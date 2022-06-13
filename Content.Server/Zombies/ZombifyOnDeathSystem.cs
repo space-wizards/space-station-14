@@ -24,6 +24,7 @@ using Content.Server.Disease;
 using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Zombies
 {
@@ -39,6 +40,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        
         [Dependency] private readonly IChatManager _chatMan = default!;
 
         public override void Initialize()
@@ -73,7 +75,6 @@ namespace Content.Server.Zombies
             if (HasComp<ZombieComponent>(target))
                 return;
 
-            _disease.CureAllDiseases(target);
             RemComp<DiseaseCarrierComponent>(target);
             RemComp<RespiratorComponent>(target);
             RemComp<BarotraumaComponent>(target);
@@ -100,11 +101,13 @@ namespace Content.Server.Zombies
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.Arc = zombiecomp.AttackArc;
             melee.ClickArc = zombiecomp.AttackArc;
+            melee.Range = 0.75f;
+
             //lord forgive me for the hardcoded damage
             DamageSpecifier dspec = new();
             dspec.DamageDict.Add("Slash", 13);
             dspec.DamageDict.Add("Piercing", 7);
-            melee.Damage = dspec;
+            melee.Damage = dspec;            
 
             _damageable.SetDamageModifierSetId(target, "Zombie");
             _bloodstream.SetBloodLossThreshold(target, 0f);

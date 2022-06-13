@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -43,7 +44,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private const string ZombieVariantsWeightedRandomID = "ZombieVariants";
     private const string PatientZeroPrototypeID = "PatientZero";
-    private const string InitialZombieVirusPrototype = "ZombieInfection";
+    private const string InitialZombieVirusPrototype = "ActiveZombieVirus";
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
@@ -178,13 +179,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         //*/
     }
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration configuration)
     {
         //this technically will run twice with zombies on roundstart, but it doesn't matter because it fails instantly
         InfectInitialPlayers();
     }
 
-    public override void Ended() { }
+    public override void Ended(GameRuleConfiguration configuration) { }
 
     /// <summary>
     /// Infects the first players with the passive zombie virus.
@@ -246,14 +247,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     /// </summary>
     private void UnlockNuke()
     {
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("zombie-nuke-armed-event", ("code",_nukeCodeSystem.Code)), "Centcomm", default, Color.Crimson);
-        foreach (var nuke in EntityManager.EntityQuery<NukeComponent>().ToList())
+        //_chatManager.(Loc.GetString("zombie-nuke-armed-event", ("code",_nukeCodeSystem.Code)), "Centcomm", default, Color.Crimson);
+        /*foreach (var nuke in EntityManager.EntityQuery<NukeComponent>().ToList())
         {
             if (nuke.DiskSlot.ContainerSlot != null)
             {
                 nuke.DiskSlot.ContainerSlot.Insert(Spawn("NukeDisk", Transform(nuke.Owner).Coordinates));
             }
                 
-        }
+        }*/
     }
 }
