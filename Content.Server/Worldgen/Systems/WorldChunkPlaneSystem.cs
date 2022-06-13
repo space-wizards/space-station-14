@@ -47,25 +47,22 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
     /// </summary>
     public virtual int LoadingCheatFactor => 1;
 
+    /// <summary>
+    /// Which object types we should listen to when loading.
+    /// </summary>
+    public virtual LoadingFlags LoadingMask => LoadingFlags.All;
+
     private float _accumulator;
     private readonly Dictionary<MapId,HashSet<Vector2i>> _loadedChunks = new();
 
-
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-
-    }
-
     protected virtual void UnloadChunk(MapId map, Vector2i chunk)
     {
-        Logger.Debug($"Unloaded {chunk} on {map}");
+        throw new NotImplementedException();
     }
 
     protected virtual void LoadChunk(MapId map, Vector2i chunk)
     {
-        Logger.Debug($"Loaded {chunk} on {map}");
+        throw new NotImplementedException();
     }
 
     public override void Update(float frameTime)
@@ -83,7 +80,7 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         var toLoad = new Dictionary<MapId, HashSet<Vector2i>>();
 
-        foreach (var (loader, xform) in EntityQuery<ChunkLoaderComponent, TransformComponent>())
+        foreach (var (loader, xform) in EntityQuery<WorldLoaderComponent, TransformComponent>())
         {
             //if (!MapConfigurations.ContainsKey(xform.MapID))
             //    continue;
@@ -92,6 +89,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
             // This is to try and find every grid square within a circle, however said grid has been transformed by some arbitrary invertable Matrix3 so I have to suffer a bit.
             // "I think you can transform the center of the circle, then transform the distance function and add the cells until they no longer meet the condition (<=radius)" << TRY THIS LATER
             var radius = inv * loader.Range;
+            if ((loader.LoadingFlags & LoadingMask) == 0)
+                continue;
             if (!toLoad.ContainsKey(xform.MapID))
                 toLoad.Add(xform.MapID, new());
             if (!_loadedChunks.ContainsKey(xform.MapID))
@@ -217,4 +216,13 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
     public abstract bool TryClearWorldSpace(Circle area);
 
     #endregion
+}
+
+[Flags]
+public enum LoadingFlags : uint
+{
+    Stationary = 1,
+    Player = 2,
+    Npc = 4,
+    All = uint.MaxValue
 }

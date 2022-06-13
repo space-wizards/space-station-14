@@ -12,6 +12,12 @@ public sealed class DebrisPlaneSystem : WorldChunkPlaneSystem<DebrisChunkData, D
     public override Matrix3 CoordinateTransformMatrix => Matrix3.CreateScale(ChunkSize, ChunkSize);
     public override int ChunkSize => 128;
 
+
+    public override void Initialize()
+    {
+        UpdatesBefore.Add(typeof(FloorplanningPlaneSystem));
+    }
+
     protected override DebrisChunkData InitializeChunk(MapId map, Vector2i chunk)
     {
         var data = new DebrisChunkData();

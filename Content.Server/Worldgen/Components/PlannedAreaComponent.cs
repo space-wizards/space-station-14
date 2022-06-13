@@ -9,11 +9,13 @@ namespace Content.Server.Worldgen.Components;
 [RegisterComponent]
 public sealed class PlannedAreaComponent : Component
 {
-    public List<(FloorplanConfig, object?, Vector2 position)> Plans = new();
+    public List<Plan> Plans = new();
+    public HashSet<Vector2i> OwningChunks = new();
 }
 
-public record struct Plan
+public record struct Plan(FloorplanConfig Config, object? PlanData, Vector2 GridPosition)
 {
-    public FloorplanConfig Config;
-    public object? PlanData;
+    public FloorplanConfig Config = Config;
+    public object? PlanData = PlanData;
+    public Vector2 GridPosition = GridPosition;
 }

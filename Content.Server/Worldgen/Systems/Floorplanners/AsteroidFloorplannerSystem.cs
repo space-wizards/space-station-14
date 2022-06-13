@@ -28,7 +28,7 @@ public sealed class AsteroidFloorplannerSystem : EntitySystem, IFloorplanSystem
     public bool ConstructTiling(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, out object? planData)
     {
         var config = (AsteroidFloorplanConfig) rawConfig;
-                var grid = _mapManager.GetGrid(targetGrid);
+        var grid = _mapManager.GetGrid(targetGrid);
 
         var startPoint = centerPoint.Floored();
         var tileProto = _prototypeManager.Index<WeightedRandomPrototype>(config.TileWeightList);
@@ -90,9 +90,17 @@ public sealed class AsteroidFloorplannerSystem : EntitySystem, IFloorplanSystem
         return true;
     }
 
-    public void Populate(FloorplanConfig config, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds,
-        out object? planData)
+    public void Populate(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, in object? planData)
     {
-        throw new NotImplementedException();
+        var config = (AsteroidFloorplanConfig)rawConfig;
+
+        var grid = _mapManager.GetGrid(targetGrid);
+        var xform = Transform(targetGrid);
+
+        foreach (var tileRef in grid.GetAllTiles())
+        {
+            var spawnCoords = grid.LocalToWorld(tileRef.GridIndices);
+            Spawn(config.FillerEntity, new MapCoordinates(spawnCoords, xform.MapID));
+        }
     }
 }

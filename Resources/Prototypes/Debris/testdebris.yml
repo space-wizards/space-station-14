@@ -6,6 +6,7 @@
     radius: 6
     tileWeightList: AsteroidTileWeights
     smoothResult: true
+    fillerEntity: AsteroidRock
 
 - type: weightedRandom
   id: AsteroidTileWeights

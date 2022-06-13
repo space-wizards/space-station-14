@@ -1,5 +1,6 @@
 ﻿using Content.Server.Worldgen.Systems.Floorplanners;
 using Content.Shared.Random;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Worldgen.Floorplanners;
@@ -28,4 +29,7 @@ public sealed record AsteroidFloorplanConfig : FloorplanConfig
     /// </summary>
     [DataField("smoothResult")]
     public bool SmoothResult = false;
+
+    [DataField("fillerEntity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string FillerEntity = default!;
 }
