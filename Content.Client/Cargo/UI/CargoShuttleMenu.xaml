@@ -24,15 +24,12 @@
         </BoxContainer>
         <Button Name="ShuttleCallButton"
                 Text="Call Shuttle"/>
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="6">
-            <BoxContainer Name="Products"
-                          Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <!-- Products get added here by code -->
-            </BoxContainer>
-        </ScrollContainer>
+        <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
+        <BoxContainer Name="Orders"
+                      Orientation="Vertical"
+                      StyleClasses="transparentItemList"
+                      VerticalExpand="True">
+            <!-- Orders are added here by code -->
+        </BoxContainer>
     </BoxContainer>
 </userInterface:FancyWindow>

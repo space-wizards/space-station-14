@@ -1,4 +1,5 @@
 using Content.Client.Cargo.UI;
+using Content.Shared.Cargo.BUI;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -15,5 +16,13 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         base.Open();
         _menu = new CargoShuttleMenu(IoCManager.Resolve<IPrototypeManager>(), EntitySystem.Get<SpriteSystem>());
         _menu.OpenCentered();
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        if (state is not CargoShuttleConsoleBoundUserInterfaceState shuttleState) return;
+
+        _menu?.SetOrders(shuttleState.Orders);
     }
 }

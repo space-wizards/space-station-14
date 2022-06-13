@@ -1,4 +1,6 @@
-namespace Content.Shared.Cargo.Components;
+using Content.Shared.Cargo;
+
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// Added to the abstract representation of a station to track its money.

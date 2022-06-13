@@ -1,4 +1,6 @@
-namespace Content.Shared.Cargo.Components;
+using Content.Shared.Cargo;
+
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// Stores all of cargo orders for a particular station.
@@ -19,4 +21,13 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     /// Tracks the next order index available.
     /// </summary>
     public int Index;
+
+    [ViewVariables, DataField("cargoShuttleProto")]
+    public string? CargoShuttleProto = "testShuttle";
+
+    /// <summary>
+    /// The cargo shuttle assigned to this station.
+    /// </summary>
+    [ViewVariables, DataField("shuttle")]
+    public EntityUid? Shuttle;
 }

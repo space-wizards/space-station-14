@@ -122,8 +122,8 @@ namespace Content.Client.Cargo.UI
         /// </summary>
         public void PopulateOrders(IEnumerable<CargoOrderData> orders)
         {
-            Orders.RemoveAllChildren();
-            Requests.RemoveAllChildren();
+            Orders.DisposeAllChildren();
+            Requests.DisposeAllChildren();
 
             foreach (var order in orders)
             {
@@ -133,7 +133,7 @@ namespace Content.Client.Cargo.UI
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = { Texture = product.Icon.Frame0() },
+                    Icon = { Texture = _spriteSystem.Frame0(product.Icon) },
                     ProductName =
                     {
                         Text = Loc.GetString(
