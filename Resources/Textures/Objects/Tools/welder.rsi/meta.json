@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/199fffd989d6f7fd6ea9c5188c875137df4f34b8",
+  "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fad88d929f1fba9f8d4c9d47f77f0c245ad22606",
   "size": {
     "x": 32,
     "y": 32
@@ -32,18 +32,22 @@
       "directions": 4,
       "delays": [
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ]
@@ -54,18 +58,22 @@
       "directions": 4,
       "delays": [
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ],
         [
+          0.3,
           0.2,
           0.1
         ]

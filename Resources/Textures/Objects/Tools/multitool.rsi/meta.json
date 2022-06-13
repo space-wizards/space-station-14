@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/94f27c7b25bbde39c1412e24fb32bf6470fcc394",
+  "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/pull/9368/commits/2ef96a93e977851d1546ab97a69391f0e88c78d4",
   "size": {
     "x": 32,
     "y": 32

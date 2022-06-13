@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fad88d929f1fba9f8d4c9d47f77f0c245ad22606",
   "size": {
     "x": 32,
     "y": 32
