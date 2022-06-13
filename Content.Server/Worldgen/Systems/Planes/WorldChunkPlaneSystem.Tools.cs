@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Worldgen.Systems;
+﻿namespace Content.Server.Worldgen.Systems.Planes;
 
 public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig>
 {

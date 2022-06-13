@@ -30,6 +30,6 @@ public sealed record AsteroidFloorplanConfig : FloorplanConfig
     [DataField("smoothResult")]
     public bool SmoothResult = false;
 
-    [DataField("fillerEntity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string FillerEntity = default!;
+    [DataField("fillerEntityList", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    public string FillerEntityList = default!;
 }

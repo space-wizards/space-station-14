@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Worldgen.Systems;
+﻿using Robust.Shared.Map;
+
+namespace Content.Server.Worldgen.Systems;
 
 /// <summary>
 /// This handles global control of world generation, like configuration and clearing areas.
@@ -9,5 +11,17 @@ public sealed class WorldgenSystem : EntitySystem
     public override void Initialize()
     {
 
+    }
+}
+
+public sealed class MapConfigurationEvent : EntityEventArgs
+{
+    public readonly MapId MapId;
+    public readonly List<object> Configs;
+
+    public MapConfigurationEvent(MapId mapId, List<object> configs)
+    {
+        MapId = mapId;
+        Configs = configs;
     }
 }

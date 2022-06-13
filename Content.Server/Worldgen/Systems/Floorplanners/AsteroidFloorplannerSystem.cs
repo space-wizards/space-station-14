@@ -96,11 +96,12 @@ public sealed class AsteroidFloorplannerSystem : FloorplanSystem
 
         var grid = _mapManager.GetGrid(targetGrid);
         var xform = Transform(targetGrid);
+        var fills = _prototypeManager.Index<WeightedRandomPrototype>(config.FillerEntityList);
 
         foreach (var tileRef in grid.GetAllTiles())
         {
             var spawnCoords = grid.LocalToWorld(tileRef.GridIndices);
-            Spawn(config.FillerEntity, new MapCoordinates(spawnCoords, xform.MapID));
+            Spawn(fills.Pick(_random), new MapCoordinates(spawnCoords, xform.MapID));
         }
     }
 }

@@ -2,7 +2,7 @@
 using Content.Server.Worldgen.Components;
 using Robust.Shared.Map;
 
-namespace Content.Server.Worldgen.Systems;
+namespace Content.Server.Worldgen.Systems.Planes;
 
 /// <summary>
 /// This handles "chunk planes".
@@ -15,6 +15,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
     where TChunk : new()
     where TConfig: new()
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     private Dictionary<MapId, Dictionary<Vector2i, TChunk>> _chunks = new();
 
     protected Dictionary<MapId, TConfig> MapConfigurations = new();
@@ -53,6 +55,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
     /// </summary>
     public virtual LoadingFlags LoadingMask => LoadingFlags.All;
 
+    public virtual bool RequiresConfiguration => true;
+
     private float _accumulator;
     protected readonly Dictionary<MapId,HashSet<Vector2i>> LoadedChunks = new();
 
@@ -61,6 +65,22 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
         // Make sure stuff that might be doing it's own loading runs before us.
         UpdatesAfter.Add(typeof(GameTicker));
         UpdatesAfter.Add(typeof(WorldgenSystem));
+
+        SubscribeLocalEvent<MapConfigurationEvent>(MapConfigurationHandler);
+    }
+
+    private void MapConfigurationHandler(MapConfigurationEvent ev)
+    {
+        if (MapConfigurations.ContainsKey(ev.MapId))
+            return;
+
+        foreach (var config in ev.Configs)
+        {
+            if (config.GetType() == typeof(TConfig))
+            {
+                MapConfigurations[ev.MapId] = (TConfig)config;
+            }
+        }
     }
 
     protected virtual void UnloadChunk(MapId map, Vector2i chunk)
@@ -73,6 +93,11 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
         throw new NotImplementedException();
     }
 
+    protected virtual void MapDeleted(MapId map)
+    {
+
+    }
+
     public override void Update(float frameTime)
     {
         if (UpdateRate is null)
@@ -83,6 +108,19 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
             return;
 
         _accumulator -= UpdateRate.Value;
+
+        var toDelete = new List<MapId>(LoadedChunks.Count - 1);
+        foreach (var (map, _) in LoadedChunks)
+        {
+            if (!_mapManager.MapExists(map))
+                toDelete.Add(map);
+        }
+
+        foreach (var map in toDelete)
+        {
+            LoadedChunks.Remove(map);
+            MapDeleted(map);
+        }
 
         var inv = MathF.Sqrt((float)InverseTransformMatrix.Determinant);
 
@@ -133,6 +171,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         foreach (var (map, chunks) in unloadChunks)
         {
+            if (!MapConfigurations.ContainsKey(map) && RequiresConfiguration)
+                continue;
             foreach (var chunk in chunks)
             {
                 UnloadChunk(map, chunk);
@@ -141,6 +181,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         foreach (var (map, chunks) in newChunks)
         {
+            if (!MapConfigurations.ContainsKey(map) && RequiresConfiguration)
+                continue;
             foreach (var chunk in chunks)
             {
                 LoadChunk(map, chunk);
@@ -149,6 +191,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         foreach (var (map, loadedChunks) in LoadedChunks)
         {
+            if (!MapConfigurations.ContainsKey(map) && RequiresConfiguration)
+                continue;
             loadedChunks.Clear();
             loadedChunks.UnionWith(toLoad[map]);
         }

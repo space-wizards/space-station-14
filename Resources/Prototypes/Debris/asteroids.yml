@@ -1,0 +1,43 @@
+﻿- type: debris
+  id: AsteroidDebrisLarge
+  exclusionZone: 14
+  floorplanners:
+    - !type:AsteroidFloorplanConfig
+      floorPlacements: 48
+      radius: 12
+      tileWeightList: AsteroidTileWeights
+      smoothResult: true
+      fillerEntityList: StandardAsteroidRockEntityWeights
+
+- type: debris
+  id: AsteroidDebrisMedium
+  exclusionZone: 8
+  floorplanners:
+    - !type:AsteroidFloorplanConfig
+      floorPlacements: 24
+      radius: 6
+      tileWeightList: AsteroidTileWeights
+      smoothResult: true
+      fillerEntityList: StandardAsteroidRockEntityWeights
+
+- type: debris
+  id: AsteroidDebrisSmall
+  exclusionZone: 6
+  floorplanners:
+    - !type:AsteroidFloorplanConfig
+      floorPlacements: 12
+      radius: 4
+      tileWeightList: AsteroidTileWeights
+      smoothResult: true
+      fillerEntityList: StandardAsteroidRockEntityWeights
+
+- type: weightedRandom
+  id: AsteroidTileWeights
+  weights:
+    floor_asteroid_coarse_sand0: 1
+
+- type: weightedRandom
+  id: StandardAsteroidRockEntityWeights
+  weights:
+    AsteroidRockMining: 9
+    AsteroidRock: 1

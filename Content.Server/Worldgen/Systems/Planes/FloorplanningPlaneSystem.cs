@@ -5,7 +5,8 @@ using Robust.Shared.Map;
 namespace Content.Server.Worldgen.Systems.Planes;
 
 /// <summary>
-/// This handles loading floorplans when their range is entered. This uses planes as to avoid a more complex method of checking for overlaps.
+/// This handles loading floorplans when their range is entered.
+/// This uses planes as to avoid a more complex method of checking for overlaps.
 /// </summary>
 public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<FloorplanningChunk, FloorplanningConfig>
 {
@@ -49,7 +50,6 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
 
     protected override void LoadChunk(MapId map, Vector2i chunk)
     {
-        Logger.Debug("M");
         var chunkData = GetChunk(map, chunk);
         foreach (var plannedEntity in chunkData.PlannedAreas)
         {

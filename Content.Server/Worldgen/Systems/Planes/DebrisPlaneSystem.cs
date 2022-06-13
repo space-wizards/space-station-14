@@ -82,7 +82,9 @@ public sealed class DebrisData
     }
 }
 
+[DataDefinition]
 public sealed class DebrisPlaneConfig
 {
-
+    [DataField("debrisChoices", required: true)]
+    public string DebrisChoices = default!;
 }
