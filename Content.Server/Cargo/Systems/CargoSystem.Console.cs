@@ -39,6 +39,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _linker = default!;
+        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private void InitializeConsole()
@@ -87,7 +88,9 @@ namespace Content.Server.Cargo.Systems
 
                 foreach (var comp in EntityQuery<CargoConsoleComponent>())
                 {
-                    var station = Get<StationSystem>().GetOwningStation(comp.Owner);
+                    if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Key)) continue;
+
+                    var station = _station.GetOwningStation(comp.Owner);
 
                     UpdateUIState(comp, station);
                 }
@@ -236,7 +239,6 @@ namespace Content.Server.Cargo.Systems
         private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
         {
             if (station == null ||
-                !_uiSystem.IsUiOpen(component.Owner, CargoConsoleUiKey.Key) ||
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 

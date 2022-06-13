@@ -16,6 +16,12 @@
                    Text="0" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'cargo-console-menu-shuttle-status-label'}"
+                   StyleClasses="LabelKeyText" />
+            <Label Name="ShuttleStatusLabel"
+                   Text="{Loc 'cargo-console-menu-shuttle-status-away-text'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
                    StyleClasses="LabelKeyText" />
             <Label Name="ShuttleCapacityLabel"
