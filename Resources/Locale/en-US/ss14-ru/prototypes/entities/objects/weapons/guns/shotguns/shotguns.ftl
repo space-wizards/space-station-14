@@ -1,13 +1,13 @@
 ent-BaseWeaponShotgun = BaseWeaponShotgun
     .desc = A rooty tooty point and shooty.
     .suffix = { "" }
-ent-WeaponShotgunBojevic = Bojevic
+ent-WeaponShotgunBulldog = Bulldog
     .desc = It's a magazine-fed shotgun designed for close quarters combat.
     .suffix = { "" }
 ent-WeaponShotgunDoubleBarreled = double-barreled shotgun
     .desc = An immortal classic.
     .suffix = { "" }
-ent-WeaponShotgunGladstone = Gladstone
+ent-WeaponShotgunEnforcer = Enforcer
     .desc = A next-generation Frozen Star shotgun.
     .suffix = { "" }
 ent-WeaponShotgunKammerer = Kammerer

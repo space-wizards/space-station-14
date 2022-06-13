@@ -68,7 +68,7 @@ namespace Content.Shared.Movement
 
         protected Angle GetParentGridAngle(TransformComponent xform, IMoverComponent mover)
         {
-            if (xform.GridID == GridId.Invalid || !_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (xform.GridEntityId == EntityUid.Invalid || !_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
                 return mover.LastGridAngle;
 
             return grid.WorldRotation;
@@ -90,11 +90,11 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridID != GridId.Invalid)
+            if (transform.GridEntityId != EntityUid.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.LocalRotation = transform.GridID != GridId.Invalid
+                transform.LocalRotation = transform.GridEntityId != EntityUid.Invalid
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
 
@@ -130,7 +130,7 @@ namespace Content.Shared.Movement
 
                 if (!touching)
                 {
-                    if (xform.GridID != GridId.Invalid)
+                    if (xform.GridEntityId != EntityUid.Invalid)
                         mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
                     xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
@@ -152,25 +152,23 @@ namespace Content.Shared.Movement
             if (weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
-            if (xform.GridID != GridId.Invalid)
+            if (xform.GridEntityId != EntityUid.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.LocalRotation = xform.GridID != GridId.Invalid
+                xform.LocalRotation = xform.GridEntityId != EntityUid.Invalid
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
 
                 if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
-                    SoundSystem.Play(
+                    SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
-                        sound,
-                        mover.Owner,
-                        AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
                 }
             }
 
@@ -231,7 +229,7 @@ namespace Content.Shared.Movement
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
             var coordinates = xform.Coordinates;
-            var gridId = coordinates.GetGridId(EntityManager);
+            var gridId = coordinates.GetGridEntityId(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
@@ -254,7 +252,7 @@ namespace Content.Shared.Movement
                 return false;
             }
 
-            DebugTools.Assert(gridId != GridId.Invalid);
+            DebugTools.Assert(gridId != EntityUid.Invalid);
             mobMover.LastPosition = coordinates;
 
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
@@ -272,7 +270,7 @@ namespace Content.Shared.Movement
             return TryGetFootstepSound(gridId, coordinates, out variation, out sound);
         }
 
-        private bool TryGetFootstepSound(GridId gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
         {
             variation = 0f;
             sound = null;

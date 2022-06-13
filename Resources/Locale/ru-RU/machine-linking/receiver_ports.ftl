@@ -18,3 +18,7 @@ signal-port-name-order-sender = Отправитель заказа
 signal-port-description-order-sender = Отправитель заказа на компьютер карго
 signal-port-name-order-receiver = Получатель заказа
 signal-port-description-order-receiver = Получатель заказа на компьютер карго
+signal-port-name-pressurize = Pressurize
+signal-port-description-pressurize = Causes the device to starts releasing air until some target pressure is reached.
+signal-port-name-depressurize = Depressurize
+signal-port-description-depressurize = Causes the device to starts siphoning air until some target pressure is reached.

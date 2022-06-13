@@ -140,10 +140,10 @@ namespace Content.Shared.AI
         [Serializable, NetSerializable]
         public sealed class ReachableChunkRegionsDebugMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
             public Dictionary<int, Dictionary<int, List<Vector2>>> Regions { get; }
 
-            public ReachableChunkRegionsDebugMessage(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
+            public ReachableChunkRegionsDebugMessage(EntityUid gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
             {
                 GridId = gridId;
                 Regions = regions;
@@ -153,11 +153,11 @@ namespace Content.Shared.AI
         [Serializable, NetSerializable]
         public sealed class ReachableCacheDebugMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public EntityUid GridId { get; }
             public Dictionary<int, List<Vector2>> Regions { get; }
             public bool Cached { get; }
 
-            public ReachableCacheDebugMessage(GridId gridId, Dictionary<int, List<Vector2>> regions, bool cached)
+            public ReachableCacheDebugMessage(EntityUid gridId, Dictionary<int, List<Vector2>> regions, bool cached)
             {
                 GridId = gridId;
                 Regions = regions;

@@ -153,6 +153,9 @@
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: Construction
+    graph: WallmountSubstation
+    node: substation
   - type: Explosive
     explosionType: Default
     maxIntensity: 50
@@ -178,9 +181,6 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
-  - type: Construction
-    graph: WallmountSubstation
-    node: substation
 
 # Construction Frame
 - type: entity

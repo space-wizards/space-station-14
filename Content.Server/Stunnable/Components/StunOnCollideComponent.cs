@@ -3,7 +3,7 @@ namespace Content.Server.Stunnable.Components
     /// <summary>
     /// Adds stun when it collides with an entity
     /// </summary>
-    [RegisterComponent, Friend(typeof(StunOnCollideSystem))]
+    [RegisterComponent, Access(typeof(StunOnCollideSystem))]
     public sealed class StunOnCollideComponent : Component
     {
         // TODO: Can probably predict this.

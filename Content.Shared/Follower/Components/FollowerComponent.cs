@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
-[Friend(typeof(FollowerSystem))]
+[Access(typeof(FollowerSystem))]
 [NetworkedComponent]
 public sealed class FollowerComponent : Component
 {
