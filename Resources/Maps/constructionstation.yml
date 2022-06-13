@@ -5003,7 +5003,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 451
-    type: SalternAPC
+    type: APCBasic
     components:
       - pos: 0.5,4.5
         parent: 79
@@ -5015,7 +5015,7 @@ entities:
         currentSupply: 70
         type: PowerNetworkBattery
   - uid: 452
-    type: SalternAPC
+    type: APCBasic
     components:
       - pos: 4.5,5.5
         parent: 79
@@ -5028,7 +5028,7 @@ entities:
         supplyRampPosition: -0.00048065186
         type: PowerNetworkBattery
   - uid: 453
-    type: SalternAPC
+    type: APCBasic
     components:
       - pos: -3.5,-5.5
         parent: 79
@@ -5040,7 +5040,7 @@ entities:
         currentSupply: 510
         type: PowerNetworkBattery
   - uid: 454
-    type: SalternSMES
+    type: SMESBasic
     components:
       - pos: 6.5,2.5
         parent: 79
@@ -5052,7 +5052,7 @@ entities:
             ents: []
         type: ContainerContainer
   - uid: 455
-    type: SalternSubstation
+    type: SubstationBasic
     components:
       - pos: 5.5,2.5
         parent: 79
@@ -5088,7 +5088,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 458
-    type: SalternSMES
+    type: SMESBasic
     components:
       - pos: -4.5,4.5
         parent: 79
@@ -5100,7 +5100,7 @@ entities:
             ents: []
         type: ContainerContainer
   - uid: 459
-    type: SalternSubstation
+    type: SubstationBasic
     components:
       - pos: -5.5,4.5
         parent: 79
@@ -5118,7 +5118,7 @@ entities:
             ents: []
         type: ContainerContainer
   - uid: 460
-    type: SalternAPC
+    type: APCBasic
     components:
       - pos: -6.5,7.5
         parent: 79
@@ -5226,7 +5226,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 473
-    type: SalternAPC
+    type: APCBasic
     components:
       - pos: -4.5,2.5
         parent: 79
@@ -6904,19 +6904,19 @@ entities:
         parent: 79
         type: Transform
   - uid: 651
-    type: SalternGenerator
+    type: GeneratorBasic
     components:
       - pos: 12.5,0.5
         parent: 79
         type: Transform
   - uid: 652
-    type: SalternGenerator
+    type: GeneratorBasic
     components:
       - pos: 13.5,0.5
         parent: 79
         type: Transform
   - uid: 653
-    type: SalternGenerator
+    type: GeneratorBasic
     components:
       - pos: 14.5,0.5
         parent: 79
