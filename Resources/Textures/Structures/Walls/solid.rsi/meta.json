@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/c34c1b30abf18aa552e19294523924c39e5ea127/icons/turf/wall_masks.dmi and modified.",
+  "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/commit/4cd533cf0a4243050364023af9a4fcaca209dce7",
   "size": {
     "x": 32,
     "y": 32
