@@ -67,21 +67,6 @@ public abstract class SharedPowerCellSystem : EntitySystem
         {
             component.CellSlot.Name = component.SlotName;
         }
-
-        if (component.StartEmpty)
-            return;
-
-        if (!string.IsNullOrWhiteSpace(component.CellSlot.StartingItem))
-            return;
-
-        // set default starting cell based on cell-type
-        component.CellSlot.StartingItem = component.SlotSize switch
-        {
-            PowerCellSize.Small => "PowerCellSmallStandard",
-            PowerCellSize.Medium => "PowerCellMediumStandard",
-            PowerCellSize.Large => "PowerCellLargeStandard",
-            _ => throw new ArgumentOutOfRangeException()
-        };
     }
 
     private void OnCellSlotRemove(EntityUid uid, PowerCellSlotComponent component, ComponentRemove args)

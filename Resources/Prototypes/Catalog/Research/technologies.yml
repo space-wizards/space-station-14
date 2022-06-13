@@ -407,8 +407,6 @@
     - ElectromagneticTheory
   unlockedRecipes:
     - PowerCellSmallStandard
-    - PowerCellMediumStandard
-    - PowerCellLargeStandard
 
 - type: technology
   name: "advanced powercell printing"
@@ -422,8 +420,6 @@
     - PowerCellBasic
   unlockedRecipes:
     - PowerCellSmallHigh
-    - PowerCellMediumHigh
-    - PowerCellLargeHigh
 
 - type: technology
   name: "super powercell printing"
@@ -437,8 +433,6 @@
     - PowerCellAdvanced
   unlockedRecipes:
     - PowerCellSmallSuper
-    - PowerCellMediumSuper
-    - PowerCellLargeSuper
 # Basic Parts Technology Tree
 
 - type: technology

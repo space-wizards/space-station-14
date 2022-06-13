@@ -105329,7 +105329,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 9621
-  type: PowerCellLargeSuper
+  type: PowerCellSmallSuper
   components:
   - pos: -37.43891,14.626589
     parent: 60

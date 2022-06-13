@@ -54,9 +54,7 @@
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
-        - PowerCellMediumSuper
         - PowerCellSmallSuper
-        - PowerCellLargeSuper
         - PowerCellSmallAutorecharge
       rareChance: 0.08
       prototypes:
