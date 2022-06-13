@@ -5,8 +5,8 @@
 /// Objects with this component will load at a minimum the chunk they're in, potentially more depending on the range.
 /// </summary>
 [RegisterComponent]
-public sealed class ChunkLoader : Component
+public sealed class ChunkLoaderComponent : Component
 {
-    [DataField("range")]
-    public float Range = 64.0f;
+    [DataField("range"), ViewVariables(VVAccess.ReadWrite)]
+    public float Range = 512.0f;
 }

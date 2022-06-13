@@ -40,8 +40,8 @@ public sealed class RadarConsoleSystem : EntitySystem
                 var phy = Comp<PhysicsComponent>(grid.GridEntityId);
                 var transform = Transform(grid.GridEntityId);
 
-                if (phy.Mass < 50)
-                    continue;
+                //if (phy.Mass < 50)
+                //    continue;
 
                 var rad = Math.Log2(phy.Mass);
                 var gridCenter = transform.WorldMatrix.Transform(phy.LocalCenter);

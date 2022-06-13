@@ -39,11 +39,13 @@ namespace Content.Shared.Entry
             IoCManager.Resolve<MarkingManager>().Initialize();
 
 #if !FULL_RELEASE
+/*
             var configMan = IoCManager.Resolve<IConfigurationManager>();
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+            */
 #endif
 
         }

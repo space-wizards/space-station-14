@@ -1,0 +1,13 @@
+﻿- type: debris
+  id: TestDebris
+  floorplanners:
+  - !type:AsteroidFloorplanConfig
+    floorPlacements: 24
+    radius: 6
+    tileWeightList: AsteroidTileWeights
+    smoothResult: true
+
+- type: weightedRandom
+  id: AsteroidTileWeights
+  weights:
+    floor_asteroid_coarse_sand0: 1

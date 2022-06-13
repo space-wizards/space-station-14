@@ -21,6 +21,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
+using Content.Server.Worldgen;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Kitchen;
@@ -60,6 +61,7 @@ namespace Content.Server.IoC
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
+            IoCManager.Register<PoissonDiskSampler>();
         }
     }
 }
