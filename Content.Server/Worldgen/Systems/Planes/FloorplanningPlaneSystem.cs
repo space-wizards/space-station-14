@@ -64,11 +64,15 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
 
                 plans.Plans.RemoveAt(i);
                 plan.Config.Populate(plannedEntity, plan.GridPosition, null, EntityManager.EntitySysManager, plan.PlanData);
-                Logger.Debug($"Populated {plans.Owner}..");
             }
 
             plans.OwningChunks.Remove(chunk);
         }
+    }
+
+    protected override void UnloadChunk(MapId map, Vector2i chunk)
+    {
+
     }
 
     public bool ConstructTiling(FloorplanConfig config, EntityUid targetGrid, Vector2 gridPosition, Constraint? bounds)
@@ -81,12 +85,18 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
         if (!success)
             return false;
 
-        Logger.Debug("M");
+        var chunk = WorldSpaceToChunkSpace(gridComp.Grid.LocalToWorld(gridPosition)).Floored();
+
+        if (LoadedChunks[gridComp.Grid.ParentMapId].Contains(chunk))
+        {
+            config.Populate(targetGrid, gridPosition, bounds, EntityManager.EntitySysManager, in planData);
+            return true;
+        }
+
         planned.Plans.Add(new Plan(config, planData, gridPosition));
 
-        var chunk = WorldSpaceToChunkSpace(gridComp.Grid.LocalToWorld(gridPosition)).Floored();
         var chunkData = GetChunk(gridComp.Grid.ParentMapId, chunk);
-        Logger.Debug($"Adding to {chunk}");
+
         chunkData.PlannedAreas.Add(targetGrid);
         planned.OwningChunks.Add(chunk);
 

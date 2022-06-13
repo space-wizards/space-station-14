@@ -12,7 +12,7 @@ namespace Content.Server.Worldgen.Systems.Floorplanners;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class AsteroidFloorplannerSystem : EntitySystem, IFloorplanSystem
+public sealed class AsteroidFloorplannerSystem : FloorplanSystem
 {
     [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -25,7 +25,7 @@ public sealed class AsteroidFloorplannerSystem : EntitySystem, IFloorplanSystem
 
     }
 
-    public bool ConstructTiling(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, out object? planData)
+    public override bool ConstructTiling(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, out object? planData)
     {
         var config = (AsteroidFloorplanConfig) rawConfig;
         var grid = _mapManager.GetGrid(targetGrid);
@@ -90,7 +90,7 @@ public sealed class AsteroidFloorplannerSystem : EntitySystem, IFloorplanSystem
         return true;
     }
 
-    public void Populate(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, in object? planData)
+    public override void Populate(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, in object? planData)
     {
         var config = (AsteroidFloorplanConfig)rawConfig;
 

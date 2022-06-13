@@ -7,16 +7,11 @@ namespace Content.Server.Worldgen.Systems.Planes;
 public sealed class DebrisPlaneSystem : WorldChunkPlaneSystem<DebrisChunkData, DebrisPlaneConfig>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly DebrisGeneratorSystem _debrisGeneratorSystem = default!;
 
     public override Matrix3 CoordinateTransformMatrix => Matrix3.CreateScale(ChunkSize, ChunkSize);
     public override int ChunkSize => 128;
-
-
-    public override void Initialize()
-    {
-        UpdatesBefore.Add(typeof(FloorplanningPlaneSystem));
-    }
 
     protected override DebrisChunkData InitializeChunk(MapId map, Vector2i chunk)
     {
@@ -31,14 +26,28 @@ public sealed class DebrisPlaneSystem : WorldChunkPlaneSystem<DebrisChunkData, D
 
     protected override void LoadChunk(MapId map, Vector2i chunk)
     {
-        Logger.Debug("A!");
         var data = GetChunk(map, chunk);
 
-        foreach (var debris in data.Debris)
+        for (var i = 0; i < data.Debris.Count; i++)
         {
+            var debris = data.Debris[i];
+
+            _mapManager.FindGridsIntersectingEnumerator(map, new Box2(debris.Coordinates.Position - debris.Prototype.ExclusionZone, debris.Coordinates.Position + debris.Prototype.ExclusionZone), out var enumerator, true);
+
+            if (enumerator.MoveNext(out _))
+            {
+                data.Debris.RemoveAt(i); // We're blocked, self-annihilate.
+                continue;
+            }
+
             _debrisGeneratorSystem.TryGenerateDebris(debris.Coordinates, debris.Prototype!, out var ent);
             debris.Grid = ent;
         }
+    }
+
+    protected override void UnloadChunk(MapId map, Vector2i chunk)
+    {
+
     }
 
     public override bool TryClearWorldSpace(Box2Rotated area)

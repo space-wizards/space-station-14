@@ -25,8 +25,6 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig>
             debrisPoints[i] = ChunkSpaceToWorld(point + chunk + new Vector2(0.5f, 0.5f));
         }
 
-        Logger.Debug($"{debrisPoints.Count}");
-
         return debrisPoints;
     }
 }

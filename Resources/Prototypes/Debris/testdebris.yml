@@ -1,5 +1,6 @@
 ﻿- type: debris
   id: TestDebris
+  exclusionZone: 7
   floorplanners:
   - !type:AsteroidFloorplanConfig
     floorPlacements: 24

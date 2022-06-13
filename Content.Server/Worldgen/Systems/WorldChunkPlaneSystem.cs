@@ -1,4 +1,5 @@
-﻿using Content.Server.Worldgen.Components;
+﻿using Content.Server.GameTicking;
+using Content.Server.Worldgen.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Worldgen.Systems;
@@ -53,7 +54,14 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
     public virtual LoadingFlags LoadingMask => LoadingFlags.All;
 
     private float _accumulator;
-    private readonly Dictionary<MapId,HashSet<Vector2i>> _loadedChunks = new();
+    protected readonly Dictionary<MapId,HashSet<Vector2i>> LoadedChunks = new();
+
+    public override void Initialize()
+    {
+        // Make sure stuff that might be doing it's own loading runs before us.
+        UpdatesAfter.Add(typeof(GameTicker));
+        UpdatesAfter.Add(typeof(WorldgenSystem));
+    }
 
     protected virtual void UnloadChunk(MapId map, Vector2i chunk)
     {
@@ -93,8 +101,8 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
                 continue;
             if (!toLoad.ContainsKey(xform.MapID))
                 toLoad.Add(xform.MapID, new());
-            if (!_loadedChunks.ContainsKey(xform.MapID))
-                _loadedChunks.Add(xform.MapID, new());
+            if (!LoadedChunks.ContainsKey(xform.MapID))
+                LoadedChunks.Add(xform.MapID, new());
 
             var nearby = ChunksNear(InverseTransformMatrix.Transform(xform.WorldPosition).Floored(), (int)Math.Ceiling(radius));
 
@@ -108,14 +116,16 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
             }
         }
 
+        // TODO: This probably isn't efficient, at least it's O(N).
+
         var newChunks = new Dictionary<MapId, HashSet<Vector2i>>();
-        foreach (var (map, loadedChunks) in _loadedChunks)
+        foreach (var (map, loadedChunks) in LoadedChunks)
         {
             newChunks[map] = new(toLoad[map]);
             newChunks[map].ExceptWith(loadedChunks);
         }
         var unloadChunks = new Dictionary<MapId, HashSet<Vector2i>>();
-        foreach (var (map, loadedChunks) in _loadedChunks)
+        foreach (var (map, loadedChunks) in LoadedChunks)
         {
             unloadChunks[map] = new(loadedChunks);
             unloadChunks[map].ExceptWith(toLoad[map]);
@@ -137,7 +147,7 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
             }
         }
 
-        foreach (var (map, loadedChunks) in _loadedChunks)
+        foreach (var (map, loadedChunks) in LoadedChunks)
         {
             loadedChunks.Clear();
             loadedChunks.UnionWith(toLoad[map]);

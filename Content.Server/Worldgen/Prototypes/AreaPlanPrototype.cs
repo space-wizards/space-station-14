@@ -18,4 +18,10 @@ public sealed class DebrisPrototype : IPrototype
     /// </summary>
     [DataField("floorplanners", required: true)]
     public readonly List<FloorplanConfig> Floorplanners = default!;
+
+    /// <summary>
+    /// The area around this debris that, if occupied by a grid, should cancel loading the debris.
+    /// </summary>
+    [DataField("exclusionZone", required: true)]
+    public float ExclusionZone;
 }
