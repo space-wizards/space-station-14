@@ -1,13 +1,13 @@
 ent-BaseWeaponPistol = BasePistol
     .desc = A rooty tooty point and shooty.
     .suffix = { "" }
-ent-WeaponPistolClarissa = clarissa
+ent-WeaponPistolViper = viper
     .desc = A small, easily concealable, but somewhat underpowered gun.
     .suffix = { "" }
 ent-WeaponPistolHandmade = handmade pistol
     .desc = Looks unreliable.
     .suffix = { "" }
-ent-WeaponPistolMandella = mandella
+ent-WeaponPistolCobra = cobra
     .desc = A rugged, robust operator handgun with inbuilt silencer.
     .suffix = { "" }
 ent-WeaponPistolMk58 = mk 58

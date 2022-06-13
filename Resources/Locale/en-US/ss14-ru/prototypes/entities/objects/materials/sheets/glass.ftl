@@ -24,4 +24,4 @@ ent-SheetRPGlass = reinforced plasma glass
     .desc = { ent-SheetGlassBase.desc }
 ent-SheetRPGlass1 = reinforced plasma glass
     .suffix = Single
-    .desc = { ent-SheetPGlass.desc }
+    .desc = { ent-SheetRPGlass.desc }
