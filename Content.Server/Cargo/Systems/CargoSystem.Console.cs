@@ -236,6 +236,7 @@ namespace Content.Server.Cargo.Systems
         private void UpdateUIState(CargoConsoleComponent component, EntityUid? station)
         {
             if (station == null ||
+                !_uiSystem.IsUiOpen(component.Owner, CargoConsoleUiKey.Key) ||
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
@@ -256,7 +257,7 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoConsoleComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.ErrorSound.GetSound());
+            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)

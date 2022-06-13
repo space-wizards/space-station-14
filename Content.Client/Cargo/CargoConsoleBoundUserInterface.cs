@@ -44,7 +44,8 @@ namespace Content.Client.Cargo
         {
             base.Open();
 
-            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>());
+            var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
