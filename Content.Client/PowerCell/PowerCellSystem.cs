@@ -21,12 +21,12 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         {
             if (level == 0)
             {
-                args.Sprite.LayerSetVisible(Layers.Charge, false);
+                args.Sprite.LayerSetVisible(PowerCellVisualLayers.Unshaded, false);
                 return;
             }
 
-            args.Sprite.LayerSetVisible(Layers.Charge, true);
-            args.Sprite.LayerSetState(Layers.Charge, $"o{level}");
+            args.Sprite.LayerSetVisible(PowerCellVisualLayers.Unshaded, true);
+            args.Sprite.LayerSetState(PowerCellVisualLayers.Unshaded, $"o{level}");
         }
     }
 
@@ -34,10 +34,5 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     {
         Base,
         Unshaded,
-    }
-
-    private enum Layers : byte
-    {
-        Charge
     }
 }
