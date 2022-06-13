@@ -1,4 +1,7 @@
+using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
+using Content.Shared.Cargo;
+using Content.Shared.Cargo.BUI;
 using Content.Shared.GameTicking;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
@@ -12,21 +15,35 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IMapLoader _loader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
-    private MapId? _cargoDimension;
-    private readonly Dictionary<EntityUid, EntityCoordinates> _shuttles = new();
+    public MapId? CargoMap { get; private set; }
+
+    // TODO: Store this on the component ya mong
+    // ZTODO: Store cargo shuttle on station comp.
 
     /// <summary>
-    /// Prices for shuttles that are currently departed on the station.
-    /// We use it to determine the sell price when they send it back.
+    /// Stores the cargo map coordinates for each shuttle.
     /// </summary>
-    private readonly Dictionary<EntityUid, int> _activeShuttlePrices = new();
+    private readonly Dictionary<EntityUid, EntityCoordinates> _shuttles = new();
 
     #region Setup
 
     private void InitializeShuttle()
     {
+        SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentInit>(OnCargoShuttleConsoleInit);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+    }
+
+    private void OnCargoShuttleConsoleInit(EntityUid uid, CargoShuttleConsoleComponent component, ComponentInit args)
+    {
+        var station = _station.GetOwningStation(uid);
+
+        _uiSystem.GetUiOrNull(uid, CargoConsoleUiKey.Shuttle)?.SetState(
+            new CargoShuttleConsoleBoundUserInterfaceState(
+                string.Empty,
+                string.Empty,
+                TimeSpan.Zero,
+                new List<CargoOrderData>()));
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -41,15 +58,14 @@ public sealed partial class CargoSystem
 
     private void Cleanup()
     {
-        if (_cargoDimension == null)
+        if (CargoMap == null)
         {
-            _sawmill.Error($"Tried to tear down cargo dimension when it's already torn down!");
             DebugTools.Assert(_shuttles.Count == 0);
             return;
         }
 
-        _mapManager.DeleteMap(_cargoDimension.Value);
-        _cargoDimension = null;
+        _mapManager.DeleteMap(CargoMap.Value);
+        CargoMap = null;
 
         // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
         foreach (var (_, (uid, _)) in _shuttles)
@@ -62,20 +78,20 @@ public sealed partial class CargoSystem
 
     private void Setup()
     {
-        if (_cargoDimension != null)
+        if (CargoMap != null)
         {
             _sawmill.Error($"Tried to setup cargo dimension when it's already setup!");
             return;
         }
 
         // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
-        _cargoDimension = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(_cargoDimension!.Value, true);
+        CargoMap = _mapManager.CreateMap();
+        _mapManager.SetMapPaused(CargoMap!.Value, true);
         var index = 0;
 
         foreach (var proto in _protoMan.EnumeratePrototypes<CargoShuttlePrototype>())
         {
-            var (_, gridId) = _loader.LoadBlueprint(_cargoDimension.Value, proto.Path.ToString());
+            var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, proto.Path.ToString());
             var uid = _mapManager.GetGridEuid(gridId!.Value);
             var xform = Transform(uid);
 
@@ -96,6 +112,7 @@ public sealed partial class CargoSystem
 
     private int GetPrice(EntityUid uid, int price = 0)
     {
+        // TODO: Use cargo pads.
         var xform = Transform(uid);
         var childEnumerator = xform.ChildEnumerator;
 

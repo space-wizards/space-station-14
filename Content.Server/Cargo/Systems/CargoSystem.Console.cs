@@ -8,7 +8,9 @@ using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Events;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -84,6 +86,7 @@ namespace Content.Server.Cargo.Systems
 
                 foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
                 {
+                    // TODO: Also update on opening.
                     if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
 
                     var station = _station.GetOwningStation(comp.Owner);
