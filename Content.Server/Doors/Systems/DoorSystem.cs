@@ -109,7 +109,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, audioParams);
+        SoundSystem.Play(sound, filter, uid, audioParams);
     }
 
 #region DoAfters

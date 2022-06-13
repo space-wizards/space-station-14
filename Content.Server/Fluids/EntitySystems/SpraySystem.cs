@@ -113,7 +113,7 @@ public sealed class SpraySystem : EntitySystem
                 body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
         }
 
-        SoundSystem.Play(Filter.Pvs(uid), component.SpraySound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
+        SoundSystem.Play(component.SpraySound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
 
         RaiseLocalEvent(uid,
             new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)));
