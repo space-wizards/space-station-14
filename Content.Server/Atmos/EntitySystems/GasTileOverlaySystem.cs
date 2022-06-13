@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
         /// </summary>
-        private readonly Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new();
+        private readonly Dictionary<EntityUid, HashSet<Vector2i>> _invalidTiles = new();
 
         private readonly Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
             new();
@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
-        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
+        private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
             new();
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invalidate(GridId gridIndex, Vector2i indices)
+        public void Invalidate(EntityUid gridIndex, Vector2i indices)
         {
             if (!_invalidTiles.TryGetValue(gridIndex, out var existing))
             {
@@ -88,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
             existing.Add(indices);
         }
 
-        private GasOverlayChunk GetOrCreateChunk(GridId gridIndex, Vector2i indices)
+        private GasOverlayChunk GetOrCreateChunk(EntityUid gridIndex, Vector2i indices)
         {
             if (!_overlay.TryGetValue(gridIndex, out var chunks))
             {
@@ -204,7 +204,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
-                if (!_overlay.TryGetValue(grid.Index, out var chunks))
+                if (!_overlay.TryGetValue(grid.GridEntityId, out var chunks))
                 {
                     continue;
                 }
@@ -256,7 +256,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             AccumulatedFrameTime -= _updateCooldown;
 
-            var gridAtmosComponents = new Dictionary<GridId, GridAtmosphereComponent>();
+            var gridAtmosComponents = new Dictionary<EntityUid, GridAtmosphereComponent>();
             var updatedTiles = new Dictionary<GasOverlayChunk, HashSet<Vector2i>>();
 
             // So up to this point we've been caching the updated tiles for multiple ticks.
@@ -351,7 +351,7 @@ namespace Content.Server.Atmos.EntitySystems
                     overlay.RemoveChunk(chunk);
                 }
 
-                var clientInvalids = new Dictionary<GridId, List<(Vector2i, GasOverlayData)>>();
+                var clientInvalids = new Dictionary<EntityUid, List<(Vector2i, GasOverlayData)>>();
 
                 // Check for any dirty chunks in range and bundle the data to send to the client.
                 foreach (var chunk in chunksInRange)
@@ -378,13 +378,13 @@ namespace Content.Server.Atmos.EntitySystems
         }
         private sealed class PlayerGasOverlay
         {
-            private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _data =
+            private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _data =
                 new();
 
             private readonly Dictionary<GasOverlayChunk, GameTick> _lastSent =
                 new();
 
-            public GasOverlayMessage UpdateClient(GridId grid, List<(Vector2i, GasOverlayData)> data)
+            public GasOverlayMessage UpdateClient(EntityUid grid, List<(Vector2i, GasOverlayData)> data)
             {
                 return new(grid, data);
             }

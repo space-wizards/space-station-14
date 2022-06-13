@@ -20,7 +20,7 @@ public sealed class SpaceGarbageSystem : EntitySystem
         var ourXform = Transform(args.OurFixture.Body.Owner);
         var otherXform = Transform(args.OtherFixture.Body.Owner);
 
-        if (ourXform.GridID == otherXform.GridID ||
+        if (ourXform.GridEntityId == otherXform.GridEntityId ||
             args.OtherFixture.Body.BodyType != BodyType.Static) return;
 
         QueueDel(uid);

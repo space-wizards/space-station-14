@@ -193,7 +193,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 internal sealed class Explosion
 {
     public readonly Dictionary<int, List<Vector2i>>? SpaceTiles;
-    public readonly Dictionary<GridId, Dictionary<int, List<Vector2i>>> Tiles;
+    public readonly Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles;
     public readonly List<float> Intensity;
     public readonly EntityUid LightEntity;
     public readonly MapId Map;

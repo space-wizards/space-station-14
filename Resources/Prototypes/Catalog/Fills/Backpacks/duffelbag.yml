@@ -32,11 +32,11 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bojevic bundle
-  description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
-      - id: WeaponShotgunBojevic
+      - id: WeaponShotgunBulldog
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
@@ -57,12 +57,12 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
-  name: Predator bundle
-  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders."
+  name: Python bundle
+  description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPredator
+      - id: WeaponRevolverPython
       - id: SpeedLoaderMagnum
         amount: 2
 
@@ -98,12 +98,12 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledCarbine
-  name: Z8 Bulldog bundle
+  name: M-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRifleBulldog
+      - id: WeaponRifleM90GrenadeLauncher
       - id: MagazineRifle
         amount: 2
       - id: GrenadeBlast
@@ -213,7 +213,7 @@
     contents:
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: WeaponPistolClarissa
+      - id: WeaponPistolViper
       - id: BaseUplinkRadio40TC
 
 
@@ -234,4 +234,4 @@
       - id: BaseUplinkRadio40TC
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: WeaponPistolClarissa
+      - id: WeaponPistolViper

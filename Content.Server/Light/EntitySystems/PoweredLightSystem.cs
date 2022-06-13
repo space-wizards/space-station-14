@@ -114,7 +114,7 @@ namespace Content.Server.Light.EntitySystems
                         _adminLogger.Add(LogType.Damaged,
                             $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
+                    SoundSystem.Play(light.BurnHandSound.GetSound(), Filter.Pvs(uid), uid);
 
                     args.Handled = true;
                     return;
@@ -253,7 +253,7 @@ namespace Content.Server.Light.EntitySystems
                             if (time > light.LastThunk + ThunkDelay)
                             {
                                 light.LastThunk = time;
-                                SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));
+                                SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
                             }
                         }
                         else

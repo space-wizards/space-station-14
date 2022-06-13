@@ -6,74 +6,75 @@ meta:
 tilemap:
   0: space
   1: FloorArcadeBlue
-  2: FloorArcadeRed
-  3: FloorAsteroidIronsand1
-  4: FloorAsteroidIronsand2
-  5: FloorAsteroidIronsand3
-  6: FloorAsteroidIronsand4
-  7: FloorEighties
-  8: FloorGrassJungle
-  9: FloorShuttleBlue
-  10: FloorShuttleOrange
-  11: FloorShuttlePurple
-  12: FloorShuttleRed
-  13: FloorShuttleWhite
-  14: floor_asteroid_coarse_sand0
-  15: floor_asteroid_coarse_sand1
-  16: floor_asteroid_coarse_sand2
-  17: floor_asteroid_coarse_sand_dug
-  18: floor_asteroid_sand
-  19: floor_asteroid_tile
-  20: floor_bar
-  21: floor_blue
-  22: floor_blue_circuit
-  23: floor_clown
-  24: floor_dark
-  25: floor_elevator_shaft
-  26: floor_freezer
-  27: floor_glass
-  28: floor_gold
-  29: floor_grass
-  30: floor_green_circuit
-  31: floor_hydro
-  32: floor_kitchen
-  33: floor_laundry
-  34: floor_lino
-  35: floor_mime
-  36: floor_mono
-  37: floor_reinforced
-  38: floor_rglass
-  39: floor_rock_vault
-  40: floor_showroom
-  41: floor_silver
-  42: floor_snow
-  43: floor_steel
-  44: floor_steel_dirty
-  45: floor_techmaint
-  46: floor_white
-  47: floor_wood
-  48: lattice
-  49: plating
-  50: underplating
+  2: FloorArcadeBlue2
+  3: FloorArcadeRed
+  4: FloorAsteroidIronsand1
+  5: FloorAsteroidIronsand2
+  6: FloorAsteroidIronsand3
+  7: FloorAsteroidIronsand4
+  8: FloorBoxing
+  9: FloorCarpetClown
+  10: FloorCarpetOffice
+  11: FloorEighties
+  12: FloorGrassJungle
+  13: FloorGym
+  14: FloorMetalDiamond
+  15: FloorShuttleBlue
+  16: FloorShuttleOrange
+  17: FloorShuttlePurple
+  18: FloorShuttleRed
+  19: FloorShuttleWhite
+  20: floor_asteroid_coarse_sand0
+  21: floor_asteroid_coarse_sand1
+  22: floor_asteroid_coarse_sand2
+  23: floor_asteroid_coarse_sand_dug
+  24: floor_asteroid_sand
+  25: floor_asteroid_tile
+  26: floor_bar
+  27: floor_blue
+  28: floor_blue_circuit
+  29: floor_clown
+  30: floor_dark
+  31: floor_elevator_shaft
+  32: floor_freezer
+  33: floor_glass
+  34: floor_gold
+  35: floor_grass
+  36: floor_green_circuit
+  37: floor_hydro
+  38: floor_kitchen
+  39: floor_laundry
+  40: floor_lino
+  41: floor_mime
+  42: floor_mono
+  43: floor_reinforced
+  44: floor_rglass
+  45: floor_rock_vault
+  46: floor_showroom
+  47: floor_silver
+  48: floor_snow
+  49: floor_steel
+  50: floor_steel_dirty
+  51: floor_techmaint
+  52: floor_white
+  53: floor_wood
+  54: lattice
+  55: plating
 grids:
 - settings:
     chunksize: 16
     tilesize: 1
   chunks:
   - ind: -1,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAGAAAADEAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAxAAAAMQAAADEAAAAxAAAAGAAAABgAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAYAAAAGAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADEAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADEAAAAxAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADEAAAAxAAAAMQAAADEAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADEAAAAtAAAALQAAAAwAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAxAAAALQAAAC0AAAAMAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMQAAADEAAAAtAAAADAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAxAAAAMQAAADEAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAAAHgAAADcAAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAeAAAAHgAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAzAAAAMwAAABIAAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAAMwAAADMAAAASAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAAzAAAAEgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAAA==
   - ind: 0,-1
-    tiles: GAAAADEAAAAYAAAAGAAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAADEAAAAxAAAAMQAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAMQAAADEAAAAxAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAADEAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAxAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAAC8AAAAvAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAvAAAALwAAAC8AAAAvAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAAC8AAAAvAAAALwAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAwAAAAxAAAALgAAADEAAAAxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAMQAAADEAAAAxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: HgAAADcAAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAADcAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADUAAAA1AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAA1AAAANQAAADUAAAA1AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADUAAAA1AAAANQAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAABIAAAA3AAAANAAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,0
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,-2
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMQAAADEAAAAxAAAAMAAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAMQAAADAAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAABgAAAAYAAAAGAAAADEAAAAwAAAAMAAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAYAAAAMQAAABgAAAAxAAAAMAAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAGAAAADEAAAAYAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAABgAAAAxAAAAGAAAABgAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAYAAAAMQAAABgAAAAYAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAGAAAABgAAAAYAAAAGAAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAYAAAAGAAAAAwAAAAxAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAGAAAABgAAAAMAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMQAAAAwAAAAYAAAADAAAADEAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADEAAAAxAAAAMQAAADEAAAAxAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAMQAAABgAAAAYAAAAMQAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAMQAAADEAAAAYAAAAGAAAABgAAAAxAAAAMQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAB4AAAAeAAAAHgAAADcAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAeAAAANwAAAB4AAAA3AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAHgAAADcAAAAeAAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAB4AAAA3AAAAHgAAAB4AAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAeAAAANwAAAB4AAAAeAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAHgAAAB4AAAAeAAAAHgAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAAeAAAAHgAAABIAAAA3AAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAHgAAAB4AAAASAAAAHgAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAABIAAAAeAAAAEgAAADcAAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAAANwAAAB4AAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAAAHgAAAB4AAAA3AAAANwAAAA==
   - ind: 0,-2
-    tiles: MAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMAAAADEAAAAxAAAAMQAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADAAAAAxAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAMQAAACUAAAAxAAAAJQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADEAAAAlAAAAMQAAACUAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAJQAAADEAAAAlAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAADEAAAAxAAAAGAAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAxAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAxAAAAMQAAADEAAAAxAAAAMQAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAMQAAABgAAAAYAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQAAABgAAAAYAAAAGAAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: -1,-3
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAwAAAAAAAAAA==
-  - ind: 0,-3
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAA3AAAANwAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANwAAACsAAAA3AAAAKwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAArAAAANwAAACsAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAKwAAADcAAAArAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAHgAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAANwAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAB4AAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
   type: WallReinforced
@@ -483,10 +484,6 @@ entities:
   - pos: -2.5,-21.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 66
   type: GasPipeTJunction
   components:
@@ -496,30 +493,18 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 67
-  type: CableHV
+  type: Catwalk
   components:
   - pos: -2.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 68
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -1.5,-26.5
+  - pos: -2.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 69
   type: AMEShielding
   components:
@@ -532,6 +517,8 @@ entities:
   - pos: -6.4711375,-22.477419
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 71
   type: WallReinforced
   components:
@@ -2040,66 +2027,38 @@ entities:
   - pos: -5.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 205
   type: CableHV
   components:
   - pos: -5.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 206
   type: CableHV
   components:
   - pos: -5.5,-25.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 207
   type: CableHV
   components:
   - pos: -5.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 208
   type: CableHV
   components:
   - pos: -5.5,-23.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 209
   type: CableHV
   components:
   - pos: -5.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 210
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -5.5,-19.5
     parent: 73
@@ -2108,14 +2067,8 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 211
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -4.5,-19.5
     parent: 73
@@ -2124,12 +2077,6 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 212
   type: CableTerminal
   components:
@@ -2158,62 +2105,32 @@ entities:
   - pos: -5.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 215
   type: CableHV
   components:
   - pos: -4.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 216
   type: CableHV
   components:
   - pos: -5.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 217
   type: CableHV
   components:
   - pos: -4.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 218
   type: CableHV
   components:
   - pos: -3.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 219
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -3.5,-19.5
     parent: 73
@@ -2222,20 +2139,14 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 220
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
 - uid: 221
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 0.5,-6.5
     parent: 73
@@ -2246,1678 +2157,894 @@ entities:
   - pos: -3.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 223
   type: CableMV
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 224
   type: CableMV
   components:
   - pos: -3.5,-17.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 225
   type: CableMV
   components:
   - pos: -3.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 226
   type: CableMV
   components:
   - pos: -2.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 227
   type: CableMV
   components:
   - pos: -0.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 228
   type: CableMV
   components:
   - pos: -1.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 229
   type: CableMV
   components:
   - pos: -0.5,-15.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 230
   type: CableMV
   components:
   - pos: -0.5,-14.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 231
   type: CableMV
   components:
   - pos: -0.5,-13.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 232
   type: CableMV
   components:
   - pos: -0.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 233
   type: CableMV
   components:
   - pos: -0.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 234
   type: CableMV
   components:
   - pos: -0.5,-10.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 235
   type: CableMV
   components:
   - pos: -0.5,-9.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 236
   type: CableMV
   components:
   - pos: -0.5,-8.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 237
   type: CableMV
   components:
   - pos: -0.5,-7.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 238
   type: CableMV
   components:
   - pos: -0.5,-6.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 239
   type: CableMV
   components:
   - pos: 0.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 240
   type: CableMV
   components:
   - pos: -3.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 241
   type: CableMV
   components:
   - pos: -3.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 242
   type: CableMV
   components:
   - pos: -4.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 243
   type: CableMV
   components:
   - pos: -4.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 244
   type: CableMV
   components:
   - pos: -4.5,-23.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 245
   type: CableMV
   components:
   - pos: -4.5,-24.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 246
   type: CableMV
   components:
   - pos: -4.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 247
   type: CableMV
   components:
   - pos: -4.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 248
   type: CableMV
   components:
   - pos: -4.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 249
   type: CableApcExtension
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 250
   type: CableApcExtension
   components:
   - pos: -3.5,-17.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 251
   type: CableApcExtension
   components:
   - pos: -3.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 252
   type: CableApcExtension
   components:
   - pos: -4.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 253
   type: CableApcExtension
   components:
   - pos: -5.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 254
   type: CableApcExtension
   components:
   - pos: -6.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 255
   type: CableApcExtension
   components:
   - pos: -7.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 256
   type: CableApcExtension
   components:
   - pos: -8.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 257
   type: CableApcExtension
   components:
   - pos: -6.5,-15.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 258
   type: CableApcExtension
   components:
   - pos: -6.5,-17.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 259
   type: CableApcExtension
   components:
   - pos: -4.5,-15.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 260
   type: CableApcExtension
   components:
   - pos: -4.5,-14.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 261
   type: CableApcExtension
   components:
   - pos: -4.5,-13.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 262
   type: CableApcExtension
   components:
   - pos: -4.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 263
   type: CableApcExtension
   components:
   - pos: -4.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 264
   type: CableApcExtension
   components:
   - pos: -4.5,-10.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 265
   type: CableApcExtension
   components:
   - pos: -5.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 266
   type: CableApcExtension
   components:
   - pos: -6.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 267
   type: CableApcExtension
   components:
   - pos: -2.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 268
   type: CableApcExtension
   components:
   - pos: -1.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 269
   type: CableApcExtension
   components:
   - pos: -0.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 270
   type: CableApcExtension
   components:
   - pos: 0.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 271
   type: CableApcExtension
   components:
   - pos: 1.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 272
   type: CableApcExtension
   components:
   - pos: 2.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 273
   type: CableApcExtension
   components:
   - pos: 3.5,-16.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 274
   type: CableApcExtension
   components:
   - pos: 4.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 275
   type: CableApcExtension
   components:
   - pos: 5.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 276
   type: CableApcExtension
   components:
   - pos: 5.5,-15.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 277
   type: CableApcExtension
   components:
   - pos: 5.5,-17.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 278
   type: CableApcExtension
   components:
   - pos: 6.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 279
   type: CableApcExtension
   components:
   - pos: 7.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 280
   type: CableApcExtension
   components:
   - pos: 3.5,-15.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 281
   type: CableApcExtension
   components:
   - pos: 3.5,-14.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 282
   type: CableApcExtension
   components:
   - pos: 3.5,-13.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 283
   type: CableApcExtension
   components:
   - pos: 3.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 284
   type: CableApcExtension
   components:
   - pos: 3.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 285
   type: CableApcExtension
   components:
   - pos: 3.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 286
   type: CableApcExtension
   components:
   - pos: 3.5,-10.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 287
   type: CableApcExtension
   components:
   - pos: 4.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 288
   type: CableApcExtension
   components:
   - pos: 5.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 289
   type: CableApcExtension
   components:
   - pos: 0.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 290
   type: CableApcExtension
   components:
   - pos: -0.5,-6.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 291
   type: CableApcExtension
   components:
   - pos: -0.5,-7.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 292
   type: CableApcExtension
   components:
   - pos: -0.5,-8.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 293
   type: CableApcExtension
   components:
   - pos: -0.5,-9.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 294
   type: CableApcExtension
   components:
   - pos: -0.5,-10.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 295
   type: CableApcExtension
   components:
   - pos: -0.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 296
   type: CableApcExtension
   components:
   - pos: -0.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 297
   type: CableApcExtension
   components:
   - pos: -0.5,-13.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 298
   type: CableApcExtension
   components:
   - pos: -0.5,-14.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 299
   type: CableApcExtension
   components:
   - pos: -1.5,-12.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 300
   type: CableApcExtension
   components:
   - pos: 0.5,-12.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 301
   type: CableApcExtension
   components:
   - pos: -0.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 302
   type: CableApcExtension
   components:
   - pos: 0.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 303
   type: CableApcExtension
   components:
   - pos: 1.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 304
   type: CableApcExtension
   components:
   - pos: 2.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 305
   type: CableApcExtension
   components:
   - pos: 3.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 306
   type: CableApcExtension
   components:
   - pos: 3.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 307
   type: CableApcExtension
   components:
   - pos: -0.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 308
   type: CableApcExtension
   components:
   - pos: -0.5,-3.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 309
   type: CableApcExtension
   components:
   - pos: -0.5,-2.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 310
   type: CableApcExtension
   components:
   - pos: 0.5,-2.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 311
   type: CableApcExtension
   components:
   - pos: 1.5,-2.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 312
   type: CableApcExtension
   components:
   - pos: -1.5,-2.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 313
   type: CableApcExtension
   components:
   - pos: -2.5,-2.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 314
   type: CableApcExtension
   components:
   - pos: -1.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 315
   type: CableApcExtension
   components:
   - pos: -3.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 316
   type: CableApcExtension
   components:
   - pos: -2.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 317
   type: CableApcExtension
   components:
   - pos: -4.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 318
   type: CableApcExtension
   components:
   - pos: -5.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 319
   type: CableApcExtension
   components:
   - pos: -5.5,-5.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 320
   type: CableApcExtension
   components:
   - pos: -5.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 321
   type: CableApcExtension
   components:
   - pos: -5.5,-3.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 322
   type: CableApcExtension
   components:
   - pos: 4.5,-4.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 323
   type: CableApcExtension
   components:
   - pos: 4.5,-3.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 324
   type: CableApcExtension
   components:
   - pos: 3.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 325
   type: CableApcExtension
   components:
   - pos: -0.5,-17.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 326
   type: CableApcExtension
   components:
   - pos: -3.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 327
   type: CableApcExtension
   components:
   - pos: -3.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 328
   type: CableApcExtension
   components:
   - pos: -3.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 329
   type: CableApcExtension
   components:
   - pos: -4.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 330
   type: CableApcExtension
   components:
   - pos: -4.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 331
   type: CableApcExtension
   components:
   - pos: -4.5,-23.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 332
   type: CableApcExtension
   components:
   - pos: -4.5,-24.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 333
   type: CableApcExtension
   components:
   - pos: -4.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 334
   type: CableApcExtension
   components:
   - pos: -4.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 335
   type: CableApcExtension
   components:
   - pos: -4.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 336
   type: CableApcExtension
   components:
   - pos: -4.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 337
   type: CableApcExtension
   components:
   - pos: -5.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 338
   type: CableApcExtension
   components:
   - pos: -6.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 339
   type: CableApcExtension
   components:
   - pos: -6.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 340
   type: CableApcExtension
   components:
   - pos: -6.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 341
   type: CableApcExtension
   components:
   - pos: -6.5,-24.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 342
   type: CableApcExtension
   components:
   - pos: -6.5,-23.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 343
   type: CableApcExtension
   components:
   - pos: -6.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 344
   type: CableApcExtension
   components:
   - pos: -2.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 345
   type: CableApcExtension
   components:
   - pos: -1.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 346
   type: CableApcExtension
   components:
   - pos: -0.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 347
   type: CableApcExtension
   components:
   - pos: -0.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 348
   type: CableApcExtension
   components:
   - pos: -0.5,-23.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 349
   type: CableApcExtension
   components:
   - pos: -0.5,-22.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 350
   type: CableApcExtension
   components:
   - pos: -0.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 351
   type: CableApcExtension
   components:
   - pos: -0.5,-25.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 352
   type: CableApcExtension
   components:
   - pos: -0.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 353
   type: CableApcExtension
   components:
   - pos: 0.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 354
   type: CableApcExtension
   components:
   - pos: 1.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 355
   type: CableApcExtension
   components:
   - pos: 2.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 356
   type: CableApcExtension
   components:
   - pos: 3.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 357
   type: CableApcExtension
   components:
   - pos: 4.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 358
   type: CableApcExtension
   components:
   - pos: 3.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 359
   type: CableApcExtension
   components:
   - pos: 3.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 360
   type: CableApcExtension
   components:
   - pos: 3.5,-23.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 361
   type: CableApcExtension
   components:
   - pos: 3.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 362
   type: CableApcExtension
   components:
   - pos: 3.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 363
   type: CableApcExtension
   components:
   - pos: 3.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 364
   type: CableApcExtension
   components:
   - pos: 3.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 365
   type: CableApcExtension
   components:
   - pos: 4.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 366
   type: CableApcExtension
   components:
   - pos: 5.5,-27.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 367
   type: CableApcExtension
   components:
   - pos: 5.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 368
   type: CableApcExtension
   components:
   - pos: 5.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 369
   type: CableApcExtension
   components:
   - pos: 5.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 370
   type: CableApcExtension
   components:
   - pos: 5.5,-23.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 371
   type: AirlockSecurityGlass
   components:
@@ -3935,9 +3062,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -3952,9 +3076,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -3968,9 +3089,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -4055,8 +3173,6 @@ entities:
     pos: 3.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 388
   type: GasPassiveVent
   components:
@@ -4064,8 +3180,6 @@ entities:
     pos: 5.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 389
   type: GasMinerOxygen
   components:
@@ -4091,10 +3205,6 @@ entities:
     pos: 3.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 392
   type: GasPipeStraight
   components:
@@ -4102,18 +3212,12 @@ entities:
     pos: 5.5,-25.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 393
   type: GasPipeBend
   components:
   - pos: 5.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 394
   type: GasPipeStraight
   components:
@@ -4121,8 +3225,6 @@ entities:
     pos: 4.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 395
   type: GasMixer
   components:
@@ -4137,8 +3239,6 @@ entities:
     type: GasMixer
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 396
   type: GasPipeFourway
   components:
@@ -4147,8 +3247,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 397
   type: GasPipeStraight
   components:
@@ -4157,10 +3255,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 398
   type: GasPipeStraight
   components:
@@ -4169,10 +3263,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 399
   type: GasPipeBend
   components:
@@ -4181,10 +3271,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 400
   type: GasPipeStraight
   components:
@@ -4194,10 +3280,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 401
   type: GasPipeStraight
   components:
@@ -4207,10 +3289,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 402
   type: GasPipeStraight
   components:
@@ -4220,10 +3298,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 403
   type: GasPipeFourway
   components:
@@ -4232,10 +3306,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 404
   type: GasPipeStraight
   components:
@@ -4245,10 +3315,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 405
   type: GasPipeStraight
   components:
@@ -4258,10 +3324,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 406
   type: GasPipeStraight
   components:
@@ -4271,10 +3333,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 407
   type: GasPipeBend
   components:
@@ -4284,10 +3342,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 408
   type: GasPipeStraight
   components:
@@ -4296,10 +3350,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 409
   type: GasPipeStraight
   components:
@@ -4308,10 +3358,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 410
   type: GasPipeStraight
   components:
@@ -4320,10 +3366,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 411
   type: GasPipeFourway
   components:
@@ -4332,8 +3374,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 412
   type: GasPipeStraight
   components:
@@ -4342,10 +3382,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 413
   type: GasPipeStraight
   components:
@@ -4354,10 +3390,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 414
   type: GasPipeStraight
   components:
@@ -4366,8 +3398,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 415
   type: GasPipeStraight
   components:
@@ -4376,8 +3406,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 416
   type: GasPipeTJunction
   components:
@@ -4387,8 +3415,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 417
   type: GasPipeStraight
   components:
@@ -4397,10 +3423,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 418
   type: GasPipeStraight
   components:
@@ -4409,10 +3431,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 419
   type: GasPipeStraight
   components:
@@ -4421,10 +3439,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 420
   type: GasPipeStraight
   components:
@@ -4433,10 +3447,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 421
   type: GasPipeStraight
   components:
@@ -4445,10 +3455,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 422
   type: GasPipeTJunction
   components:
@@ -4458,10 +3464,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 423
   type: GasPipeStraight
   components:
@@ -4471,10 +3473,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 424
   type: GasPipeStraight
   components:
@@ -4484,10 +3482,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 425
   type: GasPipeStraight
   components:
@@ -4497,10 +3491,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 426
   type: GasVentPump
   components:
@@ -4509,8 +3499,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 427
   type: GasVentPump
   components:
@@ -4520,8 +3508,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 428
   type: GasVentPump
   components:
@@ -4531,8 +3517,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 429
   type: GasPipeTJunction
   components:
@@ -4541,8 +3525,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 430
   type: GasVentPump
   components:
@@ -4552,8 +3534,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 431
   type: GasVentPump
   components:
@@ -4563,8 +3543,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 432
   type: GasVentPump
   components:
@@ -4574,8 +3552,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 433
   type: GasPipeStraight
   components:
@@ -4585,8 +3561,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 434
   type: GasPipeStraight
   components:
@@ -4596,10 +3570,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 435
   type: GasPipeStraight
   components:
@@ -4609,10 +3579,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 436
   type: GasPipeStraight
   components:
@@ -4622,10 +3588,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 437
   type: GasPipeStraight
   components:
@@ -4635,10 +3597,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 438
   type: GasVentPump
   components:
@@ -4648,8 +3606,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 439
   type: GasVentPump
   components:
@@ -4659,8 +3615,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 440
   type: GasVentPump
   components:
@@ -4670,8 +3624,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 441
   type: AirlockGlassShuttle
   components:
@@ -4766,8 +3718,6 @@ entities:
     pos: 6.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 452
   type: GasPipeStraight
   components:
@@ -4775,8 +3725,6 @@ entities:
     pos: 5.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 453
   type: GasPressurePump
   components:
@@ -4788,8 +3736,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 454
   type: GasPipeStraight
   components:
@@ -4799,10 +3745,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 455
   type: GasPipeTJunction
   components:
@@ -4811,10 +3753,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 456
   type: GasPipeStraight
   components:
@@ -4824,10 +3762,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 457
   type: GasPipeTJunction
   components:
@@ -4837,10 +3771,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 458
   type: GasVentScrubber
   components:
@@ -4850,8 +3780,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 459
   type: GasPipeFourway
   components:
@@ -4860,10 +3788,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 460
   type: GasPipeStraight
   components:
@@ -4873,10 +3797,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 461
   type: GasPipeStraight
   components:
@@ -4886,10 +3806,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 462
   type: GasPipeStraight
   components:
@@ -4899,8 +3815,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 463
   type: GasPipeStraight
   components:
@@ -4910,10 +3824,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 464
   type: GasPipeStraight
   components:
@@ -4923,8 +3833,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 465
   type: GasPipeStraight
   components:
@@ -4934,10 +3842,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 466
   type: GasPipeStraight
   components:
@@ -4947,8 +3851,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 467
   type: GasPipeStraight
   components:
@@ -4958,10 +3860,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 468
   type: GasPipeStraight
   components:
@@ -4971,8 +3869,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 469
   type: GasPipeStraight
   components:
@@ -4982,10 +3878,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 470
   type: GasPipeTJunction
   components:
@@ -4995,10 +3887,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 471
   type: GasPipeStraight
   components:
@@ -5007,10 +3895,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 472
   type: GasPipeStraight
   components:
@@ -5019,10 +3903,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 473
   type: GasPipeStraight
   components:
@@ -5031,10 +3911,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 474
   type: GasPipeBend
   components:
@@ -5043,10 +3919,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 475
   type: GasPipeStraight
   components:
@@ -5056,10 +3928,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 476
   type: GasPipeBend
   components:
@@ -5069,10 +3937,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 477
   type: GasPipeStraight
   components:
@@ -5082,8 +3946,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 478
   type: GasPipeTJunction
   components:
@@ -5093,10 +3955,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 479
   type: GasPipeStraight
   components:
@@ -5106,10 +3964,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 480
   type: GasPipeStraight
   components:
@@ -5119,8 +3973,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 481
   type: GasPipeStraight
   components:
@@ -5130,10 +3982,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 482
   type: GasVentScrubber
   components:
@@ -5143,8 +3991,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 483
   type: GasVentScrubber
   components:
@@ -5153,8 +3999,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 484
   type: GasVentScrubber
   components:
@@ -5164,8 +4008,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 485
   type: GasVentScrubber
   components:
@@ -5175,8 +4017,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 486
   type: GasVentScrubber
   components:
@@ -5186,8 +4026,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 487
   type: GasVentScrubber
   components:
@@ -5197,8 +4035,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 488
   type: GasPipeStraight
   components:
@@ -5207,10 +4043,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 489
   type: GasPipeBend
   components:
@@ -5220,10 +4052,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 490
   type: GasPipeStraight
   components:
@@ -5233,10 +4061,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 491
   type: GasPipeStraight
   components:
@@ -5246,10 +4070,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
 - uid: 492
   type: GasPipeStraight
   components:
@@ -5259,8 +4079,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 493
   type: GasVentScrubber
   components:
@@ -5270,8 +4088,6 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 494
   type: Grille
   components:
@@ -5294,9 +4110,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5311,9 +4124,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5327,9 +4137,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5343,9 +4150,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5359,9 +4163,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5376,9 +4177,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5393,9 +4191,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5409,9 +4204,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5425,9 +4217,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5441,9 +4230,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5458,9 +4244,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5475,9 +4258,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5491,9 +4271,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5507,9 +4284,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5523,9 +4297,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5539,9 +4310,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5562,9 +4330,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5579,9 +4344,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5596,9 +4358,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5655,8 +4414,6 @@ entities:
     type: Transform
   - color: '#0335FCFF'
     type: AtmosPipeColor
-  - canCollide: False
-    type: Physics
 - uid: 524
   type: OxygenCanister
   components:
@@ -5677,9 +4434,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -5719,6 +4473,8 @@ entities:
   - pos: 2.7185502,-19.320925
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -5764,6 +4520,8 @@ entities:
   - pos: 2.0779252,-19.21155
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 538
@@ -5772,6 +4530,8 @@ entities:
   - pos: 2.3123002,-19.21155
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 539
@@ -5780,6 +4540,8 @@ entities:
   - pos: 2.2843437,-19.542192
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 540
@@ -5788,6 +4550,8 @@ entities:
   - pos: 2.0968437,-19.526567
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 541
@@ -5796,6 +4560,8 @@ entities:
   - pos: 4.71855,-21.289675
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 542
@@ -5804,6 +4570,8 @@ entities:
   - pos: 4.78105,-21.14905
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 543
@@ -5812,24 +4580,32 @@ entities:
   - pos: 1.5138227,-21.269203
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 544
   type: KnifePlastic
   components:
   - pos: 4.3731976,-21.472328
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 545
   type: Wrench
   components:
   - pos: 5.4749,-23.512577
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 546
   type: Wrench
   components:
   - pos: 5.63115,-23.481327
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 547
   type: WindowReinforcedDirectional
   components:
@@ -5860,12 +4636,16 @@ entities:
   - pos: -1.6924903,-23.407444
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 552
   type: DoubleEmergencyOxygenTankFilled
   components:
   - pos: -1.4112403,-23.458082
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 553
   type: OxygenCanister
   components:
@@ -5907,8 +4687,6 @@ entities:
   components:
   - parent: 696
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 560
   type: Gyroscope
   components:
@@ -5922,8 +4700,6 @@ entities:
   components:
   - parent: 697
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 562
   type: Gyroscope
   components:
@@ -5938,56 +4714,70 @@ entities:
   - pos: -3.5848765,-15.374643
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 564
   type: DoubleEmergencyOxygenTankFilled
   components:
   - pos: 2.3995786,-15.264303
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 565
   type: DoubleEmergencyOxygenTankFilled
   components:
   - pos: 2.3643875,-17.370064
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 566
   type: DoubleEmergencyOxygenTankFilled
   components:
   - pos: -3.5850925,-17.384031
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 567
   type: YellowOxygenTankFilled
   components:
   - pos: -3.4130015,-15.484018
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 568
   type: YellowOxygenTankFilled
   components:
   - pos: -3.3819675,-17.540281
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 569
   type: YellowOxygenTankFilled
   components:
   - pos: 2.5362625,-17.573189
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 570
   type: YellowOxygenTankFilled
   components:
   - pos: 2.5558286,-15.404928
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 571
   type: VendingMachineYouTool
   components:
   - pos: -1.5,-19.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 572
   type: SignDirectionalEvac
   components:
@@ -6028,12 +4818,16 @@ entities:
   - pos: -1.593372,-21.550352
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 578
   type: CrowbarRed
   components:
   - pos: -1.374622,-21.550352
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 579
   type: Catwalk
   components:
@@ -6160,24 +4954,12 @@ entities:
   - pos: 0.5,-23.5
     parent: 73
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 600
   type: ClosetEmergencyFilledRandom
   components:
   - pos: 0.5,-24.5
     parent: 73
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 601
   type: ChairPilotSeat
   components:
@@ -6237,8 +5019,6 @@ entities:
     pos: 0.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -6250,8 +5030,6 @@ entities:
     pos: -0.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -6263,8 +5041,6 @@ entities:
     pos: -1.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6276,8 +5052,6 @@ entities:
     pos: -2.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6289,8 +5063,6 @@ entities:
     pos: -3.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6302,8 +5074,6 @@ entities:
     pos: -4.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6315,8 +5085,6 @@ entities:
     pos: -5.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6328,8 +5096,6 @@ entities:
     pos: -6.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6341,8 +5107,6 @@ entities:
     pos: -7.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -6353,8 +5117,6 @@ entities:
   - pos: -0.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6365,8 +5127,6 @@ entities:
   - pos: -0.5,-17.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6377,8 +5137,6 @@ entities:
   - pos: -0.5,-16.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6389,8 +5147,6 @@ entities:
   - pos: -0.5,-15.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6401,8 +5157,6 @@ entities:
   - pos: -0.5,-14.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6413,8 +5167,6 @@ entities:
   - pos: -0.5,-13.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6425,8 +5177,6 @@ entities:
   - pos: -0.5,-12.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6437,8 +5187,6 @@ entities:
   - pos: -0.5,-11.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6449,8 +5197,6 @@ entities:
   - pos: -0.5,-10.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6461,8 +5207,6 @@ entities:
   - pos: -0.5,-9.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6473,8 +5217,6 @@ entities:
   - pos: -0.5,-8.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6485,8 +5227,6 @@ entities:
   - pos: -0.5,-7.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6497,8 +5237,6 @@ entities:
   - pos: -0.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -6510,8 +5248,6 @@ entities:
     pos: -1.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -6523,8 +5259,6 @@ entities:
     pos: -2.5,-6.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -6551,12 +5285,16 @@ entities:
   - pos: -6.6426735,-22.402021
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 635
   type: Multitool
   components:
   - pos: -6.3614235,-22.402021
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 636
   type: WallReinforced
   components:
@@ -6608,340 +5346,209 @@ entities:
   - pos: -1.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 644
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -1.5,-31.5
+  - pos: -2.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 645
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -1.5,-32.5
+  - pos: 0.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 646
   type: CableHV
   components:
   - pos: -0.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 647
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -1.5,-33.5
+  - pos: 1.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 648
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -2.5,-33.5
+  - pos: -2.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 649
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -2.5,-32.5
+  - pos: -2.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 650
   type: CableHV
   components:
   - pos: -0.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 651
   type: CableHV
   components:
   - pos: -0.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 652
   type: CableHV
   components:
   - pos: -0.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 653
   type: CableHV
   components:
   - pos: -0.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 654
-  type: GravityGenerator
+  type: Catwalk
   components:
-  - pos: -0.5,-28.5
+  - pos: 1.5,-26.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - powerLoad: 2500
-    type: ApcPowerReceiver
-  - charge: 100
-    type: GravityGenerator
-  - radius: 175.75
-    type: PointLight
 - uid: 655
   type: CableHV
   components:
   - pos: -0.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 656
   type: CableHV
   components:
   - pos: -0.5,-25.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 657
   type: CableHV
   components:
   - pos: -0.5,-24.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 658
   type: CableHV
   components:
   - pos: -0.5,-23.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 659
   type: CableHV
   components:
   - pos: -0.5,-22.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 660
   type: CableHV
   components:
   - pos: -0.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 661
   type: CableHV
   components:
   - pos: -0.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 662
   type: CableHV
   components:
   - pos: -1.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 663
   type: CableHV
   components:
   - pos: -2.5,-20.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 664
   type: CableHV
   components:
   - pos: -2.5,-19.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 665
   type: SolarPanel
   components:
-  - pos: -1.5,-32.5
+  - pos: -0.5,-29.5
     parent: 73
     type: Transform
 - uid: 666
-  type: SolarPanel
+  type: Catwalk
   components:
-  - pos: -1.5,-33.5
+  - pos: -0.5,-26.5
     parent: 73
     type: Transform
 - uid: 667
   type: SolarPanel
   components:
-  - pos: -2.5,-33.5
+  - pos: 0.5,-28.5
     parent: 73
     type: Transform
 - uid: 668
   type: CableHV
   components:
-  - pos: 1.5,-33.5
+  - pos: -1.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 669
-  type: CableHV
+  type: SolarPanel
   components:
-  - pos: 0.5,-33.5
+  - pos: -1.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 670
   type: CableHV
   components:
-  - pos: 1.5,-32.5
+  - pos: 0.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 671
   type: CableApcExtension
   components:
   - pos: -0.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 672
   type: CableHV
   components:
   - pos: 0.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 673
   type: CableApcExtension
   components:
   - pos: -0.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 674
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 0.5,-31.5
+  - pos: 1.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 675
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: 1.5,-31.5
+  - pos: 1.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 676
-  type: CableHV
+  type: SyndicateComputerComms
   components:
-  - pos: 0.5,-32.5
+  - rot: -1.5707963267948966 rad
+    pos: 1.5,-3.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 677
   type: WallReinforced
   components:
@@ -6964,21 +5571,17 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 680
-  type: SolarPanel
+  type: Catwalk
   components:
-  - pos: -2.5,-32.5
+  - pos: 1.5,-30.5
     parent: 73
     type: Transform
 - uid: 681
-  type: CableHV
+  type: Catwalk
   components:
-  - pos: -2.5,-31.5
+  - pos: -1.5,-26.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 682
   type: ComputerSolarControl
   components:
@@ -7046,15 +5649,16 @@ entities:
   - pos: 2.5,-6.5
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 691
   type: Lamp
   components:
   - pos: 4.5645804,-4.320716
     parent: 73
     type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 692
   type: LockerSyndicatePersonal
   components:
@@ -7063,12 +5667,6 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 693
   type: TableWood
   components:
@@ -7095,10 +5693,8 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 724
         - 752
@@ -7115,10 +5711,8 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 841
         - 718
@@ -7135,10 +5729,8 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents:
         - 845
         - 842
@@ -7244,12 +5836,6 @@ entities:
   - pos: -6.5,-23.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 713
   type: ClothingUniformJumpskirtOperative
   components:
@@ -7299,12 +5885,6 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 720
   type: ClothingNeckMantleHOS
   components:
@@ -7334,6 +5914,8 @@ entities:
   - pos: 1.4127003,-11.973867
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 724
   type: ClothingHandsGlovesCombat
   components:
@@ -7356,6 +5938,8 @@ entities:
   - pos: 1.6939503,-11.973867
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 727
   type: ClothingHeadsetAltSyndicate
   components:
@@ -7378,6 +5962,8 @@ entities:
   - inputs:
       Trigger: []
     type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 730
   type: C4
   components:
@@ -7387,6 +5973,8 @@ entities:
   - inputs:
       Trigger: []
     type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 731
   type: ClothingHeadsetAltSyndicate
   components:
@@ -7407,12 +5995,16 @@ entities:
   - pos: -3.7334418,-24.386538
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 734
   type: AMEJar
   components:
   - pos: -3.5303168,-24.386538
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 735
   type: TableReinforced
   components:
@@ -7443,6 +6035,10 @@ entities:
   - pos: 1.6797396,-6.442282
     parent: 73
     type: Transform
+  - unspawnedCount: 16
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 740
   type: SoapSyndie
   components:
@@ -7467,6 +6063,8 @@ entities:
   - pos: 1.1069542,-13.37335
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 744
   type: SignSecureSmallRed
   components:
@@ -7497,6 +6095,8 @@ entities:
   - pos: 1.5034143,-11.298322
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7510,6 +6110,8 @@ entities:
   - inputs:
       Trigger: []
     type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 750
   type: C4
   components:
@@ -7519,6 +6121,8 @@ entities:
   - inputs:
       Trigger: []
     type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 751
   type: ClothingHeadsetAltSyndicate
   components:
@@ -7543,14 +6147,18 @@ entities:
   - pos: -3.3740668,-24.386538
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 754
   type: AMEJar
   components:
   - pos: -3.2178168,-24.386538
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 755
-  type: WeaponPistolClarissa
+  type: WeaponPistolViper
   components:
   - pos: 1.5391146,-6.426657
     parent: 73
@@ -7560,11 +6168,15 @@ entities:
       gun_magazine: !type:ContainerSlot
         ent: 756
     type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 756
   type: MagazinePistol
   components:
   - parent: 755
     type: Transform
+  - unspawnedCount: 10
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 757
@@ -7573,6 +6185,8 @@ entities:
   - pos: 1.6651934,-13.288349
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - outputs:
       Pressed: []
     type: SignalTransmitter
@@ -7582,6 +6196,10 @@ entities:
   - pos: 1.5391146,-6.442282
     parent: 73
     type: Transform
+  - unspawnedCount: 16
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 759
   type: Catwalk
   components:
@@ -7649,16 +6267,11 @@ entities:
     parent: 73
     type: Transform
 - uid: 769
-  type: ComputerComms
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 1.5,-3.5
+  - pos: 0.5,-28.5
     parent: 73
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 770
   type: TableReinforced
   components:
@@ -7705,6 +6318,8 @@ entities:
   - pos: 1.4510483,-2.399527
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7763,6 +6378,8 @@ entities:
   - pos: -3.5991516,-3.3256855
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7773,12 +6390,16 @@ entities:
   - pos: -4.5028133,-3.3256855
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 786
   type: Gauze
   components:
   - pos: -4.2840633,-3.3569355
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 787
   type: AtmosFixNitrogenMarker
   components:
@@ -7803,6 +6424,8 @@ entities:
   - pos: -4.0496883,-3.3571234
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 791
   type: PosterContrabandNuclearDeviceInformational
   components:
@@ -7821,6 +6444,8 @@ entities:
   - pos: -5.4968786,-5.5336776
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7831,6 +6456,8 @@ entities:
   - pos: -5.4968786,-5.2836776
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -7844,8 +6471,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - enabled: False
-    type: AmbientSound
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -7862,8 +6487,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - enabled: False
-    type: AmbientSound
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -7881,8 +6504,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - enabled: False
-    type: AmbientSound
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -7899,9 +6520,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -7916,13 +6534,13 @@ entities:
 - uid: 800
   type: SolarPanel
   components:
-  - pos: -2.5,-31.5
+  - pos: -0.5,-30.5
     parent: 73
     type: Transform
 - uid: 801
   type: SolarPanel
   components:
-  - pos: -1.5,-31.5
+  - pos: 0.5,-29.5
     parent: 73
     type: Transform
 - uid: 802
@@ -7937,56 +6555,42 @@ entities:
   - pos: -0.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 804
-  type: SolarPanel
+  type: CableHV
   components:
-  - pos: 0.5,-33.5
+  - pos: -1.5,-28.5
     parent: 73
     type: Transform
 - uid: 805
   type: SolarPanel
   components:
-  - pos: 1.5,-33.5
+  - pos: -0.5,-28.5
     parent: 73
     type: Transform
 - uid: 806
   type: SolarPanel
   components:
-  - pos: 1.5,-32.5
+  - pos: -1.5,-29.5
     parent: 73
     type: Transform
 - uid: 807
-  type: SolarPanel
+  type: GravityGeneratorMini
   components:
-  - pos: 0.5,-32.5
+  - pos: -0.5,-27.5
     parent: 73
     type: Transform
-- uid: 808
-  type: SolarPanel
-  components:
-  - pos: 0.5,-31.5
-    parent: 73
-    type: Transform
-- uid: 809
-  type: SolarPanel
-  components:
-  - pos: 1.5,-31.5
-    parent: 73
-    type: Transform
+  - enabled: False
+    type: AmbientSound
+  - powerLoad: 500
+    type: ApcPowerReceiver
+  - radius: 2.5
+    type: PointLight
 - uid: 810
   type: CableApcExtension
   components:
   - pos: -0.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 811
   type: SolarPanel
   components:
@@ -7999,50 +6603,30 @@ entities:
   - pos: -0.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 813
   type: CableApcExtension
   components:
   - pos: -1.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 814
   type: CableApcExtension
   components:
   - pos: -2.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 815
   type: CableApcExtension
   components:
   - pos: 0.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 816
   type: CableApcExtension
   components:
   - pos: 1.5,-27.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 817
   type: Poweredlight
   components:
@@ -8052,9 +6636,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -8069,9 +6650,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
   - inputs:
       On: []
       Off: []
@@ -8133,160 +6711,96 @@ entities:
   - pos: -6.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 826
   type: CableApcExtension
   components:
   - pos: -6.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 827
   type: CableApcExtension
   components:
   - pos: -2.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 828
   type: CableApcExtension
   components:
   - pos: -2.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 829
   type: CableApcExtension
   components:
   - pos: -2.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 830
   type: CableApcExtension
   components:
   - pos: -3.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 831
   type: CableApcExtension
   components:
   - pos: -4.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 832
   type: CableApcExtension
   components:
   - pos: -5.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 833
   type: CableApcExtension
   components:
   - pos: 1.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 834
   type: CableApcExtension
   components:
   - pos: 1.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 835
   type: CableApcExtension
   components:
   - pos: 1.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 836
   type: CableApcExtension
   components:
   - pos: 2.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 837
   type: CableApcExtension
   components:
   - pos: 3.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 838
   type: CableApcExtension
   components:
   - pos: 4.5,-30.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 839
   type: CableApcExtension
   components:
   - pos: 5.5,-28.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 840
   type: CableApcExtension
   components:
   - pos: 5.5,-29.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 841
   type: ClothingBeltMilitaryWebbing
   components:
@@ -8318,12 +6832,16 @@ entities:
   - inputs:
       Trigger: []
     type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 844
   type: BoxFlashbang
   components:
   - pos: 0.49331844,-13.366474
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -8341,6 +6859,8 @@ entities:
   - pos: -1.5082364,-3.2390168
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 847
   type: WallReinforced
   components:
@@ -8410,86 +6930,36 @@ entities:
   - pos: -5.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 854
   type: CableHV
   components:
   - pos: -4.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 855
   type: CableHV
   components:
   - pos: -3.5,-18.5
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 856
   type: CableHV
   components:
   - pos: -3.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 857
   type: CableHV
   components:
   - pos: -4.5,-21.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 858
   type: CableHV
   components:
   - pos: -4.5,-22.5
     parent: 73
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-- uid: 859
-  type: CableHV
-  components:
-  - pos: 0.5,-26.5
-    parent: 73
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
-- uid: 860
-  type: CableHV
-  components:
-  - pos: 1.5,-26.5
-    parent: 73
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures: []
-    type: Fixtures
 - uid: 861
   type: SpawnPointNukies
   components:
@@ -8544,24 +7014,32 @@ entities:
   - pos: -1.5331463,-2.6787243
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 870
   type: PinpointerNuclear
   components:
   - pos: -1.5956463,-2.4287243
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 871
   type: PinpointerNuclear
   components:
   - pos: 4.5606036,-4.4755993
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 872
   type: PinpointerNuclear
   components:
   - pos: 1.1699787,-13.472618
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 873
   type: NuclearBombUnanchored
   components:

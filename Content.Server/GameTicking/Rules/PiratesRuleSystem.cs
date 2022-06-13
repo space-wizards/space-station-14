@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.RoundEnd;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
@@ -119,9 +120,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started() { }
+    public override void Started(GameRuleConfiguration _) { }
 
-    public override void Ended() { }
+    public override void Ended(GameRuleConfiguration _) { }
 
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {

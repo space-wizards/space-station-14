@@ -31,7 +31,7 @@ public sealed partial class StorageSystem
             if (serverStorageComp != null && Insert(uid, ent, serverStorageComp))
                 continue;
 
-            Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {uid} but can't.");
+            Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
             EntityManager.DeleteEntity(ent);
         }
     }

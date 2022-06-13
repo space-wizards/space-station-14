@@ -47,7 +47,7 @@ public sealed partial class CargoSystem
 
             var product = comp.TeleportQueue.Pop();
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.TeleportSound.GetSound(), comp.Owner, AudioParams.Default.WithVolume(-8f));
+            SoundSystem.Play(comp.TeleportSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default.WithVolume(-8f));
             SpawnProduct(comp, product);
 
             comp.CurrentState = CargoTelepadState.Teleporting;
