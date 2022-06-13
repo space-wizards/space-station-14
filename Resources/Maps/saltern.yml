@@ -22803,7 +22803,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1771
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - pos: 27.5,10.5
     parent: 852
@@ -22812,9 +22812,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 1772
   type: LockerQuarterMasterFilled
   components:
@@ -32171,16 +32168,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 3115
-  type: CargoOrderConsole
+  type: ComputerSupplyOrdering
   components:
   - pos: 20.5,10.5
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
-  - inputs:
-      OrderReceiver: []
-    type: SignalReceiver
 - uid: 3116
   type: GasVentPump
   components:
@@ -41299,7 +41293,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 4309
-  type: ComputerSupplyRequest
+  type: ComputerSupplyOrdering
   components:
   - rot: -1.5707963267948966 rad
     pos: 16.5,9.5
@@ -41309,9 +41303,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 4310
   type: WallReinforced
   components:
@@ -56555,9 +56546,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 6252
   type: TableReinforced
   components:

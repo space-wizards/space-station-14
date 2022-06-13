@@ -1,7 +1,7 @@
 ﻿- type: entity
-  id: CargoConsole
+  id: CargoTelepad
   parent: BaseStructureDynamic
-  name: cargo console
+  name: cargo telepad
   components:
   - type: InteractionOutline
   - type: Physics
@@ -46,6 +46,6 @@
   - type: ApcPowerReceiver
     powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
   - type: ExtensionCableReceiver
-  - type: CargoOrderConsole
+  - type: CargoTelepad
   - type: Appearance
   - type: CollideOnAnchor
