@@ -238,7 +238,7 @@ namespace Content.Server.Kitchen.EntitySystems
             switch (program)
             {
                 case SharedReagentGrinderComponent.GrinderProgram.Grind:
-                    SoundSystem.Play(Filter.Pvs(component.Owner), component.GrindSound.GetSound(), component.Owner, AudioParams.Default);
+                    SoundSystem.Play(component.GrindSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
                     // Get each item inside the chamber and get the reagents it contains.
                     // Transfer those reagents to the beaker, given we have one in.
                     component.Owner.SpawnTimer(component.WorkTime, () =>
@@ -265,7 +265,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     break;
 
                 case SharedReagentGrinderComponent.GrinderProgram.Juice:
-                    SoundSystem.Play(Filter.Pvs(component.Owner), component.JuiceSound.GetSound(), component.Owner, AudioParams.Default);
+                    SoundSystem.Play(component.JuiceSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
                     component.Owner.SpawnTimer(component.WorkTime, () =>
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
@@ -299,7 +299,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void ClickSound(ReagentGrinderComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.ClickSound.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(component.ClickSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

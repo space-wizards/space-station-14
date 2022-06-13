@@ -11,9 +11,8 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
-    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic

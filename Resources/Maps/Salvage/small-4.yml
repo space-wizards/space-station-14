@@ -824,7 +824,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 53
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,-3.5
     parent: 0

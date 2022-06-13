@@ -200,7 +200,7 @@ namespace Content.Shared.Stunnable
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
 
-            SoundSystem.Play(Filter.Pvs(uid), knocked.StunAttemptSound.GetSound(), uid, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
 
             knocked.Dirty();
 

@@ -161,7 +161,7 @@ public sealed class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, messageWrap, colorOverride);
         if (playDefaultSound)
         {
-            SoundSystem.Play(Filter.Broadcast(), AnnouncementSound, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(AnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -197,7 +197,7 @@ public sealed class ChatSystem : SharedChatSystem
 
         if (playDefaultSound)
         {
-            SoundSystem.Play(filter, AnnouncementSound, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(AnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");

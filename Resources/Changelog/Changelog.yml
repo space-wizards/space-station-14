@@ -1,137 +1,4 @@
 Entries:
-- author: ninruB
-  changes:
-  - {message: 'a recipe for white and dark tiles in the crafting menu, sorta like
-      the steel tile recipe.', type: Add}
-  id: 1167
-  time: '2022-03-05T20:47:19.0000000+00:00'
-- author: Radrark
-  changes:
-  - {message: Improved the movement of shuttles., type: Tweak}
-  id: 1168
-  time: '2022-03-07T05:03:53.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed electrocution not dealing damage., type: Fix}
-  id: 1169
-  time: '2022-03-07T05:14:56.0000000+00:00'
-- author: Radrark
-  changes:
-  - {message: Fixed the mass scanner console., type: Fix}
-  id: 1170
-  time: '2022-03-07T07:04:27.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Musician PDA works like a regular PDA again., type: Fix}
-  id: 1171
-  time: '2022-03-07T11:41:50.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones can now only pick up or drag a whitelist of items., type: Tweak}
-  - {message: Drones are now way easier to kill for a variety of reasons., type: Tweak}
-  - {message: "Drones can no longer interact with anything within 2\xBD tiles of a\
-      \ non-drone mob. The nerfs will continue until morale improves.", type: Tweak}
-  id: 1172
-  time: '2022-03-07T11:46:37.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Player built shuttles should now be able to hold an atmosphere, assuming
-      they''re eight tiles or larger.', type: Add}
-  id: 1173
-  time: '2022-03-07T12:09:55.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar 5.2! New arcade, small dorms, EVA storage and minor fixes. Engineering
-      now have EVA suits.', type: Add}
-  id: 1174
-  time: '2022-03-07T12:26:28.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Things should no longer float through asteroid rocks., type: Fix}
-  id: 1175
-  time: '2022-03-08T01:01:36.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Welder sprite now updates correctly when lit., type: Fix}
-  id: 1176
-  time: '2022-03-08T01:06:10.0000000+00:00'
-- author: moony
-  changes:
-  - {message: A number of unused/useless chems have been removed until they actually
-      get a usage., type: Remove}
-  id: 1177
-  time: '2022-03-08T02:51:35.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Health Analyzers have now been added to various medical containers and
-      the autolathe, type: Add}
-  id: 1178
-  time: '2022-03-08T03:45:52.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Musicians will now receive a special box on a certain holiday., type: Add}
-  id: 1179
-  time: '2022-03-08T06:34:10.0000000+00:00'
-- author: DubiousDoggo
-  changes:
-  - {message: Fixed popup positioning on large UI scales, type: Fix}
-  id: 1180
-  time: '2022-03-08T07:53:02.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added Uniform Printers. You can currently get them from the circuit
-      imprinter, later they will be part of the HOP office.', type: Add}
-  - {message: Lathes now actually play their building animations., type: Fix}
-  id: 1181
-  time: '2022-03-08T23:58:50.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: You can no longer accidentally punch sub-floor entities when using a
-      T-Ray scanner, type: Fix}
-  id: 1182
-  time: '2022-03-09T06:40:07.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'The client now tries to predict more interactions. This may lead to
-      some bugs, particularly double audio, pop-ups, and animations. Please report
-      any that come up.', type: Tweak}
-  id: 1183
-  time: '2022-03-09T07:12:17.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: clarify round stalling as against the rules, type: Add}
-  id: 1184
-  time: '2022-03-09T13:45:53.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Some tiles now have additional visual variants. These will start showing
-      up when maps are updated., type: Add}
-  id: 1185
-  time: '2022-03-09T19:59:44.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: It's now possible to carry an acoustic guitar on your back., type: Add}
-  id: 1186
-  time: '2022-03-10T13:59:12.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Footstep sounds are now predicted and won't sound delayed., type: Tweak}
-  id: 1187
-  time: '2022-03-11T01:48:03.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: 'Admin ghosts now have the cargo shuttle console, communications console,
-      crew monitoring console, mass scanner console, and solar control console built
-      into their ghostly skull.', type: Add}
-  id: 1188
-  time: '2022-03-11T05:37:36.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones now have a whitelist for machine UIs they can open. Chem dispensers
-      are not included., type: Tweak}
-  - {message: Machine UIs should behave more consistently., type: Fix}
-  id: 1189
-  time: '2022-03-12T18:26:06.0000000+00:00'
 - author: Todd
   changes:
   - {message: added 3 new lobby themes., type: Add}
@@ -3004,3 +2871,136 @@ Entries:
   - {message: Silencer now mutes you., type: Add}
   id: 1666
   time: '2022-06-06T08:35:25.0000000+00:00'
+- author: Veritius
+  changes:
+  - {message: You can now opt in to being a nukie., type: Fix}
+  id: 1667
+  time: '2022-06-07T02:43:54.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: The Syndicate have gotten more creative with their names., type: Tweak}
+  id: 1668
+  time: '2022-06-07T03:41:22.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed shutter construction not working properly when using a wrench
+      on it., type: Fix}
+  id: 1669
+  time: '2022-06-08T07:50:23.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Counters and tables now take more damage to destroy., type: Tweak}
+  id: 1670
+  time: '2022-06-08T08:47:30.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where Omnitools and Jaws of Life sometimes don't pry
+      floor tiles, type: Fix}
+  id: 1671
+  time: '2022-06-08T09:25:48.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Matches can once again be lit using match boxes., type: Fix}
+  id: 1672
+  time: '2022-06-09T02:39:29.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: changed color of opened airlock maint. panel, type: Add}
+  id: 1673
+  time: '2022-06-09T02:41:29.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added network configuration functionality to multitools, type: Add}
+  - {message: 'Air alarms can be tied to specific vents, scrubbers and firelocks',
+    type: Tweak}
+  id: 1674
+  time: '2022-06-10T01:28:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Captain and HoP PDA pen slots now hold just pens, type: Fix}
+  id: 1675
+  time: '2022-06-10T18:53:56.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies are fixed again., type: Fix}
+  id: 1676
+  time: '2022-06-11T14:18:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: A greater variety of miscellaneous trash can now be found around the
+      station., type: Tweak}
+  id: 1677
+  time: '2022-06-11T14:25:38.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Slowed down parallax significiantly. Space should feel much, much vaster
+      now.', type: Tweak}
+  id: 1678
+  time: '2022-06-11T20:59:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer eat chocolate bars through their wrappers or spawn
+      infinite wrappers from certain snacks., type: Fix}
+  id: 1679
+  time: '2022-06-12T01:06:52.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Stun batons now use internal battery instead of a power cell; can be
+      inserted into a recharger again, type: Tweak}
+  id: 1680
+  time: '2022-06-12T01:20:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed round end sounds playing even if you have the "Lobby & Round-end
+      Music" option disabled in the game's settings., type: Fix}
+  id: 1681
+  time: '2022-06-12T01:23:29.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Waystation now has cameras., type: Add}
+  id: 1682
+  time: '2022-06-12T01:28:19.0000000+00:00'
+- author: ninruB
+  changes:
+  - {message: 'Added ore bags, a funky new bag for salvage specialists that can be
+      found in their lockers!', type: Add}
+  id: 1683
+  time: '2022-06-12T01:57:02.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Items now correctly pass through plastic flaps. Cargo players rejoice!,
+    type: Fix}
+  id: 1684
+  time: '2022-06-12T02:40:15.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Asteroid walls now have reduced ore yield. Look out for designated mining
+      areas and salvage asteroids., type: Tweak}
+  id: 1685
+  time: '2022-06-12T02:58:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Most gun sizes have been increased., type: Tweak}
+  id: 1686
+  time: '2022-06-12T05:30:03.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new APC variants for mappers. Construction graphs to follow in
+      a later PR., type: Add}
+  - {message: Standard APC is now 5x bigger in power capacity., type: Tweak}
+  id: 1687
+  time: '2022-06-12T05:34:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now do reduced damage to other zombies., type: Tweak}
+  - {message: Dead and crit enemies now automatically zombify., type: Fix}
+  - {message: Mice who are zombified are now able to attack., type: Fix}
+  - {message: Mice can no longer be revived in cloning pods nor will they become humans
+      when cloned., type: Fix}
+  id: 1688
+  time: '2022-06-12T05:53:13.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: ERT shuttle updated to Dart V2., type: Tweak}
+  id: 1689
+  time: '2022-06-12T06:17:16.0000000+00:00'
