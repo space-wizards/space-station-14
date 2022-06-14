@@ -21,7 +21,7 @@ public sealed class MouseMigration : StationEvent
 
     public override int MinimumPlayers => 35; //this just ensures that it doesn't spawn on lowpop maps. 
 
-    public override float Weight => WeightVeryLow;
+    public override float Weight => WeightLow;
 
     public override int? MaxOccurrences => 1;
 
