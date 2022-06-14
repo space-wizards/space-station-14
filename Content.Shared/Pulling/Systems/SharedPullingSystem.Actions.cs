@@ -78,6 +78,11 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
+            if (EntityManager.TryGetComponent<PhysicsComponent>(pullable.Owner, out var pullablePhysics) && pullable.HasFixedRot)
+            {
+                pullablePhysics.FixedRotation = true;
+            }
+
             var msg = new StopPullingEvent(user);
             RaiseLocalEvent(pullable.Owner, msg);
 
@@ -123,6 +128,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
+            if (pullablePhysics.FixedRotation)
+            {
+                pullable.HasFixedRot = true;
+                pullablePhysics.FixedRotation = false;
+            }
+
             // Ensure that the puller is not currently pulling anything.
             // If this isn't done, then it happens too late, and the start/stop messages go out of order,
             //  and next thing you know it thinks it's not pulling anything even though it is!
@@ -164,6 +175,9 @@ namespace Content.Shared.Pulling
 
             if (pullAttempt.Cancelled)
             {
+                if (pullable.HasFixedRot)
+                    pullablePhysics.FixedRotation = true;
+
                 return false;
             }
 
@@ -171,6 +185,9 @@ namespace Content.Shared.Pulling
 
             if (pullAttempt.Cancelled)
             {
+                if (pullable.HasFixedRot)
+                    pullablePhysics.FixedRotation = true;
+
                 return false;
             }
 

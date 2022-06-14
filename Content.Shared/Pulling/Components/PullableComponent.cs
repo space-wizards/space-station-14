@@ -29,6 +29,9 @@ namespace Content.Shared.Pulling.Components
         [Access(typeof(SharedPullingStateManagementSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public EntityCoordinates? MovingTo { get; set; }
 
+        [Access(typeof(SharedPullingSystem), Other = AccessPermissions.ReadExecute)]
+        public bool HasFixedRot { get; set; }
+
         public override ComponentState GetComponentState()
         {
             return new PullableComponentState(Puller);
