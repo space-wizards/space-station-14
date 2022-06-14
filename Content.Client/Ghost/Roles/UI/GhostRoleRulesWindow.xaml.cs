@@ -16,14 +16,13 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
         private float _timer = 3.0f;
 
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
 
+            RobustXamlLoader.Load(this);
             TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + Loc.GetString("ghost-roles-window-rules-footer")));
             RequestButton.OnPressed += requestAction;
 
