@@ -8,6 +8,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    size: 10
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -34,7 +35,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi    
+    sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -105,7 +106,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
-    
+
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterEngi

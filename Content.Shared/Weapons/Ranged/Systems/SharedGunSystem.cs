@@ -327,7 +327,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         if (sound != null && playSound)
-            SoundSystem.Play(Filter.Pvs(entity, entityManager: EntityManager), sound, coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
+            SoundSystem.Play(sound, Filter.Pvs(entity, entityManager: EntityManager), coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)

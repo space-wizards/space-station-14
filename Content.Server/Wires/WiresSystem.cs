@@ -468,11 +468,11 @@ public sealed class WiresSystem : EntitySystem
 
         if (component.IsPanelOpen)
         {
-            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverOpenSound.GetSound(), args.Target);
+            SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
         }
         else
         {
-            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverCloseSound.GetSound(), args.Target);
+            SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
             _uiSystem.GetUiOrNull(args.Target, WiresUiKey.Key)?.CloseAll();
         }
     }
@@ -742,7 +742,7 @@ public sealed class WiresSystem : EntitySystem
                 wire.Action.Pulse(user, wire);
 
                 UpdateUserInterface(used);
-                SoundSystem.Play(Filter.Pvs(used), wires.PulseSound.GetSound(), used);
+                SoundSystem.Play(wires.PulseSound.GetSound(), Filter.Pvs(used), used);
                 break;
         }
 

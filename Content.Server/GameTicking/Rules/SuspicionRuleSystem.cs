@@ -216,7 +216,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-        SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 

@@ -309,7 +309,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGun
-        amount: 6
+        amount: 3
 
 - type: entity
   name: box of SMG .35 auto (flash) magazines
@@ -320,7 +320,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGunFlash
-        amount: 6
+        amount: 3
 
 - type: entity
   name: box of SMG .35 auto (high-velocity) magazines
@@ -331,7 +331,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGunHighVelocity
-        amount: 6
+        amount: 3
 
 - type: entity
   name: box of SMG .35 auto (practice) magazines
@@ -342,7 +342,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGunPractice
-        amount: 6
+        amount: 3
 
 - type: entity
   name: box of SMG .35 auto (rubber) magazines
@@ -353,7 +353,7 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGunRubber
-        amount: 6
+        amount: 3
 
 # Shotgun
 - type: entity

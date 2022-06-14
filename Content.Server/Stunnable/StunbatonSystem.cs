@@ -99,7 +99,7 @@ namespace Content.Server.Stunnable
 
             // TODO: Make slowdown inflicted customizable.
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.StunSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
@@ -122,7 +122,7 @@ namespace Content.Server.Stunnable
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || !(battery.CurrentCharge < comp.EnergyPerUse))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
         }
 
@@ -136,7 +136,7 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item)) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
             // TODO stunbaton visualizer
             sprite.LayerSetState(0, "stunbaton_off");
@@ -157,12 +157,12 @@ namespace Content.Server.Stunnable
             var playerFilter = Filter.Pvs(comp.Owner);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-                SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
 
-            SoundSystem.Play(playerFilter, comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
