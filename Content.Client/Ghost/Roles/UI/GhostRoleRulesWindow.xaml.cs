@@ -8,18 +8,28 @@ using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
+
 namespace Content.Client.Ghost.Roles.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
-        private float _timer = 5.0f;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        private float _timer = 3.0f;
+
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)
         {
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
+
             TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + Loc.GetString("ghost-roles-window-rules-footer")));
             RequestButton.OnPressed += requestAction;
+
+            _cfg.OnValueChanged(CCVars.GhostRoleTime, value => _timer = value, true);
         }
+
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
