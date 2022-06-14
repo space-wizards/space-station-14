@@ -273,7 +273,7 @@
           types:
             Radiation: -1
       - !type:ChemVomit
-        probability: 0.05
+        probability: 0.02
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
