@@ -86,7 +86,7 @@ namespace Content.Server.StationEvents.Events
                 if (!_entityManager.TryGetComponent<IMapGridComponent>(stationEnt, out var grid))
                     return;
 
-                if (mapManager.IsGridPaused(grid.GridIndex))
+                if (mapManager.IsGridPaused(grid.Owner))
                     return;
 
                 SpawnPulse(grid.Grid);
@@ -112,7 +112,7 @@ namespace Content.Server.StationEvents.Events
 
         private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
-            if (!mapGrid.Index.IsValid())
+            if (!(mapGrid.GridEntityId).IsValid())
             {
                 coordinates = default;
                 return false;

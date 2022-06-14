@@ -48,7 +48,7 @@ namespace Content.Server.Morgue.Components
             if (Cooking) return;
             if (Open) return;
 
-            SoundSystem.Play(Filter.Pvs(Owner), _cremateStartSound.GetSound(), Owner);
+            SoundSystem.Play(_cremateStartSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             Cremate();
         }
@@ -62,7 +62,7 @@ namespace Content.Server.Morgue.Components
                 appearanceComponent.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
-            SoundSystem.Play(Filter.Pvs(Owner), _crematingSound.GetSound(), Owner);
+            SoundSystem.Play(_crematingSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             _cremateCancelToken?.Cancel();
 
@@ -90,7 +90,7 @@ namespace Content.Server.Morgue.Components
 
                 TryOpenStorage(Owner);
 
-                SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
+                SoundSystem.Play(_cremateFinishSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             }, _cremateCancelToken.Token);
         }

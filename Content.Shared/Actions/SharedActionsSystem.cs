@@ -333,7 +333,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
         if (action.Sound != null)
-            SoundSystem.Play(filter, action.Sound.GetSound(), performer, action.AudioParams);
+            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;
