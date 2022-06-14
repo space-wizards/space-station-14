@@ -25,7 +25,7 @@ public sealed class DoorTimingWireAction : BaseWireAction
         {
             switch (door.AutoCloseDelayModifier)
             {
-                case 0f:
+                case 0.01f:
                     lightState = StatusLightState.Off;
                     break;
                 case <= 0.5f:
@@ -50,7 +50,7 @@ public sealed class DoorTimingWireAction : BaseWireAction
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-            door.AutoCloseDelayModifier = 0f;
+            door.AutoCloseDelayModifier = 0.01f;
         }
 
         return true;
