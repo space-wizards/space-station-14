@@ -991,5 +991,8 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> UpdateRestartDelay =
             CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
+
+        public static readonly CVarDef<float> GhostRoleTime =
+            CVarDef.Create("ghost.role_time", 5f, CVar.REPLICATED);
     }
 }
