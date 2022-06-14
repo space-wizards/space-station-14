@@ -7,6 +7,9 @@
     contents:
 # Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSalvage
+        prob: 0.5
+      - id: ClothingOuterHardsuitSpatio
+        prob: 0.5
       - id: YellowOxygenTank
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
@@ -14,8 +17,12 @@
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
-      - id: FlashlightSeclite
+        prob: 0.8
       - id: SurvivalKnife
-      - id: ClothingOuterHardsuitSpatio
+        prob: 0.8
+      - id: Pickaxe
+        prob: 0.5
+      - id: WeaponMakeshiftLaser
+        prob: 0.25
 
 
