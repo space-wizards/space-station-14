@@ -1561,10 +1561,29 @@
       "name": "television_broken"
     },
     {
-      "name": "telescreen"
+      "name": "television_wall"
     },
     {
-      "name": "telescreen_broken"
+      "name": "television_wallbroken"
+    },
+    {
+      "name": "television_wallscreen",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "telescreen",
+      "directions": 4
+    },
+    {
+      "name": "telescreen_broken",
+      "directions": 4
     },
     {
       "name": "detective_television"

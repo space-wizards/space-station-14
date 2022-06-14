@@ -1,6 +1,7 @@
 - type: entity
   parent: ComputerBase
   id: WallmountTelescreen
+  suffix: camera monitor
   name: telescreen
   description: Finally, some decent reception around here...
   components:
@@ -64,6 +65,63 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WiredNetworkConnection
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: WallmountTelescreen
+  id: WallmountTelevision
+  suffix: entertainment
+  name: television
+  description: Finally, some decent reception around here...
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: television_wall
+          body: television_wall
+          bodyBroken: television_wallbroken
+          screen: television_wallscreen
+#    - type: Construction
+#      graph: Monitor
+#      node: Television
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: Structures/Wallmounts/flatscreentv.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television_wall
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: television_wall
+          shader: shaded
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 50
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: SurveillanceCamera
