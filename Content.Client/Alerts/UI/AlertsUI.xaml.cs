@@ -156,7 +156,6 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
 
     public AlertsUI(IChatManager chatManager)
     {
-        _chatManager = chatManager;
         RobustXamlLoader.Load(this);
 
         LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
@@ -195,39 +194,6 @@ public sealed partial class AlertsUI : Control, IAlertsFrameView
 
     public event EventHandler<AlertType>? AlertPressed;
 
-    //TODO: This control caring about it's layout relative to other controls in the tree is terrible
-    // the presenters or gamescreen should be dealing with this
-    // probably want to tackle this after chatbox gets MVP'd
-    #region Spaghetti
-
-    public const float ChatSeparation = 38f;
-    private readonly IChatManager _chatManager;
-
-    protected override void EnteredTree()
-    {
-        base.EnteredTree();
-        _chatManager.OnChatBoxResized += OnChatResized;
-        OnChatResized(new ChatResizedEventArgs(HudChatBox.InitialChatBottom));
-    }
-
-    protected override void ExitedTree()
-    {
-        base.ExitedTree();
-        _chatManager.OnChatBoxResized -= OnChatResized;
-    }
-
-    private void OnChatResized(ChatResizedEventArgs chatResizedEventArgs)
-    {
-        // resize us to fit just below the chat box
-        if (_chatManager.CurrentChatBox != null)
-            LayoutContainer.SetMarginTop(this, chatResizedEventArgs.NewBottom + ChatSeparation);
-        else
-            LayoutContainer.SetMarginTop(this, 250);
-    }
-
-    #endregion
-
-    // This makes no sense but I'm leaving it in place in case I break anything by removing it.
     protected override void Resized()
     {
         // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,

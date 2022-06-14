@@ -73,14 +73,8 @@ namespace Content.Client.Lobby
             };
 
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
-
-            _chatManager.SetChatBox(_lobby.Chat);
             _voteManager.SetPopupContainer(_lobby.VoteContainer);
-
-            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName;
-
-            ChatInput.SetupChatInputHandlers(_inputManager, _lobby.Chat);
-
+            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();
 
             _lobby.CharacterPreview.CharacterSetupButton.OnPressed += _ =>

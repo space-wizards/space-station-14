@@ -45,13 +45,6 @@ namespace Content.Client.Gameplay
         protected override void Startup()
         {
             base.Startup();
-            _gameChat = new HudChatBox {PreferredChannel = ChatSelectChannel.Local};
-            UserInterfaceManager.StateRoot.AddChild(_gameChat);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
-            LayoutContainer.SetMarginLeft(_gameChat, -475);
-            LayoutContainer.SetMarginBottom(_gameChat, HudChatBox.InitialChatBottom);
-            _chatManager.ChatBoxOnResized(new ChatResizedEventArgs(HudChatBox.InitialChatBottom));
             Viewport = new MainViewport
             {
                 Viewport =
@@ -59,20 +52,12 @@ namespace Content.Client.Gameplay
                     ViewportSize = ViewportSize
                 }
             };
-
             UserInterfaceManager.StateRoot.AddChild(Viewport);
             LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
             Viewport.SetPositionFirst();
-            _chatManager.SetChatBox(_gameChat);
-
-            ChatInput.SetupChatInputHandlers(_inputManager, _gameChat);
-
             SetupPresenters();
-
             _eyeManager.MainViewport = Viewport.Viewport;
-
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
-
             _fpsCounter = new FpsCounter(_gameTiming);
             UserInterfaceManager.StateRoot.AddChild(_fpsCounter);
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
@@ -85,8 +70,6 @@ namespace Content.Client.Gameplay
             DisposePresenters();
 
             base.Shutdown();
-
-            _gameChat?.Dispose();
             Viewport.Dispose();
             // Clear viewport to some fallback, whatever.
             _eyeManager.MainViewport = UserInterfaceManager.MainViewport;
@@ -112,22 +95,6 @@ namespace Content.Client.Gameplay
 
             // HUD
             _alertsFramePresenter?.Dispose();
-        }
-
-        internal static void FocusChat(ChatBox chat)
-        {
-            if (chat.UserInterfaceManager.KeyboardFocused != null)
-                return;
-
-            chat.Focus();
-        }
-
-        internal static void FocusChannel(ChatBox chat, ChatSelectChannel channel)
-        {
-            if (chat.UserInterfaceManager.KeyboardFocused != null)
-                return;
-
-            chat.Focus(channel);
         }
 
         public override void FrameUpdate(FrameEventArgs e)
