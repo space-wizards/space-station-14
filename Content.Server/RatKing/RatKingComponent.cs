@@ -17,37 +17,37 @@ namespace Content.Server.RatKing
         /// <summary>
         ///     The amount of hunger one use of Raise Army consumes
         /// </summary>
-        [DataField("hungerPerArmyUse", required: true)]
+        [ViewVariables(VVAccess.ReadWrite), DataField("hungerPerArmyUse", required: true)]
         public float HungerPerArmyUse = 25f;
 
         /// <summary>
         ///     The entity prototype of the mob that Raise Army summons
         /// </summary>
-        [DataField("armyMobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite), DataField("armyMobSpawnId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ArmyMobSpawnId = "MobRatServant";
 
         /// <summary>
         ///     The action for the Domain ability
         /// </summary>
-        [DataField("actionDomain", required: true)]
+        [ViewVariables, DataField("actionDomain", required: true)]
         public InstantAction ActionDomain = new();
 
         /// <summary>
         ///     The amount of hunger one use of Domain consumes
         /// </summary>
-        [DataField("hungerPerDomainUse", required: true)]
+        [ViewVariables(VVAccess.ReadWrite), DataField("hungerPerDomainUse", required: true)]
         public float HungerPerDomainUse = 50f;
 
         /// <summary>
         ///     The disease prototype id that the Domain ability spreads
         /// </summary>
-        [DataField("domainDiseaseId", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
+        [ViewVariables, DataField("domainDiseaseId", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
         public string DomainDiseaseId = "Plague";
 
         /// <summary>
         ///     The range of the Domain ability.
         /// </summary>
-        [DataField("domainRange")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("domainRange")]
         public float DomainRange = 3f;
 
     }

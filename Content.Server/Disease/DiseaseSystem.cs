@@ -97,30 +97,28 @@ namespace Content.Server.Disease
                 {
                     var disease = carrierComp.Diseases[i];
 
-                    //if the disease is on the silent disease list, don't do effects
-                    var doEffects = true;
-                    if (carrierComp.CarrierDiseases != null)
-                        foreach (var id in carrierComp.CarrierDiseases)
-                            if (id == disease.ID)
-                                doEffects = false;
-
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
-                    if (disease.Accumulator >= disease.TickTime)
+
+                    if (disease.Accumulator < disease.TickTime) continue;
+
+                    // if the disease is on the silent disease list, don't do effects
+                    var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) == true;
+
+                    disease.Accumulator -= disease.TickTime;
+
+                    foreach (var cure in disease.Cures)
                     {
-                        disease.Accumulator -= disease.TickTime;
-                        foreach (var cure in disease.Cures)
+                        if (cure.Cure(args))
+                            CureDisease(carrierComp, disease);
+                    }
+
+                    if (doEffects)
+                    {
+                        foreach (var effect in disease.Effects)
                         {
-                            if (cure.Cure(args))
-                                CureDisease(carrierComp, disease);
-                        }
-                        if (doEffects)
-                        {
-                            foreach (var effect in disease.Effects)
-                            {
-                                if (_random.Prob(effect.Probability))
-                                    effect.Effect(args);
-                            }
+                            if (_random.Prob(effect.Probability))
+                                effect.Effect(args);
                         }
                     }
                 }
