@@ -26,7 +26,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
   - type: Fixtures
     fixtures:
     - shape:
@@ -95,7 +95,7 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
-    silentDiseases:
+    carrierDiseases:
     - Plague
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -133,7 +133,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-3
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
   - type: Fixtures
     fixtures:
     - shape:
@@ -166,7 +166,7 @@
       dead: splat-3
   - type: Puller
   - type: DiseaseCarrier
-    silentDiseases:
+    carrierDiseases:
     - Plague
   - type: Vocal
     # mice are gender neutral who cares

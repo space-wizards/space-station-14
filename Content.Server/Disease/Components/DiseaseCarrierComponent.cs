@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared.Disease;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Disease.Components
 {
@@ -38,7 +38,7 @@ namespace Content.Server.Disease.Components
         /// exhibit direct symptoms from. They still transmit
         /// these diseases, just without symptoms.
         /// </summary>
-        [DataField("silentDiseases", customTypeSerializer: typeof(PrototypeIdListSerializer<DiseasePrototype>))]
-        public List<string>? SilentDiseases;
+        [DataField("carrierDiseases", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<DiseasePrototype>))]
+        public HashSet<string>? CarrierDiseases;
     }
 }

@@ -99,8 +99,8 @@ namespace Content.Server.Disease
 
                     //if the disease is on the silent disease list, don't do effects
                     var doEffects = true;
-                    if (carrierComp.SilentDiseases != null)
-                        foreach (var id in carrierComp.SilentDiseases)
+                    if (carrierComp.CarrierDiseases != null)
+                        foreach (var id in carrierComp.CarrierDiseases)
                             if (id == disease.ID)
                                 doEffects = false;
 

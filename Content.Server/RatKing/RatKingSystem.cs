@@ -74,16 +74,15 @@ namespace Content.Server.RatKing
             args.Handled = true;
             hunger.CurrentHunger -= component.HungerPerDomainUse;
 
+            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid, default, EntityManager));
 
-            var bodyXform = Transform(uid);
-            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid));
-
+            var tstalker = GetEntityQuery<DiseaseCarrierComponent>();
             foreach (var entity in _lookup.GetEntitiesInRange(uid, component.DomainRange)) //go through all of them, filtering only those in range that are not the king itself
             {
                 if (entity == uid)
                     continue;
 
-                if (TryComp<DiseaseCarrierComponent>(entity, out var diseasecomp))
+                if (tstalker.TryGetComponent(entity, out var diseasecomp))
                     _disease.TryInfect(diseasecomp, component.DomainDiseaseId); //infect them with w/e disease
             }
         }
