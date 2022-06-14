@@ -23,9 +23,6 @@ namespace Content.Client.Chat
             inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.OOC)));
 
-            inputManager.SetInputCommand(ContentKeyFunctions.FocusLOOC,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.OOC)));
-
             inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
                 InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(chatBox, ChatSelectChannel.Admin)));
 
