@@ -61,6 +61,7 @@ namespace Content.Client.Chat.UI
         public const char AliasDead = '\\';
         public const char AliasOOC = '[';
         public const char AliasEmotes = '@';
+        public const char AliasLOOC = '|';
         public const char AliasAdmin = ']';
         public const char AliasRadio = ';';
         public const char AliasWhisper = ',';
@@ -71,6 +72,7 @@ namespace Content.Client.Chat.UI
             {AliasWhisper, ChatSelectChannel.Whisper},
             {AliasConsole, ChatSelectChannel.Console},
             {AliasOOC, ChatSelectChannel.OOC},
+            {AliasLOOC, ChatSelectChannel.LOOC},
             {AliasEmotes, ChatSelectChannel.Emotes},
             {AliasAdmin, ChatSelectChannel.Admin},
             {AliasRadio, ChatSelectChannel.Radio},
