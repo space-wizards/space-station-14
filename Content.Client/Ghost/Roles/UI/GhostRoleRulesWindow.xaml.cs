@@ -20,5 +20,19 @@ namespace Content.Client.Ghost.Roles.UI
             TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + "\n" + Loc.GetString("ghost-roles-window-rules-footer")));
             RequestButton.OnPressed += requestAction;
         }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            if (!RequestButton.Disabled) return;
+            if (_timer > 0.0)
+            {
+                _timer -= args.DeltaSeconds;
+            }
+            else
+            {
+                RequestButton.Disabled = false;
+            }
+        }
     }
 }
