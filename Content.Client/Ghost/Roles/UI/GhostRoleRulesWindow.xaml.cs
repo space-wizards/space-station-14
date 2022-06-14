@@ -23,7 +23,14 @@ namespace Content.Client.Ghost.Roles.UI
         {
 
             RobustXamlLoader.Load(this);
-            TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(rules + Loc.GetString("ghost-roles-window-rules-footer")));
+            TopBanner.SetMessage(
+                FormattedMessage.FromMarkupPermissive(
+                    rules + "\n" + String.Format(
+                        Loc.GetString("ghost-roles-window-rules-footer"),
+                        _timer.ToString()
+                    )
+                )
+            );
             RequestButton.OnPressed += requestAction;
 
             _cfg.OnValueChanged(CCVars.GhostRoleTime, value => _timer = value, true);
