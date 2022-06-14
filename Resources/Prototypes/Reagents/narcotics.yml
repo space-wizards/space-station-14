@@ -91,6 +91,7 @@
         key: KnockedDown
         time: 0.5
         type: Add
+        probability: 0.05
       - !type:PopupMessage
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
         type: Local
