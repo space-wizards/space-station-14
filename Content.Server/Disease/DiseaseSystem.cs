@@ -96,15 +96,13 @@ namespace Content.Server.Disease
                 for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
                     var disease = carrierComp.Diseases[i];
-
-                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
 
                     if (disease.Accumulator < disease.TickTime) continue;
 
                     // if the disease is on the silent disease list, don't do effects
                     var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) != true;
-
+                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator -= disease.TickTime;
 
                     foreach (var cure in disease.Cures)
