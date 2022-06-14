@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
   group: Narcotics
@@ -13,11 +13,11 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.75
+            Poison: 2.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 20
         damage:
           types:
             Poison: 2 # this is added to the base damage of the meth.
@@ -25,20 +25,29 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.35
-        sprintSpeedModifier: 1.35
+        walkSpeedModifier: 2.86
+        sprintSpeedModifier: 2.86
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stun
-        time: 3
+        time: 4
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 3
+        time: 4
         type: Remove
+      #- !type:Emote
+      #  messages: ["chatsan-twitches", "chatsan-shivers"] # yes it could instead be inside of a dedicated action translation file if WE HAD ONE
+      #  probability: 0.4
+      #- !type:Emote
+      #  conditions:
+      #  - !type:ReagentThreshold
+      #    min: 20
+      #  messages: ["chatsan-giggles", "chatsan-laughs"]
+      #  probability: 0.1
 
 - type: reagent
   id: Ephedrine
@@ -53,15 +62,15 @@
     Narcotic:
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.25
-        sprintSpeedModifier: 1.25
+        walkSpeedModifier: 2
+        sprintSpeedModifier: 2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 20 # buff to 30 when heart failure happens
         damage:
           types:
-            Poison: 2 # this is added to the base damage of the meth.
+            Poison: 2
             Asphyxiation: 2
       - !type:Jitter
       - !type:GenericStatusEffect
@@ -69,9 +78,19 @@
         time: 1
         type: Remove
       - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
         key: KnockedDown
         time: 1
         type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        key: KnockedDown
+        time: 0.5
+        type: Add
       - !type:PopupMessage
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
         type: Local
