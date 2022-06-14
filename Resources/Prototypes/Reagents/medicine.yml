@@ -152,6 +152,7 @@
         damage:
           types:
             Asphyxiation: 1
+        group:
             Brute: 0.5
       - !type:Jitter
         conditions:
