@@ -7,9 +7,9 @@ gun-SemiAuto = полуавто
 gun-Burst = очередь
 gun-FullAuto = авто
 # BallisticAmmoProvider
-gun-ballistic-cycle = Цикл
-gun-ballistic-cycled = Циклирован
-gun-ballistic-cycled-empty = Циклирован (пуст)
+gun-ballistic-cycle = Перезарядка
+gun-ballistic-cycled = Перезаряжено
+gun-ballistic-cycled-empty = Разряжено
 # BatteryAmmoProvider
 gun-battery-examine = Заряда хватит на [color={ $color }]{ $count } выстрелов.
 # MagazineAmmoProvider
