@@ -30,7 +30,7 @@ namespace Content.Client.EscapeMenu.UI
             QuitButton.OnPressed += OnQuitButtonClicked;
             RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
             DisconnectButton.OnPressed += OnDisconnectButtonClicked;
-            QuitButton.OnPressed += OnWikiButtonClicked;
+            WikiButton.OnPressed += OnWikiButtonClicked;
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
