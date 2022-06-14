@@ -1,7 +1,9 @@
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
+using Content.Shared.Cargo.Events;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Cargo.BUI;
 
@@ -14,7 +16,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _menu = new CargoShuttleMenu(IoCManager.Resolve<IPrototypeManager>(), EntitySystem.Get<SpriteSystem>());
+        _menu = new CargoShuttleMenu(IoCManager.Resolve<IGameTiming>(), IoCManager.Resolve<IPrototypeManager>(), EntitySystem.Get<SpriteSystem>());
 
         _menu.ShuttleCallRequested += OnShuttleCall;
         _menu.ShuttleRecallRequested += OnShuttleRecall;
@@ -24,14 +26,12 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnShuttleRecall()
     {
-        Owner.Owner;
-        SendMessage();
+        SendMessage(new CargoRecallShuttleMessage());
     }
 
     private void OnShuttleCall()
     {
-        Owner.Owner;
-        SendMessage();
+        SendMessage(new CargoCallShuttleMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -39,6 +39,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not CargoShuttleConsoleBoundUserInterfaceState shuttleState) return;
 
+        _menu?.SetShuttleETA(shuttleState.ShuttleETA);
         _menu?.SetOrders(shuttleState.Orders);
     }
 }

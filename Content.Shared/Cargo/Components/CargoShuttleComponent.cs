@@ -8,8 +8,8 @@ namespace Content.Shared.Cargo.Components;
 [RegisterComponent]
 public sealed class CargoShuttleComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("lastCall")]
-    public TimeSpan LastCall;
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextCall")]
+    public TimeSpan? NextCall;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
     public float Cooldown = 15f;
