@@ -191,7 +191,7 @@
     node: SheetRPGlass
 
 - type: entity
-  parent: SheetPGlass
+  parent: SheetRPGlass
   id: SheetRPGlass1
   name: reinforced plasma glass
   suffix: Single

@@ -47,7 +47,7 @@ public sealed partial class ToolSystem
         if (!TryComp<ToolComponent?>(component.Owner, out var tool) && component.ToolComponentNeeded)
             return false;
 
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid))
+        if (!_mapManager.TryGetGrid(clickLocation.GetGridEntityId(EntityManager), out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -65,7 +65,7 @@ public sealed partial class ToolSystem
         var token = new CancellationTokenSource();
         component.CancelToken = token;
 
-        UseTool(
+        bool success = UseTool(
             component.Owner,
             user,
             null,
@@ -80,6 +80,9 @@ public sealed partial class ToolSystem
             toolComponent: tool,
             doAfterEventTarget: component.Owner,
             cancelToken: token.Token);
+
+        if (!success)
+            component.CancelToken = null;
 
         return true;
     }
