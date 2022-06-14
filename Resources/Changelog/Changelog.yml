@@ -1,9 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Lean can now be made and has effects., type: Tweak}
-  id: 1192
-  time: '2022-03-12T22:07:07.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: All windows are now less susceptible to piercing damage and more to
@@ -3005,3 +3000,9 @@ Entries:
   - {message: Fixed cobra magazine so it actually goes into the gun., type: Fix}
   id: 1691
   time: '2022-06-13T09:30:16.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Solar's Best Hot Drinks now only have half as much coffee and tea in
+      them., type: Tweak}
+  id: 1692
+  time: '2022-06-14T07:13:31.0000000+00:00'
