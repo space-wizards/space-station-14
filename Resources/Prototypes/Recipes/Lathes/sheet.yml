@@ -7,7 +7,7 @@
   completetime: 2
   materials:
     Steel: 100
-    
+
 - type: latheRecipe
   id: SheetSteel30
   icon:
@@ -27,7 +27,7 @@
   completetime: 2
   materials:
     Glass: 100
-    
+
 - type: latheRecipe
   id: SheetGlass30
   icon:
@@ -48,7 +48,7 @@
   materials:
     Glass: 100
     Steel: 50
-    
+
 - type: latheRecipe
   id: SheetRGlass30
   icon:
@@ -70,7 +70,7 @@
   materials:
     Glass: 3000
     Plasma: 3000
-    
+
 - type: latheRecipe
   id: SheetRPGlass30
   icon:
@@ -82,12 +82,12 @@
     Glass: 3000
     Plasma: 3000
     Steel: 1500
-    
+
 - type: latheRecipe
   id: SheetPlasma30
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma_3
+    state: plasma
   result: SheetPlasma
   completetime: 2
   materials:
@@ -102,7 +102,7 @@
   completetime: 2
   materials:
     Uranium: 500
-    
+
 - type: latheRecipe
   id: IngotGold1
   icon:

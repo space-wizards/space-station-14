@@ -9,7 +9,7 @@
   cost: 2000
   category: Materials
   group: market
-  
+
 - type: cargoProduct
   name: "fuel tank crate"
   id: MaterialCrateFuelTank
@@ -76,7 +76,7 @@
   description: "90 sheets of plasma."
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma_3
+    state: plasma
   product: CrateMaterialPlasma
   cost: 4500
   category: Materials
