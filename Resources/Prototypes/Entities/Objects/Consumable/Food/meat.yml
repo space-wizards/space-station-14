@@ -16,7 +16,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: Item
     size: 5
@@ -47,7 +47,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -73,7 +73,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -91,7 +91,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -112,7 +112,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -133,7 +133,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -154,7 +154,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -195,7 +195,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -213,7 +213,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
@@ -231,7 +231,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
   - type: SliceableFood
     count: 3
@@ -261,7 +261,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
@@ -279,7 +279,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 20
   - type: SliceableFood
     count: 3
@@ -300,7 +300,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 10
 
 - type: entity
@@ -318,7 +318,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -739,7 +739,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -761,7 +761,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -781,7 +781,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -801,7 +801,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -821,7 +821,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -844,7 +844,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -867,7 +867,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Toxin
+        - reagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
