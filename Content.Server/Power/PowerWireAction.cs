@@ -134,11 +134,6 @@ public sealed class PowerWireAction : BaseWireAction
 
         var electrifiedAttempt = _electrocutionSystem.TryDoElectrifiedAct(wire.Owner, user);
 
-        if (electrifiedAttempt && !timed)
-        {
-            SetElectrified(wire.Owner, false, electrified);
-        }
-
         // if we were electrified, then return false
         return !electrifiedAttempt;
 
