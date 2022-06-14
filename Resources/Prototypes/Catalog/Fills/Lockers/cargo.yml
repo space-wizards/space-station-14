@@ -10,14 +10,11 @@
       - id: YellowOxygenTank
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
-      - id: OreBag
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
         prob: 0.8
       - id: SurvivalKnife
-        prob: 0.8
-      - id: Pickaxe
         prob: 0.8
       - id: WeaponMakeshiftLaser
         prob: 0.25
