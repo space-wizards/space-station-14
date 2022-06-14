@@ -24,6 +24,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Content.Client.UserInterface.Systems;
 using Content.Client.Options.UI;
 
 

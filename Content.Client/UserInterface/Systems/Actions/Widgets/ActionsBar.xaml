@@ -1,0 +1,39 @@
+﻿<widgets:ActionsBar
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:in="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Actions.Controls"
+    xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions"
+    VerticalExpand="False"
+    Orientation="Horizontal"
+    HorizontalExpand="False"
+>
+    <controls:ActionButtonContainer
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Name="ActionsContainer"
+        Access="Public"
+    >
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar1}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar2}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar3}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar4}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar5}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar6}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar7}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar8}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar9}"/>
+        <actions:ActionButton
+            KeyBind="{x:Static in:ContentKeyFunctions.Hotbar0}"/>
+    </controls:ActionButtonContainer>
+</widgets:ActionsBar>

@@ -1,0 +1,21 @@
+﻿<widgets:HandsGui
+    xmlns="https://spacestation14.io"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    Name="HandsInterface"
+    VerticalExpand="False"
+    VerticalAlignment="Bottom"
+    Orientation="Horizontal"
+
+    HorizontalAlignment="Center"
+    >
+   <BoxContainer>
+       <controls:ItemSlotButtonContainer SlotGroup="SecondHotbar"/>
+       <controls:HandsContainer
+           Name="HandContainer"
+           Access= "Protected"
+           ColumnLimit="6"
+           />
+       <controls:ItemSlotButtonContainer SlotGroup="MainHotbar"/>
+   </BoxContainer>
+</widgets:HandsGui>

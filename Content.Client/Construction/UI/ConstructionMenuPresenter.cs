@@ -7,7 +7,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
-using MenuBar = Content.Client.UserInterface.Widgets.MenuBar;
+using MenuBar = Content.Client.UserInterface.Systems.MenuBar.Widgets.MenuBar;
 
 namespace Content.Client.Construction.UI
 {

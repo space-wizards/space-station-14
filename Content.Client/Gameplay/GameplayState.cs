@@ -29,8 +29,6 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-        [ViewVariables] private ChatBox? _gameChat;
-
         protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private ConstructionMenuPresenter? _constructionMenu;
@@ -47,17 +45,13 @@ namespace Content.Client.Gameplay
         protected override void Startup()
         {
             base.Startup();
-
             _gameChat = new HudChatBox {PreferredChannel = ChatSelectChannel.Local};
-
             UserInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetMarginLeft(_gameChat, -475);
             LayoutContainer.SetMarginBottom(_gameChat, HudChatBox.InitialChatBottom);
-
             _chatManager.ChatBoxOnResized(new ChatResizedEventArgs(HudChatBox.InitialChatBottom));
-
             Viewport = new MainViewport
             {
                 Viewport =

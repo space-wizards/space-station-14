@@ -98,17 +98,6 @@ namespace Content.Client.Chat.Managers
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-
-        /// <summary>
-        /// Current chat box control. This can be modified, so do not depend on saving a reference to this.
-        /// </summary>
-        public ChatBox? CurrentChatBox { get; private set; }
-
-        /// <summary>
-        /// Invoked when CurrentChatBox is resized (including after setting initial default size)
-        /// </summary>
-        public event Action<ChatResizedEventArgs>? OnChatBoxResized;
-
         public event Action<ChatPermissionsUpdatedEventArgs>? ChatPermissionsUpdated;
         public event Action? UnreadMessageCountsUpdated;
         public event Action<StoredChatMessage>? MessageAdded;
@@ -278,11 +267,6 @@ namespace Content.Client.Chat.Managers
             }
         }
 
-        public void SetChatBox(ChatBox chatBox)
-        {
-            CurrentChatBox = chatBox;
-        }
-
         public void ClearUnfilteredUnreads()
         {
             foreach (var channel in _unreadMessages.Keys.ToArray())
@@ -290,11 +274,6 @@ namespace Content.Client.Chat.Managers
                 if ((ChannelFilters & channel) != 0)
                     _unreadMessages.Remove(channel);
             }
-        }
-
-        public void ChatBoxOnResized(ChatResizedEventArgs chatResizedEventArgs)
-        {
-            OnChatBoxResized?.Invoke(chatResizedEventArgs);
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
@@ -310,12 +289,9 @@ namespace Content.Client.Chat.Managers
             }
         }
 
-        public void OnChatBoxTextSubmitted(ChatBox chatBox, ReadOnlyMemory<char> text, ChatSelectChannel channel)
+        public void OnChatBoxTextSubmitted(ReadOnlyMemory<char> text, ChatSelectChannel channel)
         {
-            DebugTools.Assert(chatBox == CurrentChatBox);
-
             var str = text.ToString();
-
             switch (channel)
             {
                 case ChatSelectChannel.Console:

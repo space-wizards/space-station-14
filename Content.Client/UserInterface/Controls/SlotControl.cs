@@ -1,4 +1,5 @@
 ﻿using Content.Client.Cooldown;
+using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
