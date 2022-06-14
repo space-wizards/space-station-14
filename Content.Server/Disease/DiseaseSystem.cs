@@ -103,7 +103,7 @@ namespace Content.Server.Disease
                     if (disease.Accumulator < disease.TickTime) continue;
 
                     // if the disease is on the silent disease list, don't do effects
-                    var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) == false;
+                    var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) != true;
 
                     disease.Accumulator -= disease.TickTime;
 
