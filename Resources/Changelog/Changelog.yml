@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: All windows are now less susceptible to piercing damage and more to
-      blunt., type: Tweak}
-  - {message: 'Spears now take cable, a glass shard and 2 rods to craft. They break
-      after 4 throws.', type: Tweak}
-  id: 1193
-  time: '2022-03-12T22:07:27.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Guitar and other items now correctly react on quick equipment key (Z
@@ -3006,3 +2998,8 @@ Entries:
       them., type: Tweak}
   id: 1692
   time: '2022-06-14T07:13:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tweak pistol firerate from 8 -> 6 and cobra firerate from 8 -> 4., type: Tweak}
+  id: 1693
+  time: '2022-06-14T07:19:51.0000000+00:00'
