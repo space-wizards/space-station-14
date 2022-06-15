@@ -51,8 +51,8 @@
 
 - type: instantAction
   id: VendingThrow
-  name: placeholder
-  description: placeholder
+  name: vending-machine-action-name
+  description: vending-machine-action-description
   useDelay: 30
   event: !type:VendingMachineSelfDispenseEvent
   whitelist:
