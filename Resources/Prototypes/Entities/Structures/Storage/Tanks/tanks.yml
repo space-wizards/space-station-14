@@ -76,56 +76,22 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
-  - type: ItemSlots
-    slots:
-      cup_slot_0:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
+  - type: Dispenser
+    item: DrinkWaterCup
+    capacity: 6
+    whitelist:
+      tags:
+          - PaperCup
+  - type: ItemMapper
+    mapLayers:
+      watercooler_cups:
         whitelist:
           tags:
           - PaperCup
-      cup_slot_1:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
-        whitelist:
-          tags:
-          - PaperCup
-      cup_slot_2:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
-        whitelist:
-          tags:
-          - PaperCup
-      cup_slot_3:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
-        whitelist:
-          tags:
-          - PaperCup
-      cup_slot_4:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
-        whitelist:
-          tags:
-          - PaperCup
-      cup_slot_5:
-        name: Cup
-        startingItem: DrinkWaterCup
-        ejectOnInteract: true
-        insertOnInteract: false
-        whitelist:
-          tags:
-          - PaperCup
+  - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
+      sprite: Structures/Storage/tanks.rsi
 
 - type: entity
   parent: StorageTank
