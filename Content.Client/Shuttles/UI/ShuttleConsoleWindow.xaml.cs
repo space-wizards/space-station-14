@@ -84,9 +84,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
+    public void SetEntity(EntityUid? uid)
+    {
+        _entity = uid;
+        RadarScreen.Entity = uid;
+    }
+
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
-        _entity = scc.Entity;
         UpdateDocks(scc.Docks);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";

@@ -24,6 +24,15 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         _menu.OpenCentered();
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+        {
+            _menu?.Dispose();
+        }
+    }
+
     private void OnShuttleRecall()
     {
         SendMessage(new CargoRecallShuttleMessage());
@@ -37,12 +46,11 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
-        if (state is not CargoShuttleConsoleBoundUserInterfaceState shuttleState) return;
-
-        _menu?.SetAccountName(shuttleState.AccountName);
-        _menu?.SetShuttleName(shuttleState.ShuttleName);
-        _menu?.SetShuttleETA(shuttleState.ShuttleETA);
-        _menu?.SetOrders(shuttleState.Orders);
-        _menu?.SetCanRecall(shuttleState.CanRecall);
+        if (state is not CargoShuttleConsoleBoundUserInterfaceState cargoState) return;
+        _menu?.SetAccountName(cargoState.AccountName);
+        _menu?.SetShuttleName(cargoState.ShuttleName);
+        _menu?.SetShuttleETA(cargoState.ShuttleETA);
+        _menu?.SetOrders(cargoState.Orders);
+        _menu?.SetCanRecall(cargoState.CanRecall);
     }
 }

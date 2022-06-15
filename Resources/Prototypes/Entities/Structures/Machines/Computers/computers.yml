@@ -69,6 +69,25 @@
     color: "#c94242"
 
 - type: entity
+  parent: ComputerShuttleBase
+  id: ComputerShuttleCargo
+  name: cargo shuttle console
+  description: Used to pilot the cargo shuttle.
+  components:
+  - type: Appearance
+    visuals:
+      - type: ComputerVisualizer
+        key: generic_key
+        screen: shuttle
+  - type: CargoPilotConsole
+  - type: RadarConsole
+    maxRange: 256
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c94242"
+
+- type: entity
   parent: ComputerBase
   id: ComputerPowerMonitoring
   name: power monitoring computer

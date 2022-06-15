@@ -1,15 +1,12 @@
 using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.System;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.GameTicking;
@@ -26,11 +23,6 @@ namespace Content.Server.Cargo.Systems
         /// How much time to wait (in seconds) before increasing bank accounts balance.
         /// </summary>
         private const int Delay = 10;
-
-        /// <summary>
-        /// How many points to give to every bank account every second.
-        /// </summary>
-        private const int PointIncrease = 5;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
@@ -81,7 +73,7 @@ namespace Content.Server.Cargo.Systems
 
                 foreach (var account in EntityQuery<StationBankAccountComponent>())
                 {
-                    account.Balance += PointIncrease * Delay;
+                    account.Balance += (int) (account.IncreasePerSecond * Delay);
                 }
 
                 foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())

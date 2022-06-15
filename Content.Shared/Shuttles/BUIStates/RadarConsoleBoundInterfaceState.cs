@@ -8,7 +8,12 @@ namespace Content.Shared.Shuttles.BUIStates;
 public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly float MaxRange;
+
+    /// <summary>
+    /// The relevant entity to base the radar around.
+    /// </summary>
     public readonly EntityUid? Entity;
+
     public readonly List<DockingInterfaceState> Docks;
 
     public RadarConsoleBoundInterfaceState(

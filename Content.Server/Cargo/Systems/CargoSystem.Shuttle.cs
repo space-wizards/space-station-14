@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
+using Content.Server.Shuttles.Events;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -10,10 +11,8 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Robust.Server.Maps;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -47,9 +46,21 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
+        SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetShuttle);
+
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+    }
+
+    private void OnCargoGetShuttle(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
+    {
+        var stationUid = _station.GetOwningStation(uid);
+
+        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
+
+        args.Entity = orderDatabase.Shuttle;
     }
 
     #region Console

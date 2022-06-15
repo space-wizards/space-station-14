@@ -27,7 +27,7 @@ public sealed class RadarControl : Control
     /// <summary>
     /// Entity used to transform all of the radar objects.
     /// </summary>
-    private EntityUid? _entity;
+    public EntityUid? Entity;
 
     private float _radarMinRange = 64f;
     private float _radarMaxRange = 256f;
@@ -74,7 +74,6 @@ public sealed class RadarControl : Control
         if (_radarMaxRange < _radarMinRange)
             _radarMinRange = _radarMaxRange;
 
-        _entity = ls.Entity;
         _docks.Clear();
 
         foreach (var state in ls.Docks)
@@ -109,7 +108,7 @@ public sealed class RadarControl : Control
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
-        if (_entity == null)
+        if (Entity == null)
         {
             Clear();
             return;

@@ -14,9 +14,9 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoShuttleMenu : FancyWindow
     {
-        private IGameTiming _timing;
-        private IPrototypeManager _protoManager;
-        private SpriteSystem _spriteSystem;
+        private readonly IGameTiming _timing;
+        private readonly IPrototypeManager _protoManager;
+        private readonly SpriteSystem _spriteSystem;
 
         public Action? ShuttleCallRequested;
         public Action? ShuttleRecallRequested;
@@ -31,7 +31,6 @@ namespace Content.Client.Cargo.UI
             _spriteSystem = spriteSystem;
             ShuttleCallButton.OnPressed += OnCallPressed;
             ShuttleRecallButton.OnPressed += OnRecallPressed;
-
             Title = Loc.GetString("cargo-shuttle-console-menu-title");
         }
 

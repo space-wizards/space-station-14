@@ -208,7 +208,14 @@ namespace Content.Server.Shuttles.Systems
             TryComp<RadarConsoleComponent>(component.Owner, out var radar);
             var range = radar?.MaxRange ?? 0f;
 
-            TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
+            var getShuttleEv = new ConsoleShuttleEvent
+            {
+                Entity = component.Owner,
+            };
+
+            RaiseLocalEvent(component.Owner, ref getShuttleEv, false);
+
+            TryComp<ShuttleComponent>(getShuttleEv.Entity, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();
@@ -217,7 +224,7 @@ namespace Content.Server.Shuttles.Systems
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
                     range,
-                    component.Owner,
+                    getShuttleEv.Entity,
                     docks));
         }
 
