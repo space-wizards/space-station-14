@@ -128,12 +128,6 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (pullablePhysics.FixedRotation)
-            {
-                pullable.HasFixedRot = true;
-                pullablePhysics.FixedRotation = false;
-            }
-
             // Ensure that the puller is not currently pulling anything.
             // If this isn't done, then it happens too late, and the start/stop messages go out of order,
             //  and next thing you know it thinks it's not pulling anything even though it is!
@@ -175,9 +169,6 @@ namespace Content.Shared.Pulling
 
             if (pullAttempt.Cancelled)
             {
-                if (pullable.HasFixedRot)
-                    pullablePhysics.FixedRotation = true;
-
                 return false;
             }
 
@@ -185,13 +176,17 @@ namespace Content.Shared.Pulling
 
             if (pullAttempt.Cancelled)
             {
-                if (pullable.HasFixedRot)
-                    pullablePhysics.FixedRotation = true;
-
                 return false;
             }
 
             _pullSm.ForceRelationship(puller, pullable);
+
+            if (pullablePhysics.FixedRotation)
+            {
+                pullable.HasFixedRot = true;
+                pullablePhysics.FixedRotation = false;
+            }
+
             return true;
         }
 
