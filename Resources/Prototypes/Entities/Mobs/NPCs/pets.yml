@@ -47,6 +47,8 @@
   - type: SentienceTarget
     flavorKind: corgi
   - type: Puller
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: corrupted corgi
@@ -251,6 +253,8 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: Runtime

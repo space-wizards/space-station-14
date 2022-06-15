@@ -108,6 +108,8 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
+  - type: MobPrice
+    price: 50
 
 - type: entity
   name: bee
@@ -314,6 +316,8 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
+  - type: MobPrice
+    price: 50
 
 - type: entity
   name: cow
@@ -747,7 +751,8 @@
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
   - type: CanEscapeInventory
-
+  - type: MobPrice
+    price: 50
 
 - type: entity
   parent: MobMouse
