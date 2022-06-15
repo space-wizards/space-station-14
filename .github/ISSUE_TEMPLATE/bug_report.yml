@@ -3,6 +3,7 @@ description: "Если что-то работает не так, как ожид
 labels: ["triage"]
 body:
   - type: textarea
+    id: description
     validations:
       required: true
     attributes:
@@ -10,6 +11,7 @@ body:
       description: "Опишите проблему как можно подробнее"
 
   - type: textarea
+    id: reproduction
     attributes:
       label: "Шаги воспроизведения"
       description: "Если применимо, опишите шаги для воспроизведения проблемы"
@@ -19,6 +21,7 @@ body:
         3. Получить ошибку...
 
   - type: textarea
+    id: screenshots
     attributes:
       label: "Скриншоты"
       description: |
