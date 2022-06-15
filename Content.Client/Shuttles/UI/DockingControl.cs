@@ -13,8 +13,8 @@ namespace Content.Client.Shuttles.UI;
 [Virtual]
 public class DockingControl : Control
 {
-    private IEntityManager _entManager;
-    private IMapManager _mapManager;
+    private readonly IEntityManager _entManager;
+    private readonly IMapManager _mapManager;
 
     private const int MinimapRadius = 384;
     private const int MinimapMargin = 4;

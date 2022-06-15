@@ -191,7 +191,7 @@ public sealed class RadarControl : Control
             var name = metaQuery.GetComponent(grid.GridEntityId).EntityName;
 
             if (name == string.Empty)
-                name = "Unknown";
+                name = Loc.GetString("shuttle-console-unknown");
 
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
@@ -228,7 +228,7 @@ public sealed class RadarControl : Control
                 {
                     control.Visible = true;
                     var label = (Label) control.GetChild(0);
-                    label.Text = $"{name} ({gridCentre.Length:0.0}m)";
+                    label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{gridCentre.Length:0.0}"));
                     LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
                 }
                 else
