@@ -51,52 +51,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
-    private void OnCargoShuttleMove(EntityUid uid, CargoShuttleComponent component, ref MoveEvent args)
-    {
-        if (component.Station == null) return;
-
-        var oldCanRecall = component.CanRecall;
-
-        // Check if we can update the recall status.
-        var canRecall = CanRecallShuttle(uid, out _, args.Component);
-        if (oldCanRecall == canRecall) return;
-
-        component.CanRecall = canRecall;
-        _sawmill.Debug($"Updated CanRecall for {ToPrettyString(uid)}");
-        UpdateShuttleCargoConsoles(component);
-    }
-
-    private void OnCargoOrderStartup(EntityUid uid, StationCargoOrderDatabaseComponent component, ComponentStartup args)
-    {
-        // Stations get created first but if any are added at runtime then do this.
-        AddShuttle(component);
-    }
-
-    private void AddShuttle(StationCargoOrderDatabaseComponent component)
-    {
-        if (CargoMap == null || component.Shuttle != null) return;
-
-        if (component.CargoShuttleProto != null)
-        {
-            var prototype = _protoMan.Index<CargoShuttlePrototype>(component.CargoShuttleProto);
-
-            var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
-            var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
-            var xform = Transform(shuttleUid);
-
-            // TODO: Something better like a bounds check.
-            xform.LocalPosition += 100 * _index;
-            var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
-            comp.Station = component.Owner;
-            comp.Coordinates = xform.Coordinates;
-
-            component.Shuttle = shuttleUid;
-            comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
-            UpdateShuttleCargoConsoles(comp);
-            _index++;
-            _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
-        }
-    }
+    #region Console
 
     private void UpdateShuttleCargoConsoles(CargoShuttleComponent component)
     {
@@ -129,6 +84,25 @@ public sealed partial class CargoSystem
                 CanRecallShuttle(shuttle?.Owner, out _),
                 shuttle?.NextCall,
                 orders));
+    }
+
+    #endregion
+
+    #region Shuttle
+
+    private void OnCargoShuttleMove(EntityUid uid, CargoShuttleComponent component, ref MoveEvent args)
+    {
+        if (component.Station == null) return;
+
+        var oldCanRecall = component.CanRecall;
+
+        // Check if we can update the recall status.
+        var canRecall = CanRecallShuttle(uid, out _, args.Component);
+        if (oldCanRecall == canRecall) return;
+
+        component.CanRecall = canRecall;
+        _sawmill.Debug($"Updated CanRecall for {ToPrettyString(uid)}");
+        UpdateShuttleCargoConsoles(component);
     }
 
     /// <summary>
@@ -201,49 +175,39 @@ public sealed partial class CargoSystem
         return pads;
     }
 
-    private void OnRoundStart(RoundStartingEvent ev)
+    #endregion
+
+    #region Station
+
+    private void OnCargoOrderStartup(EntityUid uid, StationCargoOrderDatabaseComponent component, ComponentStartup args)
     {
-        Setup();
+        // Stations get created first but if any are added at runtime then do this.
+        AddShuttle(component);
     }
 
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    private void AddShuttle(StationCargoOrderDatabaseComponent component)
     {
-        Cleanup();
-    }
+        if (CargoMap == null || component.Shuttle != null) return;
 
-    private void Cleanup()
-    {
-        if (CargoMap == null)
+        if (component.CargoShuttleProto != null)
         {
-            DebugTools.Assert(!EntityQuery<CargoShuttleComponent>().Any());
-            return;
-        }
+            var prototype = _protoMan.Index<CargoShuttlePrototype>(component.CargoShuttleProto);
 
-        _mapManager.DeleteMap(CargoMap.Value);
-        CargoMap = null;
+            var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
+            var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
+            var xform = Transform(shuttleUid);
 
-        // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
-        foreach (var comp in EntityQuery<CargoShuttleComponent>())
-        {
-            QueueDel(comp.Owner);
-        }
-    }
+            // TODO: Something better like a bounds check.
+            xform.LocalPosition += 100 * _index;
+            var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
+            comp.Station = component.Owner;
+            comp.Coordinates = xform.Coordinates;
 
-    private void Setup()
-    {
-        if (CargoMap != null)
-        {
-            _sawmill.Error($"Tried to setup cargo dimension when it's already setup!");
-            return;
-        }
-
-        // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
-        CargoMap = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(CargoMap!.Value, true);
-
-        foreach (var comp in EntityQuery<StationCargoOrderDatabaseComponent>(true))
-        {
-            AddShuttle(comp);
+            component.Shuttle = shuttleUid;
+            comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
+            UpdateShuttleCargoConsoles(comp);
+            _index++;
+            _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
         }
     }
 
@@ -254,7 +218,8 @@ public sealed partial class CargoSystem
 
         foreach (var pallet in GetCargoPallets(component))
         {
-            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner))
+            // Containers should already get the sell price of their children so can skip those.
+            foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored))
             {
                 if (toSell.Contains(ent)) continue;
                 var price = _pricing.GetPrice(ent);
@@ -271,7 +236,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    public void SendToCargoDimension(EntityUid uid, CargoShuttleComponent? component = null)
+    private void SendToCargoMap(EntityUid uid, CargoShuttleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -400,7 +365,7 @@ public sealed partial class CargoSystem
 
         SellPallets(shuttle, bank);
 
-        SendToCargoDimension(orderDatabase.Shuttle.Value);
+        SendToCargoMap(orderDatabase.Shuttle.Value);
     }
 
     private void OnCargoShuttleCall(EntityUid uid, CargoShuttleConsoleComponent component, CargoCallShuttleMessage args)
@@ -408,5 +373,53 @@ public sealed partial class CargoSystem
         var stationUid = _station.GetOwningStation(args.Entity);
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
         CallShuttle(orderDatabase);
+    }
+
+    #endregion
+
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
+        Setup();
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        if (CargoMap == null)
+        {
+            DebugTools.Assert(!EntityQuery<CargoShuttleComponent>().Any());
+            return;
+        }
+
+        _mapManager.DeleteMap(CargoMap.Value);
+        CargoMap = null;
+
+        // Shuttle may not have been in the cargo dimension (e.g. on the station map) so need to delete.
+        foreach (var comp in EntityQuery<CargoShuttleComponent>())
+        {
+            QueueDel(comp.Owner);
+        }
+    }
+
+    private void Setup()
+    {
+        if (CargoMap != null)
+        {
+            _sawmill.Error($"Tried to setup cargo dimension when it's already setup!");
+            return;
+        }
+
+        // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
+        CargoMap = _mapManager.CreateMap();
+        _mapManager.SetMapPaused(CargoMap!.Value, true);
+
+        foreach (var comp in EntityQuery<StationCargoOrderDatabaseComponent>(true))
+        {
+            AddShuttle(comp);
+        }
     }
 }
