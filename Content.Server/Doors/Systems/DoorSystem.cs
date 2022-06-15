@@ -109,7 +109,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, audioParams);
+        SoundSystem.Play(sound, filter, uid, audioParams);
     }
 
 #region DoAfters
@@ -305,7 +305,7 @@ public sealed class DoorSystem : SharedDoorSystem
             foreach (var other in PhysicsSystem.GetCollidingEntities(body))
             {
                 if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner)) break;
+                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
             }
         }
     }

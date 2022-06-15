@@ -8,7 +8,7 @@
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 50
   - type: AmmoCounter
   - type: Gun
     fireRate: 5
@@ -25,12 +25,14 @@
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazineLightRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
+        priority: 1
         whitelist:
           tags:
             - CartridgeLightRifle
@@ -53,7 +55,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Gun
     fireRate: 5
@@ -67,12 +68,14 @@
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazineLightRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
+        priority: 1
         whitelist:
           tags:
             - CartridgeLightRifle
@@ -100,7 +103,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: ItemSlots
     slots:
@@ -109,12 +111,14 @@
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazineRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
+        priority: 1
         whitelist:
           tags:
             - CartridgeRifle
@@ -142,7 +146,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
     soundGunshot:
@@ -154,12 +157,14 @@
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazineRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
+        priority: 1
         whitelist:
           tags:
             - CartridgeRifle

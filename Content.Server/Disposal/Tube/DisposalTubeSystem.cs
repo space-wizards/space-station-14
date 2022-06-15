@@ -72,7 +72,7 @@ namespace Content.Server.Disposal.Tube
             }
 
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
+            SoundSystem.Play(component.ClangSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)

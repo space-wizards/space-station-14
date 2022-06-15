@@ -7,6 +7,8 @@
   - type: Tag
     tags:
       - MagazineHeavyRifle
+  - type: Item
+    size: 10
   - type: BallisticAmmoProvider
     capacity: 100
   - type: ContainerContainer

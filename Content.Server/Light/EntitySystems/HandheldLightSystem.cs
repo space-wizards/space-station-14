@@ -211,7 +211,7 @@ namespace Content.Server.Light.EntitySystems
                 appearance.SetData(ToggleableLightVisuals.Enabled, false);
 
             if (makeNoise)
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOffSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOffSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
 
             return true;
         }
@@ -222,7 +222,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
                 return false;
             }
@@ -232,7 +232,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
                 return false;
             }
@@ -247,7 +247,7 @@ namespace Content.Server.Light.EntitySystems
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(ToggleableLightVisuals.Enabled, true);
 
-            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnSound.GetSound(), component.Owner);
+            SoundSystem.Play(component.TurnOnSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
             return true;
         }
 

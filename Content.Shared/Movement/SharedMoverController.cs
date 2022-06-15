@@ -90,11 +90,11 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridEntityId == EntityUid.Invalid)
+            if (transform.GridEntityId != EntityUid.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.LocalRotation = transform.GridEntityId == EntityUid.Invalid
+                transform.LocalRotation = transform.GridEntityId != EntityUid.Invalid
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
 
@@ -166,11 +166,9 @@ namespace Content.Shared.Movement
 
                 if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
-                    SoundSystem.Play(
+                    SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
-                        sound,
-                        mover.Owner,
-                        AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
                 }
             }
 

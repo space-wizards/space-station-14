@@ -16,7 +16,7 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Access(typeof(DamageableSystem))]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
     public sealed class DamageableComponent : Component
     {
         /// <summary>
@@ -24,7 +24,6 @@ namespace Content.Shared.Damage
         ///     If null, all damage types will be supported.
         /// </summary>
         [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public string? DamageContainerID;
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace Content.Shared.Damage
         ///     Though DamageModifierSets can be deserialized directly, we only want to use the prototype version here
         ///     to reduce duplication.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("damageModifierSet", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string? DamageModifierSetId;
 
@@ -46,8 +44,6 @@ namespace Content.Shared.Damage
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
         [DataField("damage")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -63,16 +59,10 @@ namespace Content.Shared.Damage
         ///     The sum of all damages in the DamageableComponent.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public FixedPoint2 TotalDamage;
 
-        // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
-        [ViewVariables]
         [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
-        [ViewVariables]
-        [DataField("explosionDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
     }
 
     [Serializable, NetSerializable]
