@@ -213,8 +213,15 @@ public sealed class ChatSystem : SharedChatSystem
         message = TransformSpeech(source, message);
 
         _listener.PingListeners(source, message);
-        var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
+        string messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
+        if (message.EndsWith("?")) {
+            messageWrap = Loc.GetString("chat-manager-entity-ask-wrap-message",
+            ("entityName", Name(source)));
+        } else if (message.EndsWith("!") || message == message.ToUpper()) {
+            messageWrap = Loc.GetString("chat-manager-entity-shout-wrap-message",
+            ("entityName", Name(source)));
+        }
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
