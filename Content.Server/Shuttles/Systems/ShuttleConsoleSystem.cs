@@ -220,11 +220,14 @@ namespace Content.Server.Shuttles.Systems
 
             docks ??= GetAllDocks();
 
+            TryComp<TransformComponent>(getShuttleEv.Entity, out var xform);
+
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
                     range,
-                    getShuttleEv.Entity,
+                    xform?.Coordinates,
+                    xform?.LocalRotation,
                     docks));
         }
 

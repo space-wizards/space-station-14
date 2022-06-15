@@ -10,19 +10,26 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
     public readonly float MaxRange;
 
     /// <summary>
-    /// The relevant entity to orient around.
+    /// The relevant coordinates to base the radar around.
     /// </summary>
-    public readonly EntityUid? Entity;
+    public EntityCoordinates? Coordinates;
+
+    /// <summary>
+    /// The relevant rotation to rotate the angle around.
+    /// </summary>
+    public Angle? Angle;
 
     public readonly List<DockingInterfaceState> Docks;
 
     public RadarConsoleBoundInterfaceState(
         float maxRange,
-        EntityUid? entity,
+        EntityCoordinates? coordinates,
+        Angle? angle,
         List<DockingInterfaceState> docks)
     {
         MaxRange = maxRange;
-        Entity = entity;
+        Coordinates = coordinates;
+        Angle = angle;
         Docks = docks;
     }
 }

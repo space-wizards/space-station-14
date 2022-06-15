@@ -47616,7 +47616,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 4832
-  type: CargoOrderConsole
+  type: ComputerSupplyOrdering
   components:
   - pos: 25.5,-20.5
     parent: 61

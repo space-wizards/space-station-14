@@ -186000,7 +186000,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21911
-  type: CargoOrderConsole
+  type: ComputerSupplyOrdering
   components:
   - pos: 21.5,-71.5
     parent: 69

@@ -25,9 +25,11 @@ public sealed class RadarControl : Control
     private const float GridLinesDistance = 32f;
 
     /// <summary>
-    /// Entity used to transform all of the radar objects.
+    /// Used to transform all of the radar objects. Typically is a shuttle console parented to a grid.
     /// </summary>
-    public EntityUid? Entity;
+    private EntityCoordinates? _coordinates;
+
+    private Angle? _rotation;
 
     private float _radarMinRange = 64f;
     private float _radarMaxRange = 256f;
@@ -59,6 +61,12 @@ public sealed class RadarControl : Control
     {
         IoCManager.InjectDependencies(this);
         MinSize = (SizeFull, SizeFull);
+    }
+
+    public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
+    {
+        _coordinates = coordinates;
+        _rotation = angle;
     }
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
@@ -108,7 +116,7 @@ public sealed class RadarControl : Control
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
 
         // No data
-        if (Entity == null)
+        if (_coordinates == null || _rotation == null)
         {
             Clear();
             return;
@@ -134,8 +142,8 @@ public sealed class RadarControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var xform = xformQuery.GetComponent(Entity.Value);
-        var mapPosition = xform.MapPosition;
+
+        var mapPosition = _coordinates.Value.ToMap(_entManager);
 
         if (mapPosition.MapId == MapId.Nullspace)
         {
@@ -144,27 +152,33 @@ public sealed class RadarControl : Control
         }
 
         // Can also use ourGridBody.LocalCenter
-        var offset = xform.Coordinates.Position;
+        var offset = _coordinates.Value.Position;
         var offsetMatrix = Matrix3.CreateTranslation(-offset);
         Matrix3 matrix;
 
         // Draw our grid in detail
-        var ourGridId = xform.GridID;
-        if (ourGridId != GridId.Invalid)
+        var ourGridId = _coordinates.Value.GetGridUid(_entManager);
+        if (ourGridId != null)
         {
-            matrix = xform.InvWorldMatrix;
-            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
+            var negativeRotation = Matrix3.CreateRotation(-_rotation.Value);
+            Matrix3.Multiply(in offsetMatrix, in negativeRotation, out offsetMatrix);
+
+            matrix = Matrix3.CreateTranslation(-_coordinates.Value.Position);
+            var rotation = Matrix3.CreateRotation(-_rotation.Value);
+            Matrix3.Multiply(in rotation, in matrix, out matrix);
+
+            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
             // Draw our grid; use non-filled boxes so it doesn't look awful.
             DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
 
-            DrawDocks(handle, xform.GridEntityId, offsetMatrix);
+            DrawDocks(handle, ourGridId.Value, offsetMatrix);
         }
         else
         {
             matrix = Matrix3.CreateTranslation(-offset);
         }
 
-        var invertedPosition = xform.Coordinates.Position - offset;
+        var invertedPosition = _coordinates.Value.Position - offset;
         invertedPosition.Y = -invertedPosition.Y;
         // Don't need to transform the InvWorldMatrix again as it's already offset to its position.
 

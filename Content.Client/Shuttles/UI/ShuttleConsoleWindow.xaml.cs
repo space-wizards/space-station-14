@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
@@ -17,10 +18,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 {
     private readonly IEntityManager _entManager;
 
-    /// <summary>
-    /// EntityUid of the open console.
-    /// </summary>
-    private EntityUid? _entity;
+    private EntityUid? _shuttleUid;
 
     /// <summary>
     /// Currently selected dock button for camera.
@@ -84,10 +82,10 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
-    public void SetEntity(EntityUid? uid)
+    public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
     {
-        _entity = uid;
-        RadarScreen.Entity = uid;
+        _shuttleUid = coordinates?.EntityId;
+        RadarScreen.SetMatrix(coordinates, angle);
     }
 
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
@@ -115,13 +113,9 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockPorts.DisposeAllChildren();
         DockingScreen.Docks = _docks;
 
-        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform))
-        {
-            // TODO: Show Placeholder
-            return;
-        }
 
-        if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
+        // TODO: Show Placeholder
+        if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var gridDocks))
         {
             var index = 1;
 
@@ -191,15 +185,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
-            // DebugTools.Assert(DockingScreen.ViewedDock == null);
-            _entManager.TryGetComponent<TransformComponent>(_entity, out var xform);
-
             UndockButton.Disabled = false;
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = ent;
             StartAutodockPressed?.Invoke(ent);
-            DockingScreen.GridEntity = xform?.GridEntityId;
+            DockingScreen.GridEntity = _shuttleUid;
             _selectedDock = obj.Button;
         }
     }
@@ -219,9 +210,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         base.Draw(handle);
 
-        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var entXform) ||
-            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridBody) ||
-            !_entManager.TryGetComponent<TransformComponent>(entXform.GridEntityId, out var gridXform))
+        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleUid, out var gridBody) ||
+            !_entManager.TryGetComponent<TransformComponent>(_shuttleUid, out var gridXform))
         {
             return;
         }
