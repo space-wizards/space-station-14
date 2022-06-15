@@ -482,7 +482,7 @@
       - state: green
       - state: reporter
 
--- type: entity
+- type: entity
   id: SpawnPointPsychologist
   parent: SpawnPointJobBase
   name: psychologist
