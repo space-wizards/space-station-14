@@ -2732,73 +2732,73 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 151
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -4.5,5.5
     parent: 0
     type: Transform
 - uid: 152
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -3.5,5.5
     parent: 0
     type: Transform
 - uid: 153
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -1.5,5.5
     parent: 0
     type: Transform
 - uid: 154
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -0.5,5.5
     parent: 0
     type: Transform
 - uid: 155
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -0.5,2.5
     parent: 0
     type: Transform
 - uid: 156
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -1.5,2.5
     parent: 0
     type: Transform
 - uid: 157
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -1.5,-0.5
     parent: 0
     type: Transform
 - uid: 158
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -0.5,-0.5
     parent: 0
     type: Transform
 - uid: 159
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -3.5,2.5
     parent: 0
     type: Transform
 - uid: 160
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -4.5,2.5
     parent: 0
     type: Transform
 - uid: 161
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -4.5,-0.5
     parent: 0
     type: Transform
 - uid: 162
-  type: CargoPad
+  type: CargoPallet
   components:
   - pos: -3.5,-0.5
     parent: 0

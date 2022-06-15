@@ -1,10 +1,10 @@
 - type: entity
-  id: CargoPad
-  name: cargo pad
-  description: Designates valid items to sell to Centcomm.
+  id: CargoPallet
+  name: cargo pallet
+  description: Designates valid items to sell to Centcomm when a shuttle is recalled.
   parent: BaseStructure
   components:
-  - type: CargoPad
+  - type: CargoPallet
   - type: Sprite
     netsync: false
     layers:
