@@ -39,6 +39,8 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not CargoShuttleConsoleBoundUserInterfaceState shuttleState) return;
 
+        _menu?.SetAccountName(shuttleState.AccountName);
+        _menu?.SetShuttleName(shuttleState.ShuttleName);
         _menu?.SetShuttleETA(shuttleState.ShuttleETA);
         _menu?.SetOrders(shuttleState.Orders);
         _menu?.SetCanRecall(shuttleState.CanRecall);

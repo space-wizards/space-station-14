@@ -7,6 +7,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Robust.Server.Maps;
 using Robust.Shared.Collections;
@@ -75,12 +76,13 @@ public sealed partial class CargoSystem
         TryComp<CargoShuttleComponent>(orderDatabase?.Shuttle, out var shuttle);
 
         var orders = GetProjectedOrders(orderDatabase, shuttle);
+        var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
         // TODO: Loc
         _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Shuttle)?.SetState(
             new CargoShuttleConsoleBoundUserInterfaceState(
-                station != null ? MetaData(station.Value).EntityName : "Unknown",
-                orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : "Not found",
+                station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
+                string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
                 CanRecallShuttle(shuttle?.Owner, out _),
                 shuttle?.NextCall,
                 orders));
@@ -192,10 +194,13 @@ public sealed partial class CargoSystem
         if (component.CargoShuttleProto != null)
         {
             var prototype = _protoMan.Index<CargoShuttlePrototype>(component.CargoShuttleProto);
+            var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
+            var name = _random.Pick(possibleNames);
 
             var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
             var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
             var xform = Transform(shuttleUid);
+            MetaData(shuttleUid).EntityName = name;
 
             // TODO: Something better like a bounds check.
             xform.LocalPosition += 100 * _index;
@@ -284,14 +289,7 @@ public sealed partial class CargoSystem
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
         AddCargoContents(shuttle, orderDatabase);
-
-        // Update consoles
-        foreach (var comp in EntityQuery<CargoShuttleConsoleComponent>(true))
-        {
-            var station = _station.GetOwningStation(comp.Owner);
-            if (station != orderDatabase.Owner) continue;
-            UpdateShuttleState(comp);
-        }
+        UpdateShuttleCargoConsoles(shuttle);
 
         _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");
     }

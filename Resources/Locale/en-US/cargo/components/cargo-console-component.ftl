@@ -1,14 +1,14 @@
 ## UI
-cargo-console-menu-title = Cargo Request Console
-cargo-console-menu-account-name-label = Account Name:{" "}
+cargo-console-menu-title = Cargo request console
+cargo-console-menu-account-name-label = Account name:{" "}
 cargo-console-menu-account-name-none-text = None
-cargo-console-menu-account-name-label = Shuttle Name:{" "}
-cargo-console-menu-account-name-none-text = None
+cargo-console-menu-shuttle-name-label = Shuttle name:{" "}
+cargo-console-menu-shuttle-name-none-text = None
 cargo-console-menu-points-label = Points:{" "}
-cargo-console-menu-shuttle-status-label = Shuttle Status:{" "}
+cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
-cargo-console-menu-order-capacity-label = Order Capacity:{" "}
-cargo-console-menu-call-shuttle-button = Activate Telepad
+cargo-console-menu-order-capacity-label = Order capacity:{" "}
+cargo-console-menu-call-shuttle-button = Activate telepad
 cargo-console-menu-permissions-button = Permissions
 cargo-console-menu-categories-label = Categories:{" "}
 cargo-console-menu-search-bar-placeholder = Search
@@ -26,3 +26,8 @@ cargo-console-paper-print-text =
     Requested by: {$requester}
     Reason: {$reason}
     Approved by: {$approver}
+
+# Cargo shuttle console
+cargo-shuttle-console-menu-title = Cargo shuttle console
+cargo-shuttle-console-station-unknown = Unknown
+cargo-shuttle-console-shuttle-not-found = Not found

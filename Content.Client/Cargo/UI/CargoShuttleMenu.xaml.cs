@@ -32,7 +32,17 @@ namespace Content.Client.Cargo.UI
             ShuttleCallButton.OnPressed += OnCallPressed;
             ShuttleRecallButton.OnPressed += OnRecallPressed;
 
-            Title = Loc.GetString("cargo-console-menu-title");
+            Title = Loc.GetString("cargo-shuttle-console-menu-title");
+        }
+
+        public void SetAccountName(string name)
+        {
+            AccountNameLabel.Text = name;
+        }
+
+        public void SetShuttleName(string name)
+        {
+            ShuttleNameLabel.Text = name;
         }
 
         public void SetShuttleETA(TimeSpan? eta)
