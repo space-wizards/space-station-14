@@ -1,3 +1,3 @@
-ent-Memorial = memorial
-    .desc = Commemorating something.
+ent-Memorial = памятник
+    .desc = Увековечивает что-то или кого-то.
     .suffix = { "" }

@@ -1,9 +1,9 @@
-ent-RollerBed = rollerbed
-    .desc = Used to carry patients around without damaging them.
+ent-RollerBed = каталка
+    .desc = Используется для транспортировки пациентов, не нанося вреда.
     .suffix = { "" }
-ent-CheapRollerBed = rollerbed
-    .desc = A run-down rollerbed. Used to carry patients around.
+ent-CheapRollerBed = каталка
+    .desc = Потертая каталка. Используется для транспортировки пациентов.
     .suffix = { "" }
-ent-EmergencyRollerBed = rollerbed
-    .desc = A robust looking rollerbed used for emergencies.
+ent-EmergencyRollerBed = каталка
+    .desc = Прочная на вид каталка, используемая в чрезвычайных ситуациях.
     .suffix = { "" }
