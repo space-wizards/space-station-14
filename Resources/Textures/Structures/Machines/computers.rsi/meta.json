@@ -1558,26 +1558,6 @@
       "name": "television"
     },
     {
-      "name": "television_broken"
-    },
-    {
-      "name": "television_wall"
-    },
-    {
-      "name": "television_wallbroken"
-    },
-    {
-      "name": "television_wallscreen",
-      "delays": [
-        [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
       "name": "telescreen",
       "directions": 4
     },
