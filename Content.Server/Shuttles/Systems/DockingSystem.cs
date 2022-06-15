@@ -1,24 +1,30 @@
 using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
+using Content.Shared.Shuttles.Events;
 using Content.Shared.Verbs;
+using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Shuttles.EntitySystems
+namespace Content.Server.Shuttles.Systems
 {
-    public sealed class DockingSystem : EntitySystem
+    public sealed partial class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
 
+        private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
         private const string DockingJoint = "docking";
         private const float DockingRadius = 0.20f;
@@ -26,14 +32,26 @@ namespace Content.Server.Shuttles.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("docking");
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
-            SubscribeLocalEvent<DockingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
+
+            // Yes this isn't in shuttle console; it may be used by other systems technically.
+            // in which case I would also add their subs here.
+            SubscribeLocalEvent<ShuttleConsoleComponent, AutodockRequestMessage>(OnRequestAutodock);
+            SubscribeLocalEvent<ShuttleConsoleComponent, StopAutodockRequestMessage>(OnRequestStopAutodock);
+            SubscribeLocalEvent<ShuttleConsoleComponent, UndockRequestMessage>(OnRequestUndock);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateAutodock();
         }
 
         private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)
@@ -41,56 +59,6 @@ namespace Content.Server.Shuttles.EntitySystems
             // We'll just pin the door open when docked.
             if (component.Docked)
                 args.Cancel();
-        }
-
-        private void OnVerb(EntityUid uid, DockingComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanInteract ||
-                !args.CanAccess) return;
-
-            InteractionVerb? verb;
-
-            // TODO: Have it open the UI and have the UI do this.
-            if (!component.Docked &&
-                TryComp(uid, out PhysicsComponent? body) &&
-                TryComp(uid, out TransformComponent? xform))
-            {
-                DockingComponent? otherDock = null;
-
-                if (component.Enabled)
-                    otherDock = GetDockable(body, xform);
-
-                verb = new InteractionVerb
-                {
-                    Disabled = otherDock == null,
-                    Text = Loc.GetString("docking-component-dock"),
-                    Act = () =>
-                    {
-                        if (otherDock == null) return;
-                        TryDock(component, otherDock);
-                    }
-                };
-            }
-            else if (component.Docked)
-            {
-                verb = new InteractionVerb
-                {
-                    Disabled = !component.Docked,
-                    Text = Loc.GetString("docking-component-undock"),
-                    Act = () =>
-                    {
-                        if (component.DockedWith == null || !component.Enabled) return;
-
-                        Undock(component);
-                    }
-                };
-            }
-            else
-            {
-                return;
-            }
-
-            args.Verbs.Add(verb);
         }
 
         private DockingComponent? GetDockable(PhysicsComponent body, TransformComponent dockingXform)
@@ -105,12 +73,9 @@ namespace Content.Server.Shuttles.EntitySystems
             var transform = body.GetTransform();
             var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
 
+            // Happens if no power or whatever
             if (dockingFixture == null)
-            {
-                DebugTools.Assert(false);
-                Logger.ErrorS("docking", $"Found null fixture on {(body).Owner}");
                 return null;
-            }
 
             Box2? aabb = null;
 
@@ -142,7 +107,7 @@ namespace Content.Server.Shuttles.EntitySystems
                     if (otherDockingFixture == null)
                     {
                         DebugTools.Assert(false);
-                        Logger.ErrorS("docking", $"Found null docking fixture on {ent}");
+                        _sawmill.Error($"Found null docking fixture on {ent}");
                         continue;
                     }
 
@@ -181,7 +146,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 !TryComp(dockBUid, out DockingComponent? dockB))
             {
                 DebugTools.Assert(false);
-                Logger.Error("docking", $"Tried to cleanup {dockA.Owner} but not docked?");
+                _sawmill.Error($"Tried to cleanup {dockA.Owner} but not docked?");
 
                 dockA.DockedWith = null;
                 if (dockA.DockJoint != null)
@@ -247,6 +212,8 @@ namespace Content.Server.Shuttles.EntitySystems
             {
                 DisableDocking(uid, component);
             }
+
+            _console.RefreshShuttleConsoles();
         }
 
         private void OnDockingReAnchor(EntityUid uid, DockingComponent component, ref ReAnchorEvent args)
@@ -257,6 +224,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             Undock(component);
             Dock(component, other);
+            _console.RefreshShuttleConsoles();
         }
 
         private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
@@ -329,12 +297,11 @@ namespace Content.Server.Shuttles.EntitySystems
         /// </summary>
         public void Dock(DockingComponent dockA, DockingComponent dockB)
         {
-            Logger.DebugS("docking", $"Docking between {dockA.Owner} and {dockB.Owner}");
+            _sawmill.Debug($"Docking between {dockA.Owner} and {dockB.Owner}");
 
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
-
             var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.Owner);
             var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.Owner);
 
@@ -397,10 +364,7 @@ namespace Content.Server.Shuttles.EntitySystems
             EntityManager.EventBus.RaiseEvent(EventSource.Local, msg);
         }
 
-        /// <summary>
-        /// Attempts to dock 2 ports together and will return early if it's not possible.
-        /// </summary>
-        private void TryDock(DockingComponent dockA, DockingComponent dockB)
+        private bool CanDock(DockingComponent dockA, DockingComponent dockB)
         {
             if (!TryComp(dockA.Owner, out PhysicsComponent? bodyA) ||
                 !TryComp(dockB.Owner, out PhysicsComponent? bodyB) ||
@@ -409,7 +373,7 @@ namespace Content.Server.Shuttles.EntitySystems
                 dockA.DockedWith != null ||
                 dockB.DockedWith != null)
             {
-                return;
+                return false;
             }
 
             var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA, DockingFixture);
@@ -417,7 +381,7 @@ namespace Content.Server.Shuttles.EntitySystems
 
             if (fixtureA == null || fixtureB == null)
             {
-                return;
+                return false;
             }
 
             var transformA = bodyA.GetTransform();
@@ -441,7 +405,15 @@ namespace Content.Server.Shuttles.EntitySystems
                 if (intersect) break;
             }
 
-            if (!intersect) return;
+            return intersect;
+        }
+
+        /// <summary>
+        /// Attempts to dock 2 ports together and will return early if it's not possible.
+        /// </summary>
+        private void TryDock(DockingComponent dockA, DockingComponent dockB)
+        {
+            if (!CanDock(dockA, dockB)) return;
 
             Dock(dockA, dockB);
         }
@@ -451,7 +423,7 @@ namespace Content.Server.Shuttles.EntitySystems
             if (dock.DockedWith == null)
             {
                 DebugTools.Assert(false);
-                Logger.ErrorS("docking", $"Tried to undock {(dock).Owner} but not docked with anything?");
+                _sawmill.Error($"Tried to undock {(dock).Owner} but not docked with anything?");
                 return;
             }
 
@@ -467,33 +439,12 @@ namespace Content.Server.Shuttles.EntitySystems
                 _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
-            // Could maybe give the shuttle a light push away, or at least if there's no other docks left?
+            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
+            recentlyDocked.LastDocked = dock.DockedWith.Value;
+            recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
+            recentlyDocked.LastDocked = dock.DockedWith.Value;
 
             Cleanup(dock);
-        }
-
-        /// <summary>
-        /// Raised whenever 2 airlocks dock.
-        /// </summary>
-        public sealed class DockEvent : EntityEventArgs
-        {
-            public DockingComponent DockA = default!;
-            public DockingComponent DockB = default!;
-
-            public EntityUid GridAUid = default!;
-            public EntityUid GridBUid = default!;
-        }
-
-        /// <summary>
-        /// Raised whenever 2 grids undock.
-        /// </summary>
-        public sealed class UndockEvent : EntityEventArgs
-        {
-            public DockingComponent DockA = default!;
-            public DockingComponent DockB = default!;
-
-            public EntityUid GridAUid = default!;
-            public EntityUid GridBUid = default!;
         }
     }
 }

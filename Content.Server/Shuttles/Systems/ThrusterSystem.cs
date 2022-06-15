@@ -9,8 +9,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Content.Shared.Temperature;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -18,7 +18,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Shuttles.EntitySystems
+namespace Content.Server.Shuttles.Systems
 {
     public sealed class ThrusterSystem : EntitySystem
     {
