@@ -1,0 +1,11 @@
+- type: entity
+  id: CargoPad
+  name: cargo pad
+  description: Designates valid items to sell to Centcomm.
+  parent: BaseStructure
+  components:
+  - type: CargoPad
+  - type: Sprite
+    netsync: false
+    layers:
+    - texture: Structures/catwalk.rsi/catwalk_preview.png

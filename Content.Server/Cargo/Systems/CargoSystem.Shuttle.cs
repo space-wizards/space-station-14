@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
@@ -10,6 +11,7 @@ using Robust.Server.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -20,11 +22,13 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapLoader _loader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public MapId? CargoMap { get; private set; }
 
-    // TODO: Store this on the component ya mong
-    // ZTODO: Store cargo shuttle on station comp.
+    private const float ShuttleRecallRange = 50f;
+
+    private const float CallOffset = 100f;
 
     private int _index;
 
@@ -32,7 +36,7 @@ public sealed partial class CargoSystem
     {
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
-        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(OnCargoShuttleRecall);
+        SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
@@ -48,9 +52,10 @@ public sealed partial class CargoSystem
     {
         if (CargoMap == null || component.Shuttle != null) return;
 
-        if (component.CargoShuttleProto != null &&
-            _protoMan.TryIndex<CargoShuttlePrototype>(component.CargoShuttleProto, out var prototype))
+        if (component.CargoShuttleProto != null)
         {
+            var prototype = _protoMan.Index<CargoShuttlePrototype>(component.CargoShuttleProto);
+
             var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
             var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
             var xform = Transform(shuttleUid);
@@ -150,7 +155,23 @@ public sealed partial class CargoSystem
     /// </summary>
     private int GetCargoSpace(CargoShuttleComponent component)
     {
-        return 1;
+        var space = GetCargoPads(component).Count;
+        return space;
+    }
+
+    private List<CargoPadComponent> GetCargoPads(CargoShuttleComponent component)
+    {
+        var pads = new List<CargoPadComponent>();
+
+        foreach (var (comp, compXform) in EntityQuery<CargoPadComponent, TransformComponent>(true))
+        {
+            if (compXform.ParentUid != component.Owner ||
+                !compXform.Anchored) continue;
+
+            pads.Add(comp);
+        }
+
+        return pads;
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -235,18 +256,39 @@ public sealed partial class CargoSystem
     /// <summary>
     /// Retrieves a shuttle for delivery.
     /// </summary>
-    public void RetrieveFromCargoDimension(StationCargoOrderDatabaseComponent orderDatabase)
+    public void CallShuttle(StationCargoOrderDatabaseComponent orderDatabase)
     {
-        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return;
+        if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle) ||
+            !TryComp<TransformComponent>(orderDatabase.Owner, out var xform)) return;
 
         // Already called / not available (TODO: Send message)
         if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
             return;
 
         shuttle.NextCall = null;
-        Transform(shuttle.Owner).Coordinates = new EntityCoordinates(Transform(orderDatabase.Owner).ParentUid, new Vector2(100, 100));
+
+        // Find a valid free area nearby to spawn in on
+        var center = new Vector2();
+        var minRadius = 0f;
+        Box2? aabb = null;
+
+        foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
+        {
+            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+        }
+
+        if (aabb != null)
+        {
+            center = aabb.Value.Center;
+            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
+        }
+
+        Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid, center + _random.NextVector2(minRadius, minRadius + CallOffset));
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
+        AddCargoContents(shuttle, orderDatabase);
+
+        // Update consoles
         foreach (var comp in EntityQuery<CargoShuttleConsoleComponent>(true))
         {
             var station = _station.GetOwningStation(comp.Owner);
@@ -257,12 +299,55 @@ public sealed partial class CargoSystem
         _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");
     }
 
-    public bool CanSendToCargoDimension(EntityUid uid)
+    private void AddCargoContents(CargoShuttleComponent component, StationCargoOrderDatabaseComponent orderDatabase)
     {
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var orders = GetProjectedOrders(orderDatabase, component);
+
+        var pads = GetCargoPads(component);
+        DebugTools.Assert(orders.Sum(o => o.Amount) <= pads.Count);
+
+        for (var i = 0; i < orders.Count; i++)
+        {
+            var order = orders[i];
+
+            Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product,
+                new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition));
+            order.Amount--;
+
+            if (order.Amount == 0)
+            {
+                orders.RemoveSwap(i);
+                orderDatabase.Orders.Remove(order.OrderNumber);
+                i -= 2;
+            }
+            else
+            {
+                orderDatabase.Orders[order.OrderNumber] = order;
+            }
+        }
+    }
+
+    public bool CanRecallShuttle(EntityUid uid, [NotNullWhen(false)] out string? reason)
+    {
+        reason = null;
+
+        if (!TryComp<IMapGridComponent>(uid, out var grid) ||
+            !TryComp<TransformComponent>(uid, out var xform)) return true;
+
+        var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleRecallRange);
+
+        foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
+        {
+            if (grid.GridIndex == other.Index) continue;
+            reason = $"Too close to nearby objects";
+            return false;
+        }
+
         return true;
     }
 
-    private void OnCargoShuttleRecall(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
+    private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
     {
         var stationUid = _station.GetOwningStation(component.Owner);
 
@@ -274,9 +359,9 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!CanSendToCargoDimension(orderDatabase.Shuttle.Value))
+        if (!CanRecallShuttle(orderDatabase.Shuttle.Value, out var reason))
         {
-            _popup.PopupEntity($"Unable to send cargo entity", args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(reason, args.Entity, Filter.Entities(args.Entity));
             return;
         }
 
@@ -287,7 +372,7 @@ public sealed partial class CargoSystem
     {
         var stationUid = _station.GetOwningStation(args.Entity);
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
-        RetrieveFromCargoDimension(orderDatabase);
+        CallShuttle(orderDatabase);
     }
 }
 

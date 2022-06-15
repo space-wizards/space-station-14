@@ -1,4 +1,4 @@
 # Cargo
 - type: cargoShuttle
-  id: testShuttle
-  path: /Maps/infiltrator.yml
+  id: CargoShuttle
+  path: /Maps/cargo_shuttle.yml

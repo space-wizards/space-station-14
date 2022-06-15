@@ -23,7 +23,7 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     public int Index;
 
     [ViewVariables, DataField("cargoShuttleProto")]
-    public string? CargoShuttleProto = "testShuttle";
+    public string? CargoShuttleProto = "CargoShuttle";
 
     /// <summary>
     /// The cargo shuttle assigned to this station.
