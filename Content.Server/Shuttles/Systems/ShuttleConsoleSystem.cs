@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -33,9 +34,15 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
             SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleModeRequestMessage>(OnModeRequest);
             SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
+            SubscribeLocalEvent<DockEvent>(OnDock);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnDock(DockEvent ev)
+        {
+            RefreshShuttleConsoles();
         }
 
         /// <summary>
@@ -43,6 +50,7 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         public void RefreshShuttleConsoles()
         {
+            // TODO: Should really call this per shuttle in some instances.
             var docks = GetAllDocks();
 
             foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))

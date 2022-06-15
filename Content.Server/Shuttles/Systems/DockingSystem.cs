@@ -1,6 +1,7 @@
 using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
@@ -444,30 +445,6 @@ namespace Content.Server.Shuttles.Systems
             recentlyDocked.LastDocked = dock.DockedWith.Value;
 
             Cleanup(dock);
-        }
-
-        /// <summary>
-        /// Raised whenever 2 airlocks dock.
-        /// </summary>
-        public sealed class DockEvent : EntityEventArgs
-        {
-            public DockingComponent DockA = default!;
-            public DockingComponent DockB = default!;
-
-            public EntityUid GridAUid = default!;
-            public EntityUid GridBUid = default!;
-        }
-
-        /// <summary>
-        /// Raised whenever 2 grids undock.
-        /// </summary>
-        public sealed class UndockEvent : EntityEventArgs
-        {
-            public DockingComponent DockA = default!;
-            public DockingComponent DockB = default!;
-
-            public EntityUid GridAUid = default!;
-            public EntityUid GridBUid = default!;
         }
     }
 }

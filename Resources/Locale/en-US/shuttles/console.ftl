@@ -9,6 +9,9 @@ shuttle-console-orientation = Orientation:
 shuttle-console-linear-velocity = Linear velocity:
 shuttle-console-angular-velocity = Angular velocity:
 
+shuttle-console-docked = {$index} (Docked)
+shuttle-console-dock-button = Dock {$suffix}
+
 # Buttons
 shuttle-console-strafing = Strafing mode
 shuttle-console-iff-toggle = Show IFF

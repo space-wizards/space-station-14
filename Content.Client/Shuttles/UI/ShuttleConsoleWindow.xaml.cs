@@ -118,16 +118,26 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
         {
-            var index = 0;
+            var index = 1;
 
             foreach (var state in gridDocks)
             {
                 var ent = state.Entity;
                 var pressed = ent == DockingScreen.ViewedDock;
+                string suffix;
+
+                if (state.Connected)
+                {
+                    suffix = Loc.GetString("shuttle-console-docked", ("index", index));
+                }
+                else
+                {
+                    suffix = $"{index}";
+                }
 
                 var button = new Button()
                 {
-                    Text = $"Dock {index + 1}",
+                    Text = Loc.GetString("shuttle-console-dock-button", ("suffix", suffix)),
                     ToggleMode = true,
                     Pressed = pressed,
                 };
