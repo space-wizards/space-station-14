@@ -9,5 +9,5 @@ namespace Content.Server.Cargo.Components;
 public sealed class StationBankAccountComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("balance")]
-    public int Balance;
+    public int Balance = 2000;
 }
