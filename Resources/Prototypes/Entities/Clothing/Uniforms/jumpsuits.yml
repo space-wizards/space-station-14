@@ -768,4 +768,14 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/atmos.rsi
 
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitPsychologist
+  name: psychologist suit
+  description: I don't lose things. I place things in locations which later elude me.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/psychologist.rsi
 
