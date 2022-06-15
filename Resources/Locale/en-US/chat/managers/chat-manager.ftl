@@ -13,8 +13,12 @@ chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 chat-manager-server-wrap-message = SERVER: {"{0}"}
 chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
                                                 {"{0}"}
-chat-manager-entity-say-wrap-message = {$entityName} says: "{"{0}"}"
-chat-manager-entity-whisper-wrap-message = {$entityName} whispers: "{"{0}"}"
+chat-manager-entity-death-message = {$entityName}'s body seizes up and falls limp, his eyes dead and lifeless...
+chat-manager-entity-scream-message = {$entityName} screams!
+chat-manager-entity-say-wrap-message = {$entityName} says, "{"{0}"}"
+chat-manager-entity-ask-wrap-message = {$entityName} asks, "{"{0}"}"
+chat-manager-entity-shout-wrap-message = {$entityName} exclaims, "{"{0}"}"
+chat-manager-entity-whisper-wrap-message = {$entityName} whispers, "{"{0}"}"
 chat-manager-entity-me-wrap-message = {$entityName} {"{0}"}
 chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {"{0}"}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {"{0}"}
