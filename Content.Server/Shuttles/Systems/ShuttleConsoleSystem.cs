@@ -35,12 +35,18 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleModeRequestMessage>(OnModeRequest);
             SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
             SubscribeLocalEvent<DockEvent>(OnDock);
+            SubscribeLocalEvent<UndockEvent>(OnUndock);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
         }
 
         private void OnDock(DockEvent ev)
+        {
+            RefreshShuttleConsoles();
+        }
+
+        private void OnUndock(UndockEvent ev)
         {
             RefreshShuttleConsoles();
         }
