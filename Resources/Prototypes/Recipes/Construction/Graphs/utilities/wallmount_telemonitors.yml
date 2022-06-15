@@ -1,57 +1,94 @@
 - type: constructionGraph
-  id: SurveillanceCamera
+  id: WallmountTelescreen
   start: start
   graph:
     - node: start
       edges:
-        - to: assembly
+        - to: Frame
           steps:
             - material: Steel
               amount: 2
-              doAfter: 2.0
+              doAfter: 2
 
-    - node: assembly
-      entity: SurveillanceCameraAssembly
+
+    - node: TelescreenFrame
+      entity: WallmountTelescreenFrame
       edges:
-        - to: wired
+        - to: Wired
           steps:
             - material: Cable
-              amount: 1
-              doAfter: 1
+              amount: 5
+              doAfter: 3
+              
         - to: start
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 2
-            - !type:DeleteEntity {}
           steps:
             - tool: Welding
               doAfter: 2
 
-    - node: wired
-      entity: SurveillanceCameraAssembly
+
+    - node: Wired
       edges:
-        - to: camera
+        - to: Screen
           steps:
             - tool: Screwing
               doAfter: 2
-
-    # once a camera is constructed, it will
-    # instead just require wire cutting + welding
-    # to immediately deconstruct
-    - node: camera
-      entity: SurveillanceCameraConstructed
-      edges:
-        - to: start
-          conditions:
-            - !type:AllWiresCut {}
-            - !type:WirePanel {}
+            - prototype: SurveillanceCameraMonitorCircuitboard
+              store: board
+              name: camera monitor board
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: cpuboard
+                
+        - to: TelescreenFrame
           completed:
             - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
+              prototype: CableLVStack1
+              amount: 5
             - !type:DeleteEntity {}
+          conditions:
+            - !type:ContainerEmpty
+              container: "board"
           steps:
-            - tool: Welding
+            - tool: Screwing
+              doAfter: 5
+              
+              
+    - node: Screen
+      edges:
+        - to: Telescreen
+          steps:
+            - tool: Screwing
               doAfter: 2
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+        - to: Wired
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 5
+
+
+    - node: Telescreen
+      entity: WallmountTelescreen
+      edges:
+        - to: Wired
+          completed:
+            - !type:SpawnPrototype
+              prototype: WallmountTelescreenFrame
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:ContainerEmpty
+              container: "board"
+          steps:
+            - tool: Screwing
+              doAfter: 5
 

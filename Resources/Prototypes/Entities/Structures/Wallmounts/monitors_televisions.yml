@@ -1,8 +1,7 @@
 - type: entity
   parent: ComputerBase
-  id: WallmountTelescreen
-  suffix: camera monitor
-  name: telescreen
+  id: WallmountTelescreenFrame
+  name: telescreen frame
   description: Finally, some decent reception around here...
   components:
     - type: Appearance
@@ -11,9 +10,9 @@
           body: telescreen
           bodyBroken: telescreen_broken
           screen: telescreen
-#    - type: Construction
-#      graph: Monitor
-#      node: Television
+    - type: Construction
+      graph: WallmountTelescreen
+      node: TelescreenFrame
     - type: Sprite
       drawdepth: WallMountedItems
       netsync: false
@@ -28,10 +27,6 @@
         - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
           state: telescreen
           shader: shaded
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#b89f25"
     - type: Fixtures
       fixtures:
         - shape:
@@ -65,6 +60,43 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+    - type: Transform
+      anchored: true
+
+- type: entity
+  parent: ComputerBase
+  id: WallmountTelescreen
+  suffix: camera monitor
+  name: telescreen
+  description: Finally, some decent reception around here...
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          body: telescreen
+          bodyBroken: telescreen_broken
+          screen: telescreen
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: telescreen
+          shader: shaded
+    - type: Construction
+      graph: WallmountTelescreen
+      node: Telescreen
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
     - type: DeviceNetwork
       deviceNetId: Wired
       receiveFrequencyId: SurveillanceCamera
@@ -74,13 +106,44 @@
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
-    - type: Transform
-      anchored: true
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraMonitorUiKey.Key
           type: SurveillanceCameraMonitorBoundUserInterface
 
+# Wall Televisions
+
+- type: entity
+  parent: WallmountTelescreenFrame
+  id: WallmountTelevisionFrame
+  name: television frame
+  description: Finally, some decent reception around here...
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: television_wall
+          body: television_wall
+          bodyBroken: television_wallbroken
+          screen: television_wall
+#    - type: Construction
+#      graph: WallmountTelescreen
+#      node: TelevisionFrame
+    - type: Sprite
+      drawdepth: WallMountedItems
+      netsync: false
+      sprite: Structures/Wallmounts/flatscreentv.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television_wall
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: television_wall
+          shader: shaded
+          
 - type: entity
   parent: WallmountTelescreen
   id: WallmountTelevision
@@ -96,7 +159,7 @@
           bodyBroken: television_wallbroken
           screen: television_wallscreen
 #    - type: Construction
-#      graph: Monitor
+#      graph: WallmountTelescreen
 #      node: Television
     - type: Sprite
       drawdepth: WallMountedItems
@@ -110,18 +173,8 @@
         - map: [ "enum.ComputerVisualizer+Layers.Body"]
           state: television_wall
         - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: television_wall
+          state: television_wallscreen
           shader: shaded
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 50
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: SurveillanceCamera
@@ -132,9 +185,11 @@
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
     - type: ActivatableUIRequiresPower
-    - type: Transform
-      anchored: true
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraMonitorUiKey.Key
           type: SurveillanceCameraMonitorBoundUserInterface
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
