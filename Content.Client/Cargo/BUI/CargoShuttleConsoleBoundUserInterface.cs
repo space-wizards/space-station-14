@@ -41,5 +41,6 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 
         _menu?.SetShuttleETA(shuttleState.ShuttleETA);
         _menu?.SetOrders(shuttleState.Orders);
+        _menu?.SetCanRecall(shuttleState.CanRecall);
     }
 }

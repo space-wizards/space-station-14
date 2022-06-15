@@ -34,12 +34,28 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
+        SubscribeLocalEvent<CargoShuttleComponent, MoveEvent>(OnCargoShuttleMove);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+    }
+
+    private void OnCargoShuttleMove(EntityUid uid, CargoShuttleComponent component, ref MoveEvent args)
+    {
+        if (component.Station == null) return;
+
+        var oldCanRecall = component.CanRecall;
+
+        // Check if we can update the recall status.
+        var canRecall = CanRecallShuttle(uid, out _, args.Component);
+        if (oldCanRecall == canRecall) return;
+
+        component.CanRecall = canRecall;
+        _sawmill.Debug($"Updated CanRecall for {ToPrettyString(uid)}");
+        UpdateShuttleCargoConsoles(component);
     }
 
     private void OnCargoOrderStartup(EntityUid uid, StationCargoOrderDatabaseComponent component, ComponentStartup args)
@@ -68,17 +84,19 @@ public sealed partial class CargoSystem
 
             component.Shuttle = shuttleUid;
             comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
-
-            // TODO: This shit is copypaste everywhere.
-            foreach (var console in EntityQuery<CargoShuttleConsoleComponent>(true))
-            {
-                var stationUid = _station.GetOwningStation(console.Owner);
-                if (stationUid != comp.Owner) continue;
-                UpdateShuttleState(console, stationUid);
-            }
-
+            UpdateShuttleCargoConsoles(comp);
             _index++;
             _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
+        }
+    }
+
+    private void UpdateShuttleCargoConsoles(CargoShuttleComponent component)
+    {
+        foreach (var console in EntityQuery<CargoShuttleConsoleComponent>(true))
+        {
+            var stationUid = _station.GetOwningStation(console.Owner);
+            if (stationUid != component.Owner) continue;
+            UpdateShuttleState(console, stationUid);
         }
     }
 
@@ -100,6 +118,7 @@ public sealed partial class CargoSystem
             new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : "Unknown",
                 orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : "Not found",
+                CanRecallShuttle(shuttle?.Owner, out _),
                 shuttle?.NextCall,
                 orders));
     }
@@ -243,13 +262,7 @@ public sealed partial class CargoSystem
         Transform(uid).Coordinates = component.Coordinates;
         DebugTools.Assert(MetaData(uid).EntityPaused);
 
-        foreach (var comp in EntityQuery<CargoShuttleConsoleComponent>(true))
-        {
-            var station = _station.GetOwningStation(comp.Owner);
-            if (station != component.Station) continue;
-            UpdateShuttleState(comp, station);
-        }
-
+        UpdateShuttleCargoConsoles(component);
         _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)} from {ToPrettyString(uid)}");
     }
 
@@ -319,7 +332,7 @@ public sealed partial class CargoSystem
             {
                 orders.RemoveSwap(i);
                 orderDatabase.Orders.Remove(order.OrderNumber);
-                i -= 2;
+                i--;
             }
             else
             {
@@ -328,12 +341,12 @@ public sealed partial class CargoSystem
         }
     }
 
-    public bool CanRecallShuttle(EntityUid uid, [NotNullWhen(false)] out string? reason)
+    public bool CanRecallShuttle(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
     {
         reason = null;
 
         if (!TryComp<IMapGridComponent>(uid, out var grid) ||
-            !TryComp<TransformComponent>(uid, out var xform)) return true;
+            !Resolve(uid.Value, ref xform)) return true;
 
         var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleRecallRange);
 

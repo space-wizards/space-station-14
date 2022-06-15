@@ -5,7 +5,7 @@ namespace Content.Shared.Cargo.Components;
 /// <summary>
 /// Present on cargo shuttles to provide metadata such as preventing spam calling.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedCargoSystem))]
 public sealed class CargoShuttleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("nextCall")]
@@ -13,6 +13,9 @@ public sealed class CargoShuttleComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
     public float Cooldown = 15f;
+
+    [ViewVariables]
+    public bool CanRecall;
 
     /// <summary>
     /// The shuttle's assigned coordinates on the cargo map.

@@ -93,6 +93,11 @@ namespace Content.Client.Cargo.UI
             }
         }
 
+        public void SetCanRecall(bool canRecall)
+        {
+            ShuttleRecallButton.Disabled = !canRecall;
+        }
+
         protected override void Draw(DrawingHandleScreen handle)
         {
             base.Draw(handle);
