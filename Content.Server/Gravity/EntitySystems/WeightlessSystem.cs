@@ -109,6 +109,9 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
+            if (ev.Transform.MapID == MapId.Nullspace)
+                return;
+
             var newGrid = ev.Transform.GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
