@@ -1,6 +1,6 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
-  name: Xeno
+  name: Burrower
   id: MobXeno
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
@@ -55,6 +55,7 @@
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
+    hitsound: Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     arc: claw
     damage:
       groups:
@@ -91,6 +92,23 @@
       - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
+
+- type: entity
+  name: Praetorian
+  parent: MobXeno
+  id: MobXenoPraetorian
+  Components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/praetorian.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:CriticalMobState {}
+      300: !type:DeadMobState {}
 
 - type: entity
   name: space adder
