@@ -149,7 +149,7 @@ namespace Content.Shared.Dispenser
             if (sound == null || !_gameTiming.IsFirstTimePredicted)
                 return;
 
-            SoundSystem.Play(Filter.Local(), sound.GetSound(), uid, audioParams);
+            SoundSystem.Play(sound.GetSound(), Filter.Local(), uid, audioParams);
         }
     }
 }
