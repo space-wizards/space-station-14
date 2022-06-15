@@ -59,6 +59,12 @@ namespace Content.Server.Shuttles.Systems
             if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
                 args.Session.AttachedEntity is not {} user) return;
 
+            // In case they D/C should still clean them up.
+            foreach (var comp in EntityQuery<AutoDockComponent>(true))
+            {
+                comp.Requesters.Remove(user);
+            }
+
             RemovePilot(user);
         }
 

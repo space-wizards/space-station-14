@@ -15,7 +15,6 @@ public sealed partial class DockingSystem
         var dockingQuery = GetEntityQuery<DockingComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
         var recentQuery = GetEntityQuery<RecentlyDockedComponent>();
-        var pilotQuery = GetEntityQuery<PilotComponent>();
 
         foreach (var (comp, body) in EntityQuery<AutoDockComponent, PhysicsComponent>())
         {
@@ -27,22 +26,6 @@ public sealed partial class DockingSystem
 
             // Don't re-dock if we're already docked or recently were.
             if (dock.Docked || recentQuery.HasComponent(comp.Owner)) continue;
-
-            var toRemoveEnts = new RemQueue<EntityUid>();
-
-            // If anyone d/cs handle no message being sent I guess?
-            foreach (var entity in comp.Requesters)
-            {
-                if (pilotQuery.HasComponent(entity)) continue;
-                toRemoveEnts.Add(entity);
-            }
-
-            foreach (var toRemove in toRemoveEnts)
-            {
-                comp.Requesters.Remove(toRemove);
-            }
-
-            if (comp.Requesters.Count == 0) continue;
 
             var dockable = GetDockable(body, xformQuery.GetComponent(comp.Owner));
 
