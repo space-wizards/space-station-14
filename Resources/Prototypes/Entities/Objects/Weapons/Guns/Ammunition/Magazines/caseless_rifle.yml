@@ -59,7 +59,7 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistol
+      - MagazinePistolCaselessRifle
   - type: BallisticAmmoProvider
     whitelist:
       tags:
