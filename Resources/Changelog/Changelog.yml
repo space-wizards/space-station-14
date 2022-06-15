@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Guitar and other items now correctly react on quick equipment key (Z
-      by default)., type: Fix}
-  id: 1194
-  time: '2022-03-12T22:09:11.0000000+00:00'
 - author: moony
   changes:
   - {message: All atmos devices now produce ambient noise when operating., type: Add}
@@ -3003,3 +2997,9 @@ Entries:
   - {message: Tweak pistol firerate from 8 -> 6 and cobra firerate from 8 -> 4., type: Tweak}
   id: 1693
   time: '2022-06-14T07:19:51.0000000+00:00'
+- author: KIBORG04
+  changes:
+  - {message: Entities without hands (like mice) can no longer perform some actions.,
+    type: Remove}
+  id: 1694
+  time: '2022-06-15T01:39:43.0000000+00:00'
