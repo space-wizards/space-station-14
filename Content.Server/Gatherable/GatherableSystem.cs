@@ -70,7 +70,10 @@ public sealed class GatherableSystem : EntitySystem
         // Spawn the loot!
         if (component.MappedLoot == null) return;
 
-        var playerPos = Transform(ev.Player).MapPosition;
+        if (!TryComp<TransformComponent>(ev.Player, out var transformComp))
+            return;
+
+        var playerPos = transformComp.Coordinates;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
