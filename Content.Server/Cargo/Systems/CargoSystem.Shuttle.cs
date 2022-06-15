@@ -6,6 +6,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.GameTicking;
 using Robust.Server.Maps;
 using Robust.Shared.Collections;
@@ -408,15 +409,4 @@ public sealed partial class CargoSystem
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
         CallShuttle(orderDatabase);
     }
-}
-
-[Prototype("cargoShuttle")]
-public sealed class CargoShuttlePrototype : IPrototype
-{
-    [ViewVariables]
-    [IdDataFieldAttribute]
-    public string ID { get; } = default!;
-
-    [ViewVariables, DataField("path")]
-    public ResourcePath Path = default!;
 }

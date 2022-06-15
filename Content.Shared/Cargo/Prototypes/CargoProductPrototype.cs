@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Cargo
+namespace Content.Shared.Cargo.Prototypes
 {
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public sealed class CargoProductPrototype : IPrototype
@@ -13,7 +13,7 @@ namespace Content.Shared.Cargo
         [DataField("description")] private string _description = string.Empty;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

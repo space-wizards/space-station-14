@@ -11,6 +11,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

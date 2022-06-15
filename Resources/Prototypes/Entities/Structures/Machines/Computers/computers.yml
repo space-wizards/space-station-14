@@ -380,7 +380,7 @@
 - type: entity
   id: ComputerSupplyShuttle
   parent: ComputerBase
-  name: Cargo shuttle computer
+  name: cargo shuttle computer
   description: Used to order the shuttle.
   components:
   - type: Appearance

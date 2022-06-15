@@ -3,6 +3,7 @@ using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
