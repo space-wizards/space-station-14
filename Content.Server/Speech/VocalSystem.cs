@@ -1,4 +1,5 @@
 using Content.Server.Speech.Components;
+using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -23,6 +24,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -80,6 +82,8 @@ public sealed class VocalSystem : EntitySystem
         var scale = (float) _random.NextGaussian(1, VocalComponent.Variation);
         var pitchedParams = component.AudioParams.WithPitchScale(scale);
 
+        _popup.PopupEntity(Loc.GetString("chat-manager-entity-scream-message",
+            ("entityName", Name(uid))), uid, Filter.Pvs(uid, entityManager: EntityManager));
         switch (sex)
         {
             case Sex.Male:
