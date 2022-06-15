@@ -14,5 +14,5 @@ reagent-name-space-drugs = космические наркотики
 reagent-desc-space-drugs = Запрещенное вещество, вызывающее ряд таких эффектов, как потеря равновесия и нарушения зрения.
 reagent-name-nocturine = ноктюрин
 reagent-desc-nocturine = Заставляет вас чувствовать сильную усталость и неспособность встать. По сути, это сок, вызывающий боль в костях.
-reagent-name-mute-toxin = mute toxin
-reagent-desc-mute-toxin = Makes you unable to talk while metabolizing.
+reagent-name-mute-toxin = токсин немоты
+reagent-desc-mute-toxin = Лишает вас возможности разговаривать пока в организме.

@@ -1,19 +1,24 @@
 # Popups
 
-network-configurator-device-saved = Successfully saved network device { $device } with address { $address }!
-network-configurator-device-failed = Failed to save network device { $device }! No address assigned!
-network-configurator-device-already-saved = network device: { $device } is already saved.
-network-configurator-device-access-denied = Access denied!
+network-configurator-device-saved = Успешно сохранено сетевое устройство { $device } с адресом { $address }!
+network-configurator-device-failed = Не удалось сохранить сетевое устройство { $device }! Адрес не присвоен!
+network-configurator-device-already-saved = Сетевое устройство: { $device } уже сохранено.
+network-configurator-device-access-denied = Нет доступа!
 # Verbs
-network-configurator-save-device = Save device
-network-configurator-configure = Configure
+network-configurator-save-device = Сохранить устройство
+network-configurator-configure = Настроить
 # ui
-network-configurator-ui-clear-button = Clear
-network-configurator-ui-count-label = { $count } Devices
+network-configurator-ui-clear-button = Очистить
+network-configurator-ui-count-label =
+    { $count } { $count ->
+        [one] устройство
+        [few] устройства
+       *[other] устройств 
+    }.
 # tooltips
-network-configurator-tooltip-set = Sets targets device list
-network-configurator-tooltip-add = Adds to targets device list
-network-configurator-tooltip-edit = Edit targets device list
-network-configurator-tooltip-clear = Clear targets device list
-network-configurator-tooltip-copy = Copy targets device list to multitool
-network-configurator-tooltip-show = Show a holographic visualization of targets device list
+network-configurator-tooltip-set = Создание списка целевых устройств
+network-configurator-tooltip-add = Добавление в список целевых устройств
+network-configurator-tooltip-edit = Редактирование списка целевых устройств
+network-configurator-tooltip-clear = Очистка списка целевых устройств
+network-configurator-tooltip-copy = Копирование списка целевых устройств в мультитул
+network-configurator-tooltip-show = Показывать голографическую визуализацию списка целевых устройств

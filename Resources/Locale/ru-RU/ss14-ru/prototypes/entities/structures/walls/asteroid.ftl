@@ -1,6 +1,6 @@
 ent-AsteroidRock = астероидная порода
-    .desc = Это астероид
+    .desc = Каменистый астероид.
     .suffix = { "" }
-ent-AsteroidRockMining = asteroid rock
-    .desc = An asteroid.
+ent-AsteroidRockMining = астероидная порода
+    .desc = Это астероид.
     .suffix = { "" }

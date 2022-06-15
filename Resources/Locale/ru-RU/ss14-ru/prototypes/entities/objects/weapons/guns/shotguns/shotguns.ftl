@@ -1,11 +1,11 @@
 ent-BaseWeaponShotgun = BaseWeaponShotgun
     .desc = Дерзай — налетай, целься и стреляй.
     .suffix = { "" }
-ent-WeaponShotgunBulldog = Bulldog
-    .desc = It's a magazine-fed shotgun designed for close quarters combat.
+ent-WeaponShotgunBulldog = Бульдог
+    .desc = Магазинный дробовик, предназначенный для ведения ближнего боя.
     .suffix = { "" }
-ent-WeaponShotgunEnforcer = Enforcer
-    .desc = A next-generation Frozen Star shotgun.
+ent-WeaponShotgunEnforcer = Силовик
+    .desc = Дробовик марки Frozen Star нового поколения.
     .suffix = { "" }
 ent-WeaponShotgunDoubleBarreled = двуствольное ружьё
     .desc = Бессмертная классика.

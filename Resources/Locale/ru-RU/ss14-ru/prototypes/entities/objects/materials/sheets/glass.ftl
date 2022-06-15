@@ -24,4 +24,4 @@ ent-SheetRPGlass = плазменное бронестекло
     .desc = { ent-SheetGlassBase.desc }
 ent-SheetRPGlass1 = плазменное бронестекло
     .suffix = Один
-    .desc = { ent-SheetPGlass.desc }
+    .desc = { ent-SheetRPGlass.desc }
