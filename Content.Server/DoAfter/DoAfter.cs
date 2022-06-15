@@ -20,7 +20,9 @@ namespace Content.Server.DoAfter
 
         public EntityCoordinates UserGrid { get; }
 
-        public EntityCoordinates TargetGrid { get; }
+        public EntityCoordinates TargetGrid { get; set; }
+
+        public EntityCoordinates UsedGrid { get; set; }
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
@@ -159,6 +161,25 @@ namespace Content.Server.DoAfter
                     {
                         return true;
                     }
+                }
+            }
+
+            //Allow movement but enforce distance
+            if (EventArgs.DistanceThreshold != null)
+            {
+                if(EventArgs.Target != null && !EventArgs.User.Equals(EventArgs.Target))
+                {
+                    //recalculate Target location in case Target has also moved
+                    TargetGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates;
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, TargetGrid, EventArgs.DistanceThreshold!.Value))
+                        return true;
+                }
+                if (EventArgs.Used != null && !EventArgs.User.Equals(EventArgs.Used))
+                {
+                    //recalculate Used location in case Used has also moved
+                    UsedGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Used!.Value).Coordinates;
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, UsedGrid, EventArgs.DistanceThreshold!.Value))
+                        return true;
                 }
             }
 
