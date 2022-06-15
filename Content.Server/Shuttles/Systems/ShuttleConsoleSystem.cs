@@ -31,7 +31,7 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
-            SubscribeNetworkEvent<ShuttleModeRequestEvent>(OnModeRequest);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleModeRequestMessage>(OnModeRequest);
             SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
@@ -114,9 +114,9 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// Client is requesting a change in the shuttle's driving mode.
         /// </summary>
-        private void OnModeRequest(ShuttleModeRequestEvent msg, EntitySessionEventArgs args)
+        private void OnModeRequest(EntityUid uid, ShuttleConsoleComponent component, ShuttleModeRequestMessage args)
         {
-            if (args.SenderSession.AttachedEntity is not { } player ||
+            if (args.Session.AttachedEntity is not { } player ||
                 !TryComp<PilotComponent>(player, out var pilot) ||
                 !TryComp<TransformComponent>(player, out var xform) ||
                 pilot.Console is not ShuttleConsoleComponent console) return;
@@ -124,7 +124,7 @@ namespace Content.Server.Shuttles.Systems
             if (!console.SubscribedPilots.Contains(pilot) ||
                 !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
 
-            SetShuttleMode(msg.Mode, console, shuttle);
+            SetShuttleMode(args.Mode, console, shuttle);
         }
 
         /// <summary>

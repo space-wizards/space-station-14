@@ -3,10 +3,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Shuttles.Events;
 
 /// <summary>
-/// Raised on a client when it is no longer viewing a dock.
+/// Raised on the client when it wishes to not have 2 docking ports docked.
 /// </summary>
 [Serializable, NetSerializable]
-public class StopAutodockRequestEvent : EntityEventArgs
+public sealed class UndockRequestMessage : BoundUserInterfaceMessage
 {
     public EntityUid Entity;
 }

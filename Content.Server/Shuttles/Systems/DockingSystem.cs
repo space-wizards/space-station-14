@@ -40,9 +40,11 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<DockingComponent, BeforeDoorAutoCloseEvent>(OnAutoClose);
 
-            SubscribeNetworkEvent<AutodockRequestEvent>(OnRequestAutodock);
-            SubscribeNetworkEvent<StopAutodockRequestEvent>(OnRequestStopAutodock);
-            SubscribeNetworkEvent<UndockRequestEvent>(OnRequestUndock);
+            // Yes this isn't in shuttle console; it may be used by other systems technically.
+            // in which case I would also add their subs here.
+            SubscribeLocalEvent<ShuttleConsoleComponent, AutodockRequestMessage>(OnRequestAutodock);
+            SubscribeLocalEvent<ShuttleConsoleComponent, StopAutodockRequestMessage>(OnRequestStopAutodock);
+            SubscribeLocalEvent<ShuttleConsoleComponent, UndockRequestMessage>(OnRequestUndock);
         }
 
         public override void Update(float frameTime)

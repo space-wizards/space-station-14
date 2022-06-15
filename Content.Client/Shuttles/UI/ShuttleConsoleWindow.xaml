@@ -60,7 +60,7 @@
                            Align="Right"/>
                 </GridContainer>
             </PanelContainer>
-            <Button Name="ShuttleMode"
+            <Button Name="ShuttleModeDisplay"
                     Text="{Loc 'shuttle-console-strafing'}"
                     TextAlign="Center"
                     ToggleMode="True"/>

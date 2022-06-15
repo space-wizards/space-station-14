@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised by the client to request the server change a particular shuttle's mode.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class ShuttleModeRequestEvent : EntityEventArgs
+public sealed class ShuttleModeRequestMessage : BoundUserInterfaceMessage
 {
     public ShuttleMode Mode;
 }

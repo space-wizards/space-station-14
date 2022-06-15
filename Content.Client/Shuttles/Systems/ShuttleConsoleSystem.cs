@@ -33,13 +33,5 @@ namespace Content.Client.Shuttles.Systems
             component.Console = shuttleConsoleComponent;
             ActionBlockerSystem.UpdateCanMove(uid);
         }
-
-        public void SendShuttleMode(ShuttleMode mode)
-        {
-            RaiseNetworkEvent(new ShuttleModeRequestEvent()
-            {
-                Mode = mode,
-            });
-        }
     }
 }

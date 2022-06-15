@@ -6,16 +6,16 @@ public sealed class DockingSystem : EntitySystem
 {
     public void StartAutodock(EntityUid uid)
     {
-        RaiseNetworkEvent(new AutodockRequestEvent {Entity = uid});
+        RaiseNetworkEvent(new AutodockRequestMessage {Entity = uid});
     }
 
     public void StopAutodock(EntityUid uid)
     {
-        RaiseNetworkEvent(new StopAutodockRequestEvent() {Entity = uid});
+        RaiseNetworkEvent(new StopAutodockRequestMessage() {Entity = uid});
     }
 
     public void Undock(EntityUid uid)
     {
-        RaiseNetworkEvent(new UndockRequestEvent() {Entity = uid});
+        RaiseNetworkEvent(new UndockRequestMessage() {Entity = uid});
     }
 }

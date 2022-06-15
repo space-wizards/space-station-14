@@ -6,7 +6,7 @@ namespace Content.Shared.Shuttles.Events;
 /// Raised on the client when it's viewing a particular docking port to try and dock it automatically.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class AutodockRequestEvent : EntityEventArgs
+public sealed class AutodockRequestMessage : BoundUserInterfaceMessage
 {
     public EntityUid Entity;
 }

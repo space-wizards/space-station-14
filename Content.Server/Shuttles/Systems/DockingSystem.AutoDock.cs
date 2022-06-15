@@ -81,41 +81,41 @@ public sealed partial class DockingSystem
         }
     }
 
-    private void OnRequestUndock(UndockRequestEvent msg, EntitySessionEventArgs args)
+    private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
     {
-        _sawmill.Debug($"Received undock request for {ToPrettyString(msg.Entity)}");
+        _sawmill.Debug($"Received undock request for {ToPrettyString(args.Entity)}");
 
         // TODO: Validation
-        if (!TryComp<DockingComponent>(msg.Entity, out var dock) ||
+        if (!TryComp<DockingComponent>(args.Entity, out var dock) ||
             !dock.Docked) return;
 
         Undock(dock);
     }
 
-    private void OnRequestAutodock(AutodockRequestEvent msg, EntitySessionEventArgs args)
+    private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received autodock request for {ToPrettyString(msg.Entity)}");
-        var player = args.SenderSession.AttachedEntity;
+        _sawmill.Debug($"Received autodock request for {ToPrettyString(args.Entity)}");
+        var player = args.Session.AttachedEntity;
 
-        if (player == null || !HasComp<DockingComponent>(msg.Entity)) return;
+        if (player == null || !HasComp<DockingComponent>(args.Entity)) return;
 
         // TODO: Validation
-        var comp = EnsureComp<AutoDockComponent>(msg.Entity);
+        var comp = EnsureComp<AutoDockComponent>(args.Entity);
         comp.Requesters.Add(player.Value);
     }
 
-    private void OnRequestStopAutodock(StopAutodockRequestEvent msg, EntitySessionEventArgs args)
+    private void OnRequestStopAutodock(EntityUid uid, ShuttleConsoleComponent component, StopAutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received stop autodock request for {ToPrettyString(msg.Entity)}");
+        _sawmill.Debug($"Received stop autodock request for {ToPrettyString(args.Entity)}");
 
-        var player = args.SenderSession.AttachedEntity;
+        var player = args.Session.AttachedEntity;
 
         // TODO: Validation
-        if (player == null || !TryComp<AutoDockComponent>(msg.Entity, out var comp)) return;
+        if (player == null || !TryComp<AutoDockComponent>(args.Entity, out var comp)) return;
 
         comp.Requesters.Remove(player.Value);
 
         if (comp.Requesters.Count == 0)
-            RemComp<AutoDockComponent>(msg.Entity);
+            RemComp<AutoDockComponent>(args.Entity);
     }
 }
