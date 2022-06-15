@@ -134,7 +134,7 @@ public sealed class RadarControl : Control
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var fixturesQuery = _entManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = _entManager.GetEntityQuery<PhysicsComponent>();
-        var xform = xformQuery.GetComponent(_entity.Value);
+        var xform = xformQuery.GetComponent(Entity.Value);
         var mapPosition = xform.MapPosition;
 
         if (mapPosition.MapId == MapId.Nullspace)

@@ -10,7 +10,7 @@ public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
     public readonly float MaxRange;
 
     /// <summary>
-    /// The relevant entity to base the radar around.
+    /// The relevant entity to orient around.
     /// </summary>
     public readonly EntityUid? Entity;
 

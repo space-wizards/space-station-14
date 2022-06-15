@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
+using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -46,7 +47,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
-        SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetShuttle);
+        SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
 
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
@@ -54,13 +55,14 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
-    private void OnCargoGetShuttle(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
+    private void OnCargoGetConsole(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
     {
         var stationUid = _station.GetOwningStation(uid);
 
-        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase)) return;
+        if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
+            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return;
 
-        args.Entity = orderDatabase.Shuttle;
+        args.Entity = GetShuttleConsole(shuttle);
     }
 
     #region Console
@@ -102,6 +104,17 @@ public sealed partial class CargoSystem
     #endregion
 
     #region Shuttle
+
+    public EntityUid? GetShuttleConsole(CargoShuttleComponent component)
+    {
+        foreach (var (comp, xform) in EntityQuery<ShuttleConsoleComponent, TransformComponent>(true))
+        {
+            if (xform.ParentUid != component.Owner) continue;
+            return comp.Owner;
+        }
+
+        return null;
+    }
 
     private void OnCargoShuttleMove(EntityUid uid, CargoShuttleComponent component, ref MoveEvent args)
     {
