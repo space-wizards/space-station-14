@@ -195,15 +195,12 @@ namespace Content.Server.Flash
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
-            if(_inventorySystem.TryGetSlots(uid, out var slots))
+            foreach (var slot in new string[]{"head", "eyes", "mask"})
             {
-                foreach(var slot in slots)
-                {
-                    if (args.Cancelled)
-                        break;
-                    if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
-                        RaiseLocalEvent(item.Value, args);
-                }
+                if (args.Cancelled)
+                    break;
+                if (_inventorySystem.TryGetSlotEntity(uid, slot, out var item, component))
+                    RaiseLocalEvent(item.Value, args);
             }
         }
 
