@@ -1,13 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: All atmos devices now produce ambient noise when operating., type: Add}
-  - {message: Wiring now has mains hum., type: Add}
-  - {message: Atmos piping has gas movement noise., type: Add}
-  - {message: 'Ambient audio volume levels have been raised, so you can hear them
-      without an explosion blowing your eardrums out.', type: Tweak}
-  id: 1195
-  time: '2022-03-12T22:20:31.0000000+00:00'
 - author: TaralGit
   changes:
   - {message: Pulse carbine and pistol for ERT, type: Add}
@@ -3003,3 +2994,8 @@ Entries:
     type: Remove}
   id: 1694
   time: '2022-06-15T01:39:43.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Syndie gas masks now provide protection from flashbangs, type: Tweak}
+  id: 1695
+  time: '2022-06-15T07:04:53.0000000+00:00'
