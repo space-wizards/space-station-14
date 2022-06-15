@@ -31,12 +31,12 @@ public sealed class RadarControl : Control
 
     private float _radarMinRange = 64f;
     private float _radarMaxRange = 256f;
-    private float _radarRange = 256f;
+    public float RadarRange { get; private set; } = 256f;
 
     private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
-    private float MinimapScale => _radarRange != 0 ? ScaledMinimapRadius / _radarRange : 0f;
+    private float MinimapScale => RadarRange != 0 ? ScaledMinimapRadius / RadarRange : 0f;
 
     /// <summary>
     /// Shows a label on each radar object.
@@ -65,10 +65,10 @@ public sealed class RadarControl : Control
     {
         _radarMaxRange = ls.MaxRange;
 
-        if (_radarMaxRange < _radarRange)
+        if (_radarMaxRange < RadarRange)
         {
-            _radarRange = _radarMaxRange;
-            OnRadarRangeChanged?.Invoke(_radarRange);
+            RadarRange = _radarMaxRange;
+            OnRadarRangeChanged?.Invoke(RadarRange);
         }
 
         if (_radarMaxRange < _radarMinRange)
@@ -93,12 +93,12 @@ public sealed class RadarControl : Control
 
     public void AddRadarRange(float value)
     {
-        var oldValue = _radarRange;
-        _radarRange = MathF.Max(0f, MathF.Max(_radarMinRange, MathF.Min(_radarRange + value, _radarMaxRange)));
+        var oldValue = RadarRange;
+        RadarRange = MathF.Max(0f, MathF.Max(_radarMinRange, MathF.Min(RadarRange + value, _radarMaxRange)));
 
-        if (oldValue.Equals(_radarRange)) return;
+        if (oldValue.Equals(RadarRange)) return;
 
-        OnRadarRangeChanged?.Invoke(_radarRange);
+        OnRadarRangeChanged?.Invoke(RadarRange);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -117,7 +117,7 @@ public sealed class RadarControl : Control
 
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
-        var gridLinesEquatorial = (int) Math.Floor(_radarRange / GridLinesDistance);
+        var gridLinesEquatorial = (int) Math.Floor(RadarRange / GridLinesDistance);
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
@@ -176,7 +176,7 @@ public sealed class RadarControl : Control
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - _radarRange, mapPosition.Position + _radarRange)))
+                     new Box2(mapPosition.Position - RadarRange, mapPosition.Position + RadarRange)))
         {
             if (grid.Index == ourGridId) continue;
 
@@ -224,7 +224,7 @@ public sealed class RadarControl : Control
 
                 // TODO: When we get IFF or whatever we can show controls at a further distance; for now
                 // we don't do that because it would immediately reveal nukies.
-                if (gridCentre.Length < _radarRange)
+                if (gridCentre.Length < RadarRange)
                 {
                     control.Visible = true;
                     var label = (Label) control.GetChild(0);
@@ -284,7 +284,7 @@ public sealed class RadarControl : Control
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length > _radarRange - DockScale) continue;
+                if (uiPosition.Length > RadarRange - DockScale) continue;
 
                 var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
 
@@ -323,7 +323,7 @@ public sealed class RadarControl : Control
             {
                 var vert = matrix.Transform(poly.Vertices[i]);
 
-                if (vert.Length > _radarRange)
+                if (vert.Length > RadarRange)
                 {
                     invalid = true;
                     break;

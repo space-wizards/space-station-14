@@ -42,6 +42,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
 
+        OnRadarRangeChange(RadarScreen.RadarRange);
         RadarScreen.OnRadarRangeChanged += OnRadarRangeChange;
 
         IFFToggle.OnToggled += OnIFFTogglePressed;
