@@ -11,11 +11,12 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        private readonly ChatSystem _chatSystem;
 
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
+            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
         }
 
         public override void Opened()
