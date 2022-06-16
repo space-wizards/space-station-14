@@ -1,21 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Coffee, Tea, and Energy drinks now contain a small amount of theobromine.',
-    type: Add}
-  - {message: Ultragigancer progression slowed a bit. It still fulfills its purpose
-      of taking up a bunch of medbay resources., type: Tweak}
-  - {message: You can no longer insert swabs into disease machines while they are
-      currently making something., type: Fix}
-  - {message: Fixed broken localization string for the vent cough disease., type: Fix}
-  id: 1207
-  time: '2022-03-14T06:05:02.0000000+00:00'
-- author: Carou
-  changes:
-  - {message: 'Added animated friendly purple snake, with the id: purple_snake.',
-    type: Add}
-  id: 1208
-  time: '2022-03-14T15:00:23.0000000+00:00'
 - author: Spillhelm53
   changes:
   - {message: 'Mops can now be used to add or remove liquid from most containers.
@@ -2999,3 +2982,20 @@ Entries:
   - {message: All mobs will now gib after enough damage., type: Fix}
   id: 1706
   time: '2022-06-16T09:25:51.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bagelstation now has a unique job, the Reporter. They exist to follow
+      the nukies around trying to get an interview and blatantly ignore any and all
+      ideas of "safety".', type: Add}
+  - {message: 'Marathon now has a unique job, Psychologist. Interview the clown to
+      discover the true machinations that drive their enigma of a mind, realize you''re
+      just a worse doctor with a cool outfit. These two roles are station exclusives,
+      and won''t be seen anywhere else.', type: Add}
+  id: 1707
+  time: '2022-06-16T09:28:38.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bicaridine, Dermaline, and Hyronalin all OD at 30u. Hyronalin has a
+      low base chance to induce vomiting.', type: Add}
+  id: 1708
+  time: '2022-06-16T09:29:11.0000000+00:00'
