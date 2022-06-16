@@ -248,6 +248,96 @@
   heatCapacity: 10000
 
 - type: tile
+  id: floor_titanium
+  name: titanium floor
+  texture: "titanium"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemTitanium
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: floor_titanium_blue
+  name: blue titanium floor
+  texture: "titanium_blue"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemTitaniumBlue
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: floor_titanium_purple
+  name: purple titanium floor
+  texture: "titanium_purple"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemTitaniumPurple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: floor_titanium_yellow
+  name: yellow titanium floor
+  texture: "titanium_yellow"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemTitaniumYellow
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: floor_plastitanium
+  name: plastitanium floor
+  texture: "plastitanium"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemPlastitanium
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: floor_plastitanium_red
+  name: red plastitanium floor
+  texture: "plastitanium_red"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_floor
+  friction: 0.30
+  item_drop: FloorTileItemPlastitaniumRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: floor_bar
   name: bar floor
   texture: "bar"
