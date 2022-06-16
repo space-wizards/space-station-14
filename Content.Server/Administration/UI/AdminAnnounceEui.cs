@@ -16,7 +16,7 @@ namespace Content.Server.Administration.UI
         public AdminAnnounceEui()
         {
             IoCManager.InjectDependencies(this);
-            _chatSystem = EntitySystem.Get<ChatSystem>();
+            _chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
         }
 
         public override void Opened()
