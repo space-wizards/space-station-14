@@ -1,0 +1,25 @@
+- type: job
+  id: Psychologist
+  name: "psychologist"
+  startingGear: PsychologistGear
+  departments:
+  - Medical
+  icon: "Psychologist"
+  supervisors: "the chief medical officer"
+  access:
+  - Medical
+  - Maintenance
+  extendedAccess:
+  - Chemistry
+
+- type: startingGear
+  id: PsychologistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPsychologist
+    back: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesLeather
+    id: PsychologistPDA
+    ears: ClothingHeadsetMedical
+  innerclothingskirt: ClothingUniformJumpsuitPsychologist
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled
