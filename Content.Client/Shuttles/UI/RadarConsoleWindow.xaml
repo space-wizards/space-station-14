@@ -1,0 +1,6 @@
+<userInterface:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+               Title="{Loc 'radar-console-window-title'}">
+    <ui:RadarControl Name="RadarScreen"/>
+</userInterface:FancyWindow>

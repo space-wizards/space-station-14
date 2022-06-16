@@ -33,11 +33,14 @@
       0: !type:NormalMobState {}
       150: !type:DeadMobState {}
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: bear
-      crit: bear_dead
-      dead: bear_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bear
+      Critical:
+        Base: bear_dead
+      Dead:
+        Base: bear_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatBear

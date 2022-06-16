@@ -215,9 +215,10 @@
       layer:
       - LargeMobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: onestar_boss
-      dead: onestar_boss_wrecked
+    rotate: true
+    states:
+      Alive:
+        Base: onestar_boss
+      Dead:
+        Base: onestar_boss_wrecked
   - type: CombatMode

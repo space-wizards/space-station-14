@@ -1,0 +1,103 @@
+- type: entity
+  name: space dragon
+  parent: SimpleSpaceMobBase
+  id: MobDragon
+  suffix:
+  description: A flying leviathan, loosely related to space carps.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Space dragon!
+    description: Crash, roast, flood the station with carps!
+  - type: Speech
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: PlayerMobMover
+  - type: PlayerInputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/dragon.rsi
+    noRot: true
+    # TODO: Randomise colors when RandomSpriteColor isn't poopoo
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: alive-unshaded
+      shader: unshaded
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+        BaseUnshaded: alive-unshaded
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
+        BaseUnshaded: dead-unshaded
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.40
+      mass: 50
+      mask:
+      - FlyingMobMask
+      layer:
+      - FlyingMobLayer
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      450: !type:CriticalMobState {}
+      500: !type:DeadMobState {}
+  - type: Metabolizer
+    solutionOnBody: false
+    updateFrequency: 0.25
+    metabolizerTypes: [Dragon]
+    groups:
+    - id: Medicine
+    - id: Poison
+  - type: MovementIgnoreGravity
+  - type: NoSlip
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatDragon
+      amount: 2
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 15
+        Slash: 15
+  - type: Dragon
+    spawnsLeft: 2
+    spawnsProto: MobCarpDragon
+    devourAction:
+      event: !type:DragonDevourActionEvent
+      icon: Interface/Actions/devour.png
+      name: action-name-devour
+      description: action-description-devour
+      devourChemical: Ichor
+      devourHealRate: 15.0
+      whitelist:
+        components:
+        - MobState
+        - Door
+        tags:
+        - Wall
+    spawnAction:
+      event: !type:DragonSpawnActionEvent
+      icon: Interface/Actions/carpbirth.png
+      name: action-name-carp-birth
+      description: action-description-carp-birth
+      useDelay: 5
+

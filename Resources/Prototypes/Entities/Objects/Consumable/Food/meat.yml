@@ -48,10 +48,34 @@
       food:
         reagents:
         - ReagentId: Toxin
-          Quantity: 1
+          Quantity: 5
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+
+- type: entity
+  name: raw carp fillet
+  parent: FoodMeatBase
+  # MeatFish?...
+  id: FoodMeatFish
+  description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
 
 - type: entity
   name: raw bacon
@@ -215,6 +239,32 @@
         reagents:
         - ReagentId: Toxin
           Quantity: 5
+
+- type: entity
+  name: dragon flesh
+  parent: FoodMeatBase
+  id: FoodMeatDragon
+  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    layers:
+    - state: dragon
+    - state: dragon_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Ichor
+        Quantity: 2
 
 - type: entity
   name: raw lizard meat
