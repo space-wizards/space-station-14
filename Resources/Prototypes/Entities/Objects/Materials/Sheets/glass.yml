@@ -201,3 +201,79 @@
   - type: Stack
     stackType: ReinforcedPlasmaGlass
     count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetTGlass
+  name: titanium glass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      TitaniumGlass: 500
+  - type: Stack
+    stackType: TitaniumGlass
+  - type: Sprite
+    state: titaniumglass_3
+  - type: Item
+    HeldPrefix: titaniumglass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - titaniumglass
+      - titaniumglass_2
+      - titaniumglass_3
+  - type: Construction
+    graph: Glass
+    node: TitaniumGlass
+
+- type: entity
+  parent: SheetTGlass
+  id: SheetTGlass1
+  name: titanium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: titaniumglass
+  - type: Stack
+    stackType: TitaniumGlass
+    count: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetPTGlass
+  name: plastitanium glass
+  suffix: Full
+  components:
+  - type: Material
+    materials:
+      PlastitaniumGlass: 500
+  - type: Stack
+    stackType: PlastitaniumGlass
+  - type: Sprite
+    state: titaniumglass_3
+  - type: Item
+    HeldPrefix: plastitaniumglass
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      stackLayers:
+      - plastitaniumglass
+      - plastitaniumglass_2
+      - plastitaniumglass_3
+  - type: Construction
+    graph: Glass
+    node: PlastitaniumGlass
+
+- type: entity
+  parent: SheetPTGlass
+  id: SheetPTGlass1
+  name: plastitanium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plastitaniumglass
+  - type: Stack
+    stackType: PlastitaniumGlass
+    count: 1
