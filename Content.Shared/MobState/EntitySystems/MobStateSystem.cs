@@ -1,3 +1,4 @@
+using Content.Shared.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
@@ -12,12 +13,14 @@ using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
+using Robust.Shared.Player;
 
 namespace Content.Shared.MobState.EntitySystems
 {
     public sealed class MobStateSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -37,6 +40,7 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+            SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
         }
@@ -45,6 +49,15 @@ namespace Content.Shared.MobState.EntitySystems
         private void OnStateChanged(MobStateChangedEvent ev)
         {
             _blocker.UpdateCanMove(ev.Entity);
+        }
+
+        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args) {
+            // Check if current mobstate is dead
+            if (args.CurrentMobState.IsDead()) {
+                // Create the popup
+                _popup.PopupEntity(Loc.GetString("chat-manager-entity-death-message",
+                    ("entityName", Name(uid))), uid, Filter.Pvs(uid, entityManager: EntityManager));
+            }
         }
 
         private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
