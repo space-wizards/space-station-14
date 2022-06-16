@@ -197,6 +197,12 @@ namespace Content.Server.Interaction
                 if (!unobstructed)
                     return;
             }
+            else if (ContainerSystem.IsEntityInContainer(user))
+            {
+                // No wide attacking while in containers (holos, lockers, etc).
+                // Can't think of a valid case where you would want this.
+                return;
+            }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
