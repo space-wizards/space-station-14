@@ -274,7 +274,12 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            component.StripDelay = SlotSwitch(slot, component);
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                return;
+            }
+
+            component.StripDelay = slotDef.StripTime;
 
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
@@ -330,9 +335,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            component.StripDelay = SlotSwitch(handName, component);
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -378,7 +381,12 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            component.StripDelay = SlotSwitch(slot, component);
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                return;
+            }
+
+            component.StripDelay = slotDef.StripTime;
 
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
@@ -431,9 +439,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            component.StripDelay = SlotSwitch(handName, component);
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -451,35 +457,6 @@ namespace Content.Server.Strip
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
-        }
-
-        private float SlotSwitch(string slot, StrippableComponent component)
-        {
-            switch (slot)
-            {
-                case "jumpsuit":
-                case "outerClothing":
-                case "back":
-                case "belt":
-                case "id":
-                {
-                    return component.ImportantDelay;
-                }
-                case "pocket1":
-                case "pocket2":
-                case "ears":
-                case "eyes":
-                case "shoes":
-                case "suitstorage":
-                {
-                    return component.LowPriorityDelay;
-                }
-
-                default:
-                {
-                    return component.DefaultStripDelay;
-                }
-            }
         }
 
         private sealed class OpenStrippingCompleteEvent

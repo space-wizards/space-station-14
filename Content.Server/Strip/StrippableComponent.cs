@@ -19,30 +19,14 @@ namespace Content.Server.Strip
         public float OpenDelay = 0.8f;
 
         /// <summary>
-        /// The default strip delay to default to if it doesn't meet params or not specified.
+        /// The strip delay for hands.
         /// </summary>
         [ViewVariables]
-        [DataField("defaultDelay")]
-        public float DefaultStripDelay = 3f;
+        [DataField("handDelay")]
+        public float HandStripDelay = 3f;
 
         /// <summary>
-        /// Delay for important objects that should take awhile to steal
-        /// Jumpsuit, suit, back, belt and ID
-        /// </summary>
-        [ViewVariables]
-        [DataField("importantDelay")]
-        public float ImportantDelay = 5f;
-
-        /// <summary>
-        /// Delay for not so important objects that shouldn't take too long to steal
-        /// Pockets, ears, eyes, shoes and suit storage.
-        /// </summary>
-        [ViewVariables]
-        [DataField("lowPriorityDelay")]
-        public float LowPriorityDelay = 2f;
-
-        /// <summary>
-        /// Store the value for the strip delay
+        /// Store the value for the inventory strip time
         /// </summary>
         [ViewVariables]
         public float StripDelay;
