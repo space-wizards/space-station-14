@@ -81,8 +81,6 @@ namespace Content.Server.Strip
 
             var placingItem = userHands.ActiveHandEntity != null;
 
-            //here from hands
-
             if (TryComp<HandsComponent>(component.Owner, out var hands))
             {
                 if (hands.Hands.TryGetValue(args.Hand, out var hand) && !hand.IsEmpty)
@@ -107,8 +105,6 @@ namespace Content.Server.Strip
             {
                 if (_inventorySystem.TryGetSlotEntity(component.Owner, args.Slot, out _, inventory))
                     placingItem = false;
-
-                //place switch here
 
                 if (placingItem)
                     PlaceActiveHandItemInInventory(user, args.Slot, component);
