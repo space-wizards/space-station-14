@@ -49,7 +49,7 @@ namespace Content.Server.Dragon
             //TODO: Do this when the dragon gets butchered instead
             if (component.DeathSound != null && args.CurrentMobState.IsDead())
             {
-                SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), component.DeathSound.GetSound());
+                SoundSystem.Play(component.DeathSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
                 component.DragonStomach.EmptyContainer();
             }
         }
@@ -66,7 +66,7 @@ namespace Content.Server.Dragon
             EntityManager.QueueDeleteEntity(args.Target);
 
             if (component.DevourSound != null)
-                SoundSystem.Play(Filter.Pvs(args.User, entityManager: EntityManager), component.DevourSound.GetSound());
+                SoundSystem.Play(component.DevourSound.GetSound(), Filter.Pvs(args.User, entityManager: EntityManager));
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -85,7 +85,7 @@ namespace Content.Server.Dragon
 
             // Announces the dragon's spawn with a global bellowing sound
             // NOTE: good idea(?)
-            SoundSystem.Play(Filter.Pvs(uid, 4f, EntityManager), "/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+            SoundSystem.Play("/Audio/Animals/sound_creatures_space_dragon_roar.ogg", Filter.Pvs(uid, 4f, EntityManager));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Content.Server.Dragon
                             _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
                             // Sends the human entity into the stomach so it can be revived later.
                             component.DragonStomach.Insert(target);
-                            SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
+                            SoundSystem.Play("/Audio/Effects/sound_magic_demon_consume.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
                             // Add a spawn for a consumed humanoid
                             component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
                         }
@@ -133,7 +133,7 @@ namespace Content.Server.Dragon
                             // Sends the non-human entity into the stomach
                             // NOTE: I am a bit conflicted on this, and only really adding this because force-delete is bad, is this needed?
                             component.DragonStomach.Insert(target);
-                            SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Effects/sound_magic_demon_consume.ogg");
+                            SoundSystem.Play("/Audio/Effects/sound_magic_demon_consume.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
                         }
 
                         return;
@@ -150,7 +150,7 @@ namespace Content.Server.Dragon
             if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
-                SoundSystem.Play(Filter.Pvs(dragonuid, entityManager: EntityManager), "/Audio/Machines/airlock_creaking.ogg");
+                SoundSystem.Play("/Audio/Machines/airlock_creaking.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
                 component.CancelToken = new CancellationTokenSource();
 
                 _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTime, component.CancelToken.Token, target)

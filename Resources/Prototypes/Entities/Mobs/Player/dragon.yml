@@ -22,8 +22,6 @@
       autoPopulate: false
       name: action-name-disarm
   - type: DoAfter
-  # You can't pull a huge fuckoff dragon right? Butcher him on the spot!
-  #- type: Pullable
   - type: Actions
   - type: Input
   - type: Alerts
@@ -34,11 +32,28 @@
     baseSprintSpeed : 5
   - type: Sprite
     drawdepth: Mobs
+    sprite: Mobs/Aliens/Carps/dragon.rsi
+    netsync: false
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
-      sprite: Mobs/Aliens/Carps/dragon.rsi
+      color: "#00FF00"
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: alive-unshaded
+      shader: unshaded
     noRot: true
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      states:
+        Alive:
+          enum.DamageStateVisualLayers.Base: alive
+          enum.DamageStateVisualLayers.BaseUnshaded: alive-unshaded
+        Critical:
+          enum.DamageStateVisualLayers.Base: crit
+        Dead:
+          enum.DamageStateVisualLayers.Base: dead
+          enum.DamageStateVisualLayers.BaseUnshaded: dead-unshaded
   - type: Fixtures
     fixtures:
     - shape:
@@ -80,12 +95,6 @@
           -1
   - type: MovementIgnoreGravity
   - type: NoSlip
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      crit: crit
-      dead: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatDragon
@@ -99,7 +108,7 @@
     damage:
       types:
         Piercing: 15
-        Slash: 30
+        Slash: 15
     disarmAction:
       enabled: false
       autoPopulate: false

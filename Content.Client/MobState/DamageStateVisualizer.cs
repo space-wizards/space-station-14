@@ -1,61 +1,23 @@
-using System.Collections.Generic;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.MobState
 {
     [UsedImplicitly]
-    public sealed class DamageStateVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class DamageStateVisualizer : AppearanceVisualizer
     {
-        private DamageState _data = DamageState.Alive;
-        private Dictionary<DamageState, string> _stateMap = new();
         private int? _originalDrawDepth;
 
-        [DataField("normal")]
-        private string? _normal;
-
-        [DataField("crit")]
-        private string? _crit;
-
-        [DataField("dead")]
-        private string? _dead;
+        [DataField("states")]
+        private Dictionary<DamageState, Dictionary<string, string>> _states = new();
 
         /// <summary>
         /// Should noRot be turned off when crit / dead.
         /// </summary>
         [DataField("rotate")]
         private bool _rotate;
-
-        void ISerializationHooks.BeforeSerialization()
-        {
-            _stateMap.TryGetValue(DamageState.Alive, out _normal);
-            _stateMap.TryGetValue(DamageState.Critical, out _crit);
-            _stateMap.TryGetValue(DamageState.Dead, out _dead);
-        }
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if (_normal != null)
-            {
-                _stateMap.Add(DamageState.Alive, _normal);
-            }
-
-            if (_crit != null)
-            {
-                _stateMap.Add(DamageState.Critical, _crit);
-            }
-
-            if (_dead != null)
-            {
-                _stateMap.Add(DamageState.Dead, _dead);
-            }
-        }
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -66,12 +28,10 @@ namespace Content.Client.MobState
                 return;
             }
 
-            if (_data == data)
+            if (!_states.TryGetValue(data, out var layers))
             {
                 return;
             }
-
-            _data = data;
 
             if (_rotate)
             {
@@ -83,13 +43,13 @@ namespace Content.Client.MobState
                 };
             }
 
-            if (_stateMap.TryGetValue(_data, out var state))
+            foreach (var (key, state) in layers)
             {
-                sprite.LayerSetState(DamageStateVisualLayers.Base, state);
+                sprite.LayerSetState(key, state);
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
+            if (data == DamageState.Dead && sprite.DrawDepth > (int) DrawDepth.Items)
             {
                 _originalDrawDepth = sprite.DrawDepth;
                 sprite.DrawDepth = (int) DrawDepth.Items;
@@ -104,6 +64,7 @@ namespace Content.Client.MobState
 
     public enum DamageStateVisualLayers : byte
     {
-        Base
+        Base,
+        BaseUnshaded,
     }
 }
