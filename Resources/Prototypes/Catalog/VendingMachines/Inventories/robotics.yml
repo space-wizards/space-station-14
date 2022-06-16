@@ -4,18 +4,19 @@
   spriteName: robotics
   startingInventory:
     #TO DO: add missing prototypes
-    ClothingOuterCoatLab: 4
-    #roboticist under
-    CableStack: 4
+    CableApcStack: 4
     Flash: 4
     PowerCellLargeHigh: 12
-    #proximity sensor
-    #signaller
-    #health anaylzer
+    ProximitySensor: 4
+    RemoteSignaller: 4
+    HandheldHealthAnalyzer: 2
+    RoboticsCircuitImprinterMachineCircuitboard: 1
     Scalpel: 2
     Saw: 1
+    LeftHandDrone: 4
+    RightHandDrone: 4
     #bonesetter
     #anaesthetic
-    #medical mask
+    ClothingMaskSterile: 4
     Screwdriver: 5
     Crowbar: 5
