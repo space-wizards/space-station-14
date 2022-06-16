@@ -158,6 +158,16 @@
      Glass: 500
 
 - type: latheRecipe
+  id: RoboticsCircuitImprinterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: RoboticsCircuitImprinterMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 500
+     Glass: 900
+     Gold: 50
+
+- type: latheRecipe
   id: UniformPrinterMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: UniformPrinterMachineCircuitboard
