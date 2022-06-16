@@ -393,6 +393,28 @@
 #    FoodMeat: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCubanCarp
+  name: cuban carp recipe
+  result: FoodMealCubancarp
+  time: 15
+  solids:
+    FoodDough: 1
+    FoodCheeseSlice: 2
+    FoodChili: 1
+    FoodMeatFish: 2
+
+- type: microwaveMealRecipe
+  id: RecipeSashimi
+  name: sashimi recipe
+  result: FoodMealCubancarp
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFish: 2
+
+
+- type: microwaveMealRecipe
   id: RecipeMisoColaSoup
   name: salty sweet milocola soup recipe
   result: DisgustingSweptSoup
