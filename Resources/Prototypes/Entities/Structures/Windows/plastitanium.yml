@@ -18,13 +18,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300 
+        damage: 1200 
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 900
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -37,7 +37,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    base: rwindow
+    base: ptwindow
   - type: Construction
     graph: Window
     node: plastitaniumWindow
@@ -50,4 +50,4 @@
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 0.75
+    price: 100
