@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: There's intel of an unknown enemy corp creating experimental mechas
-      and testing them on stations., type: Add}
-  id: 1197
-  time: '2022-03-12T23:14:17.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Add lizard accent. Hissss!, type: Add}
@@ -2996,3 +2990,8 @@ Entries:
       minions and spread plague in order to get it., type: Add}
   id: 1696
   time: '2022-06-16T00:53:27.0000000+00:00'
+- author: Delete
+  changes:
+  - {message: Fireplaces provide useful light, type: Add}
+  id: 1697
+  time: '2022-06-16T01:02:51.0000000+00:00'
