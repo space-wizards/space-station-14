@@ -81,6 +81,8 @@ namespace Content.Server.Strip
 
             var placingItem = userHands.ActiveHandEntity != null;
 
+            //here from hands
+
             if (TryComp<HandsComponent>(component.Owner, out var hands))
             {
                 if (hands.Hands.TryGetValue(args.Hand, out var hand) && !hand.IsEmpty)
@@ -105,6 +107,8 @@ namespace Content.Server.Strip
             {
                 if (_inventorySystem.TryGetSlotEntity(component.Owner, args.Slot, out _, inventory))
                     placingItem = false;
+
+                //place switch here
 
                 if (placingItem)
                     PlaceActiveHandItemInInventory(user, args.Slot, component);
@@ -274,6 +278,8 @@ namespace Content.Server.Strip
                 return true;
             }
 
+            component.StripDelay = SlotSwitch(slot, component);
+
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
@@ -328,6 +334,8 @@ namespace Content.Server.Strip
                 return true;
             }
 
+            component.StripDelay = SlotSwitch(handName, component);
+
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
@@ -373,6 +381,8 @@ namespace Content.Server.Strip
 
                 return true;
             }
+
+            component.StripDelay = SlotSwitch(slot, component);
 
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
@@ -425,6 +435,8 @@ namespace Content.Server.Strip
                 return true;
             }
 
+            component.StripDelay = SlotSwitch(handName, component);
+
             var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
@@ -443,6 +455,35 @@ namespace Content.Server.Strip
             _handsSystem.TryDrop(component.Owner, hand, checkActionBlocker: false, handsComp: hands);
             _handsSystem.PickupOrDrop(user, held, handsComp: userHands);
             // hand update will trigger strippable update
+        }
+
+        private float SlotSwitch(string slot, StrippableComponent component)
+        {
+            switch (slot)
+            {
+                case "jumpsuit":
+                case "outerClothing":
+                case "back":
+                case "belt":
+                case "id":
+                {
+                    return component.ImportantDelay;
+                }
+                case "pocket1":
+                case "pocket2":
+                case "ears":
+                case "eyes":
+                case "shoes":
+                case "suitstorage":
+                {
+                    return component.LowPriorityDelay;
+                }
+
+                default:
+                {
+                    return component.DefaultStripDelay;
+                }
+            }
         }
 
         private sealed class OpenStrippingCompleteEvent
