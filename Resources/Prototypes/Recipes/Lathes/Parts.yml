@@ -44,3 +44,94 @@
     Steel: 50
     Glass: 50
     Plastic: 50
+
+- type: latheRecipe
+  id: AdvCapacitatorStockPart
+  icon: Objects/Misc/stock_parts.rsi/adv_capacitor.png
+  result: AdvCapacitatorStockPart
+  completetime: 1
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: AdvMatterBinStockPart
+  icon: Objects/Misc/stock_parts.rsi/advanced_matter_bin.png
+  result: AdvMatterBinStockPart
+  completetime: 1
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: AdvScanModuleStockPart
+  icon: Objects/Misc/stock_parts.rsi/adv_scan_module.png
+  result: AdvScanModuleStockPart
+  completetime: 1
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: NanoManipulatorPart
+  icon: Objects/Misc/stock_parts.rsi/nano_mani.png
+  result: NanoManipulatorStockPart
+  completetime: 1
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: HighMicroLaserStockPart
+  icon: Objects/Misc/stock_parts.rsi/high_micro_laser.png
+  result: HighMicroLaserStockPart
+  completetime: 1
+  materials:
+    Steel: 100
+    Glass: 100
+    Plastic: 100
+
+
+- type: latheRecipe
+  id: SuperCapacitatorStockPart
+  icon: Objects/Misc/stock_parts.rsi/super_capacitor.png
+  result: SuperCapacitatorStockPart
+  completetime: 1
+  materials:
+    Steel: 200
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: SuperMatterBinStockPart
+  icon: Objects/Misc/stock_parts.rsi/super_matter_bin.png
+  result: SuperMatterBinStockPart
+  completetime: 1
+  materials:
+    Steel: 200
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: SuperScanModuleStockPart
+  icon: Objects/Misc/stock_parts.rsi/super_scan_module.png
+  result: SuperScanModuleStockPart
+  completetime: 1
+  materials:
+    Steel: 200
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  id: PicoManipulatorStockPart
+  icon: Objects/Misc/stock_parts.rsi/pico_mani.png
+  result: PicoManipulatorStockPart
+  completetime: 1
+  materials:
+    Steel: 200
+    Glass: 200
+    Plastic: 200
