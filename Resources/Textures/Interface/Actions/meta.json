@@ -24,6 +24,12 @@
 		},
 		{
 			"name": "manifest"
-		}
+		},
+        {
+            "name": "ratKingArmy"
+        },
+        {
+            "name":  "ratKingDomain"
+        }
     ]
 }
