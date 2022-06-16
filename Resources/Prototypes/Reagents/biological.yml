@@ -28,3 +28,31 @@
       effects:
       - !type:SatiateHunger
         factor: 1.5
+
+- type: reagent
+  id: Ichor
+  name: Ichor
+  group: Biological
+  desc: An extremely potent regenerative chemical, perfected by space fauna evolution. Produced in the dragon's digestive system, it is seen as an exotic commodity due to the gargantuan effort of hunting for it.
+  physicalDesc: roaring
+  color: "#f4692e"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+    # Dragon doesn't require airloss healing, so omnizine is still best for humans.
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -5
+            Brute: -5
+            Toxin: -2
+          types:
+            Bloodloss: -5
+  # Just in case you REALLY want to water your plants
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 0.5
