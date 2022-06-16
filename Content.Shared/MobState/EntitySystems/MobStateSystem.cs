@@ -40,7 +40,6 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
-            SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
         }
@@ -49,16 +48,6 @@ namespace Content.Shared.MobState.EntitySystems
         private void OnStateChanged(MobStateChangedEvent ev)
         {
             _blocker.UpdateCanMove(ev.Entity);
-        }
-
-        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args) {
-            // Check if current mobstate is dead
-            if (args.CurrentMobState.IsDead()) {
-                // Create the popup (Disabled for now due to popups not being obscured by LOS)
-                
-                //_popup.PopupEntity(Loc.GetString("chat-manager-entity-death-message",
-                //    ("entityName", Name(uid))), uid, Filter.Pvs(uid, entityManager: EntityManager));
-            }
         }
 
         private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
