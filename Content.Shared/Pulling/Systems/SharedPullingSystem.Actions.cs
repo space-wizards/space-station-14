@@ -3,6 +3,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Cuffs.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -54,6 +55,12 @@ namespace Content.Shared.Pulling
                     return false;
                 }
             }
+            // Can't pull people who are cuffed if someone else is pulling them.
+            // You have to stun the puller or something first.
+            // Throwing sec a bone.
+            if (TryComp<SharedPullableComponent>(pulled, out var pullable) && pullable.Puller != null // Are they being pulled by someone else?
+            && TryComp<SharedCuffableComponent>(pulled, out var cuffable) && !cuffable.CanStillInteract) // Are they cuffed?
+                return false;
 
             var startPull = new StartPullAttemptEvent(puller, pulled);
             RaiseLocalEvent(puller, startPull);
