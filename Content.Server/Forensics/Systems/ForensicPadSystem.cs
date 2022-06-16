@@ -81,8 +81,8 @@ namespace Content.Server.Forensics
             pad.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, pad.ScanDelay, pad.CancelToken.Token, target: target)
             {
-                BroadcastFinishedEvent = new TargetPadSuccessfulEvent(user, target, pad, sample),
-                BroadcastCancelledEvent = new PadCancelledEvent(user, pad),
+                BroadcastFinishedEvent = new TargetPadSuccessfulEvent(user, target, pad.Owner, sample),
+                BroadcastCancelledEvent = new PadCancelledEvent(pad.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -93,40 +93,29 @@ namespace Content.Server.Forensics
         /// <summary>
         /// When the forensic pad is successfully used, take their fingerprint sample and flag the pad as used.
         /// </summary>
-        /// <param name="uid">Entity we're getting the fingerprint from</param>
-        /// <param name="sample">The fingerprint GUID</param>
-        /// <param name="component"><see cref="ForensicPadComponent"/> being used></param>
-        public void PressSample(EntityUid uid, string sample, ForensicPadComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            component.Sample = sample;
-            component.Used = true;
-        }
-
         private void OnTargetPadSuccessful(TargetPadSuccessfulEvent ev)
         {
-            ev.Component.CancelToken = null;
+            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent component))
+                return;
 
-            PressSample(ev.Component.Owner, ev.Sample, ev.Component);
+            component.CancelToken = null;
+            component.Sample = ev.Sample;
+            component.Used = true;
         }
         private void OnPadCancelled(PadCancelledEvent ev)
         {
-            if (ev.Component == null)
+            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent component))
                 return;
-            ev.Component.CancelToken = null;
+            component.CancelToken = null;
         }
 
         private sealed class PadCancelledEvent : EntityEventArgs
         {
-            public EntityUid Uid;
-            public ForensicPadComponent Component;
+            public EntityUid Pad;
 
-            public PadCancelledEvent(EntityUid uid, ForensicPadComponent component)
+            public PadCancelledEvent(EntityUid pad)
             {
-                Uid = uid;
-                Component = component;
+                Pad = pad;
             }
         }
 
@@ -134,14 +123,14 @@ namespace Content.Server.Forensics
         {
             public EntityUid User;
             public EntityUid? Target;
-            public ForensicPadComponent Component;
+            public EntityUid Pad;
             public string Sample = string.Empty;
 
-            public TargetPadSuccessfulEvent(EntityUid user, EntityUid? target, ForensicPadComponent component, string sample)
+            public TargetPadSuccessfulEvent(EntityUid user, EntityUid? target, EntityUid pad, string sample)
             {
                 User = user;
                 Target = target;
-                Component = component;
+                Pad = pad;
                 Sample = sample;
             }
         }

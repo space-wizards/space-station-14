@@ -34,21 +34,24 @@ namespace Content.Server.Forensics
 
         private void OnScanCancelled(ScanCancelledEvent ev)
         {
-            if (ev.Component == null)
+            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent scanner))
                 return;
-            ev.Component.CancelToken = null;
+            scanner.CancelToken = null;
         }
 
         private void OnTargetScanSuccessful(TargetScanSuccessfulEvent ev)
         {
-            ev.Component.CancelToken = null;
+            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent scanner))
+                return;
+
+            scanner.CancelToken = null;
 
             if (!TryComp<ForensicsComponent>(ev.Target, out var forensics))
               return;
 
-            ev.Component.Fingerprints = forensics.Fingerprints.ToList();
-            ev.Component.Fibers = forensics.Fibers.ToList();
-            OpenUserInterface(ev.User, ev.Component);
+            scanner.Fingerprints = forensics.Fingerprints.ToList();
+            scanner.Fibers = forensics.Fibers.ToList();
+            OpenUserInterface(ev.User, scanner);
         }
 
         private void OnAfterInteract(EntityUid uid, ForensicScannerComponent component, AfterInteractEvent args)
@@ -59,8 +62,8 @@ namespace Content.Server.Forensics
             component.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.ScanDelay, component.CancelToken.Token, target: args.Target)
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, component),
-                BroadcastCancelledEvent = new ScanCancelledEvent(uid, component),
+                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(args.User, args.Target, component.Owner),
+                BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -142,13 +145,11 @@ namespace Content.Server.Forensics
 
         private sealed class ScanCancelledEvent : EntityEventArgs
         {
-            public EntityUid Uid;
-            public ForensicScannerComponent Component;
+            public EntityUid Scanner;
 
-            public ScanCancelledEvent(EntityUid uid, ForensicScannerComponent component)
+            public ScanCancelledEvent(EntityUid scanner)
             {
-                Uid = uid;
-                Component = component;
+                Scanner = scanner;
             }
         }
 
@@ -156,12 +157,12 @@ namespace Content.Server.Forensics
         {
             public EntityUid User;
             public EntityUid? Target;
-            public ForensicScannerComponent Component;
-            public TargetScanSuccessfulEvent(EntityUid user, EntityUid? target, ForensicScannerComponent component)
+            public EntityUid Scanner;
+            public TargetScanSuccessfulEvent(EntityUid user, EntityUid? target, EntityUid scanner)
             {
                 User = user;
                 Target = target;
-                Component = component;
+                Scanner = scanner;
             }
         }
     }
