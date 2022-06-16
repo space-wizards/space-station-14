@@ -6,11 +6,13 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Physics;
 
 namespace Content.Server.CombatMode
 {
@@ -64,8 +66,9 @@ namespace Content.Server.CombatMode
             var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == args.Performer);
 
             args.Handled = true;
-
-            if (_random.Prob(component.DisarmFailChance))
+            var chance = CalculateDisarmChance(args.Performer, args.Target, component);
+            Logger.Error("Chance is: " + chance);
+            if (_random.Prob(chance))
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
@@ -89,8 +92,55 @@ namespace Content.Server.CombatMode
             SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
-            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = component.DisarmPushChance };
+            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = chance };
             RaiseLocalEvent(args.Target, eventArgs);
+        }
+
+
+        private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, SharedCombatModeComponent disarmerComp)
+        {
+            float healthMod = 0;
+            if (!TryComp<DamageableComponent>(disarmer, out var disarmerDamage) || !TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
+            {
+               healthMod = 0; // If some of them can't take damage, no effect from this.
+            }
+            else
+            {
+
+                // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
+                healthMod = (((float) disarmedDamage.TotalDamage - (float) disarmerDamage.TotalDamage) / 200); // Ex. You have 0 damage, they have 90, you get a 45% chance increase
+            }
+            Logger.Error("Health mod is: " + healthMod);
+
+            float massMod = 0;
+            float disarmerMass = 0;
+            float disarmedMass = 0;
+
+            if (!TryComp<FixturesComponent>(disarmer, out var disarmerFixtures) || !TryComp<FixturesComponent>(disarmed, out var disarmedFixtures))
+            {
+                massMod = 0;
+            }
+            else
+            {
+                foreach (var fixture in disarmerFixtures.Fixtures.Values)
+                {
+                    disarmerMass += fixture.Mass;
+                }
+                foreach (var fixture in disarmedFixtures.Fixtures.Values)
+                {
+                    disarmedMass += fixture.Mass;
+                }
+
+                massMod = (((disarmedMass / disarmerMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
+            }
+            Logger.Error("Mass mod is: " + massMod);
+
+            float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
+            if (chance <= 0)
+                return 0f;
+            if (chance >= 1)
+                return 1f;
+            return chance;
         }
     }
 }
