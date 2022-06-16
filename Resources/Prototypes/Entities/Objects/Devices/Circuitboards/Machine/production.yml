@@ -79,6 +79,22 @@
         DefaultPrototype: Beaker
         ExamineName: Glass Beaker
 
+ type: entity
+  id: RoboticsCircuitImprinterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: robotics circuit imprinter machine board
+  components:
+  - type: MachineBoard
+    prototype: RoboticsCircuitImprinter
+    requirements:
+      MatterBin: 2
+      Manipulator: 2
+    tagRequirements:
+      GlassBeaker:
+        Amount: 3
+        DefaultPrototype: Beaker
+        ExamineName: Glass Beaker
+
 - type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
