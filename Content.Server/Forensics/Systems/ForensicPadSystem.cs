@@ -97,7 +97,7 @@ namespace Content.Server.Forensics
         /// </summary>
         private void OnTargetPadSuccessful(TargetPadSuccessfulEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent component))
+            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
                 return;
 
             component.CancelToken = null;
@@ -106,7 +106,7 @@ namespace Content.Server.Forensics
         }
         private void OnPadCancelled(PadCancelledEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent component))
+            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
                 return;
             component.CancelToken = null;
         }

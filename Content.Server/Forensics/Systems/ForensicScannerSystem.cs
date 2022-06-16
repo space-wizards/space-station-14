@@ -34,14 +34,14 @@ namespace Content.Server.Forensics
 
         private void OnScanCancelled(ScanCancelledEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent scanner))
+            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent? scanner))
                 return;
             scanner.CancelToken = null;
         }
 
         private void OnTargetScanSuccessful(TargetScanSuccessfulEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent scanner))
+            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent? scanner))
                 return;
 
             scanner.CancelToken = null;
@@ -83,7 +83,7 @@ namespace Content.Server.Forensics
             {
                 if (fiber == pad.Sample)
                 {
-                    SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/Nuke/angry_beep.ogg", uid);
+                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fiber"), uid, Filter.Entities(args.User));
                     return;
                 }
@@ -93,12 +93,12 @@ namespace Content.Server.Forensics
             {
                 if (fingerprint == pad.Sample)
                 {
-                    SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/Nuke/angry_beep.ogg", uid);
+                    SoundSystem.Play("/Audio/Machines/Nuke/angry_beep.ogg", Filter.Pvs(uid), uid);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-fingerprint"), uid, Filter.Entities(args.User));
                     return;
                 }
             }
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/airlock_deny.ogg", uid);
+            SoundSystem.Play("/Audio/Machines/airlock_deny.ogg", Filter.Pvs(uid), uid);
             _popupSystem.PopupEntity(Loc.GetString("forensic-scanner-match-none"), uid, Filter.Entities(args.User));
         }
 
