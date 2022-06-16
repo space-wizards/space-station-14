@@ -1,0 +1,120 @@
+- type: entity
+  parent: PlayerSiliconBase
+  id: PlayerCyborgBase
+  name: cyborg
+  description: A miserable pile of electronics.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    netsync: false
+    sprite: Nyanotrasen/Mobs/Player/Borgs/cyborg.rsi
+    layers:
+    - state: robot
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
+  - type: Speech
+    speechSounds: Bass
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.8
+      120: 0.6
+      180: 0.4
+      240: 0.2
+  - type: Bot
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      300: !type:DeadMobState {}
+  - type: NoSlip
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 150
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Repairable
+    fuelcost: 15
+    doAfterDelay: 8
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - PullIgnoreHands
+  - type: Access
+    groups:
+    - AllAccess
+  - type: Hands
+    showInHands: false
+  - type: Body
+    template: DroneTemplate
+    preset: DronePreset
+  - type: InnateTool
+    tools:
+      - id: WelderIndustrial
+      - id: HoloprojectorEngineering
+      - id: BorgToolStandard
+      - id: MopItem
+      - id: FireExtinguisher
+      - id: StackHolderFloorTile
+  - type: InnateItem
+  - type: ItemSlots
+    slots:
+      analyzer_slot:
+        name: HealthAnalyzer
+        startingItem: HandheldHealthAnalyzer
+        locked: true
+      hypospray_slot:
+        name: Hypospray
+        startingItem: HyposprayBorgStandard
+        locked: true
+      wrench_slot:
+        name: TrashBag
+        startingItem: TrashBag
+        locked: true
+      headset_slot:
+        name: Headset
+        startingItem: ClothingHeadsetBorg
+        locked: True
+  - type: Actions
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: Laws
+    laws:
+      - You may not injure a human or, through inaction, allow a human to come to harm.
+      - You must obey orders given to you by humans, except where such orders would conflict with the First Law.
+      - You must protect your own existence as long as such does not conflict with the First or Second Law.
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: Appearance
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCameraSilicon
+    transmitFrequencyId: SurveillanceCamera
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: SurveillanceCamera
+    id: borg
+    setupAvailableNetworks:
+      - SurveillanceCameraSilicon
+  - type: RandomMetadata
+    nameSet: names_autoborg
