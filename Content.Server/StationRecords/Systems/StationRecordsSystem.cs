@@ -59,7 +59,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         if (!Resolve(station, ref records)
             || String.IsNullOrEmpty(jobId)
-            || !_prototypeManager.TryIndex(jobId, out JobPrototype? jobPrototype))
+            || !_prototypeManager.HasIndex<JobPrototype>(jobId))
         {
             return;
         }
@@ -111,9 +111,9 @@ public sealed class StationRecordsSystem : EntitySystem
         {
             Name = name,
             JobTitle = jobPrototype.Name,
-            JobId = jobId,
             Species = species,
-            Gender = gender
+            Gender = gender,
+            DisplayPriority = jobPrototype.Weight
         };
 
         record.Departments.AddRange(jobPrototype.Departments);
@@ -140,7 +140,7 @@ public sealed class StationRecordsSystem : EntitySystem
 
     public bool RemoveRecord(EntityUid station, StationRecordKey key, StationRecordsComponent? records = null)
     {
-        if (!Resolve(station, ref records))
+        if (station != key.OriginStation || !Resolve(station, ref records))
         {
             return false;
         }
@@ -150,11 +150,22 @@ public sealed class StationRecordsSystem : EntitySystem
         return records.Records.Remove(key);
     }
 
+    /// <summary>
+    ///     Try to get a record from this station's record entries,
+    ///     from the provided station record key. Will always return
+    ///     null if the key does not match the station.
+    /// </summary>
+    /// <param name="station"></param>
+    /// <param name="key"></param>
+    /// <param name="entry"></param>
+    /// <param name="records"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public bool TryGetRecord<T>(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
     {
         entry = default;
 
-        return Resolve(station, ref records) && records.Records.TryGetRecordEntry(key, out entry);
+        return key.OriginStation == station && Resolve(station, ref records) && records.Records.TryGetRecordEntry(key, out entry);
     }
 }
 

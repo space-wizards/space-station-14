@@ -20,12 +20,6 @@ public sealed class GeneralStationRecord
     public string JobTitle = string.Empty;
 
     /// <summary>
-    ///     The original job prototype tied to this record.
-    /// </summary>
-    [ViewVariables]
-    public string JobId = String.Empty;
-
-    /// <summary>
     ///     Species tied to this station record.
     /// </summary>
     [ViewVariables]
@@ -46,14 +40,21 @@ public sealed class GeneralStationRecord
     ///     at round start/player spawn when the job prototype
     ///     ID is accessed.
     /// </summary>
+    /// <remarks>
+    ///     This probably shouldn't be user-settable, otherwise you
+    ///     run the risk of users having the ability to duplicate
+    ///     themselves across departments. Have any custom jobs just
+    ///     be renames of an existing job so that department information
+    ///     is preserved.
+    /// </remarks>
     [ViewVariables]
     public List<string> Departments = new();
 
     /// <summary>
     ///     The priority to display this record at.
-    ///     Higher is better, i.e., 4 will display over 3.
-    ///     Assigned at round start/player spawn.
+    ///     This is taken from the 'weight' of a job prototype,
+    ///     usually.
     /// </summary>
     [ViewVariables]
-    public uint DisplayPriority;
+    public int DisplayPriority;
 }
