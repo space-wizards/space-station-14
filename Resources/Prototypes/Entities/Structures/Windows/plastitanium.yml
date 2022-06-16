@@ -1,0 +1,53 @@
+- type: entity
+  id: PlastitaniumWindow
+  name: plastitanium window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/plastitanium_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/plastitanium_window.rsi
+  - type: Repairable
+    fuelCost: 25
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: RGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300 
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlastitanium:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: rwindow
+  - type: Construction
+    graph: Window
+    node: plastitaniumWindow
+  - type: Appearance
+    visuals:
+    - type: DamageVisualizer
+      thresholds: [4, 8, 12]
+      damageDivisor: 10
+      trackAllDamage: true
+      damageOverlay:
+        sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 0.75
