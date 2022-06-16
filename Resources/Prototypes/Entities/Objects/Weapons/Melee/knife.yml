@@ -89,6 +89,8 @@
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     prefix: inhand
+  - type: DisarmMalus
+    malus: 0.225
 
 - type: entity
   name: survival knife

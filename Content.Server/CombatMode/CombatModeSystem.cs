@@ -1,5 +1,6 @@
 using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
+using Content.Server.CombatMode.Disarm;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
@@ -75,7 +76,8 @@ namespace Content.Server.CombatMode
             var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == args.Performer);
 
             args.Handled = true;
-            var chance = CalculateDisarmChance(args.Performer, args.Target, component);
+            var chance = CalculateDisarmChance(args.Performer, args.Target, inTargetHand, component);
+            Logger.Error("Chance is:" + chance);
             if (_random.Prob(chance))
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
@@ -105,8 +107,10 @@ namespace Content.Server.CombatMode
         }
 
 
-        private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, SharedCombatModeComponent disarmerComp)
+        private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
         {
+            Logger.Error("inTargetHand is: " + inTargetHand);
+
             float healthMod = 0;
             if (!TryComp<DamageableComponent>(disarmer, out var disarmerDamage) || !TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
             {
@@ -146,6 +150,11 @@ namespace Content.Server.CombatMode
                 chance += 0.35f;
             if (HasComp<SlowedDownComponent>(disarmed))
                 chance -= 0.35f;
+
+            if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
+            {
+                chance += malus.Malus;
+            }
 
             if (chance <= 0)
                 return 0f;
