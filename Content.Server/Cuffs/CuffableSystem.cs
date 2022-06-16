@@ -17,7 +17,6 @@ namespace Content.Server.Cuffs
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public override void Initialize()
         {
@@ -25,8 +24,6 @@ namespace Content.Server.Cuffs
 
             SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
-            SubscribeLocalEvent<UncuffSuccessEvent>(OnUncuffSuccess);
-
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
         }
 
@@ -125,15 +122,6 @@ namespace Content.Server.Cuffs
                 Dirty(cuffable);
             }
         }
-
-        /// <summary>
-        ///     Cuff successfully removed, try to place it in the users hand
-        /// </summary>
-        private void OnUncuffSuccess(UncuffSuccessEvent args)
-        {
-            _handsSystem.PickupOrDrop(args.User, args.CuffsToRemove);
-        }
-
     }
 
     /// <summary>
@@ -149,21 +137,6 @@ namespace Content.Server.Cuffs
         {
             User = user;
             Target = target;
-        }
-    }
-
-    /// <summary>
-    /// Event fired on successfully removing the cuffs.
-    /// </summary>
-    public sealed class UncuffSuccessEvent
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid CuffsToRemove;
-
-        public UncuffSuccessEvent(EntityUid user, EntityUid cuffsToRemove)
-        {
-            User = user;
-            CuffsToRemove = cuffsToRemove;
         }
     }
 }

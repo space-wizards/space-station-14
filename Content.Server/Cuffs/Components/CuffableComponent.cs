@@ -245,9 +245,7 @@ namespace Content.Server.Cuffs.Components
                 SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
                 Container.ForceRemove(cuffsToRemove.Value);
-                var uncuffed = new UncuffSuccessEvent(user, cuffsToRemove.Value);
-                _entMan.EventBus.RaiseLocalEvent(user, uncuffed);
-
+                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);
 
                 if (cuff.BreakOnRemove)
                 {
