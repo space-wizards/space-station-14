@@ -1,0 +1,195 @@
+- type: entity
+  name: Rat King
+  id: MobRatKing
+  parent: SimpleMobBase
+  description: He's da rat. He make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.75
+    baseSprintSpeed : 3.75
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/regalrat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: regalrat
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      150: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
+  - type: MeleeWeapon
+    range: 1
+    arcwidth: 0
+    arc: claw
+    damage:
+      types:
+        Slash: 12
+        Piercing: 8
+  - type: Appearance
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: regalrat
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Puller
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat King
+    description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
+    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: RatKing
+    actionRaiseArmy:
+      useDelay: 4
+      icon: Interface/Actions/ratKingArmy.png
+      name: rat-king-raise-army-name
+      description: rat-king-raise-army-description
+      itemIconStyle: NoItem
+      event: !type:RatKingRaiseArmyActionEvent
+    hungerPerArmyUse: 25
+    actionDomain:
+      useDelay: 10
+      icon: Interface/Actions/ratKingDomain.png
+      name: rat-king-domain-name
+      description: rat-king-domain-description
+      itemIconStyle: NoItem
+      event: !type:RatKingDomainActionEvent
+    hungerPerDomainUse: 50
+  - type: Access #he's so baller he gets his own access. NT got nothing on him
+    tags:
+    - Maintenance
+    - Service
+  - type: Butcherable
+    spawned:
+    - id: ClothingHeadHatFancyCrown #how did that get there?
+      amount: 1
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - Plague
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.9
+      75: 0.8
+      100: 0.7
+  - type: MobPrice
+    price: 2500 # rat wealth
+
+- type: entity
+  name: Rat Servant
+  id: MobRatServant
+  parent: SimpleMobBase
+  description: He's da mini rat. He don't make da roolz.
+  components:
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - UnarmedAttackHostiles
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-3
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.2
+      mass: 10
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      25: !type:CriticalMobState {}
+      50: !type:DeadMobState {}
+  - type: MeleeWeapon
+    range: 1
+    arcwidth: 0
+    arc: claw
+    damage:
+      types:
+        Slash: 5
+        Piercing: 2
+  - type: Appearance
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: mouse-3
+      Critical:
+        Base: dead-3
+      Dead:
+        Base: splat-3
+  - type: Puller
+  - type: DiseaseCarrier
+    carrierDiseases:
+    - Plague
+  - type: Vocal
+    # mice are gender neutral who cares
+    maleScream: /Audio/Animals/mouse_squeak.ogg
+    femaleScream: /Audio/Animals/mouse_squeak.ogg
+    wilhelmProbability: 0.001
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Rat Servant
+    description: You are a Rat Servant. You must follow your king's orders.
+    rules: You are an antagonist, scavenge, attack, and serve your king!
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+  - type: NoSlip
+  - type: MobPrice
+    price: 500 # rat wealth
+

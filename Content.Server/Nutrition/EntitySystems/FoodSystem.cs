@@ -196,7 +196,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner)), args.User, Filter.Entities(args.User));
             }
 
-            SoundSystem.Play(Filter.Pvs(uid), args.Food.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-1f));
+            SoundSystem.Play(args.Food.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-1f));
 
             // Try to break all used utensils
             foreach (var utensil in args.Utensils)
@@ -216,7 +216,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid? user = null)
         {
             //We're empty. Become trash.
-            var position = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
+            var position = Transform(component.Owner).MapPosition;
             var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
 
             // If the user is holding the item
@@ -299,7 +299,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
-            SoundSystem.Play(Filter.Pvs(target), food.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-1f));
+            SoundSystem.Play(food.UseSound.GetSound(), Filter.Pvs(target), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
                 EntityManager.QueueDeleteEntity(food.Owner);

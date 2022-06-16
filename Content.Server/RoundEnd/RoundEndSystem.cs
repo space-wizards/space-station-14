@@ -84,7 +84,7 @@ namespace Content.Server.RoundEnd
 
             _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, Color.Gold);
 
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
+            SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
             Timer.Spawn(countdownTime, EndRound, _countdownTokenSource.Token);
@@ -114,7 +114,7 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlerecalled.ogg");
+            SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
 
             ExpectedCountdownEnd = null;
             ActivateCooldown();

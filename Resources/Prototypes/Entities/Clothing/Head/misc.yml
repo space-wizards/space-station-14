@@ -114,6 +114,19 @@
     
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatFancyCrown
+  name: fancy crown
+  description: It smells like dead rat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: MobPrice
+    price: 3000
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"

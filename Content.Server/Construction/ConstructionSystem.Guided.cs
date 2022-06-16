@@ -30,7 +30,7 @@ namespace Content.Server.Construction
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             if (component.TargetNode == component.DeconstructionNode ||

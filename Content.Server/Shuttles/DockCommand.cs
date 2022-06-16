@@ -1,6 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Shuttles.Components;
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
