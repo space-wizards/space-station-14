@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: 'Fixed some audio files that were causing sound effects to play globally,
-      rather than being position-dependent', type: Fix}
-  id: 1211
-  time: '2022-03-15T03:57:54.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed some UI bugs. Ian should no longer be able to make announcements,
     type: Fix}
   id: 1212
@@ -2993,3 +2987,9 @@ Entries:
       rather than under the person being uncuffed.', type: Add}
   id: 1710
   time: '2022-06-16T09:42:32.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Ghost role delay is now a cvar, type: Add}
+  - {message: Set ghost role delay from 5 seconds to 3 seconds, type: Tweak}
+  id: 1711
+  time: '2022-06-16T09:56:09.0000000+00:00'
