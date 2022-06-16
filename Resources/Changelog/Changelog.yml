@@ -1,11 +1,4 @@
 Entries:
-- author: Spillhelm53
-  changes:
-  - {message: 'Mops can now be used to add or remove liquid from most containers.
-      However, Nanotrasen continues to recommend its company-made "Big Yella" brand
-      mop buckets for best results.', type: Add}
-  id: 1209
-  time: '2022-03-14T21:02:26.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Added new generator types: 2x portable generators. Research their boards
@@ -2999,3 +2992,8 @@ Entries:
       low base chance to induce vomiting.', type: Add}
   id: 1708
   time: '2022-06-16T09:29:11.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Added a wiki button to the escape menu, type: Add}
+  id: 1709
+  time: '2022-06-16T09:33:59.0000000+00:00'
