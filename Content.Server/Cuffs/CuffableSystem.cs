@@ -30,7 +30,7 @@ namespace Content.Server.Cuffs
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
         {
             // Can the user access the cuffs, and is there even anything to uncuff?
-            if (!args.CanAccess || component.CuffedHandCount == 0)
+            if (!args.CanAccess || component.CuffedHandCount == 0 || args.Hands == null)
                 return;
 
             // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up

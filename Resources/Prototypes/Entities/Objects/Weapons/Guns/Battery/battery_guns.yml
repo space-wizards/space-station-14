@@ -300,6 +300,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
   - type: MagazineVisuals
     magState: mag
     steps: 5

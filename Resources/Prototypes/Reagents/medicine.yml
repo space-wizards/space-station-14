@@ -539,6 +539,7 @@
       - !type:SatiateHunger
         factor: -1
 
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
   name: reagent-name-omnizine
@@ -598,3 +599,4 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+

@@ -34,8 +34,8 @@ public sealed class WiresSystem : EntitySystem
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
 
-    private const float ScrewTime = 2.5f;
-    private const float ToolTime = 1f;
+    private const float ScrewTime = 1f;
+    private float _toolTime = 0f;
 
     private static DummyWireAction _dummyWire = new DummyWireAction();
 
@@ -649,28 +649,36 @@ public sealed class WiresSystem : EntitySystem
                 break;
         }
 
-        var args = new DoAfterEventArgs(user, ToolTime, default, used)
+        if (_toolTime > 0f)
         {
-            NeedHand = true,
-            BreakOnStun = true,
-            BreakOnDamage = true,
-            BreakOnUserMove = true,
-            TargetFinishedEvent = new OnWireDoAfterEvent
+            var args = new DoAfterEventArgs(user, _toolTime, default, used)
             {
-                Target = used,
-                User = user,
-                Tool = toolEntity,
-                Action = action,
-                Id = id
-            },
-            TargetCancelledEvent = new OnWireDoAfterCancelEvent
-            {
-                Id = id
-            }
-        };
-        _doAfter.DoAfter(args);
+                NeedHand = true,
+                BreakOnStun = true,
+                BreakOnDamage = true,
+                BreakOnUserMove = true,
+                TargetFinishedEvent = new OnWireDoAfterEvent
+                {
+                    Target = used,
+                    User = user,
+                    Tool = toolEntity,
+                    Action = action,
+                    Id = id
+                },
+                TargetCancelledEvent = new OnWireDoAfterCancelEvent
+                {
+                    Id = id
+                }
+            };
 
-        wires.WiresQueue.Add(id);
+            _doAfter.DoAfter(args);
+
+            wires.WiresQueue.Add(id);
+        }
+        else
+        {
+            UpdateWires(used, user, toolEntity, id, action, wires);
+        }
     }
 
 
