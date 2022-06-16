@@ -1,10 +1,17 @@
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.CrewManifest;
 
+[Serializable, NetSerializable]
 public sealed class CrewManifestEntries
 {
-    Dictionary<string, List<CrewManifestEntry>> Entries = new();
+    /// <summary>
+    ///     Entries in the crew manifest. Goes by department ID.
+    /// </summary>
+    public Dictionary<string, List<CrewManifestEntry>> Entries = new();
 }
 
+[Serializable, NetSerializable]
 public sealed class CrewManifestEntry
 {
     public string Name { get; }
