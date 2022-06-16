@@ -1,0 +1,32 @@
+- type: latheRecipe
+  id: ProximitySensor
+  icon:
+    sprite: Textures/Objects/Misc/proximity_sensor.rsi
+    state: icon
+  result: ProximitySensor
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 300
+
+- type: latheRecipe
+  id: LeftHandDrone
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: "l_hand"
+  result: LeftHandDrone
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 100
+
+- type: latheRecipe
+  id: RightHandDrone
+  icon:
+    sprite: Mobs/Silicon/drone.rsi
+    state: "r_hand"
+  result: RightHandDrone
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 100
