@@ -53,11 +53,18 @@ namespace Content.Server.Dragon
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? SpawnPrototype = "MobCarpDragon";
 
-        [DataField("deathSound")]
-        public SoundSpecifier? DeathSound = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
+        public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
 
-        [DataField("devourSound")]
-        public SoundSpecifier? DevourSound = new SoundPathSpecifier("/Audio/Effects/sound_magic_demon_consume.ogg");
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
+        public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/sound_magic_demon_consume.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
+        public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
+        public SoundSpecifier? SoundRoar =
+            new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
 
         public CancellationTokenSource? CancelToken;
 

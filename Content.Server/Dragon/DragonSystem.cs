@@ -15,10 +15,6 @@ using System.Threading;
 using Content.Shared.MobState.State;
 using Content.Shared.Doors.Components;
 
-/*
- * Please don't re-use this code for anything else. If you do sloth will shed you.
- */
-
 namespace Content.Server.Dragon
 {
     public sealed class DragonSystem : EntitySystem
@@ -47,9 +43,11 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (component.DeathSound != null && args.CurrentMobState.IsDead())
+            if (args.CurrentMobState.IsDead())
             {
-                SoundSystem.Play(component.DeathSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
+                if (component.SoundDeath != null)
+                    SoundSystem.Play(component.SoundDeath.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
+
                 component.DragonStomach.EmptyContainer();
             }
         }
@@ -65,8 +63,8 @@ namespace Content.Server.Dragon
             //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
             EntityManager.QueueDeleteEntity(args.Target);
 
-            if (component.DevourSound != null)
-                SoundSystem.Play(component.DevourSound.GetSound(), Filter.Pvs(args.User, entityManager: EntityManager));
+            if (component.SoundDevour != null)
+                SoundSystem.Play(component.SoundDevour.GetSound(), Filter.Pvs(args.User, entityManager: EntityManager));
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -75,7 +73,7 @@ namespace Content.Server.Dragon
 
             //Dragon doesn't actually chew, since he sends targets right into his stomach.
             //I did it mom, I added ERP content into upstream. Legally!
-            component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon-stomach");
+            component.DragonStomach = _containerSystem.EnsureContainer<Container>(uid, "dragon_stomach");
 
             if (component.DevourAction != null)
                 _actionsSystem.AddAction(uid, component.DevourAction, null);
@@ -83,9 +81,8 @@ namespace Content.Server.Dragon
             if (component.SpawnAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnAction, null);
 
-            // Announces the dragon's spawn with a global bellowing sound
-            // NOTE: good idea(?)
-            SoundSystem.Play("/Audio/Animals/sound_creatures_space_dragon_roar.ogg", Filter.Pvs(uid, 4f, EntityManager));
+            if (component.SoundRoar != null)
+                SoundSystem.Play(component.SoundRoar.GetSound(), Filter.Pvs(uid, 4f, EntityManager));
         }
 
         /// <summary>
@@ -98,13 +95,9 @@ namespace Content.Server.Dragon
             args.Handled = true;
             var target = args.Target;
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
-            var halfedIchorInjection = new Solution(component.DevourChem, component.DevourHealRate / 2);
 
             //Check if the target is valid. The effects should be possible to accomplish on either a wall or a body.
             //Eating bodies is instant, the wall requires a doAfter.
-
-            //NOTE: I honestly don't know much on how one detects valid eating targets, so right now I am using a body component to tell them apart
-            //That way dragons can't devour guardians and other dragons. Yet.
 
             if (EntityManager.TryGetComponent(target, out MobStateComponent? targetState))
             {
@@ -117,24 +110,20 @@ namespace Content.Server.Dragon
                         //Humanoid devours allow dragon to get eggs, corpses included
                         if (EntityManager.HasComponent<HumanoidAppearanceComponent>(target))
                         {
-                            // inject the healing chemical into the system.
-                            _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
-                            // Sends the human entity into the stomach so it can be revived later.
-                            component.DragonStomach.Insert(target);
-                            SoundSystem.Play("/Audio/Effects/sound_magic_demon_consume.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
                             // Add a spawn for a consumed humanoid
                             component.SpawnsLeft = Math.Min(component.SpawnsLeft + 1, component.MaxSpawns);
                         }
                         //Non-humanoid mobs can only heal dragon for half the normal amount, with no additional spawn tickets
                         else
                         {
-                            // heal HALF the damage
-                            _bloodstreamSystem.TryAddToChemicals(dragonuid, halfedIchorInjection);
-                            // Sends the non-human entity into the stomach
-                            // NOTE: I am a bit conflicted on this, and only really adding this because force-delete is bad, is this needed?
-                            component.DragonStomach.Insert(target);
-                            SoundSystem.Play("/Audio/Effects/sound_magic_demon_consume.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
+                            ichorInjection.ScaleSolution(0.5f);
                         }
+
+                        _bloodstreamSystem.TryAddToChemicals(dragonuid, ichorInjection);
+                        component.DragonStomach.Insert(target);
+
+                        if (component.SoundDevour != null)
+                            SoundSystem.Play(component.SoundDevour.GetSound(), Filter.Pvs(dragonuid, entityManager: EntityManager));
 
                         return;
                     default:
@@ -150,7 +139,10 @@ namespace Content.Server.Dragon
             if (_tagSystem.HasTag(target, "Wall") || (_tagSystem.HasTag(target, "Window") || EntityManager.HasComponent<DoorComponent>(target)))
             {
                 _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), dragonuid, Filter.Entities(dragonuid));
-                SoundSystem.Play("/Audio/Machines/airlock_creaking.ogg", Filter.Pvs(dragonuid, entityManager: EntityManager));
+
+                if (component.SoundStructureDevour != null)
+                    SoundSystem.Play(component.SoundStructureDevour.GetSound(), Filter.Pvs(dragonuid, entityManager: EntityManager));
+
                 component.CancelToken = new CancellationTokenSource();
 
                 _doAfterSystem.DoAfter(new DoAfterEventArgs(dragonuid, component.DevourTime, component.CancelToken.Token, target)
