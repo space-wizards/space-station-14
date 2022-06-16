@@ -439,6 +439,22 @@
     - PowerCellSmallSuper
     - PowerCellMediumSuper
     - PowerCellLargeSuper
+
+- type: technology
+  name: "robotics technology"
+  id: RoboticsTechnology
+  description: Robot parts.
+  icon:
+    sprite: Nyanotrasen/Mobs/Robots/cleanbot.rsi
+    state: cleanbot
+  requiredPoints: 10000
+  requiredTechnologies:
+    - CompactPowerTechnology
+    - AdvancedPartsTechnology
+  unlockedRecipes:
+    - LeftHandDrone
+    - RightHandDrone
+ 
 # Basic Parts Technology Tree
 
 - type: technology
@@ -457,6 +473,39 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
+
+- type: technology
+  name: "advanced parts technology"
+  id: AdvancedPartsTechnology
+  description: NOW we're getting somewhere.
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: adv_capacitor
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicPartsTechnology
+  unlockedRecipes:
+    - AdvancedCapacitorStockPart
+    - AdvancedScanningModuleStockPart
+    - HighPowerMicroLaserStockPart
+    - AdvancedMatterBinStockPart
+    - NanoManipulatorStockPart
+
+- type: technology
+  name: "super parts technology"
+  id: SuperPartsTechnology
+  description: Nanotrasen-patented Super Part technology.
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: super_capacitor
+  requiredPoints: 8000
+  requiredTechnologies:
+    - AdvancedPartsTechnology
+  unlockedRecipes:
+    - SuperCapacitorStockPart
+    - PicoManipulatorStockPart
+    - SuperMatterBinStockPart
+    - PhasicScanningModuleStockPart
 
 # Bluespace Theory Technology Tree
 
