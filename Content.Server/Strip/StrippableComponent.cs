@@ -9,9 +9,14 @@ namespace Content.Server.Strip
     [Access(typeof(StrippableSystem))]
     public sealed class StrippableComponent : SharedStrippableComponent
     {
+        /// <summary>
+        /// How long it takes to open the strip menu.
+        /// This should be relatively short so it's not a hassle
+        /// but so it also doesn't open immediately during melee combat
+        /// </summary>
         [ViewVariables]
         [DataField("openDelay")]
-        public float OpenDelay = 1f;
+        public float OpenDelay = 0.8f;
 
         /// <summary>
         /// The default strip delay to default to if it doesn't meet params or not specified.
