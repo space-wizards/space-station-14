@@ -337,12 +337,12 @@ public sealed class ChatSystem : SharedChatSystem
 
     private string GetToneBySuffix(string s) {
         var toneSuffixes = new Dictionary<string,string>() {
+            {"?!", "chat-manager-entity-exclaims-wrap-message"},
+            {"!?", "chat-manager-entity-exclaims-wrap-message"},
             {"?", "chat-manager-entity-ask-wrap-message"},
             {"!!!", "chat-manager-entity-scream-wrap-message"},
             {"!!", "chat-manager-entity-shout-wrap-message"},
             {"!", "chat-manager-entity-yell-wrap-message"},
-            {"!?", "chat-manager-entity-exclaims-wrap-message"},
-            {"?!", "chat-manager-entity-exclaims-wrap-message"}
         };
         string? tbr = "chat-manager-entity-say-wrap-message";
 
