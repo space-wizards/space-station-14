@@ -60,12 +60,14 @@
       groups:
         Brute: 20
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: running
-      crit: crit
-      dead: dead
+  - type: DamageStateVisuals
+    rotate: true
+    Alive:
+      enum.DamageStateVisualLayers.Base: running
+    Critical:
+      enum.DamageStateVisualLayers.Base: crit
+    Dead:
+      enum.DamageStateVisualLayers.Base: dead
   - type: Puller
   - type: Butcherable
     butcheringType: Spike

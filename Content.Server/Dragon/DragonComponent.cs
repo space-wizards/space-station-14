@@ -54,17 +54,17 @@ namespace Content.Server.Dragon
         public string? SpawnPrototype = "MobCarpDragon";
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
-        public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+        public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
-        public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/sound_magic_demon_consume.ogg");
+        public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
         public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
         public SoundSpecifier? SoundRoar =
-            new SoundPathSpecifier("/Audio/Animals/sound_creatures_space_dragon_roar.ogg");
+            new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
         public CancellationTokenSource? CancelToken;
 

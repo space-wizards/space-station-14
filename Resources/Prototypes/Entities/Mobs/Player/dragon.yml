@@ -1,7 +1,8 @@
 - type: entity
   name: space dragon
-  parent: SimpleSpaceMob
+  parent: SimpleSpaceMobBase
   id: MobDragon
+  suffix:
   description: A flying leviathan, loosely related to space carps.
   components:
   - type: GhostTakeoverAvailable
@@ -22,25 +23,26 @@
   - type: Sprite
     sprite: Mobs/Aliens/Carps/dragon.rsi
     noRot: true
+    # TODO: Randomise colors when RandomSpriteColor isn't poopoo
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: alive
-      color: "#00FF00"
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: alive-unshaded
       shader: unshaded
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      states:
-        Alive:
-          enum.DamageStateVisualLayers.Base: alive
-          enum.DamageStateVisualLayers.BaseUnshaded: alive-unshaded
-        Critical:
-          enum.DamageStateVisualLayers.Base: crit
-        Dead:
-          enum.DamageStateVisualLayers.Base: dead
-          enum.DamageStateVisualLayers.BaseUnshaded: dead-unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: alive
+        enum.DamageStateVisualLayers.BaseUnshaded: alive-unshaded
+      Critical:
+        enum.DamageStateVisualLayers.Base: crit
+      Dead:
+        enum.DamageStateVisualLayers.Base: dead
+        enum.DamageStateVisualLayers.BaseUnshaded: dead-unshaded
+  - type: Physics
+    bodyType: KinematicController
   - type: Fixtures
     fixtures:
     - shape:
