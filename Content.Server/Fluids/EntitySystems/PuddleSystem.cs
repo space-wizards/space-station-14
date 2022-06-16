@@ -70,8 +70,9 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
-            if (puddleComponent.CurrentVolume < puddleComponent.SlipThreshold
-                && TryComp(entityUid, out StepTriggerComponent? stepTrigger))
+            if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
+                 puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
+                TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
                 _stepTrigger.SetActive(entityUid, false, stepTrigger);
             }
