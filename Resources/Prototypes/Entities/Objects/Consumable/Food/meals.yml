@@ -371,7 +371,7 @@
   name: Sashimi
   parent: FoodMealBase
   id: FoodMealSashimi
-  description: It's taste can only be described as "Exotic". The poisoning though? That's pretty common.
+  description: Its taste can only be described as "Exotic". The poisoning though? That's pretty common.
   components:
   - type: Sprite
     state: sashimi
