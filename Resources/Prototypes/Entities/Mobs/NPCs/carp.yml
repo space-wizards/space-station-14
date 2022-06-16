@@ -40,11 +40,14 @@
       100: !type:DeadMobState {}
   - type: MovementIgnoreGravity
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      crit: crit
-      dead: dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: alive
+      Critical:
+        enum.DamageStateVisualLayers.Base: crit
+      Dead:
+        enum.DamageStateVisualLayers.Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatFish

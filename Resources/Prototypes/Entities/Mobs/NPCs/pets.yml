@@ -24,12 +24,15 @@
       - MobMask
       layer:
       - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: corgi
+      Critical:
+        enum.DamageStateVisualLayers.Base: corgi_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: corgi_dead
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: corgi
-      crit: corgi_dead
-      dead: corgi_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -61,11 +64,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: narsian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: narsian
-      crit: narsian_dead
-      dead: narsian_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: narsian
+      Critical:
+        enum.DamageStateVisualLayers.Base: narsian_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: narsian_dead
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
@@ -125,11 +131,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ian
-      crit: ian_dead
-      dead: ian_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: ian
+      Critical:
+        enum.DamageStateVisualLayers.Base: ian_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: ian_dead
   - type: Grammar
     attributes:
       proper: true
@@ -152,11 +161,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: old_ian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: old_ian
-      crit: old_ian_dead
-      dead: old_ian_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: old_ian
+      Critical:
+        enum.DamageStateVisualLayers.Base: old_ian_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: old_ian_dead
   - type: Grammar
     attributes:
       proper: true
@@ -175,11 +187,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: lisa
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: lisa
-      crit: lisa_dead
-      dead: lisa_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: lisa
+      Critical:
+        enum.DamageStateVisualLayers.Base: lisa_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: lisa_dead
   - type: Grammar
     attributes:
       proper: true
@@ -198,11 +213,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: puppy
-      crit: puppy_dead
-      dead: puppy_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: puppy
+      Critical:
+        enum.DamageStateVisualLayers.Base: puppy_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: puppy_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -231,11 +249,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat
-      crit: cat_dead
-      dead: cat_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: cat
+      Critical:
+        enum.DamageStateVisualLayers.Base: cat_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: cat_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -275,11 +296,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat2
-      crit: cat2_dead
-      dead: cat2_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: cat2
+      Critical:
+        enum.DamageStateVisualLayers.Base: cat2_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: cat2_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -307,11 +331,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: spacecat
-      crit: spacecat_dead
-      dead: spacecat_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: spacecat
+      Critical:
+        enum.DamageStateVisualLayers.Base: spacecat_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: spacecat_dead
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
@@ -335,11 +362,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: caracal_flop
-      crit: caracal_dead
-      dead: caracal_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: caracal_flop
+      Critical:
+        enum.DamageStateVisualLayers.Base: caracal_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: caracal_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -381,11 +411,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: sloth
-      crit: sloth_dead
-      dead: sloth_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: sloth
+      Critical:
+        enum.DamageStateVisualLayers.Base: sloth_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: sloth_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -424,11 +457,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ferret
-      crit: ferret_dead
-      dead: ferret_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: ferret
+      Critical:
+        enum.DamageStateVisualLayers.Base: ferret_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: ferret_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -478,11 +514,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: bingus
-      crit: bingus_dead
-      dead: bingus_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: bingus
+      Critical:
+        enum.DamageStateVisualLayers.Base: bingus_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: bingus_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -521,11 +560,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: mcgriff
-      crit: mcgriff_dead
-      dead: mcgriff_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: mcgriff
+      Critical:
+        enum.DamageStateVisualLayers.Base: mcgriff_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: mcgriff_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -556,11 +598,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: paperwork
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: paperwork
-      crit: paperwork_dead
-      dead: paperwork_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: paperwork
+      Critical:
+        enum.DamageStateVisualLayers.Base: paperwork_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: paperwork_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -598,11 +643,14 @@
       layer:
       - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: walter
-      crit: walter_dead
-      dead: walter_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: walter
+      Critical:
+        enum.DamageStateVisualLayers.Base: walter_dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: walter_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
