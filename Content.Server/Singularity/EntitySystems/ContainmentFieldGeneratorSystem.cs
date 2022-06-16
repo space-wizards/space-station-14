@@ -1,4 +1,4 @@
-using Content.Server.ParticleAccelerator.Components;
+﻿using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
@@ -34,13 +34,12 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
         {
-            if (EntityManager.TryGetComponent<PhysicsComponent>(component.Owner, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static)
+            if (!args.Anchored)
             {
                 component.Connection1?.Item2.Dispose();
                 component.Connection2?.Item2.Dispose();
             }
         }
-
 
         private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
         {
@@ -96,7 +95,7 @@ namespace Content.Server.Singularity.EntitySystems
                 pointLightComponent.Enabled = hasAnyConnection;
             }
         }
-        
+
         public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
         {
             if (component.Connection1?.Item2 == connection)
@@ -200,12 +199,12 @@ namespace Content.Server.Singularity.EntitySystems
 
         public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component) => component.Connection1?.Item2?.CanRepel(toRepel) == true ||
                                                                      component.Connection2?.Item2?.CanRepel(toRepel) == true;
-        
+
         public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
         {
             return component.Connection1 == null || component.Connection2 == null;
         }
-        
+
 
     }
 }
