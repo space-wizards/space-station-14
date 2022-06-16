@@ -1737,13 +1737,13 @@ entities:
     parent: 179
     type: Transform
 - uid: 186
-  type: PowerCellSmallHigh
+  type: PowerCellMedium
   components:
   - pos: -2.67511,-10.351
     parent: 179
     type: Transform
 - uid: 187
-  type: PowerCellSmallHigh
+  type: PowerCellMedium
   components:
   - pos: -2.55011,-10.6635
     parent: 179

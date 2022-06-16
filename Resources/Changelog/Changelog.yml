@@ -1,14 +1,4 @@
 Entries:
-- author: Jezithyr
-  changes:
-  - {message: Rewrote the lobby UI, type: Add}
-  - {message: Added adminhelp button to the lobby screen, type: Add}
-  - {message: 'Added the ability to add custom lobby screens, (You can have multiple
-      and picks a random one!)', type: Add}
-  - {message: 'rewrote the backend of the lobby ui to be slightly less ass, still
-      a work in progress. Please report any issues with monitor scaling.', type: Tweak}
-  id: 1204
-  time: '2022-03-14T02:33:19.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Hardsuits now noticeably slow you down. Wear something else., type: Tweak}
@@ -3004,3 +2994,9 @@ Entries:
   - {message: Holofans now use power cells and not a custom recharge system., type: Tweak}
   id: 1703
   time: '2022-06-16T08:30:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Power cell bloat has been removed as it's never been used. Only small
+      cells remain., type: Remove}
+  id: 1704
+  time: '2022-06-16T08:37:08.0000000+00:00'
