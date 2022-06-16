@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -136,6 +137,12 @@ namespace Content.Server.CombatMode
             Logger.Error("Mass mod is: " + massMod);
 
             float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
+            if (HasComp<SlowedDownComponent>(disarmer))
+                chance += 0.2f;
+            if (HasComp<SlowedDownComponent>(disarmed))
+                chance -= -0.2f;
+
+
             if (chance <= 0)
                 return 0f;
             if (chance >= 1)
