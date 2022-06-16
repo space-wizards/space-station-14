@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -57,14 +58,23 @@ namespace Content.Server.Dragon
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
-        public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg");
+        public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(-3f),
+        };
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
-        public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg");
+        public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg")
+        {
+            Params = AudioParams.Default.WithVolume(-3f),
+        };
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
         public SoundSpecifier? SoundRoar =
-            new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
+            new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg")
+            {
+                Params = AudioParams.Default.WithVolume(-3f),
+            };
 
         public CancellationTokenSource? CancelToken;
 
