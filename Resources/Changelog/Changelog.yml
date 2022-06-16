@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Hardsuits now noticeably slow you down. Wear something else., type: Tweak}
-  id: 1205
-  time: '2022-03-14T06:03:50.0000000+00:00'
 - author: router
   changes:
   - {message: Desoxyephedrine no longer hardcounters the speedboost it's supposed
@@ -3000,3 +2995,8 @@ Entries:
       cells remain., type: Remove}
   id: 1704
   time: '2022-06-16T08:37:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pulse Pistol and Captains Antique Pistol are now size 10., type: Tweak}
+  id: 1705
+  time: '2022-06-16T09:16:53.0000000+00:00'
