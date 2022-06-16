@@ -25,6 +25,14 @@
   - type: Appearance
 
 - type: entity
+  id: BaseWeaponBatterySmall
+  parent: BaseWeaponBattery
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+
+- type: entity
   name: retro laser gun
   parent: BaseWeaponBattery
   id: WeaponLaserGun
@@ -101,7 +109,7 @@
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
@@ -143,7 +151,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -280,7 +287,7 @@
 
 - type: entity
   name: antique laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:

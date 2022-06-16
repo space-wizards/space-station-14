@@ -18,8 +18,6 @@ public abstract class SharedPowerCellSystem : EntitySystem
         SubscribeLocalEvent<PowerCellSlotComponent, ComponentInit>(OnCellSlotInit);
         SubscribeLocalEvent<PowerCellSlotComponent, ComponentRemove>(OnCellSlotRemove);
 
-        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnSlotExamined);
-
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
@@ -33,7 +31,7 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (args.Container.ID != component.CellSlot.ID)
             return;
 
-        if (!TryComp(args.EntityUid, out PowerCellComponent? cell) || cell.CellSize != component.SlotSize)
+        if (!HasComp<PowerCellComponent>(args.EntityUid))
         {
             args.Cancel();
         }
@@ -67,41 +65,10 @@ public abstract class SharedPowerCellSystem : EntitySystem
         {
             component.CellSlot.Name = component.SlotName;
         }
-
-        if (component.StartEmpty)
-            return;
-
-        if (!string.IsNullOrWhiteSpace(component.CellSlot.StartingItem))
-            return;
-
-        // set default starting cell based on cell-type
-        component.CellSlot.StartingItem = component.SlotSize switch
-        {
-            PowerCellSize.Small => "PowerCellSmallStandard",
-            PowerCellSize.Medium => "PowerCellMediumStandard",
-            PowerCellSize.Large => "PowerCellLargeStandard",
-            _ => throw new ArgumentOutOfRangeException()
-        };
     }
 
     private void OnCellSlotRemove(EntityUid uid, PowerCellSlotComponent component, ComponentRemove args)
     {
         _itemSlotsSystem.RemoveItemSlot(uid, component.CellSlot);
-    }
-
-    private void OnSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange || string.IsNullOrWhiteSpace(component.DescFormatString))
-            return;
-
-        var sizeText = Loc.GetString(component.SlotSize switch
-        {
-            PowerCellSize.Small => "power-cell-slot-component-description-size-small",
-            PowerCellSize.Medium => "power-cell-slot-component-description-size-medium",
-            PowerCellSize.Large => "power-cell-slot-component-description-size-large",
-            _ => "???"
-        });
-
-        args.PushMarkup(Loc.GetString(component.DescFormatString, ("size", sizeText)));
     }
 }
