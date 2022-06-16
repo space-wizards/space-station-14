@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount)
+            if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
 
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
