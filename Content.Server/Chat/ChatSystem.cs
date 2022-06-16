@@ -213,15 +213,9 @@ public sealed class ChatSystem : SharedChatSystem
         message = TransformSpeech(source, message);
 
         _listener.PingListeners(source, message);
-        string messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
+
+        string messageWrap = Loc.GetString(GetToneBySuffix(message),
             ("entityName", Name(source)));
-        if (message.EndsWith("?")) {
-            messageWrap = Loc.GetString("chat-manager-entity-ask-wrap-message",
-            ("entityName", Name(source)));
-        } else if (message.EndsWith("!") || message == message.ToUpper()) {
-            messageWrap = Loc.GetString("chat-manager-entity-shout-wrap-message",
-            ("entityName", Name(source)));
-        }
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
@@ -335,6 +329,31 @@ public sealed class ChatSystem : SharedChatSystem
         var sessions = new List<ICommonSession>();
         ClientDistanceToList(source, VoiceRange, sessions);
         _chatManager.ChatMessageToMany(channel, message, messageWrap, source, hideChat, sessions.Select(s => s.ConnectedClient).ToList());
+    }
+
+    /// <summary>
+    ///     Input a string, outputs the correct tone
+    /// </summary>
+
+    private string GetToneBySuffix(string s) {
+        var toneSuffixes = new Dictionary<string,string>() {
+            {"?", "chat-manager-entity-ask-wrap-message"},
+            {"!!!", "chat-manager-entity-scream-wrap-message"},
+            {"!!", "chat-manager-entity-shout-wrap-message"},
+            {"!", "chat-manager-entity-yell-wrap-message"},
+            {"!?", "chat-manager-entity-exclaims-wrap-message"},
+            {"?!", "chat-manager-entity-exclaims-wrap-message"}
+        };
+        string? tbr = default;
+
+        foreach(KeyValuePair<string, string> tone in toneSuffixes) {
+            if (s.EndsWith(tone.Key)) {
+                tbr = tone.Value;
+                break;
+            }
+        }
+
+        return tbr!;
     }
 
     /// <summary>
