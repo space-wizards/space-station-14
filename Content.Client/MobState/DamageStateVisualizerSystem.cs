@@ -33,7 +33,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         // Brain no worky rn so this was just easier.
         foreach (var layer in sprite.AllLayers)
         {
-            layer.Visible = false;
+            sprite.LayerSetVisible(layer, false);
         }
 
         foreach (var (key, state) in layers)
