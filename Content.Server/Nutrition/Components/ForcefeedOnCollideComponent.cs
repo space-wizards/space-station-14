@@ -5,7 +5,7 @@ namespace Content.Server.Nutrition.Components
     /// <summary>
     ///     A food item with this component will be forcefully fed to anyone
     /// </summary>
-    [RegisterComponent, Friend(typeof(ForcefeedOnCollideSystem))]
+    [RegisterComponent, Access(typeof(ForcefeedOnCollideSystem))]
     public sealed class ForcefeedOnCollideComponent : Component
     {
         /// <summary>

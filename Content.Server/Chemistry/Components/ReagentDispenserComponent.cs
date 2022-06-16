@@ -262,7 +262,7 @@ namespace Content.Server.Chemistry.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private sealed class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>

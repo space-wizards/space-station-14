@@ -19,6 +19,7 @@
       - id: Crowbar
       - id: Wirecutter
       - id: ClothingBeltUtility
+      - id: OreBag
 
 - type: entity
   id: CrateSalvageAssortedGoodies
@@ -80,7 +81,7 @@
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001
-      - id: WeaponRevolverPredator
+      - id: WeaponRevolverPython
         prob: 0.0001
       - id: WeaponRevolverMateba
         prob: 0.0001

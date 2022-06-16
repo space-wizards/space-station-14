@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Animals.Components
 {
-    [RegisterComponent, Friend(typeof(UdderSystem))]
+    [RegisterComponent, Access(typeof(UdderSystem))]
     internal sealed class UdderComponent : Component
     {
         /// <summary>

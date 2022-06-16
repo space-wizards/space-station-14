@@ -11,7 +11,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
+    size: 30
   - type: AmmoCounter
   - type: Gun
     fireRate: 1

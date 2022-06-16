@@ -12,7 +12,7 @@ namespace Content.Server.Light.Components
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    [RegisterComponent, Friend(typeof(PoweredLightSystem))]
+    [RegisterComponent, Access(typeof(PoweredLightSystem))]
     public sealed class PoweredLightComponent : Component
     {
         [DataField("burnHandSound")]

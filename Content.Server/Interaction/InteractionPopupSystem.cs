@@ -68,9 +68,9 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (sfx is not null) //not all cases will have sound.
         {
             if (component.SoundPerceivedByOthers)
-                SoundSystem.Play(Filter.Pvs(args.Target), sfx, args.Target); //play for everyone in range
+                SoundSystem.Play(sfx, Filter.Pvs(args.Target), args.Target); //play for everyone in range
             else
-                SoundSystem.Play(Filter.Entities(args.User, args.Target), sfx, args.Target); //play only for the initiating entity and its target.
+                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target); //play only for the initiating entity and its target.
         }
 
         component.LastInteractTime = curTime;

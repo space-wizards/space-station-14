@@ -14,9 +14,8 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
-    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic
@@ -96,6 +95,8 @@
     - type: Construction
       graph: Firelock
       node: Firelock
+    - type: WallMount
+      arc: 360
 
 - type: entity
   id: FirelockGlass
