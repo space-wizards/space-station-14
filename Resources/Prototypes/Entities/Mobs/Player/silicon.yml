@@ -218,7 +218,7 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: onestar_boss
+        Base: onestar_boss
       Dead:
-        enum.DamageStateVisualLayers.Base: onestar_boss_wrecked
+        Base: onestar_boss_wrecked
   - type: CombatMode

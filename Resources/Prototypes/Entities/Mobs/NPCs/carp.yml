@@ -43,11 +43,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: alive
+        Base: alive
       Critical:
-        enum.DamageStateVisualLayers.Base: crit
+        Base: crit
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatFish
