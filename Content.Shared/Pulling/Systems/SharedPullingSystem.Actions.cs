@@ -55,9 +55,11 @@ namespace Content.Shared.Pulling
                 }
             }
 
+            var getPulled = new BeingPulledAttemptEvent(puller, pulled);
+            RaiseLocalEvent(pulled, getPulled);
             var startPull = new StartPullAttemptEvent(puller, pulled);
             RaiseLocalEvent(puller, startPull);
-            return !startPull.Cancelled;
+            return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
         public bool TogglePull(EntityUid puller, SharedPullableComponent pullable)

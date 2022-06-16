@@ -8,6 +8,9 @@
       alarmedBy:
       - FireAlarm
       - AirAlarm
+    - type: Tag
+      tags:
+        - RCDDeconstructWhitelist
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork

@@ -177,7 +177,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
-        - ReagentId: CapsaicinOil
+        - ReagentId: CarpoToxin
           Quantity: 3
 # Tastes like fish, batter, hot peppers.
 
@@ -366,6 +366,25 @@
     - type: Sprite
       state: queso
 # Its queso! Everyone loves queso... Right?.
+
+- type: entity
+  name: Sashimi
+  parent: FoodMealBase
+  id: FoodMealSashimi
+  description: It's taste can only be described as "Exotic". The poisoning though? That's pretty common.
+  components:
+  - type: Sprite
+    state: sashimi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CarpoToxin
+          Quantity: 15
+# tastes exotic
 
 - type: entity
   name: enchiladas
