@@ -64,7 +64,7 @@
             Slash: 7.5
             Heat: 7.5
             Blunt: -1
-    litDisarmMalus: 0.225
+    litDisarmMalus: 0.3
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
