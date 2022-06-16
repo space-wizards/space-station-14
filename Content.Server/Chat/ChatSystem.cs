@@ -344,17 +344,13 @@ public sealed class ChatSystem : SharedChatSystem
             {"!?", "chat-manager-entity-exclaims-wrap-message"},
             {"?!", "chat-manager-entity-exclaims-wrap-message"}
         };
-        string? tbr = default;
+        string? tbr = "chat-manager-entity-say-wrap-message";
 
         foreach(KeyValuePair<string, string> tone in toneSuffixes) {
             if (s.EndsWith(tone.Key)) {
                 tbr = tone.Value;
                 break;
             }
-        }
-
-        if (tbr == null) {
-            tbr = "chat-manager-entity-say-wrap-message";
         }
 
         return tbr!;
