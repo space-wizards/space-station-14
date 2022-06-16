@@ -41,21 +41,21 @@ namespace Content.Server.CombatMode
             if (!_actionBlockerSystem.CanAttack(args.Performer))
                 return;
 
-            EntityUid? inTargetHand = null;
-
-            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
-                && targetHandsComponent.ActiveHand != null
-                && !targetHandsComponent.ActiveHand.IsEmpty)
-            {
-                inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
-            }
-
             if (TryComp<HandsComponent>(args.Performer, out var hands)
             && hands.ActiveHand != null
             && !hands.ActiveHand.IsEmpty)
             {
                 _popupSystem.PopupEntity(Loc.GetString("disarm-action-free-hand"), args.Performer, Filter.Entities(args.Performer));
                 return;
+            }
+
+            EntityUid? inTargetHand = null;
+
+            if (TryComp<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
+                && targetHandsComponent.ActiveHand != null
+                && !targetHandsComponent.ActiveHand.IsEmpty)
+            {
+                inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
             }
 
             var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer,inTargetHand);
