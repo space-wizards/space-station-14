@@ -303,6 +303,20 @@
     - SheetGlass1
 
 - type: technology
+  name: advanced material sheet printing
+  id: Sheets
+  description: Print those high-end sheets!
+  icon: Objects/Materials/Sheets/researchicon.png
+  requiredPoints: 7500
+  requiredTechnologies:
+    - Sheets
+  unlockedRecipes:
+    - SheetTitanium
+    - SheetPlastitanium
+    - SheetTGlass
+    - SheetPTGlass
+
+- type: technology
   name: advanced atmospherics technology
   id: AdvancedAtmosTechnology
   description: As if it can get more advanced.
@@ -445,7 +459,7 @@
   id: RoboticsTechnology
   description: Robot parts.
   icon:
-    sprite: Nyanotrasen/Mobs/Robots/cleanbot.rsi
+    sprite: Textures/Mobs/Silicon/cleanbot.rsi
     state: cleanbot
   requiredPoints: 10000
   requiredTechnologies:
@@ -454,7 +468,13 @@
   unlockedRecipes:
     - LeftHandDrone
     - RightHandDrone
- 
+    - CyborgEntityCircuitboard
+    - MedibotEntityCircuitboard
+    - HonkbotEntityCircuitboard
+    - CleanbotEntityCircuitboard
+    - RoboticsCircuitImprinterMachineCircuitboard
+    - ProximitySensor
+
 # Basic Parts Technology Tree
 
 - type: technology
@@ -477,7 +497,7 @@
 - type: technology
   name: "advanced parts technology"
   id: AdvancedPartsTechnology
-  description: NOW we're getting somewhere.
+  description: Oh yeah. Now we're getting somewhere.
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: adv_capacitor
@@ -505,7 +525,7 @@
     - SuperCapacitorStockPart
     - PicoManipulatorStockPart
     - SuperMatterBinStockPart
-    - PhasicScanningModuleStockPart
+    - SuperScanningModuleStockPart
 
 # Bluespace Theory Technology Tree
 
