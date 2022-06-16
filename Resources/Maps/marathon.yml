@@ -37441,7 +37441,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2119
-  type: PowerCellMediumStandard
+  type: PowerCellSmall
   components:
   - pos: -27.504559,56.49509
     parent: 30
@@ -37449,7 +37449,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2120
-  type: PowerCellMediumStandard
+  type: PowerCellSmall
   components:
   - pos: -27.504559,56.68259
     parent: 30

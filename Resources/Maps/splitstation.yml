@@ -105162,7 +105162,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11187
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 14.5,-105.5
     parent: 69

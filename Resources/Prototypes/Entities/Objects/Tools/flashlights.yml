@@ -27,7 +27,7 @@
         shader: unshaded
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -60,7 +60,7 @@
   components:
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallSuper
+      startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
     inhandVisuals:
