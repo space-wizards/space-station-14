@@ -30,3 +30,52 @@
   materials:
     Steel: 200
     Glass: 100
+
+- type: latheRecipe
+  id: CyborgEntityCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: CyborgEntityCircuitboard
+  completetime: 4
+  materials:
+     Steel: 800
+     Glass: 750
+     Plastic: 200
+     Gold: 100
+
+- type: latheRecipe
+  id: MedibotEntityCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: MedibotEntityCircuitboard
+  completetime: 4
+  materials:
+     Steel: 500
+     Glass: 500
+     Plastic: 50
+
+- type: latheRecipe
+  id: HonkbotEntityCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: HonkbotEntityCircuitboard
+  completetime: 4
+  materials:
+     Steel: 400
+     Glass: 400
+
+- type: latheRecipe
+  id: CleanbotEntityCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: CleanbotEntityCircuitboard
+  completetime: 4
+  materials:
+     Steel: 500
+     Glass: 500
+
+- type: latheRecipe
+  id: RoboticsCircuitImprinterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/science.png
+  result: RoboticsCircuitImprinterMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 500
+     Glass: 900
+     Gold: 50
