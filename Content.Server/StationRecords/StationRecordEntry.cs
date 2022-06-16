@@ -14,7 +14,13 @@ namespace Content.Server.StationRecords;
 public sealed class StationRecordSet
 {
     private uint _currentRecordId;
+
     private HashSet<StationRecordKey> _keys = new();
+
+    // Keys that were linked to another entity. This violates
+    // the abstraction that this is supposed to give
+    private HashSet<StationRecordKey> _linkedKeys = new();
+
     private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
 
     // Gets all records of a specific type stored in the record set.
