@@ -332,7 +332,7 @@ public sealed class ChatSystem : SharedChatSystem
     }
 
     /// <summary>
-    ///     Input a string, outputs the correct tone
+    ///     Input a string, outputs the correct tone that you can get with Loc.GetString
     /// </summary>
 
     private string GetToneBySuffix(string s) {
@@ -351,6 +351,10 @@ public sealed class ChatSystem : SharedChatSystem
                 tbr = tone.Value;
                 break;
             }
+        }
+
+        if (tbr == null) {
+            tbr = "chat-manager-entity-say-wrap-message";
         }
 
         return tbr!;
