@@ -68,7 +68,6 @@ namespace Content.Server.CombatMode
 
             args.Handled = true;
             var chance = CalculateDisarmChance(args.Performer, args.Target, component);
-            Logger.Error("Chance is: " + chance);
             if (_random.Prob(chance))
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
@@ -111,7 +110,6 @@ namespace Content.Server.CombatMode
                 // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
                 healthMod = (((float) disarmedDamage.TotalDamage - (float) disarmerDamage.TotalDamage) / 200); // Ex. You have 0 damage, they have 90, you get a 45% chance increase
             }
-            Logger.Error("Health mod is: " + healthMod);
 
             float massMod = 0;
             float disarmerMass = 0;
@@ -134,14 +132,12 @@ namespace Content.Server.CombatMode
 
                 massMod = (((disarmedMass / disarmerMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
             }
-            Logger.Error("Mass mod is: " + massMod);
 
             float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
             if (HasComp<SlowedDownComponent>(disarmer))
                 chance += 0.2f;
             if (HasComp<SlowedDownComponent>(disarmed))
                 chance -= -0.2f;
-
 
             if (chance <= 0)
                 return 0f;
