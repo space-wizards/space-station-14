@@ -216,7 +216,7 @@
 
 - type: entity
   name: white duck #Quack
-  parent: SimpleMobBase
+  parent: MobDuckMallard
   id: MobDuckWhite
   description: An adorable white duck, it's fluffy and soft!
   components:
@@ -235,22 +235,10 @@
         Base: dead-1
       Dead:
         Base: dead-1
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDuck
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
 
 - type: entity
   name: brown duck #Quack
-  parent: SimpleMobBase
+  parent: MobDuckMallard
   id: MobDuckBrown
   description: An adorable brown duck, it's fluffy and soft!
   components:
@@ -269,18 +257,6 @@
         Base: dead-2
       Dead:
         Base: dead-2
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatDuck
-      amount: 1
-  - type: InteractionPopup
-    successChance: 0.9
-    interactSuccessString: petting-success-bird
-    interactFailureString: petting-failure-generic
-    interactSuccessSound:
-      path: /Audio/Animals/duck_quack_happy.ogg
-  - type: Bloodstream
-    bloodMaxVolume: 100
 
 - type: entity
   name: butterfly
