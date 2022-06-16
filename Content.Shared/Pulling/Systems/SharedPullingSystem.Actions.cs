@@ -80,15 +80,17 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (EntityManager.TryGetComponent<PhysicsComponent>(pullable.Owner, out var pullablePhysics) && pullable.HasFixedRot)
-            {
-                pullablePhysics.FixedRotation = true;
-            }
-
             var msg = new StopPullingEvent(user);
             RaiseLocalEvent(pullable.Owner, msg);
 
             if (msg.Cancelled) return false;
+
+            // Stop pulling confirmed!
+
+            if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
+            {
+                pullablePhysics.FixedRotation = pullable.PrevFixedRotation;
+            }
 
             _pullSm.ForceRelationship(null, pullable);
             return true;
@@ -177,18 +179,11 @@ namespace Content.Shared.Pulling
             RaiseLocalEvent(pullable.Owner, pullAttempt);
 
             if (pullAttempt.Cancelled)
-            {
                 return false;
-            }
 
             _pullSm.ForceRelationship(puller, pullable);
-
-            if (pullablePhysics.FixedRotation)
-            {
-                pullable.HasFixedRot = true;
-                pullablePhysics.FixedRotation = false;
-            }
-
+            pullable.PrevFixedRotation = pullablePhysics.FixedRotation;
+            pullablePhysics.FixedRotation = pullable.FixedRotationOnPull;
             return true;
         }
 
