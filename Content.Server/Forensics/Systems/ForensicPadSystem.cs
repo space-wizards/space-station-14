@@ -49,6 +49,8 @@ namespace Content.Server.Forensics
             if (HasComp<ForensicScannerComponent>(args.Target))
                 return;
 
+            args.Handled = true;
+
             if (component.Used)
             {
                 _popupSystem.PopupEntity(Loc.GetString("forensic-pad-already-used"), args.Target.Value, Filter.Entities(args.User));
