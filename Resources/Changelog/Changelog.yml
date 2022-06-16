@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed some UI bugs. Ian should no longer be able to make announcements,
-    type: Fix}
-  id: 1212
-  time: '2022-03-15T03:59:20.0000000+00:00'
 - author: Todd
   changes:
   - {message: Added flip flap to the lobby themes., type: Add}
@@ -2993,3 +2987,10 @@ Entries:
   - {message: Set ghost role delay from 5 seconds to 3 seconds, type: Tweak}
   id: 1711
   time: '2022-06-16T09:56:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Holoparasites can no longer attack their owner while recalled using
+      wide attacks., type: Fix}
+  - {message: 'You can no longer wide attack inside of lockers, crates, etc.', type: Fix}
+  id: 1712
+  time: '2022-06-16T10:59:13.0000000+00:00'
