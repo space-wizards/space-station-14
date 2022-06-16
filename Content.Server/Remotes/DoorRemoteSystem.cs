@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Doors.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction.Events;
 using static Content.Server.Remotes.DoorRemoteComponent;
 
@@ -51,19 +52,19 @@ namespace Content.Server.Remotes
 
         private void OnBeforeInteract(EntityUid uid, DoorRemoteComponent component, BeforeRangedInteractEvent args)
         {
-            if (
-                   args.Handled
+            if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
                 || !TryComp<AirlockComponent>(args.Target, out var airlockComp) // Remotes only work on airlocks
                 // The remote can be used anywhere the user can see the door.
                 // This doesn't work that well, but I don't know of an alternative
-                   || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
+                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
                     SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
                 return;
 
             args.Handled = true;
-            if (!airlockComp.IsPowered())
+
+            if (!this.IsPowered(args.Target.Value, EntityManager))
             {
                 ShowPopupToUser("door-remote-no-power", args.User);
                 return;
