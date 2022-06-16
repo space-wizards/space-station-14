@@ -50,6 +50,14 @@ namespace Content.Server.CombatMode
                 inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
             }
 
+            if (TryComp<HandsComponent>(args.Performer, out var hands)
+            && hands.ActiveHand != null
+            && !hands.ActiveHand.IsEmpty)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disarm-action-free-hand"), args.Performer, Filter.Entities(args.Performer));
+                return;
+            }
+
             var attemptEvent = new DisarmAttemptEvent(args.Target, args.Performer,inTargetHand);
 
             if (inTargetHand != null)
