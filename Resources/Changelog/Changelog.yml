@@ -1,13 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Pulse carbine and pistol for ERT, type: Add}
-  - {message: Pulse hitscan projectile, type: Add}
-  - {message: The Lamia handgun is now using its own sprite instead of the gyropistol's,
-    type: Tweak}
-  - {message: A whole bunch of resprites for various guns and melee weapons, type: Tweak}
-  id: 1196
-  time: '2022-03-12T22:29:17.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: There's intel of an unknown enemy corp creating experimental mechas
@@ -2999,3 +2990,9 @@ Entries:
   - {message: Syndie gas masks now provide protection from flashbangs, type: Tweak}
   id: 1695
   time: '2022-06-15T07:04:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Rat King. This regal rodent wants your food and will summon
+      minions and spread plague in order to get it., type: Add}
+  id: 1696
+  time: '2022-06-16T00:53:27.0000000+00:00'
