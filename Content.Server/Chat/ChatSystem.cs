@@ -50,7 +50,7 @@ public sealed class ChatSystem : SharedChatSystem
     private const int WhisperRange = 2; // how far whisper goes in world units
     private const string AnnouncementSound = "/Audio/Announcements/announce.ogg";
 
-    private Dictionary<string,string> toneSuffixes = new Dictionary<string,string>() {
+    private readonly Dictionary<string,string> _toneSuffixes = new Dictionary<string,string>() {
         {"?!", "chat-manager-entity-exclaims-wrap-message"},
         {"!?", "chat-manager-entity-exclaims-wrap-message"},
         {"?", "chat-manager-entity-ask-wrap-message"},
@@ -348,7 +348,7 @@ public sealed class ChatSystem : SharedChatSystem
     {
         var LOCtone = "chat-manager-entity-say-wrap-message";
 
-        foreach(var tone in toneSuffixes) {
+        foreach(var tone in _toneSuffixes) {
             if (s.EndsWith(tone.Key)) {
                 LOCtone = tone.Value;
                 break;
