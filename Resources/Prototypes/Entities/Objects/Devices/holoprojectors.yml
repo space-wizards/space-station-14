@@ -10,7 +10,7 @@
     delay: 1.0
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
   - type: Sprite
     sprite: Objects/Devices/Holoprojectors/custodial.rsi
     state: icon
