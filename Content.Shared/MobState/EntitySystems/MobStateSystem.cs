@@ -54,9 +54,10 @@ namespace Content.Shared.MobState.EntitySystems
         private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args) {
             // Check if current mobstate is dead
             if (args.CurrentMobState.IsDead()) {
-                // Create the popup
-                _popup.PopupEntity(Loc.GetString("chat-manager-entity-death-message",
-                    ("entityName", Name(uid))), uid, Filter.Pvs(uid, entityManager: EntityManager));
+                // Create the popup (Disabled for now due to popups not being obscured by LOS)
+                
+                //_popup.PopupEntity(Loc.GetString("chat-manager-entity-death-message",
+                //    ("entityName", Name(uid))), uid, Filter.Pvs(uid, entityManager: EntityManager));
             }
         }
 
