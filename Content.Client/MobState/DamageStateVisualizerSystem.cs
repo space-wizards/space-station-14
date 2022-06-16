@@ -38,6 +38,9 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
 
         foreach (var (key, state) in layers)
         {
+            // Inheritance moment.
+            if (!sprite.LayerMapTryGet(key, out _)) continue;
+
             sprite.LayerSetVisible(key, true);
             sprite.LayerSetState(key, state);
         }
