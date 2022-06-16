@@ -8,6 +8,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
 {
+    /// <summary>
+    /// Used to transfer fingerprints from entities to forensic pads.
+    /// </summary>
     public sealed class ForensicPadSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -87,6 +90,12 @@ namespace Content.Server.Forensics
             });
         }
 
+        /// <summary>
+        /// When the forensic pad is successfully used, take their fingerprint sample and flag the pad as used.
+        /// </summary>
+        /// <param name="uid">Entity we're getting the fingerprint from</param>
+        /// <param name="sample">The fingerprint GUID</param>
+        /// <param name="component"><see cref="ForensicPadComponent"/> being used></param>
         public void PressSample(EntityUid uid, string sample, ForensicPadComponent? component = null)
         {
             if (!Resolve(uid, ref component))

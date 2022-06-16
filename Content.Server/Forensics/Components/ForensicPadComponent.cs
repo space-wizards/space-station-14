@@ -3,8 +3,8 @@ using System.Threading;
 namespace Content.Server.Forensics
 {
     /// <summary>
-    /// Used to take samples of people with fingerprints
-    /// or gloves.
+    /// Used to take a sample of someone's fingerprints.
+    /// </summary>
     [RegisterComponent]
     public sealed class ForensicPadComponent : Component
     {
