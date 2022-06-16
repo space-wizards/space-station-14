@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Plant produce now scales in size depending on its potency., type: Add}
-  id: 1200
-  time: '2022-03-13T10:11:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Lizards now correctly no longer show up at roundstart., type: Fix}
@@ -3004,3 +2999,8 @@ Entries:
       of space, type: Fix}
   id: 1699
   time: '2022-06-16T04:14:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now have a docking camera to make docking easier., type: Add}
+  id: 1700
+  time: '2022-06-16T05:28:17.0000000+00:00'
