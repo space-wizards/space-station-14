@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Add lizard accent. Hissss!, type: Add}
-  id: 1198
-  time: '2022-03-13T04:23:44.0000000+00:00'
 - author: Rane
   changes:
   - {message: Drones now have an innate flashlight., type: Add}
@@ -2995,3 +2990,9 @@ Entries:
   - {message: Fireplaces provide useful light, type: Add}
   id: 1697
   time: '2022-06-16T01:02:51.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'You can no longer break pulls on cuffed people if someone else is pulling.
+      Sorry griefers, maybe sec will be tolerable to play now.', type: Tweak}
+  id: 1698
+  time: '2022-06-16T01:10:03.0000000+00:00'
