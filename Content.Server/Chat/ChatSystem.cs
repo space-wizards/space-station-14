@@ -50,6 +50,15 @@ public sealed class ChatSystem : SharedChatSystem
     private const int WhisperRange = 2; // how far whisper goes in world units
     private const string AnnouncementSound = "/Audio/Announcements/announce.ogg";
 
+    private Dictionary<string,string> toneSuffixes = new Dictionary<string,string>() {
+        {"?!", "chat-manager-entity-exclaims-wrap-message"},
+        {"!?", "chat-manager-entity-exclaims-wrap-message"},
+        {"?", "chat-manager-entity-ask-wrap-message"},
+        {"!!!", "chat-manager-entity-scream-wrap-message"},
+        {"!!", "chat-manager-entity-shout-wrap-message"},
+        {"!", "chat-manager-entity-yell-wrap-message"},
+    };
+
     private bool _loocEnabled = true;
     private readonly bool _adminLoocEnabled = true;
 
@@ -335,25 +344,18 @@ public sealed class ChatSystem : SharedChatSystem
     ///     Input a string, outputs the correct tone that you can get with Loc.GetString
     /// </summary>
 
-    private string GetToneBySuffix(string s) {
-        var toneSuffixes = new Dictionary<string,string>() {
-            {"?!", "chat-manager-entity-exclaims-wrap-message"},
-            {"!?", "chat-manager-entity-exclaims-wrap-message"},
-            {"?", "chat-manager-entity-ask-wrap-message"},
-            {"!!!", "chat-manager-entity-scream-wrap-message"},
-            {"!!", "chat-manager-entity-shout-wrap-message"},
-            {"!", "chat-manager-entity-yell-wrap-message"},
-        };
-        string? tbr = "chat-manager-entity-say-wrap-message";
+    private string GetToneBySuffix(string s)
+    {
+        var LOCtone = "chat-manager-entity-say-wrap-message";
 
-        foreach(KeyValuePair<string, string> tone in toneSuffixes) {
+        foreach(var tone in toneSuffixes) {
             if (s.EndsWith(tone.Key)) {
-                tbr = tone.Value;
+                LOCtone = tone.Value;
                 break;
             }
         }
 
-        return tbr!;
+        return LOCtone;
     }
 
     /// <summary>
