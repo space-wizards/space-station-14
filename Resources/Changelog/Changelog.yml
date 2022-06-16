@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Add foxes and Renault., type: Add}
-  id: 1203
-  time: '2022-03-13T23:32:33.0000000+00:00'
 - author: Jezithyr
   changes:
   - {message: Rewrote the lobby UI, type: Add}
@@ -3004,3 +2999,8 @@ Entries:
   - {message: Nerfed gun damage by 30% across the board., type: Tweak}
   id: 1702
   time: '2022-06-16T06:15:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Holofans now use power cells and not a custom recharge system., type: Tweak}
+  id: 1703
+  time: '2022-06-16T08:30:27.0000000+00:00'
