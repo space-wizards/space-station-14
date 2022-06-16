@@ -49,14 +49,17 @@
     damage:
       types:
         Slash: 12
-        Piercing: 8 
+        Piercing: 8
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: regalrat
-      crit: dead
-      dead: dead
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        enum.DamageStateVisualLayers.Base: regalrat
+      Critical:
+        enum.DamageStateVisualLayers.Base: dead
+      Dead:
+        enum.DamageStateVisualLayers.Base: dead
   - type: Puller
   - type: GhostTakeoverAvailable
     makeSentient: true
@@ -69,7 +72,7 @@
       - DoorBumpOpener
       - FootstepSound
   - type: NoSlip
-  - type: RatKing   
+  - type: RatKing
     actionRaiseArmy:
       useDelay: 4
       icon: Interface/Actions/ratKingArmy.png
