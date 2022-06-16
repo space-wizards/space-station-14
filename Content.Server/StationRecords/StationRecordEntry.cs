@@ -11,64 +11,55 @@ namespace Content.Server.StationRecords;
 ///     correct, and all keys originate from the station that owns
 ///     this component.
 /// </summary>
-public sealed class StationRecordSet : Dictionary<StationRecordKey, StationRecordEntry>
+public sealed class StationRecordSet
 {
     private uint _currentRecordId;
+    private HashSet<StationRecordKey> _keys = new();
+    private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
 
     // Gets all records of a specific type stored in the record set.
-    public IEnumerable<(StationRecordKey, T)> GetRecordsOfType<T>()
+    public IEnumerable<(StationRecordKey, T)?> GetRecordsOfType<T>()
     {
-        foreach (var (key, entry) in this)
+        if (!_tables.ContainsKey(typeof(T)))
         {
-            if (entry.Entries.TryGetValue(typeof(T), out var obj)
-                && obj is T cast)
-            {
-                yield return (key, cast);
-            }
+            yield return null;
         }
-    }
 
-    // Gets all records of a specific type stored in the record set.
-    public IEnumerable<(StationRecordKey, T1, T2)> GetRecordsOfType<T1, T2>()
-    {
-        foreach (var (key, entry) in this)
+        foreach (var (key, entry) in _tables[typeof(T)])
         {
-            if (entry.Entries.TryGetValue(typeof(T1), out var objT)
-                && entry.Entries.TryGetValue(typeof(T2), out var objU)
-                && objT is T1 castT
-                && objU is T2 castU)
+            if (entry is not T cast)
             {
-                yield return (key, castT, castU);
+                continue;
             }
+
+            yield return (key, cast);
         }
     }
 
     // Add a record into this set of record entries.
-    public (StationRecordKey, StationRecordEntry) AddRecord(EntityUid station)
+    public StationRecordKey AddRecord(EntityUid station)
     {
         var key = new StationRecordKey(_currentRecordId++, station);
-        var record = new StationRecordEntry();
 
-        Add(key, record);
+        _keys.Add(key);
 
-        return (key, record);
+        return key;
     }
 
     public void AddRecordEntry<T>(StationRecordKey key, T entry)
     {
-        if (!TryGetValue(key, out var record))
+        if (!_keys.Contains(key) || entry == null)
         {
             return;
         }
 
-        if (record.Entries.ContainsKey(typeof(T)))
+        if (!_tables.TryGetValue(typeof(T), out var table))
         {
-            record.Entries[typeof(T)] = entry!;
+            table = new();
+            _tables.Add(typeof(T), table);
         }
-        else
-        {
-            record.Entries.Add(typeof(T), entry!);
-        }
+
+        table.Add(key, entry);
     }
 
     /// <summary>
@@ -82,27 +73,39 @@ public sealed class StationRecordSet : Dictionary<StationRecordKey, StationRecor
     {
         entry = default;
 
-        if (!TryGetValue(key, out var record))
+        if (!_keys.Contains(key)
+            || !_tables.TryGetValue(typeof(T), out var table)
+            || !table.TryGetValue(key, out var entryObject))
         {
             return false;
         }
 
-        if (record.Entries.TryGetValue(typeof(T), out var entryObj)
-            && entryObj is T cast)
+        entry = (T) entryObject;
+
+        return true;
+    }
+
+    public bool HasRecordEntry<T>(StationRecordKey key)
+    {
+        return _keys.Contains(key)
+               && _tables.TryGetValue(typeof(T), out var table)
+               && table.ContainsKey(key);
+    }
+
+    public bool RemoveAllRecords(StationRecordKey key)
+    {
+        if (!_keys.Remove(key))
         {
-            entry = cast;
-            return true;
+            return false;
         }
 
-        return false;
-    }
-}
+        foreach (var table in _tables.Values)
+        {
+            table.Remove(key);
+        }
 
-public sealed class StationRecordEntry
-{
-    // Record entries. This contains information about a crewmember
-    // without tying it to the entity UID of that crewmember entity.
-    public Dictionary<Type, object> Entries = new();
+        return true;
+    }
 }
 
 // Station record keys. These should be stored somewhere,
@@ -117,13 +120,4 @@ public readonly struct StationRecordKey
         ID = id;
         OriginStation = originStation;
     }
-}
-
-// Station record types. This could be by string,
-// but it is instead an enum to encourage more
-// cleaner prototypes. Records should be implemented
-// within code anyways.
-public enum StationRecordType : byte
-{
-    General
 }

@@ -3,6 +3,7 @@ using Content.Server.Access.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -33,7 +34,7 @@ using Robust.Shared.Prototypes;
 public sealed class StationRecordsSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+    [Dependency] private readonly StationRecordKeyStorageSystem _keyStorageSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
@@ -118,8 +119,9 @@ public sealed class StationRecordsSystem : EntitySystem
 
         record.Departments.AddRange(jobPrototype.Departments);
 
-        (var key, var entry) = records.Records.AddRecord(station);
-        entry.Entries.Add(typeof(GeneralStationRecord), record);
+        var key = records.Records.AddRecord(station);
+        records.Records.AddRecordEntry(key, record);
+        // entry.Entries.Add(typeof(GeneralStationRecord), record);
 
         if (idUid != null)
         {
@@ -129,9 +131,9 @@ public sealed class StationRecordsSystem : EntitySystem
                 keyStorageEntity = pdaComponent.IdSlot.Item;
             }
 
-            if (keyStorageEntity != null && TryComp(keyStorageEntity, out StationRecordKeyStorageComponent? keyStorage))
+            if (keyStorageEntity != null)
             {
-                keyStorage.Key = key;
+                _keyStorageSystem.AssignKey(keyStorageEntity.Value, key);
             }
         }
 
@@ -147,7 +149,7 @@ public sealed class StationRecordsSystem : EntitySystem
 
         RaiseLocalEvent(new RecordRemovedEvent(key));
 
-        return records.Records.Remove(key);
+        return records.Records.RemoveAllRecords(key);
     }
 
     /// <summary>
@@ -165,7 +167,22 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         entry = default;
 
-        return key.OriginStation == station && Resolve(station, ref records) && records.Records.TryGetRecordEntry(key, out entry);
+        if (key.OriginStation != station || !Resolve(station, ref records))
+        {
+            return false;
+        }
+
+        return records.Records.TryGetRecordEntry(key, out entry);
+    }
+
+    public IEnumerable<(StationRecordKey, T)?>? GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records))
+        {
+            return null;
+        }
+
+        return records.Records.GetRecordsOfType<T>();
     }
 }
 
@@ -205,6 +222,21 @@ public sealed class RecordRemovedEvent : EntityEventArgs
     public StationRecordKey Key { get; }
 
     public RecordRemovedEvent(StationRecordKey key)
+    {
+        Key = key;
+    }
+}
+
+/// <summary>
+///     Event raised after a record is modified. This is to
+///     inform other systems that records stored in this key
+///     may have changed.
+/// </summary>
+public sealed class RecordModifiedEvent : EntityEventArgs
+{
+    public StationRecordKey Key { get; }
+
+    public RecordModifiedEvent(StationRecordKey key)
     {
         Key = key;
     }
