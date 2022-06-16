@@ -9,7 +9,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: Fiber
-    fiberDescription: fibers-leather-red
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
   - type: FingerprintMask
 
 - type: entity
@@ -25,7 +26,8 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: blue
   - type: Fiber
-    fiberDescription: fibers-leather-blue
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-blue
   - type: FingerprintMask
 
 - type: entity
@@ -41,7 +43,8 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: green
   - type: Fiber
-    fiberDescription: fibers-leather-green
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-green
   - type: FingerprintMask
 
 - type: entity
@@ -57,7 +60,8 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: yellow
   - type: Fiber
-    fiberDescription: fibers-leather-yellow
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-yellow
   - type: FingerprintMask
 
 - type: entity
@@ -73,7 +77,8 @@
     HeatResistance: 1400
   - type: Insulated
   - type: Fiber
-    fiberDescription: fibers-durathread-regal-blue
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-blue
   - type: FingerprintMask
 
 - type: entity
@@ -87,7 +92,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/ihscombat.rsi
   - type: Fiber
-    fiberDescription: fibers-durathread
+    fiberMaterial: fibers-durathread
   - type: FingerprintMask
 
 #### Medical
@@ -104,7 +109,7 @@
   - type: DiseaseProtection
     protection: 0.1
   - type: Fiber
-    fiberDescription: fibers-latex
+    fiberMaterial: fibers-latex
   - type: FingerprintMask
 
 - type: entity
@@ -120,7 +125,7 @@
   - type: DiseaseProtection
     protection: 0.15
   - type: Fiber
-    fiberDescription: fibers-nitrile
+    fiberMaterial: fibers-nitrile
   - type: FingerprintMask
 ####
 - type: entity
@@ -135,7 +140,8 @@
     sprite: Clothing/Hands/Gloves/leather.rsi
     HeatResistance: 1400
   - type: Fiber
-    fiberDescription: fibers-leather-brown
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-brown
   - type: FingerprintMask
 
 - type: entity
@@ -149,7 +155,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/powerglove.rsi
   - type: Fiber
-    fiberDescription: fibers-insulative-nanomachines
+    fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
 
 - type: entity
@@ -163,7 +169,8 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/robohands.rsi
   - type: Fiber
-    fiberDescription: fibers-leather-black
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-black
   - type: FingerprintMask
 
 - type: entity
@@ -179,7 +186,7 @@
     HeatResistance: 1400
   - type: Insulated
   - type: Fiber
-    fiberDescription: fibers-insulative-nanomachines
+    fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
 
 - type: entity
@@ -195,7 +202,8 @@
     HeatResistance: 1400
   - type: Insulated
   - type: Fiber
-    fiberDescription: fibers-insulative-black
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-black
   - type: FingerprintMask
 
 - type: entity
@@ -209,5 +217,6 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/fingerless.rsi
   - type: Fiber
-    fiberDescription: fibers-synthetic-black
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
 

@@ -36,8 +36,8 @@ namespace Content.Server.Forensics
             var component = EnsureComp<ForensicsComponent>(target);
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
-                if (TryComp<FiberComponent>(gloves, out var fiber) && fiber.FiberDescription != null)
-                    component.Fibers.Add(Loc.GetString(fiber.FiberDescription));
+                if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))
+                    component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
 
                 if (HasComp<FingerprintMaskComponent>(gloves))
                     return;
