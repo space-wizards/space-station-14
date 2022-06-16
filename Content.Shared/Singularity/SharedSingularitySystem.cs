@@ -115,9 +115,17 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle circle})
+            if (physics != null)
             {
-                circle.Radius = value - 0.5f;
+                var fixture = _fixtures.GetFixtureOrNull(physics, DeleteFixture);
+
+                if (fixture != null)
+                {
+                    var circle = (PhysShapeCircle) fixture.Shape;
+                    circle.Radius = value - 0.5f;
+
+                    fixture.Hard = value <= 4;
+                }
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))
