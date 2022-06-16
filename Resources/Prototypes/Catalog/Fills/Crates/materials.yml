@@ -29,6 +29,16 @@
         amount: 3
 
 - type: entity
+  id: CrateMaterialPlastic
+  name:  titanium sheet crate
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetTitanium
+        amount: 3
+
+- type: entity
   id: CrateMaterialWood
   name:  wood crate
   parent: CrateGenericSteel
