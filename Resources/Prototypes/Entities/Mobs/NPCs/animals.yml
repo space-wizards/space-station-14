@@ -32,11 +32,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: bat
+        Base: bat
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -103,11 +103,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: 0
+        Base: 0
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Tag
     tags:
     - Bee
@@ -162,11 +162,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: chicken-0
+        Base: chicken-0
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-0
+        Base: dead-0
       Dead:
-        enum.DamageStateVisualLayers.Base: dead-0
+        Base: dead-0
   - type: Butcherable
     spawned:
     - id: FoodMeatChicken
@@ -196,11 +196,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: duck-0
+        Base: duck-0
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-0
+        Base: dead-0
       Dead:
-        enum.DamageStateVisualLayers.Base: dead-0
+        Base: dead-0
   - type: Butcherable
     spawned:
     - id: FoodMeatDuck
@@ -230,11 +230,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: duck-1
+        Base: duck-1
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-1
+        Base: dead-1
       Dead:
-        enum.DamageStateVisualLayers.Base: dead-1
+        Base: dead-1
   - type: Butcherable
     spawned:
     - id: FoodMeatDuck
@@ -264,11 +264,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: duck-2
+        Base: duck-2
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-2
+        Base: dead-2
       Dead:
-        enum.DamageStateVisualLayers.Base: dead-2
+        Base: dead-2
   - type: Butcherable
     spawned:
     - id: FoodMeatDuck
@@ -327,11 +327,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: butterfly
+        Base: butterfly
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
@@ -363,11 +363,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: cow
+        Base: cow
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: SolutionContainerManager
     solutions:
       udder:
@@ -423,11 +423,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: crab
+        Base: crab
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatCrab
@@ -455,11 +455,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: goat
+        Base: goat
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: SolutionContainerManager
     solutions:
       udder:
@@ -503,11 +503,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: goose
+        Base: goose
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatChicken
@@ -549,11 +549,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: crawling
+        Base: crawling
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -592,12 +592,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: kangaroo
+        Base: kangaroo
       # SKIPPY NO!
       Critical:
-        enum.DamageStateVisualLayers.Base: kangaroo-dead
+        Base: kangaroo-dead
       Dead:
-        enum.DamageStateVisualLayers.Base: kangaroo-dead
+        Base: kangaroo-dead
   - type: Puller
 
 - type: entity
@@ -618,11 +618,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: kangaroo-boxing
+        Base: kangaroo-boxing
       Critical:
-        enum.DamageStateVisualLayers.Base: kangaroo-boxing-dead
+        Base: kangaroo-boxing-dead
       Dead:
-        enum.DamageStateVisualLayers.Base: kangaroo-boxing-dead
+        Base: kangaroo-boxing-dead
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
@@ -671,11 +671,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: monkey
+        Base: monkey
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Appearance
     visuals:
     - type: FireVisualizer
@@ -703,10 +703,10 @@
     speechSounds: Squeak
   - type: Sprite
     drawdepth: SmallMobs
+    sprite: Mobs/Animals/mouse.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-      sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
     size: 5
     quickEquip: false
@@ -737,11 +737,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: mouse-0
+        Base: mouse-0
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-0
+        Base: dead-0
       Dead:
-        enum.DamageStateVisualLayers.Base: splat-0
+        Base: splat-0
   - type: Food
   - type: Hunger
     baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
@@ -814,11 +814,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: mouse-1
+        Base: mouse-1
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-1
+        Base: dead-1
       Dead:
-        enum.DamageStateVisualLayers.Base: splat-1
+        Base: splat-1
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #Why doesn't this save if it's only on the parent wtf
@@ -840,11 +840,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: mouse-1
+        Base: mouse-1
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-1
+        Base: dead-1
       Dead:
-        enum.DamageStateVisualLayers.Base: splat-1
+        Base: splat-1
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier
@@ -880,11 +880,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: lizard
+        Base: lizard
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -931,11 +931,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: slug
+        Base: slug
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -977,11 +977,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: frog
+        Base: frog
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1026,11 +1026,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: parrot
+        Base: parrot
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1072,11 +1072,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: penguin
+        Base: penguin
       Critical:
-        enum.DamageStateVisualLayers.Base: penguin_dead
+        Base: penguin_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: penguin_dead
+        Base: penguin_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatPenguin
@@ -1124,11 +1124,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: penguin
+        Base: penguin
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatPenguin
@@ -1181,7 +1181,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: snake
+        Base: snake
   - type: Appearance
     visuals:
     - type: RotationVisualizer
@@ -1232,11 +1232,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: tarantula
+        Base: tarantula
       Critical:
-        enum.DamageStateVisualLayers.Base: tarantula_dead
+        Base: tarantula_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: tarantula_dead
+        Base: tarantula_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
@@ -1299,11 +1299,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: possum
+        Base: possum
       Critical:
-        enum.DamageStateVisualLayers.Base: possum_dead
+        Base: possum_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: possum_dead
+        Base: possum_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1358,11 +1358,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: raccoon
+        Base: raccoon
       Critical:
-        enum.DamageStateVisualLayers.Base: raccoon_dead
+        Base: raccoon_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: raccoon_dead
+        Base: raccoon_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1417,11 +1417,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: fox
+        Base: fox
       Critical:
-        enum.DamageStateVisualLayers.Base: fox_dead
+        Base: fox_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: fox_dead
+        Base: fox_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat

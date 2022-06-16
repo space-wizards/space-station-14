@@ -64,11 +64,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: running
+        Base: running
       Critical:
-        enum.DamageStateVisualLayers.Base: crit
+        Base: crit
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Puller
   - type: Butcherable
     butcheringType: Spike
@@ -111,11 +111,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: purple_snake
+        Base: purple_snake
       Critical:
-        enum.DamageStateVisualLayers.Base: dead_purple_snake
+        Base: dead_purple_snake
       Dead:
-        enum.DamageStateVisualLayers.Base: dead_purple_snake
+        Base: dead_purple_snake
   - type: Grammar
     attributes:
       proper: true
@@ -165,10 +165,10 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: small_purple_snake
+        Base: small_purple_snake
       Critical:
-        enum.DamageStateVisualLayers.Base: dead_small_purple_snake
+        Base: dead_small_purple_snake
       Dead:
-        enum.DamageStateVisualLayers.Base: dead_small_purple_snake
+        Base: dead_small_purple_snake
   - type: SolutionTransfer
     maxTransferAmount: 1

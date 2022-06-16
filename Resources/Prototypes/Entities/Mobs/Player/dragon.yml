@@ -34,12 +34,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: alive
+        Base: alive
         enum.DamageStateVisualLayers.BaseUnshaded: alive-unshaded
       Critical:
-        enum.DamageStateVisualLayers.Base: crit
+        Base: crit
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
         enum.DamageStateVisualLayers.BaseUnshaded: dead-unshaded
   - type: Physics
     bodyType: KinematicController
