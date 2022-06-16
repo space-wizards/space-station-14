@@ -107,7 +107,10 @@ namespace Content.Server.VendingMachines
         
         private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
-            if (component.DispenseOnHitChance != null && _random.Prob(component.DispenseOnHitChance.Value))
+            if (component.DispenseOnHitChance == null || args.DamageDelta == null)
+                return;
+
+            if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
                 EjectRandom(uid, true, component);
         }
 

@@ -34,6 +34,9 @@ namespace Content.Server.VendingMachines
         [DataField("dispenseOnHitChance")]
         public float? DispenseOnHitChance;
 
+        [DataField("dispenseOnHitThreshold")]
+        public float? DispenseOnHitThreshold;
+
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
         public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");

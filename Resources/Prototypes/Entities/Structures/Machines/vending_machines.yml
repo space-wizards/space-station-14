@@ -169,6 +169,7 @@
   - type: VendingMachine
     pack: CigaretteMachineInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: CigaretteMachineAds
   - type: Speech
@@ -236,6 +237,7 @@
   - type: VendingMachine
     pack: HotDrinksMachineInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -275,6 +277,7 @@
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -344,6 +347,7 @@
   - type: VendingMachine
     pack: DiscountDansInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -581,6 +585,7 @@
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -616,6 +621,7 @@
   - type: VendingMachine
     pack: BodaInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -824,6 +830,7 @@
   - type: VendingMachine
     pack: ChangInventory
     dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: ChangAds
   - type: Speech
