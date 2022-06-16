@@ -20,7 +20,6 @@ namespace Content.Shared.MobState.EntitySystems
     public sealed class MobStateSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
