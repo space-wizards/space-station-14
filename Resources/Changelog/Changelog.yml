@@ -1,14 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones now have an innate flashlight., type: Add}
-  - {message: Onestar Mechs are no longer bound by drone laws., type: Fix}
-  - {message: Drones can now toggle all their innate tools within range of people.,
-    type: Tweak}
-  - {message: 'Added power cells, toolboxes and certain boxes to the drone whitelist.',
-    type: Tweak}
-  id: 1199
-  time: '2022-03-13T09:53:01.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Plant produce now scales in size depending on its potency., type: Add}
@@ -2996,3 +2986,21 @@ Entries:
       Sorry griefers, maybe sec will be tolerable to play now.', type: Tweak}
   id: 1698
   time: '2022-06-16T01:10:03.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Nanotrasen's deeper research into the space-faring carpfish has proven
+      that their meat contains extremely potent poison!, type: Add}
+  - {message: 'New carp meat dishes are on the menu for experienced cooks! Their taste
+      can only be described as "Exotic", by those willing to stomach their lethal
+      effects.', type: Add}
+  - {message: 'It seems like the carpfish kind also have an apex predator among their
+      ranks, be warned of large influxes of organic activity and leviathan space-faring
+      creatures', type: Add}
+  - {message: Some carp appear to be smarter than others and capable of humanlike
+      speech, type: Add}
+  - {message: 'due to overuse of heartstopper toxin, and it''s more daring carp alternative,
+      the effects of the former have been greatly reduced', type: Tweak}
+  - {message: Space-faring carp will no longer die of being exposed to the coldness
+      of space, type: Fix}
+  id: 1699
+  time: '2022-06-16T04:14:06.0000000+00:00'
