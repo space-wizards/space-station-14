@@ -1,14 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Added new generator types: 2x portable generators. Research their boards
-      to build them.', type: Add}
-  - {message: Added the RTG. Find them in a deep space wreck and try not to get burnt...,
-    type: Add}
-  - {message: Added wallmount generator and substation for use in shuttles and escape
-      pods., type: Add}
-  id: 1210
-  time: '2022-03-15T01:27:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed some audio files that were causing sound effects to play globally,
@@ -2997,3 +2987,9 @@ Entries:
   - {message: Added a wiki button to the escape menu, type: Add}
   id: 1709
   time: '2022-06-16T09:33:59.0000000+00:00'
+- author: ProfanedBane
+  changes:
+  - {message: 'Whilst uncuffing someone, the handcuffs are placed in the your hand,
+      rather than under the person being uncuffed.', type: Add}
+  id: 1710
+  time: '2022-06-16T09:42:32.0000000+00:00'
