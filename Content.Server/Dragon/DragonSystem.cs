@@ -132,7 +132,7 @@ namespace Content.Server.Dragon
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)
                         {
-                            UserFinishedEvent = new DragonStructureDevourComplete(uid, target),
+                            UserFinishedEvent = new DragonDevourComplete(uid, target),
                             UserCancelledEvent = new DragonDevourCancelledEvent(),
                             BreakOnTargetMove = true,
                             BreakOnUserMove = true,
