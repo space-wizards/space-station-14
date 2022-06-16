@@ -1,10 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Desoxyephedrine no longer hardcounters the speedboost it's supposed
-      to be granting., type: Tweak}
-  id: 1206
-  time: '2022-03-14T06:04:02.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Coffee, Tea, and Energy drinks now contain a small amount of theobromine.',
@@ -3000,3 +2994,8 @@ Entries:
   - {message: Pulse Pistol and Captains Antique Pistol are now size 10., type: Tweak}
   id: 1705
   time: '2022-06-16T09:16:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All mobs will now gib after enough damage., type: Fix}
+  id: 1706
+  time: '2022-06-16T09:25:51.0000000+00:00'
