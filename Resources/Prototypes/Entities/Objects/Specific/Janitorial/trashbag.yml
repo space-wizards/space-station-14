@@ -2,6 +2,7 @@
   name: trash bag
   id: TrashBag
   parent: BaseStorageItem
+  description: The solution to space pollution. Rubbish removal revolution.
   components:
   - type: Sprite
     netSync: false
