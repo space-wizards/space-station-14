@@ -12,7 +12,7 @@ namespace Content.Server.Fluids.Components
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
-        private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(-1);
+        private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(5);
         public static readonly FixedPoint2 DefaultOverflowVolume = FixedPoint2.New(20);
 
         // Current design: Something calls the SpillHelper.Spill, that will either
