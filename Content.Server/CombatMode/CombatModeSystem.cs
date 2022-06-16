@@ -145,7 +145,7 @@ namespace Content.Server.CombatMode
             if (HasComp<SlowedDownComponent>(disarmer))
                 chance += 0.2f;
             if (HasComp<SlowedDownComponent>(disarmed))
-                chance -= -0.2f;
+                chance -= 0.2f;
 
             if (chance <= 0)
                 return 0f;
