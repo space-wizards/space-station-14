@@ -62,7 +62,7 @@ public sealed partial class CargoSystem
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
             !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return;
 
-        args.Entity = GetShuttleConsole(shuttle);
+        args.Console = GetShuttleConsole(shuttle);
     }
 
     #region Console

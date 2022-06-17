@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
@@ -61,9 +62,12 @@ namespace Content.Server.Physics.Controllers
             var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
-            foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
-                if (pilot.Console == null) continue;
+                // TODO: Lord this is shit.
+                if (HasComp<CargoPilotConsoleComponent>(pilot.Owner) ||
+                    !TryComp<TransformComponent>(pilot.Console?.Owner, out var xform)) continue;
+
                 _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridEntityId;

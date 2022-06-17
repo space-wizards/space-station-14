@@ -205,23 +205,24 @@ namespace Content.Server.Shuttles.Systems
 
         private void UpdateState(ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
         {
-            TryComp<TransformComponent>(component.Owner, out var consoleXform);
-            TryComp<RadarConsoleComponent>(component.Owner, out var radar);
-            var range = radar?.MaxRange ?? 0f;
+            EntityUid? entity = component.Owner;
 
             var getShuttleEv = new ConsoleShuttleEvent
             {
-                Entity = consoleXform?.GridUid,
+                Console = entity,
             };
 
-            RaiseLocalEvent(component.Owner, ref getShuttleEv, false);
+            RaiseLocalEvent(entity.Value, ref getShuttleEv, false);
+            entity = getShuttleEv.Console;
 
-            TryComp<ShuttleComponent>(getShuttleEv.Entity, out var shuttle);
+            TryComp<TransformComponent>(entity, out var consoleXform);
+            TryComp<RadarConsoleComponent>(entity, out var radar);
+            var range = radar?.MaxRange ?? 0f;
+
+            TryComp<ShuttleComponent>(entity, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();
-
-            TryComp<TransformComponent>(getShuttleEv.Entity, out var xform);
 
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(

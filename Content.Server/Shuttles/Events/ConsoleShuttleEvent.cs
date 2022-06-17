@@ -8,5 +8,5 @@ namespace Content.Server.Shuttles.Events;
 [ByRefEvent]
 public struct ConsoleShuttleEvent
 {
-    public EntityUid? Entity;
+    public EntityUid? Console;
 }
