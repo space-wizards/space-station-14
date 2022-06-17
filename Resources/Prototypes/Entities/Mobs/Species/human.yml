@@ -56,8 +56,6 @@
   # Organs
   - type: InjectableSolution
     solution: chemicals
-  - type: DrawableSolution
-    solution: bloodstream
   - type: HealthExaminable
     examinableTypes:
     - Blunt
