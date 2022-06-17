@@ -49,7 +49,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private Dictionary<string, string> _initialInfected = new();
 
     public override string Prototype => "Zombie";
-    private const string PatientZeroPrototypeID = "PatientZero";
+    private const string PatientZeroPrototypeID = "InitialInfected";
     private const string InitialZombieVirusPrototype = "ActiveZombieVirus";
 
     public override void Initialize()
@@ -70,9 +70,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!Enabled)
             return;
 
-        //it's my if-else chain and no one can tell me how to write it!
+        //this is just the general condition thing used for determining the win/lose text
         var percent = GetInfectedPercentage();
-        Logger.Debug(percent.ToString());
+
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
         else if (percent <= 0.25)
@@ -103,10 +103,22 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         InfectInitialPlayers();
     }
 
+    /// <remarks>
+    ///     This is just checked if the last human somehow dies
+    ///     by starving or flying off into space.
+    /// </remarks>
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (!Enabled)
             return;
+
+        if (!HasComp<HumanoidAppearanceComponent>(ev.Entity))
+            return;
+
+        var percent = GetInfectedPercentage();
+
+        if (percent >= 1)
+            _roundEndSystem.EndRound();
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)
