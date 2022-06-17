@@ -1,0 +1,220 @@
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: BananaTreeClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "banana tree"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: Chlown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "chlown"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: ClownsClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "clowns"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: DestroyerClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "destroyer"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: FleshClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "fleshclown"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: GluttonClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "glutton"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: HonkHulkClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "honkhulk"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: HonklingClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "honkling"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: Honkmunculus
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "honkmunculus"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: LongFaceClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "long face"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: MutantClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "mutant"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: PieSpewerClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "pie spewer"
+
+- type: entity
+  name: Clown
+  parent: MobXeno
+  id: ScaryClown
+  description: Clown
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: clown
+    description: You are a clown, honk on all the crew members.
+    rules: You are an antagonist, smack, slash, and wack!
+  - type: Sprite
+    netsync: false
+    sprite: /Uploaded/clown_mobs.rsi
+    layers:
+    - state: "scary_clown"
