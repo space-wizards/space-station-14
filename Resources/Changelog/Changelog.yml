@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: You can no longer construct 'destroyed machine frames'., type: Tweak}
-  id: 1214
-  time: '2022-03-15T22:54:30.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: 'Drones now have access to the Omnitool, a T-Ray Scanner, and a satchel!',
@@ -2999,3 +2994,9 @@ Entries:
       making them much harder to disarm.', type: Add}
   id: 1713
   time: '2022-06-17T05:37:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Ported miasma from Nyano MRP., type: Add}
+  - {message: Removed the radiation storm event., type: Remove}
+  id: 1714
+  time: '2022-06-17T07:00:23.0000000+00:00'
