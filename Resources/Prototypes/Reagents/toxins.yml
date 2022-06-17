@@ -19,6 +19,30 @@
             Poison: 2
 
 - type: reagent
+  id: CarpoToxin
+  name: Carpotoxin
+  group: Toxins
+  desc: Toxic secretions of a space carp. Causes a painful burning sensation.
+  color: "#e2a38c"
+  physicalDesc: exotic-smelling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
   id: PolytrinicAcid
   name: reagent-name-polytrinic-acid
   group: Toxins
@@ -164,7 +188,7 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 4
+            Asphyxiation: 2
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -215,7 +239,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         damage:
           groups:
             Brute: 2
@@ -228,7 +252,7 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         type: Local
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
