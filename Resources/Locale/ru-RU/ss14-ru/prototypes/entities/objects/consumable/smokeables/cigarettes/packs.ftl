@@ -13,6 +13,6 @@ ent-CigPackBlue = пачка сигарет AcmeCo
 ent-CigPackBlack = пачка сигарет Nomads
     .desc = "Nomads's extra strong" для тех случаев, когда ваша жизнь становится слишком тяжёлой.
     .suffix = { "" }
-ent-CigPackSyndicate = пачка сигарет Синдиката
+ent-CigPackSyndicate = пачка сигарет синдиката
     .desc = Элитные сигареты для элитных агентов. Насыщенные лекарствами, когда вам нужно больше, чем просто успокоить нервы.
     .suffix = { "" }

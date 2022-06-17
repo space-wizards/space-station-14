@@ -1,7 +1,7 @@
 stamp-component-stamped-name-default = Очень важная персона
 stamp-component-stamped-name-mime = Мим
 stamp-component-stamped-name-captain = Капитан
-stamp-component-stamped-name-centcom = ЦентКом
+stamp-component-stamped-name-centcom = Центком
 stamp-component-stamped-name-chaplain = Священник
 stamp-component-stamped-name-clown = Клоун
 stamp-component-stamped-name-cmo = Главврач
