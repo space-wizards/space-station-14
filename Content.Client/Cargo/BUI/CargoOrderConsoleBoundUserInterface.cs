@@ -5,6 +5,7 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -46,8 +47,18 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
             _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
+            var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
+
+            string orderRequester;
+
+            if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
+                orderRequester = metadata.EntityName;
+            else
+                orderRequester = string.Empty;
+
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
@@ -57,7 +68,7 @@ namespace Content.Client.Cargo.BUI
                 if (args.Button.Parent is not CargoProductRow row)
                     return;
                 _product = row.Product;
-                _orderMenu.Requester.Text = "";
+                _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
                 _orderMenu.OpenCentered();
