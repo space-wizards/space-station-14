@@ -11,7 +11,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "banana tree"
 
@@ -28,7 +28,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "chlown"
 
@@ -45,7 +45,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "clowns"
 
@@ -62,7 +62,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "destroyer"
 
@@ -79,7 +79,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "fleshclown"
 
@@ -96,7 +96,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "glutton"
 
@@ -113,7 +113,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "honkhulk"
 
@@ -130,7 +130,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "honkling"
 
@@ -147,7 +147,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "honkmunculus"
 
@@ -164,7 +164,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "long face"
 
@@ -181,7 +181,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "mutant"
 
@@ -198,7 +198,7 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "pie spewer"
 
@@ -215,6 +215,6 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: Sprite
     netsync: false
-    sprite: /Uploaded/clown_mobs.rsi
+    sprite: /Clown Abominations/clown_mobs.rsi
     layers:
     - state: "scary_clown"
