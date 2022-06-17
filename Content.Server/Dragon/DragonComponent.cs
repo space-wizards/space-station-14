@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -77,6 +78,20 @@ namespace Content.Server.Dragon
             };
 
         public CancellationTokenSource? CancelToken;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("devourWhitelist")]
+        public EntityWhitelist? DevourWhitelist = new()
+        {
+            Components = new string[]
+            {
+                "Door",
+                "MobState",
+            },
+            Tags = new List<string>()
+            {
+                "Wall",
+            }
+        };
 
         /// <summary>
         /// Where the entities go when dragon devours them, empties when the dragon is butchered.
