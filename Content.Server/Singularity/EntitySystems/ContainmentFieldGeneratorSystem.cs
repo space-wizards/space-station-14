@@ -8,12 +8,17 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Popups;
+using Content.Shared.Construction.Components;
+using Content.Shared.Interaction;
+using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems
 {
     public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -24,6 +29,50 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
             SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
             SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        }
+
+        private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (TryComp(component.Owner, out TransformComponent? transformComp) && transformComp.Anchored)
+            {
+                if (!component.Enabled)
+                    TurnOn(component);
+                else if (component.Enabled && component.IsConnected)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+                    return;
+                }
+                else
+                    TurnOff(component);
+            }
+
+            args.Handled = true;
+        }
+
+        private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component, UnanchorAttemptEvent args)
+        {
+            if (component.Enabled)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+                args.Cancel();
+            }
+        }
+
+        private void TurnOn(ContainmentFieldGeneratorComponent component)
+        {
+            component.Enabled = true;
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+        }
+
+        private void TurnOff(ContainmentFieldGeneratorComponent component)
+        {
+            component.Enabled = false;
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
         }
 
         private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
@@ -101,11 +150,13 @@ namespace Content.Server.Singularity.EntitySystems
             if (component.Connection1?.Item2 == connection)
             {
                 component.Connection1 = null;
+                component.IsConnected = false;
                 UpdateConnectionLights(component);
             }
             else if (component.Connection2?.Item2 == connection)
             {
                 component.Connection2 = null;
+                component.IsConnected = false;
                 UpdateConnectionLights(component);
             }
             else if (connection != null)
@@ -117,6 +168,7 @@ namespace Content.Server.Singularity.EntitySystems
         private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
         {
             if (propertyFieldTuple != null) return false;
+            if (!component.Enabled) return false; //don't gen a field unless it's on
             if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
 
             foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
@@ -165,6 +217,8 @@ namespace Content.Server.Singularity.EntitySystems
                 {
                     Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
+
+                component.IsConnected = true;
                 UpdateConnectionLights(component);
                 return true;
             }
