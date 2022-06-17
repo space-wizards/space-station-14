@@ -43,8 +43,8 @@ namespace Content.Server.CombatMode
                 return;
 
             if (TryComp<HandsComponent>(args.Performer, out var hands)
-            && hands.ActiveHand != null
-            && !hands.ActiveHand.IsEmpty)
+                && hands.ActiveHand != null
+                && !hands.ActiveHand.IsEmpty)
             {
                 _popupSystem.PopupEntity(Loc.GetString("disarm-action-free-hand"), args.Performer, Filter.Entities(args.Performer));
                 return;
@@ -77,7 +77,6 @@ namespace Content.Server.CombatMode
 
             args.Handled = true;
             var chance = CalculateDisarmChance(args.Performer, args.Target, inTargetHand, component);
-            Logger.Error("Chance is:" + chance);
             if (_random.Prob(chance))
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
@@ -112,37 +111,18 @@ namespace Content.Server.CombatMode
             Logger.Error("inTargetHand is: " + inTargetHand);
 
             float healthMod = 0;
-            if (!TryComp<DamageableComponent>(disarmer, out var disarmerDamage) || !TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
+            if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
             {
-               healthMod = 0; // If some of them can't take damage, no effect from this.
-            }
-            else
-            {
-
                 // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
                 healthMod = (((float) disarmedDamage.TotalDamage - (float) disarmerDamage.TotalDamage) / 200); // Ex. You have 0 damage, they have 90, you get a 45% chance increase
             }
 
             float massMod = 0;
-            float disarmerMass = 0;
-            float disarmedMass = 0;
 
-            if (!TryComp<FixturesComponent>(disarmer, out var disarmerFixtures) || !TryComp<FixturesComponent>(disarmed, out var disarmedFixtures))
+            if (TryComp<PhysicsComponent>(disarmer, out var disarmerPhysics) && TryComp<PhysicsComponent>(disarmed, out var disarmedPhysics))
             {
-                massMod = 0;
-            }
-            else
-            {
-                foreach (var fixture in disarmerFixtures.Fixtures.Values)
-                {
-                    disarmerMass += fixture.Mass;
-                }
-                foreach (var fixture in disarmedFixtures.Fixtures.Values)
-                {
-                    disarmedMass += fixture.Mass;
-                }
-
-                massMod = (((disarmedMass / disarmerMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
+                if (disarmerPhysics.FixturesMass != 0) // yeah this will never happen but let's not kill the server if it does
+                    massMod = (((disarmedPhysics.FixturesMass / disarmerPhysics.FixturesMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
             }
 
             float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
@@ -156,11 +136,7 @@ namespace Content.Server.CombatMode
                 chance += malus.Malus;
             }
 
-            if (chance <= 0)
-                return 0f;
-            if (chance >= 1)
-                return 1f;
-            return chance;
+            return Math.Clamp(chance, 0f, 1f);
         }
     }
 }
