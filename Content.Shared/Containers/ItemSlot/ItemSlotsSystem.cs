@@ -225,7 +225,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (excluded != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
 
-            SoundSystem.Play(filter, sound.GetSound(), uid, audioParams);
+            SoundSystem.Play(sound.GetSound(), filter, uid, audioParams);
         }
 
         /// <summary>

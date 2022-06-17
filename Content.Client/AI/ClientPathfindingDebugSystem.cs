@@ -481,7 +481,7 @@ namespace Content.Client.AI
 
             var screenHandle = args.ScreenHandle;
             screenHandle.UseShader(_shader);
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
 
             if ((Modes & PathfindingDebugMode.Route) != 0)
             {

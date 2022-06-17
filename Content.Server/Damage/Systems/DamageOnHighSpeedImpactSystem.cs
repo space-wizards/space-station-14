@@ -34,7 +34,7 @@ namespace Content.Server.Damage.Systems
 
             if (speed < component.MinimumSpeed) return;
 
-            SoundSystem.Play(Filter.Pvs(otherBody), component.SoundHit.GetSound(), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            SoundSystem.Play(component.SoundHit.GetSound(), Filter.Pvs(otherBody), otherBody, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             if ((_gameTiming.CurTime - component.LastHit).TotalSeconds < component.DamageCooldown)
                 return;
