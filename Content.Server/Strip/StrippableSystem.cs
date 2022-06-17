@@ -276,6 +276,7 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
             {
+                Logger.Error("The slot didn't exist.");
                 return;
             }
 
