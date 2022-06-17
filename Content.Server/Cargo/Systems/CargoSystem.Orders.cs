@@ -41,11 +41,11 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, BoundUIOpenedEvent>(OnOrderUIOpened);
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             Reset();
         }
-
 
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
         {
@@ -73,12 +73,11 @@ namespace Content.Server.Cargo.Systems
 
                 foreach (var account in EntityQuery<StationBankAccountComponent>())
                 {
-                    account.Balance += (int) (account.IncreasePerSecond * Delay);
+                    account.Balance += account.IncreasePerSecond * Delay;
                 }
 
                 foreach (var comp in EntityQuery<CargoOrderConsoleComponent>())
                 {
-                    // TODO: Also update on opening.
                     if (!_uiSystem.IsUiOpen(comp.Owner, CargoConsoleUiKey.Orders)) continue;
 
                     var station = _station.GetOwningStation(comp.Owner);
@@ -187,6 +186,12 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
                 return;
             }
+        }
+
+        private void OnOrderUIOpened(EntityUid uid, CargoOrderConsoleComponent component, BoundUIOpenedEvent args)
+        {
+            var station = _station.GetOwningStation(uid);
+            UpdateOrderState(component, station);
         }
 
         #endregion
