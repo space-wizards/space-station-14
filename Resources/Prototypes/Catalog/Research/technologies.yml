@@ -400,45 +400,39 @@
   id: PowerCellBasic
   description: Print standard powercells.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
-    state: s_st
+    sprite: Objects/Power/power_cells.rsi
+    state: small
   requiredPoints: 2500
   requiredTechnologies:
     - ElectromagneticTheory
   unlockedRecipes:
-    - PowerCellSmallStandard
-    - PowerCellMediumStandard
-    - PowerCellLargeStandard
+    - PowerCellSmall
 
 - type: technology
   name: "advanced powercell printing"
   id: PowerCellAdvanced
   description: Print advanced powercells.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
-    state: s_hi
+    sprite: Objects/Power/power_cells.rsi
+    state: medium
   requiredPoints: 5000
   requiredTechnologies:
     - PowerCellBasic
   unlockedRecipes:
-    - PowerCellSmallHigh
-    - PowerCellMediumHigh
-    - PowerCellLargeHigh
+    - PowerCellMedium
 
 - type: technology
   name: "super powercell printing"
   id: PowerCellSuper
   description: Print super powercells.
   icon:
-    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
-    state: s_sup
+    sprite: Objects/Power/power_cells.rsi
+    state: high
   requiredPoints: 10000
   requiredTechnologies:
     - PowerCellAdvanced
   unlockedRecipes:
-    - PowerCellSmallSuper
-    - PowerCellMediumSuper
-    - PowerCellLargeSuper
+    - PowerCellHigh
 # Basic Parts Technology Tree
 
 - type: technology

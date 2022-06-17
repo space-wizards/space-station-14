@@ -17902,7 +17902,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 1130
-  type: PowerCellSmallStandard
+  type: PowerCellSmall
   components:
   - parent: 1549
     type: Transform

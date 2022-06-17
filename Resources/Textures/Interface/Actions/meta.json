@@ -19,11 +19,23 @@
         {
             "name": "disarm"
         },
-		{
-			"name": "harm"
-		},
-		{
-			"name": "manifest"
-		}
+        {
+            "name": "harm"
+        },
+        {
+            "name": "manifest"
+        },
+        {
+            "name": "devour"
+        },
+        {
+            "name": "carp_summon"
+        },
+        {
+            "name": "ratKingArmy"
+        },
+        {
+            "name": "ratKingDomain"
+        }
     ]
 }
