@@ -1,9 +1,4 @@
 Entries:
-- author: Todd
-  changes:
-  - {message: Added flip flap to the lobby themes., type: Add}
-  id: 1213
-  time: '2022-03-15T12:28:24.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: You can no longer construct 'destroyed machine frames'., type: Tweak}
@@ -2994,3 +2989,13 @@ Entries:
   - {message: 'You can no longer wide attack inside of lockers, crates, etc.', type: Fix}
   id: 1712
   time: '2022-06-16T10:59:13.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Disarm chance now scales with relative health, relative mass, and status
+      effects. It''s now a much, much worse tool to instantly win a fight you''re
+      losing.', type: Tweak}
+  - {message: You now need to use an empty hand to perform disarms., type: Tweak}
+  - {message: 'Purpose-built single-handed melee weapons now have a disarm malus,
+      making them much harder to disarm.', type: Add}
+  id: 1713
+  time: '2022-06-17T05:37:07.0000000+00:00'
