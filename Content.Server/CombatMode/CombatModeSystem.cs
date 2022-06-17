@@ -108,8 +108,6 @@ namespace Content.Server.CombatMode
 
         private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
         {
-            Logger.Error("inTargetHand is: " + inTargetHand);
-
             float healthMod = 0;
             if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
             {
