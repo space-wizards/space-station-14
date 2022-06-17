@@ -20,6 +20,14 @@ cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$product
 cargo-console-menu-cargo-order-row-approve-button = Approve
 cargo-console-menu-cargo-order-row-cancel-button = Cancel
 
+# Orders
+cargo-console-order-not-allowed = Access not allowed
+cargo-console-station-not-found = No available station
+cargo-console-invalid-product = Invalid product ID
+cargo-console-too-many = Too many approved orders
+cargo-console-snip-snip = Order trimmed to capacity
+cargo-console-insufficient-funds = Insufficient funds (require {$cost})
+
 cargo-console-paper-print-name = Order #{$orderNumber}
 cargo-console-paper-print-text =
     Order #{$orderNumber}

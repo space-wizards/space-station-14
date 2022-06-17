@@ -96,7 +96,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_accessReaderSystem.IsAllowed(player, uid))
             {
-                ConsolePopup(args.Session, "Access not allowed");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-order-not-allowed"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -107,7 +107,7 @@ namespace Content.Server.Cargo.Systems
             // No station to deduct from.
             if (orderDatabase == null || bankAccount == null)
             {
-                ConsolePopup(args.Session, "No available station");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-station-not-found"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -119,7 +119,7 @@ namespace Content.Server.Cargo.Systems
             // Invalid order
             if (!_protoMan.TryIndex<CargoProductPrototype>(order.ProductId, out var product))
             {
-                ConsolePopup(args.Session, "Invalid product ID");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -130,7 +130,7 @@ namespace Content.Server.Cargo.Systems
             // Too many orders, avoid them getting spammed in the UI.
             if (amount >= capacity)
             {
-                ConsolePopup(args.Session, "Too many approved orders");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-too-many"));
                 PlayDenySound(uid, component);
                 return;
             }
@@ -141,7 +141,7 @@ namespace Content.Server.Cargo.Systems
             if (orderAmount != order.Amount)
             {
                 order.Amount = orderAmount;
-                ConsolePopup(args.Session, "Order trimmed to capacity");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-snip-snip"));
                 PlayDenySound(uid, component);
             }
 
@@ -150,7 +150,7 @@ namespace Content.Server.Cargo.Systems
             // Not enough balance
             if (cost > bankAccount.Balance)
             {
-                ConsolePopup(args.Session, $"Insufficient funds (require {cost})");
+                ConsolePopup(args.Session, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
                 PlayDenySound(uid, component);
                 return;
             }
