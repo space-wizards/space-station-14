@@ -270,6 +270,16 @@
       - MobLayer
 
 - type: entity
+  ame: Rouny
+  parent: MobXenoRunner
+  id: MobXenoRouny
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/rouny.rsi
+    offset: 0,0.6
+
+- type: entity
   name: Spitter
   parent: MobXeno
   id: MobXenoSpitter
