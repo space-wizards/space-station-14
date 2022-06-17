@@ -54,7 +54,8 @@
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
-    hitSound: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    hitSound:
+     soundcollection: AlienClaw
     arc:
     damage:
       groups:
@@ -273,7 +274,7 @@
       - MobLayer
 
 - type: entity
-  ame: Rouny
+  name: Rouny
   parent: MobXenoRunner
   id: MobXenoRouny
   components:
