@@ -63,7 +63,7 @@ namespace Content.Server.DoAfter
         /// <summary>
         ///     Threshold for distance user is allowed to get from the target
         /// </summary>
-        public float? DistanceThreshold { get; set; }
+        public float? BreakOnDistance { get; set; }
 
         /// <summary>
         ///     Requires a function call once at the end (like InRangeUnobstructed).

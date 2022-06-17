@@ -133,7 +133,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 BreakOnStun = true,
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
-                DistanceThreshold = 2.0f,
+                BreakOnDistance = 2.0f,
                 TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),
                 NeedHand = true,

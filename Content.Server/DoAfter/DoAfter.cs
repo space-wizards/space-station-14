@@ -165,20 +165,20 @@ namespace Content.Server.DoAfter
             }
 
             //Allow movement but enforce distance
-            if (EventArgs.DistanceThreshold != null)
+            if (EventArgs.BreakOnDistance != null)
             {
                 if(EventArgs.Target != null && !EventArgs.User.Equals(EventArgs.Target))
                 {
                     //recalculate Target location in case Target has also moved
                     TargetGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, TargetGrid, EventArgs.DistanceThreshold!.Value))
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, TargetGrid, EventArgs.BreakOnDistance!.Value))
                         return true;
                 }
                 if (EventArgs.Used != null && !EventArgs.User.Equals(EventArgs.Used))
                 {
                     //recalculate Used location in case Used has also moved
                     UsedGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Used!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, UsedGrid, EventArgs.DistanceThreshold!.Value))
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, UsedGrid, EventArgs.BreakOnDistance!.Value))
                         return true;
                 }
             }
