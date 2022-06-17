@@ -47,10 +47,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId:
-          Quantity: 1
         - ReagentId: UncookedAnimalProteins
-          Quantity: 5
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -100,7 +98,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 2
 
 - type: entity
   name: raw bear meat
@@ -118,7 +116,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -139,7 +137,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -160,7 +158,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -181,7 +179,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
@@ -284,7 +282,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -332,7 +330,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 20
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -792,7 +790,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw bear cutlet
@@ -814,7 +812,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw penguin cutlet
@@ -834,7 +832,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw chicken cutlet
@@ -854,7 +852,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw duck cutlet
@@ -874,7 +872,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw lizard cutlet
@@ -897,7 +895,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 3
 
 - type: entity
   name: raw spider cutlet
@@ -920,7 +918,7 @@
       food:
         reagents:
         - reagentId: UncookedAnimalProteins
-          Quantity: 20
+          Quantity: 3
 
 - type: entity
   name: raw xeno cutlet
