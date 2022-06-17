@@ -13,7 +13,6 @@
 - type: startingGear
   id: ReporterGear
   equipment:
-    head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitReporter
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorWhite
