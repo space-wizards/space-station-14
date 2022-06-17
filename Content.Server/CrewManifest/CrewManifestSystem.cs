@@ -107,6 +107,19 @@ public sealed class CrewManifestSystem : EntitySystem
             _uiSystem.GetUiOrNull(comp.Owner, CrewManifestUiKey.Key)?.SetState(new CrewManifestBoundUiState(entries));
         }
     }
+
+    public void OpenUserInterface(EntityUid uid, EntityUid player)
+    {
+        if (!_uiSystem.TryGetUi(uid, CrewManifestUiKey.Key, out var bui)
+            || !TryComp<ActorComponent>(player, out var actor))
+        {
+            return;
+        }
+
+        AddComp<ActiveCrewManifestViewerComponent>(uid);
+
+        bui.Open(actor.PlayerSession);
+    }
 }
 
 
