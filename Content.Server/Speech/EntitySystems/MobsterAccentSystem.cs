@@ -9,7 +9,7 @@ public sealed class MobsterAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    private Dictionary<string, string> _directReplacements = new()
+    private static readonly Dictionary<string, string> DirectReplacements = new()
     {
         { "let me", "lemme" },
         { "should", "oughtta" },
@@ -31,9 +31,9 @@ public sealed class MobsterAccentSystem : EntitySystem
 
         var msg = message;
 
-        foreach (var (first, replace) in _directReplacements)
+        foreach (var (first, replace) in DirectReplacements)
         {
-            msg.Replace(first, replace, true, CultureInfo.InvariantCulture);
+            msg = msg.Replace(first, replace, true, CultureInfo.InvariantCulture);
         }
 
         // thinking -> thinkin'
