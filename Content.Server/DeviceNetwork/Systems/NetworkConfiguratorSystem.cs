@@ -104,7 +104,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
         if (_accessSystem.IsAllowed(user.Value, reader))
             return true;
 
-        SoundSystem.Play(Filter.Pvs(user.Value), component.SoundNoAccess.GetSound(), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        SoundSystem.Play(component.SoundNoAccess.GetSound(), Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
 
         return false;

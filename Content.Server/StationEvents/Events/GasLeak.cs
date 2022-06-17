@@ -20,6 +20,7 @@ namespace Content.Server.StationEvents.Events
         protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
 
         private static readonly Gas[] LeakableGases = {
+            Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
         };
@@ -158,8 +159,8 @@ namespace Content.Server.StationEvents.Events
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmosphereSystem.HotspotExpose(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridEntityId, _targetTile, 700f, 50f, true);
-                SoundSystem.Play(Filter.Pvs(_targetCoords), "/Audio/Effects/sparks4.ogg", _targetCoords);
+                atmosphereSystem.HotspotExpose(_entityManager.GetComponent<TransformComponent>(_targetGrid).GridID, _targetTile, 700f, 50f, true);
+                SoundSystem.Play("/Audio/Effects/sparks4.ogg", Filter.Pvs(_targetCoords), _targetCoords);
             }
         }
     }

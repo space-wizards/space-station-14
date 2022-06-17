@@ -284,7 +284,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(filter, type.Sound.GetSound(), mapEntityCoords, _audioParams);
+        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,

@@ -64,9 +64,6 @@
         #  - Ammo
       - id: MagazineBoxMagnum
         prob: 0.01
-        #  - #shinies
-      - id: PowerCellLargeHyper
-        prob: 0.01
         # Just no (0.1%)
         #  - Working guns
       - id: WeaponRevolverDeckard

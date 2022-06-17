@@ -101,7 +101,7 @@ namespace Content.Shared.Standing
             // > no longer true with door crushing. There just needs to be a better way to handle audio prediction.
             if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(uid), standingState.DownSound.GetSound(), uid, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(standingState.DownSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
             }
 
             return true;
