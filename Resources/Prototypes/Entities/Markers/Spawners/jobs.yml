@@ -467,3 +467,29 @@
     layers:
       - state: green
       - state: ertjanitor
+
+# STATION SPECIFIC
+
+- type: entity
+  id: SpawnPointReporter
+  parent: SpawnPointJobBase
+  name: reporter
+  components:
+  - type: SpawnPoint
+    job_id: Reporter
+  - type: Sprite
+    layers:
+      - state: green
+      - state: reporter
+
+- type: entity
+  id: SpawnPointPsychologist
+  parent: SpawnPointJobBase
+  name: psychologist
+  components:
+  - type: SpawnPoint
+    job_id: Psychologist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: psychologist

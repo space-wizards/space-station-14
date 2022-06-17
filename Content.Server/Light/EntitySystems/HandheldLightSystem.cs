@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Light.Components;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -220,7 +221,8 @@ namespace Content.Server.Light.EntitySystems
         {
             if (component.Activated) return false;
 
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
+                !TryComp(component.Owner, out battery))
             {
                 SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
@@ -253,7 +255,8 @@ namespace Content.Server.Light.EntitySystems
 
         public void TryUpdate(HandheldLightComponent component, float frameTime)
         {
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
+                !TryComp(component.Owner, out battery))
             {
                 TurnOff(component, false);
                 return;

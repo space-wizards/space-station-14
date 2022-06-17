@@ -95,6 +95,14 @@
       0: !type:NormalMobState {}
       50: !type:CriticalMobState {}
       100: !type:DeadMobState {}
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: CombatMode
   - type: Internals

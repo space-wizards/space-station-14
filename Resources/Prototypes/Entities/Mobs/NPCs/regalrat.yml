@@ -55,11 +55,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: regalrat
+        Base: regalrat
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Puller
   - type: GhostTakeoverAvailable
     makeSentient: true
@@ -165,11 +165,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: mouse-3
+        Base: mouse-3
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-3
+        Base: dead-3
       Dead:
-        enum.DamageStateVisualLayers.Base: splat-3
+        Base: splat-3
   - type: Puller
   - type: DiseaseCarrier
     carrierDiseases:
