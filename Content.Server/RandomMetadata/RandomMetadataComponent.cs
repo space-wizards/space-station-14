@@ -1,4 +1,4 @@
-﻿using Content.Shared.Dataset;
+using Content.Shared.Dataset;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.RandomMetadata;
@@ -14,4 +14,7 @@ public sealed class RandomMetadataComponent : Component
 
     [DataField("nameSet", customTypeSerializer:typeof(PrototypeIdSerializer<DatasetPrototype>))]
     public string? NameSet;
+
+    [DataField("nameSet2", customTypeSerializer: typeof(PrototypeIdSerializer<DatasetPrototype>))]
+    public string? NameSet2;
 }

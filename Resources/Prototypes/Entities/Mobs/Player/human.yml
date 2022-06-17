@@ -62,9 +62,7 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertleader
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTLeader
-    deleteOnSpawn: true
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: ERT Leader
     description: Lead a team of specialists to resolve the stations issues.
@@ -72,6 +70,7 @@
     prototype: ERTLeaderGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitaryLeader
+    nameSet2: NamesLast
   - type: RandomHumanoidAppearance
     randomizeName: false
     
@@ -84,10 +83,6 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertleadereva
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTLeaderEVA
-    deleteOnSpawn: true
-    makeSentient: true
   - type: Loadout
     prototype: ERTLeaderGearEVA
 
@@ -100,9 +95,7 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertengineer
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTEngineer
-    deleteOnSpawn: true
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: ERT Engineer
     description: Assist with engineering efforts to resolve the stations issues.
@@ -110,6 +103,7 @@
     prototype: ERTEngineerGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
+    nameSet2: NamesLast
     
 - type: entity
   name: ERT engineer
@@ -120,12 +114,6 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertengineereva
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTEngineerEVA
-    deleteOnSpawn: true
-    makeSentient: true
-    name: ERT Engineer
-    description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTEngineerGearEVA
     
@@ -138,9 +126,7 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertsecurity
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTSecurity
-    deleteOnSpawn: true
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: ERT Security
     description: Assist with security efforts to resolve the stations issues.
@@ -148,6 +134,7 @@
     prototype: ERTSecurityGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
+    nameSet2: NamesLast
     
 - type: entity
   name: ERT security
@@ -158,12 +145,6 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertsecurityeva
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTSecurityEVA
-    deleteOnSpawn: true
-    makeSentient: true
-    name: ERT Security
-    description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTSecurityGearEVA
     
@@ -176,9 +157,7 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertmedical
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTMedical
-    deleteOnSpawn: true
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: ERT Medic
     description: Assist with medical efforts to resolve the stations issues.
@@ -186,6 +165,7 @@
     prototype: ERTMedicalGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
+    nameSet2: NamesLast
     
 - type: entity
   name: ERT medic
@@ -196,12 +176,6 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertmedicaleva
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTMedicalEVA
-    deleteOnSpawn: true
-    makeSentient: true
-    name: ERT Medic
-    description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTMedicalGearEVA
     
@@ -214,16 +188,15 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertjanitor
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTJanitor
-    deleteOnSpawn: true
+  - type: GhostTakeoverAvailable
     makeSentient: true
     name: ERT Janitor
-    description: Assist with custodial efforts to resolve the stations issues.
+    description: Assist with janitorial efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTJanitorGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
+    nameSet2: NamesLast
     
 - type: entity
   name: ERT janitor
@@ -234,11 +207,5 @@
   - type: Icon
     sprite: Markers/jobs.rsi
     state: ertjanitoreva
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanERTJanitorEVA
-    deleteOnSpawn: true
-    makeSentient: true
-    name: ERT Janitor
-    description: Assist with custodial efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTJanitorGearEVA

@@ -35,7 +35,7 @@ namespace Content.Tests.Server.Preferences
   - Aaliyah
 
 - type: dataset
-  id: names_last
+  id: NamesLast
   values:
   - Ackerley";
 

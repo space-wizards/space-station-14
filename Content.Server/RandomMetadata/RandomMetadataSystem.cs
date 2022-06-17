@@ -1,4 +1,4 @@
-﻿using Content.Shared.Dataset;
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -25,6 +25,12 @@ public sealed class RandomMetadataSystem : EntitySystem
         {
             var nameProto = _prototype.Index<DatasetPrototype>(component.NameSet);
             meta.EntityName = _random.Pick(nameProto.Values);
+        }
+
+        if (component.NameSet2 != null && component.NameSet != null)
+        {
+            var nameProto = _prototype.Index<DatasetPrototype>(component.NameSet2);
+            meta.EntityName = meta.EntityName + " " + _random.Pick(nameProto.Values);
         }
 
         if (component.DescriptionSet != null)
