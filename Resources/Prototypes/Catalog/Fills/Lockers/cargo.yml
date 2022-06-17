@@ -10,6 +10,7 @@
       - id: YellowOxygenTank
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
+      - id: OreBag
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled

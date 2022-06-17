@@ -1,5 +1,5 @@
 using Content.Server.Shuttles.Components;
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -66,7 +66,7 @@ namespace Content.Server.Physics.Controllers
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner);
 
-                var gridId = xform.GridID;
+                var gridId = xform.GridEntityId;
                 // This tries to see if the grid is a shuttle
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
@@ -123,7 +123,7 @@ namespace Content.Server.Physics.Controllers
                             angularInput += sprint.X;
                         }
                         break;
-                    case ShuttleMode.Docking:
+                    case ShuttleMode.Strafing:
                         // No angular input possible
                         foreach (var (pilot, mover) in pilots)
                         {

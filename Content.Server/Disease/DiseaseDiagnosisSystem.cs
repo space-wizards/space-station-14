@@ -159,7 +159,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", uid);
+            SoundSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/vaccinator_running.ogg", uid);
+            SoundSystem.Play("/Audio/Machines/vaccinator_running.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>

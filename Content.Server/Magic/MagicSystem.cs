@@ -215,7 +215,7 @@ public sealed class MagicSystem : EntitySystem
 
         transform.WorldPosition = args.Target.Position;
         transform.AttachToGridOrMap();
-        SoundSystem.Play(Filter.Pvs(args.Target), args.BlinkSound.GetSound());
+        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target));
         args.Handled = true;
     }
 
@@ -232,7 +232,7 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(Filter.Pvs(coords), args.KnockSound.GetSound(), AudioParams.Default.WithVolume(args.KnockVolume));
+        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))

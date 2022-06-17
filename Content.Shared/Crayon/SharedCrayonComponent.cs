@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Crayon
 {
-    [NetworkedComponent, ComponentProtoName("Crayon"), Friend(typeof(SharedCrayonSystem))]
+    [NetworkedComponent, ComponentProtoName("Crayon"), Access(typeof(SharedCrayonSystem))]
     public abstract class SharedCrayonComponent : Component
     {
         public string SelectedState { get; set; } = string.Empty;

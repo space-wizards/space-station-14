@@ -69,7 +69,7 @@ namespace Content.Server.Chemistry.Components
 
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             var solSys = _systems.GetEntitySystem<SolutionContainerSystem>();
-            var grid = MapManager.GetGrid(xform.GridID);
+            var grid = MapManager.GetGrid(xform.GridEntityId);
             var origin = grid.TileIndicesFor(xform.Coordinates);
 
             DebugTools.Assert(xform.Anchored, "Area effect entity prototypes must be anchored.");
@@ -146,7 +146,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ReactiveSystem>();
             var xform = _entities.GetComponent<TransformComponent>(Owner);
-            var mapGrid = MapManager.GetGrid(xform.GridID);
+            var mapGrid = MapManager.GetGrid(xform.GridEntityId);
             var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(_entities, MapManager));
             var lookup = EntitySystem.Get<EntityLookupSystem>();
 
