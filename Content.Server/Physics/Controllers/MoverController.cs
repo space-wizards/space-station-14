@@ -64,9 +64,9 @@ namespace Content.Server.Physics.Controllers
             // We just mark off their movement and the shuttle itself does its own movement
             foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
-                // TODO: Lord this is shit.
-                if (HasComp<CargoPilotConsoleComponent>(pilot.Owner) ||
-                    !TryComp<TransformComponent>(pilot.Console?.Owner, out var xform)) continue;
+                var consoleEnt = pilot.Console?.Owner;
+
+                if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
 
                 _excludedMobs.Add(mover.Owner);
 
