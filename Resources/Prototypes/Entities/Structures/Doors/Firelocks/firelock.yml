@@ -113,7 +113,7 @@
         - Impassable
         - HighImpassable
         layer:
-        - GlassAirlockLayer
+        - AirlockLayer
     - type: Door
       occludes: false
 
@@ -138,7 +138,7 @@
         - Impassable
         - HighImpassable
         layer:
-        - GlassAirlockLayer
+        - AirlockLayer
     - type: Occluder
       enabled: false
     - type: Door

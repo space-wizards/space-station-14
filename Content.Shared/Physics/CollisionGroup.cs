@@ -57,7 +57,7 @@ public enum CollisionGroup
 
     // Airlocks, windoors, firelocks
     GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
-    AirlockLayer = Opaque | GlassAirlockLayer,
+    AirlockLayer = Opaque,
 
     // Airlock assembly
     HumanoidBlockLayer = HighImpassable | MidImpassable,
