@@ -10,8 +10,12 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Traitor;
+using Content.Server.Zombies;
 using Content.Shared.CCVar;
+using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -42,14 +46,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly NukeSystem _nukeSystem = default!;
     [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
-    private const string ZombieVariantsWeightedRandomID = "ZombieVariants";
-    private const string PatientZeroPrototypeID = "PatientZero";
-    private const string InitialZombieVirusPrototype = "ActiveZombieVirus";
-
-    private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
-    private bool _opsWon;
+    private Dictionary<string, string> _initialInfected = new();
 
     public override string Prototype => "Zombie";
+    private const string PatientZeroPrototypeID = "PatientZero";
+    private const string InitialZombieVirusPrototype = "ActiveZombieVirus";
 
     public override void Initialize()
     {
@@ -57,9 +58,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         //SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        //SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
+
+        SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -67,92 +70,58 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!Enabled)
             return;
 
-        ev.AddLine("ZOMBIE ROUND OVER TESTETEST");
-        ev.AddLine(Loc.GetString("nukeops-list-start"));
-        foreach (var nukeop in _aliveNukeops)
-        {
-            ev.AddLine($"- {nukeop.Key.Session?.Name}");
-        }
-    }
+        //it's my if-else chain and no one can tell me how to write it!
+        var percent = GetInfectedPercentage();
+        Logger.Debug(percent.ToString());
+        if (percent <= 0)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
+        else if (percent <= 0.25)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
+        else if (percent <= 0.5)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", (percent * 100).ToString())));
+        else if (percent < 1)
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", (percent * 100).ToString())));
+        else
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-    private void OnMobStateChanged(MobStateChangedEvent ev)
-    {
-        
+        ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", _initialInfected.Count)));
+        foreach (var player in _initialInfected)
+        {
+            ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
+                ("name", player.Key),
+                ("username", player.Value)));
+        }
     }
 
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
+        if (!Enabled)
+            return;
+
+        _initialInfected = new();
+
         InfectInitialPlayers();
     }
 
-    private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
+    private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (!Enabled)
             return;
-        //these are staying here because i want the code for reference
+    }
 
-        /*
-        
-        // TODO: Loot table or something
-        var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
-        var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
-        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+    private void OnEntityZombified(EntityZombifiedEvent ev)
+    {
+        if (!Enabled)
+            return;
 
-        var spawns = new List<EntityCoordinates>();
+        //we only care about players, not monkeys and such.
+        if (!HasComp<HumanoidAppearanceComponent>(ev.Target))
+            return;
 
-        // Forgive me for hardcoding prototypes
-        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
-        {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
+        var percent = GetInfectedPercentage();
 
-            spawns.Add(xform.Coordinates);
-        }
-
-        if (spawns.Count == 0)
-        {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
-            Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
-        }
-        
-        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
-        for (var i = 0; i < ops.Length; i++)
-        {
-            string name;
-            StartingGearPrototype gear;
-
-            switch (i)
-            {
-                case 0:
-                    name = $"Commander";
-                    gear = commanderGear;
-                    break;
-                case 1:
-                    name = $"Operator #{i}";
-                    gear = medicGear;
-                    break;
-                default:
-                    name = $"Operator #{i}";
-                    gear = starterGear;
-                    break;
-            }
-
-            var session = ops[i];
-            var newMind = new Mind.Mind(session.UserId)
-            {
-                CharacterName = name
-            };
-            newMind.ChangeOwningPlayer(session.UserId);
-
-            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
-
-            newMind.TransferTo(mob);
-            _stationSpawningSystem.EquipStartingGear(mob, gear, null);
-
-            _aliveNukeops.Add(newMind, true);
-
-            GameTicker.PlayerJoinGame(session);
-        }*/
+        if (percent >= 1)
+            _roundEndSystem.EndRound();
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -187,12 +156,40 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     public override void Ended(GameRuleConfiguration configuration) { }
 
+    private FixedPoint2 GetInfectedPercentage()
+    {
+        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
+        var totalPlayers = new List<EntityUid>();
+        var livingZombies = new List<EntityUid>();
+        foreach (var ent in allPlayers)
+        {
+            if (ent.Item2.IsAlive())
+            {
+                totalPlayers.Add(ent.Item2.Owner);
+
+                if (HasComp<ZombieComponent>(ent.Item1.Owner))
+                    livingZombies.Add(ent.Item2.Owner);
+            }    
+        }
+        Logger.Debug((livingZombies.Count / totalPlayers.Count).ToString());
+        return (FixedPoint2) livingZombies.Count / (FixedPoint2) totalPlayers.Count;
+    }
+
     /// <summary>
-    /// Infects the first players with the passive zombie virus.
+    ///     Infects the first players with the passive zombie virus.
+    ///     Also records their names for the end of round screen.
     /// </summary>
     private void InfectInitialPlayers()
     {
-        var playerList = _playerManager.ServerSessions.ToList();
+        var allPlayers = _playerManager.ServerSessions.ToList();
+        var playerList = new List<IPlayerSession>();
+        foreach (var player in allPlayers)
+        {
+            if (player.AttachedEntity != null)
+            {
+                playerList.Add(player);
+            }
+        }
 
         if (playerList.Count == 0)
             return;
@@ -211,7 +208,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
                 break;
             }
-            IPlayerSession zombie = _random.PickAndTake(playerList);
+            var zombie = _random.PickAndTake(playerList);
             playerList.Remove(zombie);
             Logger.InfoS("preset", "Selected a patient 0.");
 
@@ -221,40 +218,29 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 Logger.ErrorS("preset", "Failed getting mind for picked patient 0.");
                 continue;
             }
-            
+
             DebugTools.AssertNotNull(mind.OwnedEntity);
 
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(PatientZeroPrototypeID)));
+            var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
-                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype); //change this once zombie refactor is in.
+            {
+                _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype);
+                inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
+            }
 
             if (mind.Session != null)
             {
                 var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+
+                //gets the names now in case the players leave.
+                if (inCharacterName != null)
+                    _initialInfected.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),
                    messageWrapper, default, false, mind.Session.ConnectedClient, Color.Plum);
             }
         }
-    }
-
-
-    /// <summary>
-    /// This event announces the nuke code and spawns
-    /// the disk inside of it. This is for round end
-    /// so the duplicated disk shouldn't really matter.
-    /// </summary>
-    private void UnlockNuke()
-    {
-        //_chatManager.(Loc.GetString("zombie-nuke-armed-event", ("code",_nukeCodeSystem.Code)), "Centcomm", default, Color.Crimson);
-        /*foreach (var nuke in EntityManager.EntityQuery<NukeComponent>().ToList())
-        {
-            if (nuke.DiskSlot.ContainerSlot != null)
-            {
-                nuke.DiskSlot.ContainerSlot.Insert(Spawn("NukeDisk", Transform(nuke.Owner).Coordinates));
-            }
-                
-        }*/
     }
 }

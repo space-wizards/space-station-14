@@ -24,12 +24,11 @@ using Content.Server.Disease;
 using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Zombies
 {
     /// <summary>
-    /// Handles zombie propagation and inherent zombie traits
+    ///     Handles zombie propagation and inherent zombie traits
     /// </summary>
     public sealed class ZombifyOnDeathSystem : EntitySystem
     {
@@ -38,9 +37,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
-        
         [Dependency] private readonly IChatManager _chatMan = default!;
 
         public override void Initialize()
@@ -49,7 +46,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
         }
-
+        
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
         /// </summary>
@@ -67,9 +64,10 @@ namespace Content.Server.Zombies
 
         /// <summary>
         /// This is the general purpose function to call if you want to zombify an entity.
-        /// It handles both humanoid and nonhumanoid transformation.
+        /// It handles both humanoid and nonhumanoid transformation and everything should be called through it.
         /// </summary>
         /// <param name="target">the entity being zombified</param>
+        /// <param name="provider">the entity that zombifies it. Used for data tracking</param>
         public void ZombifyEntity(EntityUid target)
         {
             if (HasComp<ZombieComponent>(target))
@@ -80,19 +78,8 @@ namespace Content.Server.Zombies
             RemComp<BarotraumaComponent>(target);
             RemComp<HungerComponent>(target);
             RemComp<ThirstComponent>(target);
-
-            var zombiecomp = EnsureComp<ZombifyOnDeathComponent>(target);
-            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp))
-            {
-                var appearance = huApComp.Appearance;
-                _sharedHuApp.UpdateAppearance(target, appearance.WithSkinColor(zombiecomp.SkinColor), huApComp);
-                _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
-            }
-
-            if (!HasComp<SharedDummyInputMoverComponent>(target))
-                MakeSentientCommand.MakeSentient(target, EntityManager);
-
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
+            var zombiecomp = EnsureComp<ZombifyOnDeathComponent>(target);
 
             //funny add delet go brrr
             RemComp<CombatModeComponent>(target);
@@ -103,17 +90,27 @@ namespace Content.Server.Zombies
             melee.ClickArc = zombiecomp.AttackArc;
             melee.Range = 0.75f;
 
-            //lord forgive me for the hardcoded damage
-            DamageSpecifier dspec = new();
-            dspec.DamageDict.Add("Slash", 13);
-            dspec.DamageDict.Add("Piercing", 7);
-            melee.Damage = dspec;            
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp))
+            {
+                var appearance = huApComp.Appearance;
+                _sharedHuApp.UpdateAppearance(target, appearance.WithSkinColor(zombiecomp.SkinColor), huApComp);
+                _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
+
+                //lord forgive me for the hardcoded damage
+                DamageSpecifier dspec = new();
+                dspec.DamageDict.Add("Slash", 13);
+                dspec.DamageDict.Add("Piercing", 7);
+                melee.Damage = dspec;
+            }
 
             _damageable.SetDamageModifierSetId(target, "Zombie");
             _bloodstream.SetBloodLossThreshold(target, 0f);
 
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target));
             _serverInventory.TryUnequip(target, "gloves", true, true);
+
+            if (!HasComp<SharedDummyInputMoverComponent>(target))
+                MakeSentientCommand.MakeSentient(target, EntityManager);
 
             if (TryComp<TemperatureComponent>(target, out var tempComp))
                 tempComp.ColdDamage.ClampMax(0);
@@ -126,7 +123,7 @@ namespace Content.Server.Zombies
 
             var mindcomp = EnsureComp<MindComponent>(target);
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
-                _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));     
+                _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
             {
@@ -143,8 +140,26 @@ namespace Content.Server.Zombies
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
-
             EnsureComp<ZombieComponent>(target);
+
+            RaiseLocalEvent(new EntityZombifiedEvent(target));
         }
     }
+
+    /// <summary>
+    ///     Event raised whenever an entity is zombified.
+    ///     Used by the zombie gamemode to track total infections.
+    /// </summary>
+    public sealed class EntityZombifiedEvent : EventArgs
+    {
+        /// <summary>
+        ///     The entity that was zombified.
+        /// </summary>
+        public EntityUid Target;
+
+        public EntityZombifiedEvent(EntityUid target)
+        {
+            Target = target;
+        }
+    };
 }

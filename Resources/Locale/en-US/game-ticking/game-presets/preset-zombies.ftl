@@ -8,4 +8,16 @@ zombie-patientzero-role-greeting = You are patient 0. Hide your infection, get s
 
 zombie-nuke-armed-event = In response to the zombie outbreak, we have armed the nuclear device positioned onboard the station. A disk has been automatically teleported inside of it. The code to detonate the device is: {$code}.
 zombie-end-nuke-armed-event-fail = The nuke was not detonated.
-zombie-end-nuke-armed-eveent-success = The nuke was successfully detonated by {$name} ({$username}), stopping the outbreak.
+zombie-end-nuke-armed-event-success = The nuke was successfully detonated by {$name} ({$username}), stopping the outbreak.
+
+zombie-round-end-initial-count = {$initialCount ->
+    [one] There was one initial infected.
+    *[other] There were {$initialCount} initial infected.
+}
+zombie-round-end-user-was-initial = - [color=Plum]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial infected.
+
+zombie-round-end-amount-none = [color=green]All of the zombies were eradicated![/color]
+zombie-round-end-amount-low = [color=green]Almost all of the zombies were exterminated.[/color]
+zombie-round-end-amount-medium = [color=yellow]{$percent}% of the crew were turned into zombies.[/color]
+zombie-round-end-amount-high = [color=crimson]{$percent}% of the crew were turned into zombies.[/color]
+zombie-round-end-amount-all = [color=darkred]The entire crew became zombies![/color]
