@@ -1,4 +1,5 @@
 using Content.Server.GameTicking;
+using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Shared.CrewManifest;
 using Robust.Server.GameObjects;
@@ -7,6 +8,7 @@ namespace Content.Server.CrewManifest;
 
 public sealed class CrewManifestSystem : EntitySystem
 {
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
@@ -21,6 +23,7 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
+        SubscribeLocalEvent<ActiveCrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time
@@ -34,6 +37,11 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OnRecordModified(RecordModifiedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
+    }
+
+    private void OnBoundUiClose(EntityUid uid, ActiveCrewManifestViewerComponent component, BoundUIClosedEvent ev)
+    {
+        EntityManager.RemoveComponent<ActiveCrewManifestViewerComponent>(uid);
     }
 
     /// <summary>
@@ -80,6 +88,23 @@ public sealed class CrewManifestSystem : EntitySystem
         else
         {
             _cachedEntries.Add(station, entries);
+        }
+
+        UpdateUserInterface();
+    }
+
+    private void UpdateUserInterface()
+    {
+        foreach (var comp in EntityQuery<ActiveCrewManifestViewerComponent>())
+        {
+            var owningStation = _stationSystem.GetOwningStation(comp.Owner);
+            CrewManifestEntries? entries = null;
+            if (owningStation != null)
+            {
+                _cachedEntries.TryGetValue(owningStation.Value, out entries);
+            }
+
+            _uiSystem.GetUiOrNull(comp.Owner, CrewManifestUiKey.Key)?.SetState(new CrewManifestBoundUiState(entries));
         }
     }
 }

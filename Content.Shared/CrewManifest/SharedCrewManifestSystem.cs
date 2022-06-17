@@ -3,6 +3,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CrewManifest;
 
 [Serializable, NetSerializable]
+public sealed class CrewManifestBoundUiState: BoundUserInterfaceState
+{
+    public CrewManifestEntries? Entries { get; }
+
+    public CrewManifestBoundUiState(CrewManifestEntries? entries)
+    {
+        Entries = entries;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class CrewManifestEntries
 {
     /// <summary>
@@ -26,4 +37,10 @@ public sealed class CrewManifestEntry
         JobTitle = jobTitle;
         DisplayPriority = displayPriority;
     }
+}
+
+[Serializable, NetSerializable]
+public enum CrewManifestUiKey
+{
+    Key
 }
