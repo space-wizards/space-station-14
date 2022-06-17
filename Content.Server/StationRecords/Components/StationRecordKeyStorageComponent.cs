@@ -6,5 +6,6 @@ public sealed class StationRecordKeyStorageComponent : Component
     /// <summary>
     ///     The key stored in this component.
     /// </summary>
+    [ViewVariables]
     public StationRecordKey? Key;
 }

@@ -21,6 +21,7 @@ public sealed class StationRecordSet
     // the abstraction that this is supposed to give
     private HashSet<StationRecordKey> _linkedKeys = new();
 
+    [ViewVariables]
     private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
 
     // Gets all records of a specific type stored in the record set.
@@ -118,7 +119,10 @@ public sealed class StationRecordSet
 // preferably within an ID card.
 public readonly struct StationRecordKey
 {
+    [ViewVariables]
     public uint ID { get; }
+
+    [ViewVariables]
     public EntityUid OriginStation { get; }
 
     public StationRecordKey(uint id, EntityUid originStation)
