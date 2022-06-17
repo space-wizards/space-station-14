@@ -26,6 +26,7 @@
       Plasma: danger # everything below is usually bad
       Tritium: danger
       WaterVapor: danger
+      Miasma: danger
   - type: AtmosAlarmable
     alarmedBy: ["AirAlarm"]
   - type: AtmosDevice

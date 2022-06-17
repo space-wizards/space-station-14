@@ -35234,7 +35234,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2452
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 8.459046,45.525425
     parent: 82
@@ -45505,7 +45505,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3700
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 44.656002,21.563784
     parent: 82
@@ -56560,7 +56560,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 4967
-  type: PowerCellMediumPotato
+  type: PowerCellPotato
   components:
   - pos: 32.49642,-0.21778393
     parent: 82

@@ -60,12 +60,15 @@
       groups:
         Brute: 20
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: running
-      crit: crit
-      dead: dead
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: running
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
   - type: Puller
   - type: Butcherable
     butcheringType: Spike
@@ -105,11 +108,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: purple_snake
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: purple_snake
-      crit: dead_purple_snake
-      dead: dead_purple_snake
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: purple_snake
+      Critical:
+        Base: dead_purple_snake
+      Dead:
+        Base: dead_purple_snake
   - type: Grammar
     attributes:
       proper: true
@@ -156,10 +162,13 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: small_purple_snake
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: purple_snake
-      crit: dead_small_purple_snake
-      dead: dead_small_purple_snake
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: small_purple_snake
+      Critical:
+        Base: dead_small_purple_snake
+      Dead:
+        Base: dead_small_purple_snake
   - type: SolutionTransfer
     maxTransferAmount: 1
