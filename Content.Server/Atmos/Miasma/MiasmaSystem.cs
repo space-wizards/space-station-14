@@ -1,9 +1,9 @@
 using Content.Shared.MobState;
 using Content.Shared.Damage;
+using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.Miasma
@@ -46,7 +46,7 @@ namespace Content.Server.Atmos.Miasma
 
                 var tileMix = _atmosphereSystem.GetTileMixture(Transform(perishable.Owner).Coordinates);
                 if (tileMix != null)
-                    tileMix.AdjustMoles(6, perishable.MolsPerSecondPerUnitMass * physics.FixturesMass);
+                    tileMix.AdjustMoles(Gas.Miasma, perishable.MolsPerSecondPerUnitMass * physics.FixturesMass);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.Miasma
                 var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
                 var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
                 if (tileMix != null)
-                    tileMix.AdjustMoles(6, molsToDump);
+                    tileMix.AdjustMoles(Gas.Miasma, molsToDump);
         }
 
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)

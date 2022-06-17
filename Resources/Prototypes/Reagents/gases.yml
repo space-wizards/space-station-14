@@ -146,8 +146,8 @@
 
 - type: reagent
   id: Miasma
-  name: miasma
-  desc: Uh oh, stinky!
+  name: reagent-name-miasma
+  desc: reagent-desc-miasma
   physicalDesc: reagent-physical-desc-gaseous
   color: "#56941E"
   boilingPoint: -195.8
