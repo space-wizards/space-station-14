@@ -152,7 +152,7 @@
     shoes: ClothingShoesBootsJack
     id: CentcomPDA
     pocket1: CombatKnife
-    pocket2: LaserGun
+    pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled
     belt: ClothingBeltBandolier
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
