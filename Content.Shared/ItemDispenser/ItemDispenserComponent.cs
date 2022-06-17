@@ -10,14 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Content.Shared.Dispenser
+namespace Content.Shared.ItemDispenser
 {
     /// <summary>
     /// Used for entities that can simply dispense a single type of item on interact.
     /// Think grab-and-go like a glove from a glove pack or a cup from a water cooler.
     /// </summary>
     [RegisterComponent]
-    public sealed class DispenserComponent : Component
+    public sealed class ItemDispenserComponent : Component
     {
         /// <summary>
         /// The entity to initially dispense
@@ -33,10 +33,10 @@ namespace Content.Shared.Dispenser
 
         /// <summary>
         /// The allowed entities to restock with.
-        /// Will not allow restocking without this.
+        /// Will not allow restocking without this (to avoid putting random things in the dispenser)
         /// </summary>
-        [DataField("whitelist")]
-        public EntityWhitelist? WhiteList;
+        [DataField("restockWhitelist")]
+        public EntityWhitelist? RestockWhitelist;
 
         [DataField("dispenseSound")]
         public SoundSpecifier DispenseSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");

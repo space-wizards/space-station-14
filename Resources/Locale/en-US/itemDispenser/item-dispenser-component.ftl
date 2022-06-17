@@ -1,0 +1,1 @@
+item-dispenser-component-restock-verb = Restock {$itemName}

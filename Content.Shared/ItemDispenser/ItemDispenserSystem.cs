@@ -9,17 +9,19 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Popups;
 
-namespace Content.Shared.Dispenser
+namespace Content.Shared.ItemDispenser
 {
     /// <summary>
-    /// Handles the interactions with a single item type dispenser
+    /// Handles the interactions for a single item type dispenser
     /// </summary>
-    public sealed class DispenserSystem : EntitySystem
+    public sealed class ItemDispenserSystem : EntitySystem
     {
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -27,89 +29,88 @@ namespace Content.Shared.Dispenser
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DispenserComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<DispenserComponent, ComponentInit>(OnInitialize);
+            SubscribeLocalEvent<ItemDispenserComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<ItemDispenserComponent, ComponentInit>(OnInitialize);
 
-            SubscribeLocalEvent<DispenserComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<DispenserComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+            SubscribeLocalEvent<ItemDispenserComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<ItemDispenserComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
 
-            SubscribeLocalEvent<DispenserComponent, BreakageEventArgs>(OnBreak);
-            SubscribeLocalEvent<DispenserComponent, DestructionEventArgs>(OnBreak);
+            SubscribeLocalEvent<ItemDispenserComponent, BreakageEventArgs>(OnBreak);
+            SubscribeLocalEvent<ItemDispenserComponent, DestructionEventArgs>(OnBreak);
         }
 
-        private void OnInitialize(EntityUid uid, DispenserComponent component, ComponentInit args)
+        private void OnInitialize(EntityUid uid, ItemDispenserComponent dispenser, ComponentInit args)
         {
-            component.Storage = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
+            dispenser.Storage = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
         }
 
         /// <summary>
         ///  Fill up container on init
         /// </summary>
-        private void OnMapInit(EntityUid uid, DispenserComponent component, MapInitEvent args)
+        private void OnMapInit(EntityUid uid, ItemDispenserComponent dispenser, MapInitEvent args)
         {
-            for(int i = 0; i < component.Capacity; i++ )
+            for(int i = 0; i < dispenser.Capacity; i++ )
             {
-                var itemEntity = EntityManager.SpawnEntity(component.ItemId, _entManager.GetComponent<TransformComponent>(component.Owner).Coordinates);
-                component.Storage?.Insert(itemEntity);
+                var itemEntity = EntityManager.SpawnEntity(dispenser.ItemId, _entManager.GetComponent<TransformComponent>(dispenser.Owner).Coordinates);
+                dispenser.Storage?.Insert(itemEntity);
             }
         }
 
         /// <summary>
         ///     Adds an alt verb for restocking items
         /// </summary>
-        private void OnGetAltVerbs(EntityUid uid, DispenserComponent dispenser, GetVerbsEvent<AlternativeVerb> args)
+        private void OnGetAltVerbs(EntityUid uid, ItemDispenserComponent dispenser, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess || args.Using == null)
                 return;
 
             var itemUsed = (EntityUid) args.Using;
 
+            if (!CanRestock(uid, dispenser, itemUsed))
+                return;
+
+            var itemName = _entManager.GetComponent<MetaDataComponent>(itemUsed).EntityName;
+
             AlternativeVerb verb = new();
             verb.IconEntity = args.Using;
-            verb.Act = () =>
-            {
-                if (TryRestock(uid, dispenser, itemUsed))
-                    PlaySound(uid, dispenser.RestockSound, dispenser.SoundOptions);
-            };
-
-            verb.Text = Loc.GetString("dispenser-component-restock-verb");
+            verb.Text = Loc.GetString("item-dispenser-component-restock-verb", ("itemName", itemName));
             verb.Category = VerbCategory.Insert;
+
+            verb.Act = () => { Restock(uid, dispenser, itemUsed); };
 
             args.Verbs.Add(verb);
         }
 
-        private bool TryRestock(EntityUid uid, DispenserComponent dispenser, EntityUid itemUsed)
+        private bool CanRestock(EntityUid uid, ItemDispenserComponent dispenser, EntityUid itemUsed)
         {
-            //restocking one item
-            if (dispenser.WhiteList?.IsValid(itemUsed) == true
-                && dispenser.Storage?.ContainedEntities.Count < dispenser.Capacity)
-            {
-                return dispenser.Storage?.Insert(itemUsed) == true;
-            }
+            return dispenser.RestockWhitelist?.IsValid(itemUsed) == true
+                && dispenser.Storage?.ContainedEntities.Count < dispenser.Capacity;
+        }
 
-            //TODO: handle item stacks
-
-            return false;
+        private void Restock(EntityUid uid, ItemDispenserComponent dispenser, EntityUid itemUsed)
+        {
+            dispenser.Storage?.Insert(itemUsed);
+            PlaySound(uid, dispenser.RestockSound, dispenser.SoundOptions);
         }
 
         /// <summary>
         ///  Attempt to dispense an item into the used hand.
         /// </summary>
-        private void OnInteractHand(EntityUid uid, DispenserComponent dispenser, InteractHandEvent args)
+        private void OnInteractHand(EntityUid uid, ItemDispenserComponent dispenser, InteractHandEvent args)
         {
             if (args.Handled)
                 return;
 
-            TryDispense(uid, dispenser, args.User);
             args.Handled = true;
+            TryDispense(uid, dispenser, args.User);
         }
 
-        private bool TryDispense(EntityUid uid, DispenserComponent dispenser, EntityUid? _user)
+        private bool TryDispense(EntityUid uid, ItemDispenserComponent dispenser, EntityUid? _user)
         {
             if (_user == null || !_user.HasValue || dispenser.Storage == null)
                 return false;
 
-            if(dispenser.Storage.ContainedEntities.Count <= 0)
+            if(dispenser.Storage.ContainedEntities.Count < 1)
                 return false;
 
             EntityUid user = (EntityUid) _user;
@@ -129,15 +130,15 @@ namespace Content.Shared.Dispenser
         /// <summary>
         /// Dumps the remaining items onto the ground upon breaking.
         /// </summary>
-        private void OnBreak(EntityUid uid, DispenserComponent component, EntityEventArgs args)
+        private void OnBreak(EntityUid uid, ItemDispenserComponent dispenser, EntityEventArgs args)
         {
-            if (component.Storage == null)
+            if (dispenser.Storage == null)
                 return;
 
-            int count = component.Storage.ContainedEntities.Count;
+            int count = dispenser.Storage.ContainedEntities.Count;
             for (int i = 0; i < count; i++)
             {
-                component.Storage.Remove(component.Storage.ContainedEntities.First());
+                dispenser.Storage.Remove(dispenser.Storage.ContainedEntities.First());
             }
         }
 

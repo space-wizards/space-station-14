@@ -76,10 +76,10 @@
         reagents:
         - ReagentId: Water
           Quantity: 500
-  - type: Dispenser
+  - type: ItemDispenser
     item: DrinkWaterCup
     capacity: 6
-    whitelist:
+    restockWhitelist:
       tags:
           - PaperCup
   - type: ItemMapper
