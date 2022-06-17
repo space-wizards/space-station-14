@@ -147,14 +147,6 @@
     - node: wallrust
       entity: WallSolidRust
       edges:
-        - to: girder
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-          steps:
-            - tool: Welding
-              doAfter: 10
         - to: wall
           completed:
             - !type:SpawnPrototype
@@ -162,5 +154,5 @@
               amount: 1
             - !type:DeleteEntity {}
           steps:
-            - tool: Prying
+            - tool: Welding
               doAfter: 5
