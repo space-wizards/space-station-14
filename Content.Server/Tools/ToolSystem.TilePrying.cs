@@ -3,7 +3,9 @@ using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Server.Tools;
 
@@ -26,6 +28,7 @@ public sealed partial class ToolSystem
     private void OnTilePryComplete(EntityUid uid, TilePryingComponent component, TilePryingCompleteEvent args)
     {
         component.CancelToken = null;
+        SoundSystem.Play("/Audio/Items/crowbar.ogg", Filter.Pvs(uid, entityManager: EntityManager));
         args.Coordinates.PryTile(EntityManager, _mapManager);
     }
 

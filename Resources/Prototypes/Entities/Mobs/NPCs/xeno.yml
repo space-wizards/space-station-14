@@ -11,6 +11,10 @@
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
+  - type: Tool
+    speed: 0.3
+    qualities:
+      - Prying
   - type: Reactive
     groups:
       Flammable: [Touch]
