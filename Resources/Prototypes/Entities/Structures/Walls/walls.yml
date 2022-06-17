@@ -568,8 +568,6 @@
   components:
   - type: Sprite
     sprite: Structures/Walls/solidrust.rsi
-  - type: Icon
-    sprite: Structures/Walls/solidrust.rsi
   - type: Construction
     graph: Girder
     node: wallrust
