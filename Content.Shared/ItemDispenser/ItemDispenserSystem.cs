@@ -1,15 +1,16 @@
+using Content.Shared.ActionBlocker;
 using Robust.Shared.Audio;
 using Content.Shared.Destructible;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Popups;
 
 namespace Content.Shared.ItemDispenser
 {
@@ -34,6 +35,7 @@ namespace Content.Shared.ItemDispenser
 
             SubscribeLocalEvent<ItemDispenserComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemDispenserComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+            SubscribeLocalEvent<ItemDispenserComponent, ExaminedEvent>(OnExamined);
 
             SubscribeLocalEvent<ItemDispenserComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<ItemDispenserComponent, DestructionEventArgs>(OnBreak);
@@ -49,6 +51,9 @@ namespace Content.Shared.ItemDispenser
         /// </summary>
         private void OnMapInit(EntityUid uid, ItemDispenserComponent dispenser, MapInitEvent args)
         {
+            if (!dispenser.FillOnInit)
+                return;
+
             for(int i = 0; i < dispenser.Capacity; i++ )
             {
                 var itemEntity = EntityManager.SpawnEntity(dispenser.ItemId, _entManager.GetComponent<TransformComponent>(dispenser.Owner).Coordinates);
@@ -139,6 +144,26 @@ namespace Content.Shared.ItemDispenser
             for (int i = 0; i < count; i++)
             {
                 dispenser.Storage.Remove(dispenser.Storage.ContainedEntities.First());
+            }
+        }
+
+        private void OnExamined(EntityUid uid, ItemDispenserComponent dispenser, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange || !dispenser.AllowStockExamine || dispenser.Storage == null)
+                return;
+
+            if (dispenser.Storage.ContainedEntities.Count > 0)
+            {
+                var itemName = _entManager.GetComponent<MetaDataComponent>(dispenser.Storage.ContainedEntities.First()).EntityName;
+
+                args.PushMarkup(Loc.GetString("item-dispenser-component-remaining-stock",
+                    ("amount", dispenser.Storage.ContainedEntities.Count),
+                    ("capacity", dispenser.Capacity),
+                    ("item", itemName)));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("item-dispenser-component-out-of-stock"));
             }
         }
 

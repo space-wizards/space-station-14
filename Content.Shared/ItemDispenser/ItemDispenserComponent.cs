@@ -32,6 +32,16 @@ namespace Content.Shared.ItemDispenser
         public int Capacity;
 
         /// <summary>
+        /// Whether to fill the dispenser on map init
+        /// </summary>
+        public bool FillOnInit = true;
+
+        /// <summary>
+        /// If the remaining stock can be seen OnExmaine
+        /// </summary>
+        public bool AllowStockExamine = true;
+
+        /// <summary>
         /// The allowed entities to restock with.
         /// Will not allow restocking without this (to avoid putting random things in the dispenser)
         /// </summary>
