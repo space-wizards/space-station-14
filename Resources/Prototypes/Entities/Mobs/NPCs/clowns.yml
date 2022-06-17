@@ -1,4 +1,50 @@
 - type: entity
+  name: clown
+  id: MobVoreClown
+  parent: MobHuman
+  description: the clown looks hungry. Honk.
+  components:
+  - type: Loadout
+    prototype: ClownGear
+  - type: MeleeWeapon
+    hitSound:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 15
+        Slash: 15
+  - type: Dragon
+    spawnsLeft: 0
+    spawnProto: MobVoreClown
+    soundDeath: null
+    soundRoar: null
+    devourAction:
+      event: !type:DragonDevourActionEvent
+      icon: Interface/Actions/devour.png
+      name: action-name-devour
+      description: action-description-devour
+      devourChemical: Ichor
+      devourHealRate: 15.0
+      whitelist:
+        components:
+        - MobState
+        - Door
+        tags:
+        - Wall
+    spawnAction:
+      event: !type:DragonSpawnActionEvent
+      icon: Interface/Actions/carpbirth.png
+      name: action-name-carp-birth
+      description: action-description-carp-birth
+      useDelay: 5
+  - type: GhostRoleMobSpawner
+    prototype: MobVoreClown
+    deleteOnSpawn: true
+    makeSentient: false
+    name: hungry clown
+    description: Oh my god, it EATS people!
+
+- type: entity
   name: Clown
   parent: MobXeno
   id: BananaTreeClown
