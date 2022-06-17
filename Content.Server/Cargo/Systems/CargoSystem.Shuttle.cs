@@ -12,6 +12,8 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
+using Content.Shared.MobState.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -267,25 +269,41 @@ public sealed partial class CargoSystem
     {
         double amount = 0;
         var toSell = new HashSet<EntityUid>();
+        var actorQuery = GetEntityQuery<ActorComponent>();
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var pallet in GetCargoPallets(component))
         {
             // Containers should already get the sell price of their children so can skip those.
             foreach (var ent in _lookup.GetEntitiesIntersecting(pallet.Owner, LookupFlags.Anchored))
             {
-                if (toSell.Contains(ent)) continue;
+                // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
+                // (e.g. players).
+                if (toSell.Contains(ent) ||
+                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored) ||
+                    !CanSell(ent, mobQuery, actorQuery)) continue;
+
                 var price = _pricing.GetPrice(ent);
                 if (price == 0) continue;
+                toSell.Add(ent);
                 amount += price;
             }
         }
 
         bank.Balance += (int) amount;
+        _sawmill.Debug($"Cargo sold {toSell.Count} entities for {amount}");
 
         foreach (var ent in toSell)
         {
             Del(ent);
         }
+    }
+
+    private bool CanSell(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<ActorComponent> actorQuery)
+    {
+        // Can't sell players or mobs generally because they will get trapped there.
+        return !mobQuery.HasComponent(uid) && !actorQuery.HasComponent(uid);
     }
 
     private void SendToCargoMap(EntityUid uid, CargoShuttleComponent? component = null)
