@@ -1,15 +1,20 @@
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
-    public sealed class ShuttleSystem : EntitySystem
+    public sealed partial class ShuttleSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+
+        private ISawmill _sawmill = default!;
 
         public const float TileMassMultiplier = 0.5f;
 
@@ -25,9 +30,11 @@ namespace Content.Server.Shuttles.Systems
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("shuttles");
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
@@ -39,6 +46,12 @@ namespace Content.Server.Shuttles.Systems
             configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
             configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
             configManager.OnValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum, true);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateHyperspace(frameTime);
         }
 
         private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
