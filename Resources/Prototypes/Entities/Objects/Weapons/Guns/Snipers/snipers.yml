@@ -1,7 +1,7 @@
 - type: entity
-  name: SniperBase
+  name: BaseWeaponSniper
   parent: BaseItem
-  id: SniperBase
+  id: BaseWeaponSniper
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -9,51 +9,29 @@
     netsync: false
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
-  - type: BoltActionBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeLRifle
-    caliber: LRifle
-    capacity: 10
-    fireRate: 1.0
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
+    size: 30
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-  - type: RangedWeapon
+  - type: BallisticAmmoProvider
+    autoCycle: false
+    capacity: 10
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
 
 - type: entity
   name: Kardashev-Mosin
-  parent: SniperBase
-  id: SniperBoltGun
-  description: A weapon for hunting, or endless trench warfare.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: BoltActionBarrel
-    capacity: 5
-
-- type: entity
-  name: Kardashev-Mosin
-  parent: SniperBoltGun
-  id: SniperBoltGunWood
+  parent: BaseWeaponSniper
+  id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare.
   components:
   - type: Sprite
@@ -63,60 +41,55 @@
 
 - type: entity
   name: Hristov
-  parent: SniperBase
-  id: SniperHeavy
+  parent: BaseWeaponSniper
+  id: WeaponSniperHristov
   description: A portable anti-armour rifle. Fires armor piercing 14.5mm shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
     capacity: 1
-    fillPrototype: CartridgeAntiMaterial
-
-- type: entity
-  name: flintlock pistol
-  parent: SniperBase
-  id: FlintlockPistol
-  description: A pirate's companion. Yarrr!
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
-    capacity: 1
-    fireRate: 1.0
-    minAngle: 20
-    maxAngle: 80
-    angleIncrease: 20
-    angleDecay: 15
-    fillPrototype: CartridgeAntiMaterial
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
-  - type: Item
-    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
-
+    proto: CartridgeAntiMaterial
 
 - type: entity
   name: musket
-  parent: SniperBase
+  parent: BaseWeaponSniper
   id: Musket
   description: This should've been in a museum long before you were born.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: BoltActionBarrel
-    caliber: AntiMaterial
-    capacity: 1
-    fireRate: 1.0
-    minAngle: 10
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    fillPrototype: CartridgeAntiMaterial
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Item
     icon: Objects/Weapons/Guns/Snipers/musket.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMaterial
+    capacity: 1
+    proto: CartridgeAntiMaterial
+
+- type: entity
+  name: flintlock pistol
+  parent: BaseWeaponSniper
+  id: WeaponPistolFlintlock
+  description: A pirate's companion. Yarrr!
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    - type: Item
+      icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    - type: BallisticAmmoProvider
+      whitelist:
+        tags:
+          - CartridgeAntiMaterial
+      capacity: 1
+      proto: CartridgeAntiMaterial

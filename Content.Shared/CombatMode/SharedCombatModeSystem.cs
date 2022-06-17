@@ -52,6 +52,11 @@ namespace Content.Shared.CombatMode
                 _actionsSystem.RemoveAction(uid, component.DisarmAction);
         }
 
+        public bool IsInCombatMode(EntityUid entity)
+        {
+            return TryComp<SharedCombatModeComponent>(entity, out var combatMode) && combatMode.IsInCombatMode;
+        }
+
         private void OnActionPerform(EntityUid uid, SharedCombatModeComponent component, ToggleCombatActionEvent args)
         {
             if (args.Handled)
@@ -65,10 +70,8 @@ namespace Content.Shared.CombatMode
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == default || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
-            {
+            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
                 return;
-            }
 
             combatModeComponent.IsInCombatMode = ev.Active;
         }

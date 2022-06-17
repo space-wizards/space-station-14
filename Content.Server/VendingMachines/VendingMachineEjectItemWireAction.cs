@@ -1,4 +1,3 @@
-using Content.Server.VendingMachines.Systems;
 using Content.Server.Wires;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
@@ -19,7 +18,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
         var lightState = StatusLightState.Off;
 
         if (IsPowered(wire.Owner)
-            && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+            && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             lightState = vending.CanShoot
                 ? StatusLightState.BlinkingFast
@@ -41,7 +40,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
-        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             vending.CanShoot = true;
         }
@@ -51,7 +50,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
-        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent vending))
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             vending.CanShoot = false;
         }

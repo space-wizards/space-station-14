@@ -154,7 +154,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(Filter.Pvs(uid), component.InstantBloodSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
         }
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
@@ -162,7 +162,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(Filter.Pvs(uid), component.BloodHealedSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
                 Filter.Entities(uid));
 ;       }
@@ -289,8 +289,11 @@ public sealed class BloodstreamSystem : EntitySystem
         var tempSol = new Solution() { MaxVolume = max };
 
         tempSol.AddSolution(component.BloodSolution);
+        component.BloodSolution.RemoveAllSolution();
         tempSol.AddSolution(component.BloodTemporarySolution);
+        component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution);
+        component.ChemicalSolution.RemoveAllSolution();
         _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

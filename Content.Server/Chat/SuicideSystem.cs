@@ -17,7 +17,7 @@ namespace Content.Server.Chat
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -35,7 +35,7 @@ namespace Content.Server.Chat
                 return false;
             }
 
-            _adminLogSystem.Add(LogType.Suicide,
+            _adminLogger.Add(LogType.Suicide,
                             $"{EntityManager.ToPrettyString(victim):player} is committing suicide");
 
             var suicideEvent = new SuicideEvent(victim);
@@ -73,7 +73,7 @@ namespace Content.Server.Chat
         private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             // Suicide by held item
-            if (EntityManager.TryGetComponent(victim, out HandsComponent handsComponent)
+            if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
                 && handsComponent.ActiveHandEntity is EntityUid item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);

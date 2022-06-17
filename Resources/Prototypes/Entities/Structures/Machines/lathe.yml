@@ -193,15 +193,9 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
-      - PowerCellSmallStandard
-      - PowerCellSmallHigh
-      - PowerCellSmallSuper
-      - PowerCellMediumStandard
-      - PowerCellMediumHigh
-      - PowerCellMediumSuper
-      - PowerCellLargeStandard
-      - PowerCellLargeHigh
-      - PowerCellLargeSuper
+      - PowerCellSmall
+      - PowerCellMedium
+      - PowerCellHigh
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -250,6 +244,13 @@
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
+      - SurveillanceCameraRouterCircuitboard
+      - SurveillanceCameraMonitorCircuitboard
+      - SurveillanceWirelessCameraMonitorCircuitboard
+      - SurveillanceCameraWirelessRouterCircuitboard
+      - ComputerTelevisionCircuitboard
+      - SurveillanceWirelessCameraMovableCircuitboard
+      - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
@@ -262,6 +263,11 @@
       - DawInstrumentMachineCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - GeneratorPlasmaMachineCircuitboard
+      - GeneratorUraniumMachineCircuitboard
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
+      - EmitterCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
@@ -301,16 +307,16 @@
       - Stunbaton
       - CartridgePistol
       - ShellShotgun
-      - CartridgeLRifle
+      - CartridgeLightRifle
       - CartridgeMagnum
       - ShellShotgunBeanbag
       - ShellShotgunFlare
       - ShellShotgunFlash
       - CartridgePistolRubber
       - CartridgeMagnumRubber
-      - CartridgeClRifleRubber
-      - CartridgeLRifleRubber
-      - CartridgeSRifleRubber  #Everything below this is shared with other lathes
+      - CartridgeCaselessRifleRubber
+      - CartridgeLightRifleRubber
+      - CartridgeRifleRubber  #Everything below this is shared with other lathes
       - FlashlightLantern
       - Bucket
       - MopItem

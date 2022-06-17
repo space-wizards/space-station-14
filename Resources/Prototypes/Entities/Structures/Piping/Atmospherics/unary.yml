@@ -27,11 +27,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -99,11 +98,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -218,9 +216,12 @@
           enabledState: freezer_on
     - type: GasThermoMachine
       mode: Freezer
-      minTemperature: 73.15
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -244,6 +245,9 @@
           enabledState: heater_on
     - type: GasThermoMachine
       mode: Heater
-      maxTemperature: 573.15 # This is changed when parts are refreshed.
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container

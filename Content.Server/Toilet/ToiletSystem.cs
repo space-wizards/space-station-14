@@ -177,8 +177,8 @@ namespace Content.Server.Toilet
                 return;
 
             component.IsSeatUp = !component.IsSeatUp;
-            SoundSystem.Play(Filter.Pvs(uid), component.ToggleSound.GetSound(), uid,
-                AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(component.ToggleSound.GetSound(), Filter.Pvs(uid),
+                uid, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite(uid, component);
         }

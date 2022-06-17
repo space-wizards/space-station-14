@@ -10,7 +10,7 @@
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
   - type: ApcNetworkConnection
@@ -34,6 +34,14 @@
         Emagged: fire_emagged
       hideOnDepowered: ["fireAlarmState"]
     - type: WiresVisualizer
+  - type: AlertLevelDisplay
+    alertVisuals:
+      green: fire_0
+      blue: fire_1
+      red: fire_2
+      violet: fire_1
+      yellow: fire_1
+      delta: fire_3
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

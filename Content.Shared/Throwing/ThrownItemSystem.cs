@@ -17,7 +17,7 @@ namespace Content.Shared.Throwing
     public sealed class ThrownItemSystem : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         private const string ThrowingFixture = "throw-fixture";
@@ -63,12 +63,15 @@ namespace Content.Shared.Throwing
             }
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
-            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
+            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionMask = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
             _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
         {
+            if (args.OtherFixture.Hard == false)
+                return;
+
             var thrower = component.Thrower;
             var otherBody = args.OtherFixture.Body;
 
@@ -128,7 +131,7 @@ namespace Content.Shared.Throwing
 
             // Assume it's uninteresting if it has no thrower. For now anyway.
             if (thrownItem.Thrower is not null)
-                _adminLogSystem.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
+                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
             var landMsg = new LandEvent {User = thrownItem.Thrower};
             RaiseLocalEvent(landing, landMsg, false);
@@ -140,7 +143,7 @@ namespace Content.Shared.Throwing
         public void ThrowCollideInteraction(EntityUid? user, IPhysBody thrown, IPhysBody target)
         {
             if (user is not null)
-                _adminLogSystem.Add(LogType.ThrowHit, LogImpact.Low,
+                _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
                     $"{ToPrettyString(thrown.Owner):thrown} thrown by {ToPrettyString(user.Value):thrower} hit {ToPrettyString(target.Owner):target}.");
             // TODO: Just pass in the bodies directly
             RaiseLocalEvent(target.Owner, new ThrowHitByEvent(user, thrown.Owner, target.Owner));

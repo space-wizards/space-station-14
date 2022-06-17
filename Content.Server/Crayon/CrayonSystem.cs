@@ -20,7 +20,7 @@ namespace Content.Server.Crayon;
 public sealed class CrayonSystem : SharedCrayonSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -30,7 +30,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
-        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
+        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
         SubscribeLocalEvent<CrayonComponent, ComponentGetState>(OnCrayonGetState);
@@ -68,12 +68,12 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (component.UseSound != null)
-            SoundSystem.Play(Filter.Pvs(uid), component.UseSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(component.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
 
         // Decrease "Ammo"
         component.Charges--;
         Dirty(component);
-        _logs.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
+        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
 
         if (component.DeleteEmpty && component.Charges <= 0)

@@ -1,0 +1,41 @@
+- type: alertLevels
+  id: stationAlerts
+  defaultLevel: green
+  levels:
+    green:
+      announcement: alert-level-green-announcement
+      color: Green
+    blue:
+      announcement: alert-level-blue-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: DodgerBlue
+    violet:
+      announcement: alert-level-violet-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Violet
+    yellow:
+      announcement: alert-level-yellow-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Yellow
+    red:
+      announcement: alert-level-red-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Red
+    gamma:
+      announcement: alert-level-gamma-announcement
+      selectable: false
+      sound: /Audio/Misc/siren.ogg
+      disableSelection: true
+      color: PaleVioletRed
+    delta:
+      announcement: alert-level-delta-announcement
+      selectable: false
+      sound: /Audio/Misc/delta.ogg
+      disableSelection: true
+      color: DarkRed
+    epsilon:
+      announcement: alert-level-epsilon-announcement
+      selectable: false
+      sound: /Audio/Misc/epsilon.ogg
+      disableSelection: true
+      color: DarkViolet

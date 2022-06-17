@@ -32,7 +32,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -111,10 +111,10 @@ namespace Content.Server.Light.EntitySystems
                     var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
 
                     if (damage != null)
-                        _logSystem.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
+                    SoundSystem.Play(light.BurnHandSound.GetSound(), Filter.Pvs(uid), uid);
 
                     args.Handled = true;
                     return;
@@ -253,7 +253,7 @@ namespace Content.Server.Light.EntitySystems
                             if (time > light.LastThunk + ThunkDelay)
                             {
                                 light.LastThunk = time;
-                                SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));
+                                SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
                             }
                         }
                         else

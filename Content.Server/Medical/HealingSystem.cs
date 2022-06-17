@@ -18,7 +18,7 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -59,13 +59,13 @@ public sealed class HealingSystem : EntitySystem
         _stacks.Use(args.Component.Owner, 1, stack);
 
         if (uid != args.User)
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
         else
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
 
         if (args.Component.HealingEndSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), args.Component.HealingEndSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(args.Component.HealingEndSound.GetSound(), Filter.Pvs(uid, entityManager:EntityManager), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
     }
 
@@ -119,7 +119,7 @@ public sealed class HealingSystem : EntitySystem
 
         if (component.HealingBeginSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), component.HealingBeginSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(component.HealingBeginSound.GetSound(), Filter.Pvs(uid, entityManager:EntityManager), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
 
         _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)

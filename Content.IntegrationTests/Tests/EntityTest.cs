@@ -45,12 +45,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -68,7 +63,7 @@ namespace Content.IntegrationTests.Tests
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (prototype.NoSpawn || prototype.Abstract)
+                    if (prototype.Abstract)
                     {
                         continue;
                     }
@@ -136,12 +131,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -239,12 +229,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -253,9 +238,9 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DoMapInitialize(mapId);
             });
 
-            var distinctComponents = new List<(List<Type> components, List<Type> references)>
+            var distinctComponents = new List<(List<CompIdx> components, List<CompIdx> references)>
             {
-                (new List<Type>(), new List<Type>())
+                (new List<CompIdx>(), new List<CompIdx>())
             };
 
             // Split components into groups, ensuring that their references don't conflict
@@ -272,14 +257,14 @@ namespace Content.IntegrationTests.Tests
                         // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
                         {
-                            distinctComponents.Add((new List<Type>(), new List<Type>()));
+                            distinctComponents.Add((new List<CompIdx>(), new List<CompIdx>()));
                         }
 
                         continue;
                     }
 
                     // Add the component and its references if no conflicting references were found
-                    distinct.components.Add(type);
+                    distinct.components.Add(registration.Idx);
                     distinct.references.AddRange(registration.References);
                 }
             }

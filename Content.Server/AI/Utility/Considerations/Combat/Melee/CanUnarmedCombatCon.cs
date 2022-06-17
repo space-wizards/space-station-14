@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entity = context.GetState<SelfState>().GetValue();
-            return entityManager.HasComponent<UnarmedCombatComponent>(entity) ? 1.0f : 0.0f;
+            return entityManager.HasComponent<MeleeWeaponComponent>(entity) ? 1.0f : 0.0f;
         }
     }
 }

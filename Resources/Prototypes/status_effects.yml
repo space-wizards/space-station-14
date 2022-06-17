@@ -33,3 +33,7 @@
   
 - type: statusEffect
   id: PressureImmunity
+
+- type: statusEffect
+  id: Muted
+  alert: Muted

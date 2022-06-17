@@ -3,7 +3,7 @@ namespace Content.Server.Stunnable.Components
     /// <summary>
     /// Adds stun when it collides with an entity
     /// </summary>
-    [RegisterComponent, Friend(typeof(StunOnCollideSystem))]
+    [RegisterComponent, Access(typeof(StunOnCollideSystem))]
     public sealed class StunOnCollideComponent : Component
     {
         // TODO: Can probably predict this.
@@ -23,5 +23,10 @@ namespace Content.Server.Stunnable.Components
 
         [DataField("runSpeedMultiplier")]
         public float RunSpeedMultiplier = 1f;
+
+        /// <summary>
+        /// Fixture we track for the collision.
+        /// </summary>
+        [ViewVariables, DataField("fixture")] public string FixtureID = "projectile";
     }
 }

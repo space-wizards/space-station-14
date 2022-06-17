@@ -119,7 +119,7 @@
       types:
         Heat : 1 #per second, scales with temperature & other constants
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     netsync: false
     layers:
     - state: shell
@@ -174,10 +174,10 @@
   - type: Drone
     applyLaws: false
     tools:
-      - id: Minigun
+      - id: WeaponMinigun
       - id: EnergySword
-      - id: LauncherMultipleRocket
-      - id: XrayCannon
+      - id: WeaponLauncherMultipleRocket
+      - id: WeaponXrayCannon
   - type: UserInterface
     interfaces:
     - key: enum.StrippingUiKey.Key
@@ -215,9 +215,10 @@
       layer:
       - LargeMobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: onestar_boss
-      dead: onestar_boss_wrecked
+    rotate: true
+    states:
+      Alive:
+        Base: onestar_boss
+      Dead:
+        Base: onestar_boss_wrecked
   - type: CombatMode

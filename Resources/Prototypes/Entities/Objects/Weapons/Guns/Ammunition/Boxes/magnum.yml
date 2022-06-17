@@ -1,92 +1,99 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BoxMagnumBase
+  id: BaseMagazineBoxMagnum
   components:
-  - type: AmmoBox
-    caliber: Magnum
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    proto: CartridgeMagnum
     capacity: 60
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
     netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Boxes
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnum
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnum
   name: ammunition box (.40 magnum)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnum
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumFlash
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumFlash
   name: ammunition box (.40 magnum flash)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumFlash
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumFlash
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
     - state: flash
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumHV
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumHighVelocity
   name: ammunition box (.40 magnum high-velocity)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumHV
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumHighVelocity
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
     - state: hv
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumPractice
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumPractice
   name: ammunition box (.40 magnum practice)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumPractice
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
     - state: practice
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumRubber
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumRubber
   name: ammunition box (.40 magnum rubber)
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumRubber
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
     - state: rubber

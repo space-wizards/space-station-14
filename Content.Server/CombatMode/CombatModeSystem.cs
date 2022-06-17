@@ -20,7 +20,7 @@ namespace Content.Server.CombatMode
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly MeleeWeaponSystem _meleeWeaponSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -40,7 +40,7 @@ namespace Content.Server.CombatMode
 
             EntityUid? inTargetHand = null;
 
-            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent targetHandsComponent)
+            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
                 && targetHandsComponent.ActiveHand != null
                 && !targetHandsComponent.ActiveHand.IsEmpty)
             {
@@ -67,7 +67,7 @@ namespace Content.Server.CombatMode
 
             if (_random.Prob(component.DisarmFailChance))
             {
-                SoundSystem.Play(Filter.Pvs(args.Performer), component.DisarmFailSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
                 var targetName = Name(args.Target);
 
@@ -86,8 +86,8 @@ namespace Content.Server.CombatMode
             }
 
             _meleeWeaponSystem.SendAnimation("disarm", angle, args.Performer, args.Performer, new[] { args.Target });
-            SoundSystem.Play(filterAll, component.DisarmSuccessSound.GetSound(), args.Performer, AudioHelpers.WithVariation(0.025f));
-            _logSystem.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
+            SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
+            _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
             var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = component.DisarmPushChance };
             RaiseLocalEvent(args.Target, eventArgs);

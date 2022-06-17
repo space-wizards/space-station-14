@@ -15,7 +15,10 @@ ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
-ui-options-lobby-music = Lobby Music
+ui-options-lobby-music = Lobby & Round-end Music
+ui-options-admin-sounds = Play Admin Sounds
+ui-options-station-ambience = Station Ambience
+ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
@@ -126,6 +129,7 @@ ui-options-function-editor-cancel-place = Cancel placement
 ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
+ui-options-function-editor-copy-object = Copy
 
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console

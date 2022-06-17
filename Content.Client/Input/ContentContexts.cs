@@ -29,6 +29,9 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.Point);
             common.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
+            // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
+            common.AddFunction(ContentKeyFunctions.EditorCopyObject);
+
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);
@@ -46,7 +49,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
             human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
-            human.AddFunction(ContentKeyFunctions.WideAttack);
             human.AddFunction(ContentKeyFunctions.ArcadeUp);
             human.AddFunction(ContentKeyFunctions.ArcadeDown);
             human.AddFunction(ContentKeyFunctions.ArcadeLeft);

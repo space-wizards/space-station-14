@@ -111,7 +111,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = true;
 
-            SoundSystem.Play(Filter.Pvs(uid), welder.WelderOnSounds.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(welder.WelderOnSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
 
             // TODO: Use TransformComponent directly.
             _atmosphereSystem.HotspotExpose(EntityManager.GetComponent<TransformComponent>(welder.Owner).Coordinates, 700, 50, true);
@@ -146,7 +146,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = false;
 
-            SoundSystem.Play(Filter.Pvs(uid), welder.WelderOffSounds.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(welder.WelderOffSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
 
             welder.Dirty();
 
@@ -217,7 +217,7 @@ namespace Content.Server.Tools
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
                     _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
-                    SoundSystem.Play(Filter.Pvs(uid), welder.WelderRefill.GetSound(), uid);
+                    SoundSystem.Play(welder.WelderRefill.GetSound(), Filter.Pvs(uid), uid);
                     target.PopupMessage(args.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
                 else

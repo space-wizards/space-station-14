@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -13,7 +14,7 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
-        private readonly Dictionary<GridId, List<AlertsComponent>> _alerts = new();
+        private readonly Dictionary<EntityUid, List<AlertsComponent>> _alerts = new();
 
         public override void Initialize()
         {
@@ -21,7 +22,7 @@ namespace Content.Server.Gravity.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
-            SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(EntParentChanged);
             SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
@@ -32,12 +33,12 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void AddAlert(AlertsComponent status)
         {
-            var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
-            var alerts = _alerts.GetOrNew(gridId);
+            var xform = Transform(status.Owner);
+            var alerts = _alerts.GetOrNew(xform.GridEntityId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -52,7 +53,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(AlertsComponent status)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridEntityId;
             if (!_alerts.TryGetValue(grid, out var statuses))
             {
                 return;
@@ -94,17 +95,13 @@ namespace Content.Server.Gravity.EntitySystems
             _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
-        private void EntParentChanged(ref EntParentChangedMessage ev)
+        private void EntParentChanged(EntityUid uid, AlertsComponent status, ref EntParentChangedMessage ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
-            {
-                return;
-            }
-
+            // First, update the `_alerts` dictionary
             if (ev.OldParent is {Valid: true} old &&
                 EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
-                var oldGrid = mapGrid.GridIndex;
+                var oldGrid = mapGrid.Owner;
 
                 if (_alerts.TryGetValue(oldGrid, out var oldStatuses))
                 {
@@ -112,10 +109,21 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = EntityManager.GetComponent<TransformComponent>(ev.Entity).GridID;
+            var newGrid = ev.Transform.GridEntityId;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
+
+            // then update the actual alert. The alert is only removed if either the player is on a grid with gravity,
+            // or if they ignore gravity-based movement altogether.
+            // TODO: update this when planets and the like are added.
+            // TODO: update alert when the ignore-gravity component is added or removed.
+            if (_mapManager.TryGetGrid(newGrid, out var grid)
+                && TryComp(grid.GridEntityId, out GravityComponent? gravity)
+                && gravity.Enabled)
+                RemoveWeightless(status.Owner);
+            else if (!HasComp<MovementIgnoreGravityComponent>(uid))
+                AddWeightless(status.Owner);
         }
 
         private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)

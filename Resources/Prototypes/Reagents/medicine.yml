@@ -91,6 +91,18 @@
         damage:
           groups:
             Brute: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
     Alcohol:
       effects:
       - !type:Drunk
@@ -151,6 +163,19 @@
         damage:
           groups:
             Burn: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+        groups:
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Dexalin
@@ -266,6 +291,32 @@
         damage:
           types:
             Radiation: -1
+      - !type:ChemVomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+           Heat: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+
+- type: reagent
+  id: Ipecac
+  name: ipecac
+  group: Medicine
+  desc: Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
+  physicalDesc: inky
+  color: "#422912"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        probability: 0.3
 
 - type: reagent
   id: Inaprovaline
@@ -313,6 +364,10 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: -4
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
@@ -342,13 +397,15 @@
         damage:
           types:
             Poison: 1
+          groups:
+            Brute: -1.5
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
             min: 15
         damage:
           types:
-            Poison: 4
+            Poison: 3
       - !type:GenericStatusEffect
         key: PressureImmunity
         component: PressureImmunity
@@ -378,6 +435,8 @@
           types:
             Cellular: -1
             Radiation: 1
+      - !type:ChemVomit
+        probability: 0.05
 
 - type: reagent
   id: Romerol
@@ -536,6 +595,7 @@
       - !type:SatiateHunger
         factor: -1
 
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
   name: reagent-name-omnizine
@@ -595,3 +655,4 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+

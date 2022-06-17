@@ -8,6 +8,11 @@
     snap:
     - Window
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag
@@ -80,6 +85,8 @@
       trackAllDamage: true
       damageOverlay:
         sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 0.5
 
 - type: entity
   id: WindowDirectional
@@ -156,6 +163,8 @@
   - type: Construction
     graph: WindowDirectional
     node: windowDirectional
+  - type: StaticPrice
+    price: 0.5
 
 - type: entity
   id: WindowTintedDirectional
@@ -179,6 +188,8 @@
     state: tinted_window
   - type: Occluder
     boundingBox: "-0.5,-0.5,0.5,-0.3"
+  - type: StaticPrice
+    price: 0.5
 
 - type: entity
   id: WindowFrostedDirectional
@@ -197,3 +208,5 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
+  - type: StaticPrice
+    price: 0.5

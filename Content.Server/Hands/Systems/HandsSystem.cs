@@ -54,7 +54,7 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
-            SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
+            SubscribeLocalEvent<HandsComponent, PullAttemptEvent>(HandlePullAttempt);
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
@@ -148,7 +148,7 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region pulling
-        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
+        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptEvent args)
         {
             if (args.Puller.Owner != uid)
                 return;

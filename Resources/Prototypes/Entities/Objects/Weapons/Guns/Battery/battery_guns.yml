@@ -1,413 +1,319 @@
 - type: entity
-  id: BatteryGunBase
+  id: BaseWeaponBattery
   parent: BaseItem
   abstract: true
   components:
-  - type: RangedWeapon
-  - type: BatteryBarrel
+  - type: Sprite
+    netsync: false
+  - type: Item
+    size: 50
+  - type: AmmoCounter
+  - type: Gun
     fireRate: 2
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
-    ammoPrototype: RedLaser
-    currentSelector: Single
-    allSelectors:
-    - Single
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: false
 
 - type: entity
-  id: BatteryGunSmall
-  parent: BatteryGunBase
-  abstract: true 
+  id: BaseWeaponBatterySmall
+  parent: BaseWeaponBattery
+  abstract: true
   components:
-  - type: PowerCellSlot
-    slotSize: Small
-
-- type: entity
-  id: BatteryGunMedium
-  parent: BatteryGunBase
-  abstract: true 
-  components:
-  - type: PowerCellSlot
-    slotSize: Medium
-
-- type: entity
-  id: BatteryGunLarge
-  parent: BatteryGunBase
-  abstract: true 
-  components:
-  - type: PowerCellSlot
-    slotSize: Large
+  - type: Item
+    size: 10
 
 - type: entity
   name: retro laser gun
-  parent: BatteryGunSmall
-  id: LaserGun
+  parent: BaseWeaponBattery
+  id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
-  - type: RangedWeapon
-  - type: BatteryBarrel
-    minAngle: 10
-    fireCost: 40
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: makeshift laser gun
-  parent: BatteryGunMedium
-  id: MakeshiftLaser
+  parent: BaseWeaponBattery
+  id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
-  - type: BatteryBarrel
-    fireCost: 240
-
-
-- type: entity
-  name: svalinn laser pistol
-  parent: BatteryGunSmall
-  id: LaserPistolSvalinn
-  description: A cheap and widely used laser pistol.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 12
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-  - type: BatteryBarrel
-    fireCost: 25
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: Construction
+    graph: MakeshiftLaser
+    node: makeshiftLaser
 
 - type: entity
-  name: PDW-10 pulse pistol
-  parent: BatteryGunSmall
-  id: PulsePistolPdw
-  description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
-  - type: Item
-    size: 12
-    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
-  - type: BatteryBarrel
-    fireCost: 25
-    ammoPrototype: Pulse
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
-      startingItem: PowerCellSmallHigh
-
-- type: entity
-  name: cog laser carbine
-  parent: BatteryGunMedium
-  id: LaserRifleCog
+  name: laser gun
+  parent: BaseWeaponBattery
+  id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/cog.rsi
-  - type: BatteryBarrel
-    fireCost: 140
-    ammoPrototype: RedMediumLaser
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
 
 - type: entity
-  name: nightfall laser rifle
-  parent: BatteryGunMedium
-  id: LaserRifleSniper
-  description: A scoped high capacity laser rifle.
+  name: pulse pistol
+  parent: BaseWeaponBatterySmall
+  id: WeaponPulsePistol
+  description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Battery/nightfall.rsi
-  - type: BatteryBarrel
-    fireCost: 100
-    ammoPrototype: RedMediumLaser
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
+    sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 200
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
 
 - type: entity
-  name: DEAC-12 pulse carbine
-  parent: BatteryGunMedium
-  id: PulseCarbineDeac
+  name: pulse carbine
+  parent: BaseWeaponBattery
+  id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
-  - type: BatteryBarrel
-    fireCost: 120
-    ammoPrototype: Pulse
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 3
+    availableModes:
+      - SemiAuto
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
-      startingItem: PowerCellMediumHigh
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 200
+  - type: Battery
+    maxCharge: 5000
+    startingCharge: 5000
 
 - type: entity
-  name: destroyer pulse rifle
-  parent: BatteryGunMedium
-  id: PulseRifleDeathSquad
-  description: A weapon that fully lives up to its name. 
+  name: pulse rifle
+  parent: BaseWeaponBattery
+  id: WeaponPulseRifle
+  description: A weapon that is almost as infamous as its users.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
-  - type: BatteryBarrel
-    fireCost: 100
-    ammoPrototype: Pulse
+  - type: Gun
+    fireRate: 1.5
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
-      startingItem: PowerCellMediumHigh
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: Pulse
+    fireCost: 100
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
 
 - type: entity
   name: laser cannon
-  parent: BatteryGunLarge
-  id: LaserCannon
+  parent: BaseWeaponBattery
+  id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-  - type: BatteryBarrel
-    fireCost: 4000
-    ammoPrototype: RedHeavyLaser
+  - type: Gun
+    fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
-      startingItem: PowerCellLargeSuper
+  - type: HitscanBatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
 
 - type: entity
   name: x-ray cannon
-  parent: BatteryGunLarge
-  id: XrayCannon
+  parent: BaseWeaponBattery
+  id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-0
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
-  - type: BatteryBarrel
-    fireCost: 6000
-    ammoPrototype: XrayLaser
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
-  - type: PowerCellSlot
-    cellSlot:
-      ejectOnUse: true
-      soundOptions:
-        volume: -2
-      startingItem: PowerCellLargeSuper
+  - type: HitscanBatteryAmmoProvider
+    proto: XrayLaser
+    fireCost: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: taser
-  parent: BatteryGunSmall
-  id: TaserGun
+  parent: BaseWeaponBattery
+  id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
   - type: Tag
     tags:
     - Taser
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-0
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    size: 24
+    size: 10
     quickEquip: false
     Slots:
     - Belt
     HeldPrefix: taser4
-  - type: BatteryBarrel
-    minAngle: 5
-    angleIncrease: 20
-    fireCost: 360
-    ammoPrototype: BulletTaser
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
-  - type: PowerCellSlot
-    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
-    cellSlot:
-      soundOptions:
-        volume: -2
-      locked: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletTaser
+    fireCost: 50
+  - type: Battery
+    maxCharge: 100
+    startingCharge: 100
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
 
 - type: entity
   name: antique laser gun
-  parent: BatteryGunSmall
-  id: AntiqueLaserGun
+  parent: BaseWeaponBatterySmall
+  id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-unshaded-4
-        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
-        shader: unshaded
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
-  - type: BatteryBarrel
-    fireCost: 120
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: RangedWeapon    
-  - type: PowerCellSlot
-    descFormatString : "" # empty string for no examine-text (cell is not ejectable)
-    cellSlot:
-      startingItem: PowerCellAntiqueProto
-      soundOptions:
-        volume: -2
-      locked: true
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 5
-      zeroVisible: true
+  - type: StaticPrice
+    price: 750

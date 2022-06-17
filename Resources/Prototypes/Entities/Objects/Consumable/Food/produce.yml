@@ -85,7 +85,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 10
   - type: Produce
     seedId: sugarcane
@@ -177,8 +177,9 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     HeldPrefix: peel
   - type: Slippery
-    intersectPercentage: 0.2
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+    intersectRatio: 0.2
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -787,4 +788,4 @@
   - type: Produce
     seedId: gatfruit
   - type: Food
-    trash: RevolverPredator
+    trash: WeaponRevolverPython

@@ -6,6 +6,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     public sealed class GasPressurePumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

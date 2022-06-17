@@ -32,11 +32,14 @@
     life: 0
 
 - type: shader
+  id: CameraStatic
+  kind: source
+  path: "/Textures/Shaders/camera_static.swsl"
+
+- type: shader
   id: Drunk
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
-  params:
-    boozePower: 0.0
 
 - type: shader
   id: Texture

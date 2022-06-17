@@ -1,10 +1,10 @@
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Damage;
 
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    [Friend(typeof(ThrusterSystem))]
+    [Access(typeof(ThrusterSystem))]
     public sealed class ThrusterComponent : Component
     {
         /// <summary>

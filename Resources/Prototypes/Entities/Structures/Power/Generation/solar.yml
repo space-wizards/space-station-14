@@ -5,13 +5,17 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
     anchored: true
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -106,7 +110,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -150,7 +153,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

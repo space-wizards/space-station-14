@@ -37,6 +37,7 @@
   - type: Ringer
   - type: ActivatableUI
     key: enum.PDAUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
@@ -52,6 +53,7 @@
   - type: PDA
     penSlot:
       startingItem: Pen
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -176,11 +178,10 @@
   - type: PDA
     id: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # no pink crayon?!?
-      # Maybe this is a bad idea.
-      # At least they can't just spam alt-click it.
-      # You need to remove the ID & alternate between inserting and ejecting
+      startingItem: CrayonOrange # no pink crayon?!? 
+      # ^ Still unacceptable.
       ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -192,7 +193,8 @@
     state: pda-clown
   - type: Slippery
     paralyzeTime: 4
-    launchForwardsMultiplier: 9.0
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -362,7 +364,11 @@
   - type: PDA
     id: CaptainIDCard
     penSlot:
-      startingItem: PenCap    
+      startingItem: PenCap
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -379,7 +385,11 @@
   - type: PDA
     id: HoPIDCard
     penSlot:
-      startingItem: PenHop    
+      startingItem: PenHop
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -401,7 +411,6 @@
         state: pda-ce
   - type: Icon
     state: pda-ce
-
 
 - type: entity
   parent: BasePDA
@@ -614,3 +623,41 @@
   - type: Icon
     state: pda-syndi
 
+- type: entity
+  parent: HoSPDA
+  id: ERTLeaderPDA
+  name: ERT PDA
+  description: Red for firepower.
+  components:
+  - type: PDA
+    id: ERTLeaderIDCard
+
+- type: entity
+  parent: BasePDA
+  id: PsychologistPDA
+  name: psychologist PDA
+  description: Looks immaculately cleaned.
+  components:
+  - type: PDA
+    id: PsychologistIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-medical
+  - type: Icon
+    state: pda-medical
+
+- type: entity
+  parent: BasePDA
+  id: ReporterPDA
+  name: reporter PDA
+  description: Smells like freshly printed press.
+  components:
+  - type: PDA
+    id: ReporterIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-reporter
+  - type: Icon
+    state: pda-reporter

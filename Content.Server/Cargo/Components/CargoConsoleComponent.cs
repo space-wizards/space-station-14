@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Cargo;
@@ -109,7 +110,7 @@ namespace Content.Server.Cargo.Components
                     if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
                         msg.Amount, _bankAccount.Id))
                     {
-                        SoundSystem.Play(Filter.Pvs(Owner), _errorSound.GetSound(), Owner, AudioParams.Default);
+                        SoundSystem.Play(_errorSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default);
                     }
                     break;
                 }
@@ -142,7 +143,7 @@ namespace Content.Server.Cargo.Components
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
-                        SoundSystem.Play(Filter.Pvs(Owner), _errorSound.GetSound(), Owner, AudioParams.Default);
+                        SoundSystem.Play(_errorSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default);
                         break;
                     }
 

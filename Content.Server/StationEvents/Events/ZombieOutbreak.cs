@@ -1,8 +1,10 @@
+using Content.Server.Chat;
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
-using Content.Server.Disease.Zombie.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
+using Content.Server.Zombies;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -13,7 +15,6 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Name => "ZombieOutbreak";
         public override int EarliestStart => 50;
@@ -31,6 +32,7 @@ namespace Content.Server.StationEvents.Events
         public override void Startup()
         {
             base.Startup();
+            HashSet<EntityUid> stationsToNotify = new();
             List<MobStateComponent> deadList = new();
             foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
             {
@@ -40,17 +42,30 @@ namespace Content.Server.StationEvents.Events
             _random.Shuffle(deadList);
 
             var toInfect = _random.Next(1, 3);
-
-            /// Now we give it to people in the list of dead entities earlier.
+            
+            var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
+            
+            // Now we give it to people in the list of dead entities earlier.
+            var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
+            var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
+            var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
+            
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
+                    
+                zombifysys.ZombifyEntity(target.Owner);
 
-                _entityManager.EnsureComponent<DiseaseZombieComponent>(target.Owner);
+                var station = stationSystem.GetOwningStation(target.Owner);
+                if(station == null) continue;
+                stationsToNotify.Add((EntityUid) station);
             }
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-zombie-outbreak-announcement"),
-            playDefaultSound: false, colorOverride: Color.DarkMagenta);
+            foreach (var station in stationsToNotify)
+            {
+                chatSystem.DispatchStationAnnouncement((EntityUid) station, Loc.GetString("station-event-zombie-outbreak-announcement"),
+                    playDefaultSound: false, colorOverride: Color.DarkMagenta);
+            }
         }
     }
 }

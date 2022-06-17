@@ -20,6 +20,7 @@
         - PonderingOrb
         - Skub
         - ClothingHeadHatCatEars
+        - DrinkMugDog
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -38,8 +39,8 @@
         - ClothingUnderSocksCoder
       chance: 0.6
       offset: 0.0
-      
-      
+
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Tools+Cells+Mats
@@ -49,14 +50,13 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
+        - sprite: Objects/Power/power_cells.rsi
+          state: high
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
-        - PowerCellMediumSuper
-        - PowerCellSmallSuper
-        - PowerCellLargeSuper
-        - PowerCellSmallAutorecharge
+        - PowerCellHigh
+        - PowerCellMicroreactor
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
@@ -68,12 +68,12 @@
         - ClothingBeltUtilityFilled
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
       chance: 0.6
       offset: 0.0
-      
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Scrap+Weapons
@@ -99,7 +99,7 @@
         - Crowbar
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - Spear
         - LidSalami
       chance: 0.6

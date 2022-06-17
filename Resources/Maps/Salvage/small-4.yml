@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -796,7 +796,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 50
-  type: ShotgunSawn
+  type: WeaponShotgunSawn
   components:
   - rot: -1.5707963267948966 rad
     pos: -1.1875,-1.421875
@@ -804,11 +804,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      BoltActionBarrel-ammo-container: !type:Container
-        ents: []
-      BoltActionBarrel-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 51
   type: CableApcExtension
   components:
@@ -829,7 +824,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 53
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,-3.5
     parent: 0

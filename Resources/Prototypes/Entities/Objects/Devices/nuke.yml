@@ -38,6 +38,8 @@
       whitelist:
         components:
         - NukeDisk
+    alertLevelOnActivate: delta
+    alertLevelOnDeactivate: green
   - type: InteractionOutline
   - type: ActivatableUI
     key: enum.NukeUiKey.Key
@@ -45,6 +47,16 @@
     interfaces:
     - key: enum.NukeUiKey.Key
       type: NukeBoundUserInterface
+  - type: StaticPrice # TODO: Make absolutely certain cargo cannot sell this, that'd be horrible. Presumably, add an export ban component so only the yarrs get a deal here.
+    price: 50000 # YOU STOLE A NUCLEAR FISSION EXPLOSIVE?!
+
+- type: entity
+  parent: NuclearBomb
+  id: NuclearBombUnanchored
+  suffix: unanchored
+  components:
+    - type: Transform
+      anchored: false
 
 - type: entity
   parent: StorageTank
@@ -77,3 +89,5 @@
           Quantity: 3000
   - type: ReagentTank
     transferAmount: 100
+  - type: StaticPrice
+    price: 5000 # That's a pretty fancy keg you got there.

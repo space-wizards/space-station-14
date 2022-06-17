@@ -4,10 +4,11 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
     [RegisterComponent]
-    [Friend(typeof(GasMixerSystem))]
+    [Access(typeof(GasMixerSystem))]
     public sealed class GasMixerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
         public bool Enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

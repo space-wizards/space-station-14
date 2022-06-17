@@ -18,6 +18,29 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  name: gorlax hypospray
+  parent: BaseItem
+  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for gorlax marauder operatives.
+  id: SyndiHypo
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+    state: hypo
+  - type: Item
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 20
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
 
 - type: entity
   name: chemical medipen
@@ -54,6 +77,8 @@
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 75 # These are limited supply items.
 
 - type: entity
   name: emergency medipen
@@ -145,4 +170,5 @@
   - type: Tag
     tags:
     - Write
-
+  - type: StaticPrice
+    price: 75

@@ -1,30 +1,23 @@
-using System.Linq;
 using Content.Shared.Sound;
+using Content.Shared.StepTrigger;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Slippery
 {
+    /// <summary>
+    /// Causes somebody to slip when they walk over this entity.
+    /// </summary>
+    /// <remarks>
+    /// Requires <see cref="StepTriggerComponent"/>, see that component for some additional properties.
+    /// </remarks>
     [RegisterComponent]
-    [NetworkedComponent()]
+    [NetworkedComponent]
     public sealed class SlipperyComponent : Component
     {
         private float _paralyzeTime = 3f;
-        private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 3.5f;
         private float _launchForwardsMultiplier = 1f;
-        private bool _slippery = true;
         private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
-
-        /// <summary>
-        ///     List of entities that are currently colliding with the entity.
-        /// </summary>
-        public readonly HashSet<EntityUid> Colliding = new();
-
-        /// <summary>
-        ///     The list of entities that have been slipped by this component, which shouldn't be slipped again.
-        /// </summary>
-        public readonly HashSet<EntityUid> Slipped = new();
 
         /// <summary>
         ///     Path to the sound to be played when a mob slips.
@@ -62,40 +55,6 @@ namespace Content.Shared.Slippery
         }
 
         /// <summary>
-        ///     Percentage of shape intersection for a slip to occur.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("intersectPercentage")]
-        public float IntersectPercentage
-        {
-            get => _intersectPercentage;
-            set
-            {
-                if (MathHelper.CloseToPercent(_intersectPercentage, value)) return;
-
-                _intersectPercentage = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Entities will only be slipped if their speed exceeds this limit.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requiredSlipSpeed")]
-        public float RequiredSlipSpeed
-        {
-            get => _requiredSlipSpeed;
-            set
-            {
-                if (MathHelper.CloseToPercent(_requiredSlipSpeed, value)) return;
-
-                _requiredSlipSpeed = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
         ///     The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -112,44 +71,18 @@ namespace Content.Shared.Slippery
             }
         }
 
-        /// <summary>
-        ///     Whether or not this component will try to slip entities.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("slippery")]
-        public bool Slippery
-        {
-            get => _slippery;
-            set
-            {
-                if (_slippery == value) return;
-
-                _slippery = value;
-                Dirty();
-            }
-        }
-
         public override ComponentState GetComponentState()
         {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
+            return new SlipperyComponentState(ParalyzeTime, LaunchForwardsMultiplier, SlipSound.GetSound());
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState is not SlipperyComponentState state) return;
 
-            _slippery = state.Slippery;
-            _intersectPercentage = state.IntersectPercentage;
             _paralyzeTime = state.ParalyzeTime;
-            _requiredSlipSpeed = state.RequiredSlipSpeed;
             _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
             _slipSound = new SoundPathSpecifier(state.SlipSound);
-            Slipped.Clear();
-
-            foreach (var slipped in state.Slipped)
-            {
-                Slipped.Add(slipped);
-            }
         }
     }
 
@@ -157,22 +90,14 @@ namespace Content.Shared.Slippery
     public sealed class SlipperyComponentState : ComponentState
     {
         public float ParalyzeTime { get; }
-        public float IntersectPercentage { get; }
-        public float RequiredSlipSpeed { get; }
         public float LaunchForwardsMultiplier { get; }
-        public bool Slippery { get; }
         public string SlipSound { get; }
-        public readonly EntityUid[] Slipped;
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped)
+        public SlipperyComponentState(float paralyzeTime, float launchForwardsMultiplier, string slipSound)
         {
             ParalyzeTime = paralyzeTime;
-            IntersectPercentage = intersectPercentage;
-            RequiredSlipSpeed = requiredSlipSpeed;
             LaunchForwardsMultiplier = launchForwardsMultiplier;
-            Slippery = slippery;
             SlipSound = slipSound;
-            Slipped = slipped;
         }
     }
 }

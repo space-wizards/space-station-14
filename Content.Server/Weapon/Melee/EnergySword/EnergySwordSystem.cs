@@ -38,7 +38,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
             // Overrides basic blunt damage with burn+slash as set in yaml
             args.BonusDamage = comp.LitDamageBonus;
-            args.HitSoundOverride = comp.HitSound;
         }
 
         private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
@@ -69,7 +68,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 item.Size = 5;
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.DeActivateSound.GetSound(), comp.Owner);
+            SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             comp.Activated = false;
         }
@@ -84,7 +83,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 item.Size = 9999;
             }
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.ActivateSound.GetSound(), comp.Owner);
+            SoundSystem.Play(comp.ActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             comp.Activated = true;
         }

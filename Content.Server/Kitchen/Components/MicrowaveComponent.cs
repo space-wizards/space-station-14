@@ -212,6 +212,7 @@ namespace Content.Server.Kitchen.Components
 
                 if (ev.Handled)
                 {
+                    _busy = false;
                     UIDirty = true;
                     return;
                 }
@@ -224,7 +225,7 @@ namespace Content.Server.Kitchen.Components
                     // destroy microwave
                     Broken = true;
                     SetAppearance(MicrowaveVisualState.Broken);
-                    SoundSystem.Play(Filter.Pvs(Owner), ItemBreakSound.GetSound(), Owner);
+                    SoundSystem.Play(ItemBreakSound.GetSound(), Filter.Pvs(Owner), Owner);
                     return;
                 }
 
@@ -276,7 +277,7 @@ namespace Content.Server.Kitchen.Components
 
             SetAppearance(MicrowaveVisualState.Cooking);
             var time = _currentCookTimerTime * _cookTimeMultiplier;
-            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
+            SoundSystem.Play(_startCookingSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default);
             Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
                 if (_lostPower)
@@ -295,8 +296,8 @@ namespace Content.Server.Kitchen.Components
 
                 EjectSolids();
 
-                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
-                    AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(_cookingCompleteSound.GetSound(), Filter.Pvs(Owner),
+                    Owner, AudioParams.Default.WithVolume(-1f));
 
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
@@ -444,7 +445,7 @@ namespace Content.Server.Kitchen.Components
 
         public void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 
