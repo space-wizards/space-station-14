@@ -55,10 +55,11 @@
     range: 1.5
     arcwidth: 0
     hitSound: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
+    arc:
     damage:
       groups:
-        Brute: 20
-  - type: Appearance
+        Brute: 15
+  - type: Appearance  
     visuals:
     - type: DamageStateVisualizer
       rotate: true
