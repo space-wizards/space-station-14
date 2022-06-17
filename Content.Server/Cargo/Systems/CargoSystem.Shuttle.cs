@@ -316,7 +316,7 @@ public sealed partial class CargoSystem
         DebugTools.Assert(MetaData(uid).EntityPaused);
 
         UpdateShuttleCargoConsoles(component);
-        _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)} from {ToPrettyString(uid)}");
+        _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)}");
     }
 
     /// <summary>

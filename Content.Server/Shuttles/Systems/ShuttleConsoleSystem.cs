@@ -155,6 +155,12 @@ namespace Content.Server.Shuttles.Systems
                 !TryComp<ShuttleComponent>(consoleXform.GridUid, out var shuttle)) return;
 
             SetShuttleMode(args.Mode, console, shuttle);
+            UpdateState(component);
+
+            if (uid != consoleUid)
+            {
+                UpdateState(console);
+            }
         }
 
         /// <summary>
@@ -169,7 +175,6 @@ namespace Content.Server.Shuttles.Systems
                 !consoleXform.Anchored ||
                 consoleXform.GridID != Transform(shuttleComponent.Owner).GridID)
             {
-                UpdateState(consoleComponent);
                 return;
             }
 
@@ -184,8 +189,6 @@ namespace Content.Server.Shuttles.Systems
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            UpdateState(consoleComponent);
         }
 
         /// <summary>
