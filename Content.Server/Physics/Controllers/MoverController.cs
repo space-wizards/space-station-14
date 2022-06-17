@@ -66,6 +66,12 @@ namespace Content.Server.Physics.Controllers
             {
                 var consoleEnt = pilot.Console?.Owner;
 
+                // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
+                if (TryComp<CargoPilotConsoleComponent>(consoleEnt, out var cargoConsole))
+                {
+                    consoleEnt = cargoConsole.Entity;
+                }
+
                 if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
 
                 _excludedMobs.Add(mover.Owner);

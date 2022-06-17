@@ -4,6 +4,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.UserInterface;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -47,7 +48,10 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoCallShuttleMessage>(OnCargoShuttleCall);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, CargoRecallShuttleMessage>(RecallCargoShuttle);
+
         SubscribeLocalEvent<CargoPilotConsoleComponent, ConsoleShuttleEvent>(OnCargoGetConsole);
+        SubscribeLocalEvent<CargoPilotConsoleComponent, AfterActivatableUIOpenEvent>(OnCargoPilotConsoleOpen);
+        SubscribeLocalEvent<CargoPilotConsoleComponent, BoundUIClosedEvent>(OnCargoPilotConsoleClose);
 
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
@@ -55,15 +59,34 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
+    #region Cargo Pilot Console
+
+    private void OnCargoPilotConsoleOpen(EntityUid uid, CargoPilotConsoleComponent component, AfterActivatableUIOpenEvent args)
+    {
+        component.Entity = GetShuttleConsole(component);
+    }
+
+    private void OnCargoPilotConsoleClose(EntityUid uid, CargoPilotConsoleComponent component, BoundUIClosedEvent args)
+    {
+        component.Entity = null;
+    }
+
     private void OnCargoGetConsole(EntityUid uid, CargoPilotConsoleComponent component, ref ConsoleShuttleEvent args)
     {
-        var stationUid = _station.GetOwningStation(uid);
+        args.Console = GetShuttleConsole(component);
+    }
+
+    private EntityUid? GetShuttleConsole(CargoPilotConsoleComponent component)
+    {
+        var stationUid = _station.GetOwningStation(component.Owner);
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
-            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return;
+            !TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle)) return null;
 
-        args.Console = GetShuttleConsole(shuttle);
+        return GetShuttleConsole(shuttle);
     }
+
+    #endregion
 
     #region Console
 

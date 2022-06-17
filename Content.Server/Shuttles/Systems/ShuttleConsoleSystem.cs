@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -5,6 +6,7 @@ using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
+using Content.Shared.Light;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -136,13 +138,21 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         private void OnModeRequest(EntityUid uid, ShuttleConsoleComponent component, ShuttleModeRequestMessage args)
         {
+            var consoleUid = uid;
+
+            if (TryComp<CargoPilotConsoleComponent>(uid, out var cargoPilot) && cargoPilot.Entity != null)
+            {
+                consoleUid = cargoPilot.Entity.Value;
+            }
+
             if (args.Session.AttachedEntity is not { } player ||
                 !TryComp<PilotComponent>(player, out var pilot) ||
-                !TryComp<TransformComponent>(player, out var xform) ||
-                pilot.Console is not ShuttleConsoleComponent console) return;
+                !TryComp<ShuttleConsoleComponent>(consoleUid, out var console) ||
+                !TryComp<TransformComponent>(consoleUid, out var consoleXform)) return;
 
-            if (!console.SubscribedPilots.Contains(pilot) ||
-                !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
+            // Can't check console pilots as it may be remotely piloted!
+            if (!component.SubscribedPilots.Contains(pilot) ||
+                !TryComp<ShuttleComponent>(consoleXform.GridUid, out var shuttle)) return;
 
             SetShuttleMode(args.Mode, console, shuttle);
         }
@@ -219,7 +229,7 @@ namespace Content.Server.Shuttles.Systems
             TryComp<RadarConsoleComponent>(entity, out var radar);
             var range = radar?.MaxRange ?? 0f;
 
-            TryComp<ShuttleComponent>(entity, out var shuttle);
+            TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();

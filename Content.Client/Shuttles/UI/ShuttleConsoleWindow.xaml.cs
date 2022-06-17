@@ -28,7 +28,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Stored by grid entityid then by states
     /// </summary>
-    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+    private Dictionary<EntityUid, Dictionary<EntityUid, DockingInterfaceState>> _docks = new();
 
     public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
@@ -107,7 +107,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         foreach (var dock in docks)
         {
             var grid = _docks.GetOrNew(dock.Coordinates.EntityId);
-            grid.Add(dock);
+            grid.Add(dock.Entity, dock);
         }
 
         DockPorts.DisposeAllChildren();
@@ -119,9 +119,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             var index = 1;
 
-            foreach (var state in gridDocks)
+            foreach (var (ent, state) in gridDocks)
             {
-                var ent = state.Entity;
                 var pressed = ent == DockingScreen.ViewedDock;
 
                 string suffix;
@@ -173,6 +172,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         if (_selectedDock != null)
         {
+            // If it got untoggled via other means then we'll stop viewing the old dock.
+            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != ent)
+            {
+                StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
+            }
+
             _selectedDock.Pressed = false;
             _selectedDock = null;
         }
@@ -191,6 +196,18 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
+            if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var docks) &&
+                docks.TryGetValue(ent, out var state))
+            {
+                DockingScreen.Coordinates = state.Coordinates;
+                DockingScreen.Angle = state.Angle;
+            }
+            else
+            {
+                DockingScreen.Coordinates = null;
+                DockingScreen.Angle = null;
+            }
+
             UndockButton.Disabled = false;
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
