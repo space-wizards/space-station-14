@@ -205,12 +205,13 @@ namespace Content.Server.Shuttles.Systems
 
         private void UpdateState(ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
         {
+            TryComp<TransformComponent>(component.Owner, out var consoleXform);
             TryComp<RadarConsoleComponent>(component.Owner, out var radar);
             var range = radar?.MaxRange ?? 0f;
 
             var getShuttleEv = new ConsoleShuttleEvent
             {
-                Entity = component.Owner,
+                Entity = consoleXform?.GridUid,
             };
 
             RaiseLocalEvent(component.Owner, ref getShuttleEv, false);
@@ -226,8 +227,8 @@ namespace Content.Server.Shuttles.Systems
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
                     range,
-                    xform?.Coordinates,
-                    xform?.LocalRotation,
+                    consoleXform?.Coordinates,
+                    consoleXform?.LocalRotation,
                     docks));
         }
 

@@ -123,6 +123,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             {
                 var ent = state.Entity;
                 var pressed = ent == DockingScreen.ViewedDock;
+
                 string suffix;
 
                 if (state.Connected)
@@ -140,6 +141,11 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     ToggleMode = true,
                     Pressed = pressed,
                 };
+
+                if (pressed)
+                {
+                    _selectedDock = button;
+                }
 
                 button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
                 button.OnMouseExited += args => OnDockMouseExited(args, ent);
