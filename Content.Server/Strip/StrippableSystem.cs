@@ -279,9 +279,7 @@ namespace Content.Server.Strip
                 return;
             }
 
-            component.StripDelay = slotDef.StripTime;
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -383,12 +381,11 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
             {
+                Logger.Error("The slot didn't exist.");
                 return;
             }
 
-            component.StripDelay = slotDef.StripTime;
-
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,

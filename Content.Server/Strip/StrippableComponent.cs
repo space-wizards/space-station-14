@@ -25,12 +25,6 @@ namespace Content.Server.Strip
         [DataField("handDelay")]
         public float HandStripDelay = 3f;
 
-        /// <summary>
-        /// Store the value for the inventory strip time
-        /// </summary>
-        [ViewVariables]
-        public float StripDelay;
-
         public override bool Drop(DragDropEvent args)
         {
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StrippableSystem>().StartOpeningStripper(args.User, this);
