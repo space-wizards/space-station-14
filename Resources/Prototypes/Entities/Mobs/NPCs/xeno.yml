@@ -55,7 +55,6 @@
     range: 1.5
     arcwidth: 0
     hitSound: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    arc: claw
     damage:
       groups:
         Brute: 20
@@ -100,6 +99,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
+    offset: 0,0.4
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -110,6 +110,17 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
 - type: entity
   name: Drone
   parent: MobXeno
@@ -118,6 +129,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/drone.rsi
+    offset: 0,0.2
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -131,6 +143,16 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       150: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: Queen
@@ -140,6 +162,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/queen.rsi
+    offset: 0,0.4
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -158,6 +181,16 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       1000: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: Ravager
@@ -167,6 +200,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/ravager.rsi
+    offset: 0,0.5
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -185,6 +219,16 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       450: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: Runner
@@ -194,6 +238,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/runner.rsi
+    offset: 0,0.6
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -212,6 +257,16 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: Spitter
@@ -221,6 +276,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/spitter.rsi
+    offset: 0,0.3
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
@@ -231,6 +287,17 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
 - type: entity
   name: space adder
   parent: SimpleSpaceMobBase
