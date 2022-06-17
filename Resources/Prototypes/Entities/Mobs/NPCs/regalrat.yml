@@ -89,6 +89,8 @@
       itemIconStyle: NoItem
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
+  - type: MobsterAccent
+    isBoss: true
   - type: Access #he's so baller he gets his own access. NT got nothing on him
     tags:
     - Maintenance
