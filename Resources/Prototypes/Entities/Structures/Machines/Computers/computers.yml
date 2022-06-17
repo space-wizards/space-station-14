@@ -62,7 +62,7 @@
       key: syndie_key
       screen: syndishuttle
   - type: RadarConsole
-    maxRange: 512
+    maxRange: 1536
   - type: PointLight
     radius: 1.5
     energy: 1.6

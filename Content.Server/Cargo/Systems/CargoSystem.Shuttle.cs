@@ -309,7 +309,7 @@ public sealed partial class CargoSystem
         }
 
         Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid,
-            center + _random.NextVector2(minRadius + CallOffset, minRadius + ShuttleRecallRange));
+            center + _random.NextVector2(minRadius + 20f, minRadius + CallOffset));
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
         AddCargoContents(shuttle, orderDatabase);

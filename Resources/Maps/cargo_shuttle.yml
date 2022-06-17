@@ -2471,13 +2471,13 @@ entities:
 - uid: 116
   type: CableApcExtension
   components:
-  - pos: -2.5,-2.5
+  - pos: -1.5,-4.5
     parent: 0
     type: Transform
 - uid: 117
   type: CableApcExtension
   components:
-  - pos: -3.5,-2.5
+  - pos: -1.5,-1.5
     parent: 0
     type: Transform
 - uid: 118
@@ -2489,25 +2489,25 @@ entities:
 - uid: 119
   type: CableApcExtension
   components:
-  - pos: -0.5,-2.5
+  - pos: -2.5,-4.5
     parent: 0
     type: Transform
 - uid: 120
   type: CableApcExtension
   components:
-  - pos: -0.5,-3.5
+  - pos: -1.5,-3.5
     parent: 0
     type: Transform
 - uid: 121
   type: CableApcExtension
   components:
-  - pos: -4.5,-2.5
+  - pos: -3.5,-4.5
     parent: 0
     type: Transform
 - uid: 122
   type: CableApcExtension
   components:
-  - pos: -4.5,-3.5
+  - pos: -3.5,-3.5
     parent: 0
     type: Transform
 - uid: 123
@@ -2801,6 +2801,12 @@ entities:
   type: CargoPallet
   components:
   - pos: -3.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 163
+  type: CableApcExtension
+  components:
+  - pos: -4.5,-3.5
     parent: 0
     type: Transform
 ...

@@ -151,27 +151,23 @@ public sealed class RadarControl : Control
             return;
         }
 
-        // Can also use ourGridBody.LocalCenter
         var offset = _coordinates.Value.Position;
-        var offsetMatrix = Matrix3.CreateTranslation(-offset);
         Matrix3 matrix;
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
         if (ourGridId != null)
         {
-            var negativeRotation = Matrix3.CreateRotation(-_rotation.Value);
-            Matrix3.Multiply(in offsetMatrix, in negativeRotation, out offsetMatrix);
-
-            matrix = Matrix3.CreateTranslation(-_coordinates.Value.Position);
-            var rotation = Matrix3.CreateRotation(-_rotation.Value);
-            Matrix3.Multiply(in rotation, in matrix, out matrix);
-
+            var offsetMatrix = Matrix3.CreateInverseTransform(offset.X, offset.Y, (float) _rotation.Value.Theta);
             var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
             // Draw our grid; use non-filled boxes so it doesn't look awful.
             DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
 
             DrawDocks(handle, ourGridId.Value, offsetMatrix);
+
+            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).InvWorldMatrix;
+
+            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out matrix);
         }
         else
         {
