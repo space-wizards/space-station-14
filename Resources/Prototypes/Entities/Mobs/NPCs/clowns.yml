@@ -59,7 +59,7 @@
     netsync: false
     sprite: /Clown Abominations/clown_mobs.rsi
     layers:
-    - state: "banana tree"
+    - state: "banana_tree"
 
 - type: entity
   name: Clown
@@ -212,7 +212,7 @@
     netsync: false
     sprite: /Clown Abominations/clown_mobs.rsi
     layers:
-    - state: "long face"
+    - state: "long_face"
 
 - type: entity
   name: Clown
@@ -246,7 +246,7 @@
     netsync: false
     sprite: /Clown Abominations/clown_mobs.rsi
     layers:
-    - state: "pie spewer"
+    - state: "pie_spewer"
 
 - type: entity
   name: Clown
