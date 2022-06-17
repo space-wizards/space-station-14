@@ -47,8 +47,8 @@
       state_open: mining_open
       state_closed: mining_door
   - type: AccessReader
-    access: [["Salvage"]] 
-    
+    access: [["Salvage"]]
+
 # Command
 - type: entity
   id: LockerCaptain
@@ -169,6 +169,7 @@
     access: [ [ "Kitchen" ] ]
   - type: ExplosionResistance
     resistance: 0.90
+  - type: AntiRottingContainer
 
 # Botanist
 - type: entity
