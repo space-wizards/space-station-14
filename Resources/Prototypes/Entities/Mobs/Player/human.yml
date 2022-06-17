@@ -65,7 +65,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTLeader
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Leader
     description: Lead a team of specialists to resolve the stations issues.
   - type: Loadout
@@ -87,7 +87,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTLeaderEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
   - type: Loadout
     prototype: ERTLeaderGearEVA
 
@@ -103,7 +103,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTEngineer
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Engineer
     description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
@@ -123,7 +123,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTEngineerEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Engineer
     description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
@@ -141,7 +141,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTSecurity
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Security
     description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
@@ -161,7 +161,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTSecurityEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Security
     description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
@@ -179,7 +179,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTMedical
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Medic
     description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
@@ -199,7 +199,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTMedicalEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Medic
     description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
@@ -217,7 +217,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTJanitor
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Janitor
     description: Assist with custodial efforts to resolve the stations issues.
   - type: Loadout
@@ -237,7 +237,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTJanitorEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Janitor
     description: Assist with custodial efforts to resolve the stations issues.
   - type: Loadout

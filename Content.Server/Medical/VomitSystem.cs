@@ -50,7 +50,7 @@ namespace Content.Server.Medical
 
             var puddleComp = Comp<PuddleComponent>(puddle);
 
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Effects/Diseases/vomiting.ogg", uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
+            SoundSystem.Play("/Audio/Effects/Diseases/vomiting.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
             _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", uid)), uid, Filter.Pvs(uid));
             // Get the solution of the puddle we spawned

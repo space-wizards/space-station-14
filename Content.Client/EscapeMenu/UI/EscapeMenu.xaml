@@ -9,6 +9,7 @@
         <ui:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
         <Button Name="RulesButton" Text="{Loc 'ui-escape-rules'}" />
+        <Button Name="WikiButton" Text="{Loc 'ui-escape-wiki'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>

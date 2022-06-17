@@ -112,16 +112,16 @@ namespace Content.Server.Traitor.Uplink
             if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
                 EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
-                SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
-                    uplink.Owner, AudioParams.Default);
+                SoundSystem.Play(uplink.InsufficientFundsSound.GetSound(),
+                    Filter.SinglePlayer(message.Session), uplink.Owner, AudioParams.Default);
                 RaiseNetworkEvent(new UplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                 return;
             }
 
             _handsSystem.PickupOrDrop(player, entity.Value);
 
-            SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
-                uplink.Owner, AudioParams.Default.WithVolume(-8f));
+            SoundSystem.Play(uplink.BuySuccessSound.GetSound(),
+                Filter.SinglePlayer(message.Session), uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
         }
@@ -143,8 +143,8 @@ namespace Content.Server.Traitor.Uplink
             _handsSystem.PickupOrDrop(player, tcUid.Value);
 
             // play buying sound
-            SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
-                    uplink.Owner, AudioParams.Default.WithVolume(-8f));
+            SoundSystem.Play(uplink.BuySuccessSound.GetSound(),
+                    Filter.SinglePlayer(args.Session), uplink.Owner, AudioParams.Default.WithVolume(-8f));
 
             UpdateUserInterface(uplink);
         }

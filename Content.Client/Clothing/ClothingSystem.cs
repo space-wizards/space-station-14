@@ -131,7 +131,7 @@ public sealed class ClothingSystem : EntitySystem
             return false;
         }
 
-        var layer = PrototypeLayerData.New();
+        var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layers = new() { layer };

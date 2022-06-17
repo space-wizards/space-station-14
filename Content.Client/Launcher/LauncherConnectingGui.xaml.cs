@@ -79,7 +79,7 @@ namespace Content.Client.Launcher
             else
             {
                 RedialButton.Disabled = true;
-                RedialButton.Text = Loc.GetString("connecting-redial-wait", ("time", _redialWaitTime));
+                RedialButton.Text = Loc.GetString("connecting-redial-wait", ("time", _redialWaitTime.ToString("00.000")));
             }
         }
 

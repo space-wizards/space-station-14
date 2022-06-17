@@ -65,9 +65,8 @@ namespace Content.Server.Light.EntitySystems
         public void Ignite(MatchstickComponent component, EntityUid user)
         {
             // Play Sound
-            SoundSystem.Play(
-                Filter.Pvs(component.Owner), component.IgniteSound.GetSound(), component.Owner,
-                AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
+            SoundSystem.Play(component.IgniteSound.GetSound(), Filter.Pvs(component.Owner),
+                component.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
             SetState(component, SmokableState.Lit);

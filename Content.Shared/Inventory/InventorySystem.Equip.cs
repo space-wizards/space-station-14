@@ -207,7 +207,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, item.EquipSound.Params.WithVolume(-2f));
+            SoundSystem.Play(item.EquipSound.GetSound(), filter, target, item.EquipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();
@@ -386,7 +386,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.UnequipSound.GetSound(), target, item.UnequipSound.Params.WithVolume(-2f));
+            SoundSystem.Play(item.UnequipSound.GetSound(), filter, target, item.UnequipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();

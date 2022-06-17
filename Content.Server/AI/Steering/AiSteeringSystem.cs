@@ -242,7 +242,7 @@ namespace Content.Server.AI.Steering
             if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
                 !controller.CanMove ||
-                !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
+                !EntityManager.GetComponent<TransformComponent>(entity).GridEntityId.IsValid())
             {
                 return SteeringStatus.NoPath;
             }
@@ -255,7 +255,7 @@ namespace Content.Server.AI.Steering
                 return SteeringStatus.NoPath;
             }
 
-            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridID))
+            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;
@@ -263,7 +263,7 @@ namespace Content.Server.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (EntityManager.GetComponent<TransformComponent>(entity).GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
+            if (EntityManager.GetComponent<TransformComponent>(entity).GridEntityId != steeringRequest.TargetGrid.GetGridEntityId(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
@@ -408,7 +408,7 @@ namespace Content.Server.AI.Steering
             }
 
             var cancelToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
             var startTile = gridManager.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
@@ -439,7 +439,7 @@ namespace Content.Server.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -508,7 +508,7 @@ namespace Content.Server.AI.Steering
         {
             if (_paths[entity].Count == 0) return;
             var nextTile = dequeue ? _paths[entity].Dequeue() : _paths[entity].Peek();
-            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GridTileToLocal(nextTile.GridIndices);
+            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GridTileToLocal(nextTile.GridIndices);
             _nextGrid[entity] = nextGrid;
         }
 
@@ -631,7 +631,7 @@ namespace Content.Server.AI.Steering
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
             var entityGridCoords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
             var nextTile = grid.GetTileRef(entityGridCoords.Offset(direction));
