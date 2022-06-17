@@ -11,7 +11,6 @@
     sprite: Structures/Power/Generation/ame.rsi
     state: control
   - type: Physics
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

@@ -4210,7 +4210,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 153
-  type: PowerCellSmallStandard
+  type: PowerCellSmall
   components:
   - parent: 152
     type: Transform
@@ -4225,7 +4225,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 155
-  type: PowerCellSmallStandard
+  type: PowerCellSmall
   components:
   - parent: 154
     type: Transform

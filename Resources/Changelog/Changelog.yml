@@ -1,121 +1,4 @@
 Entries:
-- author: TaralGit
-  changes:
-  - {message: Pulse carbine and pistol for ERT, type: Add}
-  - {message: Pulse hitscan projectile, type: Add}
-  - {message: The Lamia handgun is now using its own sprite instead of the gyropistol's,
-    type: Tweak}
-  - {message: A whole bunch of resprites for various guns and melee weapons, type: Tweak}
-  id: 1196
-  time: '2022-03-12T22:29:17.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: There's intel of an unknown enemy corp creating experimental mechas
-      and testing them on stations., type: Add}
-  id: 1197
-  time: '2022-03-12T23:14:17.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Add lizard accent. Hissss!, type: Add}
-  id: 1198
-  time: '2022-03-13T04:23:44.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones now have an innate flashlight., type: Add}
-  - {message: Onestar Mechs are no longer bound by drone laws., type: Fix}
-  - {message: Drones can now toggle all their innate tools within range of people.,
-    type: Tweak}
-  - {message: 'Added power cells, toolboxes and certain boxes to the drone whitelist.',
-    type: Tweak}
-  id: 1199
-  time: '2022-03-13T09:53:01.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Plant produce now scales in size depending on its potency., type: Add}
-  id: 1200
-  time: '2022-03-13T10:11:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Lizards now correctly no longer show up at roundstart., type: Fix}
-  id: 1201
-  time: '2022-03-13T15:42:07.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Removed fun! No more lean, don''t do drugs kids.', type: Remove}
-  id: 1202
-  time: '2022-03-13T20:46:26.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Add foxes and Renault., type: Add}
-  id: 1203
-  time: '2022-03-13T23:32:33.0000000+00:00'
-- author: Jezithyr
-  changes:
-  - {message: Rewrote the lobby UI, type: Add}
-  - {message: Added adminhelp button to the lobby screen, type: Add}
-  - {message: 'Added the ability to add custom lobby screens, (You can have multiple
-      and picks a random one!)', type: Add}
-  - {message: 'rewrote the backend of the lobby ui to be slightly less ass, still
-      a work in progress. Please report any issues with monitor scaling.', type: Tweak}
-  id: 1204
-  time: '2022-03-14T02:33:19.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Hardsuits now noticeably slow you down. Wear something else., type: Tweak}
-  id: 1205
-  time: '2022-03-14T06:03:50.0000000+00:00'
-- author: router
-  changes:
-  - {message: Desoxyephedrine no longer hardcounters the speedboost it's supposed
-      to be granting., type: Tweak}
-  id: 1206
-  time: '2022-03-14T06:04:02.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Coffee, Tea, and Energy drinks now contain a small amount of theobromine.',
-    type: Add}
-  - {message: Ultragigancer progression slowed a bit. It still fulfills its purpose
-      of taking up a bunch of medbay resources., type: Tweak}
-  - {message: You can no longer insert swabs into disease machines while they are
-      currently making something., type: Fix}
-  - {message: Fixed broken localization string for the vent cough disease., type: Fix}
-  id: 1207
-  time: '2022-03-14T06:05:02.0000000+00:00'
-- author: Carou
-  changes:
-  - {message: 'Added animated friendly purple snake, with the id: purple_snake.',
-    type: Add}
-  id: 1208
-  time: '2022-03-14T15:00:23.0000000+00:00'
-- author: Spillhelm53
-  changes:
-  - {message: 'Mops can now be used to add or remove liquid from most containers.
-      However, Nanotrasen continues to recommend its company-made "Big Yella" brand
-      mop buckets for best results.', type: Add}
-  id: 1209
-  time: '2022-03-14T21:02:26.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added new generator types: 2x portable generators. Research their boards
-      to build them.', type: Add}
-  - {message: Added the RTG. Find them in a deep space wreck and try not to get burnt...,
-    type: Add}
-  - {message: Added wallmount generator and substation for use in shuttles and escape
-      pods., type: Add}
-  id: 1210
-  time: '2022-03-15T01:27:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some audio files that were causing sound effects to play globally,
-      rather than being position-dependent', type: Fix}
-  id: 1211
-  time: '2022-03-15T03:57:54.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some UI bugs. Ian should no longer be able to make announcements,
-    type: Fix}
-  id: 1212
-  time: '2022-03-15T03:59:20.0000000+00:00'
 - author: Todd
   changes:
   - {message: Added flip flap to the lobby themes., type: Add}
@@ -2999,3 +2882,115 @@ Entries:
   - {message: Syndie gas masks now provide protection from flashbangs, type: Tweak}
   id: 1695
   time: '2022-06-15T07:04:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Rat King. This regal rodent wants your food and will summon
+      minions and spread plague in order to get it., type: Add}
+  id: 1696
+  time: '2022-06-16T00:53:27.0000000+00:00'
+- author: Delete
+  changes:
+  - {message: Fireplaces provide useful light, type: Add}
+  id: 1697
+  time: '2022-06-16T01:02:51.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'You can no longer break pulls on cuffed people if someone else is pulling.
+      Sorry griefers, maybe sec will be tolerable to play now.', type: Tweak}
+  id: 1698
+  time: '2022-06-16T01:10:03.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Nanotrasen's deeper research into the space-faring carpfish has proven
+      that their meat contains extremely potent poison!, type: Add}
+  - {message: 'New carp meat dishes are on the menu for experienced cooks! Their taste
+      can only be described as "Exotic", by those willing to stomach their lethal
+      effects.', type: Add}
+  - {message: 'It seems like the carpfish kind also have an apex predator among their
+      ranks, be warned of large influxes of organic activity and leviathan space-faring
+      creatures', type: Add}
+  - {message: Some carp appear to be smarter than others and capable of humanlike
+      speech, type: Add}
+  - {message: 'due to overuse of heartstopper toxin, and it''s more daring carp alternative,
+      the effects of the former have been greatly reduced', type: Tweak}
+  - {message: Space-faring carp will no longer die of being exposed to the coldness
+      of space, type: Fix}
+  id: 1699
+  time: '2022-06-16T04:14:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now have a docking camera to make docking easier., type: Add}
+  id: 1700
+  time: '2022-06-16T05:28:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Total door hacking time reduced from 5s to 2.5s, type: Tweak}
+  id: 1701
+  time: '2022-06-16T06:14:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerfed gun damage by 30% across the board., type: Tweak}
+  id: 1702
+  time: '2022-06-16T06:15:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Holofans now use power cells and not a custom recharge system., type: Tweak}
+  id: 1703
+  time: '2022-06-16T08:30:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Power cell bloat has been removed as it's never been used. Only small
+      cells remain., type: Remove}
+  id: 1704
+  time: '2022-06-16T08:37:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Pulse Pistol and Captains Antique Pistol are now size 10., type: Tweak}
+  id: 1705
+  time: '2022-06-16T09:16:53.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All mobs will now gib after enough damage., type: Fix}
+  id: 1706
+  time: '2022-06-16T09:25:51.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bagelstation now has a unique job, the Reporter. They exist to follow
+      the nukies around trying to get an interview and blatantly ignore any and all
+      ideas of "safety".', type: Add}
+  - {message: 'Marathon now has a unique job, Psychologist. Interview the clown to
+      discover the true machinations that drive their enigma of a mind, realize you''re
+      just a worse doctor with a cool outfit. These two roles are station exclusives,
+      and won''t be seen anywhere else.', type: Add}
+  id: 1707
+  time: '2022-06-16T09:28:38.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: 'Bicaridine, Dermaline, and Hyronalin all OD at 30u. Hyronalin has a
+      low base chance to induce vomiting.', type: Add}
+  id: 1708
+  time: '2022-06-16T09:29:11.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Added a wiki button to the escape menu, type: Add}
+  id: 1709
+  time: '2022-06-16T09:33:59.0000000+00:00'
+- author: ProfanedBane
+  changes:
+  - {message: 'Whilst uncuffing someone, the handcuffs are placed in the your hand,
+      rather than under the person being uncuffed.', type: Add}
+  id: 1710
+  time: '2022-06-16T09:42:32.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: Ghost role delay is now a cvar, type: Add}
+  - {message: Set ghost role delay from 5 seconds to 3 seconds, type: Tweak}
+  id: 1711
+  time: '2022-06-16T09:56:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Holoparasites can no longer attack their owner while recalled using
+      wide attacks., type: Fix}
+  - {message: 'You can no longer wide attack inside of lockers, crates, etc.', type: Fix}
+  id: 1712
+  time: '2022-06-16T10:59:13.0000000+00:00'
