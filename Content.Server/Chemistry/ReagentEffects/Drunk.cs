@@ -1,8 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Drunk;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -16,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            var drunkSys = EntitySystem.Get<SharedDrunkSystem>();
+            var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
             drunkSys.TryApplyDrunkenness(args.SolutionEntity, BoozePower);
         }
     }

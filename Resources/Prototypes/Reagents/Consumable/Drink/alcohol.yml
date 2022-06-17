@@ -112,6 +112,10 @@
         - !type:ReagentThreshold
           reagent: Ethanol
           min: 3
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 3
 
 - type: reagent
   id: Gin

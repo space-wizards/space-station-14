@@ -1,33 +1,29 @@
-﻿using System;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.Shared.Drunk
+namespace Content.Shared.Drunk;
+
+public abstract class SharedDrunkSystem : EntitySystem
 {
-    public abstract class SharedDrunkSystem : EntitySystem
+    public const string DrunkKey = "Drunk";
+
+    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+    [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
+
+    public void TryApplyDrunkenness(EntityUid uid, float boozePower,
+        StatusEffectsComponent? status = null)
     {
-        public const string DrunkKey = "Drunk";
+        if (!Resolve(uid, ref status, false))
+            return;
 
-        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-        [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
-
-        public void TryApplyDrunkenness(EntityUid uid, float boozePower,
-            StatusEffectsComponent? status = null)
+        _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
+        if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
-            if (!Resolve(uid, ref status, false))
-                return;
-
-            _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
-            if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
-            {
-                _statusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
-            }
-            else
-            {
-                _statusEffectsSystem.TryAddTime(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
-            }
+            _statusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
+        }
+        else
+        {
+            _statusEffectsSystem.TryAddTime(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
         }
     }
 }
