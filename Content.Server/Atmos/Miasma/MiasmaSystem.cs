@@ -68,13 +68,13 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnGibbed(EntityUid uid, PerishableComponent component, BeingGibbedEvent args)
         {
-                if (!TryComp<PhysicsComponent>(uid, out var physics))
-                    return;
+            if (!TryComp<PhysicsComponent>(uid, out var physics))
+                return;
 
-                var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
-                var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
-                if (tileMix != null)
-                    tileMix.AdjustMoles(Gas.Miasma, molsToDump);
+            var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
+            var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
+            if (tileMix != null)
+                tileMix.AdjustMoles(6, molsToDump);
         }
 
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
