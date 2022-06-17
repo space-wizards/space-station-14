@@ -1,5 +1,4 @@
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Doors.Components;
@@ -8,7 +7,9 @@ using Content.Shared.Physics;
 using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Doors.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction.Events;
+using static Content.Server.Remotes.DoorRemoteComponent;
 
 namespace Content.Server.Remotes
 {
@@ -21,80 +22,81 @@ namespace Content.Server.Remotes
 
         public override void Initialize()
         {
-            base.Initialize();
-
             SubscribeLocalEvent<DoorRemoteComponent, UseInHandEvent>(OnInHandActivation);
             SubscribeLocalEvent<DoorRemoteComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
         }
 
         public void OnInHandActivation(EntityUid user, DoorRemoteComponent component, UseInHandEvent args)
         {
+            string switchMessageId;
             switch (component.Mode)
             {
-                case DoorRemoteComponent.OperatingMode.OpenClose:
-                    component.Mode = DoorRemoteComponent.OperatingMode.ToggleBolts;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-bolts"), args.User, Filter.Entities(args.User));
+                case OperatingMode.OpenClose:
+                    component.Mode = OperatingMode.ToggleBolts;
+                    switchMessageId = "door-remote-switch-state-toggle-bolts";
                     break;
-                case DoorRemoteComponent.OperatingMode.ToggleBolts:
-                    component.Mode = DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-toggle-emergency-access"), args.User, Filter.Entities(args.User));
+                case OperatingMode.ToggleBolts:
+                    component.Mode = OperatingMode.ToggleEmergencyAccess;
+                    switchMessageId = "door-remote-switch-state-toggle-emergency-access";
                     break;
-                case DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess:
-                    component.Mode = DoorRemoteComponent.OperatingMode.OpenClose;
-                    _popupSystem.PopupEntity(Loc.GetString("door-remote-switch-state-open-close"), args.User, Filter.Entities(args.User));
+                case OperatingMode.ToggleEmergencyAccess:
+                    component.Mode = OperatingMode.OpenClose;
+                    switchMessageId = "door-remote-switch-state-open-close";
                     break;
+                default:
+                    throw new InvalidOperationException(
+                        $"{nameof(DoorRemoteComponent)} had invalid mode {component.Mode}");
             }
+            ShowPopupToUser(switchMessageId, args.User);
         }
 
         private void OnBeforeInteract(EntityUid uid, DoorRemoteComponent component, BeforeRangedInteractEvent args)
         {
-            if (!args.CanReach ||
-                args.Handled
+            if (args.Handled
                 || args.Target == null
-                || !TryComp<DoorComponent>(args.Target, out var doorComponent) // If it isn't a door we don't use it
-                || !HasComp<AccessReaderComponent>(args.Target) // Remotes do not work on doors without access requirements
-                || !TryComp<AirlockComponent>(args.Target, out var airlockComponent) // Remotes only work on airlocks
-                // TODO: Why the fuck is this -1f
-                || !_interactionSystem.InRangeUnobstructed(args.User, doorComponent.Owner, -1f, CollisionGroup.Opaque))
-            {
+                || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
+                || !TryComp<AirlockComponent>(args.Target, out var airlockComp) // Remotes only work on airlocks
+                // The remote can be used anywhere the user can see the door.
+                // This doesn't work that well, but I don't know of an alternative
+                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
+                    SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
                 return;
-            }
 
             args.Handled = true;
 
-            if (component.Mode == DoorRemoteComponent.OperatingMode.OpenClose)
+            if (!this.IsPowered(args.Target.Value, EntityManager))
             {
-                _doorSystem.TryToggleDoor(doorComponent.Owner, user: args.Used);
+                ShowPopupToUser("door-remote-no-power", args.User);
+                return;
             }
 
-            if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleBolts
-                && airlockComponent.IsPowered())
+            if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
+                !_doorSystem.HasAccess(doorComp.Owner, args.Used, accessComponent))
             {
-                if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
-                {
-                    airlockComponent.SetBoltsWithAudio(!airlockComponent.IsBolted());
-                }
-                else
-                {
-                    if (doorComponent.State != DoorState.Open)
-                    {
-                        _doorSystem.Deny(airlockComponent.Owner, user: args.User);
-                    }
-                    else if (doorComponent.DenySound != null)
-                    {
-                        SoundSystem.Play(doorComponent.DenySound.GetSound(), Filter.Pvs(args.Target.Value, entityManager: EntityManager), args.Target.Value);
-                    }
-                }
+                _doorSystem.Deny(airlockComp.Owner, doorComp, args.User);
+                ShowPopupToUser("door-remote-denied", args.User);
+                return;
             }
 
-            if (component.Mode == DoorRemoteComponent.OperatingMode.ToggleEmergencyAccess
-                && airlockComponent.IsPowered())
+            switch (component.Mode)
             {
-                if (_doorSystem.HasAccess(doorComponent.Owner, args.Used))
-                {
-                    _sharedAirlockSystem.ToggleEmergencyAccess(airlockComponent);
-                }
+                case OperatingMode.OpenClose:
+                    _doorSystem.TryToggleDoor(doorComp.Owner, doorComp, args.Used);
+                    break;
+                case OperatingMode.ToggleBolts:
+                    //TODO: What about cut wires...?
+                    airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
+                    break;
+                case OperatingMode.ToggleEmergencyAccess:
+                    _sharedAirlockSystem.ToggleEmergencyAccess(airlockComp);
+                    break;
+                default:
+                    throw new InvalidOperationException(
+                        $"{nameof(DoorRemoteComponent)} had invalid mode {component.Mode}");
             }
         }
+
+        private void ShowPopupToUser(string messageId, EntityUid user) =>
+            _popupSystem.PopupEntity(Loc.GetString(messageId), user, Filter.Entities(user));
     }
 }

@@ -86506,7 +86506,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7165
-  type: PowerCellMediumPotato
+  type: PowerCellPotato
   components:
   - pos: -20.516964,-56.33504
     parent: 60
@@ -105329,7 +105329,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 9621
-  type: PowerCellLargeSuper
+  type: PowerCellHigh
   components:
   - pos: -37.43891,14.626589
     parent: 60
@@ -151805,7 +151805,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 16084
-  type: PowerCellSmallAutorecharge
+  type: PowerCellMicroreactor
   components:
   - pos: 0.55256647,20.72724
     parent: 60
@@ -151861,7 +151861,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 16091
-  type: PowerCellMediumHyper
+  type: PowerCellHyper
   components:
   - pos: 0.56819147,21.03974
     parent: 60
