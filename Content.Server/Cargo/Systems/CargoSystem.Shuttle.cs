@@ -336,6 +336,7 @@ public sealed partial class CargoSystem
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
         AddCargoContents(shuttle, orderDatabase);
+        UpdateOrders(orderDatabase);
         UpdateShuttleCargoConsoles(shuttle);
 
         _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");

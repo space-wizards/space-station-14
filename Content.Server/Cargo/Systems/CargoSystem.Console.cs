@@ -94,6 +94,13 @@ namespace Content.Server.Cargo.Systems
             if (args.Session.AttachedEntity is not {Valid: true} player)
                 return;
 
+            if (!_accessReaderSystem.IsAllowed(player, uid))
+            {
+                ConsolePopup(args.Session, "Access not allowed");
+                PlayDenySound(uid, component);
+                return;
+            }
+
             var orderDatabase = GetOrderDatabase(component);
             var bankAccount = GetBankAccount(component);
 
