@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.Miasma
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
             var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
             if (tileMix != null)
-                tileMix.AdjustMoles(6, molsToDump);
+                tileMix.AdjustMoles(Gas.Miasma, molsToDump);
         }
 
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
