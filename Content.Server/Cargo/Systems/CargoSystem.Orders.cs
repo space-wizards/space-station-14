@@ -168,7 +168,6 @@ namespace Content.Server.Cargo.Systems
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
             RemoveOrder(orderDatabase, args.OrderNumber);
-            UpdateOrders(orderDatabase);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -277,6 +276,7 @@ namespace Content.Server.Cargo.Systems
         public void RemoveOrder(StationCargoOrderDatabaseComponent component, int index)
         {
             if (!component.Orders.Remove(index)) return;
+            UpdateOrders(component);
         }
 
         public void ClearOrders(StationCargoOrderDatabaseComponent component)
