@@ -32,7 +32,6 @@ namespace Content.Server.Cloning.Systems
             base.Initialize();
 
             SubscribeLocalEvent<CloningConsoleComponent, ComponentStartup>(OnComponentStartup);
-            SubscribeLocalEvent<CloningConsoleComponent, ActivateInWorldEvent>(HandleActivateInWorld);
             SubscribeLocalEvent<CloningConsoleComponent, UiButtonPressedMessage>(OnButtonPressed);
             SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -42,20 +41,6 @@ namespace Content.Server.Cloning.Systems
         private void OnComponentStartup(EntityUid uid, CloningConsoleComponent consoleComponent, ComponentStartup args)
         {
             FindDevices(uid, consoleComponent);
-        }
-
-        private void HandleActivateInWorld(EntityUid uid, CloningConsoleComponent consoleComponent, ActivateInWorldEvent args)
-        {
-            if (!TryComp<ActorComponent>(args.User, out var actor))
-                return;
-
-            if (!consoleComponent.Powered)
-                return;
-
-            if (!_actionBlockerSystem.CanInteract(args.User, consoleComponent.Owner))
-                return;
-
-            _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.Open(actor.PlayerSession);
         }
 
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
