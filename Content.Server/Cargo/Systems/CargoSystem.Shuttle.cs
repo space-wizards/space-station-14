@@ -15,6 +15,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -269,8 +270,6 @@ public sealed partial class CargoSystem
     {
         double amount = 0;
         var toSell = new HashSet<EntityUid>();
-        var actorQuery = GetEntityQuery<ActorComponent>();
-        var mobQuery = GetEntityQuery<MobStateComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
 
         foreach (var pallet in GetCargoPallets(component))
@@ -281,8 +280,7 @@ public sealed partial class CargoSystem
                 // Don't re-sell anything, sell anything anchored (e.g. light fixtures), or anything blacklisted
                 // (e.g. players).
                 if (toSell.Contains(ent) ||
-                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored) ||
-                    !CanSell(ent, mobQuery, actorQuery)) continue;
+                    (xformQuery.TryGetComponent(ent, out var xform) && xform.Anchored)) continue;
 
                 var price = _pricing.GetPrice(ent);
                 if (price == 0) continue;
@@ -298,12 +296,6 @@ public sealed partial class CargoSystem
         {
             Del(ent);
         }
-    }
-
-    private bool CanSell(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<ActorComponent> actorQuery)
-    {
-        // Can't sell players or mobs generally because they will get trapped there.
-        return !mobQuery.HasComponent(uid) && !actorQuery.HasComponent(uid);
     }
 
     private void SendToCargoMap(EntityUid uid, CargoShuttleComponent? component = null)
@@ -401,7 +393,7 @@ public sealed partial class CargoSystem
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
             if (grid.GridIndex == other.Index) continue;
-            reason = $"Too close to nearby objects";
+            reason = Loc.GetString("cargo-shuttle-console-proximity");
             return false;
         }
 
@@ -410,6 +402,10 @@ public sealed partial class CargoSystem
 
     private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
     {
+        var player = args.Session.AttachedEntity;
+
+        if (player == null) return;
+
         var stationUid = _station.GetOwningStation(component.Owner);
 
         if (!TryComp<StationCargoOrderDatabaseComponent>(stationUid, out var orderDatabase) ||
@@ -427,9 +423,43 @@ public sealed partial class CargoSystem
             return;
         }
 
+        if (IsBlocked(shuttle))
+        {
+            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, Filter.Entities(player.Value));
+            SoundSystem.Play(component.DenySound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            return;
+        };
+
         SellPallets(shuttle, bank);
 
         SendToCargoMap(orderDatabase.Shuttle.Value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="component"></param>
+    private bool IsBlocked(CargoShuttleComponent component)
+    {
+        // TODO: Would be good to rate-limit this on the console.
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        return FoundOrganics(component.Owner, mobQuery, xformQuery);
+    }
+
+    private bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
+    {
+        var xform = xformQuery.GetComponent(uid);
+        var childEnumerator = xform.ChildEnumerator;
+
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (mobQuery.HasComponent(child.Value) ||
+                FoundOrganics(child.Value, mobQuery, xformQuery)) return true;
+        }
+
+        return false;
     }
 
     private void OnCargoShuttleCall(EntityUid uid, CargoShuttleConsoleComponent component, CargoCallShuttleMessage args)
