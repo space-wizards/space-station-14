@@ -88,6 +88,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, PortDisconnectedEvent args)
         {
+            Logger.Error("disconnected port is... " + args.Port);
             if (args.Port == "MedicalScannerSender")
                 component.GeneticScanner = null;
 
