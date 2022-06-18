@@ -20,9 +20,7 @@ namespace Content.Server.DoAfter
 
         public EntityCoordinates UserGrid { get; }
 
-        public EntityCoordinates TargetGrid { get; set; }
-
-        public EntityCoordinates UsedGrid { get; set; }
+        public EntityCoordinates TargetGrid { get; }
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 
@@ -164,21 +162,20 @@ namespace Content.Server.DoAfter
                 }
             }
 
-            //Allow movement but enforce distance
             if (EventArgs.BreakOnDistance != null)
             {
-                if(EventArgs.Target != null && !EventArgs.User.Equals(EventArgs.Target))
+                if (!EventArgs.User.Equals(EventArgs.Target))
                 {
                     //recalculate Target location in case Target has also moved
-                    TargetGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, TargetGrid, EventArgs.BreakOnDistance!.Value))
+                    EntityCoordinates CurrentTargetGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates;
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, CurrentTargetGrid, EventArgs.BreakOnDistance!.Value))
                         return true;
                 }
-                if (EventArgs.Used != null && !EventArgs.User.Equals(EventArgs.Used))
+                if (EventArgs.Used != null)
                 {
                     //recalculate Used location in case Used has also moved
-                    UsedGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Used!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, UsedGrid, EventArgs.BreakOnDistance!.Value))
+                    EntityCoordinates CurrentUsedGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Used!.Value).Coordinates;
+                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, CurrentUsedGrid, EventArgs.BreakOnDistance!.Value))
                         return true;
                 }
             }
