@@ -39,3 +39,13 @@
   name: signal-port-name-order-sender
   description: signal-port-description-order-sender
   defaultLinks: [ OrderReceiver ]
+
+- type: transmitterPort
+  id: CloningPodSender
+  name: signal-port-name-pod-receiver
+  description: signal-port-description-pod-sender
+
+- type: transmitterPort
+  id: MedicalScannerSender
+  name: signal-port-name-med-scanner-sender
+  description: signal-port-description-med-scanner-sender

@@ -5,6 +5,9 @@
   description: A bulky medical scanner.
   components:
   - type: MedicalScanner
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/scanner.rsi

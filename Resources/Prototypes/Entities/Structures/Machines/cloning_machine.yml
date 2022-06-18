@@ -5,6 +5,9 @@
   description: A Cloning Pod. 50% reliable.
   components:
   - type: CloningPod
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/cloning.rsi
