@@ -410,11 +410,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-            if(component.FlushStart != null && _gameTiming.CurTime - component.FlushStart >= TimeSpan.FromSeconds(component.FlushTime))
+            if(component.FlushEnd != null && _gameTiming.CurTime <= component.FlushEnd)
             {
                 //Flushing animation has completed, so update visuals to pressurizing
                 UpdateVisualState(component);
-                component.FlushStart = null;
+                component.FlushEnd = null;
             }
 
             Box2? disposalsBounds = null;
@@ -582,7 +582,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing);
                 appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
-                component.FlushStart = _gameTiming.CurTime;
+                component.FlushEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.FlushTime);
                 return;
             }
 

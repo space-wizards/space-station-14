@@ -72,6 +72,6 @@ namespace Content.Server.Disposal.Unit.Components
         /// <summary>
         /// Moment the flush started to calculate end of animation
         /// </summary>
-        public TimeSpan? FlushStart;
+        public TimeSpan? FlushEnd;
     }
 }
