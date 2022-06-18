@@ -49,7 +49,7 @@ namespace Content.Server.Cloning.Systems
             if (!TryComp<ActorComponent>(args.User, out var actor))
                 return;
 
-            if (!IsPowered(consoleComponent))
+            if (!consoleComponent.Powered)
                 return;
 
             if (!_actionBlockerSystem.CanInteract(args.User, consoleComponent.Owner))
@@ -60,7 +60,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
         {
-            if (!IsPowered(consoleComponent))
+            if (!consoleComponent.Powered)
                 return;
 
             switch (args.Button)
@@ -74,12 +74,13 @@ namespace Content.Server.Cloning.Systems
                         TryEject(uid, consoleComponent.CloningPod.Value, consoleComponent: consoleComponent);
                     break;
             }
+            UpdateUserInterface(consoleComponent);
         }
 
         private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, PowerChangedEvent args)
         {
-            if (!args.Powered)
-                _uiSystem.GetUiOrNull(uid, CloningConsoleUiKey.Key)?.CloseAll();
+            component.Powered = args.Powered;
+            UpdateUserInterface(component);
         }
 
         private void OnAnchorChanged(EntityUid uid, CloningConsoleComponent consoleComponent, ref AnchorStateChangedEvent args)
@@ -95,17 +96,9 @@ namespace Content.Server.Cloning.Systems
             DisconnectMachineConnections(uid, consoleComponent);
         }
 
-        public bool IsPowered(CloningConsoleComponent consoleComponent)
-        {
-            if (TryComp<TransformComponent>(consoleComponent.Owner, out var transform) && transform.Anchored && TryComp<ApcPowerReceiverComponent>(consoleComponent.Owner, out var receiver))
-                return receiver.Powered;
-
-            return false;
-        }
-
         private void UpdateUserInterface(CloningConsoleComponent consoleComponent)
         {
-            if (!IsPowered(consoleComponent))
+            if (!consoleComponent.Powered)
             {
                 _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.CloseAll();
                 return;
@@ -263,23 +256,6 @@ namespace Content.Server.Cloning.Systems
 
             consoleComponent.CloningPod = null;
             consoleComponent.GeneticScanner = null;
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            // check update rate
-            _updateDif += frameTime;
-            if (_updateDif < UpdateRate)
-                return;
-            _updateDif = 0f;
-
-            var consoles = EntityManager.EntityQuery<CloningConsoleComponent>();
-            foreach (var console in consoles)
-            {
-                UpdateUserInterface(console);
-            }
         }
     }
 }

@@ -295,6 +295,7 @@
      Steel: 100
      Glass: 900
 
+- type: latheRecipe
   id: MicrowaveMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MicrowaveMachineCircuitboard
@@ -365,7 +366,7 @@
   materials:
     Steel: 100
     Glass: 900
-    
+
 - type: latheRecipe
   id: EmitterCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png

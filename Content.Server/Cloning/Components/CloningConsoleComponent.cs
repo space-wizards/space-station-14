@@ -7,5 +7,7 @@ namespace Content.Server.Cloning.Components
         public EntityUid? GeneticScanner = null;
         [ViewVariables]
         public EntityUid? CloningPod = null;
+
+        public bool Powered = false;
     }
 }
