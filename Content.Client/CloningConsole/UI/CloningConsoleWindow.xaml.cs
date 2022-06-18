@@ -10,6 +10,7 @@ namespace Content.Client.CloningConsole.UI
     [GenerateTypedNameReferences]
     public partial class CloningConsoleWindow : DefaultWindow
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         public CloningConsoleWindow()
         {
             RobustXamlLoader.Load(this);
@@ -32,7 +33,7 @@ namespace Content.Client.CloningConsole.UI
             float simulatedProgress = _lastUpdate.Progress;
             if (_lastUpdate.Progressing)
             {
-                TimeSpan sinceReference = IoCManager.Resolve<IGameTiming>().CurTime - _lastUpdate.ReferenceTime;
+                TimeSpan sinceReference = _timing.RealTime - _lastUpdate.ReferenceTime;
                 simulatedProgress += (float) sinceReference.TotalSeconds;
                 simulatedProgress = MathHelper.Clamp(simulatedProgress, 0f, _lastUpdate.Maximum);
             }
