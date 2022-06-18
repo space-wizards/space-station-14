@@ -1,10 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: 'Due to a budgetary oversight, possums and raccoons are now smaller.
-      Also Ferrets are a little bigger.', type: Tweak}
-  id: 1219
-  time: '2022-03-16T21:30:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed gas tank UIs not showing the current output pressure when opened.,
@@ -2998,3 +2992,8 @@ Entries:
   - {message: Added the remaining botany tools to the NutriVend machine., type: Tweak}
   id: 1718
   time: '2022-06-18T03:34:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain station events will no longer be announced., type: Tweak}
+  id: 1719
+  time: '2022-06-18T03:53:02.0000000+00:00'
