@@ -1,15 +1,12 @@
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 using Content.Server.Medical.Components;
-using Robust.Shared.Map;
 using Content.Server.Cloning.Components;
 using Content.Server.Power.Components;
 using Content.Server.Mind.Components;
-using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
 
@@ -18,11 +15,9 @@ namespace Content.Server.Cloning.Systems
     [UsedImplicitly]
     public sealed partial class CloningConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private const float UpdateRate = 2f;
@@ -30,17 +25,8 @@ namespace Content.Server.Cloning.Systems
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<CloningConsoleComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<CloningConsoleComponent, UiButtonPressedMessage>(OnButtonPressed);
             SubscribeLocalEvent<CloningConsoleComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<CloningConsoleComponent, ComponentShutdown>(OnComponentShutdown);
-        }
-
-        private void OnComponentStartup(EntityUid uid, CloningConsoleComponent consoleComponent, ComponentStartup args)
-        {
-            FindDevices(uid, consoleComponent);
         }
 
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
@@ -68,19 +54,6 @@ namespace Content.Server.Cloning.Systems
             UpdateUserInterface(component);
         }
 
-        private void OnAnchorChanged(EntityUid uid, CloningConsoleComponent consoleComponent, ref AnchorStateChangedEvent args)
-        {
-            if (args.Anchored)
-                FindDevices(uid, consoleComponent);
-            else
-                DisconnectMachineConnections(uid, consoleComponent);
-        }
-
-        private void OnComponentShutdown(EntityUid uid, CloningConsoleComponent consoleComponent, ComponentShutdown args)
-        {
-            DisconnectMachineConnections(uid, consoleComponent);
-        }
-
         private void UpdateUserInterface(CloningConsoleComponent consoleComponent)
         {
             if (!consoleComponent.Powered)
@@ -92,34 +65,6 @@ namespace Content.Server.Cloning.Systems
             var newState = GetUserInterfaceState(consoleComponent);
 
             _uiSystem.GetUiOrNull(consoleComponent.Owner, CloningConsoleUiKey.Key)?.SetState(newState);
-        }
-
-        private void FindDevices(EntityUid Owner, CloningConsoleComponent cloneConsoleComp)
-        {
-            cloneConsoleComp.CloningPod = null;
-            cloneConsoleComp.GeneticScanner = null;
-            if (TryComp<TransformComponent>(Owner, out var transformComp) && transformComp.Anchored)
-            {
-                var grid = _mapManager.GetGrid(transformComp.GridID);
-                var coords = transformComp.Coordinates;
-                foreach (var entity in grid.GetCardinalNeighborCells(coords))
-                {
-                    if (TryComp<MedicalScannerComponent>(entity, out var geneticScanner) && geneticScanner.ConnectedConsole == null)
-                    {
-                        cloneConsoleComp.GeneticScanner = entity;
-                        geneticScanner.ConnectedConsole = Owner;
-                        continue;
-                    }
-
-                    if (TryComp<CloningPodComponent>(entity, out var cloningPod) && cloningPod.ConnectedConsole == null)
-                    {
-                        cloneConsoleComp.CloningPod = entity;
-                        cloningPod.ConnectedConsole = Owner;
-                    }
-                }
-            }
-            UpdateUserInterface(cloneConsoleComp);
-            return;
         }
 
         public void TryEject(EntityUid uid, EntityUid clonePodUid, CloningPodComponent? cloningPod = null, CloningConsoleComponent? consoleComponent = null)
@@ -226,21 +171,6 @@ namespace Content.Server.Cloning.Systems
                 scannerConnected,
                 clonerConnected
                 );
-        }
-
-        public void DisconnectMachineConnections(EntityUid uid, CloningConsoleComponent? consoleComponent)
-        {
-            if (!Resolve(uid, ref consoleComponent))
-                return;
-
-            if (consoleComponent.CloningPod != null && TryComp<CloningPodComponent>(consoleComponent.CloningPod, out var cloningPod) && cloningPod.ConnectedConsole == uid)
-                cloningPod.ConnectedConsole = null;
-
-            if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var medicalScanner) && medicalScanner.ConnectedConsole == uid)
-                medicalScanner.ConnectedConsole = null;
-
-            consoleComponent.CloningPod = null;
-            consoleComponent.GeneticScanner = null;
         }
     }
 }
