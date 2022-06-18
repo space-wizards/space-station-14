@@ -1,15 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Added a variation of the cute bee plushie, type: Add}
-  id: 1217
-  time: '2022-03-16T18:42:08.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Due to a budget oversight, SS14 is now equipped with rotatable arcade
-      machines.', type: Fix}
-  id: 1218
-  time: '2022-03-16T21:30:05.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: 'Due to a budgetary oversight, possums and raccoons are now smaller.
@@ -2998,3 +2987,14 @@ Entries:
     type: Tweak}
   id: 1716
   time: '2022-06-18T02:36:19.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'There are more kinds of Exos than a simple slug with blades now. Some
+      are faster, some are stronger, and one might shoot, someday.', type: Add}
+  id: 1717
+  time: '2022-06-18T03:33:41.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the remaining botany tools to the NutriVend machine., type: Tweak}
+  id: 1718
+  time: '2022-06-18T03:34:10.0000000+00:00'
