@@ -16,9 +16,9 @@ public sealed class MobsterAccentSystem : EntitySystem
         { "the", "da" },
         { "kill", "whack" },
         { "murder", "whack" },
-        { "dead", "sleepin' with the fishies"},
+        { "dead", "sleepin' with da fishies"},
         { "hey", "ey'o" },
-        { "rules", "rulez" },
+        { "rules", "roolz" },
         { "you", "yous" },
         { "have to", "gotta" },
         { "here", "'ere" }
