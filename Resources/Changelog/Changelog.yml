@@ -1,11 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: 'Drones now have access to the Omnitool, a T-Ray Scanner, and a satchel!',
-    type: Add}
-  - {message: Drones have 1 less available hands., type: Tweak}
-  id: 1215
-  time: '2022-03-16T01:11:30.0000000+00:00'
 - author: EmoGarbage
   changes:
   - {message: 'Added the Space Tick, a new salvage mob to terrorize hardworking salvage
@@ -3000,3 +2993,9 @@ Entries:
   - {message: Removed the radiation storm event., type: Remove}
   id: 1714
   time: '2022-06-17T07:00:23.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Botany tools now fit on the botany belt., type: Tweak}
+  - {message: Airlock Painters now fit on utility belts., type: Tweak}
+  id: 1715
+  time: '2022-06-18T02:13:29.0000000+00:00'
