@@ -16,6 +16,7 @@ namespace Content.Client.Inventory
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
+        public string Occupied { get; } = "Occupied";
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
@@ -54,10 +55,20 @@ namespace Content.Client.Inventory
             {
                 foreach (var (slot, name) in Inventory)
                 {
-                    _strippingMenu.AddButton(slot.Name, name, (ev) =>
+                    if (slot.ID == "pocket1" && name != "None" || slot.ID == "pocket2" && name != "None")
                     {
-                        SendMessage(new StrippingInventoryButtonPressed(slot.ID));
-                    });
+                        _strippingMenu.AddButton(slot.Name, Occupied, (ev) =>
+                        {
+                            SendMessage(new StrippingInventoryButtonPressed(slot.ID));
+                        });
+                    }
+                    else
+                    {
+                        _strippingMenu.AddButton(slot.Name, name, (ev) =>
+                        {
+                            SendMessage(new StrippingInventoryButtonPressed(slot.ID));
+                        });
+                    }
                 }
             }
 
