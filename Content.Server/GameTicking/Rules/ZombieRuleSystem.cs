@@ -2,13 +2,9 @@ using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.Nuke;
+using Content.Server.Mind.Components;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.RoundEnd;
-using Content.Server.Spawners.Components;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.CCVar;
@@ -16,14 +12,9 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
-using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -36,28 +27,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-    [Dependency] private readonly NukeSystem _nukeSystem = default!;
-    [Dependency] private readonly NukeCodeSystem _nukeCodeSystem = default!;
 
     private Dictionary<string, string> _initialInfected = new();
 
     public override string Prototype => "Zombie";
     private const string PatientZeroPrototypeID = "InitialInfected";
-    private const string InitialZombieVirusPrototype = "ActiveZombieVirus";
+    private const string InitialZombieVirusPrototype = "PassiveZombieVirus";
+
+    private const int LastSurvivorsThreshold = 6;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        //SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
@@ -71,7 +57,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = GetInfectedPercentage();
+        var percent = GetInfectedPercentage(out var livingHumans);
 
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
@@ -90,6 +76,25 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
                 ("name", player.Key),
                 ("username", player.Value)));
+        }
+
+        //Gets a bunch of the living players and displays them if they're under a threshold.
+        if (percent > 0 && livingHumans.Count < LastSurvivorsThreshold)
+        {
+            ev.AddLine("");
+            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", 1)));
+            foreach (var survivor in livingHumans)
+            {
+                var meta = MetaData(survivor);
+                var username = string.Empty;
+                if (TryComp<MindComponent>(survivor, out var mindcomp))
+                    if (mindcomp.Mind != null && mindcomp.Mind.Session != null)
+                        username = mindcomp.Mind.Session.Name;
+
+                ev.AddLine(Loc.GetString("zombie-round-end-user-was-survivor",
+                    ("name", meta.EntityName),
+                    ("username", username)));
+            }
         }
     }
 
@@ -115,7 +120,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!HasComp<HumanoidAppearanceComponent>(ev.Entity))
             return;
 
-        var percent = GetInfectedPercentage();
+        var percent = GetInfectedPercentage(out var _);
 
         if (percent >= 1)
             _roundEndSystem.EndRound();
@@ -130,7 +135,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!HasComp<HumanoidAppearanceComponent>(ev.Target))
             return;
 
-        var percent = GetInfectedPercentage();
+        var percent = GetInfectedPercentage(out var _);
 
         if (percent >= 1)
             _roundEndSystem.EndRound();
@@ -168,11 +173,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     public override void Ended(GameRuleConfiguration configuration) { }
 
-    private FixedPoint2 GetInfectedPercentage()
+    private FixedPoint2 GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
         var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
         var totalPlayers = new List<EntityUid>();
         var livingZombies = new List<EntityUid>();
+        livingHumans = new();
         foreach (var ent in allPlayers)
         {
             if (ent.Item2.IsAlive())
@@ -181,9 +187,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
                 if (HasComp<ZombieComponent>(ent.Item1.Owner))
                     livingZombies.Add(ent.Item2.Owner);
+                else
+                    livingHumans.Add(ent.Item2.Owner);
             }    
         }
-        Logger.Debug((livingZombies.Count / totalPlayers.Count).ToString());
+        //Logger.Debug((livingZombies.Count / totalPlayers.Count).ToString());
         return (FixedPoint2) livingZombies.Count / (FixedPoint2) totalPlayers.Count;
     }
 

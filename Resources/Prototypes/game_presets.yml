@@ -85,6 +85,9 @@
   alias:
     - zombie
     - zombies
+    - Zombies
+    - zz14
+    - zomber
   name: zombie-title
   description: zombie-description
   showInVote: true

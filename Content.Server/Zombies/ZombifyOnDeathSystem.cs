@@ -73,8 +73,8 @@ namespace Content.Server.Zombies
         /// <remarks>
         ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
-        ///     attempted to label everything thouroughly for your sanity. It has been attempted to be
-        ///     rewritten, but this is how it shall lie eternal. Turn back now.
+        ///     attempted to label everything thouroughly for your sanity. It have attempted to 
+        ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
         public void ZombifyEntity(EntityUid target)

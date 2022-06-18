@@ -11,8 +11,8 @@ zombie-end-nuke-armed-event-fail = The nuke was not detonated.
 zombie-end-nuke-armed-event-success = The nuke was successfully detonated by {$name} ({$username}), stopping the outbreak.
 
 zombie-round-end-initial-count = {$initialCount ->
-    [one] There was one initial infected.
-    *[other] There were {$initialCount} initial infected.
+    [one] There was one initial infected:
+    *[other] There were {$initialCount} initial infected:
 }
 zombie-round-end-user-was-initial = - [color=Plum]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial infected.
 
@@ -21,3 +21,9 @@ zombie-round-end-amount-low = [color=green]Almost all of the zombies were exterm
 zombie-round-end-amount-medium = [color=yellow]{$percent}% of the crew were turned into zombies.[/color]
 zombie-round-end-amount-high = [color=crimson]{$percent}% of the crew were turned into zombies.[/color]
 zombie-round-end-amount-all = [color=darkred]The entire crew became zombies![/color]
+
+zombie-round-end-survivor-count = {$count ->
+    [one] There was only one survivor left:
+    *[other] There were only {$count} survivors left:
+}
+zombie-round-end-user-was-survivor = - [color=White]{$name}[/color] ([color=gray]{$username}[/color]) survived the outbreak.
