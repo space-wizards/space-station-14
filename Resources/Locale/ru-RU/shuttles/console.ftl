@@ -1,18 +1,18 @@
 shuttle-pilot-start = Пилотирование начато
 shuttle-pilot-end = Пилотирование прекращено
 # Display
-shuttle-console-max-radar = Max radar range:
-shuttle-console-radar = Radar range:
-shuttle-console-position = Position:
-shuttle-console-orientation = Orientation:
-shuttle-console-linear-velocity = Linear velocity:
-shuttle-console-angular-velocity = Angular velocity:
-shuttle-console-docked = { $index } (Docked)
-shuttle-console-dock-button = Dock { $suffix }
-shuttle-console-unknown = Unknown
-shuttle-console-iff-label = "{ $name } ({ $distance }m)
+shuttle-console-max-radar = Максимальная дальность радара:
+shuttle-console-radar = Дальность радара:
+shuttle-console-position = Местоположение:
+shuttle-console-orientation = Ориентация:
+shuttle-console-linear-velocity = Линейная скорость:
+shuttle-console-angular-velocity = Угловая скорость:
+shuttle-console-docked = { $index } (Пристыкован)
+shuttle-console-dock-button = Пристыковать { $suffix }
+shuttle-console-unknown = Неизвестно
+shuttle-console-iff-label = "{ $name } ({ $distance }м)
 # Buttons
-shuttle-console-strafing = Strafing mode
-shuttle-console-iff-toggle = Show IFF
-shuttle-console-dock-toggle = Show docks
-shuttle-console-undock = Undock
+shuttle-console-strafing = Режим стрейфа
+shuttle-console-iff-toggle = Показать "свой-чужой"
+shuttle-console-dock-toggle = Показать стыковку
+shuttle-console-undock = Отстыковать

@@ -245,5 +245,5 @@ ent-HighSecCaptainLocked = { ent-HighSecDoor }
     .suffix = Капитан, Закрыт
     .desc = { ent-HighSecDoor.desc }
 ent-HighSecArmoryLocked = { ent-HighSecDoor }
-    .suffix = Armory, Locked
+    .suffix = Оружейная, Закрыт
     .desc = { ent-HighSecDoor.desc }

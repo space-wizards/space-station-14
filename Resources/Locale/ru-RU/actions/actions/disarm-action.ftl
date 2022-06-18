@@ -1,4 +1,4 @@
-disarm-action-free-hand = You need to use a free hand to disarm!
+disarm-action-free-hand = Для обезоруживания вам необходимо использовать свободную руку!
 disarm-action-popup-message-other-clients = { $performerName } не удалось обезоружить { $targetName }!
 disarm-action-popup-message-cursor = Вам не удалось обезоружить { $targetName }!
 action-name-disarm = [color=red]Обезоружить[/color]

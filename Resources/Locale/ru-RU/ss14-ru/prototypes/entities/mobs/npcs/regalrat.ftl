@@ -1,6 +1,6 @@
-ent-MobRatKing = Rat King
-    .desc = He's da rat. He make da roolz.
+ent-MobRatKing = крысиный король
+    .desc = Он крысюк и он тут босс.
     .suffix = { "" }
-ent-MobRatServant = Rat Servant
-    .desc = He's da mini rat. He don't make da roolz.
+ent-MobRatServant = крысиный слуга
+    .desc = Он мини-крысюк и он тут не босс.
     .suffix = { "" }

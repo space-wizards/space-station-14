@@ -1,8 +1,8 @@
-devour-action-popup-message-structure = Your jaws dig into thick material..
-devour-action-popup-message-fail-target-not-valid = That doesn't look particularly edible.
-devour-action-popup-message-fail-target-alive = You can't consume creatures that are alive!
-dragon-spawn-action-popup-message-fail-no-eggs = You don't have the stamina to create a carp!
-action-name-devour = [color=red]Devour[/color]
-action-description-devour = Attempt to break a structure with your jaws or swallow a creature.
-action-name-carp-summon = Summon carp
-action-description-carp-summon = Summon a carp to aid you at seizing the station!
+devour-action-popup-message-structure = Ваши челюсти впиваются в плотный материал...
+devour-action-popup-message-fail-target-not-valid = Это выглядит не особо съедобно.
+devour-action-popup-message-fail-target-alive = Вы не можете поглощать живых существ!
+dragon-spawn-action-popup-message-fail-no-eggs = Вам не хватит выносливости для создания карпа!
+action-name-devour = [color=red]Поглотить[/color]
+action-description-devour = Попытаться разрушить конструкцию своими челюстями или поглотить существо.
+action-name-carp-summon = Призвать карпа
+action-description-carp-summon = Призовите карпа, чтобы он помог вам захватить станцию!

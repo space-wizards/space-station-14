@@ -8,5 +8,5 @@ reagent-name-carbon-dioxide = диоксид углерода
 reagent-desc-carbon-dioxide = Он же углекислый газ. Вы совершенно не представляете, что это такое.
 reagent-name-nitrogen = азот
 reagent-desc-nitrogen = Он же нитроген. Бесцветный, не имеющий запаха нереактивный газ. Очень стабилен.
-reagent-name-miasma = miasma
-reagent-desc-miasma = Uh oh, stinky!
+reagent-name-miasma = миазма
+reagent-desc-miasma = Ух ох, как воняет!
