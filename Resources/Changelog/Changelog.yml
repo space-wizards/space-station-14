@@ -1,18 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed gas tank UIs not showing the current output pressure when opened.,
-    type: Fix}
-  id: 1220
-  time: '2022-03-16T21:30:40.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: Bullets now fly through Guardians in accordance with the Cybersun handbook.
-      Better aim for the owner!, type: Fix}
-  - {message: Stun bolts also pass through guardians. Laser beams however don't.,
-    type: Tweak}
-  id: 1221
-  time: '2022-03-17T18:46:11.0000000+00:00'
 - author: CrudeWax
   changes:
   - {message: 'Traitors can now purchase a hypopen: a stealthy 15u hypospray disguised
@@ -2997,3 +2983,15 @@ Entries:
   - {message: Certain station events will no longer be announced., type: Tweak}
   id: 1719
   time: '2022-06-18T03:53:02.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Salvo oxygen tanks now start full, type: Fix}
+  id: 1720
+  time: '2022-06-18T23:20:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Rat Servants are now slightly stronger and slower., type: Tweak}
+  - {message: The Rat King's Domain ability now releases a cloud of miasma rather
+      than spreading plague., type: Add}
+  id: 1721
+  time: '2022-06-18T23:21:07.0000000+00:00'
