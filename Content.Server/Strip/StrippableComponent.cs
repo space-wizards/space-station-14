@@ -16,7 +16,7 @@ namespace Content.Server.Strip
         /// </summary>
         [ViewVariables]
         [DataField("openDelay")]
-        public float OpenDelay = 0.8f;
+        public float OpenDelay = 1f;
 
         /// <summary>
         /// The strip delay for hands.
