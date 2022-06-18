@@ -199,11 +199,8 @@
         probability: 0.12
         conditions:
         - !type:OrganType
-          type: Human
-        - !type:OrganType
-          type: Animal
-        - !type:OrganType
-          type: Vox
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 0.8
