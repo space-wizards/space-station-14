@@ -158,6 +158,9 @@ namespace Content.Server.Cargo.Systems
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.Approver = idCard?.FullName ?? string.Empty;
 
+
+            SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
         }
