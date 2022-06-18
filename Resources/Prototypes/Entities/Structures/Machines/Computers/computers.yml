@@ -20,6 +20,14 @@
   abstract: true
   components:
   - type: ShuttleConsole
+  - type: ActivatableUI
+    key: enum.ShuttleConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ShuttleConsoleUiKey.Key
+      type: ShuttleConsoleBoundUserInterface
+  - type: RadarConsole
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -53,6 +61,8 @@
     - type: ComputerVisualizer
       key: syndie_key
       screen: syndishuttle
+  - type: RadarConsole
+    maxRange: 512
   - type: PointLight
     radius: 1.5
     energy: 1.6

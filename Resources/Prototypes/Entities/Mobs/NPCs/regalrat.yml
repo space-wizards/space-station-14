@@ -55,11 +55,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: regalrat
+        Base: regalrat
       Critical:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Puller
   - type: GhostTakeoverAvailable
     makeSentient: true
@@ -89,6 +89,7 @@
       itemIconStyle: NoItem
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
+  - type: MobsterAccent
   - type: Access #he's so baller he gets his own access. NT got nothing on him
     tags:
     - Maintenance
@@ -165,11 +166,11 @@
     rotate: true
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: mouse-3
+        Base: mouse-3
       Critical:
-        enum.DamageStateVisualLayers.Base: dead-3
+        Base: dead-3
       Dead:
-        enum.DamageStateVisualLayers.Base: splat-3
+        Base: splat-3
   - type: Puller
   - type: DiseaseCarrier
     carrierDiseases:
@@ -192,4 +193,5 @@
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
-
+  - type: MobsterAccent
+    isBoss: false

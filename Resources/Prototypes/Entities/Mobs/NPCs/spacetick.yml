@@ -41,9 +41,9 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: alive
+        Base: alive
       Dead:
-        enum.DamageStateVisualLayers.Base: dead
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno

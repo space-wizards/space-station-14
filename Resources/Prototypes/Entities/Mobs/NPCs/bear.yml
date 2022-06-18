@@ -36,11 +36,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        enum.DamageStateVisualLayers.Base: bear
+        Base: bear
       Critical:
-        enum.DamageStateVisualLayers.Base: bear_dead
+        Base: bear_dead
       Dead:
-        enum.DamageStateVisualLayers.Base: bear_dead
+        Base: bear_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatBear

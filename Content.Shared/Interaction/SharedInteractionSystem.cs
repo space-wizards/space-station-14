@@ -52,10 +52,10 @@ namespace Content.Shared.Interaction
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 2;
+        public const float InteractionRange = 2f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        public const float MaxRaycastRange = 100;
+        public const float MaxRaycastRange = 100f;
 
         public delegate bool Ignored(EntityUid entity);
 
