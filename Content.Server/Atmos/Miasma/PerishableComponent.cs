@@ -35,6 +35,7 @@ namespace Content.Server.Atmos.Miasma
         /// How many moles of gas released per second, per unit of mass.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("molsPerSecondPerUnitMass")]
         public float MolsPerSecondPerUnitMass = 0.0035f;
     }
 }
