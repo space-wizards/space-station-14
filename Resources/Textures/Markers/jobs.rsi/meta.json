@@ -113,6 +113,9 @@
       "name": "mime"
     },
     {
+      "name": "reporter"
+    },
+    {
       "name": "paramedic"
     },
     {

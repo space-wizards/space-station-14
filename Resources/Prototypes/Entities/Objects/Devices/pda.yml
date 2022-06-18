@@ -631,3 +631,33 @@
   components:
   - type: PDA
     id: ERTLeaderIDCard
+
+- type: entity
+  parent: BasePDA
+  id: PsychologistPDA
+  name: psychologist PDA
+  description: Looks immaculately cleaned.
+  components:
+  - type: PDA
+    id: PsychologistIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-medical
+  - type: Icon
+    state: pda-medical
+
+- type: entity
+  parent: BasePDA
+  id: ReporterPDA
+  name: reporter PDA
+  description: Smells like freshly printed press.
+  components:
+  - type: PDA
+    id: ReporterIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-reporter
+  - type: Icon
+    state: pda-reporter

@@ -1,5 +1,6 @@
 ### Voting system related console commands
 
+
 ## 'createvote' command
 
 cmd-createvote-desc = Создает голосование
@@ -36,8 +37,9 @@ cmd-listvotes-help = Использование: listvotes
 ## 'cancelvote' command
 
 cmd-cancelvote-desc = Отменяет текущее голосование
-cmd-cancelvote-help = Использование: cancelvote <id>
-                      Вы можете найти ID с помощью команды listvotes.
+cmd-cancelvote-help =
+    Использование: cancelvote <id>
+    Вы можете найти ID с помощью команды listvotes.
 cmd-cancelvote-error-invalid-vote-id = Неверный ID голосования
 cmd-cancelvote-error-missing-vote-id = Отсутствует ID
 cmd-cancelvote-arg-id = <id>
