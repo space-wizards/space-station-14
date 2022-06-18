@@ -28487,7 +28487,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2075
-  type: PowerCellMediumStandard
+  type: PowerCellSmall
   components:
   - pos: 9.531351,32.51714
     parent: 2
@@ -50161,7 +50161,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 5313
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 56.529827,20.631775
     parent: 2
@@ -50725,7 +50725,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5382
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 50.725174,11.548619
     parent: 2
@@ -94093,7 +94093,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 11070
-  type: PowerCellMediumStandard
+  type: PowerCellSmall
   components:
   - parent: 9191
     type: Transform
@@ -94878,7 +94878,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 11166
-  type: PowerCellMediumStandard
+  type: PowerCellSmall
   components:
   - parent: 11154
     type: Transform

@@ -31,7 +31,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 14
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
@@ -81,7 +81,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Piercing: 17
 
 - type: entity
   id: BaseBulletPractice
@@ -179,7 +179,7 @@
   - type: Projectile
     damage:
       types:
-        Heat: 20
+        Heat: 14
   - type: Tag
     tags:
     - EmitterBolt
