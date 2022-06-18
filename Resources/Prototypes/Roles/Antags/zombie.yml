@@ -2,7 +2,7 @@
   id: InitialInfected
   name: "Initial Infected"
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: "Once you turn, infect as many other crew members as possible"
 
 - type: antag

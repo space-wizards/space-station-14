@@ -19,11 +19,14 @@
         {
             "name": "disarm"
         },
-		{
-			"name": "harm"
-		},
-		{
-			"name": "manifest"
-		}
+		    {
+		        "name": "harm"
+		    },
+        {
+            "name": "manifest"
+        },
+        {
+            "name": "zombie-turn"
+        }
     ]
 }

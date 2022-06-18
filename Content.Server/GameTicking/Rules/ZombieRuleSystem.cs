@@ -4,6 +4,8 @@ using Content.Server.Disease;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Popups;
+using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Traitor;
 using Content.Server.Zombies;
@@ -12,9 +14,12 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -28,8 +33,10 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     private Dictionary<string, string> _initialInfected = new();
 
@@ -116,28 +123,31 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         if (!Enabled)
             return;
-
-        if (!HasComp<HumanoidAppearanceComponent>(ev.Entity))
-            return;
-
-        var percent = GetInfectedPercentage(out var _);
-
-        if (percent >= 1)
-            _roundEndSystem.EndRound();
+        CheckRoundEnd(ev.Entity);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)
     {
         if (!Enabled)
             return;
+        CheckRoundEnd(ev.Target);
+    }
 
+    /// <summary>
+    ///     The big kahoona function for checking if the round is gonna end
+    /// </summary>
+    /// <param name="target">depending on this uid, we should care about the round ending</param>
+    private void CheckRoundEnd(EntityUid target)
+    {
         //we only care about players, not monkeys and such.
-        if (!HasComp<HumanoidAppearanceComponent>(ev.Target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
 
-        var percent = GetInfectedPercentage(out var _);
+        var percent = GetInfectedPercentage(out var num);
 
-        if (percent >= 1)
+        if (num.Count == 1) //only one left
+            _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
+        if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
 
@@ -191,7 +201,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                     livingHumans.Add(ent.Item2.Owner);
             }    
         }
-        //Logger.Debug((livingZombies.Count / totalPlayers.Count).ToString());
         return (FixedPoint2) livingZombies.Count / (FixedPoint2) totalPlayers.Count;
     }
 
@@ -199,15 +208,25 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     ///     Infects the first players with the passive zombie virus.
     ///     Also records their names for the end of round screen.
     /// </summary>
+    /// <remarks>
+    ///     The reason this code is written separately is to facilitate
+    ///     allowing this gamemode to be started midround. As such, it doesn't need
+    ///     any information besides just running.
+    /// </remarks>
     private void InfectInitialPlayers()
     {
         var allPlayers = _playerManager.ServerSessions.ToList();
         var playerList = new List<IPlayerSession>();
+        var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
             if (player.AttachedEntity != null)
             {
                 playerList.Add(player);
+
+                var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
+                if (pref.AntagPreferences.Contains(PatientZeroPrototypeID))
+                    prefList.Add(player);
             }
         }
 
@@ -223,14 +242,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         for (var i = 0; i < numInfected; i++)
         {
-            if (playerList.Count == 0)
+            IPlayerSession zombie;
+            if (prefList.Count == 0)
             {
-                Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
-                break;
+                if(playerList.Count == 0)
+                {
+                    Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
+                    break;
+                }
+                zombie = _random.PickAndTake(playerList);
+                Logger.InfoS("preset", "Insufficient preferred patient 0, picking at random.");
             }
-            var zombie = _random.PickAndTake(playerList);
-            playerList.Remove(zombie);
-            Logger.InfoS("preset", "Selected a patient 0.");
+            else
+            {
+                zombie = _random.PickAndTake(prefList);
+                playerList.Remove(zombie);
+                Logger.InfoS("preset", "Selected a patient 0.");
+            }
 
             var mind = zombie.Data.ContentData()?.Mind;
             if (mind == null)
@@ -242,6 +270,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             DebugTools.AssertNotNull(mind.OwnedEntity);
 
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(PatientZeroPrototypeID)));
+
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {

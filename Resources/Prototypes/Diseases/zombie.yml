@@ -31,10 +31,5 @@
   infectious: false
   cureResist: 1 #no cure. Death is your cure.
   effects:
-    - !type:DiseaseHealthChange #roughly procs once a minute, takes 20 minutes to kill.
-      probability: 0.016
-      damage:
-        types:
-          Cellular: 5
     - !type:DiseaseAddComponent
       comp: ZombifyOnDeath

@@ -10,6 +10,8 @@ zombie-nuke-armed-event = In response to the zombie outbreak, we have armed the 
 zombie-end-nuke-armed-event-fail = The nuke was not detonated.
 zombie-end-nuke-armed-event-success = The nuke was successfully detonated by {$name} ({$username}), stopping the outbreak.
 
+zombie-alone = You feel entirely alone.
+
 zombie-round-end-initial-count = {$initialCount ->
     [one] There was one initial infected:
     *[other] There were {$initialCount} initial infected:
