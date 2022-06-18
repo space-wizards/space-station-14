@@ -34,10 +34,13 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
+
+            InitializeEscape();
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
@@ -52,6 +55,12 @@ namespace Content.Server.Shuttles.Systems
         {
             base.Update(frameTime);
             UpdateHyperspace(frameTime);
+        }
+
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            CleanupEscape();
+            CleanupHyperspace();
         }
 
         private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;

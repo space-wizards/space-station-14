@@ -89,7 +89,7 @@ public sealed partial class ShuttleSystem
         DebugTools.Assert(!_mapManager.IsMapPaused(_hyperSpaceMap.Value));
     }
 
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    private void CleanupHyperspace()
     {
         if (_hyperSpaceMap == null) return;
         _mapManager.DeleteMap(_hyperSpaceMap.Value);
