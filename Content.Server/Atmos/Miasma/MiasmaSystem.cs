@@ -77,6 +77,9 @@ namespace Content.Server.Atmos.Miasma
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 return;
 
+            if (component.DeathAccumulator <= component.RotAfter.TotalSeconds)
+                return;
+
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
             var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
             if (tileMix != null)
