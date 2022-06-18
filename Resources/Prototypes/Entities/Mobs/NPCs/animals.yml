@@ -24,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      mass: 2
       mask:
       - FlyingMobMask
       layer:
@@ -88,7 +88,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.1
-      mass: 5
+      mass: 1
       mask:
       - FlyingMobMask
       layer:
@@ -158,6 +158,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 3
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -192,6 +202,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
       sprite: Mobs/Animals/duck.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 2 #They actually are pretty light, I looked it up
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -279,7 +299,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      mass: 1
       mask:
       - FlyingMobMask
       layer:
@@ -330,7 +350,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 45
+      mass: 700
       mask:
       - MobMask
       layer:
@@ -390,7 +410,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      mass: 2
       mask:
       - MobMask
       layer:
@@ -427,6 +447,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 60
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -476,6 +506,16 @@
       state: goose
       sprite: Mobs/Animals/goose.rsi
   - type: Appearance
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -516,7 +556,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 60
+      mass: 150
       mask:
       - MobMask
       layer:
@@ -553,17 +593,17 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: kangaroo
         sprite: Mobs/Animals/kangaroo.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
-      mass: 60
+        radius: 0.35
+      mass: 50
       mask:
       - MobMask
       layer:
       - MobLayer
+  - type: Physics
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -627,6 +667,16 @@
     flavorKind: primate
   - type: Inventory
     templateId: monkey
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 30
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -898,7 +948,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      mass: 1
       mask:
       - MobMask
       layer:
@@ -944,7 +994,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 2
+      mass: 1
       mask:
       - SmallMobMask
       layer:
@@ -993,7 +1043,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      mass: 2
       mask:
       - FlyingMobMask
       layer:
@@ -1091,7 +1141,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 10
+      mass: 5
       mask:
       - MobMask
       layer:
@@ -1149,7 +1199,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 8
+      mass: 2
       mask:
       - SmallMobMask
       layer:
@@ -1199,7 +1249,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 25
+      mass: 50
       mask:
       - MobMask
       layer:
@@ -1384,7 +1434,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 20 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:

@@ -32,7 +32,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 120
+      mass: 200
       mask:
       - MobMask
       layer:
@@ -93,7 +93,7 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
-      - FootstepSound 
+      - FootstepSound
   - type: NoSlip
 
 - type: entity
@@ -120,7 +120,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 250
       mask:
       - MobMask
       layer:
@@ -153,7 +153,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 200
       mask:
       - MobMask
       layer:
@@ -191,7 +191,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 10000
       mask:
       - MobMask
       layer:
@@ -229,7 +229,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 600
       mask:
       - MobMask
       layer:
@@ -267,7 +267,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 150
       mask:
       - MobMask
       layer:
@@ -307,7 +307,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 120
+      mass: 150
       mask:
       - MobMask
       layer:
@@ -365,6 +365,16 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 3
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: space adder
