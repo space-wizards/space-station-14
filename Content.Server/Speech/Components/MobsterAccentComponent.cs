@@ -11,5 +11,5 @@ public sealed class MobsterAccentComponent : Component
     ///     Do you make all the rules?
     /// </summary>
     [DataField("isBoss")]
-    public bool IsBoss = false;
+    public bool IsBoss = true;
 }

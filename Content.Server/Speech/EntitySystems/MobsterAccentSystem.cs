@@ -12,8 +12,16 @@ public sealed class MobsterAccentSystem : EntitySystem
     private static readonly Dictionary<string, string> DirectReplacements = new()
     {
         { "let me", "lemme" },
-        { "should", "oughtta" },
-        { "the", "da" }
+        { "should", "oughta" },
+        { "the", "da" },
+        { "kill", "whack" },
+        { "murder", "whack" },
+        { "dead", "sleepin' with the fishies"},
+        { "hey", "ey'o" },
+        { "rules", "rulez" },
+        { "you", "yous" },
+        { "have to", "gotta" },
+        { "here", "'ere" }
     };
 
     public override void Initialize()
@@ -52,6 +60,9 @@ public sealed class MobsterAccentSystem : EntitySystem
             msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
             msg = Loc.GetString($"accent-mobster-prefix-{pick}") + " " + msg;
         }
+
+        // Sanitize capital again, in case we substituted a word that should be capitalized
+        msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
 
         // Suffixes
         if (_random.Prob(0.4f))
