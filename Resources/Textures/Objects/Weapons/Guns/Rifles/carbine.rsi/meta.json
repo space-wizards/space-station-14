@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "license": "GNU Affero General Public License version 3",
-    "copyright": "Taken from The World Server at https://github.com/TheNick5527/The-World-Server/commit/91677c25160ccc0265f84189d2cd1ed44bc39742",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Polaris at https://github.com/PolarisSS13/Polaris/commit/ff87150c3dfc387c46db7d1c956abf19ddff7819",
     "size": {
         "x": 32,
         "y": 32

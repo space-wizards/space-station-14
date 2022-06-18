@@ -96,17 +96,23 @@ namespace Content.Server.Disease
                 for (var i = 0; i < carrierComp.Diseases.Count; i++) //this is a for-loop so that it doesn't break when new diseases are added
                 {
                     var disease = carrierComp.Diseases[i];
-
-                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator += frameTime;
-                    if (disease.Accumulator >= disease.TickTime)
+
+                    if (disease.Accumulator < disease.TickTime) continue;
+
+                    // if the disease is on the silent disease list, don't do effects
+                    var doEffects = carrierComp.CarrierDiseases?.Contains(disease.ID) != true;
+                    var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
+                    disease.Accumulator -= disease.TickTime;
+
+                    foreach (var cure in disease.Cures)
                     {
-                        disease.Accumulator -= disease.TickTime;
-                        foreach (var cure in disease.Cures)
-                        {
-                            if (cure.Cure(args))
-                                CureDisease(carrierComp, disease);
-                        }
+                        if (cure.Cure(args))
+                            CureDisease(carrierComp, disease);
+                    }
+
+                    if (doEffects)
+                    {
                         foreach (var effect in disease.Effects)
                         {
                             if (_random.Prob(effect.Probability))
@@ -381,6 +387,14 @@ namespace Content.Server.Disease
                 return;
             if (_random.Prob(infectionChance))
                 TryAddDisease(carrier.Owner, disease, carrier);
+        }
+
+        public void TryInfect(DiseaseCarrierComponent carrier, string? disease, float chance = 0.7f, bool forced = false)
+        {
+            if (disease == null || !_prototypeManager.TryIndex<DiseasePrototype>(disease, out var d))
+                return;
+
+            TryInfect(carrier, d, chance, forced);
         }
 
         /// <summary>

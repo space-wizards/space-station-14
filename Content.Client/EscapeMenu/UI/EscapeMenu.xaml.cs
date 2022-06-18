@@ -5,6 +5,8 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Client.UserInterface;
+using Content.Client.Links;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.EscapeMenu.UI
@@ -28,6 +30,7 @@ namespace Content.Client.EscapeMenu.UI
             QuitButton.OnPressed += OnQuitButtonClicked;
             RulesButton.OnPressed += _ => new RulesAndInfoWindow().Open();
             DisconnectButton.OnPressed += OnDisconnectButtonClicked;
+            WikiButton.OnPressed += OnWikiButtonClicked;
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
@@ -45,6 +48,12 @@ namespace Content.Client.EscapeMenu.UI
         private void OnOptionsButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _optionsMenu.OpenCentered();
+        }
+
+        private void OnWikiButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            var uriOpener = IoCManager.Resolve<IUriOpener>();
+            uriOpener.OpenUri(UILinks.Wiki);
         }
 
         protected override void Dispose(bool disposing)
