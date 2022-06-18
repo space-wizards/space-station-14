@@ -162,11 +162,8 @@
       - !type:ChemCauseRandomDisease
         conditions:
         - !type:OrganType
-          type: Human
-        - !type:OrganType
-          type: Animal
-        - !type:OrganType
-          type: Vox
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
@@ -182,11 +179,8 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Human
-        - !type:OrganType
-          type: Animal
-        - !type:OrganType
-          type: Vox
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
