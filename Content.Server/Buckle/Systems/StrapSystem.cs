@@ -1,5 +1,6 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Shared.Destructible;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
@@ -22,6 +23,7 @@ namespace Content.Server.Buckle.Systems
             SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
             SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
             SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<StrapComponent, DestructionEventArgs>(OnDestroy);
         }
 
         private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -117,6 +119,11 @@ namespace Content.Server.Buckle.Systems
 
                 args.Verbs.Add(verb);
             }
+        }
+
+        private void OnDestroy(EntityUid uid, StrapComponent component, DestructionEventArgs args)
+        {
+            component.RemoveAll();
         }
     }
 }

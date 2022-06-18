@@ -1,9 +1,4 @@
-﻿using System;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 

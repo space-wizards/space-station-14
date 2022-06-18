@@ -6,6 +6,7 @@ using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
+using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -241,7 +242,7 @@ namespace Content.Server.AI.Steering
             if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
                 !controller.CanMove ||
-                !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
+                !EntityManager.GetComponent<TransformComponent>(entity).GridEntityId.IsValid())
             {
                 return SteeringStatus.NoPath;
             }
@@ -254,7 +255,7 @@ namespace Content.Server.AI.Steering
                 return SteeringStatus.NoPath;
             }
 
-            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridID))
+            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;
@@ -262,7 +263,7 @@ namespace Content.Server.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (EntityManager.GetComponent<TransformComponent>(entity).GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
+            if (EntityManager.GetComponent<TransformComponent>(entity).GridEntityId != steeringRequest.TargetGrid.GetGridEntityId(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
@@ -385,6 +386,7 @@ namespace Content.Server.AI.Steering
             {
                 movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
+
             // Group behaviors would also go here e.g. separation, cohesion, alignment
 
             // Move towards it
@@ -406,7 +408,7 @@ namespace Content.Server.AI.Steering
             }
 
             var cancelToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
             var startTile = gridManager.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
@@ -437,7 +439,7 @@ namespace Content.Server.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -472,10 +474,12 @@ namespace Content.Server.AI.Steering
                 _nextGrid.Remove(entity);
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - xform.Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -485,7 +489,7 @@ namespace Content.Server.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - EntityManager.GetComponent<TransformComponent>(entity).Coordinates.Position).Length <= TileTolerance)
+                (nextGrid.Position - xform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];
@@ -504,7 +508,7 @@ namespace Content.Server.AI.Steering
         {
             if (_paths[entity].Count == 0) return;
             var nextTile = dequeue ? _paths[entity].Dequeue() : _paths[entity].Peek();
-            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GridTileToLocal(nextTile.GridIndices);
+            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GridTileToLocal(nextTile.GridIndices);
             _nextGrid[entity] = nextGrid;
         }
 
@@ -627,7 +631,7 @@ namespace Content.Server.AI.Steering
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
             var entityGridCoords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
             var nextTile = grid.GetTileRef(entityGridCoords.Offset(direction));
@@ -656,7 +660,8 @@ namespace Content.Server.AI.Steering
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
                     if (EntityManager.TryGetComponent(physicsEntity, out IPhysBody? otherPhysics) &&
-                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
+                        (!otherPhysics.Hard ||
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0))
                     {
                         continue;
                     }

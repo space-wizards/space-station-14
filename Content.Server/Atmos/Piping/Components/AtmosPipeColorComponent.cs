@@ -1,9 +1,5 @@
 using Content.Server.Atmos.Piping.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Piping.Components
 {

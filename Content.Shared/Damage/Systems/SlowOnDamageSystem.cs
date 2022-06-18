@@ -1,9 +1,6 @@
-﻿using System;
-using Content.Shared.Damage.Components;
+﻿using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.Damage
 {

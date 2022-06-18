@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.ContentPack;
 
 namespace Content.Shared.Module

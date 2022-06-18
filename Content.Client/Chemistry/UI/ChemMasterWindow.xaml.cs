@@ -162,7 +162,7 @@ namespace Content.Client.Chemistry.UI
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
-                    name = proto.Name;
+                    name = proto.LocalizedName;
                 }
 
                 if (proto != null)
@@ -222,7 +222,7 @@ namespace Content.Client.Chemistry.UI
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
                 {
-                    name = proto.Name;
+                    name = proto.LocalizedName;
                 }
 
                 if (proto != null)

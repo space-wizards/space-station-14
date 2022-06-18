@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Inventory;
 

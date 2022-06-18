@@ -12,19 +12,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.1"
+        bounds: "-0.45,-0.45,0.45,0.1"
       mass: 25
       hard: false
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - FullTileMask
       layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - FullTileMask
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

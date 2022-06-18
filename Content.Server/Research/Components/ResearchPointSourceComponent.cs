@@ -1,5 +1,4 @@
 using Content.Server.Power.Components;
-using Content.Shared.Interaction;
 
 namespace Content.Server.Research.Components
 {

@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Light.Components;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -13,6 +14,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -47,6 +49,27 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<HandheldLightComponent, ToggleActionEvent>(OnToggleAction);
+
+            SubscribeLocalEvent<HandheldLightComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+            SubscribeLocalEvent<HandheldLightComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        }
+
+        private void OnEntInserted(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntInsertedIntoContainerMessage args)
+        {
+            // Not guaranteed to be the correct container for our slot, I don't care.
+            UpdateLevel(component);
+        }
+
+        private void OnEntRemoved(
+            EntityUid uid,
+            HandheldLightComponent component,
+            EntRemovedFromContainerMessage args)
+        {
+            // Ditto above
+            UpdateLevel(component);
         }
 
         private void OnGetActions(EntityUid uid, HandheldLightComponent component, GetItemActionsEvent args)
@@ -189,7 +212,7 @@ namespace Content.Server.Light.EntitySystems
                 appearance.SetData(ToggleableLightVisuals.Enabled, false);
 
             if (makeNoise)
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOffSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOffSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
 
             return true;
         }
@@ -198,9 +221,10 @@ namespace Content.Server.Light.EntitySystems
         {
             if (component.Activated) return false;
 
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
+                !TryComp(component.Owner, out battery))
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
                 return false;
             }
@@ -210,7 +234,7 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnFailSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
                 return false;
             }
@@ -225,13 +249,14 @@ namespace Content.Server.Light.EntitySystems
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(ToggleableLightVisuals.Enabled, true);
 
-            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.TurnOnSound.GetSound(), component.Owner);
+            SoundSystem.Play(component.TurnOnSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
             return true;
         }
 
         public void TryUpdate(HandheldLightComponent component, float frameTime)
         {
-            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
+                !TryComp(component.Owner, out battery))
             {
                 TurnOff(component, false);
                 return;
@@ -256,13 +281,18 @@ namespace Content.Server.Light.EntitySystems
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))
                 TurnOff(component, false);
 
-            var level = GetLevel(component);
+            UpdateLevel(component);
+        }
 
-            if (level != component.LastLevel)
-            {
-                component.LastLevel = level;
-                component.Dirty(EntityManager);
-            }
+        private void UpdateLevel(HandheldLightComponent comp)
+        {
+            var level = GetLevel(comp);
+
+            if (level == comp.LastLevel)
+                return;
+
+            comp.LastLevel = level;
+            Dirty(comp);
         }
     }
 }

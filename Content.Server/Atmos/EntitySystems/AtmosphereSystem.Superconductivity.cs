@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 

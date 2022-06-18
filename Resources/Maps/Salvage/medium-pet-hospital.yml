@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -1257,9 +1257,7 @@ entities:
   - pos: 2.643423,-9.525697
     parent: 0
     type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
+
 - uid: 87
   type: Paper
   components:
@@ -1673,7 +1671,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 145
-  type: SalternAPC
+  type: APCBasic
   components:
   - name: bear outpost APC
     type: MetaData
@@ -2124,10 +2122,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 200
   type: WardrobeMedicalDoctorFilled
   components:
@@ -2136,10 +2131,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 201
   type: ClothingOuterWinterMed
   components:

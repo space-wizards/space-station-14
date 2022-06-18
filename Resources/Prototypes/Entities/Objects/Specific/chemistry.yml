@@ -279,7 +279,7 @@
 - type: entity
   name: pill canister
   id: PillCanister
-  parent: BaseItem
+  parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
   - type: Sprite

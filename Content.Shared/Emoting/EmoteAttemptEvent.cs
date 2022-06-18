@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Emoting
+﻿namespace Content.Shared.Emoting
 {
     public sealed class EmoteAttemptEvent : CancellableEntityEventArgs
     {

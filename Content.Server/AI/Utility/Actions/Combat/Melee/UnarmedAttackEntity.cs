@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
@@ -12,8 +10,6 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.Weapon.Melee.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
@@ -24,7 +20,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         public override void SetupOperators(Blackboard context)
         {
             MoveToEntityOperator moveOperator;
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out UnarmedCombatComponent? unarmedCombatComponent))
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MeleeWeaponComponent? unarmedCombatComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, Target, unarmedCombatComponent.Range - 0.01f);
             }

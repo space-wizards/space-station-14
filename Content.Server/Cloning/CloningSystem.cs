@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Audio;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Robust.Shared.Timing;
@@ -54,6 +55,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
+            // TODO: Make this stateful
             foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>())
             {
                 if (cloning.UiKnownPowerState != power.Powered)
@@ -137,7 +139,7 @@ namespace Content.Server.Cloning
     // For example, GameTicker should be using this, and this should be using ICharacterProfile rather than HumanoidCharacterProfile.
     // It should carry a reference or copy of itself with the mobs that it affects.
     // See TODO in MedicalScannerComponent.
-    struct ClonerDNAEntry {
+    public struct ClonerDNAEntry {
         public Mind.Mind Mind;
         public HumanoidCharacterProfile Profile;
 

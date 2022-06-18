@@ -42,3 +42,6 @@
         states:
           enum.KitchenSpikeStatus.Empty: spike
           enum.KitchenSpikeStatus.Bloody: spikebloody
+  - type: Construction
+    graph: MeatSpike
+    node: MeatSpike

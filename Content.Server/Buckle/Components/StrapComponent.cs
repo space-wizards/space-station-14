@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
@@ -11,7 +10,7 @@ namespace Content.Server.Buckle.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public sealed class StrapComponent : SharedStrapComponent, ISerializationHooks, IDestroyAct
+    public sealed class StrapComponent : SharedStrapComponent, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -183,12 +182,7 @@ namespace Content.Server.Buckle.Components
             RemoveAll();
         }
 
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            RemoveAll();
-        }
-
-        private void RemoveAll()
+        public void RemoveAll()
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
 

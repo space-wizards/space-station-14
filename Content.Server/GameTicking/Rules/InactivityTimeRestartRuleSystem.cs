@@ -1,10 +1,7 @@
-using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
@@ -28,12 +25,16 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration config)
     {
+        if (config is not InactivityGameRuleConfiguration inactivityConfig)
+            return;
+        InactivityMaxTime = inactivityConfig.InactivityMaxTime;
+        RoundEndDelay = inactivityConfig.RoundEndDelay;
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    public override void Ended()
+    public override void Ended(GameRuleConfiguration _)
     {
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
 

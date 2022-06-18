@@ -4,8 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Interaction
@@ -49,7 +47,7 @@ namespace Content.Server.Interaction
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerGrid = _entities.GetComponent<TransformComponent>(attached).GridID;
+            var playerGrid = _entities.GetComponent<TransformComponent>(attached).GridEntityId;
             var mapGrid = mapManager.GetGrid(playerGrid);
             var playerPosition = _entities.GetComponent<TransformComponent>(attached).Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();

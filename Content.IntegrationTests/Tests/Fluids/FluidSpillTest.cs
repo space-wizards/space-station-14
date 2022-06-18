@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
@@ -6,7 +6,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
-using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -22,7 +21,7 @@ public sealed class FluidSpill : ContentIntegrationTest
     {
         foreach (var uid in mapGrid.GetAnchoredEntities(pos))
         {
-            if (entityManager.TryGetComponent(uid, out PuddleComponent puddleComponent))
+            if (entityManager.TryGetComponent(uid, out PuddleComponent? puddleComponent))
                 return puddleComponent;
         }
 
@@ -56,13 +55,13 @@ public sealed class FluidSpill : ContentIntegrationTest
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
-        GridId gridId = default;
+        EntityUid gridId = default;
 
         await server.WaitPost(() =>
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
 
             for (var x = 0; x < 3; x++)
             {
@@ -119,7 +118,7 @@ public sealed class FluidSpill : ContentIntegrationTest
         var spillSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SpillableSystem>();
         var gameTiming = server.ResolveDependency<IGameTiming>();
         MapId mapId;
-        GridId gridId = default;
+        EntityUid gridId = default;
 
         await server.WaitPost(() =>
         {
@@ -134,7 +133,7 @@ public sealed class FluidSpill : ContentIntegrationTest
                 }
             }
 
-            gridId = grid.Index;
+            gridId = grid.GridEntityId;
         });
 
         await server.WaitAssertion(() =>

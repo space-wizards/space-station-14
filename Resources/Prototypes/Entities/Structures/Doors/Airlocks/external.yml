@@ -29,6 +29,8 @@
   id: AirlockExternalGlass
   suffix: Glass, External
   components:
+  - type: Door
+    occludes: false
   - type: Occluder
     enabled: false
   - type: Sprite

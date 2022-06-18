@@ -7,7 +7,7 @@ namespace Content.Server.Fluids.Components;
 /// <summary>
 /// For entities that can clean up puddles
 /// </summary>
-[RegisterComponent, Friend(typeof(MoppingSystem))]
+[RegisterComponent, Access(typeof(MoppingSystem))]
 public sealed class AbsorbentComponent : Component
 {
     public const string SolutionName = "absorbed";

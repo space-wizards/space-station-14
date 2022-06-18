@@ -1,0 +1,28 @@
+﻿- type: job
+  id: TechnicalAssistant
+  name: "technical assistant"
+  startingGear: TechnicalAssistantGear
+  departments:
+  - Civilian
+  - Engineering
+  icon: "TechnicalAssistant"
+  supervisors: "station engineers, atmospheric technicians, and the chief engineer"
+  canBeAntag: false
+  access:
+  - Maintenance
+  - Engineering
+  - External
+
+- type: startingGear
+  id: TechnicalAssistantGear
+  equipment:
+    head: ClothingHeadHatWelding
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+    back: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesBootsWork
+    id: TechnicalAssistantPDA
+    belt: ClothingBeltUtilityFilled
+    ears: ClothingHeadsetEngineering
+  innerclothingskirt: ClothingUniformJumpskirtColorYellow
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

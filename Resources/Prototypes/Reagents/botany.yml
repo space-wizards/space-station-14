@@ -1,21 +1,21 @@
 - type: reagent
   id: EZNutrient
-  name: EZ nutrient
+  name: reagent-name-e-z-nutrient
   group: Botanical
-  desc: Give your plants some of those EZ nutrients!
+  desc: reagent-desc-e-z-nutrient
   color: "#664330"
-  physicalDesc: thick
+  physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
 
 - type: reagent
   id: Left4Zed
-  name: left-4-zed
+  name: reagent-name-left4-zed
   group: Botanical
-  desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
+  desc: reagent-desc-left4-zed
   color: "#5b406c"
-  physicalDesc: heterogeneous
+  physicalDesc: reagent-physical-desc-heterogeneous
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
@@ -27,11 +27,11 @@
 
 - type: reagent
   id: PestKiller
-  name: pest killer
+  name: reagent-name-pest-killer
   group: Botanical
-  desc: A mixture that targets pests.
+  desc: reagent-desc-pest-killer
   color: "#9e9886"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
@@ -40,11 +40,11 @@
 
 - type: reagent
   id: PlantBGone
-  name: plant-B-gone
+  name: reagent-name-plant-b-gone
   group: Botanical
-  desc: A harmful toxic mixture to kill plantlife. Do not ingest!
+  desc: reagent-desc-plant-b-gone
   color: "#49002E"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
@@ -57,11 +57,11 @@
 
 - type: reagent
   id: RobustHarvest
-  name: robust harvest
+  name: reagent-name-robust-harvest
   group: Botanical
-  desc: Plant-enhancing hormones, good for increasing potency.
+  desc: reagent-desc-robust-harvest
   color: "#3e901c"
-  physicalDesc: robust
+  physicalDesc: reagent-physical-desc-robust
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.05
@@ -75,11 +75,11 @@
 
 - type: reagent
   id: WeedKiller
-  name: weed killer
+  name: reagent-name-weed-killer
   group: Botanical
-  desc: A mixture that targets weeds.
+  desc: reagent-desc-weed-killer
   color: "#968395"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
@@ -88,10 +88,10 @@
 
 - type: reagent
   id: Ammonia
-  name: ammonia
+  name: reagent-name-ammonia
   group: Botanical
-  desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
-  physicalDesc: pungent
+  desc: reagent-desc-ammonia
+  physicalDesc: reagent-physical-desc-pungent
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
@@ -110,10 +110,10 @@
 
 - type: reagent
   id: Diethylamine
-  name: diethylamine
+  name: reagent-name-diethylamine
   group: Botanical
-  desc: A very potent fertilizer.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-diethylamine
+  physicalDesc: reagent-physical-desc-strong-smelling
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0

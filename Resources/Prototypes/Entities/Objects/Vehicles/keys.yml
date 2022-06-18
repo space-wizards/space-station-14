@@ -57,3 +57,19 @@
     - PussyWagonKeys
     - SecwayKeys
     - ATVKeys
+    - SyndicateSegwayKeys
+
+- type: entity
+  parent: VehicleKeyPussyWagon
+  id: VehicleKeySyndicateSegway
+  name: syndicate segway keys
+  description: Patterned after the iconic EMAG design.
+  components:
+    - type: Tag
+      tags:
+        - VehicleKey
+        - SyndicateSegwayKeys
+    - type: Sprite
+      sprite: Objects/Vehicles/syndicatesegway.rsi
+      state: keys
+      netsync: false

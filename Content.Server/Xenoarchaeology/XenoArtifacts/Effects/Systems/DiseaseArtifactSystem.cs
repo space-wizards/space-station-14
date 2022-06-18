@@ -6,7 +6,6 @@ using Content.Server.Disease.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Content.Shared.Interaction;
-using Robust.Shared.Map;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
 {

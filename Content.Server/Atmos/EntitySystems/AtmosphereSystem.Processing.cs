@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -59,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(mapGrid.Index, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(mapGrid.GridEntityId, indices, new GasMixture(volume){Temperature = Atmospherics.T20C});
                     atmosphere.Tiles[indices] = tile;
                 }
 
@@ -115,7 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var tileDef = GetTile(tile)?.Tile.GetContentTileDefinition(_tileDefinitionManager);
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(mapGrid.Index, indices);
+                InvalidateVisuals(mapGrid.GridEntityId, indices);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
@@ -219,6 +214,8 @@ namespace Content.Server.Atmos.EntitySystems
             if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.HighPressureDelta);
 
+            // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
+
             var number = 0;
             var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
@@ -229,6 +226,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 HighPressureMovements(atmosphere, tile, bodies, xforms, pressureQuery, metas);
                 tile.PressureDifference = 0f;
+                tile.LastPressureDirection = tile.PressureDirection;
+                tile.PressureDirection = AtmosDirection.Invalid;
                 tile.PressureSpecificTarget = null;
                 atmosphere.HighPressureDelta.Remove(tile);
 

@@ -2,6 +2,7 @@ using Content.Client.SubFloor;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -12,7 +13,8 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
-
+    [Dependency] private readonly SubFloorHideSystem _subfloorSys = default!;
+    
     public override void Initialize()
     {
         base.Initialize();
@@ -45,8 +47,15 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
     private void OnAppearanceChanged(EntityUid uid, PipeAppearanceComponent component, ref AppearanceChangeEvent args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
+
+        if (!args.Sprite.Visible)
+        {
+            // This entity is probably below a floor and is not even visible to the user -> don't bother updating sprite data.
+            // Note that if the subfloor visuals change, then another AppearanceChangeEvent will get triggered.
+            return;
+        }
 
         if (!args.Component.TryGetData(PipeColorVisuals.Color, out Color color))
             color = Color.White;
@@ -59,10 +68,10 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
         {
-            if (!sprite.LayerMapTryGet(layerKey, out var key))
+            if (!args.Sprite.LayerMapTryGet(layerKey, out var key))
                 continue;
 
-            var layer = sprite[key];
+            var layer = args.Sprite[key];
             var dir = (PipeDirection) layerKey;
             var visible = connectedDirections.HasDirection(dir);
 

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.Serialization;
 
@@ -22,6 +20,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.Plasma,
             Gas.Tritium,
             Gas.WaterVapor,
+            Gas.Miasma
         };
 
         // Presets for 'dumb' air alarm modes

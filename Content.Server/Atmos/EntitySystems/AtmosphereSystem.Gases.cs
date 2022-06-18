@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -109,6 +106,52 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             NumericsHelpers.Add(receiver.Moles, giver.Moles);
+        }
+
+        /// <summary>
+        ///     Divides a source gas mixture into several recipient mixtures, scaled by their relative volumes. Does not
+        ///     modify the source gas mixture. Used for pipe network splitting. Note that the total destination volume
+        ///     may be larger or smaller than the source mixture.
+        /// </summary>
+        public void DivideInto(GasMixture source, List<GasMixture> receivers)
+        {
+            var totalVolume = 0f;
+            foreach (var receiver in receivers)
+            {
+                if (!receiver.Immutable)
+                    totalVolume += receiver.Volume;
+            }
+
+            float? sourceHeatCapacity = null;
+            var buffer = new float[Atmospherics.AdjustedNumberOfGases];
+
+            foreach (var receiver in receivers)
+            {
+                if (receiver.Immutable)
+                    continue;
+
+                var fraction = receiver.Volume / totalVolume;
+
+                // Set temperature, if necessary.
+                if (MathF.Abs(receiver.Temperature - source.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
+                {
+                    // Often this divides a pipe net into new and completely empty pipe nets
+                    if (receiver.TotalMoles == 0) 
+                        receiver.Temperature = source.Temperature;
+                    else
+                    {
+                        sourceHeatCapacity ??= GetHeatCapacity(source);
+                        var receiverHeatCapacity = GetHeatCapacity(receiver);
+                        var combinedHeatCapacity = receiverHeatCapacity + sourceHeatCapacity.Value * fraction;
+                        if (combinedHeatCapacity > 0f)
+                            receiver.Temperature = (GetThermalEnergy(source, sourceHeatCapacity.Value * fraction) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
+                    }
+                }
+
+                // transfer moles
+                NumericsHelpers.Multiply(source.Moles, fraction, buffer);
+                NumericsHelpers.Add(receiver.Moles, buffer);
+            }
         }
 
         /// <summary>

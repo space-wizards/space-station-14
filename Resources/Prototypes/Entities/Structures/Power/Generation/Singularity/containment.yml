@@ -1,35 +1,21 @@
 - type: entity
+  parent: BaseStructure
   id: ContainmentFieldGenerator
   name: containment field generator
   description: A machine that generates a containment field when powered by an emitter. Keeps the Singularity docile.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: InteractionOutline
-  - type: Clickable
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
-        # Using a circle here makes it a lot easier to pull it all the way from Cargo
-        # However keep in mind that this will affect singulo collision as well,
-        #  when people inevitably physicsify that,
-        #  so it can't just be 0.1 or something
-        !type:PhysShapeCircle
-          radius: 0.45
+        !type:PhysShapeAabb
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 25
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: Transform
-    anchored: true
+      - FullTileMask
+      layer:
+      - WallLayer
+  - type: InteractionOutline
+  - type: Anchorable
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
@@ -38,8 +24,6 @@
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
   - type: ContainmentFieldGenerator
-  - type: Anchorable
-  - type: Pullable
   - type: PointLight
     enabled: false
     color: "#4080FF"
@@ -62,16 +46,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - Opaque
+        bounds: "-0.5,-0.5,0.5,0.5"
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
+      - FullTileMask
+      layer:
+      - GlassLayer
   - type: Transform
     anchored: true
   - type: Sprite

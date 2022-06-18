@@ -5,7 +5,6 @@ namespace Content.Shared.Input
     [KeyFunctions]
     public static class ContentKeyFunctions
     {
-        public static readonly BoundKeyFunction WideAttack = "WideAttack";
         public static readonly BoundKeyFunction UseItemInHand = "ActivateItemInHand";
         public static readonly BoundKeyFunction AltUseItemInHand = "AltActivateItemInHand";
         public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
@@ -80,5 +79,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote7 = "Vote7";
         public static readonly BoundKeyFunction Vote8 = "Vote8";
         public static readonly BoundKeyFunction Vote9 = "Vote9";
+        public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
     }
 }

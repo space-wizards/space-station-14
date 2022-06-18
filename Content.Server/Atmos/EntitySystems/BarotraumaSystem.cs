@@ -15,7 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         private const float UpdateTimer = 1f;
@@ -25,6 +25,10 @@ namespace Content.Server.Atmos.EntitySystems
         {
             SubscribeLocalEvent<PressureProtectionComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<PressureProtectionComponent, LowPressureEvent>(OnLowPressureEvent);
+
+            SubscribeLocalEvent<PressureImmunityComponent, HighPressureEvent>(OnHighPressureImmuneEvent);
+            SubscribeLocalEvent<PressureImmunityComponent, LowPressureEvent>(OnLowPressureImmuneEvent);
+
         }
 
         private void OnHighPressureEvent(EntityUid uid, PressureProtectionComponent component, HighPressureEvent args)
@@ -37,6 +41,24 @@ namespace Content.Server.Atmos.EntitySystems
         {
             args.Modifier += component.LowPressureModifier;
             args.Multiplier *= component.LowPressureMultiplier;
+        }
+
+
+        /// <summary>
+        /// Completely prevent high pressure damage
+        /// </summary>
+        private void OnHighPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, HighPressureEvent args)
+        {
+            args.Multiplier = 0;
+        }
+
+        /// <summary>
+        /// Completely prevent low pressure damage
+        /// </summary>
+        private void OnLowPressureImmuneEvent(EntityUid uid, PressureImmunityComponent component, LowPressureEvent args)
+        {
+            args.Modifier = 100;
+            args.Multiplier = 10000;
         }
 
         public float GetFeltLowPressure(BarotraumaComponent baro, float environmentPressure)
@@ -150,7 +172,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking low pressure damage");
+                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking low pressure damage");
                         }
 
                         if (pressure <= Atmospherics.HazardLowPressure)
@@ -177,7 +199,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = true;
-                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking high pressure damage");
+                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} started taking high pressure damage");
                         }
 
                         if (pressure >= Atmospherics.HazardHighPressure)
@@ -194,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (barotrauma.TakingDamage)
                         {
                             barotrauma.TakingDamage = false;
-                            _logSystem.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} stopped taking pressure damage");
+                            _adminLogger.Add(LogType.Barotrauma, $"{ToPrettyString(barotrauma.Owner):entity} stopped taking pressure damage");
                         }
                         _alertsSystem.ClearAlertCategory(barotrauma.Owner, AlertCategory.Pressure);
                         break;

@@ -1,6 +1,5 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.Popups;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
@@ -111,7 +110,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, SharedButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife)
+        if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
 
         bool disabled = false;

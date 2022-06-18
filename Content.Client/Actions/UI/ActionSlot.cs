@@ -28,6 +28,8 @@ namespace Content.Client.Actions.UI
         private static readonly string EnabledColor = "#7b7e9e";
         private static readonly string DisabledColor = "#950000";
 
+        private bool _spriteViewDirty = false;
+
         /// <summary>
         /// Current action in this slot.
         /// </summary>
@@ -40,6 +42,7 @@ namespace Content.Client.Actions.UI
         public byte SlotIndex { get; }
 
         private readonly IGameTiming _gameTiming;
+        private readonly IEntityManager _entMan;
         private readonly RichTextLabel _number;
         private readonly TextureRect _bigActionIcon;
         private readonly TextureRect _smallActionIcon;
@@ -56,11 +59,12 @@ namespace Content.Client.Actions.UI
         /// Creates an action slot for the specified number
         /// </summary>
         /// <param name="slotIndex">slot index this corresponds to, 0-9 (0 labeled as 1, 8, labeled "9", 9 labeled as "0".</param>
-        public ActionSlot(ActionsUI actionsUI, ActionMenu actionMenu, byte slotIndex)
+        public ActionSlot(ActionsUI actionsUI, ActionMenu actionMenu, byte slotIndex, IGameTiming timing, IEntityManager entMan)
         {
             _actionsUI = actionsUI;
             _actionMenu = actionMenu;
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
+            _gameTiming = timing;
+            _entMan = entMan;
             SlotIndex = slotIndex;
             MouseFilter = MouseFilterMode.Stop;
 
@@ -422,7 +426,17 @@ namespace Content.Client.Actions.UI
 
         private void UpdateItemIcon()
         {
-            if (Action?.EntityIcon == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(Action.EntityIcon.Value, out SpriteComponent sprite))
+            if (Action?.EntityIcon != null && !_entMan.EntityExists(Action.EntityIcon))
+            {
+                // This is almost certainly because a player received/processed their own actions component state before
+                // being send the entity in their inventory that enabled this action.
+
+                // Defer updating icons to the next FrameUpdate().
+                _spriteViewDirty = true;
+                return;
+            }
+
+            if (Action?.EntityIcon == null || !_entMan.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent? sprite))
             {
                 _bigItemSpriteView.Visible = false;
                 _bigItemSpriteView.Sprite = null;
@@ -502,6 +516,13 @@ namespace Content.Client.Actions.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
+
+            if (_spriteViewDirty)
+            {
+                _spriteViewDirty = false;
+                UpdateIcons();
+            }
+
             if (Action == null || Action.Cooldown == null || !Action.Enabled)
             {
                 _cooldownGraphic.Visible = false;

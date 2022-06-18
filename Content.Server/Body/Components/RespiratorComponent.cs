@@ -1,14 +1,9 @@
-using System;
 using Content.Server.Body.Systems;
 using Content.Shared.Damage;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(RespiratorSystem))]
+    [RegisterComponent, Access(typeof(RespiratorSystem))]
     public sealed class RespiratorComponent : Component
     {
         /// <summary>

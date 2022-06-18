@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration.Managers;
@@ -9,11 +8,7 @@ using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.EntitySystems
@@ -340,7 +335,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         private IEnumerable<Node> GetCompatibleNodes(Node node, EntityQuery<TransformComponent> xformQuery, EntityQuery<NodeContainerComponent> nodeQuery)
         {
             var xform = xformQuery.GetComponent(node.Owner);
-            _mapManager.TryGetGrid(xform.GridID, out var grid);
+            _mapManager.TryGetGrid(xform.GridEntityId, out var grid);
 
             if (!node.Connectable(EntityManager, xform))
                     yield break;

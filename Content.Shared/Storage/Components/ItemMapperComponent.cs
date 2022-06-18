@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Storage.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Storage.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SharedItemMapperSystem))]
+    [Access(typeof(SharedItemMapperSystem))]
     public sealed class ItemMapperComponent : Component, ISerializationHooks
     {
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();

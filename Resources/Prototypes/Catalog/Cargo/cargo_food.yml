@@ -9,3 +9,28 @@
   cost: 1000
   category: Food
   group: market
+
+- type: cargoProduct
+  name: "MRE crate"
+  id: FoodMRE
+  description: A military style meal fit to feed a whole department.
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: nutribrick
+  product: CrateFoodMRE
+  cost: 4000
+  category: Food
+  group: market
+
+- type: cargoProduct
+  name: "kitchen supplies crate"
+  id: FoodCook
+  description: Extra kitchen supplies, in case the botanists are absent.
+  icon:
+    sprite: Objects/Consumable/Food/ingredients.rsi
+    state: flour-big
+  product: CrateFoodCooking
+  cost: 5000
+  category: Food
+  group: market
+  

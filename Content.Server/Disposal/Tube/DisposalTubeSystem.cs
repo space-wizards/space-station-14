@@ -1,6 +1,7 @@
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
@@ -23,6 +24,7 @@ namespace Content.Server.Disposal.Tube
 
             SubscribeLocalEvent<DisposalTubeComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
             SubscribeLocalEvent<DisposalTubeComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<DisposalTubeComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<DisposalTaggerComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, GetVerbsEvent<InteractionVerb>>(AddOpenUIVerbs);
             SubscribeLocalEvent<DisposalRouterComponent, ActivatableUIOpenAttemptEvent>(OnOpenRouterUIAttempt);
@@ -70,7 +72,12 @@ namespace Content.Server.Disposal.Tube
             }
 
             component.LastClang = _gameTiming.CurTime;
-            SoundSystem.Play(Filter.Pvs(uid), component.ClangSound.GetSound(), uid);
+            SoundSystem.Play(component.ClangSound.GetSound(), Filter.Pvs(uid), uid);
+        }
+
+        private void OnBreak(EntityUid uid, DisposalTubeComponent component, BreakageEventArgs args)
+        {
+            component.Disconnect();
         }
 
         private void OnOpenRouterUIAttempt(EntityUid uid, DisposalRouterComponent router, ActivatableUIOpenAttemptEvent args)
@@ -107,7 +114,7 @@ namespace Content.Server.Disposal.Tube
         private static void BodyTypeChanged(
             EntityUid uid,
             DisposalTubeComponent component,
-            PhysicsBodyTypeChangedEvent args)
+            ref PhysicsBodyTypeChangedEvent args)
         {
             component.AnchoredChanged();
         }
@@ -118,7 +125,7 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(targetTube.Owner).GridID);
+            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(targetTube.Owner).GridEntityId);
             var position = EntityManager.GetComponent<TransformComponent>(targetTube.Owner).Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {

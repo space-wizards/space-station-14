@@ -1,119 +1,139 @@
 ﻿- type: entity
-  id: ShellShotgunBase
+  id: BaseShellShotgun
   name: shell (.50)
   parent: BaseCartridge
   abstract: true
   components:
   - type: Tag
     tags:
-    - ShotgunShell
     - Cartridge
-  - type: Ammo
-    caliber: Shotgun
-    ammoSpread: 40
-    projectilesFired: 6
-    soundCollectionEject:
+    - ShellShotgun
+  - type: CartridgeAmmo
+    count: 6
+    spread: 15
+    soundEject:
       collection: ShellEject
   - type: Sprite
     netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
-    - state: base
-      map: ["enum.AmmoVisualLayers.Base"]
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
 
 - type: entity
   id: ShellShotgunBeanbag
   name: shell (.50 beanbag)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
-  - type: Ammo
-    ammoSpread: 0
-    projectile: PelletShotgunBeanbag
-    projectilesFired: 1
+    layers:
+      - state: beanbag
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunBeanbag
+    count: 1
+  - type: SpentAmmoVisuals
+    state: "beanbag"
 
 - type: entity
   id: ShellShotgunSlug
   name: shell (.50 slug)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
-  - type: Ammo
-    projectile: PelletShotgunSlug
-    projectilesFired: 4
-    ammoSpread: 10
+    layers:
+      - state: slug
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunSlug
+    count: 4
+    spread: 5
+  - type: SpentAmmoVisuals
+    state: "slug"
 
 - type: entity
   id: ShellShotgunFlare
   name: shell (.50 flare)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flare.rsi
-  - type: Ammo
-    projectile: PelletShotgunFlare
-    projectilesFired: 1
-    ammoSpread: 0
+    layers:
+      - state: flare
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunFlare
+    count: 1
+  - type: SpentAmmoVisuals
+    state: "flare"
 
 - type: entity
   id: ShellShotgun
   name: shell (.50)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-  - type: Ammo
-    projectile: PelletShotgun
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgun
 
 - type: entity
   id: ShellShotgunFlash
   name: shell (.50 flash)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
-  - type: Ammo
-    projectile: PelletShotgunFlash
+    layers:
+      - state: flash
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunFlash
+  - type: SpentAmmoVisuals
+    state: "flash"
 
 - type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
-  - type: Ammo
-    projectile: PelletShotgunIncendiary
-    projectilesFired: 6
-    ammoSpread: 125
+    layers:
+      - state: incendiary
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunIncendiary
+  - type: SpentAmmoVisuals
+    state: "incendiary"
 
 - type: entity
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
-  - type: Ammo
-    projectile: PelletShotgun
+    layers:
+      - state: practice
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgun
+  - type: SpentAmmoVisuals
+    state: "practice"
 
 - type: entity
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
-  parent: ShellShotgunBase
+  parent: BaseShellShotgun
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
-  - type: Ammo
-    projectile: PelletShotgunTranquilizer
-    projectilesFired: 1
-    ammoSpread: 0
+    layers:
+      - state: practice
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunTranquilizer
+    count: 1
   - type: ChemicalAmmo
   - type: SolutionContainerManager
     solutions:
@@ -125,3 +145,5 @@
     solution: ammo
   - type: SolutionTransfer
     maxTransferAmount: 15
+  - type: SpentAmmoVisuals
+    state: "practice"

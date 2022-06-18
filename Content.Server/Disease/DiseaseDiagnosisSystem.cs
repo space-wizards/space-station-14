@@ -10,6 +10,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
@@ -139,7 +140,7 @@ namespace Content.Server.Disease
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (HasComp<DiseaseMachineRunningComponent>(uid) || TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (HasComp<DiseaseMachineRunningComponent>(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) // Don't want to accidentally breach wrenching or whatever
@@ -158,7 +159,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/diagnoser_printing.ogg", uid);
+            SoundSystem.Play("/Audio/Machines/diagnoser_printing.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Content.Server.Disease
             if (args.Handled || !args.CanReach)
                 return;
 
-            if (HasComp<DiseaseMachineRunningComponent>(uid) || TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
+            if (HasComp<DiseaseMachineRunningComponent>(uid) || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (!HasComp<HandsComponent>(args.User) || HasComp<ToolComponent>(args.Used)) //This check ensures tools don't break without yaml ordering jank
@@ -189,7 +190,7 @@ namespace Content.Server.Disease
 
             AddQueue.Enqueue(uid);
             UpdateAppearance(uid, true, true);
-            SoundSystem.Play(Filter.Pvs(uid), "/Audio/Machines/vaccinator_running.ogg", uid);
+            SoundSystem.Play("/Audio/Machines/vaccinator_running.ogg", Filter.Pvs(uid), uid);
         }
 
         /// <summary>
@@ -323,8 +324,8 @@ namespace Content.Server.Disease
         /// </summary>
         private void OnDiagnoserFinished(EntityUid uid, DiseaseDiagnoserComponent component, DiseaseMachineFinishedEvent args)
         {
-            var power = Comp<ApcPowerReceiverComponent>(uid);
-            UpdateAppearance(uid, power.Powered, false);
+            var isPowered = this.IsPowered(uid, EntityManager);
+            UpdateAppearance(uid, isPowered, false);
             // spawn a piece of paper.
             var printed = EntityManager.SpawnEntity(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
@@ -353,8 +354,7 @@ namespace Content.Server.Disease
         /// <summary>
         private void OnVaccinatorFinished(EntityUid uid, DiseaseVaccineCreatorComponent component, DiseaseMachineFinishedEvent args)
         {
-            var power = Comp<ApcPowerReceiverComponent>(uid);
-            UpdateAppearance(uid, power.Powered, false);
+            UpdateAppearance(uid, this.IsPowered(uid, EntityManager), false);
 
             // spawn a vaccine
             var vaxx = EntityManager.SpawnEntity(args.Machine.MachineOutput, Transform(uid).Coordinates);

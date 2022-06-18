@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -52,7 +48,7 @@ namespace Content.Server.Power.EntitySystems
             var xform = Transform(uid);
 
             // If grid deleting no need to update power.
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
             {
                 if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
@@ -124,7 +120,7 @@ namespace Content.Server.Power.EntitySystems
             var xform = Transform(owner);
             var coordinates = xform.Coordinates;
 
-            if (!_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (!_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
                 yield break;
 
             var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
@@ -242,7 +238,7 @@ namespace Content.Server.Power.EntitySystems
 
         private bool TryFindAvailableProvider(EntityUid owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider, TransformComponent? xform = null)
         {
-            if (!Resolve(owner, ref xform) || !_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (!Resolve(owner, ref xform) || !_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
             {
                 foundProvider = null;
                 return false;

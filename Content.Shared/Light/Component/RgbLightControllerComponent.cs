@@ -1,12 +1,5 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Light.Component;
 
@@ -19,7 +12,7 @@ namespace Content.Shared.Light.Component;
 /// </remarks>
 [NetworkedComponent]
 [RegisterComponent]
-[Friend(typeof(SharedRgbLightControllerSystem))]
+[Access(typeof(SharedRgbLightControllerSystem))]
 public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
 {
     [DataField("cycleRate")]

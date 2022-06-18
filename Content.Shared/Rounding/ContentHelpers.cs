@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Shared.Rounding
+﻿namespace Content.Shared.Rounding
 {
     public static class ContentHelpers
     {

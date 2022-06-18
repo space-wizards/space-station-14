@@ -6,7 +6,9 @@
   components:
   - type: Material
     materials:
-    - Credit
+      Credit: 1
+  - type: StaticPrice
+    price: 0
   - type: Stack
     stackType: Credit
     max: 1000000 # if you somehow get this rich consider buying a second station
@@ -22,10 +24,9 @@
     - mass: 5
       shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-0.2,0.25,0.1"
+        bounds: "-0.35,-0.2,0.25,0.1"
       mask:
-      - Impassable
-      - VaultImpassable
+      - ItemMask
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -46,6 +47,7 @@
   name: credit
   stack: Credit
   icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  price: 1
 
 - type: stack
   id: Credit

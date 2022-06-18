@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Shared.Traitor.Uplink
 {
     public sealed class UplinkAccount

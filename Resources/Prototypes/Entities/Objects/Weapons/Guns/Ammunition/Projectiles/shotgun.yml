@@ -2,25 +2,25 @@
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/slug.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: slug
   - type: Projectile
     damage:
       types:
-        Piercing: 13
+        Piercing: 5  # Should have the same or less damage than a regular pellet
 
 - type: entity
   id: PelletShotgunBeanbag
   name: beanbag (.50)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -33,43 +33,43 @@
   id: PelletShotgun
   name: pellet (.50)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
-        Piercing: 13
+        Piercing: 5
 
 - type: entity
   id: PelletShotgunFlash
   name: pellet (.50 flash)
   noSpawn: true
-  parent: BulletBaseFlash
+  parent: BaseBulletFlash
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
-        Blunt: 3
+        Blunt: 2
 
 - type: entity
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
   - type: Projectile
     damage:
       groups:
-        Burn: 10
+        Burn: 7
   - type: PointLight
     enabled: true
     color: "#ff4300"
@@ -82,11 +82,11 @@
   id: PelletShotgunPractice
   name: pellet (.50 practice)
   noSpawn: true
-  parent: BulletBasePractice
+  parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -96,11 +96,11 @@
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
   noSpawn: true
-  parent: BulletBasePractice
+  parent: BaseBulletPractice
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
   - type: Projectile
     damage:
       types:
@@ -122,15 +122,15 @@
   id: PelletShotgunFlare
   name: pellet (.50 flare)
   noSpawn: true
-  parent: BulletBase
+  parent: BaseBullet
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/flare_buckshot.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot-flare
   - type: Projectile
     damage:
       groups:
-        Burn: 20
+        Burn: 14
   - type: PointLight
     enabled: true
     color: "#FF8080"

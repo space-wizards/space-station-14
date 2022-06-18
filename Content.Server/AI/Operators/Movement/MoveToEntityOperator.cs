@@ -1,6 +1,4 @@
-using System;
 using Content.Server.AI.Steering;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Operators.Movement

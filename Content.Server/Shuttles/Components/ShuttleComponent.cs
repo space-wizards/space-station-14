@@ -1,14 +1,16 @@
-using System.Collections.Generic;
 using Content.Shared.Shuttles.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleComponent : SharedShuttleComponent
+    public sealed class ShuttleComponent : Component
     {
+        [ViewVariables]
+        public bool Enabled = true;
+
+        [ViewVariables]
+        public ShuttleMode Mode = ShuttleMode.Cruise;
+
         /// <summary>
         /// The cached thrust available for each cardinal direction
         /// </summary>
