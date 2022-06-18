@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage
-  changes:
-  - {message: 'Added the Space Tick, a new salvage mob to terrorize hardworking salvage
-      specialists.', type: Add}
-  - {message: Tweaked salvage mob spawners to allow the Space Tick to generate., type: Tweak}
-  id: 1216
-  time: '2022-03-16T01:11:36.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Added a variation of the cute bee plushie, type: Add}
@@ -2999,3 +2992,9 @@ Entries:
   - {message: Airlock Painters now fit on utility belts., type: Tweak}
   id: 1715
   time: '2022-06-18T02:13:29.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The Rat King and his servants now have an appropriate silly accent.,
+    type: Tweak}
+  id: 1716
+  time: '2022-06-18T02:36:19.0000000+00:00'
