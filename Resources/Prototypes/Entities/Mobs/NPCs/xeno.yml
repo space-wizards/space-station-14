@@ -93,8 +93,10 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
-      - FootstepSound 
+      - FootstepSound
   - type: NoSlip
+  - type: Perishable #For complex lore reasons and totally not gameplay balance umm actually the acid kills a lot of the bacteria
+    molsPerSecondPerUnitMass:  0.0005
 
 - type: entity
   name: Praetorian

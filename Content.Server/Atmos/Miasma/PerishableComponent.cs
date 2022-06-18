@@ -37,6 +37,7 @@ namespace Content.Server.Atmos.Miasma
         /// 1/6 of a minute, divided by 70 as a baseline.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("molsPerSecondPerUnitMass")]
         public float MolsPerSecondPerUnitMass = 0.0025f;
     }
 }
