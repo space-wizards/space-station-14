@@ -25,14 +25,12 @@
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineLightRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
-        priority: 1
         whitelist:
           tags:
             - CartridgeLightRifle
@@ -68,14 +66,12 @@
         startingItem: MagazineLightRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineLightRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
-        priority: 1
         whitelist:
           tags:
             - CartridgeLightRifle
@@ -111,14 +107,12 @@
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
-        priority: 1
         whitelist:
           tags:
             - CartridgeRifle
@@ -157,14 +151,12 @@
         startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
-        priority: 1
         whitelist:
           tags:
             - CartridgeRifle

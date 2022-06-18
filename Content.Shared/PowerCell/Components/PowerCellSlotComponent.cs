@@ -6,6 +6,13 @@ namespace Content.Shared.PowerCell.Components;
 public sealed class PowerCellSlotComponent : Component
 {
     /// <summary>
+    /// What size of cell fits into this component.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("slotSize")]
+    public PowerCellSize SlotSize { get; set; } = PowerCellSize.Small;
+
+    /// <summary>
     /// The actual item-slot that contains the cell. Allows all the interaction logic to be handled by <see cref="ItemSlotsSystem"/>.
     /// </summary>
     /// <remarks>

@@ -2,16 +2,14 @@
 # you'll likely have to tag its metabolizers with something other than Human.
 
 - type: metabolizerType
-  id: Animal
-
-- type: metabolizerType
-  id: Dragon
-
-- type: metabolizerType
   id: Human
+
+- type: metabolizerType
+  id: Animal
 
 - type: metabolizerType
   id: Slime
 
 - type: metabolizerType
   id: Vox
+

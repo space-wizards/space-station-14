@@ -4,5 +4,5 @@
   animationDuration: 3.4
   spriteName: coffee
   startingInventory:
-    DrinkHotCoffee: 10
-    DrinkTeaGlass: 10
+    DrinkHotCoffee: 20
+    DrinkTeaGlass: 20

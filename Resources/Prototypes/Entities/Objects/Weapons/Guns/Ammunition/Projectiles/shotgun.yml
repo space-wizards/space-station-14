@@ -10,7 +10,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5  # Should have the same or less damage than a regular pellet
+        Piercing: 8  # Should have the same or less damage than a regular pellet
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -41,7 +41,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 5
+        Piercing: 8
 
 - type: entity
   id: PelletShotgunFlash
@@ -55,7 +55,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
+        Blunt: 3
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -69,7 +69,7 @@
   - type: Projectile
     damage:
       groups:
-        Burn: 7
+        Burn: 10
   - type: PointLight
     enabled: true
     color: "#ff4300"
@@ -130,7 +130,7 @@
   - type: Projectile
     damage:
       groups:
-        Burn: 14
+        Burn: 20
   - type: PointLight
     enabled: true
     color: "#FF8080"

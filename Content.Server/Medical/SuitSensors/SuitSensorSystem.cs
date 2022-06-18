@@ -138,7 +138,7 @@ namespace Content.Server.Medical.SuitSensors
                 return;
 
             // standard interaction checks
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             args.Verbs.UnionWith(new[]

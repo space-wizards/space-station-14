@@ -29,7 +29,7 @@
     - type: ToggleableLightVisuals
     - type: PowerCellSlot
       cellSlot:
-        startingItem: PowerCellMedium
+        startingItem: PowerCellSmallHigh
 
 - type: entity
   name: extra-bright lantern

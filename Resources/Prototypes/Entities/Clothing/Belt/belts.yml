@@ -19,12 +19,12 @@
         - Screwdriver
         - Flashlight
         - Wrench
+#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
         - CigPack
       components:
-        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -82,6 +82,7 @@
         - Screwdriver
         - Flashlight
         - Wrench
+#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
@@ -89,7 +90,6 @@
         - JawsOfLife
         - CigPack
       components:
-        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -193,7 +193,6 @@
         - Soap
         - Flashlight
         - CigPack
-        - TrashBag
       components:
         - LightReplacer
   - type: ItemMapper
@@ -293,9 +292,6 @@
         # - PlantAnalyzer
         - PlantSampleTaker
         - BotanyShovel
-        - BotanyHoe
-        - BotanyHatchet
-        - PlantSampleTaker
         - PlantBGone
         - Bottle
         - CigPack

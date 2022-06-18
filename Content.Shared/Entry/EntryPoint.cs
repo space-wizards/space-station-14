@@ -41,13 +41,9 @@ namespace Content.Shared.Entry
 #if !FULL_RELEASE
             var configMan = IoCManager.Resolve<IConfigurationManager>();
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
-
-            // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
-            // just leaving this disabled.
-            // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
-
 #endif
 
         }

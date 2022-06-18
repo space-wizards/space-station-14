@@ -27,8 +27,6 @@
     size: 20
     Slots:
     - Belt
-  - type: DisarmMalus
-    malus: 0.225
 
 - type: entity
   name: flash

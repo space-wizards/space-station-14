@@ -8,6 +8,7 @@
     #roboticist under
     CableStack: 4
     Flash: 4
+    PowerCellLargeHigh: 12
     #proximity sensor
     #signaller
     #health anaylzer

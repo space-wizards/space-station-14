@@ -55,7 +55,7 @@ namespace Content.Shared.Interaction
         public const float InteractionRange = 1.4f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        public const float MaxRaycastRange = 100f;
+        public const float MaxRaycastRange = 100;
 
         public delegate bool Ignored(EntityUid entity);
 

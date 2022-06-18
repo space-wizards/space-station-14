@@ -108,11 +108,6 @@ namespace Content.Server.StationEvents.Events
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
-        ///     Whether or not the event is announced when it is run
-        /// </summary>
-        public virtual bool AnnounceEvent { get; } = true;
-
-        /// <summary>
         ///     Has the startup time elapsed?
         /// </summary>
         protected bool Started { get; set; } = false;
@@ -144,13 +139,13 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
-            if (AnnounceEvent && StartAnnouncement != null)
+            if (StartAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (AnnounceEvent && StartAudio != null)
+            if (StartAudio != null)
             {
                 SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
@@ -167,13 +162,13 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
-            if (AnnounceEvent && EndAnnouncement != null)
+            if (EndAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (AnnounceEvent && EndAudio != null)
+            if (EndAudio != null)
             {
                 SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }

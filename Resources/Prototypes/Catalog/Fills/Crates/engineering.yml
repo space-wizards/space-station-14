@@ -37,7 +37,11 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - id: PowerCellMicroreactor
+#      - id: PowerCellLargeStandard
+#        amount: 3
+#      - id: PowerCellMediumStandard
+#        amount: 3
+#      - id: PowerCellSmallAutorecharge
 #        amount: 3
 
 - type: entity

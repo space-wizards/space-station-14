@@ -3,14 +3,8 @@ using Content.Shared.Shuttles.Components;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleComponent : Component
+    public sealed class ShuttleComponent : SharedShuttleComponent
     {
-        [ViewVariables]
-        public bool Enabled = true;
-
-        [ViewVariables]
-        public ShuttleMode Mode = ShuttleMode.Cruise;
-
         /// <summary>
         /// The cached thrust available for each cardinal direction
         /// </summary>

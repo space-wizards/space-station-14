@@ -32,8 +32,6 @@ public sealed class VentCritters : StationEvent
 
     protected override float EndAfter => 60;
 
-    public override bool AnnounceEvent => false;
-
     public override void Startup()
     {
         base.Startup();

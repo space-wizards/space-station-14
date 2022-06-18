@@ -31,14 +31,12 @@
         startingItem: MagazineLightRifleBox
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineLightRifleBox
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
-        priority: 1
         whitelist:
           tags:
             - CartridgeLightRifle

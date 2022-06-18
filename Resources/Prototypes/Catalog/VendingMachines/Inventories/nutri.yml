@@ -3,11 +3,7 @@
   name: NutriMax
   spriteName: nutri
   startingInventory:
-    HydroponicsToolSpade: 2
-    HydroponicsToolMiniHoe: 2
-    HydroponicsToolClippers: 2
-    HydroponicsToolScythe: 2
-    HydroponicsToolHatchet: 2
+    HydroponicsToolSpade: 3
     PlantBag: 2
     PlantBGoneSpray: 20
     WeedSpray: 20
@@ -15,5 +11,7 @@
     Syringe: 5
     RobustHarvestChemistryBottle: 3
     #TO DO:
+    #cultivator
+    #secateurs
     #plant analyzer
 

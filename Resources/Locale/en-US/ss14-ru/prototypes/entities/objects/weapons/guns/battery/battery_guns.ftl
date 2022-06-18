@@ -1,9 +1,6 @@
 ent-BaseWeaponBattery = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-BaseWeaponBatterySmall = { ent-BaseWeaponBattery }
-    .desc = { ent-BaseWeaponBattery.desc }
-    .suffix = { "" }
 ent-WeaponLaserGun = retro laser gun
     .desc = A weapon using light amplified by the stimulated emission of radiation.
     .suffix = { "" }

@@ -50,7 +50,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
+        if (!args.CanAccess || !args.CanInteract) return;
 
         args.Verbs.Add(new Verb()
         {

@@ -4,6 +4,8 @@ namespace Content.Client.SurveillanceCamera;
 
 public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 {
+    private readonly RemQueue<EntityUid> _toRemove = new();
+
     public override void Update(float frameTime)
     {
         foreach (var comp in EntityQuery<ActiveSurveillanceCameraMonitorVisualsComponent>())
@@ -22,9 +24,16 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                     comp.OnFinish();
                 }
 
-                EntityManager.RemoveComponentDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(comp.Owner);
+                _toRemove.Add(comp.Owner);
             }
         }
+
+        foreach (var uid in _toRemove)
+        {
+            EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
+        }
+
+        _toRemove.List?.Clear();
     }
 
     public void AddTimer(EntityUid uid, Action onFinish)

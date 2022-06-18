@@ -13,7 +13,7 @@ network-configurator-ui-count-label =
     { $count } { $count ->
         [one] устройство
         [few] устройства
-       *[other] устройств
+       *[other] устройств 
     }.
 # tooltips
 network-configurator-tooltip-set = Создание списка целевых устройств

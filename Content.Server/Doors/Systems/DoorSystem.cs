@@ -305,7 +305,7 @@ public sealed class DoorSystem : SharedDoorSystem
             foreach (var other in PhysicsSystem.GetCollidingEntities(body))
             {
                 if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
-                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+                    TryOpen(component.Owner, component, other.Owner)) break;
             }
         }
     }

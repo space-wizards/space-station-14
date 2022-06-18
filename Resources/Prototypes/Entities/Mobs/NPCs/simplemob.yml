@@ -95,14 +95,6 @@
       0: !type:NormalMobState {}
       50: !type:CriticalMobState {}
       100: !type:DeadMobState {}
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 400
-      behaviors:
-      - !type:GibBehavior { }
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
@@ -152,7 +144,6 @@
       90: 0.2
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
-  - type: Perishable
 
 - type: entity
   save: false

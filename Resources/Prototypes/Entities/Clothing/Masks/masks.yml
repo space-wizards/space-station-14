@@ -42,7 +42,6 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
-  - type: FlashImmunity
 
 - type: entity
   parent: ClothingMaskBase

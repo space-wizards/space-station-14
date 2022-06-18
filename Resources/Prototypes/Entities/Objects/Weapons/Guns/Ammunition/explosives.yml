@@ -89,7 +89,7 @@
 - type: entity
   id: GrenadeFlash
   name: flash grenade
-  parent: BaseGrenade
+  parent: BaseItem
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
@@ -106,7 +106,7 @@
 - type: entity
   id: GrenadeFrag
   name: frag grenade
-  parent: BaseGrenade
+  parent: BaseItem
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag

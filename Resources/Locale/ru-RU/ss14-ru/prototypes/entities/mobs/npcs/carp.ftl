@@ -10,6 +10,3 @@ ent-MobCarpHolo = голокарп
 ent-MobCarpSalvage = { ent-MobCarp }
     .suffix = Salvage Ruleset
     .desc = { ent-MobCarp.desc }
-ent-MobCarpDragon = space carp
-    .suffix = DragonBrood
-    .desc = { ent-MobCarp.desc }

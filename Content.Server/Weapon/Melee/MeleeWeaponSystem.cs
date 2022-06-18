@@ -124,8 +124,6 @@ namespace Content.Server.Weapon.Melee
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
         {
-            if (string.IsNullOrEmpty(comp.Arc)) return;
-
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 

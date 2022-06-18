@@ -38,12 +38,10 @@
       15: !type:DeadMobState {}
   - type: MovementIgnoreGravity
   - type: Appearance
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: alive
-      Dead:
-        Base: dead
+    visuals:
+    - type: DamageStateVisualizer
+      normal: alive
+      dead: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno

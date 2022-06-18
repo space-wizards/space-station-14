@@ -28,14 +28,12 @@
         startingItem: MagazinePistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazinePistolSubMachineGun
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
-        priority: 1
         whitelist:
           tags:
             - CartridgePistol
@@ -118,14 +116,12 @@
         startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnum
-        priority: 1
         whitelist:
           tags:
             - CartridgeMagnum
@@ -172,14 +168,12 @@
         startingItem: MagazinePistolSubMachineGunTopMounted
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazinePistolSubMachineGunTopMounted
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
-        priority: 1
         whitelist:
           tags:
             - CartridgePistol
@@ -203,14 +197,12 @@
         startingItem: MagazineMagnumSubMachineGunRubber
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-        priority: 2
         whitelist:
           tags:
             - MagazineMagnumSubMachineGun
       gun_chamber:
         name: Chamber
         startingItem: CartridgeMagnumRubber
-        priority: 1
         whitelist:
           tags:
             - CartridgeMagnum
