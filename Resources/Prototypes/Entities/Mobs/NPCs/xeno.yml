@@ -55,7 +55,7 @@
     range: 1.5
     arcwidth: 0
     hitSound:
-     soundcollection: AlienClaw
+     collection: AlienClaw
     arc:
     damage:
       groups:
