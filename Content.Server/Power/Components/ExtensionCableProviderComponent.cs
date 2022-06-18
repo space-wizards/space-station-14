@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Server.Power.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Content.Server.Power.EntitySystems;
 
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    [Friend(typeof(ExtensionCableSystem))]
+    [Access(typeof(ExtensionCableSystem))]
     public sealed class ExtensionCableProviderComponent : Component
     {
         /// <summary>

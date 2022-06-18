@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
@@ -7,19 +6,14 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable
 {
@@ -206,7 +200,7 @@ namespace Content.Shared.Stunnable
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
 
-            SoundSystem.Play(Filter.Pvs(uid), knocked.StunAttemptSound.GetSound(), uid, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
 
             knocked.Dirty();
 

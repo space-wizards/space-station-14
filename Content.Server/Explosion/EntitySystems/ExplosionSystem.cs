@@ -9,7 +9,6 @@ using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
-using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -31,11 +30,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly AdminLogSystem _logsSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
@@ -215,10 +213,10 @@ public sealed partial class ExplosionSystem : EntitySystem
             return;
 
         if (user == null)
-            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(uid):entity} exploded at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
         else
-            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
     }
 
@@ -245,8 +243,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
-            _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
-        
+            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
             slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum));
     }
@@ -286,7 +284,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(filter, type.Sound.GetSound(), mapEntityCoords, _audioParams);
+        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,
@@ -310,10 +308,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         var spaceTiles = spaceData?.TileLists;
 
-        Dictionary<GridId, Dictionary<int, List<Vector2i>>> tileLists = new();
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var grid in gridData)
         {
-            tileLists.Add(grid.Grid.Index, grid.TileLists);
+            tileLists.Add(grid.Grid.GridEntityId, grid.TileLists);
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);

@@ -1,11 +1,9 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.Systems
 {
@@ -26,7 +24,7 @@ namespace Content.Server.Body.Systems
         private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
-            if (!EntityManager.TryGetComponent(uid, out MechanismComponent mech))
+            if (!EntityManager.TryGetComponent(uid, out MechanismComponent? mech))
                 return;
 
             HandleMind((mech.Part!).Owner, (args.Old).Owner);

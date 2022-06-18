@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Monitor
 {
@@ -100,7 +95,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -115,7 +110,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -137,7 +132,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -159,7 +154,7 @@ namespace Content.Server.Atmos.Monitor
     {
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm))
                 return;
 
             foreach (var (addr, device) in alarm.DeviceData)
@@ -188,9 +183,9 @@ namespace Content.Server.Atmos.Monitor
 
         public override void Execute(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm)
-                || !EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
-                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable))
+            if (!EntityManager.TryGetComponent(uid, out AirAlarmComponent? alarm)
+                || !EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
+                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
                 return;
 
             _devices = alarm.DeviceData;

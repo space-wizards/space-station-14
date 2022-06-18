@@ -1,6 +1,3 @@
-using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Coordinates.Helpers
@@ -18,7 +15,7 @@ namespace Content.Server.Coordinates.Helpers
         {
             IoCManager.Resolve(ref entMan, ref mapManager);
 
-            var gridId = coordinates.GetGridId(entMan);
+            var gridId = coordinates.GetGridEntityId(entMan);
 
             var tileSize = 1f;
 

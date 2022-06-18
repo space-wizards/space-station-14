@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -955,10 +955,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 56
   type: LockerBoozeFilled
   components:
@@ -967,10 +964,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 57
   type: LockerMedicineFilled
   components:
@@ -979,10 +973,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 58
   type: MonkeyCubeWrapped
   components:
@@ -1291,10 +1282,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 100
   type: ClosetBase
   components:
@@ -1303,10 +1291,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 101
   type: ClosetBase
   components:
@@ -1315,10 +1300,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 102
   type: FoodBurgerClown
   components:

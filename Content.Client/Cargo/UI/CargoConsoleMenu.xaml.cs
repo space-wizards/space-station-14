@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -21,6 +22,9 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : DefaultWindow
     {
+        [Dependency]
+        private IPrototypeManager _prototypeManager = default!;
+
         public CargoConsoleBoundUserInterface Owner { get; private set; }
 
         public event Action<ButtonEventArgs>? OnItemSelected;
@@ -66,6 +70,8 @@ namespace Content.Client.Cargo.UI
             Categories.SelectId(id);
         }
 
+        public IEnumerable<CargoProductPrototype> ProductPrototypes => _prototypeManager.EnumeratePrototypes<CargoProductPrototype>();
+
         /// <summary>
         ///     Populates the list of products that will actually be shown, using the current filters.
         /// </summary>
@@ -73,13 +79,8 @@ namespace Content.Client.Cargo.UI
         {
             Products.RemoveAllChildren();
 
-            if (Owner.Market == null)
-            {
-                return;
-            }
-
             var search = SearchBar.Text.Trim().ToLowerInvariant();
-            foreach (var prototype in Owner.Market.Products)
+            foreach (var prototype in ProductPrototypes)
             {
                 // if no search or category
                 // else if search
@@ -112,14 +113,9 @@ namespace Content.Client.Cargo.UI
             _categoryStrings.Clear();
             Categories.Clear();
 
-            if (Owner.Market == null)
-            {
-                return;
-            }
-
             _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
-            foreach (var prototype in Owner.Market.Products)
+            foreach (var prototype in ProductPrototypes)
             {
                 if (!_categoryStrings.Contains(prototype.Category))
                 {
@@ -141,26 +137,26 @@ namespace Content.Client.Cargo.UI
             Orders.RemoveAllChildren();
             Requests.RemoveAllChildren();
 
-            if (Owner.Orders == null || Owner.Market == null)
+            if (Owner.Orders == null)
             {
                 return;
             }
 
             foreach (var order in Owner.Orders.Orders)
             {
-                var productName = Owner.Market.GetProduct(order.ProductId)?.Name;
-
-                if (productName == null)
+                if (!_prototypeManager.TryIndex<CargoProductPrototype>(order.ProductId, out CargoProductPrototype? product))
                 {
                     DebugTools.Assert(false);
                     Logger.ErrorS("cargo", $"Unable to find product name for {order.ProductId}");
                     continue;
                 }
 
+                var productName = product.Name;
+
                 var row = new CargoOrderRow
                 {
                     Order = order,
-                    Icon = { Texture = Owner.Market.GetProduct(order.ProductId)?.Icon.Frame0() },
+                    Icon = { Texture = product.Icon.Frame0() },
                     ProductName =
                     {
                         Text = Loc.GetString(

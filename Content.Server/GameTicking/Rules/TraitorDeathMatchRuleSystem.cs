@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
 using Content.Server.Players;
@@ -22,10 +21,6 @@ using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -202,14 +197,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration _)
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Ended()
+    public override void Ended(GameRuleConfiguration _)
     {
     }
 

@@ -20,9 +20,6 @@ namespace Content.Client.Cargo
         private CargoConsoleOrderMenu? _orderMenu;
 
         [ViewVariables]
-        public GalacticMarketComponent? Market { get; private set; }
-
-        [ViewVariables]
         public CargoOrderDatabaseComponent? Orders { get; private set; }
 
         [ViewVariables]
@@ -51,10 +48,8 @@ namespace Content.Client.Cargo
             base.Open();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner.Owner, out GalacticMarketComponent? market) ||
-                !entMan.TryGetComponent(Owner.Owner, out CargoOrderDatabaseComponent? orders)) return;
+            if (!entMan.TryGetComponent(Owner.Owner, out CargoOrderDatabaseComponent? orders)) return;
 
-            Market = market;
             Orders = orders;
 
             _menu = new CargoConsoleMenu(this);
@@ -64,8 +59,6 @@ namespace Content.Client.Cargo
 
             _menu.Populate();
 
-            Market.OnDatabaseUpdated += _menu.PopulateProducts;
-            Market.OnDatabaseUpdated += _menu.PopulateCategories;
             Orders.OnDatabaseUpdated += _menu.PopulateOrders;
 
             _menu.CallShuttleButton.OnPressed += (_) =>
@@ -120,12 +113,6 @@ namespace Content.Client.Cargo
             base.Dispose(disposing);
 
             if (!disposing) return;
-
-            if (Market != null && _menu != null)
-            {
-                Market.OnDatabaseUpdated -= _menu.PopulateProducts;
-                Market.OnDatabaseUpdated -= _menu.PopulateCategories;
-            }
 
             if (Orders != null && _menu != null)
             {

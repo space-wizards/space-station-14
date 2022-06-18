@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -6,11 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.NodeGroups
 {
@@ -26,7 +21,7 @@ namespace Content.Server.Power.NodeGroups
 
         void QueueNetworkReconnect();
 
-        GridId? GridId { get; }
+        EntityUid? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -46,7 +41,7 @@ namespace Content.Server.Power.NodeGroups
         private IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
             Providers.SelectMany(provider => provider.LinkedReceivers);
 
-        GridId? IApcNet.GridId => GridId;
+        EntityUid? IApcNet.GridId => GridId;
 
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();

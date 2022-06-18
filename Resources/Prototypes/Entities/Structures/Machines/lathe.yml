@@ -27,15 +27,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: Construction
     graph: Machine
     node: machine
@@ -116,15 +113,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+        bounds: "-0.4,-0.4,0.4,0.4"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineMask
       layer:
-      - Opaque
-      - MobImpassable
+      - MachineLayer
   - type: ResearchClient
   - type: Construction
     graph: Machine
@@ -199,6 +193,9 @@
       - FlashPayload
       - Signaller
       - SignalTrigger
+      - PowerCellSmall
+      - PowerCellMedium
+      - PowerCellHigh
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -247,6 +244,13 @@
       - DiagnoserMachineCircuitboard
       - ChemMasterMachineCircuitboard
       - ChemDispenserMachineCircuitboard
+      - SurveillanceCameraRouterCircuitboard
+      - SurveillanceCameraMonitorCircuitboard
+      - SurveillanceWirelessCameraMonitorCircuitboard
+      - SurveillanceCameraWirelessRouterCircuitboard
+      - ComputerTelevisionCircuitboard
+      - SurveillanceWirelessCameraMovableCircuitboard
+      - SurveillanceWirelessCameraAnchoredCircuitboard
       - HydroponicsTrayMachineCircuitboard
       - SolarControlComputerCircuitboard
       - AutolatheMachineCircuitboard
@@ -260,6 +264,11 @@
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - GeneratorPlasmaMachineCircuitboard
+      - GeneratorUraniumMachineCircuitboard
+      - WallmountGeneratorElectronics
+      - WallmountGeneratorAPUElectronics
+      - EmitterCircuitboard
   - type: Machine
     board: CircuitImprinterMachineCircuitboard
   - type: Lathe
@@ -299,14 +308,16 @@
       - Stunbaton
       - CartridgePistol
       - ShellShotgun
-      - CartridgeLRifle
+      - CartridgeLightRifle
       - CartridgeMagnum
       - ShellShotgunBeanbag
+      - ShellShotgunFlare
+      - ShellShotgunFlash
       - CartridgePistolRubber
       - CartridgeMagnumRubber
-      - CartridgeClRifleRubber
-      - CartridgeLRifleRubber
-      - CartridgeSRifleRubber #Everything below this is shared with other lathes
+      - CartridgeCaselessRifleRubber
+      - CartridgeLightRifleRubber
+      - CartridgeRifleRubber  #Everything below this is shared with other lathes
       - FlashlightLantern
       - Bucket
       - MopItem
@@ -324,6 +335,8 @@
       - TimerTrigger
       - Signaller
       - SignalTrigger
+  - type: Machine
+    board: SecurityTechFabCircuitboard
   - type: Lathe
     whitelist:
       tags:
@@ -362,6 +375,7 @@
       - ClothingMaskSterile
       - DiseaseSwab
       - HandheldCrewMonitor
+      - ShellTranquilizer
       - Scalpel
       - Retractor
       - Cautery
@@ -388,6 +402,8 @@
       - CableStack
       - CableMVStack
       - CableHVStack
+  - type: Machine
+    board: MedicalTechFabCircuitboard
 
 - type: entity
   parent: Autolathe

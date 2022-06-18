@@ -11,7 +11,7 @@ namespace Content.Shared.Clothing.Components;
 ///     This component gives an item an action that will equip or un-equip some clothing. Intended for use with
 ///     hardsuits and hardsuit helmets.
 /// </summary>
-[Friend(typeof(ToggleableClothingSystem))]
+[Access(typeof(ToggleableClothingSystem))]
 [RegisterComponent]
 public sealed class ToggleableClothingComponent : Component
 {
@@ -48,6 +48,7 @@ public sealed class ToggleableClothingComponent : Component
     [DataField("containerId")]
     public string ContainerId = DefaultClothingContainerId;
 
+    [ViewVariables]
     public ContainerSlot? Container;
 
     /// <summary>

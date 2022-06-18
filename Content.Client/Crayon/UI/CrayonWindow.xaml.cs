@@ -37,7 +37,7 @@ namespace Content.Client.Crayon.UI
         {
             _color = color;
 
-            Owner.SelectColor(color.ToHex());
+            Owner.SelectColor(color);
 
             RefreshList();
         }

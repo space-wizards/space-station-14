@@ -1,6 +1,5 @@
 using Content.Shared.Alert;
 using Content.Shared.Standing;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State
 {

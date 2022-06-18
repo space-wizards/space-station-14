@@ -18,9 +18,6 @@ namespace Content.Server.Weapon.Melee.EnergySword
         [DataField("cycleRate")]
         public float CycleRate = 1f;
 
-        [DataField("hitSound")]
-        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/eblade1.ogg");
-
         [DataField("activateSound")]
         public SoundSpecifier ActivateSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/ebladeon.ogg");
 
@@ -39,5 +36,8 @@ namespace Content.Server.Weapon.Melee.EnergySword
 
         [DataField("litDamageBonus", required: true)]
         public DamageSpecifier LitDamageBonus = default!;
+
+        [DataField("litDisarmMalus", required: true)]
+        public float litDisarmMalus = 0.6f;
     }
 }

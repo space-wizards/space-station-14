@@ -2,11 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Components

@@ -1,9 +1,10 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
@@ -14,7 +15,6 @@ using Content.Shared.EntityList;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Suspicion;
@@ -203,7 +203,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration _)
     {
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
 
@@ -216,13 +216,13 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         var filter = Filter.Empty()
             .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
-        SoundSystem.Play(filter, _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.AllowAllNoExternal;
 
         var susLoot = _prototypeManager.Index<EntityLootTablePrototype>(SuspicionLootTable);
 
-        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationComponent, IMapGridComponent>(true))
+        foreach (var (_, mapGrid) in EntityManager.EntityQuery<StationMemberComponent, IMapGridComponent>(true))
         {
             // I'm so sorry.
             var tiles = mapGrid.Grid.GetAllTiles().ToArray();
@@ -269,7 +269,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
     }
 
-    public override void Ended()
+    public override void Ended(GameRuleConfiguration _)
     {
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.Id;
         EndTime = null;

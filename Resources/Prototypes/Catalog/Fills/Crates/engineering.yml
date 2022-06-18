@@ -37,11 +37,7 @@
 #  components:
 #  - type: StorageFill
 #    contents:
-#      - id: PowerCellLargeStandard
-#        amount: 3
-#      - id: PowerCellMediumStandard
-#        amount: 3
-#      - id: PowerCellSmallAutorecharge
+#      - id: PowerCellMicroreactor
 #        amount: 3
 
 - type: entity
@@ -86,4 +82,16 @@
       - id: CableMVStack
         amount: 2
       - id: CableApcStack
+        amount: 2
+
+- type: entity
+  id: CrateEngineeringElectricalSupplies
+  name: Electrical Supplies Crate
+  parent: CrateElectrical
+  components:
+  - type: StorageFill
+    contents:
+      - id: ToolboxElectricalFilled
+        amount: 2
+      - id: ClothingHandsGlovesColorYellow
         amount: 2

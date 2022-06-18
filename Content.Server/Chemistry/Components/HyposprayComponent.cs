@@ -10,13 +10,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -86,7 +80,7 @@ namespace Content.Server.Chemistry.Components
                 meleeSys.SendLunge(angle, user);
             }
 
-            SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
+            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(user), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(TransferAmount, targetSolution.AvailableVolume);

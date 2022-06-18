@@ -1,64 +1,64 @@
 - type: accent
   id: cat
   words:
-  - Meow!
-  - Mow.
-  - Mrrrow!
-  - Hhsss!
-  - Brrow
+  - accent-words-cat-1
+  - accent-words-cat-2
+  - accent-words-cat-3
+  - accent-words-cat-4
+  - accent-words-cat-5
 
 - type: accent
   id: dog
   words:
-  - Bark!
-  - Bork!
-  - Woof!
-  - Arf.
-  - Grrr.
+  - accent-words-dog-1
+  - accent-words-dog-2
+  - accent-words-dog-3
+  - accent-words-dog-4
+  - accent-words-dog-5
 
 - type: accent
   id: mouse
   words:
-  - Squeak!
-  - Piep!
-  - Chuu!
-  - Eeee!
+  - accent-words-mouse-1
+  - accent-words-mouse-2
+  - accent-words-mouse-3
+  - accent-words-mouse-4
 
 - type: accent
   id: mumble
   words:
-    - Mmfph!
-    - Mmmf mrrfff!
-    - Mmmf mnnf!
+    - accent-words-mumble-1
+    - accent-words-mumble-2
+    - accent-words-mumble-3
 
 - type: accent
   id: silicon
   words:
-    - Beep.
-    - Boop.
-    - Whirr.
-    - Beep-boop.
+    - accent-words-silicon-1
+    - accent-words-silicon-2
+    - accent-words-silicon-3
+    - accent-words-silicon-4
 
 - type: accent
   id: xeno
   words:
-    - Hiss.
-    - Hisssss!
-    - Hisssuuu...
-    - Hiss...!
+    - accent-words-xeno-1
+    - accent-words-xeno-2
+    - accent-words-xeno-3
+    - accent-words-xeno-4
 
 - type: accent
   id: zombie
   words:
-    - Gruaahhhh...
-    - Mmuaaaa..
-    - Braainnssss...
-    - Grrrrr...
+    - accent-words-zombie-1
+    - accent-words-zombie-2
+    - accent-words-zombie-3
+    - accent-words-zombie-4
 
 - type: accent
   id: genericAggressive
   words:
-  - Grr!
-  - Rrrr!
-  - Grr...
-  - Grrow!!
+  - accent-words-generic-aggressive-1
+  - accent-words-generic-aggressive-2
+  - accent-words-generic-aggressive-3
+  - accent-words-generic-aggressive-4

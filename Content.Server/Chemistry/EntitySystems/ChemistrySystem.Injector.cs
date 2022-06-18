@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
@@ -108,8 +107,6 @@ public sealed partial class ChemistrySystem
 
         if (component.CancelToken != null)
         {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
             args.Handled = true;
             return;
         }
@@ -209,7 +206,7 @@ public sealed partial class ChemistrySystem
             // Add an admin log, using the "force feed" log type. It's not quite feeding, but the effect is the same.
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
             {
-                _logs.Add(LogType.ForceFeed,
+                _adminLogger.Add(LogType.ForceFeed,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject {EntityManager.ToPrettyString(target):target} with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}");
             }
         }
@@ -219,7 +216,7 @@ public sealed partial class ChemistrySystem
             actualDelay /= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
-                _logs.Add(LogType.Ingestion,
+                _adminLogger.Add(LogType.Ingestion,
                     $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 

@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c",
   "states": [
     {
       "name": "ai",
@@ -1089,6 +1089,14 @@
     },
     {
       "name": "medium_secure",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "atmominsky",
       "delays": [
         [
           1

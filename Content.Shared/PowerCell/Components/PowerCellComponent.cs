@@ -1,9 +1,5 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PowerCell;
 
@@ -16,25 +12,15 @@ namespace Content.Shared.PowerCell;
 public sealed class PowerCellComponent : Component
 {
     public const string SolutionName = "powerCell";
-    public const int PowerCellVisualsLevels = 4;
-
-    [DataField("cellSize")]
-    public PowerCellSize CellSize = PowerCellSize.Small;
+    public const int PowerCellVisualsLevels = 2;
 
     // Not networked to clients
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IsRigged { get; set; }
 }
 
-public enum PowerCellSize
-{
-    Small = 0,
-    Medium = 1,
-    Large = 2
-}
-
 [Serializable, NetSerializable]
-public enum PowerCellVisuals
+public enum PowerCellVisuals : byte
 {
     ChargeLevel
 }

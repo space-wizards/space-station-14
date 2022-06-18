@@ -1,22 +1,13 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -187,7 +178,7 @@ namespace Content.Server.Cuffs.Components
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
                 eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
             }
-            SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
+            SoundSystem.Play(StartCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             TryUpdateCuff(eventArgs.User, target, cuffed);
             return true;
@@ -224,7 +215,7 @@ namespace Content.Server.Cuffs.Components
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound.GetSound(), Owner);
+                    SoundSystem.Play(EndCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
                     if (target == user)
                     {
                         user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));

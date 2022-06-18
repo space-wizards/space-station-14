@@ -5,6 +5,11 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -13,13 +18,10 @@
         !type:PhysShapeAabb
         bounds: "-0.49,-0.49,0.49,-0.3"
       mass: 50
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - VaultImpassable
+      - TabletopMachineMask
+      layer:
+      - GlassAirlockLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
@@ -30,7 +32,7 @@
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: welded
-      map: ["enum.DoorVisualLayers.BaseWelded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
@@ -75,7 +77,6 @@
     safety: false
   - type: Door
     canCrush: false
-    weldable: false
     board: DoorElectronics
     openSound:
       path: /Audio/Machines/windoor_open.ogg
@@ -83,6 +84,9 @@
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: Wires
     BoardName: "Windoor Control"
     LayoutId: Windoors
@@ -123,7 +127,7 @@
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseUnlit" ]
     - state: welded
-      map: [ "enum.DoorVisualLayers.BaseWelded" ]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: bolted_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseBolted" ]

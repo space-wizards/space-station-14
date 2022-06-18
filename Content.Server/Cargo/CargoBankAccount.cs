@@ -1,7 +1,4 @@
-﻿using System;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Cargo
+﻿namespace Content.Server.Cargo
 {
     public sealed class CargoBankAccount : ICargoBankAccount
     {

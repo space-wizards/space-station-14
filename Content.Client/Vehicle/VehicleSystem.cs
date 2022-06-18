@@ -1,32 +1,34 @@
-using Robust.Client.GameObjects;
 using Content.Shared.Vehicle;
+using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Vehicle
 {
-    /// <summary>
-    /// Controls client-side visuals for
-    /// vehicles
-    /// </summary>
-    public sealed class VehicleSystem : VisualizerSystem<VehicleVisualsComponent>
+    public sealed class VehicleSystem : EntitySystem
     {
-        protected override void OnAppearanceChange(EntityUid uid, VehicleVisualsComponent component, ref AppearanceChangeEvent args)
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+
+        public override void Initialize()
         {
-            /// First check is for the sprite itself
-            if (TryComp(uid, out SpriteComponent? sprite)
-                && args.Component.TryGetData(VehicleVisuals.DrawDepth, out int drawDepth) && sprite != null)
-            {
-                sprite.DrawDepth = drawDepth;
-            }
-            /// Set vehicle layer to animated or not (i.e. are the wheels turning or not)
-            if (args.Component.TryGetData(VehicleVisuals.AutoAnimate, out bool autoAnimate))
-            {
-                sprite?.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
-            }
+            base.Initialize();
+            SubscribeNetworkEvent<BuckledToVehicleEvent>(OnBuckle);
         }
+
+        private void OnBuckle(BuckledToVehicleEvent args)
+        {
+            // Use the vehicle's eye if we get buckled
+            if (args.Buckling)
+            {
+                if (!TryComp<EyeComponent>(args.Vehicle, out var vehicleEye) || vehicleEye.Eye == null)
+                    return;
+                _eyeManager.CurrentEye = vehicleEye.Eye;
+                return;
+            }
+            // Reset if we get unbuckled.
+            if (!TryComp<EyeComponent>(args.Rider, out var component) || component.Eye == null)
+                return; // This probably will never happen but in this strange new world we probably want to maintain our old vision
+            _eyeManager.CurrentEye = component.Eye;
+        }
+
     }
-}
-public enum VehicleVisualLayers : byte
-{
-    /// Layer for the vehicle's wheels
-    AutoAnimate,
 }

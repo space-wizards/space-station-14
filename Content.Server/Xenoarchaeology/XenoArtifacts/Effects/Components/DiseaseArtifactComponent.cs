@@ -1,5 +1,4 @@
 using Content.Shared.Disease;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// <summary>

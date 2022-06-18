@@ -1,9 +1,9 @@
-using System.Linq;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
 using Content.Server.Light.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
@@ -21,7 +21,6 @@ using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Storage;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -176,8 +175,12 @@ namespace Content.Server.Drone
             var xform = Comp<TransformComponent>(uid);
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
+                // Return true if the entity is/was controlled by a player and is not a drone or ghost.
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
+                    // Filter out dead ghost roles. Dead normal players are intended to block.
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                        continue;
                     if (_gameTiming.IsFirstTimePredicted)
                         _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
                     return true;

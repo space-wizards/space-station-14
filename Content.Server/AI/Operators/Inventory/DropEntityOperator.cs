@@ -1,4 +1,3 @@
-using Content.Server.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.AI.Operators.Inventory

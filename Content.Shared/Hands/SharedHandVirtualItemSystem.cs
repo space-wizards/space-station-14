@@ -1,7 +1,6 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Hands;
 

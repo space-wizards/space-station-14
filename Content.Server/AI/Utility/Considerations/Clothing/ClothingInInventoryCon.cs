@@ -3,8 +3,6 @@ using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Clothing.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Clothing
 {

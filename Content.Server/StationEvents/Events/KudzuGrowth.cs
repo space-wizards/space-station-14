@@ -1,9 +1,4 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -18,8 +13,6 @@ public sealed class KudzuGrowth : StationEvent
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-kudzu-growth-start-announcement");
 
-    public override string? StartAudio => "/Audio/Announcements/bloblarm.ogg";
-
     public override int EarliestStart => 15;
 
     public override int MinimumPlayers => 15;
@@ -33,6 +26,8 @@ public sealed class KudzuGrowth : StationEvent
 
     // Give crew at least 9 minutes to either have it gone, or to suffer another event. Kudzu is not actually required to be dead for another event to roll.
     protected override float EndAfter => 60*4;
+
+    public override bool AnnounceEvent => false;
 
     private EntityUid _targetGrid;
 

@@ -1,4 +1,4 @@
-using Content.Shared.Hands.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
@@ -14,7 +14,13 @@ namespace Content.Shared.Placeable
             base.Initialize();
 
             SubscribeLocalEvent<PlaceableSurfaceComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+            SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnGetState(EntityUid uid, PlaceableSurfaceComponent component, ref ComponentGetState args)
+        {
+            args.State = new PlaceableSurfaceComponentState(component.IsPlaceable, component.PlaceCentered, component.PositionOffset);
         }
 
         public void SetPlaceable(EntityUid uid, bool isPlaceable, PlaceableSurfaceComponent? surface = null)
@@ -23,7 +29,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.IsPlaceable = isPlaceable;
-            surface.Dirty();
+            Dirty(surface);
         }
 
         public void SetPlaceCentered(EntityUid uid, bool placeCentered, PlaceableSurfaceComponent? surface = null)
@@ -32,7 +38,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.PlaceCentered = placeCentered;
-            surface.Dirty();
+            Dirty(surface);
         }
 
         public void SetPositionOffset(EntityUid uid, Vector2 offset, PlaceableSurfaceComponent? surface = null)
@@ -41,7 +47,7 @@ namespace Content.Shared.Placeable
                 return;
 
             surface.PositionOffset = offset;
-            surface.Dirty();
+            Dirty(surface);
         }
 
         private void OnAfterInteractUsing(EntityUid uid, PlaceableSurfaceComponent surface, AfterInteractUsingEvent args)
@@ -50,6 +56,11 @@ namespace Content.Shared.Placeable
                 return;
 
             if (!surface.IsPlaceable)
+                return;
+
+            // 99% of the time they want to dump the stuff inside on the table, they can manually place with q if they really need to.
+            // Just causes prediction CBT otherwise.
+            if (HasComp<DumpableComponent>(args.Used))
                 return;
 
             if (!_handsSystem.TryDrop(args.User, args.Used))

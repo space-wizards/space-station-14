@@ -6,7 +6,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
 using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;

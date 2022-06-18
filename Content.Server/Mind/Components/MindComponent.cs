@@ -1,30 +1,16 @@
-using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
-using Content.Shared.Examine;
-using Content.Shared.Ghost;
-using Content.Shared.MobState.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Mind.Components
 {
     /// <summary>
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
-    [RegisterComponent, Friend(typeof(MindSystem))]
+    [RegisterComponent, Access(typeof(MindSystem))]
     public sealed class MindComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>
         [ViewVariables]
+        [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public Mind? Mind { get; set; }
 
         /// <summary>

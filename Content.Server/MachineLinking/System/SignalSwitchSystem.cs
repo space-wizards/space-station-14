@@ -1,32 +1,33 @@
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.System
 {
     public sealed class SignalSwitchSystem : EntitySystem
     {
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<SignalSwitchComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<SignalSwitchComponent, ActivateInWorldEvent>(OnActivated);
         }
 
         private void OnInit(EntityUid uid, SignalSwitchComponent component, ComponentInit args)
         {
-            var transmitter = EnsureComp<SignalTransmitterComponent>(uid);
-            foreach (string port in new[] { "On", "Off" })
-                if (!transmitter.Outputs.ContainsKey(port))
-                    transmitter.AddPort(port);
-
+            _signalSystem.EnsureTransmitterPorts(uid, component.OnPort, component.OffPort);
         }
 
         private void OnActivated(EntityUid uid, SignalSwitchComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             component.State = !component.State;
-            RaiseLocalEvent(uid, new InvokePortEvent(component.State ? "On" : "Off"), false);
+            _signalSystem.InvokePort(uid, component.State ? component.OnPort : component.OffPort);
+
             args.Handled = true;
         }
     }

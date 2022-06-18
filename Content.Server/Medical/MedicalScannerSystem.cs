@@ -1,8 +1,8 @@
 using Content.Server.Climbing;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Destructible;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.DragDrop;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
@@ -127,7 +127,7 @@ namespace Content.Server.Medical
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
-            if (IsPowered(scannerComponent))
+            if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var power) && power.Powered)
             {
                 var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)
@@ -141,15 +141,6 @@ namespace Content.Server.Medical
                 return GetStatusFromDamageState(state);
             }
             return MedicalScannerStatus.Off;
-        }
-
-        public bool IsPowered(MedicalScannerComponent scannerComponent)
-        {
-            if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var receiver))
-            {
-                return receiver.Powered;
-            }
-            return false;
         }
 
         public bool IsOccupied(MedicalScannerComponent scannerComponent)
@@ -218,7 +209,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
 
             scannerComponent.BodyContainer.Remove(contained);
-            _climbSystem.ForciblySetClimbing(contained);
+            _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }
 

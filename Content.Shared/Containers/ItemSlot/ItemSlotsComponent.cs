@@ -1,16 +1,10 @@
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -19,7 +13,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject interactions.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(ItemSlotsSystem))]
+    [Access(typeof(ItemSlotsSystem))]
     public sealed class ItemSlotsComponent : Component
     {
         /// <summary>
@@ -66,7 +60,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject sounds.
     /// </summary>
     [DataDefinition]
-    [Friend(typeof(ItemSlotsSystem))]
+    [Access(typeof(ItemSlotsSystem))]
     public sealed class ItemSlot
     {
         [DataField("whitelist")]
@@ -92,6 +86,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     of the currently held or currently inserted entity instead.
         /// </remarks>
         [DataField("name", readOnly: true)]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string Name = string.Empty;
 
         /// <summary>
@@ -103,6 +98,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     when mapping.
         /// </remarks>
         [DataField("startingItem", readOnly: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string? StartingItem;
 
         /// <summary>
@@ -202,5 +198,11 @@ namespace Content.Shared.Containers.ItemSlots
         // Convenience properties
         public bool HasItem => ContainerSlot?.ContainedEntity != null;
         public EntityUid? Item => ContainerSlot?.ContainedEntity;
+
+        /// <summary>
+        ///     Priority for use with the eject & insert verbs for this slot.
+        /// </summary>
+        [DataField("priority")]
+        public int Priority = 0;
     }
 }

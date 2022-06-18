@@ -1,16 +1,10 @@
+
 using System.Threading;
-using Content.Server.Act;
-using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
-using Content.Server.Players;
-using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Standing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -22,7 +16,7 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
 #pragma warning disable 618
-    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, ISuicideAct
+    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;
@@ -54,7 +48,7 @@ namespace Content.Server.Morgue.Components
             if (Cooking) return;
             if (Open) return;
 
-            SoundSystem.Play(Filter.Pvs(Owner), _cremateStartSound.GetSound(), Owner);
+            SoundSystem.Play(_cremateStartSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             Cremate();
         }
@@ -64,11 +58,11 @@ namespace Content.Server.Morgue.Components
             if (Open)
                 CloseStorage();
 
-            if(_entities.TryGetComponent(Owner, out AppearanceComponent appearanceComponent))
+            if(_entities.TryGetComponent(Owner, out AppearanceComponent? appearanceComponent))
                 appearanceComponent.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
-            SoundSystem.Play(Filter.Pvs(Owner), _crematingSound.GetSound(), Owner);
+            SoundSystem.Play(_crematingSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             _cremateCancelToken?.Cancel();
 
@@ -96,38 +90,9 @@ namespace Content.Server.Morgue.Components
 
                 TryOpenStorage(Owner);
 
-                SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
+                SoundSystem.Play(_cremateFinishSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             }, _cremateCancelToken.Token);
-        }
-
-        SuicideKind ISuicideAct.Suicide(EntityUid victim, IChatManager chat)
-        {
-            if (_entities.TryGetComponent(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is {} mind)
-            {
-                EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, false);
-
-                if (mind.OwnedEntity is {Valid: true} entity)
-                {
-                    entity.PopupMessage(Loc.GetString("crematorium-entity-storage-component-suicide-message"));
-                }
-            }
-
-            victim.PopupMessageOtherClients(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)));
-
-            if (CanInsert(victim))
-            {
-                Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
-            }
-            else
-            {
-                _entities.DeleteEntity(victim);
-            }
-
-            Cremate();
-
-            return SuicideKind.Heat;
         }
     }
 }

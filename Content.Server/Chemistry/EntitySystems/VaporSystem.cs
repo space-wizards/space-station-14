@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -6,10 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 
@@ -97,10 +94,10 @@ namespace Content.Server.Chemistry.EntitySystems
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridID.IsValid())
+            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridEntityId.IsValid())
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
 
                 var tile = mapGrid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())

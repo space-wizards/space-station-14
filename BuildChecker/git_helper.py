@@ -42,6 +42,9 @@ def update_submodules():
     Updates all submodules.
     """
 
+    if ('GITHUB_ACTIONS' in os.environ):
+        return
+
     if os.path.isfile("DISABLE_SUBMODULE_AUTOUPDATE"):
         return
 

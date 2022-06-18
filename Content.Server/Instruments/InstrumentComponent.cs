@@ -2,9 +2,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Instruments;
 
