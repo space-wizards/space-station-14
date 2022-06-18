@@ -72,6 +72,7 @@ public sealed partial class ChemistrySystem
             if (TryComp<BloodstreamComponent>(target, out var stream))
             {
                 TryDraw(component, target, stream.BloodSolution, user, stream);
+                return;
             }
             /// Draw from an object (food, beaker, etc)
             if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
@@ -357,6 +358,7 @@ public sealed partial class ChemistrySystem
         if (stream != null)
         {
             DrawFromBlood(user, targetEntity, component, solution, stream, (float) realTransferAmount);
+            return;
         }
 
         // Move units from attackSolution to targetSolution
