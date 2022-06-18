@@ -1,35 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: 'Drones now have access to the Omnitool, a T-Ray Scanner, and a satchel!',
-    type: Add}
-  - {message: Drones have 1 less available hands., type: Tweak}
-  id: 1215
-  time: '2022-03-16T01:11:30.0000000+00:00'
-- author: EmoGarbage
-  changes:
-  - {message: 'Added the Space Tick, a new salvage mob to terrorize hardworking salvage
-      specialists.', type: Add}
-  - {message: Tweaked salvage mob spawners to allow the Space Tick to generate., type: Tweak}
-  id: 1216
-  time: '2022-03-16T01:11:36.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Added a variation of the cute bee plushie, type: Add}
-  id: 1217
-  time: '2022-03-16T18:42:08.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Due to a budget oversight, SS14 is now equipped with rotatable arcade
-      machines.', type: Fix}
-  id: 1218
-  time: '2022-03-16T21:30:05.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: 'Due to a budgetary oversight, possums and raccoons are now smaller.
-      Also Ferrets are a little bigger.', type: Tweak}
-  id: 1219
-  time: '2022-03-16T21:30:14.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed gas tank UIs not showing the current output pressure when opened.,
@@ -3000,3 +2969,31 @@ Entries:
   - {message: Removed the radiation storm event., type: Remove}
   id: 1714
   time: '2022-06-17T07:00:23.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Botany tools now fit on the botany belt., type: Tweak}
+  - {message: Airlock Painters now fit on utility belts., type: Tweak}
+  id: 1715
+  time: '2022-06-18T02:13:29.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The Rat King and his servants now have an appropriate silly accent.,
+    type: Tweak}
+  id: 1716
+  time: '2022-06-18T02:36:19.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'There are more kinds of Exos than a simple slug with blades now. Some
+      are faster, some are stronger, and one might shoot, someday.', type: Add}
+  id: 1717
+  time: '2022-06-18T03:33:41.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added the remaining botany tools to the NutriVend machine., type: Tweak}
+  id: 1718
+  time: '2022-06-18T03:34:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Certain station events will no longer be announced., type: Tweak}
+  id: 1719
+  time: '2022-06-18T03:53:02.0000000+00:00'
