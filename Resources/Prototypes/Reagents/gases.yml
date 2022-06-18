@@ -17,6 +17,10 @@
         conditions:
         - !type:OrganType
           type: Animal
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Rat
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -157,6 +161,9 @@
       effects:
       - !type:ChemCauseRandomDisease
         conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
@@ -168,8 +175,12 @@
           - Bird Flew
           - VanAusdallsRobovirus
           - BleedersBite
+          - Plague
       - !type:HealthChange
         conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
@@ -181,6 +192,23 @@
       - !type:ChemVomit
         probability: 0.12
         conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Miasma
           min: 0.8
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Blunt: -4
+            Slash: -3
+            Piercing: -3
