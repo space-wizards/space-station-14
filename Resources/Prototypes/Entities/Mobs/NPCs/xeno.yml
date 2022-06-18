@@ -1,6 +1,6 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
-  name: Xeno
+  name: Burrower
   id: MobXeno
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
@@ -40,7 +40,6 @@
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
-      150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
@@ -55,7 +54,9 @@
   - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
-    arc: claw
+    hitSound:
+     collection: AlienClaw
+    arc:
     damage:
       groups:
         Brute: 20
@@ -92,8 +93,225 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
-      - FootstepSound
+      - FootstepSound 
   - type: NoSlip
+
+- type: entity
+  name: Praetorian
+  parent: MobXeno
+  id: MobXenoPraetorian
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/praetorian.rsi
+    offset: 0,0.4
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      300: !type:DeadMobState {}
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
+- type: entity
+  name: Drone
+  parent: MobXeno
+  id: MobXenoDrone
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/drone.rsi
+    offset: 0,0.2
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      200: !type:DeadMobState {}
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.0
+    baseSprintSpeed : 5.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      150: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
+- type: entity
+  name: Queen
+  parent: MobXeno
+  id: MobXenoQueen
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/queen.rsi
+    offset: 0,0.4
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      1500: !type:DeadMobState {}
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.8
+    baseSprintSpeed : 3.8
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 40
+    cooldownTime: 2
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      1000: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
+- type: entity
+  name: Ravager
+  parent: MobXeno
+  id: MobXenoRavager
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/ravager.rsi
+    offset: 0,0.5
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      550: !type:DeadMobState {}
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.3
+    baseSprintSpeed : 4.2
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 35
+    cooldownTime: 1.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      450: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
+- type: entity
+  name: Runner
+  parent: MobXeno
+  id: MobXenoRunner
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/runner.rsi
+    offset: 0,0.6
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      250: !type:DeadMobState {}
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.7
+    baseSprintSpeed : 6.0
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 15
+    cooldownTime: 0.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      200: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+
+- type: entity
+  name: Rouny
+  parent: MobXenoRunner
+  id: MobXenoRouny
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/rouny.rsi
+    offset: 0,0.6
+
+- type: entity
+  name: Spitter
+  parent: MobXeno
+  id: MobXenoSpitter
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/Xenos/spitter.rsi
+    offset: 0,0.3
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      300: !type:DeadMobState {}
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      250: 0.4
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.45
+      mass: 120
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
 
 - type: entity
   name: space adder

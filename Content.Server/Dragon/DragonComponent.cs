@@ -45,8 +45,11 @@ namespace Content.Server.Dragon
         /// NOTE: original intended design was to increase this proportionally with damage thresholds, but those proved quite difficult to get consistently. right now it devours the structure at a fixed timer.
         /// </remarks>
         /// </summary>
+        [DataField("structureDevourTime")]
+        public float StructureDevourTime = 10f;
+
         [DataField("devourTime")]
-        public float DevourTime = 15f;
+        public float DevourTime = 2f;
 
         [DataField("spawnCount")] public int SpawnsLeft = 2;
 
