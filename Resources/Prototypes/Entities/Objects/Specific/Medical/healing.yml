@@ -109,6 +109,12 @@
     netsync: false
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
+  - type: Item
+    HeldPrefix: Aloe Cream
+  - type: Stack
+    stackType: AloeCream
+    max: 10
+    count: 10
 
 # Pills
 - type: entity
