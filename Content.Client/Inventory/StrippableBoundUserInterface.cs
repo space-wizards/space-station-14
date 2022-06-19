@@ -16,7 +16,7 @@ namespace Content.Client.Inventory
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
-        public string Occupied { get; } = "Occupied";
+        public string Occupied { get; } = Loc.GetString("strippable-bound-user-interface-stripping-menu-obfuscate");
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
