@@ -150,7 +150,7 @@ namespace Content.Client.Atmos.Overlays
                                     var basisB = tilePos + new Vector2(1.0f, 1.0f);
                                     var basisC = tilePos + new Vector2(0.0f, 1.0f);
                                     var basisD = tilePos + new Vector2(1.0f, 0.0f);
-                                    var color = Color.White // Use first three bytes for an unique color... Good enough?
+                                    var color = Color.White // Use first three nibbles for an unique color... Good enough?
                                         .WithRed(   data.InExcitedGroup & 0x000F)
                                         .WithGreen((data.InExcitedGroup & 0x00F0) >>4)
                                         .WithBlue( (data.InExcitedGroup & 0x0F00) >>8);
