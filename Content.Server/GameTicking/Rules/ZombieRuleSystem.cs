@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -9,6 +10,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Traitor;
 using Content.Server.Zombies;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.FixedPoint;
@@ -37,14 +39,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly ActionsSystem _action = default!;
+    [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
 
     private Dictionary<string, string> _initialInfected = new();
 
     public override string Prototype => "Zombie";
+
     private const string PatientZeroPrototypeID = "InitialInfected";
     private const string InitialZombieVirusPrototype = "PassiveZombieVirus";
-
-    private const int LastSurvivorsThreshold = 6;
+    private const string ZombifySelfActionPrototype = "TurnUndead";
 
     public override void Initialize()
     {
@@ -56,6 +60,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnJobAssigned);
 
         SubscribeLocalEvent<EntityZombifiedEvent>(OnEntityZombified);
+        SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -85,11 +90,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                 ("username", player.Value)));
         }
 
-        //Gets a bunch of the living players and displays them if they're under a threshold.
-        if (percent > 0 && livingHumans.Count < LastSurvivorsThreshold)
+        ///Gets a bunch of the living players and displays them if they're under a threshold.
+        ///InitialInfected is used for the threshold because it scales with the player count well.
+        if (percent > 0 && livingHumans.Count < _initialInfected.Count)
         {
             ev.AddLine("");
-            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", 1)));
+            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
             foreach (var survivor in livingHumans)
             {
                 var meta = MetaData(survivor);
@@ -183,6 +189,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     public override void Ended(GameRuleConfiguration configuration) { }
 
+    private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
+    {
+        _zombify.ZombifyEntity(uid);
+
+        var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype));
+        _action.RemoveAction(uid, action);
+    }
+
     private FixedPoint2 GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
         var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
@@ -199,7 +213,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                     livingZombies.Add(ent.Item2.Owner);
                 else
                     livingHumans.Add(ent.Item2.Owner);
-            }    
+            }
         }
         return (FixedPoint2) livingZombies.Count / (FixedPoint2) totalPlayers.Count;
     }
@@ -245,7 +259,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             IPlayerSession zombie;
             if (prefList.Count == 0)
             {
-                if(playerList.Count == 0)
+                if (playerList.Count == 0)
                 {
                     Logger.InfoS("preset", "Insufficient number of players. stopping selection.");
                     break;
@@ -276,6 +290,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             {
                 _diseaseSystem.TryAddDisease(mind.OwnedEntity.Value, InitialZombieVirusPrototype);
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
+
+                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(ZombifySelfActionPrototype));
+                _action.AddAction(mind.OwnedEntity.Value, action, null);
             }
 
             if (mind.Session != null)

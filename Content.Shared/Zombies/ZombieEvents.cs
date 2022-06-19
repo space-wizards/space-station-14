@@ -1,4 +1,4 @@
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Zombies;
 /// <summary>
@@ -21,4 +21,4 @@ public sealed class EntityZombifiedEvent : EventArgs
 /// <summary>
 ///     Event raised when a player zombifies themself using the "turn" action
 /// </summary>
-public sealed class ZombifySelfActionEvent : InstantAction { };
+public sealed class ZombifySelfActionEvent : InstantActionEvent { };

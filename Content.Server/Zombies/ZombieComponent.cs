@@ -12,7 +12,7 @@ namespace Content.Server.Zombies
         /// attacks another zombie. longe name
         /// </summary>
         [ViewVariables]
-        public float OtherZombieDamageCoefficient = 0.75f;
+        public float OtherZombieDamageCoefficient = 0.5f;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
@@ -31,7 +31,13 @@ namespace Content.Server.Zombies
         /// The skin color of the zombie
         /// </summary>
         [ViewVariables, DataField("skinColor")]
-        public Color SkinColor = new Color(0.70f, 0.72f, 0.48f, 1);
+        public Color SkinColor = new(0.45f, 0.51f, 0.29f);
+
+        /// <summary>
+        /// The eye color of the zombie
+        /// </summary>
+        [ViewVariables, DataField("eyeColor")]
+        public Color EyeColor = new(0.96f, 0.13f, 0.24f);
 
         /// <summary>
         /// The attack arc of the zombie

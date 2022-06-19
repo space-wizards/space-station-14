@@ -52,7 +52,6 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
-            SubscribeLocalEvent<ZombifyOnDeathComponent, ZombifySelfActionEvent>(OnZombifySelf);
         }
 
         /// <summary>
@@ -67,11 +66,6 @@ namespace Content.Server.Zombies
             }
         }
 
-        private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
-        {
-            ZombifyEntity(uid);
-        }
-
         /// <summary>
         ///     This is the general purpose function to call if you want to zombify an entity.
         ///     It handles both humanoid and nonhumanoid transformation and everything should be called through it.
@@ -80,7 +74,7 @@ namespace Content.Server.Zombies
         /// <remarks>
         ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
-        ///     attempted to label everything thouroughly for your sanity. It have attempted to 
+        ///     attempted to label everything thouroughly for your sanity. I have attempted to 
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
@@ -121,7 +115,8 @@ namespace Content.Server.Zombies
             {
                 //this bs is done because you can't directly update humanoid appearances
                 var appearance = huApComp.Appearance;
-                _sharedHuApp.UpdateAppearance(target, appearance.WithSkinColor(zombiecomp.SkinColor), huApComp);
+                appearance = appearance.WithSkinColor(zombiecomp.SkinColor).WithEyeColor(zombiecomp.EyeColor);
+                _sharedHuApp.UpdateAppearance(target, appearance, huApComp);
                 _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
 
                 ///This is done here because non-humanoids shouldn't get baller damage
@@ -185,7 +180,7 @@ namespace Content.Server.Zombies
             foreach (var hand in _sharedHands.EnumerateHands(target))
             {
                 _sharedHands.SetActiveHand(target, hand);
-                hand.Container?.EmptyContainer();
+                _sharedHands.DoDrop(target, hand);
                 _sharedHands.RemoveHand(target, hand.Name);
             }
             RemComp<HandsComponent>(target);
