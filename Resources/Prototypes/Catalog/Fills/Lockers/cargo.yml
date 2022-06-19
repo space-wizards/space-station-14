@@ -15,8 +15,3 @@
       - id: ClothingBeltUtilityFilled
         prob: 0.8
       - id: SurvivalKnife
-        prob: 0.8
-      - id: WeaponMakeshiftLaser
-        prob: 0.25
-
-
