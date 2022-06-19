@@ -96,7 +96,7 @@ public sealed class SharedBlockingSystem : EntitySystem
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
             {
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                SoundSystem.Play(Filter.Pvs(component.Owner), blockingComponent.BlockSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
+                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), blockingComponent.BlockSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
             }
         }
     }
@@ -106,8 +106,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         //In theory the user should not be null when this fires off
         if (component.User != null)
         {
-            var user = (EntityUid) component.User;
-            BlockingShutdownHelper(uid, component, user);
+            BlockingShutdownHelper(uid, component, component.User.Value);
         }
     }
 

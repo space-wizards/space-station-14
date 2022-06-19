@@ -6,4 +6,4 @@ slash.ogg taken from https://github.com/tgstation/tgstation/blob/5d264fbea0124e5
 
 tap.ogg taken from https://github.com/tgstation/tgstation/blob/803ca4537df35cf252b056d8460d510be8a4f353/sound/weapons/tap.ogg under CC BY-SA 3.0
 
-block_metal1.ogg taken from https://github.com/Citadel-Station-13/Citadel-Station-13/blob/master/sound/block_parry/block_metal1.ogg under CC BY-SA 3.0
+block_metal1.ogg taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/31c5996a5db8cce0cb431cb1dc20d99cac83f268 under CC BY-SA 3.0

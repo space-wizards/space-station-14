@@ -7,13 +7,15 @@ namespace Content.Shared.Blocking;
 /// This component gets dynamically added to an Entity via the <see cref="SharedBlockingSystem"/>
 /// </summary>
 [RegisterComponent]
-public class SharedBlockingUserComponent : Component
+public sealed class SharedBlockingUserComponent : Component
 {
     /// <summary>
     /// The entity that's being used to block
     /// </summary>
+    [ViewVariables]
     public EntityUid? BlockingItem;
 
+    [ViewVariables]
     public DamageModifierSet Modifiers = default!;
 
     /// <summary>
