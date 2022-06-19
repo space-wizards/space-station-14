@@ -1,12 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: 'Traitors can now purchase a hypopen: a stealthy 15u hypospray disguised
-      as a pen', type: Add}
-  - {message: 'Replaced the basic ink pen with a Cybersun legal pen, bumped the price
-      to 4 TC for obvious reasons.', type: Tweak}
-  id: 1222
-  time: '2022-03-17T18:46:19.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The game now supports an automated map rotation that cycles through
@@ -2995,3 +2987,9 @@ Entries:
       than spreading plague., type: Add}
   id: 1721
   time: '2022-06-18T23:21:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Repairing yourself now takes 3 times as long as letting someone else
+      do it., type: Tweak}
+  id: 1722
+  time: '2022-06-19T05:50:43.0000000+00:00'
