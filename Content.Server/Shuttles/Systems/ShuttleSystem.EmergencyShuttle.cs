@@ -69,19 +69,17 @@ public sealed partial class ShuttleSystem
                    var stationDockPos = shuttleDockXform.LocalPosition +
                                         shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-                   var largestGridXform = Transform(largestGrid.Value);
-                   var largestGridMatrix = largestGridXform.WorldMatrix;
+                   var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockXform.LocalRotation);
 
                    foreach (var (comp, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
                    {
                        if (xform.ParentUid != largestGrid.Value || comp.Docked) continue;
 
                        // Now get the rotation difference between the 2 and rotate the shuttle position by that.
-                       var rotation = (shuttleDockXform.LocalRotation - xform.LocalRotation);
-                       var shuttlePos = xform.LocalPosition + rotation.RotateVec(stationDockPos);
-
-                       var xformMatrix = Matrix3.CreateTransform(shuttlePos, rotation);
-                       shuttleBounds = xformMatrix.TransformBox(shuttleAABB);
+                       var xformMatrix = Matrix3.CreateTransform(xform.LocalPosition, -xform.LocalRotation);
+                       Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
+                       shuttleBounds = matty.TransformBox(shuttleAABB);
+                       break;
 
                        // TODO: Validate clearance.
                    }
