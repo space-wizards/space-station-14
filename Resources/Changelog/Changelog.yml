@@ -1,12 +1,6 @@
 Entries:
 - author: TimrodDX
   changes:
-  - {message: 'A port of Delta Station, the largest map ever made for Space Station
-      13, is now playable! The map is still a beta.', type: Add}
-  id: 1225
-  time: '2022-03-18T21:43:53.0000000+00:00'
-- author: TimrodDX
-  changes:
   - {message: Fixes a number of issues on Delta Station. Thank you for testing it!
       Please continue to report any issues you're having., type: Tweak}
   id: 1226
@@ -3001,3 +2995,9 @@ Entries:
     type: Fix}
   id: 1724
   time: '2022-06-19T11:13:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
+      line with the other duffel bags., type: Tweak}
+  id: 1725
+  time: '2022-06-19T12:06:44.0000000+00:00'
