@@ -10,6 +10,10 @@ namespace Content.Server.Shuttles.Systems;
 
 public sealed partial class ShuttleSystem
 {
+    /*
+     * Handles the emergency shuttle's console and early launching.
+     */
+
     [Dependency] private readonly HandsSystem _handsSystem = default!;
 
     public bool EmergencyShuttleAuthorized { get; private set; }
