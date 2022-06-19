@@ -27,7 +27,6 @@
   - type: MovedByPressure
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: Transform
     noRot: true
   - type: Fixtures
@@ -61,6 +60,7 @@
       key: bag
     - type: BodyBagVisualizer
   - type: Pullable
+  - type: AntiRottingContainer
 
 - type: entity
   id: BodyBag_Folded

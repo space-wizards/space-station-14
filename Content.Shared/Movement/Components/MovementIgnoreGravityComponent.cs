@@ -45,7 +45,7 @@ namespace Content.Shared.Movement.Components
                 return ignoreGravityComponent.Weightless;
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
-            var gridId = transform.GridID;
+            var gridId = transform.GridEntityId;
 
             if (!gridId.IsValid())
             {

@@ -158,7 +158,7 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundDeny.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundDeny.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             // Play the Deny animation
             TryUpdateVisualState(uid, VendingMachineVisualState.Deny, vendComponent);
             //TODO: This duration should be a distinct value specific to the deny animation
@@ -240,7 +240,7 @@ namespace Content.Server.VendingMachines
                     _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
                 }
             });
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundVend.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundVend.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)

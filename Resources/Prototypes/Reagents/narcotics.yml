@@ -152,3 +152,19 @@
         key: Stutter
         time: 1
         component: StutteringAccent
+
+- type: reagent
+  id: MuteToxin
+  name: reagent-name-mute-toxin
+  group: Narcotics
+  desc: reagent-desc-mute-toxin
+  physicalDesc: reagent-physical-desc-syrupy
+  color: "#000000"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted

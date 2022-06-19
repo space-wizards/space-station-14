@@ -113,6 +113,12 @@
             "name": "Musician"
         },
         {
+            "name": "Reporter"
+        },
+        {
+            "name": "Psychologist"
+        },
+        {
             "name": "MedicalIntern"
         },
         {
