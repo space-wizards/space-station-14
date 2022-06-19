@@ -21,13 +21,42 @@ public sealed partial class ShuttleSystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
+    /// <summary>
+    /// Has the emergency shuttle arrived?
+    /// </summary>
+    public bool EmergencyShuttleArrived { get; private set; }
+
     public bool EmergencyShuttleAuthorized { get; private set; }
+
+    /// <summary>
+    /// How much time remaining until the shuttle consoles for emergency shuttles are unlocked?
+    /// </summary>
+    private float _accumulator;
+
+    // TODO: CVar
+    /// <summary>
+    /// How long it takes for an emergency shuttle console to be unlocked.
+    /// </summary>
+    public TimeSpan EmergencyShuttleDefaultTime = TimeSpan.FromSeconds(5);
 
     private void InitializeEmergencyConsole()
     {
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
+    }
+
+    private void UpdateEmergencyConsole(float frameTime)
+    {
+        if (_accumulator <= 0f) return;
+
+        _accumulator -= frameTime;
+
+        // TODO: Authorise shuttles NOW! SLOTH! DO IT NOW!
+        if (_accumulator <= frameTime)
+        {
+
+        }
     }
 
     private void OnEmergencyRepealAll(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealAllMessage args)
@@ -52,7 +81,7 @@ public sealed partial class ShuttleSystem
         component.AuthorizedEntities.Clear();
 
         // TODO: Authorize
-        UpdateConsole(uid, component);
+        UpdateConsoleState(uid, component);
     }
 
     private void OnEmergencyRepeal(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealMessage args)
@@ -78,7 +107,7 @@ public sealed partial class ShuttleSystem
         CheckForLaunch(component);
 
         // TODO: Authorize
-        UpdateConsole(uid, component);
+        UpdateConsoleState(uid, component);
     }
 
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
@@ -104,15 +133,16 @@ public sealed partial class ShuttleSystem
         CheckForLaunch(component);
 
         // TODO: Authorize
-        UpdateConsole(uid, component);
+        UpdateConsoleState(uid, component);
     }
 
     private void CleanupEmergencyConsole()
     {
         EmergencyShuttleAuthorized = false;
+        EmergencyShuttleArrived = false;
     }
 
-    private void UpdateConsole(EntityUid uid, EmergencyShuttleConsoleComponent component)
+    private void UpdateConsoleState(EntityUid uid, EmergencyShuttleConsoleComponent component)
     {
         var auths = new List<string>();
 

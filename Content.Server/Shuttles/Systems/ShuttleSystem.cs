@@ -60,6 +60,7 @@ namespace Content.Server.Shuttles.Systems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            UpdateEmergencyConsole(frameTime);
             UpdateHyperspace(frameTime);
         }
 

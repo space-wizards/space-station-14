@@ -160,6 +160,7 @@ public sealed partial class ShuttleSystem
                    {
                        var location = validDockConfigs.First();
                        position = location.Area;
+                       // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
 
                        if (!dryRun)
                        {
