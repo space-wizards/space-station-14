@@ -1,0 +1,29 @@
+<userInterface:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           Title="Emergency Shuttle Console">
+<BoxContainer Orientation="Vertical">
+    <Label Name="Countdown"
+           HorizontalAlignment="Center"
+           Text="00:00"/>
+    <Label Name="EngineStatus"
+           HorizontalAlignment="Center"
+           Text="Idle"/>
+    <BoxContainer Name="LaunchContainer">
+        <Label Text="Early Launch Authorization"/>
+        <Button Name="RepealAllButton" Text="Repeal All"/>
+    </BoxContainer>
+    <!-- Spacer -->
+    <BoxContainer Name="AuthorizeContainer">
+        <Button Name="AuthorizeButton" Text="AUTHORIZE"/>
+        <Button Name="RepealButton" Text="REPEAL"/>
+    </BoxContainer>
+    <BoxContainer Name="AuthorizationsContainer">
+        <Label Text="Authorizations"/>
+        <Label Name="AuthorizationCount" Text="Remaining: 3"/>
+    </BoxContainer>
+    <!-- Spacer -->
+    <BoxContainer>
+
+    </BoxContainer>
+</BoxContainer>
+</userInterface:FancyWindow>

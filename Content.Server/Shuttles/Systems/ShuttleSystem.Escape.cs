@@ -35,6 +35,16 @@ public sealed partial class ShuttleSystem
        Setup();
    }
 
+   /// <summary>
+   /// Spawns the escape shuttle for each station and starts the countdown until controls unlock.
+   /// </summary>
+   public void CallEscapeShuttle()
+   {
+       // TODO: Need a console that allows you to authorise early launch.
+
+       // TODO: When shuttle launches set a timer for round end.
+   }
+
    private void Setup()
    {
        DebugTools.Assert(_centcommMap == null);
@@ -42,11 +52,11 @@ public sealed partial class ShuttleSystem
        _mapManager.SetMapPaused(_centcommMap.Value, true);
 
        // Load Centcomm
-       var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "", new MapLoadOptions());
+       var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/Salvage/stationstation.yml", new MapLoadOptions());
        _centcomm = centcomm;
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, "", new MapLoadOptions()
+       var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/cargo_shuttle.yml", new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check centcomm.
            Offset = Vector2.One * 1000f,

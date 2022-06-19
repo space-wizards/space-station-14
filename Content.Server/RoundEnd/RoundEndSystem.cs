@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
@@ -12,15 +13,18 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd
 {
+    /// <summary>
+    /// Handles ending rounds normally and also via requesting it (e.g. via comms console)
+    /// If you request a round end then an escape shuttle will be used.
+    /// </summary>
     public sealed class RoundEndSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
+        [Dependency] private readonly ShuttleSystem _shuttle = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
         public TimeSpan DefaultCountdownDuration { get; set; } = TimeSpan.FromMinutes(4);
@@ -87,7 +91,7 @@ namespace Content.Server.RoundEnd
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
-            Timer.Spawn(countdownTime, EndRound, _countdownTokenSource.Token);
+            Timer.Spawn(countdownTime, _shuttle.CallEscapeShuttle, _countdownTokenSource.Token);
 
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
