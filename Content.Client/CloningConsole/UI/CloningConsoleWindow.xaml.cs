@@ -49,7 +49,16 @@ namespace Content.Client.CloningConsole.UI
             // BUILD SCANNER UI
             if (state.ScannerConnected)
             {
+                if (!state.ScannerInRange)
+                {
+                    GeneticScannerFar.Visible = true;
+                    GeneticScannerContents.Visible = false;
+                    GeneticScannerMissing.Visible = false;
+                    return;
+                }
+
                 GeneticScannerContents.Visible = true;
+                GeneticScannerFar.Visible = false;
                 GeneticScannerMissing.Visible = false;
                 CloneButton.Disabled = state.CloningStatus != ClonerStatus.Ready;
 
@@ -86,13 +95,23 @@ namespace Content.Client.CloningConsole.UI
             {
                 // Scanner is missing, set error message visible
                 GeneticScannerContents.Visible = false;
+                GeneticScannerFar.Visible = false;
                 GeneticScannerMissing.Visible = true;
             }
 
             // BUILD ClONER UI
             if (state.ClonerConnected)
             {
+                if (!state.ClonerInRange)
+                {
+                    CloningPodFar.Visible = true;
+                    CloningPodContents.Visible = false;
+                    CloningPodMissing.Visible = false;
+                    return;
+                }
+
                 CloningPodContents.Visible = true;
+                CloningPodFar.Visible = false;
                 CloningPodMissing.Visible = false;
 
                 UpdateProgress();
@@ -107,6 +126,7 @@ namespace Content.Client.CloningConsole.UI
             {
                 // Clone pod is missing, set error message visible
                 CloningPodContents.Visible = false;
+                CloningPodFar.Visible = false;
                 CloningPodMissing.Visible = true;
             }
         }

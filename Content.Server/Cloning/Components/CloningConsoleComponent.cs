@@ -23,6 +23,10 @@ namespace Content.Server.Cloning.Components
         [DataField("podPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
         public string PodPort = "CloningPodSender";
 
+        /// Maximum distance between console and one if its machines
+        [DataField("maxDistance")]
+        public float MaxDistance = 4f;
+
         public bool Powered = false;
     }
 }

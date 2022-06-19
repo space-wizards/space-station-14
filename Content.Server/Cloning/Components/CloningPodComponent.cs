@@ -19,7 +19,7 @@ namespace Content.Server.Cloning.Components
         /// <summary>
         ///     The port for cloning pods.
         /// </summary>
-        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string PodPort = "CloningPodReceiver";
     }
 }

@@ -159,10 +159,14 @@ namespace Content.Server.Cloning.Systems
             // genetic scanner info
             string scanBodyInfo = "Unknown";
             bool scannerConnected = false;
+            bool scannerInRange = false;
             if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var scanner)) {
 
                 scannerConnected = true;
                 EntityUid? scanBody = scanner.BodyContainer.ContainedEntity;
+
+                Transform(scanner.Owner).Coordinates.TryDistance(EntityManager, Transform((EntityUid) consoleComponent.Owner).Coordinates, out float distance);
+                scannerInRange = (distance <= consoleComponent.MaxDistance);
 
                 // GET NAME
                 if (TryComp<MetaDataComponent>(scanBody, out var scanMetaData))
@@ -196,12 +200,16 @@ namespace Content.Server.Cloning.Systems
             bool clonerProgressing = false;
             bool clonerConnected = false;
             bool clonerMindPresent = false;
+            bool clonerInRange = false;
             if (consoleComponent.CloningPod != null && TryComp<CloningPodComponent>(consoleComponent.CloningPod, out var clonePod))
             {
                 clonerConnected = true;
                 EntityUid? cloneBody = clonePod.BodyContainer.ContainedEntity;
                 if (TryComp<MetaDataComponent>(cloneBody, out var cloneMetaData))
                     cloneBodyInfo = cloneMetaData.EntityName;
+
+                Transform(clonePod.Owner).Coordinates.TryDistance(EntityManager, Transform((EntityUid) consoleComponent.Owner).Coordinates, out float distance);
+                clonerInRange = (distance <= consoleComponent.MaxDistance);
 
                 cloningProgress = clonePod.CloningProgress;
                 cloningTime = clonePod.CloningTime;
@@ -227,7 +235,9 @@ namespace Content.Server.Cloning.Systems
                 clonerMindPresent,
                 clonerStatus,
                 scannerConnected,
-                clonerConnected
+                scannerInRange,
+                clonerConnected,
+                clonerInRange
                 );
         }
     }

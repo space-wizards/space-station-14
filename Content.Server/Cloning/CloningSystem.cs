@@ -12,6 +12,7 @@ using Content.Server.EUI;
 using Robust.Shared.Containers;
 using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
+using Content.Server.MachineLinking.Components;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -38,7 +39,6 @@ namespace Content.Server.Cloning.Systems
         {
             clonePod.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, clonePod.PodPort);
-
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)

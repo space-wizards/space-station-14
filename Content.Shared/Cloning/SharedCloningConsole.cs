@@ -20,8 +20,10 @@ namespace Content.Shared.Cloning.CloningConsole
             public readonly bool MindPresent;
             public readonly ClonerStatus CloningStatus;
             public readonly bool ScannerConnected;
+            public readonly bool ScannerInRange;
             public readonly bool ClonerConnected;
-            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatus cloningStatus, bool scannerConnected, bool clonerConnected)
+            public readonly bool ClonerInRange;
+            public CloningConsoleBoundUserInterfaceState(string? scannerBodyInfo, string? cloningBodyInfo, TimeSpan refTime, float progress, float maximum, bool progressing, bool mindPresent, ClonerStatus cloningStatus, bool scannerConnected, bool scannerInRange, bool clonerConnected, bool clonerInRange)
             {
                 ScannerBodyInfo = scannerBodyInfo;
                 ClonerBodyInfo = cloningBodyInfo;
@@ -32,7 +34,9 @@ namespace Content.Shared.Cloning.CloningConsole
                 MindPresent = mindPresent;
                 CloningStatus = cloningStatus;
                 ScannerConnected = scannerConnected;
+                ScannerInRange = scannerInRange;
                 ClonerConnected = clonerConnected;
+                ClonerInRange = clonerInRange;
             }
         }
 

@@ -16,7 +16,7 @@ namespace Content.Server.Medical.Components
         /// <summary>
         ///     The port for medical scanners.
         /// </summary>
-        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string ScannerPort = "MedicalScannerReceiver";
 
         // ECS this out!, when DragDropSystem and InteractionSystem refactored
