@@ -21,6 +21,7 @@ public sealed partial class ShuttleSystem
 
    [Dependency] private readonly IAdminManager _admin = default!;
    [Dependency] private readonly IMapLoader _loader = default!;
+   [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
    private MapId? _centcommMap;
@@ -66,7 +67,7 @@ public sealed partial class ShuttleSystem
    /// </summary>
    /// <param name="stationUid"></param>
    /// <param name="dryRun">Should we show the debug data and not actually call it.</param>
-   private void CallEmergencyShuttle(EntityUid? stationUid, bool dryRun = false)
+   public void CallEmergencyShuttle(EntityUid? stationUid, bool dryRun = false)
    {
        EntityUid? targetGrid = null;
        Box2? position = null;
@@ -75,7 +76,7 @@ public sealed partial class ShuttleSystem
        // all of them on the shuttle and try to find the most appropriate.
        if (TryComp<StationDataComponent>(stationUid, out var dataComponent) && dataComponent.EmergencyShuttle != null)
        {
-           (targetGrid, _) = GetLargestGrid(dataComponent);
+           targetGrid = GetLargestGrid(dataComponent);
 
            if (targetGrid != null)
            {
@@ -88,7 +89,7 @@ public sealed partial class ShuttleSystem
                    var targetGridXform = Transform(targetGrid.Value);
                    var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
-                   var validDockConfigs = new List<(DockingComponent Dock, int Count, Box2 Area, EntityCoordinates coordinates, Angle angle)>();
+                   var validDockConfigs = new List<DockingConfig>();
 
                    if (shuttleDocks.Count > 0)
                    {
@@ -136,8 +137,21 @@ public sealed partial class ShuttleSystem
                                    }
                                }
 
-                               var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(shuttleXform.LocalPosition));
-                               validDockConfigs.Add((dock, connections, shuttleBounds.Value, spawnPosition, targetGridXform.LocalRotation - xform.LocalRotation + shuttleXform.LocalRotation));
+                               var spawnPosition = new EntityCoordinates(targetGridXform.ParentUid, matty.Transform(Vector2.Zero));
+                               var spawnRotation = shuttleDockXform.LocalRotation +
+                                   targetGridXform.LocalRotation +
+                                   xform.LocalRotation;
+
+                               validDockConfigs.Add(new DockingConfig()
+                               {
+                                   Docks = new List<(DockingComponent DockA, DockingComponent DockB)>()
+                                   {
+                                       (dock, gridDock),
+                                   },
+                                   Area = shuttleBounds.Value,
+                                   Coordinates = spawnPosition,
+                                   Angle = spawnRotation,
+                               });
                            }
                        }
                    }
@@ -150,11 +164,14 @@ public sealed partial class ShuttleSystem
                        if (!dryRun)
                        {
                            // Set position
-                           shuttleXform.Coordinates = new EntityCoordinates(targetGridXform.ParentUid,
-                               location.coordinates.ToMapPos(EntityManager));
-                           shuttleXform.WorldRotation = location.angle;
+                           shuttleXform.Coordinates = location.Coordinates;
+                           shuttleXform.WorldRotation = location.Angle;
 
                            // Connect everything
+                           foreach (var (dockA, dockB) in location.Docks)
+                           {
+                               // _dockSystem.Dock(dockA, dockB);
+                           }
                        }
                    }
                }
@@ -169,10 +186,6 @@ public sealed partial class ShuttleSystem
                Position = position,
            });
        }
-       else
-       {
-
-       }
    }
 
    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
@@ -186,13 +199,13 @@ public sealed partial class ShuttleSystem
    }
 
    /// <summary>
-   /// Spawns the escape shuttle for each station and starts the countdown until controls unlock.
+   /// Spawns the emergency shuttle for each station and starts the countdown until controls unlock.
    /// </summary>
-   public void CallEscapeShuttle()
+   public void CallEmergencyShuttle()
    {
        foreach (var comp in EntityQuery<StationDataComponent>())
        {
-           DockEmergencyShuttle(comp);
+           CallEmergencyShuttle(comp.Owner);
        }
 
        // TODO: Set a timer for 4 minutes to launch
@@ -210,7 +223,10 @@ public sealed partial class ShuttleSystem
        // TODO: Hyperspace arrival and squimsh anything in the way
    }
 
-   private (EntityUid?, Box2?) GetLargestGrid(StationDataComponent component)
+   /// <summary>
+   /// Gets the largest member grid from a station.
+   /// </summary>
+   private EntityUid? GetLargestGrid(StationDataComponent component)
    {
        EntityUid? largestGrid = null;
        Box2 largestBounds = new Box2();
@@ -221,12 +237,11 @@ public sealed partial class ShuttleSystem
 
            if (grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared) continue;
 
-
            largestBounds = grid.Grid.LocalAABB;
            largestGrid = gridUid;
        }
 
-       return (largestGrid, largestBounds);
+       return largestGrid;
    }
 
    private List<DockingComponent> GetDocks(EntityUid uid)
@@ -266,7 +281,7 @@ public sealed partial class ShuttleSystem
        // TODO: Support multiple stations dingus.
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/cargo_shuttle.yml", new MapLoadOptions()
+       var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check centcomm.
            Offset = Vector2.One * 500f,
@@ -287,6 +302,18 @@ public sealed partial class ShuttleSystem
    /// </summary>
    private sealed class DockingConfig
    {
-       
+       /// <summary>
+       /// The pairs of docks that can connect.
+       /// </summary>
+       public List<(DockingComponent DockA, DockingComponent DockB)> Docks = new();
+
+       /// <summary>
+       /// Area relative to the target grid the emergency shuttle will spawn in on.
+       /// </summary>
+       public Box2 Area;
+
+       public EntityCoordinates Coordinates;
+
+       public Angle Angle;
    }
 }
