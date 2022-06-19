@@ -18,6 +18,9 @@
   name: emergency shuttle console
   description: Handles authorization to early launch the shuttle.
   components:
+  - type: AccessReader
+    access:
+    - [ EmergencyShuttleLaunch ]
   - type: EmergencyShuttleConsole
   - type: ActivatableUI
     key: enum.EmergencyShuttleConsoleUiKey.Key
