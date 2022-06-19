@@ -26,7 +26,7 @@ namespace Content.Server.Repairable
 
             float delay = component.DoAfterDelay;
 
-            // Add a penalty to how long it takes if the user it repairing itself
+            // Add a penalty to how long it takes if the user is repairing itself
             if (args.User == args.Target)
                 delay *= component.SelfRepairPenalty;
 
