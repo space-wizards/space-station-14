@@ -83,7 +83,7 @@ public sealed partial class ShuttleSystem
                        Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
                        shuttleBounds = matty.TransformBox(shuttleAABB);
 
-                       if (!ValidSpawn(largestGridGrid, new Box2(shuttleBounds.Value.BottomLeft, shuttleBounds.Value.TopRight - Vector2.One))) continue;
+                       if (!ValidSpawn(largestGridGrid, shuttleBounds.Value)) continue;
 
                        validSpawn = true;
                        break;
