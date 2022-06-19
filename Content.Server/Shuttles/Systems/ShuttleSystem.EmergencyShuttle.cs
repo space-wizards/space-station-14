@@ -50,10 +50,27 @@ public sealed partial class ShuttleSystem
        if (player == null) return;
 
        var stationUid = _station.GetOwningStation(player.Value);
+       CallEmergencyShuttle(stationUid, true);
+   }
+
+   /// <summary>
+   /// Checks whether the emergency shuttle can warp to the specified position.
+   /// </summary>
+   private bool ValidSpawn(IMapGridComponent grid, Box2 area)
+   {
+       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+   }
+
+   /// <summary>
+   /// Calls the emergency shuttle for the station.
+   /// </summary>
+   /// <param name="stationUid"></param>
+   /// <param name="dryRun">Should we show the debug data and not actually call it.</param>
+   private void CallEmergencyShuttle(EntityUid? stationUid, bool dryRun = false)
+   {
        EntityUid? targetGrid = null;
        Box2? position = null;
 
-       // TODO: Copy-paste with docking, shitcode
        // Find the largest grid associated with the station, then try all combinations of docks on it with
        // all of them on the shuttle and try to find the most appropriate.
        if (TryComp<StationDataComponent>(stationUid, out var dataComponent) && dataComponent.EmergencyShuttle != null)
@@ -66,10 +83,12 @@ public sealed partial class ShuttleSystem
 
                if (gridDocks.Count > 0)
                {
+                   var shuttleXform = Transform(dataComponent.EmergencyShuttle.Value);
                    var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
+                   var targetGridXform = Transform(targetGrid.Value);
                    var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
-                   var validDockConfigs = new List<(DockingComponent Dock, int Count, Box2 Area)>();
+                   var validDockConfigs = new List<(DockingComponent Dock, int Count, Box2 Area, EntityCoordinates coordinates, Angle angle)>();
 
                    if (shuttleDocks.Count > 0)
                    {
@@ -117,7 +136,8 @@ public sealed partial class ShuttleSystem
                                    }
                                }
 
-                               validDockConfigs.Add((dock, connections, shuttleBounds.Value));
+                               var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(shuttleXform.LocalPosition));
+                               validDockConfigs.Add((dock, connections, shuttleBounds.Value, spawnPosition, targetGridXform.LocalRotation - xform.LocalRotation + shuttleXform.LocalRotation));
                            }
                        }
                    }
@@ -126,27 +146,34 @@ public sealed partial class ShuttleSystem
                    {
                        var location = validDockConfigs.First();
                        position = location.Area;
+
+                       if (!dryRun)
+                       {
+                           // Set position
+                           shuttleXform.Coordinates = new EntityCoordinates(targetGridXform.ParentUid,
+                               location.coordinates.ToMapPos(EntityManager));
+                           shuttleXform.WorldRotation = location.angle;
+
+                           // Connect everything
+                       }
                    }
                }
            }
        }
 
-       RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
+       if (dryRun)
        {
-            StationUid = targetGrid,
-            Position = position,
-       });
-   }
+           RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
+           {
+               StationUid = targetGrid,
+               Position = position,
+           });
+       }
+       else
+       {
 
-   /// <summary>
-   /// Checks whether the emergency shuttle can warp to the specified position.
-   /// </summary>
-   private bool ValidSpawn(IMapGridComponent grid, Box2 area)
-   {
-       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+       }
    }
-
-   
 
    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
    {
@@ -253,5 +280,13 @@ public sealed partial class ShuttleSystem
        if (_centcommMap == null) return;
 
        _mapManager.DeleteMap(_centcommMap.Value);
+   }
+
+   /// <summary>
+   /// Stores the data for a valid docking configuration for the emergency shuttle
+   /// </summary>
+   private sealed class DockingConfig
+   {
+       
    }
 }
