@@ -42,7 +42,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxTransferRate")]
-        public float MaxTransferRate = Atmospherics.MaxTransferRate;
+        public float MaxTransferRate = 900;
 
         /// <summary>
         ///     As pressure difference approaches this number, the effective volume rate may be smaller than <see
