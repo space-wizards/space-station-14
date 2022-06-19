@@ -170,7 +170,7 @@ public sealed partial class ShuttleSystem
                            // Connect everything
                            foreach (var (dockA, dockB) in location.Docks)
                            {
-                               // _dockSystem.Dock(dockA, dockB);
+                               _dockSystem.Dock(dockA, dockB);
                            }
                        }
                    }

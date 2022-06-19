@@ -35,7 +35,6 @@ namespace Content.Server.Shuttles.Systems
             _sawmill = Logger.GetSawmill("docking");
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
@@ -225,22 +224,6 @@ namespace Content.Server.Shuttles.Systems
             Undock(component);
             Dock(component, other);
             _console.RefreshShuttleConsoles();
-        }
-
-        private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
-        {
-            var lifestage = MetaData(uid).EntityLifeStage;
-            // This is because power can change during startup for <Reasons> and undock
-            if (lifestage is < EntityLifeStage.MapInitialized or >= EntityLifeStage.Terminating) return;
-
-            if (args.Powered)
-            {
-                EnableDocking(uid, component);
-            }
-            else
-            {
-                DisableDocking(uid, component);
-            }
         }
 
         private void DisableDocking(EntityUid uid, DockingComponent component)
