@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -52,6 +53,7 @@ public sealed partial class ShuttleSystem
        EntityUid? largestGrid = null;
        Box2? largestBounds;
        Box2? shuttleBounds = null;
+       var validSpawn = false;
 
        // TODO: Copy-paste with docking, shitcode
        if (TryComp<StationDataComponent>(stationUid, out var dataComponent) && dataComponent.EmergencyShuttle != null)
@@ -60,6 +62,7 @@ public sealed partial class ShuttleSystem
 
            if (largestGrid != null)
            {
+               var largestGridGrid = Comp<IMapGridComponent>(largestGrid.Value);
                var (shuttleDockXform, shuttleDock) = GetShuttleDock(dataComponent.EmergencyShuttle.Value);
                var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
 
@@ -79,9 +82,11 @@ public sealed partial class ShuttleSystem
                        var xformMatrix = Matrix3.CreateTransform(xform.LocalPosition, -xform.LocalRotation);
                        Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
                        shuttleBounds = matty.TransformBox(shuttleAABB);
-                       break;
 
-                       // TODO: Validate clearance.
+                       if (!ValidSpawn(largestGridGrid, new Box2(shuttleBounds.Value.BottomLeft, shuttleBounds.Value.TopRight - Vector2.One))) continue;
+
+                       validSpawn = true;
+                       break;
                    }
                }
            }
@@ -89,10 +94,16 @@ public sealed partial class ShuttleSystem
 
        RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
        {
-            StationUid = largestGrid,
-            Position = shuttleBounds,
+            StationUid = validSpawn ? largestGrid : null,
+            Position = validSpawn ? shuttleBounds : null,
        });
    }
+
+   private bool ValidSpawn(IMapGridComponent grid, Box2 area)
+   {
+       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+   }
+
 
    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
    {
