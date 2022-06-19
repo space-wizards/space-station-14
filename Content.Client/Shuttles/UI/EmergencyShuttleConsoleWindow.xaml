@@ -1,29 +1,42 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           Title="Emergency Shuttle Console">
-<BoxContainer Orientation="Vertical">
+                           Title="Emergency Shuttle Console"
+                           MinSize="400 400">
+<BoxContainer Orientation="Vertical"
+              Margin="5">
     <Label Name="Countdown"
            HorizontalAlignment="Center"
            Text="00:00"/>
-    <Label Name="EngineStatus"
-           HorizontalAlignment="Center"
-           Text="Idle"/>
+    <BoxContainer Name="EngineStatusContainer"
+                  HorizontalAlignment="Center">
+        <Label HorizontalAlignment="Center"
+               Text="ENGINES: "/>
+        <Label Name="EngineStatus"
+               HorizontalAlignment="Center"
+               FontColorOverride="#FFA500"
+               Text="Idle"/>
+    </BoxContainer>
     <BoxContainer Name="LaunchContainer">
         <Label Text="Early Launch Authorization"/>
         <Button Name="RepealAllButton" Text="Repeal All"/>
     </BoxContainer>
     <!-- Spacer -->
     <BoxContainer Name="AuthorizeContainer">
-        <Button Name="AuthorizeButton" Text="AUTHORIZE"/>
+        <Button Name="AuthorizeButton"
+                Text="AUTHORIZE"/>
         <Button Name="RepealButton" Text="REPEAL"/>
     </BoxContainer>
-    <BoxContainer Name="AuthorizationsContainer">
+    <BoxContainer Name="AuthorizationsTextContainer">
         <Label Text="Authorizations"/>
-        <Label Name="AuthorizationCount" Text="Remaining: 3"/>
+        <Label Name="AuthorizationCount"
+               Text="Remaining: 3"
+               FontColorOverride="#00FF00"
+               HorizontalAlignment="Right"
+               Align="Right"
+               HorizontalExpand="True"/>
     </BoxContainer>
     <!-- Spacer -->
-    <BoxContainer>
-
+    <BoxContainer Name="AuthorizationsContainer" Orientation="Vertical">
     </BoxContainer>
 </BoxContainer>
 </userInterface:FancyWindow>

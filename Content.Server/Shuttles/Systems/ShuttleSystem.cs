@@ -1,7 +1,9 @@
+using Content.Server.Access.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -13,6 +15,8 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly IdCardSystem _idCard = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -31,6 +35,10 @@ namespace Content.Server.Shuttles.Systems
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("shuttles");
+
+            InitializeEmergencyConsole();
+            InitializeEscape();
+
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
@@ -39,8 +47,6 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
-
-            InitializeEscape();
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
@@ -59,6 +65,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
+            CleanupEmergencyConsole();
             CleanupEscape();
             CleanupHyperspace();
         }
