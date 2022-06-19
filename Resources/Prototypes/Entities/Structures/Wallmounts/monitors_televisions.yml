@@ -31,7 +31,7 @@
       fixtures:
         - shape:
             !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
+            bounds: "-0.20,-0.10,0.25,0.35"
           mass: 50
           mask:
             - FullTileMask
@@ -64,32 +64,12 @@
       anchored: true
 
 - type: entity
-  parent: ComputerBase
+  parent: WallmountTelescreenFrame
   id: WallmountTelescreen
   suffix: camera monitor
   name: telescreen
   description: Finally, some decent reception around here...
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          body: telescreen
-          bodyBroken: telescreen_broken
-          screen: telescreen
-    - type: Sprite
-      drawdepth: WallMountedItems
-      netsync: false
-      sprite: Structures/Machines/computers.rsi
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body"]
-          state: television
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: telescreen
-          shader: shaded
     - type: Construction
       graph: WallmountTelescreen
       node: Telescreen
@@ -126,9 +106,19 @@
           body: television_wall
           bodyBroken: television_wallbroken
           screen: television_wall
-#    - type: Construction
-#      graph: WallmountTelescreen
-#      node: TelevisionFrame
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.75,-0.10,0.75,0.35"
+          mass: 50
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
+    - type: Construction
+      graph: WallmountTelevision
+      node: TelevisionFrame
     - type: Sprite
       drawdepth: WallMountedItems
       netsync: false
@@ -145,7 +135,7 @@
           shader: shaded
           
 - type: entity
-  parent: WallmountTelescreen
+  parent: WallmountTelevisionFrame
   id: WallmountTelevision
   suffix: entertainment
   name: television
@@ -158,23 +148,9 @@
           body: television_wall
           bodyBroken: television_wallbroken
           screen: television_wallscreen
-#    - type: Construction
-#      graph: WallmountTelescreen
-#      node: Television
-    - type: Sprite
-      drawdepth: WallMountedItems
-      netsync: false
-      sprite: Structures/Wallmounts/flatscreentv.rsi
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body"]
-          state: television_wall
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: television_wallscreen
-          shader: shaded
+    - type: Construction
+      graph: WallmountTelevision
+      node: Television
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: SurveillanceCamera
