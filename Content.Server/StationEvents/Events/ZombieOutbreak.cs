@@ -19,11 +19,10 @@ namespace Content.Server.StationEvents.Events
         public override string Name => "ZombieOutbreak";
         public override int EarliestStart => 50;
         public override float Weight => WeightLow / 2;
-
         public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
         protected override float EndAfter => 1.0f;
-
         public override int? MaxOccurrences => 1;
+        public override bool AnnounceEvent => false;
 
         /// <summary>
         /// Finds 1-3 random, dead entities accross the station
@@ -61,6 +60,9 @@ namespace Content.Server.StationEvents.Events
                 if(station == null) continue;
                 stationsToNotify.Add((EntityUid) station);
             }
+
+            if (!AnnounceEvent)
+                return;
             foreach (var station in stationsToNotify)
             {
                 chatSystem.DispatchStationAnnouncement((EntityUid) station, Loc.GetString("station-event-zombie-outbreak-announcement"),
