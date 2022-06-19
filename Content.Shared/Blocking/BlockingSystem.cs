@@ -96,7 +96,7 @@ public sealed class BlockingSystem : EntitySystem
             if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
             {
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), blockingComponent.BlockSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
+                SoundSystem.Play(blockingComponent.BlockSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.2f));
             }
         }
     }
