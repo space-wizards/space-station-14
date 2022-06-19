@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 
 namespace Content.Shared.Zombies;
+
 /// <summary>
 ///     Event raised whenever an entity is zombified.
 ///     Used by the zombie gamemode to track total infections.

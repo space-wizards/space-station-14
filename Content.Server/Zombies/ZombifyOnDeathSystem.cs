@@ -27,6 +27,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
 using Content.Shared.Zombies;
+using Content.Server.Atmos.Miasma;
 
 namespace Content.Server.Zombies
 {
@@ -97,6 +98,7 @@ namespace Content.Server.Zombies
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
+            EnsureComp<RottingComponent>(target);
 
             ///This is needed for stupid entities that fuck up combat mode component
             ///in an attempt to make an entity not attack. This is the easiest way to do it.
