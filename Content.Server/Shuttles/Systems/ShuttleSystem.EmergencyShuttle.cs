@@ -50,64 +50,103 @@ public sealed partial class ShuttleSystem
        if (player == null) return;
 
        var stationUid = _station.GetOwningStation(player.Value);
-       EntityUid? largestGrid = null;
-       Box2? largestBounds;
-       Box2? shuttleBounds = null;
-       var validSpawn = false;
+       EntityUid? targetGrid = null;
+       Box2? position = null;
 
        // TODO: Copy-paste with docking, shitcode
+       // Find the largest grid associated with the station, then try all combinations of docks on it with
+       // all of them on the shuttle and try to find the most appropriate.
        if (TryComp<StationDataComponent>(stationUid, out var dataComponent) && dataComponent.EmergencyShuttle != null)
        {
-           (largestGrid, largestBounds) = GetLargestGrid(dataComponent);
+           (targetGrid, _) = GetLargestGrid(dataComponent);
 
-           if (largestGrid != null)
+           if (targetGrid != null)
            {
-               var largestGridGrid = Comp<IMapGridComponent>(largestGrid.Value);
-               var (shuttleDockXform, shuttleDock) = GetShuttleDock(dataComponent.EmergencyShuttle.Value);
-               var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
+               var gridDocks = GetDocks(targetGrid.Value);
 
-               if (shuttleDockXform != null)
+               if (gridDocks.Count > 0)
                {
-                   // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-                   var stationDockPos = shuttleDockXform.LocalPosition +
-                                        shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
+                   var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
+                   var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
+                   var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
+                   var validDockConfigs = new List<(DockingComponent Dock, int Count, Box2 Area)>();
 
-                   var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockXform.LocalRotation);
-
-                   foreach (var (comp, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
+                   if (shuttleDocks.Count > 0)
                    {
-                       if (xform.ParentUid != largestGrid.Value || comp.Docked) continue;
+                       // We'll try all combinations of shuttle docks and see which one is most suitable
+                       foreach (var dock in shuttleDocks)
+                       {
+                           if (dock.Docked) continue;
 
-                       // Now get the rotation difference between the 2 and rotate the shuttle position by that.
-                       var xformMatrix = Matrix3.CreateTransform(xform.LocalPosition, -xform.LocalRotation);
-                       Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
-                       shuttleBounds = matty.TransformBox(shuttleAABB);
+                           var shuttleDockXform = Transform(dock.Owner);
 
-                       if (!ValidSpawn(largestGridGrid, shuttleBounds.Value)) continue;
+                           // First, get the station dock's position relative to the shuttle, this is where we rotate it around
+                           var stationDockPos = shuttleDockXform.LocalPosition +
+                                                shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-                       validSpawn = true;
-                       break;
+                           var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockXform.LocalRotation);
+
+                           foreach (var gridDock in gridDocks)
+                           {
+                               if (gridDock.Docked) continue;
+
+                               var xform = Transform(gridDock.Owner);
+
+                               // See if the spawn for the shuttle is valid
+                               // Then we'll see what other dock spawns are valid.
+                               var xformMatrix = Matrix3.CreateTransform(xform.LocalPosition, -xform.LocalRotation);
+                               Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
+                               Box2? shuttleBounds = matty.TransformBox(shuttleAABB);
+
+                               if (!ValidSpawn(targetGridGrid, shuttleBounds.Value)) continue;
+
+                               // Alright well the spawn is valid now to check how many we can connect
+                               // Get the matrix for each shuttle dock and test it against the grid docks to see
+                               // if the connected position / direction matches.
+                               var connections = 1;
+
+                               foreach (var other in shuttleDocks)
+                               {
+                                   if (dock == other || other.Docked) continue;
+                                   // TODO: GetEntityQuery<TransformComponent>
+
+                                   // TODO: Do matrix transformations to check configs
+                                   foreach (var otherGrid in gridDocks)
+                                   {
+                                       if (otherGrid == gridDock || otherGrid.Docked) continue;
+                                   }
+                               }
+
+                               validDockConfigs.Add((dock, connections, shuttleBounds.Value));
+                           }
+                       }
                    }
-                   // TODO: Get a list of valid dock spawns
-                   // Then for each one work out how many docks we can combine
-                   // From there prioritise the highest.
 
+                   if (validDockConfigs.Count > 0)
+                   {
+                       var location = validDockConfigs.First();
+                       position = location.Area;
+                   }
                }
            }
        }
 
        RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
        {
-            StationUid = validSpawn ? largestGrid : null,
-            Position = validSpawn ? shuttleBounds : null,
+            StationUid = targetGrid,
+            Position = position,
        });
    }
 
+   /// <summary>
+   /// Checks whether the emergency shuttle can warp to the specified position.
+   /// </summary>
    private bool ValidSpawn(IMapGridComponent grid, Box2 area)
    {
        return !grid.Grid.GetLocalTilesIntersecting(area).Any();
    }
 
+   
 
    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
    {
@@ -141,40 +180,6 @@ public sealed partial class ShuttleSystem
        // TODO: Dock it with the largest grid I guess?
        if (component.EmergencyShuttle == null) return;
 
-       var (largestGrid, largestBounds) = GetLargestGrid(component);
-
-       if (largestGrid != null)
-       {
-           var (shuttleDockXform, shuttleDock) = GetShuttleDock(largestGrid.Value);
-
-           if (shuttleDockXform != null)
-           {
-               // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-               var stationDockPos = shuttleDockXform.LocalPosition +
-                                    shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, 1f));
-
-               var largestGridXform = Transform(largestGrid.Value);
-               var largestGridMatrix = largestGridXform.WorldMatrix;
-
-               foreach (var (comp, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
-               {
-                   if (xform.ParentUid != largestGrid.Value || comp.Docked) continue;
-
-                   // Now get the rotation difference between the 2 and rotate the shuttle position by that.
-                   var rotation = (shuttleDockXform.LocalRotation - xform.LocalRotation);
-                   var shuttlePos = xform.LocalPosition + rotation.RotateVec(stationDockPos);
-
-                   // TODO: Check clearance
-                   var shuttleBounds = largestGridMatrix.Transform(shuttlePos);
-               }
-           }
-       }
-       // TODO: Uhh fallback?
-       else
-       {
-
-       }
-
        // TODO: Hyperspace arrival and squimsh anything in the way
    }
 
@@ -197,16 +202,18 @@ public sealed partial class ShuttleSystem
        return (largestGrid, largestBounds);
    }
 
-   private (TransformComponent?, DockingComponent?) GetShuttleDock(EntityUid uid)
+   private List<DockingComponent> GetDocks(EntityUid uid)
    {
+       var result = new List<DockingComponent>();
+
        foreach (var (dock, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
        {
            if (xform.ParentUid != uid || !dock.Enabled) continue;
 
-           return (xform, dock);
+           result.Add(dock);
        }
 
-       return (null, null);
+       return result;
    }
 
    private void Setup()
