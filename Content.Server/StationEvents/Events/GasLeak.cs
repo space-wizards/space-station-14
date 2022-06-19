@@ -20,6 +20,7 @@ namespace Content.Server.StationEvents.Events
         protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
 
         private static readonly Gas[] LeakableGases = {
+            Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
         };

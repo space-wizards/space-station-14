@@ -666,3 +666,11 @@
   components:
   - type: AccessReader
     access: [["Captain"]]
+
+- type: entity
+  parent: HighSecDoor
+  id: HighSecArmoryLocked
+  suffix: Armory, Locked
+  components:
+  - type: AccessReader
+    access: [["Armory"]]

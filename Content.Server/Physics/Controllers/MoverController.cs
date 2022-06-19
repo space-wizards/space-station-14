@@ -1,5 +1,5 @@
 using Content.Server.Shuttles.Components;
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
@@ -123,7 +123,7 @@ namespace Content.Server.Physics.Controllers
                             angularInput += sprint.X;
                         }
                         break;
-                    case ShuttleMode.Docking:
+                    case ShuttleMode.Strafing:
                         // No angular input possible
                         foreach (var (pilot, mover) in pilots)
                         {

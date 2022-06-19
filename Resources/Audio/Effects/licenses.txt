@@ -31,3 +31,11 @@ minibombcountdown.ogg taken from Thomas Evdokimoff at https://freesound.org/peop
 bite.ogg take from https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
 bone_rattle.ogg licensed under CC0 1.0 and taken from spookymodem at https://freesound.org/people/spookymodem/sounds/202102/
+
+The following sounds are taken from TGstation github (licensed under CC by 3.0):
+
+    demon_attack1.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+
+    demon_consume.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
+
+    demon_dies.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
