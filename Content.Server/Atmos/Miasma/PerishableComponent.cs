@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Miasma
         /// <summary>
         /// When DeathAccumulator is greater than this, start rotting.
         /// </summary>
-        public TimeSpan RotAfter = TimeSpan.FromMinutes(3);
+        public TimeSpan RotAfter = TimeSpan.FromMinutes(5);
 
         /// <summary>
         /// Gasses are released every second.
@@ -32,11 +32,10 @@ namespace Content.Server.Atmos.Miasma
         public float RotAccumulator = 0f;
 
         /// <summary>
-        /// How many moles of gas released per second, adjusted for mass.
-        /// Humans have a mass of 70. I am aiming for ten mols a minute, so
-        /// 1/6 of a minute, divided by 70 as a baseline.
+        /// How many moles of gas released per second, per unit of mass.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MolsPerSecondPerUnitMass = 0.0025f;
+        [DataField("molsPerSecondPerUnitMass")]
+        public float MolsPerSecondPerUnitMass = 0.0035f;
     }
 }
