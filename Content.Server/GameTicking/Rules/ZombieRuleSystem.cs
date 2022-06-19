@@ -162,8 +162,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!Enabled)
             return;
 
-        //Uncomment this once im done local testing
-        /*
         var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
@@ -178,7 +176,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             ev.Cancel();
             return;
         }
-        //*/
     }
 
     public override void Started(GameRuleConfiguration configuration)
