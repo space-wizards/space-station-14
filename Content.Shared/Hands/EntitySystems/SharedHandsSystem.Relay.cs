@@ -19,7 +19,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             //A bit singleton but I don't want other destructable items in hand
             //To be effected
-            if (HasComp<SharedBlockingComponent>(item))
+            if (HasComp<BlockingComponent>(item))
             {
                 RaiseLocalEvent(item, args, false);
             }

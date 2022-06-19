@@ -4,10 +4,10 @@ using Robust.Shared.Physics;
 namespace Content.Shared.Blocking;
 
 /// <summary>
-/// This component gets dynamically added to an Entity via the <see cref="SharedBlockingSystem"/>
+/// This component gets dynamically added to an Entity via the <see cref="BlockingSystem"/>
 /// </summary>
 [RegisterComponent]
-public sealed class SharedBlockingUserComponent : Component
+public sealed class BlockingUserComponent : Component
 {
     /// <summary>
     /// The entity that's being used to block

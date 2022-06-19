@@ -8,7 +8,7 @@ namespace Content.Shared.Blocking;
 /// This component goes on an item that you want to use to block
 /// </summary>
 [RegisterComponent]
-public sealed class SharedBlockingComponent : Component
+public sealed class BlockingComponent : Component
 {
     /// <summary>
     /// The entity that's blocking

@@ -18,7 +18,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
 
-public sealed class SharedBlockingSystem : EntitySystem
+public sealed class BlockingSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -31,37 +31,37 @@ public sealed class SharedBlockingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedBlockingComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
-        SubscribeLocalEvent<SharedBlockingComponent, DroppedEvent>(OnDrop);
+        SubscribeLocalEvent<BlockingComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
 
-        SubscribeLocalEvent<SharedBlockingComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<SharedBlockingComponent, ToggleActionEvent>(OnToggleAction);
+        SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
 
-        SubscribeLocalEvent<SharedBlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
+        SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
 
-        SubscribeLocalEvent<SharedBlockingComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnPickupAttempt(EntityUid uid, SharedBlockingComponent component, GettingPickedUpAttemptEvent args)
+    private void OnPickupAttempt(EntityUid uid, BlockingComponent component, GettingPickedUpAttemptEvent args)
     {
         component.User = args.User;
 
         //To make sure that this bodytype doesn't get set as anything but the original
         if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static
-                                                                       && !TryComp(args.User, out SharedBlockingUserComponent? blockingUserComponent))
+                                                                       && !TryComp(args.User, out BlockingUserComponent? blockingUserComponent))
         {
-            var userComp = EnsureComp<SharedBlockingUserComponent>(args.User);
+            var userComp = EnsureComp<BlockingUserComponent>(args.User);
             userComp.BlockingItem = uid;
             userComp.OriginalBodyType = physicsComponent.BodyType;
         }
     }
 
-    private void OnDrop(EntityUid uid, SharedBlockingComponent component, DroppedEvent args)
+    private void OnDrop(EntityUid uid, BlockingComponent component, DroppedEvent args)
     {
         BlockingShutdownHelper(uid, component, args.User);
     }
 
-    private void OnGetActions(EntityUid uid, SharedBlockingComponent component, GetItemActionsEvent args)
+    private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
         if (component.BlockingToggleAction == null
             && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
@@ -73,7 +73,7 @@ public sealed class SharedBlockingSystem : EntitySystem
             args.Actions.Add(component.BlockingToggleAction);
     }
 
-    private void OnToggleAction(EntityUid uid, SharedBlockingComponent component, ToggleActionEvent args)
+    private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
     {
         if(args.Handled)
             return;
@@ -86,9 +86,9 @@ public sealed class SharedBlockingSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnUserDamageModified(EntityUid uid, SharedBlockingUserComponent component, DamageModifyEvent args)
+    private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
     {
-        if (TryComp(component.BlockingItem, out SharedBlockingComponent? blockingComponent))
+        if (TryComp(component.BlockingItem, out BlockingComponent? blockingComponent))
         {
             if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
                 args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
@@ -101,7 +101,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         }
     }
 
-    private void OnShutdown(EntityUid uid, SharedBlockingComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, BlockingComponent component, ComponentShutdown args)
     {
         //In theory the user should not be null when this fires off
         if (component.User != null)
@@ -116,10 +116,10 @@ public sealed class SharedBlockingSystem : EntitySystem
     /// Also makes the user static to prevent prediction issues
     /// </summary>
     /// <param name="uid"> The entity with the blocking component</param>
-    /// <param name="component"> The <see cref="SharedBlockingComponent"/></param>
+    /// <param name="component"> The <see cref="BlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
-    private bool StartBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
+    private bool StartBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
         if (component.IsBlocking) return false;
 
@@ -162,10 +162,10 @@ public sealed class SharedBlockingSystem : EntitySystem
     /// Called where you want the user to stop blocking.
     /// </summary>
     /// <param name="item"> The entity with the blocking component</param>
-    /// <param name="component"> The <see cref="SharedBlockingComponent"/></param>
+    /// <param name="component"> The <see cref="BlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
-    private bool StopBlocking(EntityUid item, SharedBlockingComponent component, EntityUid user)
+    private bool StopBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
         if (!component.IsBlocking) return false;
 
@@ -181,7 +181,7 @@ public sealed class SharedBlockingSystem : EntitySystem
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
         //and set the users bodytype back to their original type
-        if (component.BlockingToggleAction != null && TryComp(user, out SharedBlockingUserComponent? blockingUserComponent)
+        if (component.BlockingToggleAction != null && TryComp(user, out BlockingUserComponent? blockingUserComponent)
                                                      && TryComp(user, out PhysicsComponent? physicsComponent))
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
@@ -196,17 +196,17 @@ public sealed class SharedBlockingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Called where you want someone to stop blocking and to remove the <see cref="SharedBlockingUserComponent"/> from them
+    /// Called where you want someone to stop blocking and to remove the <see cref="BlockingUserComponent"/> from them
     /// </summary>
     /// <param name="uid"> The item the component is attached to</param>
-    /// <param name="component"> The <see cref="SharedBlockingComponent"/> </param>
+    /// <param name="component"> The <see cref="BlockingComponent"/> </param>
     /// <param name="user"> The person holding the blocking item </param>
-    private void BlockingShutdownHelper(EntityUid uid, SharedBlockingComponent component, EntityUid user)
+    private void BlockingShutdownHelper(EntityUid uid, BlockingComponent component, EntityUid user)
     {
         if (component.IsBlocking)
             StopBlocking(uid, component, user);
 
-        RemComp<SharedBlockingUserComponent>(user);
+        RemComp<BlockingUserComponent>(user);
         component.User = null;
     }
 
