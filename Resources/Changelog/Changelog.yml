@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
-  id: 1224
-  time: '2022-03-18T03:18:35.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'A port of Delta Station, the largest map ever made for Space Station
@@ -3000,3 +2995,9 @@ Entries:
       foul smell with no other effects., type: Add}
   id: 1723
   time: '2022-06-19T05:51:55.0000000+00:00'
+- author: SirDragooon
+  changes:
+  - {message: 'fixes Aloe Cream splitting, no longer turns into Ointment after splitting',
+    type: Fix}
+  id: 1724
+  time: '2022-06-19T11:13:12.0000000+00:00'
