@@ -1,13 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The game now supports an automated map rotation that cycles through
-      all eligible maps, preferring whatever maps haven''t been played recently.',
-    type: Add}
-  - {message: 'Map voting has been disabled on Wizard''s Den, in favor of automated
-      rotation.', type: Tweak}
-  id: 1223
-  time: '2022-03-17T18:59:53.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
@@ -2993,3 +2984,19 @@ Entries:
       do it., type: Tweak}
   id: 1722
   time: '2022-06-19T05:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Corpses now take longer to start rotting, but start rotting faster.',
+    type: Tweak}
+  - {message: Corpses that gib when rotting no longer dump organs everywhere., type: Tweak}
+  - {message: 'Rebalanced all of the mob masses to be somewhat close to real life.
+      Disarm and miasma both use these, so don''t leave any rotting cows or xeno queens
+      lying around.', type: Tweak}
+  - {message: Xenos produce a lot less miasma for their mass because... uhhh.... the
+      acid kills the bacteria or something..., type: Tweak}
+  - {message: You can now see if a body is rotting when examining it. Chefs take note.,
+    type: Add}
+  - {message: Miasma now has an effect that starts long before others warning of a
+      foul smell with no other effects., type: Add}
+  id: 1723
+  time: '2022-06-19T05:51:55.0000000+00:00'
