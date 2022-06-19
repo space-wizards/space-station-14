@@ -88,6 +88,10 @@ public sealed partial class ShuttleSystem
                        validSpawn = true;
                        break;
                    }
+                   // TODO: Get a list of valid dock spawns
+                   // Then for each one work out how many docks we can combine
+                   // From there prioritise the highest.
+
                }
            }
        }
