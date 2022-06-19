@@ -46,7 +46,7 @@
         - to: TelescreenFrame
           completed:
             - !type:SpawnPrototype
-              prototype: CableLVStack1
+              prototype: CableApcStack1
               amount: 5
             - !type:DeleteEntity {}
           conditions:
