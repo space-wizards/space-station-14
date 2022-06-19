@@ -7,7 +7,7 @@
     contents:
 # Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSpatio
-      - id: YellowOxygenTank
+      - id: YellowOxygenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
 # Currently do not function as 'true' mesons, so they're useless for salvagers.

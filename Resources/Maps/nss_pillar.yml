@@ -53389,7 +53389,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 4846
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: 29.227386,-9.561591
     parent: 130
@@ -90644,7 +90644,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 9699
-  type: PowerCellMediumPotato
+  type: PowerCellPotato
   components:
   - pos: 34.5,-20.500025
     parent: 130
@@ -93243,7 +93243,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 9947
-  type: PowerCellLargeHigh
+  type: PowerCellMedium
   components:
   - pos: 29.548517,-9.58406
     parent: 130
@@ -95478,7 +95478,7 @@ entities:
     parent: 130
     type: Transform
 - uid: 10276
-  type: PowerCellLargeStandard
+  type: PowerCellSmall
   components:
   - pos: -40.50005,-16.500025
     parent: 130

@@ -111283,7 +111283,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 12271
-  type: PowerCellMediumPotato
+  type: PowerCellPotato
   components:
   - pos: -3.516998,-36.44544
     parent: 106
