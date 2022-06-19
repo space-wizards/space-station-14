@@ -16,7 +16,7 @@
   id: RedLaser
   damage:
     types:
-      Heat: 20
+      Heat: 14
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -31,7 +31,7 @@
   id: RedMediumLaser
   damage:
     types:
-      Heat: 25
+      Heat: 17
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_laser
@@ -46,7 +46,7 @@
   id: OmniLaser
   damage:
     types:
-      Heat: 30
+      Heat: 21
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_omni
@@ -61,8 +61,8 @@
   id: XrayLaser
   damage:
     types:
-      Heat: 15
-      Radiation: 15
+      Heat: 10
+      Radiation: 10
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_xray
@@ -77,7 +77,7 @@
   id: RedHeavyLaser
   damage:
     types:
-      Heat: 40
+      Heat: 28
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
@@ -92,7 +92,7 @@
   id: Pulse
   damage:
     types:
-      Heat: 50
+      Heat: 35
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_blue

@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 
