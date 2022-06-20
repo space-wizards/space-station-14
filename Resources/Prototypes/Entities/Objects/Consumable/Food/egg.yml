@@ -27,6 +27,7 @@
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
+    popup: spike-solution-egg
   - type: DeleteOnTrigger
   - type: DamageOnLand
     damage:
