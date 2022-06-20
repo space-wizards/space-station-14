@@ -53,8 +53,8 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(AlertsComponent status)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
-            if (!_alerts.TryGetValue(grid, out var statuses))
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridUid;
+            if (grid == null || !_alerts.TryGetValue(grid.Value, out var statuses))
             {
                 return;
             }
@@ -112,10 +112,13 @@ namespace Content.Server.Gravity.EntitySystems
             if (ev.Transform.MapID == MapId.Nullspace)
                 return;
 
-            var newGrid = ev.Transform.GridID;
-            var newStatuses = _alerts.GetOrNew(newGrid);
 
-            newStatuses.Add(status);
+            var newGrid = ev.Transform.GridUid;
+            if (newGrid != null)
+            {
+                var newStatuses = _alerts.GetOrNew(newGrid.Value);
+                newStatuses.Add(status);
+            }
 
             // then update the actual alert. The alert is only removed if either the player is on a grid with gravity,
             // or if they ignore gravity-based movement altogether.
