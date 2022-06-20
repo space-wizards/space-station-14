@@ -192,7 +192,7 @@ namespace Content.Server.Body.Systems
 
             if (mindcomp.Mind == null)
                 return;
-            
+
             if (mindcomp.Mind.UserId == null)
                 return;
 
