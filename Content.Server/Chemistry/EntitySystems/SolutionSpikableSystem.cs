@@ -11,8 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 /// <summary>
 ///     Entity system used to handle when solution containers are 'spiked'
-///     with other entities. This will result in the entity being deleted,
-///     use other entity systems if you want to keep the spiking entity.
+///     with another entity. Triggers the source entity afterwards.
 ///     Uses refillable solution as the target solution, as that indicates
 ///     'easy' refills.
 ///
