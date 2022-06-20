@@ -22803,7 +22803,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1771
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 27.5,10.5
     parent: 852
@@ -32168,7 +32168,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 3115
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 20.5,10.5
     parent: 852
@@ -41293,7 +41293,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 4309
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 16.5,9.5
@@ -56536,7 +56536,7 @@ entities:
     parent: 852
     type: Transform
 - uid: 6251
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: 21.5,10.5

@@ -407,7 +407,7 @@
       color: "#e6e227"
 
 - type: entity
-  id: ComputerSupplyShuttle
+  id: ComputerCargoShuttle
   parent: ComputerBase
   name: cargo shuttle computer
   description: Used to order the shuttle.
@@ -435,7 +435,7 @@
     access: [["Cargo"]]
 
 - type: entity
-  id: ComputerSupplyOrdering
+  id: ComputerCargoOrders
   parent: ComputerBase
   name: cargo request computer
   description: Used to order supplies and approve requests.

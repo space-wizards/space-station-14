@@ -44280,7 +44280,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 4381
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 22.5,-17.5
     parent: 61
@@ -44396,7 +44396,7 @@ entities:
     parent: 61
     type: Transform
 - uid: 4397
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 16.5,-12.5
     parent: 61
@@ -47602,7 +47602,7 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4831
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 26.5,-20.5
@@ -47616,7 +47616,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 4832
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 25.5,-20.5
     parent: 61

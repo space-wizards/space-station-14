@@ -16554,7 +16554,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1172
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: -21.5,15.5
@@ -43132,7 +43132,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 4712
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: -35.5,17.5
     parent: 30
@@ -49805,7 +49805,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 5603
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: -27.5,17.5
     parent: 30
@@ -51439,7 +51439,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 5833
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: -28.5,21.5
     parent: 30
