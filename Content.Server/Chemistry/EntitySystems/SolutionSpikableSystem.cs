@@ -55,13 +55,13 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
+        var targetName = MetaData(target).EntityName;
+        var sourceName = MetaData(source).EntityName;
+
         if (targetSolution.CurrentVolume == 0 && !spikableSource.IgnoreEmpty)
         {
-            if (TryPrototype(source, out var prototypeSource) && TryPrototype(target, out var prototypeTarget))
-            {
-                _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", prototypeTarget.ID), ("spike-entity", prototypeSource.ID)), user, Filter.Entities(user));
-                return;
-            }
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", targetName), ("spike-entity", sourceName)), user, Filter.Entities(user));
+            return;
         }
 
         if (_solutionSystem.TryMixAndOverflow(target,
@@ -72,10 +72,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
         {
             RaiseLocalEvent(new OnSolutionSpikeOverflowEvent(overflow));
 
-            if (TryPrototype(source, out var prototypeSource) && TryPrototype(target, out var prototypeTarget))
-            {
-                _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", prototypeTarget.ID), ("spike-entity", prototypeSource.ID)), user, Filter.Entities(user));
-            }
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", targetName), ("spike-entity", sourceName)), user, Filter.Entities(user));
 
             sourceSolution.RemoveAllSolution();
 
