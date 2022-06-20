@@ -1,10 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: You must be 16 or older to play now. Users under 16 will be banned.,
-    type: Tweak}
-  id: 1229
-  time: '2022-03-19T18:03:34.0000000+00:00'
 - author: Rane
   changes:
   - {message: Doctor and CMO PDAs now behave as health analyzers when used on people.,
@@ -2997,3 +2991,9 @@ Entries:
       slot.', type: Tweak}
   id: 1728
   time: '2022-06-20T00:56:00.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds obfuscation to pocket items so players can't check the strip menu
+      to see what they have., type: Add}
+  id: 1729
+  time: '2022-06-20T00:57:33.0000000+00:00'
