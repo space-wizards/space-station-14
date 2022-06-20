@@ -37,19 +37,24 @@ namespace Content.Shared.Movement
         private const float FootstepVolume = 1f;
 
         /// <summary>
-        /// Minimum speed to apply friction
+        /// <see cref="CCVars.MinimumFrictionSpeed"/>
         /// </summary>
-        private const float MinimumFrictionSpeed = 0.005f;
+        private float _minimumFrictionSpeed = 0.005f;
 
         /// <summary>
-        /// If mob is under this speed then stop them entirely.
+        /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
-        private const float StopSpeed = 0.5f;
+        private float _stopSpeed = 0.5f;
 
         /// <summary>
-        /// The negative velocity applied for friction.
+        /// <see cref="CCVars.FrictionVelocity"/>
         /// </summary>
-        private const float FrictionVelocity = 14f;
+        private float _frictionVelocity = 14f;
+
+        /// <summary>
+        /// <see cref="CCVars.MobAcceleration"/>
+        /// </summary>
+        private float _mobAcceleration = 14f;
 
         private bool _relativeMovement;
 
@@ -63,16 +68,28 @@ namespace Content.Shared.Movement
             base.Initialize();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
+            configManager.OnValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed, true);
+            configManager.OnValueChanged(CCVars.FrictionVelocity, SetFrictionVelocity, true);
+            configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+            configManager.OnValueChanged(CCVars.MobAcceleration, SetMobAcceleration, true);
             UpdatesBefore.Add(typeof(SharedTileFrictionController));
         }
 
         private void SetRelativeMovement(bool value) => _relativeMovement = value;
+        private void SetMinimumFrictionSpeed(float value) => _minimumFrictionSpeed = value;
+        private void SetStopSpeed(float value) => _stopSpeed = value;
+        private void SetFrictionVelocity(float value) => _frictionVelocity = value;
+        private void SetMobAcceleration(float value) => _mobAcceleration = value;
 
         public override void Shutdown()
         {
             base.Shutdown();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
+            configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
+            configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
+            configManager.UnsubValueChanged(CCVars.FrictionVelocity, SetFrictionVelocity);
+            configManager.UnsubValueChanged(CCVars.MobAcceleration, SetMobAcceleration);
         }
 
         public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -191,7 +208,7 @@ namespace Content.Shared.Movement
             var velocity = physicsComponent.LinearVelocity;
 
             Friction(frameTime, ref velocity);
-            Accelerate(ref velocity, in worldTotal, 7f, frameTime);
+            Accelerate(ref velocity, in worldTotal, _mobAcceleration, frameTime);
             _physics.SetLinearVelocity(physicsComponent, velocity);
         }
 
@@ -199,12 +216,12 @@ namespace Content.Shared.Movement
         {
             var speed = velocity.Length;
 
-            if (speed < MinimumFrictionSpeed) return;
+            if (speed < _minimumFrictionSpeed) return;
 
             var drop = 0f;
-            var friction = FrictionVelocity;
+            var friction = _frictionVelocity;
 
-            var control = MathF.Max(StopSpeed, speed);
+            var control = MathF.Max(_stopSpeed, speed);
             drop += control * friction * frameTime;
 
             var newSpeed = MathF.Max(0f, speed - drop);
