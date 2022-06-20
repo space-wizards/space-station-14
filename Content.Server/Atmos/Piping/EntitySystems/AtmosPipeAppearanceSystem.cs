@@ -29,7 +29,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref appearance, ref container, ref xform, false))
             return;
 
-        if (!_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
+        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             return;
 
         // get connected entities

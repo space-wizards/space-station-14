@@ -60,6 +60,7 @@ namespace Content.Server.Dragon
 
         private void OnDragonDevourComplete(EntityUid uid, DragonComponent component, DragonDevourComplete args)
         {
+            component.CancelToken = null;
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
 
             //Humanoid devours allow dragon to get eggs, corpses included
@@ -154,7 +155,7 @@ namespace Content.Server.Dragon
 
             component.CancelToken = new CancellationTokenSource();
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.StructureDevourTime, component.CancelToken.Token, target)
             {
                 UserFinishedEvent = new DragonStructureDevourComplete(uid, target),
                 UserCancelledEvent = new DragonDevourCancelledEvent(),

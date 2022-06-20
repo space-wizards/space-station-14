@@ -22,8 +22,11 @@
 [color=#a4885c]7.[/color] Hate speech, slurs and bigotry are not allowed.
 	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, orientation or the like is not tolerated.
 	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
+    - Species-ism is also NOT ALLOWED. Not even for roleplay or because it's your "character".
 
-[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. Character names should be something a real person might have for a name.
+[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. 
+    - Character names should be something that a member of that species would reasonably have
+    - No famous real or fictional names of characters.
 
 [color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
 

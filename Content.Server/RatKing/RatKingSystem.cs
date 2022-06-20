@@ -1,9 +1,11 @@
 using Content.Server.Actions;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Atmos;
 using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
@@ -14,6 +16,7 @@ namespace Content.Server.RatKing
         [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
         public override void Initialize()
         {
@@ -54,8 +57,8 @@ namespace Content.Server.RatKing
         }
 
         /// <summary>
-        /// Gets all of the nearby disease-carrying entities in a radius
-        /// and gives them the specified disease. It has a hunger cost as well
+        /// uses hunger to release a specific amount of miasma into the air. This heals the rat king
+        /// and his servants through a specific metabolism.
         /// </summary>
         private void OnDomain(EntityUid uid, RatKingComponent component, RatKingDomainActionEvent args)
         {
@@ -74,17 +77,11 @@ namespace Content.Server.RatKing
             args.Handled = true;
             hunger.CurrentHunger -= component.HungerPerDomainUse;
 
-            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid, default, EntityManager));
+            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid));
 
-            var tstalker = GetEntityQuery<DiseaseCarrierComponent>();
-            foreach (var entity in _lookup.GetEntitiesInRange(uid, component.DomainRange)) //go through all of them, filtering only those in range that are not the king itself
-            {
-                if (entity == uid)
-                    continue;
-
-                if (tstalker.TryGetComponent(entity, out var diseasecomp))
-                    _disease.TryInfect(diseasecomp, component.DomainDiseaseId); //infect them with w/e disease
-            }
+            var tileMix = _atmos.GetTileMixture(Transform(uid).Coordinates);
+            if (tileMix != null)
+                tileMix.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
     }
 

@@ -76,7 +76,7 @@ namespace Content.Server.Physics.Controllers
 
                 _excludedMobs.Add(mover.Owner);
 
-                var gridId = xform.GridEntityId;
+                var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
