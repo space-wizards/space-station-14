@@ -1,14 +1,4 @@
 Entries:
-- author: moonheart08
-  changes:
-  - {message: Nanotrasen finally figured out that still water in hydroponics trays
-      attracts space mosquitos and installed micropumps., type: Add}
-  - {message: Nanotrasen has finally installed ventilation on their R&D servers.,
-    type: Add}
-  - {message: The volume and quality of the game's ambience can be adjusted in settings.,
-    type: Add}
-  id: 1233
-  time: '2022-03-20T04:45:52.0000000+00:00'
 - author: notafet
   changes:
   - {message: Gas analyzers can now be used to examine contents of pipes., type: Add}
@@ -2998,3 +2988,8 @@ Entries:
   - {message: Items rotate when thrown again., type: Fix}
   id: 1732
   time: '2022-06-20T16:58:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
+  id: 1733
+  time: '2022-06-20T20:59:05.0000000+00:00'
