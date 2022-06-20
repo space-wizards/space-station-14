@@ -97,7 +97,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
         private void GridRemoved(GridRemovalEvent ev)
         {
-            _regions.Remove(ev.GridId);
+            _regions.Remove(ev.EntityUid);
         }
 
         public override void Update(float frameTime)

@@ -71,7 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightReAnchor(EntityUid uid, AirtightComponent airtight, ref ReAnchorEvent args)
         {
-            foreach (var gridId in new[] { args.OldGrid, args.GridId })
+            foreach (var gridId in new[] { args.OldGrid, args.Grid })
             {
                 // Update and invalidate new position.
                 airtight.LastPosition = (gridId, args.TilePos);
