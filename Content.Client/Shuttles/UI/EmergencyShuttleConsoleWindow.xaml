@@ -30,7 +30,6 @@
         <Label Text="Authorizations"/>
         <Label Name="AuthorizationCount"
                Text="Remaining: 3"
-               FontColorOverride="#00FF00"
                HorizontalAlignment="Right"
                Align="Right"
                HorizontalExpand="True"/>

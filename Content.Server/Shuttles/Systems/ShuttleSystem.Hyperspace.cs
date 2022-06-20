@@ -1,8 +1,13 @@
+using Content.Server.Buckle.Components;
 using Content.Server.Shuttles.Components;
+using Content.Server.Stunnable;
 using Content.Shared.GameTicking;
 using Content.Shared.Sound;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -14,14 +19,26 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly StunSystem _stuns = default!;
+
     private MapId? _hyperSpaceMap;
 
-    private const float HyperspaceStartupTime = 4.5f;
+    private const float HyperspaceStartupTime = 5.5f;
     private const float DefaultHyperspaceTime = 30f;
 
     private SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
     // private SoundSpecifier _travelSound = new SoundPathSpecifier();
     private SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg");
+
+    private TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
+
+    /// Left-side of the station we're allowed to use
+    private float _index;
+
+    /// <summary>
+    /// Space between grids within hyperspace.
+    /// </summary>
+    private const float Buffer = 5f;
 
     /// <summary>
     /// Moves a shuttle from its current position to the target one. Goes through the hyperspace map while the timer is running.
@@ -38,7 +55,6 @@ public sealed partial class ShuttleSystem
         }
 
         SetDocks(component, false);
-
         var hyperspace = AddComp<HyperspaceComponent>(component.Owner);
         hyperspace.Accumulator = timer;
         hyperspace.TargetCoordinates = coordinates;
@@ -55,28 +71,47 @@ public sealed partial class ShuttleSystem
             if (comp.Accumulator > 0f) continue;
 
             var xform = Transform(comp.Owner);
+            PhysicsComponent? body = null;
 
             switch (comp.State)
             {
-                // Going in-travel
+                // Startup time has elapsed and in hyperspace.
                 case HyperspaceState.Starting:
+                    DoTheDinosaur(xform);
+
                     comp.State = HyperspaceState.Travelling;
                     SetupHyperspace();
-                    xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), Vector2.Zero);
+
+                    var width = Comp<IMapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
+                    xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
+                    xform.LocalRotation = Angle.Zero;
+                    _index += width + Buffer;
+
                     comp.Accumulator += DefaultHyperspaceTime;
-                    if (TryComp<PhysicsComponent>(comp.Owner, out var body))
+                    if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 20f);
+                        body.LinearVelocity = new Vector2(0f, 100f);
+                        body.AngularVelocity = 0f;
                         body.LinearDamping = 0f;
                         body.AngularDamping = 0f;
-                        body.AngularVelocity = 0f;
                     }
+
                     break;
                 // Arrive.
                 case HyperspaceState.Travelling:
+                    DoTheDinosaur(xform);
+
                     if (TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
                     {
                         SetDocks(shuttle, true);
+                    }
+
+                    if (TryComp(comp.Owner, out body))
+                    {
+                        body.LinearVelocity = Vector2.Zero;
+                        body.AngularVelocity = 0f;
+                        body.LinearDamping = ShuttleIdleLinearDamping;
+                        body.AngularDamping = ShuttleIdleAngularDamping;
                     }
 
                     xform.Coordinates = comp.TargetCoordinates;
@@ -118,8 +153,41 @@ public sealed partial class ShuttleSystem
 
     private void CleanupHyperspace()
     {
+        _index = 0f;
         if (_hyperSpaceMap == null) return;
         _mapManager.DeleteMap(_hyperSpaceMap.Value);
         _hyperSpaceMap = null;
+    }
+
+    /// <summary>
+    /// Puts everyone unbuckled on the floor.
+    /// </summary>
+    private void DoTheDinosaur(TransformComponent xform)
+    {
+        var buckleQuery = GetEntityQuery<BuckleComponent>();
+        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        // Get enumeration exceptions from people dropping things if we just paralyze as we go
+        var toKnock = new ValueList<EntityUid>();
+
+        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
+
+        foreach (var child in toKnock)
+        {
+            if (!statusQuery.TryGetComponent(child, out var status)) continue;
+            _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+        }
+    }
+
+    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    {
+        // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
+        var childEnumerator = xform.ChildEnumerator;
+
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled) continue;
+
+            toKnock.Add(child.Value);
+        }
     }
 }

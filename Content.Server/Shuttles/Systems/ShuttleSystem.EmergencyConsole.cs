@@ -2,6 +2,7 @@ using System.Text;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Popups;
+using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
@@ -25,6 +26,7 @@ public sealed partial class ShuttleSystem
 
     [Dependency] private readonly AccessReaderSystem _reader = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
     /// <summary>
     /// Has the emergency shuttle arrived?
@@ -42,7 +44,7 @@ public sealed partial class ShuttleSystem
     /// If an early launch is authorized how short is it.
     /// </summary>
     private TimeSpan _authorizeTime = TimeSpan.FromSeconds(10);
-    private TimeSpan _transitTime = TimeSpan.FromMinutes(3);
+    private TimeSpan _transitTime = TimeSpan.FromSeconds(5); // TimeSpan.FromMinutes(3);
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
@@ -78,6 +80,8 @@ public sealed partial class ShuttleSystem
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
+                    // TODO: Add support so Hyperspace will just dock it to Centcomm.
+
                     Hyperspace(shuttle, new EntityCoordinates(_mapManager.GetMapEntityId(_centcommMap.Value), Vector2.One * 1000f), _consoleAccumulator);
                 }
             }
@@ -88,6 +92,8 @@ public sealed partial class ShuttleSystem
             _launchedShuttles = true;
             _chatSystem.DispatchGlobalStationAnnouncement(
                 $"The Emergency Shuttle has left the station. Estimate {_transitTime.Minutes} until the shuttle docks at Central Command.");
+
+            Timer.Spawn(_transitTime, () => _roundEnd.EndRound());
         }
     }
 

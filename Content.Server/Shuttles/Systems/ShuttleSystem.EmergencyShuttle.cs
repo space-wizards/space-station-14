@@ -218,18 +218,6 @@ public sealed partial class ShuttleSystem
 
        _chatSystem.DispatchGlobalStationAnnouncement($"The Emergency Shuttle has docked with the station", playDefaultSound: false);
        _consoleAccumulator = (float) _dockTime.TotalSeconds;
-
-       // TODO: When EmergencyConsole triggered set to
-
-       // TODO: When shuttle launches set a timer for round end.
-   }
-
-   private void DockEmergencyShuttle(StationDataComponent component)
-   {
-       // TODO: Dock it with the largest grid I guess?
-       if (component.EmergencyShuttle == null) return;
-
-       // TODO: Hyperspace arrival and squimsh anything in the way
    }
 
    /// <summary>
