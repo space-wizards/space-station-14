@@ -81,14 +81,14 @@ public sealed class SolutionSpikableSystem : EntitySystem
     }
 }
 
-public sealed class SolutionSpikeOverflowEvent : EntityEventArgs
+public sealed class SolutionSpikeOverflowEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The solution that's been overflowed from the spike.
     /// </summary>
     public Solution Overflow { get; }
 
-    public OnSolutionSpikeOverflowEvent(Solution overflow)
+    public SolutionSpikeOverflowEvent(Solution overflow)
     {
         Overflow = overflow;
     }

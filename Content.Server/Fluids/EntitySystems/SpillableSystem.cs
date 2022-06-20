@@ -38,7 +38,10 @@ public sealed class SpillableSystem : EntitySystem
 
     private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
     {
-        SpillAt(uid, args.Overflow, "PuddleSmear");
+        if (!args.Handled)
+        {
+            SpillAt(uid, args.Overflow, "PuddleSmear");
+        }
     }
 
     private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)
