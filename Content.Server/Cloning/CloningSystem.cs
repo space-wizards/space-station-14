@@ -12,7 +12,7 @@ using Content.Server.EUI;
 using Robust.Shared.Containers;
 using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.Events;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -22,7 +22,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly IPlayerManager _playerManager = null!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly EuiManager _euiManager = null!;
-        [Dependency] private readonly CloningSystem _cloningSystem = default!;
+        [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _appearanceSystem = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
@@ -33,6 +33,8 @@ namespace Content.Server.Cloning.Systems
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
+            SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
@@ -73,6 +75,24 @@ namespace Content.Server.Cloning.Systems
             UpdateStatus(CloningPodStatus.Cloning, cloningPodComponent);
         }
 
+        private void OnPortDisconnected(EntityUid uid, CloningPodComponent pod, PortDisconnectedEvent args)
+        {
+            pod.ConnectedConsole = null;
+        }
+
+        private void OnAnchor(EntityUid uid, CloningPodComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (component.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(component.ConnectedConsole, out var console))
+                return;
+
+            if (args.Anchored)
+            {
+                _cloningConsoleSystem.RecheckConnections((EntityUid) component.ConnectedConsole, uid, console.GeneticScanner, console);
+                return;
+            }
+            _cloningConsoleSystem.UpdateUserInterface(console);
+        }
+
         public bool IsPowered(CloningPodComponent clonepod)
         {
             if (!TryComp<ApcPowerReceiverComponent>(clonepod.Owner, out var receiver))
@@ -86,7 +106,7 @@ namespace Content.Server.Cloning.Systems
             if (!Resolve(uid, ref clonePod) || bodyToClone == null)
                 return false;
 
-            if (_cloningSystem.ClonesWaitingForMind.TryGetValue(mind, out var clone))
+            if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
             {
                 if (EntityManager.EntityExists(clone) &&
                     TryComp<MobStateComponent>(clone, out var cloneState) &&
@@ -95,7 +115,7 @@ namespace Content.Server.Cloning.Systems
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
 
-                _cloningSystem.ClonesWaitingForMind.Remove(mind);
+                ClonesWaitingForMind.Remove(mind);
             }
 
             if (mind.OwnedEntity != null &&
@@ -126,7 +146,7 @@ namespace Content.Server.Cloning.Systems
             cloneMindReturn.Parent = clonePod.Owner;
             clonePod.BodyContainer.Insert(mob);
             clonePod.CapturedMind = mind;
-            _cloningSystem.ClonesWaitingForMind.Add(mind, mob);
+            ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
             _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
             return true;

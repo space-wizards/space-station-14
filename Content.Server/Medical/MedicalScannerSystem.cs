@@ -8,10 +8,12 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Content.Server.MachineLinking.System;
+using Content.Server.MachineLinking.Events;
+using Content.Server.Cloning.Systems;
+using Content.Server.Cloning.Components;
 
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...
 
 namespace Content.Server.Medical
 {
@@ -20,7 +22,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -35,6 +37,8 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
             SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
+            SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
+            SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -111,6 +115,23 @@ namespace Content.Server.Medical
             InsertBody(uid, args.Dragged, scannerComponent);
         }
 
+        private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, PortDisconnectedEvent args)
+        {
+            component.ConnectedConsole = null;
+        }
+
+        private void OnAnchorChanged(EntityUid uid, MedicalScannerComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (component.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(component.ConnectedConsole, out var console))
+                return;
+
+            if (args.Anchored)
+            {
+                _cloningConsoleSystem.RecheckConnections((EntityUid) component.ConnectedConsole, console.CloningPod, uid, console);
+                return;
+            }
+            _cloningConsoleSystem.UpdateUserInterface(console);
+        }
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
             if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var power) && power.Powered)

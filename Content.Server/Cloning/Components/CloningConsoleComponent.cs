@@ -8,6 +8,7 @@ namespace Content.Server.Cloning.Components
     {
         [ViewVariables]
         public EntityUid? GeneticScanner = null;
+
         [ViewVariables]
         public EntityUid? CloningPod = null;
 
@@ -26,6 +27,10 @@ namespace Content.Server.Cloning.Components
         /// Maximum distance between console and one if its machines
         [DataField("maxDistance")]
         public float MaxDistance = 4f;
+
+        public bool GeneticScannerInRange = true;
+
+        public bool CloningPodInRange = true;
 
         public bool Powered = false;
     }
