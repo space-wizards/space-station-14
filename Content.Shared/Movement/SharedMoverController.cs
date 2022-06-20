@@ -39,22 +39,42 @@ namespace Content.Shared.Movement
         /// <summary>
         /// <see cref="CCVars.MinimumFrictionSpeed"/>
         /// </summary>
-        private float _minimumFrictionSpeed = 0.005f;
+        private float _minimumFrictionSpeed;
 
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
-        private float _stopSpeed = 0.5f;
-
-        /// <summary>
-        /// <see cref="CCVars.FrictionVelocity"/>
-        /// </summary>
-        private float _frictionVelocity = 14f;
+        private float _stopSpeed;
 
         /// <summary>
         /// <see cref="CCVars.MobAcceleration"/>
         /// </summary>
-        private float _mobAcceleration = 14f;
+        private float _mobAcceleration;
+
+        /// <summary>
+        /// <see cref="CCVars.MobFriction"/>
+        /// </summary>
+        private float _frictionVelocity;
+
+        /// <summary>
+        /// <see cref="CCVars.MobWeightlessAcceleration"/>
+        /// </summary>
+        private float _mobWeightlessAcceleration;
+
+        /// <summary>
+        /// <see cref="CCVars.MobWeightlessFriction"/>
+        /// </summary>
+        private float _weightlessFrictionVelocity;
+
+        /// <summary>
+        /// <see cref="CCVars.MobWeightlessFrictionNoInput"/>
+        /// </summary>
+        private float _weightlessFrictionVelocityNoInput;
+
+        /// <summary>
+        /// <see cref="CCVars.MobWeightlessModifier"/>
+        /// </summary>
+        private float _mobWeightlessModifier;
 
         private bool _relativeMovement;
 
@@ -67,11 +87,16 @@ namespace Content.Shared.Movement
         {
             base.Initialize();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
+            // Hello
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             configManager.OnValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed, true);
-            configManager.OnValueChanged(CCVars.FrictionVelocity, SetFrictionVelocity, true);
+            configManager.OnValueChanged(CCVars.MobFriction, SetFrictionVelocity, true);
+            configManager.OnValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity, true);
             configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
             configManager.OnValueChanged(CCVars.MobAcceleration, SetMobAcceleration, true);
+            configManager.OnValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration, true);
+            configManager.OnValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput, true);
+            configManager.OnValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier, true);
             UpdatesBefore.Add(typeof(SharedTileFrictionController));
         }
 
@@ -79,7 +104,11 @@ namespace Content.Shared.Movement
         private void SetMinimumFrictionSpeed(float value) => _minimumFrictionSpeed = value;
         private void SetStopSpeed(float value) => _stopSpeed = value;
         private void SetFrictionVelocity(float value) => _frictionVelocity = value;
+        private void SetWeightlessFrictionVelocity(float value) => _weightlessFrictionVelocity = value;
         private void SetMobAcceleration(float value) => _mobAcceleration = value;
+        private void SetMobWeightlessAcceleration(float value) => _mobWeightlessAcceleration = value;
+        private void SetWeightlessFrictionNoInput(float value) => _weightlessFrictionVelocityNoInput = value;
+        private void SetMobWeightlessModifier(float value) => _mobWeightlessModifier = value;
 
         public override void Shutdown()
         {
@@ -88,8 +117,12 @@ namespace Content.Shared.Movement
             configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
             configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
             configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
-            configManager.UnsubValueChanged(CCVars.FrictionVelocity, SetFrictionVelocity);
+            configManager.UnsubValueChanged(CCVars.MobFriction, SetFrictionVelocity);
+            configManager.UnsubValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity);
             configManager.UnsubValueChanged(CCVars.MobAcceleration, SetMobAcceleration);
+            configManager.UnsubValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration);
+            configManager.UnsubValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput);
+            configManager.UnsubValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier);
         }
 
         public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -159,11 +192,11 @@ namespace Content.Shared.Movement
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                var touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
 
                 if (!touching)
                 {
-                    if (xform.GridUid != EntityUid.Invalid)
+                    if (xform.GridUid != null)
                         mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
                     xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
@@ -175,15 +208,34 @@ namespace Content.Shared.Movement
             // Target velocity.
             // This is relative to the map / grid we're on.
             var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-
             var parentRotation = GetParentGridAngle(xform, mover);
-
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
             DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
+            var velocity = physicsComponent.LinearVelocity;
+            float friction;
+            float weightlessModifier;
+            float accel;
+
             if (weightless)
-                worldTotal *= mobMover.WeightlessStrength;
+            {
+                if (worldTotal != Vector2.Zero)
+                    friction = _weightlessFrictionVelocity;
+                else
+                    friction = _stopSpeed;
+
+                weightlessModifier = _mobWeightlessModifier;
+                accel = _mobWeightlessAcceleration;
+            }
+            else
+            {
+                friction = _frictionVelocity;
+                weightlessModifier = 1f;
+                accel = _mobAcceleration;
+            }
+
+            Friction(frameTime, friction, ref velocity);
 
             if (xform.GridUid != EntityUid.Invalid)
                 mover.LastGridAngle = parentRotation;
@@ -205,21 +257,18 @@ namespace Content.Shared.Movement
                 }
             }
 
-            var velocity = physicsComponent.LinearVelocity;
-
-            Friction(frameTime, ref velocity);
-            Accelerate(ref velocity, in worldTotal, _mobAcceleration, frameTime);
+            worldTotal *= weightlessModifier;
+            Accelerate(ref velocity, in worldTotal, accel, frameTime);
             _physics.SetLinearVelocity(physicsComponent, velocity);
         }
 
-        private void Friction(float frameTime, ref Vector2 velocity)
+        private void Friction(float frameTime, float friction, ref Vector2 velocity)
         {
             var speed = velocity.Length;
 
             if (speed < _minimumFrictionSpeed) return;
 
             var drop = 0f;
-            var friction = _frictionVelocity;
 
             var control = MathF.Max(_stopSpeed, speed);
             drop += control * friction * frameTime;
