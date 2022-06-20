@@ -36,6 +36,21 @@ namespace Content.Shared.Movement
         private const float FootstepVariation = 0f;
         private const float FootstepVolume = 1f;
 
+        /// <summary>
+        /// Minimum speed to apply friction
+        /// </summary>
+        private const float MinimumFrictionSpeed = 0.005f;
+
+        /// <summary>
+        /// If mob is under this speed then stop them entirely.
+        /// </summary>
+        private const float StopSpeed = 0.5f;
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        private const float FrictionVelocity = 14f;
+
         private bool _relativeMovement;
 
         /// <summary>
@@ -108,7 +123,8 @@ namespace Content.Shared.Movement
             IMoverComponent mover,
             PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover,
-            TransformComponent xform)
+            TransformComponent xform,
+            float frameTime)
         {
             DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
@@ -172,7 +188,47 @@ namespace Content.Shared.Movement
                 }
             }
 
-            _physics.SetLinearVelocity(physicsComponent, worldTotal);
+            var velocity = physicsComponent.LinearVelocity;
+
+            Friction(frameTime, ref velocity);
+            Accelerate(ref velocity, in worldTotal, 7f, frameTime);
+            _physics.SetLinearVelocity(physicsComponent, velocity);
+        }
+
+        private void Friction(float frameTime, ref Vector2 velocity)
+        {
+            var speed = velocity.Length;
+
+            if (speed < MinimumFrictionSpeed) return;
+
+            var drop = 0f;
+            var friction = FrictionVelocity;
+
+            var control = MathF.Max(StopSpeed, speed);
+            drop += control * friction * frameTime;
+
+            var newSpeed = MathF.Max(0f, speed - drop);
+
+            if (newSpeed.Equals(speed)) return;
+
+            newSpeed /= speed;
+            velocity *= newSpeed;
+        }
+
+        private void Accelerate(ref Vector2 currentVelocity, in Vector2 velocity, float accel, float frameTime)
+        {
+            var wishDir = velocity != Vector2.Zero ? velocity.Normalized : Vector2.Zero;
+            var wishSpeed = velocity.Length;
+
+            var currentSpeed = Vector2.Dot(currentVelocity, wishDir);
+            var addSpeed = wishSpeed - currentSpeed;
+
+            if (addSpeed <= 0f) return;
+
+            var accelSpeed = accel * frameTime * wishSpeed;
+            accelSpeed = MathF.Min(accelSpeed, addSpeed);
+
+            currentVelocity += wishDir * accelSpeed;
         }
 
         public bool UseMobMovement(EntityUid uid)
