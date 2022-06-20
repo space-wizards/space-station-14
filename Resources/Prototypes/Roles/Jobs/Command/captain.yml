@@ -8,7 +8,7 @@
   icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: "Nanotrasen officials"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess

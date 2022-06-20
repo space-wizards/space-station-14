@@ -6,7 +6,7 @@
   departments:
   - Cargo
   icon: "QuarterMaster"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   canBeAntag: false
   access:
   - Cargo

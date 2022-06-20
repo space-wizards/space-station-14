@@ -7,7 +7,7 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -54,11 +54,11 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTEngineerGear
   equipment:
@@ -90,7 +90,7 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    
+
 # Security
 - type: job
   id: ERTSecurity
@@ -100,11 +100,11 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTSecurityGear
   equipment:
@@ -136,7 +136,7 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    
+
 # Medical
 - type: job
   id: ERTMedical
@@ -146,11 +146,11 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTMedicalGear
   equipment:
@@ -183,7 +183,7 @@
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
-    
+
 # Janitor
 - type: job
   id: ERTJanitor
@@ -193,11 +193,11 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "centcom official"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
-  
+
 - type: startingGear
   id: ERTJanitorGear
   equipment:

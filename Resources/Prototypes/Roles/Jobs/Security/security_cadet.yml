@@ -6,7 +6,7 @@
   - Civilian
   - Security
   icon: "SecurityCadet"
-  supervisors: "security officers, the warden, and the head of security"
+  supervisors: job-supervisors-security
   canBeAntag: false
   access:
   - Security

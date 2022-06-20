@@ -6,7 +6,7 @@
   departments:
   - Command
   icon: "Nanotrasen"
-  supervisors: "the head of security"
+  supervisors: job-supervisors-hos
   canBeAntag: false
   accessGroups:
   - AllAccess

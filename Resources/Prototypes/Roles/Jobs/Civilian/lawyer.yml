@@ -5,7 +5,7 @@
   departments:
   - Civilian
   icon: "Lawyer"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Brig

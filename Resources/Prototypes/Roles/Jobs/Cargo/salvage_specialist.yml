@@ -5,7 +5,7 @@
   startingGear: SalvageSpecialistGear
   departments:
   - Cargo
-  supervisors: "the quartermaster and head of personnel"
+  supervisors: job-supervisors-hop-qm
   access:
   - Cargo
   - Salvage

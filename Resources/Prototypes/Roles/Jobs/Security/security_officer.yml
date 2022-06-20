@@ -5,7 +5,7 @@
   departments:
   - Security
   icon: "SecurityOfficer"
-  supervisors: "the head of security"
+  supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security

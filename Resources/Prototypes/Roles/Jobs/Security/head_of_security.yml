@@ -8,7 +8,7 @@
   - Security
   icon: "HeadOfSecurity"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - HeadOfSecurity

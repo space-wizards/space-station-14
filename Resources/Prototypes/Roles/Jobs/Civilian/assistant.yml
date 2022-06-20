@@ -5,7 +5,7 @@
   departments:
   - Civilian
   icon: "Passenger"
-  supervisors: "absolutely everyone"
+  supervisors: job-supervisors-everyone
   access:
   - Maintenance
 
