@@ -46,8 +46,8 @@ public sealed class SolutionSpikableSystem : EntitySystem
         SolutionContainerManagerComponent? managerSource = null,
         SolutionContainerManagerComponent? managerTarget = null)
     {
-        if (!Resolve(source, ref spikableSource, ref managerSource)
-            || !Resolve(target, ref spikableTarget, ref managerTarget)
+        if (!Resolve(source, ref spikableSource, ref managerSource, false)
+            || !Resolve(target, ref spikableTarget, ref managerTarget, false)
             || !_solutionSystem.TryGetRefillableSolution(target, out var targetSolution, managerTarget, spikableTarget)
             || !managerSource.Solutions.TryGetValue(spikableSource.SourceSolution, out var sourceSolution))
         {
