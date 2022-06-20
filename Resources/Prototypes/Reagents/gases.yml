@@ -198,6 +198,14 @@
         - !type:ReagentThreshold
           reagent: Miasma
           min: 0.8
+      - !type:PopupMessage
+        type: Local
+        messages: [ "miasma-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 0.25
       - !type:HealthChange
         conditions:
         - !type:OrganType

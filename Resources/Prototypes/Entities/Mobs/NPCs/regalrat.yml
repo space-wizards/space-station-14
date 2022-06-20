@@ -153,7 +153,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      mass: 4 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:

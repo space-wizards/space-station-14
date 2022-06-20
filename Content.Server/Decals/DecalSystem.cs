@@ -168,16 +168,16 @@ namespace Content.Server.Decals
             if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            var gridId = ev.Coordinates.GetGridEntityId(EntityManager);
+            var gridId = ev.Coordinates.GetGridUid(EntityManager);
 
-            if (!gridId.IsValid())
+            if (gridId == null)
                 return;
 
             // remove all decals on the same tile
-            foreach (var (uid, decal) in GetDecalsInRange(gridId, ev.Coordinates.Position))
+            foreach (var (uid, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
             {
                 var chunkIndices = GetChunkIndices(decal.Coordinates);
-                RemoveDecal(gridId, uid);
+                RemoveDecal(gridId.Value, uid);
             }
         }
 
@@ -205,21 +205,21 @@ namespace Content.Server.Decals
             if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
                 return false;
 
-            var gridId = coordinates.GetGridEntityId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
             if (!MapManager.TryGetGrid(gridId, out var grid))
                 return false;
 
             if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
                 return false;
 
-            var chunkCollection = DecalGridChunkCollection(gridId);
+            var chunkCollection = DecalGridChunkCollection(gridId.Value);
             uid = chunkCollection.NextUid++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
             if(!chunkCollection.ChunkCollection.ContainsKey(chunkIndices))
                 chunkCollection.ChunkCollection[chunkIndices] = new();
             chunkCollection.ChunkCollection[chunkIndices][uid.Value] = decal;
-            ChunkIndex[gridId][uid.Value] = chunkIndices;
-            DirtyChunk(gridId, chunkIndices);
+            ChunkIndex[gridId.Value][uid.Value] = chunkIndices;
+            DirtyChunk(gridId.Value, chunkIndices);
 
             return true;
         }
@@ -250,7 +250,11 @@ namespace Content.Server.Decals
 
         public bool SetDecalPosition(EntityUid gridId, uint uid, EntityCoordinates coordinates)
         {
-            return SetDecalPosition(gridId, uid, coordinates.GetGridEntityId(EntityManager), coordinates.Position);
+            var newGridId = coordinates.GetGridUid(EntityManager);
+            if (newGridId == null)
+                return false;
+
+            return SetDecalPosition(gridId, uid, newGridId.Value, coordinates.Position);
         }
 
         public bool SetDecalPosition(EntityUid gridId, uint uid, EntityUid newGridId, Vector2 position)

@@ -1,69 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: 'Traitors can now purchase a hypopen: a stealthy 15u hypospray disguised
-      as a pen', type: Add}
-  - {message: 'Replaced the basic ink pen with a Cybersun legal pen, bumped the price
-      to 4 TC for obvious reasons.', type: Tweak}
-  id: 1222
-  time: '2022-03-17T18:46:19.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The game now supports an automated map rotation that cycles through
-      all eligible maps, preferring whatever maps haven''t been played recently.',
-    type: Add}
-  - {message: 'Map voting has been disabled on Wizard''s Den, in favor of automated
-      rotation.', type: Tweak}
-  id: 1223
-  time: '2022-03-17T18:59:53.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
-  id: 1224
-  time: '2022-03-18T03:18:35.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'A port of Delta Station, the largest map ever made for Space Station
-      13, is now playable! The map is still a beta.', type: Add}
-  id: 1225
-  time: '2022-03-18T21:43:53.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixes a number of issues on Delta Station. Thank you for testing it!
-      Please continue to report any issues you're having., type: Tweak}
-  id: 1226
-  time: '2022-03-19T00:50:59.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new directional signs for more departments. Look out for these
-      in a future map update., type: Add}
-  id: 1227
-  time: '2022-03-19T03:27:45.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Added formal clothing for captain and HoS., type: Add}
-  - {message: Added atmospheric technician firesuit., type: Add}
-  - {message: Added admin cloak and miner cloak., type: Add}
-  - {message: All hardsuits now have accurate stats and movespeeds, type: Add}
-  id: 1228
-  time: '2022-03-19T07:19:44.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: You must be 16 or older to play now. Users under 16 will be banned.,
-    type: Tweak}
-  id: 1229
-  time: '2022-03-19T18:03:34.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Doctor and CMO PDAs now behave as health analyzers when used on people.,
-    type: Add}
-  id: 1230
-  time: '2022-03-19T18:20:20.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Emitter crates now cost 3000 credits for Cargo., type: Tweak}
-  id: 1231
-  time: '2022-03-19T18:22:28.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Crafting items via the construction menu should no longer attempt to
@@ -2995,3 +2930,72 @@ Entries:
       than spreading plague., type: Add}
   id: 1721
   time: '2022-06-18T23:21:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Repairing yourself now takes 3 times as long as letting someone else
+      do it., type: Tweak}
+  id: 1722
+  time: '2022-06-19T05:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Corpses now take longer to start rotting, but start rotting faster.',
+    type: Tweak}
+  - {message: Corpses that gib when rotting no longer dump organs everywhere., type: Tweak}
+  - {message: 'Rebalanced all of the mob masses to be somewhat close to real life.
+      Disarm and miasma both use these, so don''t leave any rotting cows or xeno queens
+      lying around.', type: Tweak}
+  - {message: Xenos produce a lot less miasma for their mass because... uhhh.... the
+      acid kills the bacteria or something..., type: Tweak}
+  - {message: You can now see if a body is rotting when examining it. Chefs take note.,
+    type: Add}
+  - {message: Miasma now has an effect that starts long before others warning of a
+      foul smell with no other effects., type: Add}
+  id: 1723
+  time: '2022-06-19T05:51:55.0000000+00:00'
+- author: SirDragooon
+  changes:
+  - {message: 'fixes Aloe Cream splitting, no longer turns into Ointment after splitting',
+    type: Fix}
+  id: 1724
+  time: '2022-06-19T11:13:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
+      line with the other duffel bags., type: Tweak}
+  id: 1725
+  time: '2022-06-19T12:06:44.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Spell sound effects are no longer global, type: Tweak}
+  id: 1726
+  time: '2022-06-19T21:07:01.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: SMG crates now come with the correct magazines and amount., type: Fix}
+  id: 1727
+  time: '2022-06-19T21:07:53.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'When stripping other players, the delay now depends on the targeted
+      slot.', type: Tweak}
+  id: 1728
+  time: '2022-06-20T00:56:00.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds obfuscation to pocket items so players can't check the strip menu
+      to see what they have., type: Add}
+  id: 1729
+  time: '2022-06-20T00:57:33.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed chair layering, type: Fix}
+  id: 1730
+  time: '2022-06-20T01:27:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
+    type: Tweak}
+  - {message: Rule 8 clearly states no names of fictional or real famous people.,
+    type: Tweak}
+  id: 1731
+  time: '2022-06-20T04:52:45.0000000+00:00'

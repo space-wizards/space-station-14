@@ -21,6 +21,8 @@ public sealed class SlotDefinition
 
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; } = SlotFlags.PREVENTEQUIP;
 
+    [DataField("stripTime")] public float StripTime { get; } = 3f;
+
     [DataField("uiContainer")] public SlotUIContainer UIContainer { get; } = SlotUIContainer.None;
 
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
@@ -29,6 +31,8 @@ public sealed class SlotDefinition
     [DataField("dependsOn")] public string? DependsOn { get; }
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
+
+    [DataField("stripHidden")] public bool StripHidden { get; }
 
     /// <summary>
     ///     Offset for the clothing sprites.

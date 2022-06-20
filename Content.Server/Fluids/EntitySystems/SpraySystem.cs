@@ -59,7 +59,7 @@ public sealed class SpraySystem : EntitySystem
 
         var playerPos = Transform(args.User).Coordinates;
 
-        if (args.ClickLocation.GetGridEntityId(EntityManager) != playerPos.GetGridEntityId(EntityManager))
+        if (args.ClickLocation.GetGridUid(EntityManager) != playerPos.GetGridUid(EntityManager))
             return;
 
         var direction = (args.ClickLocation.Position - playerPos.Position).Normalized;
