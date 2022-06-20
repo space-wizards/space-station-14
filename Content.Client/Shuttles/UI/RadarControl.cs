@@ -150,15 +150,15 @@ public sealed class RadarControl : Control
         Matrix3 matrix;
 
         // Draw our grid in detail
-        var ourGridId = xform.GridID;
-        if (ourGridId != GridId.Invalid)
+        var ourGridId = xform.GridUid;
+        if (ourGridId != null)
         {
             matrix = xform.InvWorldMatrix;
-            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId);
+            var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
             // Draw our grid; use non-filled boxes so it doesn't look awful.
             DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
 
-            DrawDocks(handle, xform.GridEntityId, offsetMatrix);
+            DrawDocks(handle, ourGridId.Value, offsetMatrix);
         }
         else
         {

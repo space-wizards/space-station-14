@@ -24,9 +24,9 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public EntityUid Grid => GridId;
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager? entMan = null)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             _atmosphereSystem.AddPipeNet(this);

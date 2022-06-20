@@ -126,7 +126,7 @@ namespace Content.Server.Shuttles.Systems
 
                         if (new Vector2i((int) direction.X, (int) direction.Y) != new Vector2i(x, y)) continue;
 
-                        DisableThruster(ent.Value, thruster, xform.GridEntityId);
+                        DisableThruster(ent.Value, thruster, xform.GridUid);
                     }
                 }
             }
@@ -147,7 +147,7 @@ namespace Content.Server.Shuttles.Systems
             if (!component.Enabled ||
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid) ||
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
                 !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
             {
                 return;
@@ -243,7 +243,7 @@ namespace Content.Server.Shuttles.Systems
         {
             if (component.IsOn ||
                 !Resolve(uid, ref xform) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             component.IsOn = true;
 
@@ -304,13 +304,13 @@ namespace Content.Server.Shuttles.Systems
         public void DisableThruster(EntityUid uid, ThrusterComponent component, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!Resolve(uid, ref xform)) return;
-            DisableThruster(uid, component, xform.GridEntityId, xform);
+            DisableThruster(uid, component, xform.GridUid, xform);
         }
 
         /// <summary>
         /// Tries to disable the thruster.
         /// </summary>
-        public void DisableThruster(EntityUid uid, ThrusterComponent component, EntityUid gridId, TransformComponent? xform = null, Angle? angle = null)
+        public void DisableThruster(EntityUid uid, ThrusterComponent component, EntityUid? gridId, TransformComponent? xform = null, Angle? angle = null)
         {
             if (!component.IsOn ||
                 !Resolve(uid, ref xform) ||
@@ -382,8 +382,11 @@ namespace Content.Server.Shuttles.Systems
 
         private bool NozzleExposed(TransformComponent xform)
         {
+            if (xform.GridUid == null)
+                return true;
+
             var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
-            var tile = _mapManager.GetGrid(xform.GridEntityId).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+            var tile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
 
             return tile.Tile.IsSpace();
         }

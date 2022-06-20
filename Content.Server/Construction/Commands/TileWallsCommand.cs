@@ -24,7 +24,7 @@ namespace Content.Server.Construction.Commands
         {
             var player = shell.Player as IPlayerSession;
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            EntityUid gridId;
+            EntityUid? gridId;
 
             switch (args.Length)
             {
@@ -35,7 +35,7 @@ namespace Content.Server.Construction.Commands
                         return;
                     }
 
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridEntityId;
+                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                     break;
                 case 1:
                     if (!EntityUid.TryParse(args[0], out var id))
