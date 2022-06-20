@@ -9,7 +9,7 @@
 - '**/*.xaml*'
 
 "Changes: Localization":
-- 'Resources/Locale/*.ftl'
+- 'Resources/Locale/**/*.ftl'
 
 "No C#":
 - all: ["!**/*.cs"]
