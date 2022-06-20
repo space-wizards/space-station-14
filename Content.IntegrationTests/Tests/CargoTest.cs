@@ -11,13 +11,13 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture]
-public sealed class CargoTest : ContentIntegrationTest
+public sealed class CargoTest
 {
     [Test]
     public async Task Arbitrage()
     {
-        var server = StartServer();
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
+        var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
