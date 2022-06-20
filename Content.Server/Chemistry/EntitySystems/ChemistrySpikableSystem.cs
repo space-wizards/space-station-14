@@ -65,6 +65,8 @@ public sealed class SolutionSpikableSystem : EntitySystem
             RaiseLocalEvent(new OnSolutionSpikeOverflowEvent(overflow));
         }
 
+        sourceSolution.RemoveAllSolution();
+
         _triggerSystem.Trigger(source);
     }
 }
