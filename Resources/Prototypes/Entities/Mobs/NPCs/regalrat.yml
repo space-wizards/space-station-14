@@ -50,6 +50,9 @@
       types:
         Slash: 12
         Piercing: 8
+  - type: Body
+    template: AnimalTemplate
+    preset: RatPreset
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -89,6 +92,7 @@
       itemIconStyle: NoItem
       event: !type:RatKingDomainActionEvent
     hungerPerDomainUse: 50
+  - type: MobsterAccent
   - type: Access #he's so baller he gets his own access. NT got nothing on him
     tags:
     - Maintenance
@@ -99,6 +103,13 @@
       amount: 1
   - type: DiseaseCarrier
     carrierDiseases:
+    - VentCough
+    - AMIV
+    - SpaceCold
+    - SpaceFlu
+    - Bird Flew
+    - VanAusdallsRobovirus
+    - BleedersBite
     - Plague
   - type: SlowOnDamage
     speedModifierThresholds:
@@ -116,8 +127,8 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 4
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 3.5
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -142,7 +153,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 10
+      mass: 4 #Bulky by mouse standards...
       mask:
       - SmallMobMask
       layer:
@@ -150,8 +161,8 @@
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
-      25: !type:CriticalMobState {}
-      50: !type:DeadMobState {}
+      30: !type:CriticalMobState {}
+      60: !type:DeadMobState {}
   - type: MeleeWeapon
     range: 1
     arcwidth: 0
@@ -159,7 +170,10 @@
     damage:
       types:
         Slash: 5
-        Piercing: 2
+        Piercing: 3
+  - type: Body
+    template: AnimalTemplate
+    preset: RatPreset
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -173,6 +187,13 @@
   - type: Puller
   - type: DiseaseCarrier
     carrierDiseases:
+    - VentCough
+    - AMIV
+    - SpaceCold
+    - SpaceFlu
+    - Bird Flew
+    - VanAusdallsRobovirus
+    - BleedersBite
     - Plague
   - type: Vocal
     # mice are gender neutral who cares
@@ -192,4 +213,5 @@
   - type: NoSlip
   - type: MobPrice
     price: 500 # rat wealth
-
+  - type: MobsterAccent
+    isBoss: false

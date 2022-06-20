@@ -7,7 +7,7 @@
     contents:
 # Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSalvage
-      - id: YellowOxygenTank
+      - id: YellowOxygenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
       - id: OreBag

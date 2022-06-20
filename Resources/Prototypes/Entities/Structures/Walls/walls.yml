@@ -96,6 +96,7 @@
   components:
   - type: Tag
     tags:
+      - RCDDeconstructWhitelist
       - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
@@ -335,9 +336,6 @@
   id: WallReinforced
   name: reinforced wall
   components:
-  - type: Tag
-    tags:
-      - Wall
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Icon

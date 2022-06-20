@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid to be checked.</param>
         /// <returns>Whether the grid has a simulated atmosphere.</returns>
-        public bool IsSimulatedGrid(EntityUid grid)
+        public bool IsSimulatedGrid(EntityUid? grid)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1376,7 +1376,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridEntityId;
+            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridUid;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1578,7 +1578,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            var gridId = coordinates.GetGridEntityId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
 
             if (!_mapManager.TryGetGrid(gridId, out var grid))
             {
@@ -1586,7 +1586,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            tuple = (gridId, grid.TileIndicesFor(coordinates));
+            tuple = (gridId.Value, grid.TileIndicesFor(coordinates));
             return true;
         }
 
