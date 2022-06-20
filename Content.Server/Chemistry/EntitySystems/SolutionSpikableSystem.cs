@@ -1,9 +1,11 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -21,15 +23,16 @@ public sealed class SolutionSpikableSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly TriggerSystem _triggerSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    public void OnInteractUsing(EntityUid uid, RefillableSolutionComponent target, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, RefillableSolutionComponent target, InteractUsingEvent args)
     {
-        TrySpike(args.Used, args.Target, target);
+        TrySpike(args.Used, args.Target, args.User, target);
     }
 
     /// <summary>
@@ -38,7 +41,8 @@ public sealed class SolutionSpikableSystem : EntitySystem
     /// </summary>
     /// <param name="source">Source of the solution.</param>
     /// <param name="target">Target to spike with the solution from source.</param>
-    private void TrySpike(EntityUid source, EntityUid target, RefillableSolutionComponent? spikableTarget = null,
+    /// <param name="user">User spiking the target solution.</param>
+    private void TrySpike(EntityUid source, EntityUid target, EntityUid user, RefillableSolutionComponent? spikableTarget = null,
         SolutionSpikerComponent? spikableSource = null,
         SolutionContainerManagerComponent? managerSource = null,
         SolutionContainerManagerComponent? managerTarget = null)
@@ -53,7 +57,11 @@ public sealed class SolutionSpikableSystem : EntitySystem
 
         if (targetSolution.CurrentVolume == 0 && !spikableSource.IgnoreEmpty)
         {
-            return;
+            if (TryPrototype(source, out var prototype))
+            {
+                _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spike-entity", prototype.ID)), user, Filter.Entities(user));
+                return;
+            }
         }
 
         if (_solutionSystem.TryMixAndOverflow(target,
@@ -63,11 +71,16 @@ public sealed class SolutionSpikableSystem : EntitySystem
                 out var overflow))
         {
             RaiseLocalEvent(new OnSolutionSpikeOverflowEvent(overflow));
+
+            if (TryPrototype(source, out var prototype))
+            {
+                _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spike-entity", prototype.ID)), user, Filter.Entities(user));
+            }
+
+            sourceSolution.RemoveAllSolution();
+
+            _triggerSystem.Trigger(source);
         }
-
-        sourceSolution.RemoveAllSolution();
-
-        _triggerSystem.Trigger(source);
     }
 }
 

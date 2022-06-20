@@ -15,4 +15,16 @@ public sealed class SolutionSpikerComponent : Component
     /// </summary>
     [DataField("ignoreEmpty")]
     public bool IgnoreEmpty { get; }
+
+    /// <summary>
+    ///     What should pop up when spiking with this entity.
+    /// </summary>
+    [DataField("popup")]
+    public string Popup { get; } = "spike-solution-generic";
+
+    /// <summary>
+    ///     What should pop up when spiking fails because the container was empty.
+    /// </summary>
+    [DataField("popupEmpty")]
+    public string PopupEmpty { get; } = "spike-solution-empty-generic";
 }
