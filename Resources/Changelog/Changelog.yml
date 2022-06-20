@@ -1,12 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Added formal clothing for captain and HoS., type: Add}
-  - {message: Added atmospheric technician firesuit., type: Add}
-  - {message: Added admin cloak and miner cloak., type: Add}
-  - {message: All hardsuits now have accurate stats and movespeeds, type: Add}
-  id: 1228
-  time: '2022-03-19T07:19:44.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: You must be 16 or older to play now. Users under 16 will be banned.,
@@ -2999,3 +2991,9 @@ Entries:
   - {message: SMG crates now come with the correct magazines and amount., type: Fix}
   id: 1727
   time: '2022-06-19T21:07:53.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'When stripping other players, the delay now depends on the targeted
+      slot.', type: Tweak}
+  id: 1728
+  time: '2022-06-20T00:56:00.0000000+00:00'
