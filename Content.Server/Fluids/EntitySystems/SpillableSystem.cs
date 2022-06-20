@@ -33,6 +33,12 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
+    }
+
+    private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
+    {
+        SpillAt(uid, args.Overflow, "PuddleSmear");
     }
 
     private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)

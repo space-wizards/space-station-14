@@ -70,7 +70,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
                 targetSolution.MaxVolume,
                 out var overflow))
         {
-            RaiseLocalEvent(new OnSolutionSpikeOverflowEvent(overflow));
+            RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
 
             _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", targetName), ("spike-entity", sourceName)), user, Filter.Entities(user));
 
@@ -81,7 +81,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
     }
 }
 
-public sealed class OnSolutionSpikeOverflowEvent : EntityEventArgs
+public sealed class SolutionSpikeOverflowEvent : EntityEventArgs
 {
     /// <summary>
     ///     The solution that's been overflowed from the spike.
