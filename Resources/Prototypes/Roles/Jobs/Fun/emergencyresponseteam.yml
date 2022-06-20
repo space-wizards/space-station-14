@@ -1,7 +1,7 @@
 # Leader
 - type: job
   id: ERTLeader
-  name: "ERT leader"
+  name: job-name-ertleader
   setPreference: false
   startingGear: ERTLeaderGearEVA
   departments:
@@ -48,7 +48,7 @@
 # Engineer
 - type: job
   id: ERTEngineer
-  name: "ERT engineer"
+  name: job-name-ertengineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
@@ -94,7 +94,7 @@
 # Security
 - type: job
   id: ERTSecurity
-  name: "ERT security"
+  name: job-name-ertsecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
@@ -140,7 +140,7 @@
 # Medical
 - type: job
   id: ERTMedical
-  name: "ERT medic"
+  name: job-name-ertmedic
   setPreference: false
   startingGear: ERTMedicalGearEVA
   departments:
@@ -187,7 +187,7 @@
 # Janitor
 - type: job
   id: ERTJanitor
-  name: "ERT janitor"
+  name: job-name-ertjanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
   departments:

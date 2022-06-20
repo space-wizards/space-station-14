@@ -1,6 +1,6 @@
 ﻿- type: job
   id: MedicalIntern
-  name: "medical intern"
+  name: job-name-intern
   startingGear: MedicalInternGear
   departments:
   - Civilian

@@ -1,6 +1,6 @@
 - type: job
   id: Quartermaster
-  name: "quartermaster"
+  name: job-name-qm
   weight: 10
   startingGear: QuartermasterGear
   departments:

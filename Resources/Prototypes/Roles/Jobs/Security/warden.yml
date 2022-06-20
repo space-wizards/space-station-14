@@ -1,6 +1,6 @@
 - type: job
   id: Warden
-  name: "warden"
+  name: job-name-warden
   startingGear: WardenGear
   departments:
   - Security

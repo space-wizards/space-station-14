@@ -1,6 +1,6 @@
 - type: job
   id: Bartender
-  name: "bartender"
+  name: job-name-bartender
   startingGear: BartenderGear
   departments:
   - Civilian

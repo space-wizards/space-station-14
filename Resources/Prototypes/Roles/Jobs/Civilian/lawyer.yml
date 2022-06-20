@@ -1,6 +1,6 @@
 - type: job
   id: Lawyer
-  name: "lawyer"
+  name: job-name-lawyer
   startingGear: LawyerGear
   departments:
   - Civilian

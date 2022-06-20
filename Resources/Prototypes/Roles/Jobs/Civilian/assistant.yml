@@ -1,6 +1,6 @@
 - type: job
   id: Passenger
-  name: "passenger"
+  name: job-name-passenger
   startingGear: PassengerGear
   departments:
   - Civilian

@@ -22,7 +22,7 @@ namespace Content.Server.Roles
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)
         {
             Prototype = jobPrototype;
-            Name = jobPrototype.Name;
+            Name = Loc.GetString(jobPrototype.Name);
             CanBeAntag = jobPrototype.CanBeAntag;
         }
 

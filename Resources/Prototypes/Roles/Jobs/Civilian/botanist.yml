@@ -1,6 +1,6 @@
 - type: job
   id: Botanist
-  name: "botanist"
+  name: job-name-botanist
   startingGear: BotanistGear
   departments:
   - Civilian

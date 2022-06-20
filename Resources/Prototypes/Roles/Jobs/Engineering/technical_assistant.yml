@@ -1,6 +1,6 @@
 ﻿- type: job
   id: TechnicalAssistant
-  name: "technical assistant"
+  name: job-name-assistant
   startingGear: TechnicalAssistantGear
   departments:
   - Civilian

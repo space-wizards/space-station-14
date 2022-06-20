@@ -1,6 +1,6 @@
 - type: job
   id: ResearchDirector
-  name: "research director"
+  name: job-name-rd
   weight: 10
   startingGear: ResearchDirectorGear
   departments:

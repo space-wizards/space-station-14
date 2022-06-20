@@ -1,6 +1,6 @@
 ﻿- type: job
   id: ServiceWorker
-  name: "service worker"
+  name: job-name-serviceworker
   startingGear: ServiceWorkerGear
   departments:
   - Civilian

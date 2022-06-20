@@ -1,6 +1,6 @@
 - type: job
   id: Clown
-  name: "clown"
+  name: job-name-clown
   startingGear: ClownGear
   departments:
   - Civilian

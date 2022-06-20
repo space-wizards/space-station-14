@@ -1,6 +1,6 @@
 - type: job
   id: Reporter
-  name: "reporter"
+  name: job-name-reporter
   startingGear: ReporterGear
   departments:
   - Civilian

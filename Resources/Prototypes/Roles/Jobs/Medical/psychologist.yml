@@ -1,6 +1,6 @@
 - type: job
   id: Psychologist
-  name: "psychologist"
+  name: job-name-psychologist
   startingGear: PsychologistGear
   departments:
   - Medical

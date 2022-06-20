@@ -1,6 +1,6 @@
 - type: job
   id: Janitor
-  name: "janitor"
+  name: job-name-janitor
   startingGear: JanitorGear
   departments:
   - Civilian

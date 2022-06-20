@@ -1,6 +1,6 @@
 ﻿- type: job
   id: SecurityCadet
-  name: "security cadet"
+  name: job-name-cadet
   startingGear: SecurityCadetGear
   departments:
   - Civilian

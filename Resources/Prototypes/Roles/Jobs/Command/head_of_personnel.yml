@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfPersonnel
-  name: "head of personnel"
+  name: job-name-hop
   weight: 20
   startingGear: HoPGear
   departments:

@@ -1,6 +1,6 @@
 - type: job
   id: Chaplain
-  name: "chaplain"
+  name: job-name-chaplain
   startingGear: ChaplainGear
   departments:
   - Civilian

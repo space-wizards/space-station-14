@@ -1,6 +1,6 @@
 - type: job
   id: Musician
-  name: "musician"
+  name: job-name-musician
   startingGear: MusicianGear
   departments:
   - Civilian

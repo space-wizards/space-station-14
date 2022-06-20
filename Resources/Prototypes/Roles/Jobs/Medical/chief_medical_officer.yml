@@ -2,7 +2,7 @@
 
 - type: job
   id: ChiefMedicalOfficer
-  name: "chief medical officer"
+  name: job-name-cmo
   weight: 10
   startingGear: CMOGear
   departments:
