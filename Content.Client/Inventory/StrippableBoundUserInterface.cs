@@ -16,7 +16,6 @@ namespace Content.Client.Inventory
         public Dictionary<(string ID, string Name), string>? Inventory { get; private set; }
         public Dictionary<string, string>? Hands { get; private set; }
         public Dictionary<EntityUid, string>? Handcuffs { get; private set; }
-        public string Occupied { get; } = Loc.GetString("strippable-bound-user-interface-stripping-menu-obfuscate");
 
         [ViewVariables]
         private StrippingMenu? _strippingMenu;
@@ -55,20 +54,10 @@ namespace Content.Client.Inventory
             {
                 foreach (var (slot, name) in Inventory)
                 {
-                    if (slot.ID == "pocket1" && name != "None" || slot.ID == "pocket2" && name != "None")
+                    _strippingMenu.AddButton(slot.Name, name, (ev) =>
                     {
-                        _strippingMenu.AddButton(slot.Name, Occupied, (ev) =>
-                        {
-                            SendMessage(new StrippingInventoryButtonPressed(slot.ID));
-                        });
-                    }
-                    else
-                    {
-                        _strippingMenu.AddButton(slot.Name, name, (ev) =>
-                        {
-                            SendMessage(new StrippingInventoryButtonPressed(slot.ID));
-                        });
-                    }
+                        SendMessage(new StrippingInventoryButtonPressed(slot.ID));
+                    });
                 }
             }
 

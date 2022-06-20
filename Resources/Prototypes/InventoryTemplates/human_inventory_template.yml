@@ -62,6 +62,7 @@
       uiWindowPos: 0,3
       dependsOn: jumpsuit
       displayName: Pocket 1
+      stripHidden: true
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
@@ -69,6 +70,7 @@
       uiWindowPos: 2,3
       dependsOn: jumpsuit
       displayName: Pocket 2
+      stripHidden: true
     - name: suitstorage
       slotTexture: suit_storage
       slotFlags:   SUITSTORAGE
