@@ -11,6 +11,7 @@ using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.IntegrationTests.Tests.Networking;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.Maps;
 using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
@@ -410,10 +411,22 @@ public static class PoolManager
         return pair;
     }
 
-    public static TileRef GetMainTile(IMapGrid grid)
+    public static TileRef GetMainTile(IMapManager manager)
     {
-        // TODO a heuristic that is not this bad
-        return grid.GetAllTiles().First();
+        foreach (var grid in manager.GetAllGrids())
+        {
+            if (manager.GridExists(grid.GridEntityId))
+            {
+                foreach (var tile in grid.GetAllTiles())
+                {
+                    if(tile.IsSpace())continue;
+                    if(tile.IsBlockedTurf(false))continue;
+                    return tile;
+                }
+            }
+        }
+
+        throw new Exception("Failed to find empty tile");
     }
 
     public static EntityCoordinates GetMainEntityCoordinates(IMapManager manager)

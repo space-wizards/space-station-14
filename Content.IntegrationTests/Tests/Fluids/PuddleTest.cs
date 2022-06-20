@@ -29,9 +29,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 var solution = new Solution("Water", FixedPoint2.New(20));
-                var grid = PoolManager.GetMainGrid(mapManager);
-                var (x, y) = PoolManager.GetMainTile(grid).GridIndices;
-                var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
+                var tile = PoolManager.GetMainTile(mapManager);
+                var gridUid = tile.GridUid;
+                var (x, y) = tile.GridIndices;
+                var coordinates = new EntityCoordinates(gridUid, x, y);
                 var puddle = spillSystem.SpillAt(solution, coordinates, "PuddleSmear");
 
                 Assert.NotNull(puddle);
