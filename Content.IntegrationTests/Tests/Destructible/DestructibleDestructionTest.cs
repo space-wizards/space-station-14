@@ -13,17 +13,13 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 
 namespace Content.IntegrationTests.Tests.Destructible
 {
-    public sealed class DestructibleDestructionTest : ContentIntegrationTest
+    public sealed class DestructibleDestructionTest
     {
         [Test]
         public async Task Test()
         {
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            });
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -35,8 +31,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var gridId = GetMainGrid(sMapManager).GridEntityId;
-                var coordinates = new EntityCoordinates(gridId, 0, 0);
+                var coordinates = PoolManager.GetMainEntityCoordinates(sMapManager);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
@@ -87,6 +82,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.That(found, Is.True);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

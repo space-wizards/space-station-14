@@ -25,6 +25,8 @@ public sealed class MouseMigration : StationEvent
 
     public override int? MaxOccurrences => 1;
 
+    public override bool AnnounceEvent => false;
+
     protected override float StartAfter => 30f;
 
     protected override float EndAfter => 60;
