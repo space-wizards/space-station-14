@@ -12,26 +12,18 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class FilterTests : ContentIntegrationTest
+public sealed class FilterTests
 {
     [Test]
     [TestCase(DateOrder.Ascending)]
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        var server = StartServer(new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+        var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
         var sMaps = server.ResolveDependency<IMapManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
@@ -41,7 +33,7 @@ public sealed class FilterTests : ContentIntegrationTest
 
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
+            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
@@ -51,13 +43,13 @@ public sealed class FilterTests : ContentIntegrationTest
 
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
+            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var commonGuidStr = commonGuid.ToString();
 
@@ -110,5 +102,6 @@ public sealed class FilterTests : ContentIntegrationTest
 
             return firstFound && secondFound;
         });
+        await pairTracker.CleanReturnAsync();
     }
 }
