@@ -158,6 +158,9 @@ namespace Content.Server.Cargo.Systems
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.Approver = idCard?.FullName ?? string.Empty;
 
+
+            SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
         }
@@ -219,7 +222,7 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager));
+            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)

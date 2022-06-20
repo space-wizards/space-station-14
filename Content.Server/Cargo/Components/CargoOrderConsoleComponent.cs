@@ -1,4 +1,3 @@
-using Content.Shared.Cargo.Components;
 using Content.Shared.Sound;
 
 namespace Content.Server.Cargo.Components
@@ -9,7 +8,10 @@ namespace Content.Server.Cargo.Components
     [RegisterComponent]
     public sealed class CargoOrderConsoleComponent : Component
     {
-        [DataField("errorSound")]
-        public SoundSpecifier ErrorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
+        [DataField("soundError")] public SoundSpecifier ErrorSound =
+            new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
+
+        [DataField("soundConfirm")]
+        public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
     }
 }
