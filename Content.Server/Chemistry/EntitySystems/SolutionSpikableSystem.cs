@@ -55,12 +55,9 @@ public sealed class SolutionSpikableSystem : EntitySystem
             return;
         }
 
-        var targetName = MetaData(target).EntityName;
-        var sourceName = MetaData(source).EntityName;
-
         if (targetSolution.CurrentVolume == 0 && !spikableSource.IgnoreEmpty)
         {
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", targetName), ("spike-entity", sourceName)), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
             return;
         }
 
@@ -72,7 +69,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
         {
             RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
 
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", targetName), ("spike-entity", sourceName)), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
 
             sourceSolution.RemoveAllSolution();
 

@@ -40,8 +40,10 @@ public sealed class SpillableSystem : EntitySystem
     {
         if (!args.Handled)
         {
-            SpillAt(uid, args.Overflow, "PuddleSmear");
+            SpillAt(args.Overflow, Transform(uid).Coordinates, "PuddleSmear");
         }
+
+        args.Handled = true;
     }
 
     private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)
