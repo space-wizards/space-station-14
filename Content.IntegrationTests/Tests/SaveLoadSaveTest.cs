@@ -26,8 +26,8 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 // TODO: Properly find the "main" station grid.
-                var firstGrid = mapManager.GetAllGrids().First().GridEntityId;
-                mapLoader.SaveBlueprint(firstGrid, "save load save 1.yml");
+                var grid0 = mapManager.GetAllGrids().First();
+                mapLoader.SaveBlueprint(grid0.Index, "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").gridId;
                 mapLoader.SaveBlueprint(grid!.Value, "save load save 2.yml");
