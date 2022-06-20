@@ -67,7 +67,10 @@ public sealed class SolutionSpikableSystem : EntitySystem
                 targetSolution.MaxVolume,
                 out var overflow))
         {
-            RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
+            if (overflow.TotalVolume != 0)
+            {
+                RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
+            }
 
             _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
 
