@@ -111,11 +111,6 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      50: 0.9
-      75: 0.8
-      100: 0.7
   - type: MobPrice
     price: 2500 # rat wealth
 
