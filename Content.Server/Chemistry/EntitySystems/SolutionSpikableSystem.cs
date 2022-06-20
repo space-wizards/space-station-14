@@ -67,7 +67,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
         if (_solutionSystem.TryMixAndOverflow(target,
                 targetSolution,
                 sourceSolution,
-                FixedPoint2.Zero,
+                targetSolution.MaxVolume,
                 out var overflow))
         {
             RaiseLocalEvent(new OnSolutionSpikeOverflowEvent(overflow));
