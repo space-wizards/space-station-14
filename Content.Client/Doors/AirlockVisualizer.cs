@@ -159,6 +159,7 @@ namespace Content.Client.Doors
 
             var door = _entMan.GetComponent<DoorComponent>(component.Owner);
             var unlitVisible = true;
+            var baseVisible = true;
             var boltedVisible = false;
             var emergencyLightsVisible = false;
 
@@ -186,6 +187,8 @@ namespace Content.Client.Doors
                     if (_openUnlitVisible && !_simpleVisuals)
                     {
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_open_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_open_unlit");
                     }
                     break;
                 case DoorState.Closed:
@@ -194,6 +197,7 @@ namespace Content.Client.Doors
                     {
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                         sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_unlit");
                     }
                     break;
                 case DoorState.Opening:
@@ -231,18 +235,23 @@ namespace Content.Client.Doors
                 emergencyLightsVisible = true;
             }
 
+            if ((state == DoorState.Open || state == DoorState.Closed) && (emergencyLightsVisible || boltedVisible))
+            {
+                baseVisible = false;
+            }
+
+            if (boltedVisible || state == DoorState.Opening || state == DoorState.Closing)
+            {
+                emergencyLightsVisible = false;
+            }
+
             if (!_simpleVisuals)
             {
-                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && state != DoorState.Closed && state != DoorState.Welded);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible && baseVisible);
                 sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
                 if (_emergencyAccessLayer)
                 {
-                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess,
-                            emergencyLightsVisible
-                            && state != DoorState.Open
-                            && state != DoorState.Opening
-                            && state != DoorState.Closing
-                            && unlitVisible);
+                    sprite.LayerSetVisible(DoorVisualLayers.BaseEmergencyAccess, unlitVisible && emergencyLightsVisible);
                 }
             }
         }
