@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Doctor and CMO PDAs now behave as health analyzers when used on people.,
-    type: Add}
-  id: 1230
-  time: '2022-03-19T18:20:20.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Emitter crates now cost 3000 credits for Cargo., type: Tweak}
@@ -2997,3 +2991,8 @@ Entries:
       to see what they have., type: Add}
   id: 1729
   time: '2022-06-20T00:57:33.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed chair layering, type: Fix}
+  id: 1730
+  time: '2022-06-20T01:27:22.0000000+00:00'
