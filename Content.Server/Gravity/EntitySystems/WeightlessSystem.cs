@@ -34,11 +34,11 @@ namespace Content.Server.Gravity.EntitySystems
         public void AddAlert(AlertsComponent status)
         {
             var xform = Transform(status.Owner);
-            var alerts = _alerts.GetOrNew(xform.GridEntityId);
+            var alerts = _alerts.GetOrNew(xform.GridID);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -53,8 +53,8 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void RemoveAlert(AlertsComponent status)
         {
-            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridEntityId;
-            if (!_alerts.TryGetValue(grid, out var statuses))
+            var grid = EntityManager.GetComponent<TransformComponent>(status.Owner).GridUid;
+            if (grid == null || !_alerts.TryGetValue(grid.Value, out var statuses))
             {
                 return;
             }
@@ -109,10 +109,16 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Transform.GridEntityId;
-            var newStatuses = _alerts.GetOrNew(newGrid);
+            if (ev.Transform.MapID == MapId.Nullspace)
+                return;
 
-            newStatuses.Add(status);
+
+            var newGrid = ev.Transform.GridUid;
+            if (newGrid != null)
+            {
+                var newStatuses = _alerts.GetOrNew(newGrid.Value);
+                newStatuses.Add(status);
+            }
 
             // then update the actual alert. The alert is only removed if either the player is on a grid with gravity,
             // or if they ignore gravity-based movement altogether.

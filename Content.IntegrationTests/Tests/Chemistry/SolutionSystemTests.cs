@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 // reactions can change this assumption
 [TestFixture]
 [TestOf(typeof(SolutionContainerSystem))]
-public sealed class SolutionSystemTests : ContentIntegrationTest
+public sealed class SolutionSystemTests
 {
     private const string Prototypes = @"
 - type: entity
@@ -25,22 +25,19 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
       beaker:
         maxVol: 50
 ";
-
     [Test]
     public async Task TryAddTwoNonReactiveReagent()
     {
-        var options = new ServerContentIntegrationOption { ExtraPrototypes = Prototypes };
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = GetMainEntityCoordinates(mapManager);
+        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
         EntityUid beaker;
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             var oilQuantity = FixedPoint2.New(15);
             var waterQuantity = FixedPoint2.New(10);
@@ -62,7 +59,7 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
             Assert.That(oil, Is.EqualTo(oilQuantity));
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 
     // This test mimics current behavior
@@ -70,18 +67,16 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
     [Test]
     public async Task TryAddTooMuchNonReactiveReagent()
     {
-        var options = new ServerContentIntegrationOption { ExtraPrototypes = Prototypes };
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = GetMainEntityCoordinates(mapManager);
+        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
         EntityUid beaker;
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             var oilQuantity = FixedPoint2.New(1500);
             var waterQuantity = FixedPoint2.New(10);
@@ -103,25 +98,23 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
             Assert.That(oil, Is.EqualTo(FixedPoint2.Zero));
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 
     // Unlike TryAddSolution this adds and two solution without then splits leaving only threshold in original
     [Test]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
-        var options = new ServerContentIntegrationOption { ExtraPrototypes = Prototypes };
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = GetMainEntityCoordinates(mapManager);
+        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
         EntityUid beaker;
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             int ratio = 9;
             int threshold = 20;
@@ -152,25 +145,23 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
             Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 
     // TryMixAndOverflow will fail if Threshold larger than MaxVolume
     [Test]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
-        var options = new ServerContentIntegrationOption { ExtraPrototypes = Prototypes };
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = GetMainEntityCoordinates(mapManager);
+        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
         EntityUid beaker;
 
-        server.Assert(() =>
+        await server.WaitAssertion(() =>
         {
             int ratio = 9;
             int threshold = 60;
@@ -190,6 +181,6 @@ public sealed class SolutionSystemTests : ContentIntegrationTest
                 Is.False);
         });
 
-        await server.WaitIdleAsync();
+        await pairTracker.CleanReturnAsync();
     }
 }

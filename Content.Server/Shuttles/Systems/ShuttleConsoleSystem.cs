@@ -142,7 +142,7 @@ namespace Content.Server.Shuttles.Systems
                 pilot.Console is not ShuttleConsoleComponent console) return;
 
             if (!console.SubscribedPilots.Contains(pilot) ||
-                !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
+                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
 
             SetShuttleMode(args.Mode, console, shuttle);
         }
