@@ -32,6 +32,8 @@ public sealed class SlotDefinition
 
     [DataField("displayName", required: true)] public string DisplayName { get; } = string.Empty;
 
+    [DataField("stripHidden")] public bool StripHidden { get; }
+
     /// <summary>
     ///     Offset for the clothing sprites.
     /// </summary>

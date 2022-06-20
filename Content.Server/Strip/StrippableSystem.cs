@@ -190,7 +190,17 @@ namespace Content.Server.Strip
                     var name = "None";
 
                     if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
-                        name = Name(item.Value);
+                    {
+                        if (!slot.StripHidden)
+                        {
+                            name = Name(item.Value);
+                        }
+
+                        else
+                        {
+                            name = Loc.GetString("strippable-bound-user-interface-stripping-menu-obfuscate");
+                        }
+                    }
 
                     inventory[(slot.Name, slot.DisplayName)] = name;
                 }
