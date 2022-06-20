@@ -274,7 +274,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
+                return;
+            }
+
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -328,7 +334,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -374,7 +380,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
+                return;
+            }
+
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -425,7 +437,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
