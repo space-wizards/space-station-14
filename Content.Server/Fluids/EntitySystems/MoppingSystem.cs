@@ -76,7 +76,7 @@ public sealed class MoppingSystem : EntitySystem
 
     private void ReleaseToFloor(EntityCoordinates clickLocation, AbsorbentComponent absorbent, Solution? absorbedSolution)
     {
-        if ((_mapManager.TryGetGrid(clickLocation.GetGridId(EntityManager), out var mapGrid)) // needs valid grid
+        if ((_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid)) // needs valid grid
             && absorbedSolution is not null) // needs a solution to place on the tile
         {
             TileRef tile = mapGrid.GetTileRef(clickLocation);
@@ -130,7 +130,7 @@ public sealed class MoppingSystem : EntitySystem
                 TryTransfer(used, target, "absorbed", puddle.SolutionName, transferAmount); // Complete the transfer right away, with no doAfter.
 
                 sfx = component.TransferSound;
-                SoundSystem.Play(Filter.Pvs(user), sfx.GetSound(), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
+                SoundSystem.Play(sfx.GetSound(), Filter.Pvs(user), used); // Give instant feedback for diluting puddle, so that it's clear that the player is adding to the puddle (as opposed to other behaviours, which have a doAfter).
 
                 msg = "mopping-system-puddle-diluted";
                 user.PopupMessage(user, Loc.GetString(msg)); // play message now because we are aborting.
@@ -307,7 +307,7 @@ public sealed class MoppingSystem : EntitySystem
 
     private void OnTransferComplete(TransferCompleteEvent ev)
     {
-        SoundSystem.Play(Filter.Pvs(ev.User), ev.Sound.GetSound(), ev.Tool); // Play the After SFX
+        SoundSystem.Play(ev.Sound.GetSound(), Filter.Pvs(ev.User), ev.Tool); // Play the After SFX
 
         ev.User.PopupMessage(ev.User, Loc.GetString(ev.Message, ("target", ev.Target), ("used", ev.Tool))); // Play the After popup message
 

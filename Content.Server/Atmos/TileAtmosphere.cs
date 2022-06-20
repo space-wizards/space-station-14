@@ -62,7 +62,7 @@ namespace Content.Server.Atmos
         public AtmosDirection LastPressureDirection;
 
         [ViewVariables]
-        public GridId GridIndex { get; }
+        public EntityUid GridIndex { get; }
 
         [ViewVariables]
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
@@ -93,7 +93,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
 
-        public TileAtmosphere(GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
+        public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
         {
             GridIndex = gridIndex;
             GridIndices = gridIndices;

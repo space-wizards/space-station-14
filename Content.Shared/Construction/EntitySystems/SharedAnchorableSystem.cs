@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
@@ -12,7 +13,8 @@ public abstract class SharedAnchorableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(SharedConstructionSystem) });
+        SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
+            before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
     }
 
     private void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)

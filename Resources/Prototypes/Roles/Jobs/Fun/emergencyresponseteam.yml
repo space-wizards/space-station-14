@@ -34,7 +34,6 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTLeader
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
@@ -71,6 +70,7 @@
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
     pocket2:
@@ -81,13 +81,13 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsMagAdv
-    head: ClothingHeadHelmetHardsuitERTEngineer
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesColorYellow
     outerClothing: ClothingOuterHardsuitERTEngineer
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
     
@@ -116,6 +116,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
     pocket2:
@@ -126,13 +127,13 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTSecurity
     mask: ClothingMaskBreath
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTSecurity
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
     
@@ -161,6 +162,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
@@ -171,13 +173,13 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTMedical
     mask: ClothingMaskBreath
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTMedical
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltMedicalFilled
     pocket1: HandheldHealthAnalyzer
     pocket2: Flare
@@ -206,6 +208,7 @@
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
     pocket2:
@@ -216,11 +219,11 @@
     jumpsuit: ClothingUniformJumpsuitColorBlue
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
-    head: ClothingHeadHelmetHardsuitERTJanitor
     mask: ClothingMaskBreath
     gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterHardsuitERTJanitor
     suitStorage: OxygenTankFilled
     id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare

@@ -200,7 +200,7 @@ namespace Content.Server.Guardian
             {
                 guardianComponent.Host = ev.Target;
 
-                SoundSystem.Play(Filter.Entities(ev.Target), "/Audio/Effects/guardian_inject.ogg", ev.Target);
+                SoundSystem.Play("/Audio/Effects/guardian_inject.ogg", Filter.Entities(ev.Target), ev.Target);
 
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));
                 // Exhaust the activator
@@ -223,11 +223,11 @@ namespace Content.Server.Guardian
             if (args.CurrentMobState.IsCritical())
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, Filter.Entities(component.HostedGuardian.Value));
-                SoundSystem.Play(Filter.Entities(component.HostedGuardian.Value), "/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
+                SoundSystem.Play("/Audio/Effects/guardian_warn.ogg", Filter.Entities(component.HostedGuardian.Value), component.HostedGuardian.Value);
             }
             else if (args.CurrentMobState.IsDead())
             {
-                SoundSystem.Play(Filter.Pvs(uid), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.20f));
+                SoundSystem.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);
             }
         }
