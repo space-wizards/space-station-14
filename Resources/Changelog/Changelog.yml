@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Crafting items via the construction menu should no longer attempt to
-      take items from other users inventories., type: Fix}
-  id: 1232
-  time: '2022-03-20T01:46:08.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: Nanotrasen finally figured out that still water in hydroponics trays
@@ -2999,3 +2993,8 @@ Entries:
     type: Tweak}
   id: 1731
   time: '2022-06-20T04:52:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items rotate when thrown again., type: Fix}
+  id: 1732
+  time: '2022-06-20T16:58:37.0000000+00:00'
