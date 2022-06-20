@@ -1,0 +1,8 @@
+- type: entity
+  id: OrganRatLungs
+  parent: OrganHumanLungs
+  suffix: "rat"
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Rat ]
+

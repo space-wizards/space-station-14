@@ -7,7 +7,7 @@ namespace Content.IntegrationTests.Tests.Damageable;
 
 [TestFixture]
 [TestOf(typeof(DamageSpecifier))]
-public sealed class DamageSpecifierTest : ContentIntegrationTest
+public sealed class DamageSpecifierTest
 {
     [Test]
     public void TestDamageSpecifierOperations()

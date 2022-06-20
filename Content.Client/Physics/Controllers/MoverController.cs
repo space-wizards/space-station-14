@@ -27,7 +27,7 @@ namespace Content.Client.Physics.Controllers
                 return;
             }
 
-            if (xform.GridEntityId != EntityUid.Invalid)
+            if (xform.GridUid != null)
                 mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate

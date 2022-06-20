@@ -34,7 +34,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // *This is on purpose.*
 
             DisposalUnitComponent? duc = null;
-            if (_mapManager.TryGetGrid(holderTransform.GridEntityId, out var grid))
+            if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
             {
                 foreach (var contentUid in grid.GetLocal(holderTransform.Coordinates))
                 {
