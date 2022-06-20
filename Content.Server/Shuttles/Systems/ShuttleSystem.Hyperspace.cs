@@ -37,8 +37,11 @@ public sealed partial class ShuttleSystem
             return;
         }
 
+        SetDocks(component, false);
+
         var hyperspace = AddComp<HyperspaceComponent>(component.Owner);
         hyperspace.Accumulator = timer;
+        hyperspace.TargetCoordinates = coordinates;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Pvs(component.Owner, GetSoundRange(component.Owner), entityManager: EntityManager), _startupSound.Params);
     }
@@ -55,13 +58,27 @@ public sealed partial class ShuttleSystem
 
             switch (comp.State)
             {
+                // Going in-travel
                 case HyperspaceState.Starting:
                     comp.State = HyperspaceState.Travelling;
                     SetupHyperspace();
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), Vector2.Zero);
                     comp.Accumulator += DefaultHyperspaceTime;
+                    if (TryComp<PhysicsComponent>(comp.Owner, out var body))
+                    {
+                        body.LinearVelocity = new Vector2(0f, 20f);
+                        body.LinearDamping = 0f;
+                        body.AngularDamping = 0f;
+                        body.AngularVelocity = 0f;
+                    }
                     break;
+                // Arrive.
                 case HyperspaceState.Travelling:
+                    if (TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
+                    {
+                        SetDocks(shuttle, true);
+                    }
+
                     xform.Coordinates = comp.TargetCoordinates;
                     SoundSystem.Play(_arrivalSound.GetSound(),
                         Filter.Pvs(comp.Owner, GetSoundRange(comp.Owner), entityManager: EntityManager));
@@ -70,6 +87,16 @@ public sealed partial class ShuttleSystem
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+    }
+
+    private void SetDocks(ShuttleComponent component, bool enabled)
+    {
+        foreach (var (dock, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
+        {
+            if (xform.ParentUid != component.Owner || dock.Enabled == enabled) continue;
+            _dockSystem.Undock(dock);
+            dock.Enabled = enabled;
         }
     }
 

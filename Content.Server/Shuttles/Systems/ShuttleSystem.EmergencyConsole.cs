@@ -1,13 +1,19 @@
+using System.Text;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Database;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -18,7 +24,6 @@ public sealed partial class ShuttleSystem
      */
 
     [Dependency] private readonly AccessReaderSystem _reader = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <summary>
@@ -26,36 +31,63 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool EmergencyShuttleArrived { get; private set; }
 
-    public bool EmergencyShuttleAuthorized { get; private set; }
+    public bool EarlyLaunchAuthorized { get; private set; }
 
     /// <summary>
     /// How much time remaining until the shuttle consoles for emergency shuttles are unlocked?
     /// </summary>
-    private float _accumulator;
+    private float _consoleAccumulator;
 
-    // TODO: CVar
     /// <summary>
-    /// How long it takes for an emergency shuttle console to be unlocked.
+    /// If an early launch is authorized how short is it.
     /// </summary>
-    public TimeSpan EmergencyShuttleDefaultTime = TimeSpan.FromSeconds(5);
+    private TimeSpan _authorizeTime = TimeSpan.FromSeconds(10);
+    private TimeSpan _transitTime = TimeSpan.FromMinutes(3);
+
+    /// <summary>
+    /// Have the emergency shuttles been authorised to launch at Centcomm?
+    /// </summary>
+    private bool _launchedShuttles;
 
     private void InitializeEmergencyConsole()
     {
+        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
     }
 
+    private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
+    {
+        UpdateConsoleState(uid, component);
+    }
+
     private void UpdateEmergencyConsole(float frameTime)
     {
-        if (_accumulator <= 0f) return;
+        if (_consoleAccumulator <= 0f) return;
 
-        _accumulator -= frameTime;
+        _consoleAccumulator -= frameTime;
 
-        // TODO: Authorise shuttles NOW! SLOTH! DO IT NOW!
-        if (_accumulator <= frameTime)
+        if (!_launchedShuttles && _consoleAccumulator <= HyperspaceStartupTime)
         {
+            _launchedShuttles = true;
 
+            if (_centcommMap != null)
+            {
+                foreach (var comp in EntityQuery<StationDataComponent>(true))
+                {
+                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
+
+                    Hyperspace(shuttle, new EntityCoordinates(_mapManager.GetMapEntityId(_centcommMap.Value), Vector2.One * 1000f), _consoleAccumulator);
+                }
+            }
+        }
+
+        if (_consoleAccumulator <= frameTime)
+        {
+            _launchedShuttles = true;
+            _chatSystem.DispatchGlobalStationAnnouncement(
+                $"The Emergency Shuttle has left the station. Estimate {_transitTime.Minutes} until the shuttle docks at Central Command.");
         }
     }
 
@@ -78,10 +110,9 @@ public sealed partial class ShuttleSystem
 
         if (component.AuthorizedEntities.Count == 0) return;
 
+        _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Session:user}");
         component.AuthorizedEntities.Clear();
-
-        // TODO: Authorize
-        UpdateConsoleState(uid, component);
+        UpdateAllConsoles();
     }
 
     private void OnEmergencyRepeal(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealMessage args)
@@ -104,10 +135,11 @@ public sealed partial class ShuttleSystem
         // TODO: This is fucking bad
         if (!component.AuthorizedEntities.Remove(idCard.FullName ?? idCard.OriginalOwnerName)) return;
 
+        _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
+        var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
+        _chatSystem.DispatchGlobalStationAnnouncement($"Early launch authorization revoked, {remaining} authorizations needed");
         CheckForLaunch(component);
-
-        // TODO: Authorize
-        UpdateConsoleState(uid, component);
+        UpdateAllConsoles();
     }
 
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
@@ -130,16 +162,28 @@ public sealed partial class ShuttleSystem
         // TODO: This is fucking bad
         if (!component.AuthorizedEntities.Add(idCard.FullName ?? idCard.OriginalOwnerName)) return;
 
+        _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch AUTH by {args.Session:user}");
+        var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
+        _chatSystem.DispatchGlobalStationAnnouncement($"{remaining} authorizations needed until shuttle is launched early", playDefaultSound: false);
+        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         CheckForLaunch(component);
-
-        // TODO: Authorize
-        UpdateConsoleState(uid, component);
+        UpdateAllConsoles();
     }
 
     private void CleanupEmergencyConsole()
     {
-        EmergencyShuttleAuthorized = false;
+        _launchedShuttles = false;
+        _consoleAccumulator = 0f;
+        EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
+    }
+
+    private void UpdateAllConsoles()
+    {
+        foreach (var comp in EntityQuery<EmergencyShuttleConsoleComponent>(true))
+        {
+            UpdateConsoleState(comp.Owner, comp);
+        }
     }
 
     private void UpdateConsoleState(EntityUid uid, EmergencyShuttleConsoleComponent component)
@@ -153,6 +197,7 @@ public sealed partial class ShuttleSystem
 
         _uiSystem.GetUiOrNull(uid, EmergencyShuttleConsoleUiKey.Key)?.SetState(new EmergencyShuttleConsoleBoundUserInterfaceState()
         {
+            EarlyLaunchTime = EarlyLaunchAuthorized ? IoCManager.Resolve<IGameTiming>().CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
             Authorizations = auths,
             AuthorizationsRequired = component.AuthorizationsRequired,
         });
@@ -160,10 +205,14 @@ public sealed partial class ShuttleSystem
 
     private void CheckForLaunch(EmergencyShuttleConsoleComponent component)
     {
-        if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EmergencyShuttleAuthorized)
+        if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
             return;
 
-        EmergencyShuttleAuthorized = true;
+        _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
+        _consoleAccumulator = MathF.Min(_consoleAccumulator, (float) _authorizeTime.TotalSeconds);
+        EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
+        _chatSystem.DispatchGlobalStationAnnouncement($"The emergency shuttle will launch in {_consoleAccumulator:0} seconds", playDefaultSound: false);
+        UpdateAllConsoles();
     }
 }

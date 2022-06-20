@@ -5,6 +5,10 @@ namespace Content.Shared.Shuttles.BUIStates;
 [Serializable, NetSerializable]
 public sealed class EmergencyShuttleConsoleBoundUserInterfaceState : BoundUserInterfaceState
 {
+    /// <summary>
+    /// null if we're not early launching.
+    /// </summary>
+    public TimeSpan? EarlyLaunchTime;
     public List<string> Authorizations = new();
     public int AuthorizationsRequired;
 

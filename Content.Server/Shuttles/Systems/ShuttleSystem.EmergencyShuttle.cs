@@ -1,14 +1,16 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Chat;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -18,24 +20,23 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem
 {
    /*
-    * Handles the escape shuttle + Centcomm
+    * Handles the escape shuttle + Centcomm.
     */
 
+   [Dependency] private readonly IAdminLogManager _logger = default!;
    [Dependency] private readonly IAdminManager _admin = default!;
    [Dependency] private readonly IMapLoader _loader = default!;
+   [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
    private MapId? _centcommMap;
    private EntityUid? _centcomm;
 
-   // TODO: Use uhhhhhhhhh prototypes I guess?
-
-   /*
-    * TODO: When shuttle call < 30 seconds block recalls
-    * TODO: When call happened issue event, that's when you start queueing hyperspace from Centcomm and activate Centcomm
-    * TODO: After n time unlock all controls, maybe put it on the shuttle state? Ask slorkitos
-    */
+   /// <summary>
+   /// How long the emergency shuttle remains docked with the station.
+   /// </summary>
+   private TimeSpan _dockTime = TimeSpan.FromMinutes(3);
 
    private void InitializeEscape()
    {
@@ -207,6 +208,7 @@ public sealed partial class ShuttleSystem
    /// </summary>
    public void CallEmergencyShuttle()
    {
+       _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle docked with stations");
        SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
@@ -214,7 +216,8 @@ public sealed partial class ShuttleSystem
            CallEmergencyShuttle(comp.Owner);
        }
 
-       // TODO: Set a timer for 4 minutes to launch
+       _chatSystem.DispatchGlobalStationAnnouncement($"The Emergency Shuttle has docked with the station", playDefaultSound: false);
+       _consoleAccumulator = (float) _dockTime.TotalSeconds;
 
        // TODO: When EmergencyConsole triggered set to
 

@@ -12,5 +12,5 @@ public sealed class EmergencyShuttleConsoleComponent : Component
     public HashSet<string> AuthorizedEntities = new();
 
     [ViewVariables(VVAccess.ReadWrite), DataField("authorizationsRequired")]
-    public int AuthorizationsRequired = 3;
+    public int AuthorizationsRequired = 1;
 }
