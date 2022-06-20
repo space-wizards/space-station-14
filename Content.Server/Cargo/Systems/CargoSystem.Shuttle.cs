@@ -490,6 +490,7 @@ public sealed partial class CargoSystem
     {
         if (CargoMap == null || !_mapManager.MapExists(CargoMap.Value))
         {
+            CargoMap = null;
             DebugTools.Assert(!EntityQuery<CargoShuttleComponent>().Any());
             return;
         }
