@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Emitter crates now cost 3000 credits for Cargo., type: Tweak}
-  id: 1231
-  time: '2022-03-19T18:22:28.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Crafting items via the construction menu should no longer attempt to
@@ -2996,3 +2991,11 @@ Entries:
   - {message: Fixed chair layering, type: Fix}
   id: 1730
   time: '2022-06-20T01:27:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
+    type: Tweak}
+  - {message: Rule 8 clearly states no names of fictional or real famous people.,
+    type: Tweak}
+  id: 1731
+  time: '2022-06-20T04:52:45.0000000+00:00'
