@@ -62,6 +62,11 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
+    private void ShutdownShuttle()
+    {
+        Cleanup();
+    }
+
     #region Cargo Pilot Console
 
     private void OnCargoPilotConsoleOpen(EntityUid uid, CargoPilotConsoleComponent component, AfterActivatableUIOpenEvent args)
