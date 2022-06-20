@@ -16678,7 +16678,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 1184
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: -21.5,16.5
     parent: 30
