@@ -14,9 +14,6 @@ namespace Content.Shared.Maps
         /// </summary>
         public static TileRef GetTileRef(this Vector2i vector2i, EntityUid gridId, IMapManager? mapManager = null)
         {
-            if (!gridId.IsValid())
-                return default;
-
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(gridId, out var grid))
@@ -41,7 +38,7 @@ namespace Content.Shared.Maps
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GetGridEntityId(entityManager), out var grid))
+            if (!mapManager.TryGetGrid(coordinates.GetGridUid(entityManager), out var grid))
                 return null;
 
 
@@ -87,15 +84,6 @@ namespace Content.Shared.Maps
         public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             return tile.Tile.IsSpace(tileDefinitionManager);
-        }
-
-        public static bool PryTile(this EntityCoordinates coordinates, IEntityManager? entityManager = null,
-            IMapManager? mapManager = null)
-        {
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-
-            return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridEntityId(entityManager));
         }
 
         public static bool PryTile(this Vector2i indices, EntityUid gridId,
