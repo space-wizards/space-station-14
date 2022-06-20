@@ -16,7 +16,7 @@ using Content.Server.MachineLinking.Components;
 
 namespace Content.Server.Cloning.Systems
 {
-    internal sealed class CloningSystem : EntitySystem
+    public sealed class CloningSystem : EntitySystem
     {
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
@@ -128,7 +128,7 @@ namespace Content.Server.Cloning.Systems
             clonePod.CapturedMind = mind;
             _cloningSystem.ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
-            _euiManager.OpenEui(new AcceptCloningEui(mind), client);
+            _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
             return true;
         }
 

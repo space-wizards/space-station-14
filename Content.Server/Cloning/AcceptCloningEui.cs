@@ -7,12 +7,13 @@ namespace Content.Server.Cloning
 {
     public sealed class AcceptCloningEui : BaseEui
     {
-        [Dependency] private readonly CloningSystem _cloningSystem = default!;
+        private readonly CloningSystem _cloningSystem;
         private readonly Mind.Mind _mind;
 
-        public AcceptCloningEui(Mind.Mind mind)
+        public AcceptCloningEui(Mind.Mind mind, CloningSystem cloningSys)
         {
             _mind = mind;
+            _cloningSystem = cloningSys;
         }
 
         public override void HandleMessage(EuiMessageBase msg)

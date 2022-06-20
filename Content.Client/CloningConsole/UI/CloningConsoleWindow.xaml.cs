@@ -13,6 +13,7 @@ namespace Content.Client.CloningConsole.UI
         [Dependency] private readonly IGameTiming _timing = default!;
         public CloningConsoleWindow()
         {
+            IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
         }
 
