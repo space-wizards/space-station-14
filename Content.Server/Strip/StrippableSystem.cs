@@ -276,7 +276,7 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
             {
-                Logger.Error("The slot didn't exist.");
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
                 return;
             }
 
@@ -382,7 +382,7 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
             {
-                Logger.Error("The slot didn't exist.");
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
                 return;
             }
 
