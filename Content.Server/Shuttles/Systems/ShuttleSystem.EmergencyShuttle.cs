@@ -7,8 +7,10 @@ using Content.Server.Station.Systems;
 using Content.Shared.Shuttles.Events;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
@@ -137,7 +139,8 @@ public sealed partial class ShuttleSystem
                                    }
                                }
 
-                               var spawnPosition = new EntityCoordinates(targetGridXform.ParentUid, matty.Transform(Vector2.Zero));
+                               var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(Vector2.Zero));
+                               spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
                                var spawnRotation = shuttleDockXform.LocalRotation +
                                    targetGridXform.LocalRotation +
                                    xform.LocalRotation;
@@ -204,7 +207,9 @@ public sealed partial class ShuttleSystem
    /// </summary>
    public void CallEmergencyShuttle()
    {
-       foreach (var comp in EntityQuery<StationDataComponent>())
+       SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
+
+       foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
            CallEmergencyShuttle(comp.Owner);
        }
