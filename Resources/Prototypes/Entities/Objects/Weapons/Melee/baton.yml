@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseItem
+  id: Telebaton
+  name: telescopic baton
+  description: A sleek, contractable personal defense weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/telebaton.rsi
+    layers:
+    - state: icon
+      map: ["enum.CollapsibleVisualLayers.IsCollapsed"]
+  - type: MeleeWeapon
+    damage:
+      types:
+        Asphyxiation: 0
+  - type: Item
+    size: 15
+    sprite: Objects/Weapons/Melee/telebaton.rsi
+  - type: StunOnHit
+  - type: Collapsible
+  - type: Appearance
+  - type: CollapsibleVisuals
+    collapsedState: icon
+    extendedState: icon-on
