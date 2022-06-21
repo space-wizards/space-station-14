@@ -411,7 +411,7 @@ namespace Content.Server.Strip
             if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var item) && _inventorySystem.TryUnequip(user, component.Owner, slot))
             {
                 // Raise a dropped event, so that things like gas tank internals properly deactivate when stripping
-                RaiseLocalEvent(item.Value, new DroppedEvent(user));
+                RaiseLocalEvent(item.Value, new DroppedEvent(user), true);
 
                 _handsSystem.PickupOrDrop(user, item.Value);
             }

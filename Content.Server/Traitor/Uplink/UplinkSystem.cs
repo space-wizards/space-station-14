@@ -53,7 +53,7 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
-            RaiseLocalEvent(uid, new UplinkInitEvent(component));
+            RaiseLocalEvent(uid, new UplinkInitEvent(component), true);
 
             // if component has a preset info (probably spawn by admin)
             // create a new account and register it for this uplink
@@ -67,7 +67,7 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
-            RaiseLocalEvent(uid, new UplinkRemovedEvent());
+            RaiseLocalEvent(uid, new UplinkRemovedEvent(), true);
         }
 
         private void OnActivate(EntityUid uid, UplinkComponent component, ActivateInWorldEvent args)
