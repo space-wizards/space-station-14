@@ -59,8 +59,8 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<EjectBulbCompleteEvent>(OnEjectBulbComplete);
-            SubscribeLocalEvent<EjectBulbCancelledEvent>(OnEjectBulbCancelled);
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCompleteEvent>(OnEjectBulbComplete);
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCancelledEvent>(OnEjectBulbCancelled);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -145,13 +145,13 @@ namespace Content.Server.Light.EntitySystems
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BroadcastFinishedEvent = new EjectBulbCompleteEvent()
+                TargetFinishedEvent = new EjectBulbCompleteEvent()
                 {
                     Component = light,
                     User = userUid,
                     Target = uid,
                 },
-                BroadcastCancelledEvent = new EjectBulbCancelledEvent()
+                TargetCancelledEvent = new EjectBulbCancelledEvent()
                 {
                     Component = light,
                 }
@@ -427,13 +427,13 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
         }
 
-        private void OnEjectBulbComplete(EjectBulbCompleteEvent args)
+        private void OnEjectBulbComplete(EntityUid uid, PoweredLightComponent component, EjectBulbCompleteEvent args)
         {
             args.Component.CancelToken = null;
             EjectBulb(args.Target, args.User, args.Component);
         }
 
-        private static void OnEjectBulbCancelled(EjectBulbCancelledEvent args)
+        private static void OnEjectBulbCancelled(EntityUid uid, PoweredLightComponent component, EjectBulbCancelledEvent args)
         {
             args.Component.CancelToken = null;
         }
