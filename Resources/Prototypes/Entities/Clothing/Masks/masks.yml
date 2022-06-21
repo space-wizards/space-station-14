@@ -8,6 +8,12 @@
     sprite: Clothing/Mask/gas.rsi
   - type: Clothing
     sprite: Clothing/Mask/gas.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -23,6 +29,12 @@
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassecurity.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -38,6 +50,12 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassyndicate.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -54,6 +72,12 @@
     sprite: Clothing/Mask/gasatmos.rsi
   - type: Clothing
     sprite: Clothing/Mask/gasatmos.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -73,6 +97,12 @@
     sprite: Clothing/Mask/gascaptain.rsi
   - type: Clothing
     sprite: Clothing/Mask/gascaptain.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -88,6 +118,12 @@
     sprite: Clothing/Mask/gascentcom.rsi
   - type: Clothing
     sprite: Clothing/Mask/gascentcom.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -103,6 +139,12 @@
     sprite: Clothing/Mask/gasexplorer.rsi
   - type: Clothing
     sprite: Clothing/Mask/gasexplorer.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -125,6 +167,12 @@
     sprite: Clothing/Mask/medical.rsi
   - type: Clothing
     sprite: Clothing/Mask/medical.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -140,6 +188,12 @@
     sprite: Clothing/Mask/breath.rsi
   - type: Clothing
     sprite: Clothing/Mask/breath.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -191,6 +245,12 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
@@ -221,6 +281,12 @@
     sprite: Clothing/Mask/plaguedoctormask.rsi
   - type: Clothing
     sprite: Clothing/Mask/plaguedoctormask.rsi
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Interface/Inventory/blocked.png
+      iconOn: Clothing/Mask/gas.rsi/icon.png
+      event: !type:ToggleActionEvent
   - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection

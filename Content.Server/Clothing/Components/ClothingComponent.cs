@@ -1,3 +1,4 @@
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
@@ -18,5 +19,10 @@ namespace Content.Server.Clothing.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
+
+        [DataField("toggleAction")]
+        public InstantAction? ToggleAction;
+
+        public bool IsToggled;
     }
 }
