@@ -30,6 +30,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Movement\Components\SharedPlayerMobMoverComponent.cs" />
+    <Compile Remove="Movement\EntitySystems\SharedMobMoverSystem.cs" />
+    <Compile Remove="Movement\EntitySystems\MovementSpeedModifierSystem.cs" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>

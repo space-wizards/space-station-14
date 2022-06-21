@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Damage
 {

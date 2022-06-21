@@ -8,9 +8,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.AI.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IMobMoverComponent))]
     [Virtual]
-    public class AiControllerComponent : Component, IMobMoverComponent, IMoverComponent
+    public class AiControllerComponent : Component, IMoverComponent
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
 

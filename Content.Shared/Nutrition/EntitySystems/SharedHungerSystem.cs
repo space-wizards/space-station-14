@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 
 namespace Content.Shared.Nutrition.EntitySystems

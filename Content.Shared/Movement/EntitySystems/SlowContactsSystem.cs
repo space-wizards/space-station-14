@@ -1,4 +1,5 @@
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Movement.EntitySystems;
