@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utils
             {
                 var transform = entityManager.GetComponent<TransformComponent>(entity);
 
-                if (transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
+                if (transform.Coordinates.GetGridUid(entityManager) != grid.GetGridUid(entityManager))
                 {
                     continue;
                 }

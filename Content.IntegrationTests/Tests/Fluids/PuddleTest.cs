@@ -14,39 +14,39 @@ namespace Content.IntegrationTests.Tests.Fluids
 {
     [TestFixture]
     [TestOf(typeof(PuddleComponent))]
-    public sealed class PuddleTest : ContentIntegrationTest
+    public sealed class PuddleTest
     {
         [Test]
         public async Task TilePuddleTest()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var solution = new Solution("Water", FixedPoint2.New(20));
-                var grid = GetMainGrid(mapManager);
-                var (x, y) = GetMainTile(grid).GridIndices;
-                var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
+                var tile = PoolManager.GetMainTile(mapManager);
+                var gridUid = tile.GridUid;
+                var (x, y) = tile.GridIndices;
+                var coordinates = new EntityCoordinates(gridUid, x, y);
                 var puddle = spillSystem.SpillAt(solution, coordinates, "PuddleSmear");
 
                 Assert.NotNull(puddle);
             });
+            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task SpaceNoPuddleTest()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
@@ -55,9 +55,9 @@ namespace Content.IntegrationTests.Tests.Fluids
             IMapGrid grid = null;
 
             // Remove all tiles
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
-                grid = GetMainGrid(mapManager);
+                grid = PoolManager.GetMainGrid(mapManager);
 
                 foreach (var tile in grid.GetAllTiles())
                 {
@@ -65,9 +65,9 @@ namespace Content.IntegrationTests.Tests.Fluids
                 }
             });
 
-            await server.WaitIdleAsync();
+            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var coordinates = grid.ToCoordinates();
                 var solution = new Solution("Water", FixedPoint2.New(20));
@@ -75,15 +75,14 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.Null(puddle);
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task PuddlePauseTest()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
@@ -92,8 +91,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             MapId sMapId = default;
             IMapGrid sGrid;
-            GridId sGridId = default;
-            EntityUid sGridEntity = default;
+            EntityUid sGridId = default;
             EntityCoordinates sCoordinates = default;
 
             // Spawn a paused map with one tile to spawn puddles on
@@ -102,9 +100,8 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sMapId = sMapManager.CreateMap();
                 sMapManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
-                sGridId = sGrid.Index;
-                sGridEntity = sGrid.GridEntityId;
-                entityManager.GetComponent<MetaDataComponent>(sGridEntity).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
+                sGridId = sGrid.GridEntityId;
+                entityManager.GetComponent<MetaDataComponent>(sGridId).EntityPaused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -156,8 +153,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Wait enough time for it to evaporate if it was unpaused
-            var sTimeToWait = (5 + (int)Math.Ceiling(amount * evaporateTime * sGameTiming.TickRate));
-            await server.WaitRunTicks(sTimeToWait);
+            var sTimeToWait = 5 + (int)Math.Ceiling(amount * evaporateTime * sGameTiming.TickRate);
+            await PoolManager.RunTicksSync(pairTracker.Pair, sTimeToWait);
 
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
@@ -183,7 +180,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             });
 
             // Wait enough time for it to evaporate
-            await server.WaitRunTicks(sTimeToWait);
+            await PoolManager.RunTicksSync(pairTracker.Pair, sTimeToWait);
 
             // Puddle evaporation should have ticked
             await server.WaitAssertion(() =>
@@ -191,6 +188,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 // Check that puddle has been deleted
                 Assert.True(puddle.Deleted);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

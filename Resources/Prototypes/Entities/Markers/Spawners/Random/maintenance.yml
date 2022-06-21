@@ -50,14 +50,13 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
+        - sprite: Objects/Power/power_cells.rsi
+          state: high
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
-        - PowerCellMediumSuper
-        - PowerCellSmallSuper
-        - PowerCellLargeSuper
-        - PowerCellSmallAutorecharge
+        - PowerCellHigh
+        - PowerCellMicroreactor
       rareChance: 0.08
       prototypes:
         - FlashlightLantern

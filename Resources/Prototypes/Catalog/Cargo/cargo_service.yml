@@ -28,7 +28,7 @@
   description: "Mousetraps, for when all of service is being haunted by an entire horde of rats. Use sparingly... or not."
   icon:
     sprite: Objects/Devices/mousetrap.rsi
-    state: normal
+    state: mousetrap
   product: CrateMousetrapBoxes
   cost: 1000
   category: Service

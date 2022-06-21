@@ -3,7 +3,6 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -23,11 +22,11 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
-        public GridId Grid => GridId;
+        public EntityUid Grid => GridId;
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager? entMan = null)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
             _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             _atmosphereSystem.AddPipeNet(this);

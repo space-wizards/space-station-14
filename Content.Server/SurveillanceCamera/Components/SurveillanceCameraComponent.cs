@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
-[Friend(typeof(SurveillanceCameraSystem))]
+[Access(typeof(SurveillanceCameraSystem))]
 public sealed class SurveillanceCameraComponent : Component
 {
     // List of active viewers. This is for bookkeeping purposes,

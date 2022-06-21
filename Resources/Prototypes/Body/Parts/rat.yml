@@ -1,0 +1,39 @@
+﻿# Just copypasta of some animal basic body parts for interaction,
+# It's basically as animals except a different torso with different organs
+- type: entity
+  id: TorsoRat
+  name: "animal torso"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Torso
+    size: 7
+    compatibility: Biological
+    mechanisms:
+    - OrganRatLungs
+    - OrganHumanStomach
+    - OrganHumanLiver
+    - OrganHumanHeart
+    - OrganHumanKidneys
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: OrganRatLungs
+  parent: BaseAnimalOrgan
+  name: lungs
+  noSpawn: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Rat ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
