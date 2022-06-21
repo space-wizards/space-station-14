@@ -13,6 +13,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Prometheus;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -262,6 +263,49 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
+            ShowRoundEndScoreboard(text);
+        }
+
+        public void RestartRound()
+        {
+            // If this game ticker is a dummy, do nothing!
+            if (DummyTicker)
+                return;
+
+            // Handle restart for server update
+            if (_serverUpdates.RoundEnded())
+                return;
+
+            _sawmill.Info("Restarting round!");
+
+            SendServerMessage(Loc.GetString("game-ticker-restart-round"));
+
+            RoundNumberMetric.Inc();
+
+            RunLevel = GameRunLevel.PreRoundLobby;
+            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
+            RandomizeLobbyBackground();
+            ResettingCleanup();
+
+            if (!LobbyEnabled)
+            {
+                StartRound();
+            }
+            else
+            {
+                if (_playerManager.PlayerCount == 0)
+                    _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
+                else
+                    _roundStartTime = _gameTiming.CurTime + LobbyDuration;
+
+                SendStatusToAll();
+
+                ReqWindowAttentionAll();
+            }
+        }
+
+        public void ShowRoundEndScoreboard(string text = "")
+        {
             //Tell every client the round has ended.
             var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
@@ -314,6 +358,7 @@ namespace Content.Server.GameTicking
                         PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                         // Character name takes precedence over current entity name
                         PlayerICName = playerIcName,
+                        PlayerEntityUid = mind.OwnedEntity,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -331,44 +376,6 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
-        }
-
-        public void RestartRound()
-        {
-            // If this game ticker is a dummy, do nothing!
-            if (DummyTicker)
-                return;
-
-            // Handle restart for server update
-            if (_serverUpdates.RoundEnded())
-                return;
-
-            _sawmill.Info("Restarting round!");
-
-            SendServerMessage(Loc.GetString("game-ticker-restart-round"));
-
-            RoundNumberMetric.Inc();
-
-            RunLevel = GameRunLevel.PreRoundLobby;
-            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
-            RandomizeLobbyBackground();
-            ResettingCleanup();
-
-            if (!LobbyEnabled)
-            {
-                StartRound();
-            }
-            else
-            {
-                if (_playerManager.PlayerCount == 0)
-                    _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
-                else
-                    _roundStartTime = _gameTiming.CurTime + LobbyDuration;
-
-                SendStatusToAll();
-
-                ReqWindowAttentionAll();
-            }
         }
 
         /// <summary>
