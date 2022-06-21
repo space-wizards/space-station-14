@@ -56,6 +56,8 @@
       context: "human"
     - type: Speech
     - type: Vocal
+      maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
     - type: Emoting
     - type: Grammar
       attributes:

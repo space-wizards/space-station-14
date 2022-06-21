@@ -1,5 +1,5 @@
 using System.Threading;
-using Content.Server.Cloning;
+using Content.Server.Body.Systems;
 using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Server.Body.Components
@@ -12,7 +12,7 @@ namespace Content.Server.Body.Components
         /// updated before the entity is gibbed.
         /// </summary>
         [ViewVariables]
-        public ClonerDNAEntry? DNA = null;
+        public ReassembleEntityProfile? Profile = null;
 
         /// <summary>
         /// The default time it takes to reassemble itself
