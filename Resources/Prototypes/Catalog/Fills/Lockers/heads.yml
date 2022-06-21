@@ -83,6 +83,7 @@
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
       - id: RubberStampHop
+      - id: Telebaton
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -104,6 +105,7 @@
         prob: 0.15
       - id: DoorRemoteEngineering
       - id: RubberStampCE
+      - id: Telebaton # in Nyano, CE doesn't have a telebaton. but it's eclipse speaking here and I main engi.
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -128,6 +130,7 @@
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
       - id: RubberStampCMO
+      - id: Telebaton
       - id: MedicalTechFabCircuitboard
 
 - type: entity
@@ -147,6 +150,7 @@
         prob: 0.1
       - id: DoorRemoteResearch
       - id: RubberStampRd
+      - id: Telebaton
 
 - type: entity
   id: LockerHeadOfSecurityFilled
