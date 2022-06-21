@@ -157,7 +157,7 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent());
+            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {
