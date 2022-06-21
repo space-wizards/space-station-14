@@ -1,22 +1,4 @@
 Entries:
-- author: CrudeWax
-  changes:
-  - {message: fixes all written information to be actually readable. You are finally
-      free to enjoy books!, type: Fix}
-  id: 1238
-  time: '2022-03-20T21:59:57.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Disease Outbreak event will no longer infect dead mobs., type: Fix}
-  - {message: Fixed typo in the name of a drink., type: Fix}
-  - {message: Renamed 'Medicine Resistance' in the disease report to 'Spaceacillin
-      Resistance' to make it more clear., type: Tweak}
-  - {message: Disease reports now use the player-facing name of any special cure reagents.,
-    type: Tweak}
-  - {message: Updated vaccine description to help out people who have somehow made
-      it to 2022 anno Domini without understanding what a vaccine is for., type: Tweak}
-  id: 1239
-  time: '2022-03-20T22:29:12.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing clothing layers to be drawn in the order that they
@@ -2994,3 +2976,14 @@ Entries:
   - {message: Mimes no longer warned about their vow when just typing, type: Fix}
   id: 1737
   time: '2022-06-21T02:02:55.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Puddles no longer block prying floor tiles, type: Fix}
+  id: 1738
+  time: '2022-06-21T02:03:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added visuals & toggle-interactions to the gas injector., type: Add}
+  - {message: The injector outlet pressure is now limited to 9000 kPa., type: Tweak}
+  id: 1739
+  time: '2022-06-21T02:04:55.0000000+00:00'
