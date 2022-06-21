@@ -54,11 +54,11 @@ namespace Content.IntegrationTests.Tests
             var clientEntManager = client.ResolveDependency<IEntityManager>();
             var serverEntManager = server.ResolveDependency<IEntityManager>();
             var eyeManager = client.ResolveDependency<IEyeManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
             await server.WaitPost(() =>
             {
-                var ent = serverEntManager.SpawnEntity(prototype, PoolManager.GetMainEntityCoordinates(mapManager));
+                var ent = serverEntManager.SpawnEntity(prototype, testMap.GridCoords);
                 serverEntManager.GetComponent<TransformComponent>(ent).WorldRotation = angle;
                 serverEntManager.GetComponent<SpriteComponent>(ent).Scale = (scale, scale);
                 entity = ent;

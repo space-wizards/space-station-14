@@ -34,9 +34,10 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
@@ -83,9 +84,10 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
@@ -141,9 +143,10 @@ public sealed class AddTests
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             for (var i = 0; i < amount; i++)
