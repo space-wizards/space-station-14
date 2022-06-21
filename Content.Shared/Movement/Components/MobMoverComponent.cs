@@ -17,6 +17,12 @@ public sealed class MobMoverComponent : MoverComponent
 
     private Vector2 _curTickWalkMovement;
     private Vector2 _curTickSprintMovement;
+
+    /// <summary>
+    /// Currently held movement input directions.
+    /// </summary>
+    public Vector2 HeldMove;
+
     private MoveButtons _heldMoveButtons = MoveButtons.None;
 
     [ViewVariables]
@@ -125,7 +131,7 @@ public sealed class MobMoverComponent : MoverComponent
             ? movementSpeedModifierComponent.CurrentSprintSpeed
             : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-    public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
+    public bool Sprinting;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanMove { get; set; } = true;

@@ -9,17 +9,31 @@ namespace Content.Shared.Movement.EntitySystems;
 public abstract partial class SharedMoverController
 {
     /*
-     * Handles all movement related inputs and subtick support.
+     * Handles all movement related inputs and subtick support for ALL mover classes.
+     * The actual mover code for each mob is under its respective partial class.
      */
 
     public bool DiagonalMovementEnabled = true;
 
     private void InitializeInput()
     {
-        var moveUpCmdHandler = new MoverDirInputCmdHandler(Direction.North);
-        var moveLeftCmdHandler = new MoverDirInputCmdHandler(Direction.West);
-        var moveRightCmdHandler = new MoverDirInputCmdHandler(Direction.East);
-        var moveDownCmdHandler = new MoverDirInputCmdHandler(Direction.South);
+        /*
+         * Okay here's the plan.
+         * Vehicles use mobmover probably
+         * Shuttles use their own movers.
+         * Jetpacks use mobmover
+         * KinematicMover is its own thing with no walk key.
+         *
+         * Just copying mobmover to shuttles shouldn't be THAT much boilerplate I don't think, especially with the
+         * subtick handling boilerplate removed.
+         *
+         * Add a helper method for VelocityDir that considers remaining fraction and adds it onto the thing.
+         */
+
+        var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
+        var moveLeftCmdHandler = new MoverDirInputCmdHandler(this, Direction.West);
+        var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
+        var moveDownCmdHandler = new MoverDirInputCmdHandler(this, Direction.South);
 
         CommandBinds.Builder
             // Mob movement
@@ -42,9 +56,9 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
-    /// Handles subtick inputs with a bool field.
+    /// Handles subtick inputs with a float field.
     /// </summary>
-    private void SetBoolInput(MoverComponent component, ref bool fieldValue, bool value, ushort subTick)
+    private void SetFloatInput(MoverComponent component, ref float fieldValue, float value, ushort subTick)
     {
         ResetSubtickInput(component);
 
@@ -62,21 +76,23 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
-    /// Handles subtick inputs with a vector2 field.
+    /// Handles subtick inputs with a bool field.
     /// </summary>
-    public void SetVectorInput(MoverComponent component, ref Vector2 value, ushort subTick)
+    private void SetBoolInput(MoverComponent component, ref bool fieldValue, bool value, ushort subTick)
     {
         ResetSubtickInput(component);
 
         // TODO: Okay so what we need to do is store the actual inpuy
         // somewhere for a whole tick value and adjust it
-        if (subTick >= component._lastInputSubTick)
+        if (TryGetSubtick(component, subTick, out var fraction))
         {
-            var fraction = (subTick - component._lastInputSubTick) / (float) ushort.MaxValue;
-
             var ev = new SubtickInputEvent(fraction);
             RaiseLocalEvent(component.Owner, ref ev);
+
+            component._lastInputSubTick = subTick;
         }
+
+        fieldValue = value;
     }
 
     private void ResetSubtickInput(MoverComponent component)
@@ -101,6 +117,12 @@ public abstract partial class SharedMoverController
         component._lastInputSubTick = subTick;
         return true;
     }
+
+    #region MobMover
+
+
+
+    #endregion
 
     private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
     {
@@ -209,25 +231,26 @@ public abstract partial class SharedMoverController
 
     private sealed class MoverDirInputCmdHandler : InputCmdHandler
     {
-        private IEntityManager _entManager;
+        private SharedMoverController _controller;
 
-        private readonly Direction _dir;
         private readonly Vector2 _direction;
 
-        public MoverDirInputCmdHandler(Direction dir)
+        public MoverDirInputCmdHandler(SharedMoverController controller, Vector2 direction)
         {
-            _dir = dir;
+            _controller = controller;
         }
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
         {
             if (message is not FullInputCmdMessage full ||
-                !_entManager.TryGetComponent<MoverComponent>(session?.AttachedEntity, out var mover))
+                !_entManager.TryGetComponent<MobMoverComponent>(session?.AttachedEntity, out var mover))
                 return false;
 
-            Get<SharedMoverController>().SetVectorInput(mover, _direction, message.SubTick);
+            ref var move = ref mover.HeldMove;
 
-            Get<SharedMoverController>().HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
+            // TODO: Special case mover input I guess?
+            throw new NotImplementedException();
+            Get<SharedMoverController>().SetVectorInput(mover, ref move, _direction, message.SubTick);
             return false;
         }
     }
@@ -249,7 +272,7 @@ public abstract partial class SharedMoverController
                 return false;
             }
 
-            var sprinting = mobMover.Sprinting;
+            ref var sprinting = ref mobMover.Sprinting;
 
             Get<SharedMoverController>().SetBoolInput(mobMover, ref sprinting, full.State == BoundKeyState.Down, message.SubTick);
             return false;
