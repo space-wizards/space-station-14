@@ -1,8 +1,7 @@
 using Content.Shared.CCVar;
+using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Components;
 
@@ -15,15 +14,10 @@ public sealed class MobMoverComponent : MoverComponent
     [DataField("pushStrength")]
     private float _pushStrength = 600f;
 
-    private Vector2 _curTickWalkMovement;
-    private Vector2 _curTickSprintMovement;
+    public Vector2 _curTickWalkMovement;
+    public Vector2 _curTickSprintMovement;
 
-    /// <summary>
-    /// Currently held movement input directions.
-    /// </summary>
-    public Vector2 HeldMove;
-
-    private MoveButtons _heldMoveButtons = MoveButtons.None;
+    public MoveButtons _heldMoveButtons = MoveButtons.None;
 
     [ViewVariables]
     public Angle LastGridAngle { get; set; } = new(0);
@@ -157,6 +151,7 @@ public sealed class MobMoverComponent : MoverComponent
             Vector2 sprint;
             float remainingFraction;
 
+            // TODO: Make this TryInput thingie.
             if (_gameTiming.CurTick > _lastInputTick)
             {
                 walk = Vector2.Zero;
@@ -221,15 +216,4 @@ public sealed class MobMoverComponent : MoverComponent
             Dirty();
         }
     }
-}
-
-[Flags]
-public enum MoveButtons : byte
-{
-    None = 0,
-    Up = 1,
-    Down = 2,
-    Left = 4,
-    Right = 8,
-    Walk = 16,
 }

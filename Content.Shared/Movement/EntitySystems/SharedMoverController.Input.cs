@@ -41,7 +41,9 @@ public abstract partial class SharedMoverController
             .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
             .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
             .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-            .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
+            .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(EntityManager, this))
+            // Rider
+            // TODO: Relay to vehicle.
             // Shuttle
             .Bind(ContentKeyFunctions.ShuttleBrake, new ShuttleBrakeInputCmdHandler())
 
@@ -120,75 +122,30 @@ public abstract partial class SharedMoverController
 
     #region MobMover
 
-
-
-    #endregion
-
-    private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
+    private void SetMoveInput(MobMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
     {
-        if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
-            return;
+        ResetSubtickInput(component);
 
-        SetVelocityDirection(dir, subTick, state);
-    }
-
-    /// <summary>
-    ///     Toggles one of the four cardinal directions. Each of the four directions are
-    ///     composed into a single direction vector, <see cref="VelocityDir"/>. Enabling
-    ///     opposite directions will cancel each other out, resulting in no direction.
-    /// </summary>
-    /// <param name="direction">Direction to toggle.</param>
-    /// <param name="subTick"></param>
-    /// <param name="enabled">If the direction is active.</param>
-    public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
-    {
-        // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] {direction}: {enabled}");
-
-        var bit = direction switch
+        if (TryGetSubtick(component, subTick, out var fraction))
         {
-            Direction.East => MoveButtons.Right,
-            Direction.North => MoveButtons.Up,
-            Direction.West => MoveButtons.Left,
-            Direction.South => MoveButtons.Down,
-            _ => throw new ArgumentException(nameof(direction))
-        };
-
-        SetMoveInput(subTick, enabled, bit);
-    }
-
-    private void SetMoveInput(ushort subTick, bool enabled, MoveButtons bit)
-    {
-        ResetSubtickInput();
-
-        // TODO: Okay
-        if (TryGetSubtick(, subTick, out var fraction))
-        {
-            ref var lastMoveAmount = ref Sprinting ? ref _curTickSprintMovement : ref _curTickWalkMovement;
-
-            lastMoveAmount += DirVecForButtons(_heldMoveButtons) * fraction;
-
-            _lastInputSubTick = subTick;
+            ref var lastMoveAmount = ref component.Sprinting ? ref component._curTickSprintMovement : ref component._curTickWalkMovement;
+            lastMoveAmount += DirVecForButtons(component._heldMoveButtons) * fraction;
         }
 
         if (enabled)
         {
-            _heldMoveButtons |= bit;
+            component._heldMoveButtons |= bit;
         }
         else
         {
-            _heldMoveButtons &= ~bit;
+            component._heldMoveButtons &= ~bit;
         }
 
-        // TODO: Dirty MobMover
-        Dirty();
+        // TODO: Is this even needed?
+        Dirty(component);
     }
 
-    public void SetSprinting(ushort subTick, bool walking)
-    {
-        // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
-
-        SetMoveInput(subTick, walking, MoveButtons.Walk);
-    }
+    #endregion
 
     /// <summary>
     ///     Retrieves the normalized direction vector for a specified combination of movement keys.
@@ -231,13 +188,15 @@ public abstract partial class SharedMoverController
 
     private sealed class MoverDirInputCmdHandler : InputCmdHandler
     {
+        private IEntityManager _entManager;
         private SharedMoverController _controller;
+        private readonly MoveButtons _dir;
 
-        private readonly Vector2 _direction;
-
-        public MoverDirInputCmdHandler(SharedMoverController controller, Vector2 direction)
+        public MoverDirInputCmdHandler(IEntityManager entManager, SharedMoverController controller, MoveButtons dir)
         {
+            _entManager = entManager;
             _controller = controller;
+            _dir = dir;
         }
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
@@ -246,11 +205,7 @@ public abstract partial class SharedMoverController
                 !_entManager.TryGetComponent<MobMoverComponent>(session?.AttachedEntity, out var mover))
                 return false;
 
-            ref var move = ref mover.HeldMove;
-
-            // TODO: Special case mover input I guess?
-            throw new NotImplementedException();
-            Get<SharedMoverController>().SetVectorInput(mover, ref move, _direction, message.SubTick);
+            _controller.SetMoveInput(mover, message.SubTick, full.State == BoundKeyState.Down, _dir);
             return false;
         }
     }
@@ -258,10 +213,12 @@ public abstract partial class SharedMoverController
     private sealed class WalkInputCmdHandler : InputCmdHandler
     {
         private IEntityManager _entManager;
+        private SharedMoverController _controller;
 
-        public WalkInputCmdHandler(IEntityManager entManager)
+        public WalkInputCmdHandler(IEntityManager entManager, SharedMoverController controller)
         {
             _entManager = entManager;
+            _controller = controller;
         }
 
         public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
@@ -274,7 +231,7 @@ public abstract partial class SharedMoverController
 
             ref var sprinting = ref mobMover.Sprinting;
 
-            Get<SharedMoverController>().SetBoolInput(mobMover, ref sprinting, full.State == BoundKeyState.Down, message.SubTick);
+            _controller.SetBoolInput(mobMover, ref sprinting, full.State == BoundKeyState.Down, message.SubTick);
             return false;
         }
     }
@@ -286,7 +243,6 @@ public abstract partial class SharedMoverController
             if (message is not FullInputCmdMessage full) return false;
 
             // TODO: Set shuttle stuffsies.
-
 
             return false;
         }
@@ -310,4 +266,14 @@ public abstract partial class SharedMoverController
     /// </summary>
     [ByRefEvent]
     public readonly struct ResetSubtickInputEvent {}
+}
+
+[Flags]
+public enum MoveButtons : byte
+{
+    None = 0,
+    Up = 1,
+    Down = 2,
+    Left = 4,
+    Right = 8,
 }

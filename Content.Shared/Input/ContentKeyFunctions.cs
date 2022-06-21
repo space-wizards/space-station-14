@@ -81,6 +81,14 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction Vote9 = "Vote9";
         // Shuttle
         public static readonly BoundKeyFunction ShuttleBrake = "ShuttleBrake";
+        public static readonly BoundKeyFunction ShuttleStrafeUp = "ShuttleStrafeUp";
+        public static readonly BoundKeyFunction ShuttleStrafeDown = "ShuttleStrafeDown";
+        public static readonly BoundKeyFunction ShuttleStrafeLeft = "ShuttleStrafeLeft";
+        public static readonly BoundKeyFunction ShuttleStrafeRight = "ShuttleStrafeRight";
+        public static readonly BoundKeyFunction ShuttleRotateLeft = "ShuttleRotateLeft";
+        public static readonly BoundKeyFunction ShuttleRotateRight = "ShuttleRotateRight";
+        // Vehicles
+        // TODO: Relay mover inputs to vehicle.
 
         public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
     }
