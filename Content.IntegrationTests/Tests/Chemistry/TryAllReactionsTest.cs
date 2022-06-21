@@ -32,8 +32,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {
