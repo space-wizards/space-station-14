@@ -1,16 +1,26 @@
+using Content.Shared.CCVar;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class MobMoverComponent : Component
+public sealed class MobMoverComponent : MoverComponent
 {
     private float _stepSoundDistance;
     [DataField("grabRange")]
     private float _grabRange = 0.6f;
     [DataField("pushStrength")]
     private float _pushStrength = 600f;
+
+    private Vector2 _curTickWalkMovement;
+    private Vector2 _curTickSprintMovement;
+    private MoveButtons _heldMoveButtons = MoveButtons.None;
+
+    [ViewVariables]
+    public Angle LastGridAngle { get; set; } = new(0);
 
     #region Footsteps
 
@@ -34,6 +44,25 @@ public sealed class MobMoverComponent : Component
     #endregion
 
     #region Movement
+
+    // This class has to be able to handle server TPS being lower than client FPS.
+    // While still having perfectly responsive movement client side.
+    // We do this by keeping track of the exact sub-tick values that inputs are pressed on the client,
+    // and then building a total movement vector based on those sub-tick steps.
+    //
+    // We keep track of the last sub-tick a movement input came in,
+    // Then when a new input comes in, we calculate the fraction of the tick the LAST input was active for
+    //   (new sub-tick - last sub-tick)
+    // and then add to the total-this-tick movement vector
+    // by multiplying that fraction by the movement direction for the last input.
+    // This allows us to incrementally build the movement vector for the current tick,
+    // without having to keep track of some kind of list of inputs and calculating it later.
+    //
+    // We have to keep track of a separate movement vector for walking and sprinting,
+    // since we don't actually know our current movement speed while processing inputs.
+    // We change which vector we write into based on whether we were sprinting after the previous input.
+    //   (well maybe we do but the code is designed such that MoverSystem applies movement speed)
+    //   (and I'm not changing that)
 
     public const float DefaultBaseWalkSpeed = 3.0f;
     public const float DefaultBaseSprintSpeed = 5.0f;
@@ -84,7 +113,80 @@ public sealed class MobMoverComponent : Component
     [ViewVariables]
     public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
 
-    #endregion
+    public float CurrentWalkSpeed =>
+            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+                out var movementSpeedModifierComponent)
+                ? movementSpeedModifierComponent.CurrentWalkSpeed
+                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+
+    public float CurrentSprintSpeed =>
+        _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
+            out var movementSpeedModifierComponent)
+            ? movementSpeedModifierComponent.CurrentSprintSpeed
+            : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+
+    public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool CanMove { get; set; } = true;
+
+    /// <summary>
+    ///     Calculated linear velocity direction of the entity.
+    /// </summary>
+    [ViewVariables]
+    public (Vector2 walking, Vector2 sprinting) VelocityDir
+    {
+        get
+        {
+            if (!_gameTiming.InSimulation)
+            {
+                // Outside of simulation we'll be running client predicted movement per-frame.
+                // So return a full-length vector as if it's a full tick.
+                // Physics system will have the correct time step anyways.
+                var immediateDir = DirVecForButtons(_heldMoveButtons);
+                return Sprinting ? (Vector2.Zero, immediateDir) : (immediateDir, Vector2.Zero);
+            }
+
+            Vector2 walk;
+            Vector2 sprint;
+            float remainingFraction;
+
+            if (_gameTiming.CurTick > _lastInputTick)
+            {
+                walk = Vector2.Zero;
+                sprint = Vector2.Zero;
+                remainingFraction = 1;
+            }
+            else
+            {
+                walk = _curTickWalkMovement;
+                sprint = _curTickSprintMovement;
+                remainingFraction = (ushort.MaxValue - _lastInputSubTick) / (float) ushort.MaxValue;
+            }
+
+            var curDir = DirVecForButtons(_heldMoveButtons) * remainingFraction;
+
+            if (Sprinting)
+            {
+                sprint += curDir;
+            }
+            else
+            {
+                walk += curDir;
+            }
+
+            // Logger.Info($"{curDir}{walk}{sprint}");
+            return (walk, sprint);
+        }
+    }
+
+    /// <summary>
+    ///     Whether or not the player can move diagonally.
+    /// </summary>
+    [ViewVariables]
+    public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
+
+        #endregion
 
     #region Weightless
 
@@ -113,4 +215,15 @@ public sealed class MobMoverComponent : Component
             Dirty();
         }
     }
+}
+
+[Flags]
+public enum MoveButtons : byte
+{
+    None = 0,
+    Up = 1,
+    Down = 2,
+    Left = 4,
+    Right = 8,
+    Walk = 16,
 }

@@ -7,7 +7,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
@@ -95,9 +94,8 @@ public abstract partial class SharedMoverController
     private void SetWeightlessFrictionNoInput(float value) => _weightlessFrictionVelocityNoInput = value;
     private void SetMobWeightlessModifier(float value) => _mobWeightlessModifier = value;
 
-    public override void Shutdown()
+    private void ShutdownMobMovement()
     {
-        base.Shutdown();
         _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
         _configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
         _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);

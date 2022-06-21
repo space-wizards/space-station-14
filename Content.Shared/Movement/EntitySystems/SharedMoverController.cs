@@ -1,14 +1,17 @@
 using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.EntitySystems;
 
 public abstract partial class SharedMoverController : VirtualController
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -21,7 +24,19 @@ public abstract partial class SharedMoverController : VirtualController
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("mover");
+        InitializeInput();
         InitializeMob();
         InitializeMobMovement();
+    }
+
+    public override void Shutdown()
+    {
+        ShutdownInput();
+        ShutdownMobMovement();
+    }
+
+    public void ChangeTo(EntityUid uid, MoverComponent component)
+    {
+
     }
 }

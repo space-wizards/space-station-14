@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.EntitySystems;
 public sealed class SlowContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+    [Dependency] private readonly SharedMoverController _speedModifierSystem = default!;
 
     private readonly Dictionary<EntityUid, int> _statusCapableInContact = new();
 

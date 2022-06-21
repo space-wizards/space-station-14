@@ -101,6 +101,9 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+
+            var shuttle = contexts.New("pilot", "common");
+            shuttle.AddFunction(ContentKeyFunctions.ShuttleBrake);
         }
     }
 }

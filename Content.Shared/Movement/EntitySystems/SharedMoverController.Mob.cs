@@ -2,6 +2,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.EntitySystems;
 
@@ -11,6 +12,12 @@ public abstract partial class SharedMoverController
     {
         SubscribeLocalEvent<MobMoverComponent, ComponentGetState>(OnMobGetState);
         SubscribeLocalEvent<MobMoverComponent, ComponentHandleState>(OnMobHandleState);
+        SubscribeLocalEvent<MobMoverComponent, ComponentInit>(OnMobInit);
+    }
+
+    private void OnMobInit(EntityUid uid, MobMoverComponent component, ComponentInit args)
+    {
+        component.LastGridAngle = Transform(uid).Parent?.WorldRotation ?? new Angle(0);
     }
 
     private void OnMobHandleState(EntityUid uid, MobMoverComponent component, ref ComponentHandleState args)
@@ -22,6 +29,10 @@ public abstract partial class SharedMoverController
         component.BaseSprintSpeed = state.BaseSprintSpeed;
         component.WalkSpeedModifier = state.WalkSpeedModifier;
         component.SprintSpeedModifier = state.SprintSpeedModifier;
+        component._heldMoveButtons = state.Buttons;
+        component._lastInputTick = GameTick.Zero;
+        component._lastInputSubTick = 0;
+        component.CanMove = state.CanMove;
     }
 
     private void OnMobGetState(EntityUid uid, MobMoverComponent component, ref ComponentGetState args)
@@ -65,6 +76,8 @@ public abstract partial class SharedMoverController
         public float BaseSprintSpeed;
         public float WalkSpeedModifier;
         public float SprintSpeedModifier;
+        public MobMoverComponent.MoveButtons Buttons { get; }
+        public readonly bool CanMove;
 
         public MobMoverComponentState(
             float grabRange,
