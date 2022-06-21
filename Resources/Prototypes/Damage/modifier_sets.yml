@@ -119,8 +119,8 @@
     Heat: 2.5
     Poison: 0.0
   flatReductions: #offsets rotting damage
-    Blunt: 0.25
-    Cellular: 0.25
+    Blunt: 0.3
+    Cellular: 0.3
 
 # immune to everything except physical and heat damage
 - type: damageModifierSet
