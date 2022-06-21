@@ -1,11 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Reptilians no longer have human limbs., type: Tweak}
-  - {message: Reptilians now need to breathe., type: Tweak}
-  - {message: Reptilians now have their own SKREEE!, type: Add}
-  id: 1244
-  time: '2022-03-25T17:29:23.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: You feel as though you will be respawned and kicked by accident less
@@ -2984,3 +2977,8 @@ Entries:
       slower than other species.', type: Add}
   id: 1743
   time: '2022-06-21T16:32:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Bibles can no longer heal dead entities., type: Fix}
+  id: 1744
+  time: '2022-06-21T16:44:02.0000000+00:00'
