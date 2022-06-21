@@ -31,7 +31,7 @@ namespace Content.Server.Entry
             "PotencyVisuals",
             "PaperVisuals",
             "SurveillanceCameraVisuals",
-            "KudzuVisuals",
+            "KudzuVisualizer",
         };
     }
 }

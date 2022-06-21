@@ -1,7 +1,7 @@
 namespace Content.Client.Kudzu
 {
     [RegisterComponent]
-    public sealed class KudzuVisualsComponent : Component
+    public sealed class KudzuVisualizerComponent : Component
     {
         [DataField("layer")]
         public int Layer { get; } = 0;

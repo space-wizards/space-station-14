@@ -7,9 +7,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Kudzu
 {
 
-    public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
+    public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualizerComponent>
     {
-        protected override void OnAppearanceChange(EntityUid uid, KudzuVisualsComponent component, ref AppearanceChangeEvent args)
+        protected override void OnAppearanceChange(EntityUid uid, KudzuVisualizerComponent component, ref AppearanceChangeEvent args)
         {
 
             if (!TryComp(uid, out SpriteComponent? sprite))
