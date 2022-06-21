@@ -76,7 +76,7 @@ public abstract partial class SharedMoverController
         public float BaseSprintSpeed;
         public float WalkSpeedModifier;
         public float SprintSpeedModifier;
-        public MobMoverComponent.MoveButtons Buttons { get; }
+        public MoveButtons Buttons { get; }
         public readonly bool CanMove;
 
         public MobMoverComponentState(

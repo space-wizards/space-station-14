@@ -59,39 +59,6 @@ public abstract partial class SharedMoverController
         CommandBinds.Unregister<SharedMoverController>();
     }
 
-    /// <summary>
-    /// If the last tick we handled input on is older than the current tick then reset all of our values.
-    /// </summary>
-    private bool TryResetSubtickInput(MoverComponent component, out float remainingFraction)
-    {
-        // Reset the input if its last input was on a previous tick
-        if (_gameTiming.CurTick <= component._lastInputTick)
-        {
-            remainingFraction = 1f;
-            return false;
-        }
-
-        component._lastInputTick = _gameTiming.CurTick;
-        component._lastInputSubTick = 0;
-        remainingFraction = (ushort.MaxValue - component._lastInputSubTick) / (float) ushort.MaxValue;
-        return true;
-    }
-
-    /// <summary>
-    /// Try to get the fraction that this subtick is into the tick and update.
-    /// </summary>
-    /// <returns></returns>
-    private bool TryGetSubtick(MoverComponent component, ushort subTick, out float fraction)
-    {
-        fraction = 0f;
-
-        if (subTick < component._lastInputSubTick) return false;
-
-        fraction = (subTick - component._lastInputSubTick) / (float) ushort.MaxValue;
-        component._lastInputSubTick = subTick;
-        return true;
-    }
-
     #region MobMover
 
     private void SetMoveInput(MobMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
@@ -151,7 +118,7 @@ public abstract partial class SharedMoverController
         Vector2 sprint;
 
         // We need to work out, since the last time we did our subtick input, how much fraction is remaining and add that on
-        if (TryResetSubtickInput(component, out var remainingFraction))
+        if (!TryResetSubtickInput(component, out var remainingFraction))
         {
             walk = Vector2.Zero;
             sprint = Vector2.Zero;
@@ -234,7 +201,17 @@ public abstract partial class SharedMoverController
 
     #region Shuttles
 
+    private sealed class ShuttleBrakeInputCmdHandler : InputCmdHandler
+    {
+        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        {
+            if (message is not FullInputCmdMessage full) return false;
 
+            // TODO: Set shuttle stuffsies.
+
+            return false;
+        }
+    }
 
     #endregion
 
@@ -277,16 +254,37 @@ public abstract partial class SharedMoverController
         return (buttons & flag) == flag;
     }
 
-    private sealed class ShuttleBrakeInputCmdHandler : InputCmdHandler
+    /// <summary>
+    /// If the last tick we handled input on is older than the current tick then reset all of our values.
+    /// </summary>
+    private bool TryResetSubtickInput(MoverComponent component, out float remainingFraction)
     {
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        // Reset the input if its last input was on a previous tick
+        if (_gameTiming.CurTick <= component._lastInputTick)
         {
-            if (message is not FullInputCmdMessage full) return false;
-
-            // TODO: Set shuttle stuffsies.
-
+            remainingFraction = 1f;
             return false;
         }
+
+        component._lastInputTick = _gameTiming.CurTick;
+        component._lastInputSubTick = 0;
+        remainingFraction = (ushort.MaxValue - component._lastInputSubTick) / (float) ushort.MaxValue;
+        return true;
+    }
+
+    /// <summary>
+    /// Try to get the fraction that this subtick is into the tick and update.
+    /// </summary>
+    /// <returns></returns>
+    private bool TryGetSubtick(MoverComponent component, ushort subTick, out float fraction)
+    {
+        fraction = 0f;
+
+        if (subTick < component._lastInputSubTick) return false;
+
+        fraction = (subTick - component._lastInputSubTick) / (float) ushort.MaxValue;
+        component._lastInputSubTick = subTick;
+        return true;
     }
 }
 
