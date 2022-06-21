@@ -32,8 +32,8 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
 
@@ -70,9 +70,10 @@ public sealed class SolutionSystemTests
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+        var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
 
@@ -108,9 +109,10 @@ public sealed class SolutionSystemTests
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = pairTracker.Pair.Server;
 
+
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
 
@@ -156,8 +158,8 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
-        var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
 
