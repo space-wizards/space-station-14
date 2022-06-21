@@ -1,19 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Gas analyzers can now be used to examine contents of pipes., type: Add}
-  id: 1234
-  time: '2022-03-20T05:10:48.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Pineapple botany sprite was fixed., type: Fix}
-  id: 1235
-  time: '2022-03-20T12:46:41.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: fixed holoparasite ToS not being readable, type: Fix}
-  id: 1236
-  time: '2022-03-20T13:04:47.0000000+00:00'
 - author: CrudeWax
   changes:
   - {message: fixed the popup for inserting TC into the uplink, type: Fix}
@@ -2993,3 +2978,20 @@ Entries:
   - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
   id: 1733
   time: '2022-06-20T20:59:05.0000000+00:00'
+- author: Solbusaur
+  changes:
+  - {message: New lobby art "Warden" drawn by Solbusaur, type: Add}
+  id: 1734
+  time: '2022-06-21T01:58:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Salvage workers should once again stay behind when the salvage grid
+      despawns., type: Fix}
+  id: 1735
+  time: '2022-06-21T01:59:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Damage Slowdown has been modified to feel less awful. No more slowly
+      crawling places when you're crit., type: Tweak}
+  id: 1736
+  time: '2022-06-21T02:00:14.0000000+00:00'
