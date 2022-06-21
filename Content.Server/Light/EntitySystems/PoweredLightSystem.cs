@@ -130,8 +130,15 @@ namespace Content.Server.Light.EntitySystems
                 }
             }
 
-            // all checks passed
-            // just try to eject bulb after a delay
+
+            //removing a broken/burned bulb, so allow instant removal
+            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            {
+                args.Handled = EjectBulb(uid, userUid, light) != null;
+                return;
+            }
+
+            // removing a working bulb, so require a delay
             light.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs((EntityUid) userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
             {
