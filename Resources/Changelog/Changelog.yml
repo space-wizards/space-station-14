@@ -1,10 +1,4 @@
 Entries:
-- author: Seija
-  changes:
-  - {message: 'Fixed the cat sprites to use their respective cat sprites, not just
-      all use the black cat for the lot.', type: Tweak}
-  id: 1243
-  time: '2022-03-25T04:00:09.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Reptilians no longer have human limbs., type: Tweak}
@@ -2984,3 +2978,9 @@ Entries:
   - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
   id: 1742
   time: '2022-06-21T14:00:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Slimes now have to breathe nitrogen. They still suffocate much, much
+      slower than other species.', type: Add}
+  id: 1743
+  time: '2022-06-21T16:32:31.0000000+00:00'
