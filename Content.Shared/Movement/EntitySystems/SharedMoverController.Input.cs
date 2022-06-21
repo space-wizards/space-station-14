@@ -9,6 +9,8 @@ namespace Content.Shared.Movement.EntitySystems;
 public abstract partial class SharedMoverController
 {
     /*
+     * This is a big and scary class.
+     * There is going to be boilerplate around that I couldn't think of a decent way to remove.
      * Handles all movement related inputs and subtick support for ALL mover classes.
      * The actual mover code for each mob is under its respective partial class.
      */
@@ -30,13 +32,13 @@ public abstract partial class SharedMoverController
          * Add a helper method for VelocityDir that considers remaining fraction and adds it onto the thing.
          */
 
-        var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
-        var moveLeftCmdHandler = new MoverDirInputCmdHandler(this, Direction.West);
-        var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
-        var moveDownCmdHandler = new MoverDirInputCmdHandler(this, Direction.South);
+        var moveUpCmdHandler = new MoverDirInputCmdHandler(EntityManager, this, MoveButtons.Up);
+        var moveLeftCmdHandler = new MoverDirInputCmdHandler(EntityManager, this, MoveButtons.Left);
+        var moveRightCmdHandler = new MoverDirInputCmdHandler(EntityManager, this, MoveButtons.Right);
+        var moveDownCmdHandler = new MoverDirInputCmdHandler(EntityManager, this, MoveButtons.Down);
 
         CommandBinds.Builder
-            // Mob movement
+            // Mob + Jetpack movement
             .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
             .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
             .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
@@ -58,57 +60,27 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
-    /// Handles subtick inputs with a float field.
+    /// If the last tick we handled input on is older than the current tick then reset all of our values.
     /// </summary>
-    private void SetFloatInput(MoverComponent component, ref float fieldValue, float value, ushort subTick)
-    {
-        ResetSubtickInput(component);
-
-        // TODO: Okay so what we need to do is store the actual inpuy
-        // somewhere for a whole tick value and adjust it
-        if (TryGetSubtick(component, subTick, out var fraction))
-        {
-            var ev = new SubtickInputEvent(fraction);
-            RaiseLocalEvent(component.Owner, ref ev);
-
-            component._lastInputSubTick = subTick;
-        }
-
-        fieldValue = value;
-    }
-
-    /// <summary>
-    /// Handles subtick inputs with a bool field.
-    /// </summary>
-    private void SetBoolInput(MoverComponent component, ref bool fieldValue, bool value, ushort subTick)
-    {
-        ResetSubtickInput(component);
-
-        // TODO: Okay so what we need to do is store the actual inpuy
-        // somewhere for a whole tick value and adjust it
-        if (TryGetSubtick(component, subTick, out var fraction))
-        {
-            var ev = new SubtickInputEvent(fraction);
-            RaiseLocalEvent(component.Owner, ref ev);
-
-            component._lastInputSubTick = subTick;
-        }
-
-        fieldValue = value;
-    }
-
-    private void ResetSubtickInput(MoverComponent component)
+    private bool TryResetSubtickInput(MoverComponent component, out float remainingFraction)
     {
         // Reset the input if its last input was on a previous tick
-        if (_gameTiming.CurTick <= component._lastInputTick) return;
+        if (_gameTiming.CurTick <= component._lastInputTick)
+        {
+            remainingFraction = 1f;
+            return false;
+        }
 
         component._lastInputTick = _gameTiming.CurTick;
         component._lastInputSubTick = 0;
-        // TODO: MobMover needs to reset walk / sprint vectors.
-        var ev = new ResetSubtickInputEvent();
-        RaiseLocalEvent(component.Owner, ref ev);
+        remainingFraction = (ushort.MaxValue - component._lastInputSubTick) / (float) ushort.MaxValue;
+        return true;
     }
 
+    /// <summary>
+    /// Try to get the fraction that this subtick is into the tick and update.
+    /// </summary>
+    /// <returns></returns>
     private bool TryGetSubtick(MoverComponent component, ushort subTick, out float fraction)
     {
         fraction = 0f;
@@ -124,7 +96,7 @@ public abstract partial class SharedMoverController
 
     private void SetMoveInput(MobMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
     {
-        ResetSubtickInput(component);
+        TryResetSubtickInput(component, out _);
 
         if (TryGetSubtick(component, subTick, out var fraction))
         {
@@ -145,45 +117,63 @@ public abstract partial class SharedMoverController
         Dirty(component);
     }
 
-    #endregion
-
-    /// <summary>
-    ///     Retrieves the normalized direction vector for a specified combination of movement keys.
-    /// </summary>
-    private Vector2 DirVecForButtons(MoveButtons buttons)
+    private void SetSprintInput(MobMoverComponent component, ushort subTick, bool enabled)
     {
-        // key directions are in screen coordinates
-        // _moveDir is in world coordinates
-        // if the camera is moved, this needs to be changed
+        TryResetSubtickInput(component, out _);
 
-        var x = 0;
-        x -= HasFlag(buttons, MoveButtons.Left) ? 1 : 0;
-        x += HasFlag(buttons, MoveButtons.Right) ? 1 : 0;
-
-        var y = 0;
-
-        if (DiagonalMovementEnabled || x == 0)
+        if (TryGetSubtick(component, subTick, out var fraction))
         {
-            y -= HasFlag(buttons, MoveButtons.Down) ? 1 : 0;
-            y += HasFlag(buttons, MoveButtons.Up) ? 1 : 0;
+            ref var lastMoveAmount = ref component.Sprinting ? ref component._curTickSprintMovement : ref component._curTickWalkMovement;
+            lastMoveAmount += DirVecForButtons(component._heldMoveButtons) * fraction;
         }
 
-        var vec = new Vector2(x, y);
+        component.Sprinting = !enabled;
 
-        // can't normalize zero length vector
-        if (vec.LengthSquared > 1.0e-6)
-        {
-            // Normalize so that diagonals aren't faster or something.
-            vec = vec.Normalized;
-        }
-
-        return vec;
+        // TODO: Is this even needed?
+        Dirty(component);
     }
 
-
-    private static bool HasFlag(MoveButtons buttons, MoveButtons flag)
+    /// <summary>
+    /// Gets the movement input for this mob mover at this point in time.
+    /// </summary>
+    public (Vector2 Walk, Vector2 Sprint) GetMobVelocityInput(MobMoverComponent component)
     {
-        return (buttons & flag) == flag;
+        if (!_gameTiming.InSimulation)
+        {
+            // Outside of simulation we'll be running client predicted movement per-frame.
+            // So return a full-length vector as if it's a full tick.
+            // Physics system will have the correct time step anyways.
+            var immediateDir = DirVecForButtons(component._heldMoveButtons);
+            return component.Sprinting ? (Vector2.Zero, immediateDir) : (immediateDir, Vector2.Zero);
+        }
+
+        Vector2 walk;
+        Vector2 sprint;
+
+        // We need to work out, since the last time we did our subtick input, how much fraction is remaining and add that on
+        if (TryResetSubtickInput(component, out var remainingFraction))
+        {
+            walk = Vector2.Zero;
+            sprint = Vector2.Zero;
+        }
+        else
+        {
+            walk = component._curTickWalkMovement;
+            sprint = component._curTickSprintMovement;
+        }
+
+        var curDir = DirVecForButtons(component._heldMoveButtons) * remainingFraction;
+
+        if (component.Sprinting)
+        {
+            sprint += curDir;
+        }
+        else
+        {
+            walk += curDir;
+        }
+
+        return (walk, sprint);
     }
 
     private sealed class MoverDirInputCmdHandler : InputCmdHandler
@@ -229,11 +219,62 @@ public abstract partial class SharedMoverController
                 return false;
             }
 
-            ref var sprinting = ref mobMover.Sprinting;
-
-            _controller.SetBoolInput(mobMover, ref sprinting, full.State == BoundKeyState.Down, message.SubTick);
+            _controller.SetSprintInput(mobMover, message.SubTick, full.State != BoundKeyState.Down);
             return false;
         }
+    }
+
+    #endregion
+
+    #region Rider
+
+
+
+    #endregion
+
+    #region Shuttles
+
+
+
+    #endregion
+
+    /// <summary>
+    ///     Retrieves the normalized direction vector for a specified combination of movement keys.
+    /// </summary>
+    private Vector2 DirVecForButtons(MoveButtons buttons)
+    {
+        // key directions are in screen coordinates
+        // _moveDir is in world coordinates
+        // if the camera is moved, this needs to be changed
+
+        var x = 0;
+        x -= HasFlag(buttons, MoveButtons.Left) ? 1 : 0;
+        x += HasFlag(buttons, MoveButtons.Right) ? 1 : 0;
+
+        var y = 0;
+
+        if (DiagonalMovementEnabled || x == 0)
+        {
+            y -= HasFlag(buttons, MoveButtons.Down) ? 1 : 0;
+            y += HasFlag(buttons, MoveButtons.Up) ? 1 : 0;
+        }
+
+        var vec = new Vector2(x, y);
+
+        // can't normalize zero length vector
+        if (vec.LengthSquared > 1.0e-6)
+        {
+            // Normalize so that diagonals aren't faster or something.
+            vec = vec.Normalized;
+        }
+
+        return vec;
+    }
+
+
+    private static bool HasFlag(MoveButtons buttons, MoveButtons flag)
+    {
+        return (buttons & flag) == flag;
     }
 
     private sealed class ShuttleBrakeInputCmdHandler : InputCmdHandler
@@ -247,25 +288,6 @@ public abstract partial class SharedMoverController
             return false;
         }
     }
-
-    /// <summary>
-    /// Raised on an entity whenever a new subtick input comes in.
-    /// </summary>
-    public readonly struct SubtickInputEvent
-    {
-        public readonly float Fraction;
-
-        public SubtickInputEvent(float fraction)
-        {
-            Fraction = fraction;
-        }
-    }
-
-    /// <summary>
-    /// Raised on an entity when its subtick inputs get reset.
-    /// </summary>
-    [ByRefEvent]
-    public readonly struct ResetSubtickInputEvent {}
 }
 
 [Flags]

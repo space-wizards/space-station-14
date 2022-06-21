@@ -101,93 +101,12 @@ public sealed class MobMoverComponent : MoverComponent
     [DataField("baseSprintSpeed")]
     public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
 
-    /// <summary>
-    ///     Movement speed (m/s) that the entity walks, considering modifiers.
-    /// </summary>
-    [ViewVariables]
-    public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
-
-    /// <summary>
-    ///     Movement speed (m/s) that the entity sprints, considering modifiers.
-    /// </summary>
-    [ViewVariables]
-    public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
-
-    public float CurrentWalkSpeed =>
-            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-                out var movementSpeedModifierComponent)
-                ? movementSpeedModifierComponent.CurrentWalkSpeed
-                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-
-    public float CurrentSprintSpeed =>
-        _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-            out var movementSpeedModifierComponent)
-            ? movementSpeedModifierComponent.CurrentSprintSpeed
-            : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
     public bool Sprinting;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanMove { get; set; } = true;
 
-    /// <summary>
-    ///     Calculated linear velocity direction of the entity.
-    /// </summary>
-    [ViewVariables]
-    public (Vector2 walking, Vector2 sprinting) VelocityDir
-    {
-        get
-        {
-            if (!_gameTiming.InSimulation)
-            {
-                // Outside of simulation we'll be running client predicted movement per-frame.
-                // So return a full-length vector as if it's a full tick.
-                // Physics system will have the correct time step anyways.
-                var immediateDir = DirVecForButtons(_heldMoveButtons);
-                return Sprinting ? (Vector2.Zero, immediateDir) : (immediateDir, Vector2.Zero);
-            }
-
-            Vector2 walk;
-            Vector2 sprint;
-            float remainingFraction;
-
-            // TODO: Make this TryInput thingie.
-            if (_gameTiming.CurTick > _lastInputTick)
-            {
-                walk = Vector2.Zero;
-                sprint = Vector2.Zero;
-                remainingFraction = 1;
-            }
-            else
-            {
-                walk = _curTickWalkMovement;
-                sprint = _curTickSprintMovement;
-                remainingFraction = (ushort.MaxValue - _lastInputSubTick) / (float) ushort.MaxValue;
-            }
-
-            var curDir = DirVecForButtons(_heldMoveButtons) * remainingFraction;
-
-            if (Sprinting)
-            {
-                sprint += curDir;
-            }
-            else
-            {
-                walk += curDir;
-            }
-
-            // Logger.Info($"{curDir}{walk}{sprint}");
-            return (walk, sprint);
-        }
-    }
-
-    /// <summary>
-    ///     Whether or not the player can move diagonally.
-    /// </summary>
-    [ViewVariables]
-    public bool DiagonalMovementEnabled => _configurationManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
-
-        #endregion
+    #endregion
 
     #region Weightless
 

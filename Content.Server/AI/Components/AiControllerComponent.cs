@@ -1,15 +1,10 @@
 using Content.Server.AI.EntitySystems;
-using Content.Server.Station.Systems;
-using Content.Shared.Movement.Components;
-using Content.Shared.Roles;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.AI.Components
 {
     [RegisterComponent]
     [Virtual]
-    public class AiControllerComponent : Component, IMoverComponent
+    public class AiControllerComponent : Component
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
 
@@ -43,84 +38,7 @@ namespace Content.Server.AI.Components
         {
             get => _visionRadius;
             set => _visionRadius = value;
+
         }
-
-        /// <inheritdoc />
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            // This component requires a physics component.
-            Owner.EnsureComponent<PhysicsComponent>();
-        }
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks, after modifiers
-        /// </summary>
-        [ViewVariables]
-        public float CurrentWalkSpeed
-        {
-            get
-            {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
-                {
-                    return component.CurrentWalkSpeed;
-                }
-
-                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            }
-        }
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks, after modifiers
-        /// </summary>
-        [ViewVariables]
-        public float CurrentSprintSpeed
-        {
-            get
-            {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out MovementSpeedModifierComponent? component))
-                {
-                    return component.CurrentSprintSpeed;
-                }
-
-                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-            }
-        }
-
-        public Angle LastGridAngle { get => Angle.Zero; set {} }
-
-        /// <inheritdoc />
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float PushStrength { get; set; } = IMobMoverComponent.PushStrengthDefault;
-
-        /// <inheritdoc />
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float GrabRange { get; set; } = IMobMoverComponent.GrabRangeDefault;
-
-        /// <summary>
-        ///     Is the entity Sprinting (running)?
-        /// </summary>
-        [ViewVariables]
-        public bool Sprinting { get; } = true;
-
-        /// <summary>
-        ///     Calculated linear velocity direction of the entity.
-        /// </summary>
-        [ViewVariables]
-        public Vector2 VelocityDir { get; set; }
-
-        (Vector2 walking, Vector2 sprinting) IMoverComponent.VelocityDir =>
-            Sprinting ? (Vector2.Zero, VelocityDir) : (VelocityDir, Vector2.Zero);
-
-        public EntityCoordinates LastPosition { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance { get; set; }
-
-        public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
-        public void SetSprinting(ushort subTick, bool walking) { }
-
-        public virtual void Update(float frameTime) {}
     }
 }
