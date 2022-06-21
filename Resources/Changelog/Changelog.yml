@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Touching a lightbulb no longer causes third-degree burns (20 -> 5),
-    type: Tweak}
-  id: 1242
-  time: '2022-03-21T04:48:58.0000000+00:00'
 - author: Seija
   changes:
   - {message: 'Fixed the cat sprites to use their respective cat sprites, not just
@@ -2984,3 +2978,9 @@ Entries:
       gunshot sounds.', type: Add}
   id: 1741
   time: '2022-06-21T05:16:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat king and his servants can now pull objects., type: Tweak}
+  - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
+  id: 1742
+  time: '2022-06-21T14:00:12.0000000+00:00'
