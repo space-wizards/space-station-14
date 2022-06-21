@@ -147,6 +147,13 @@
     spawned:
     - id: FoodMeatSlime
       amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
 
 - type: entity
   save: false
