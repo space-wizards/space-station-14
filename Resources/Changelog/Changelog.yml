@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing clothing layers to be drawn in the order that they
-      were equipped., type: Fix}
-  id: 1240
-  time: '2022-03-20T22:29:20.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station's beta atmos system is now complete!, type: Tweak}
@@ -2987,3 +2981,8 @@ Entries:
   - {message: The injector outlet pressure is now limited to 9000 kPa., type: Tweak}
   id: 1739
   time: '2022-06-21T02:04:55.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: You can now destroy trees!, type: Tweak}
+  id: 1740
+  time: '2022-06-21T02:06:07.0000000+00:00'
