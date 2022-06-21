@@ -1,12 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's beta atmos system is now complete!, type: Tweak}
-  - {message: Fixed the chemistry desk and EVA on Delta., type: Tweak}
-  - {message: Added some lights to Delta. Please let me know of any spots that are
-      too dim., type: Tweak}
-  id: 1241
-  time: '2022-03-20T23:04:53.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Touching a lightbulb no longer causes third-degree burns (20 -> 5),
@@ -2986,3 +2978,9 @@ Entries:
   - {message: You can now destroy trees!, type: Tweak}
   id: 1740
   time: '2022-06-21T02:06:07.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Vector, C-20R, Flaregun, Mateba, MK58, and the Atreides now have different
+      gunshot sounds.', type: Add}
+  id: 1741
+  time: '2022-06-21T05:16:36.0000000+00:00'
