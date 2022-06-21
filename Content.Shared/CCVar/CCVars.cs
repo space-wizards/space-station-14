@@ -407,13 +407,13 @@ namespace Content.Shared.CCVar
         /// The acceleration applied to mobs when moving and weightless.
         /// </summary>
         public static readonly CVarDef<float> MobWeightlessAcceleration =
-            CVarDef.Create("physics.mob_weightless_acceleration", 3f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.mob_weightless_acceleration", 1f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and providing inputs.
         /// </summary>
         public static readonly CVarDef<float> MobWeightlessFriction =
-            CVarDef.Create("physics.mob_weightless_friction", 2f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.mob_weightless_friction", 1f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not providing inputs.

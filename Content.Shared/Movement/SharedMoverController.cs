@@ -187,20 +187,18 @@ namespace Content.Shared.Movement
             UsedMobMovement[mover.Owner] = true;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
+            bool touching = true;
 
             // Handle wall-pushes.
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
 
                 if (!touching)
                 {
                     if (xform.GridUid != null)
                         mover.LastGridAngle = GetParentGridAngle(xform, mover);
-
-                    xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
-                    return;
                 }
             }
 
@@ -220,10 +218,10 @@ namespace Content.Shared.Movement
 
             if (weightless)
             {
-                if (worldTotal != Vector2.Zero)
+                if (worldTotal != Vector2.Zero && touching)
                     friction = _weightlessFrictionVelocity;
                 else
-                    friction = _stopSpeed;
+                    friction = _weightlessFrictionVelocityNoInput;
 
                 weightlessModifier = _mobWeightlessModifier;
                 accel = _mobWeightlessAcceleration;
@@ -258,7 +256,10 @@ namespace Content.Shared.Movement
             }
 
             worldTotal *= weightlessModifier;
-            Accelerate(ref velocity, in worldTotal, accel, frameTime);
+
+            if (touching)
+                Accelerate(ref velocity, in worldTotal, accel, frameTime);
+
             _physics.SetLinearVelocity(physicsComponent, velocity);
         }
 
