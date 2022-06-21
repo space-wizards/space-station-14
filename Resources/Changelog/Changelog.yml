@@ -1,12 +1,6 @@
 Entries:
 - author: CrudeWax
   changes:
-  - {message: fixed the popup for inserting TC into the uplink, type: Fix}
-  - {message: updated emag to look more like the rest of the ID cards, type: Tweak}
-  id: 1237
-  time: '2022-03-20T21:59:50.0000000+00:00'
-- author: CrudeWax
-  changes:
   - {message: fixes all written information to be actually readable. You are finally
       free to enjoy books!, type: Fix}
   id: 1238
@@ -2995,3 +2989,8 @@ Entries:
       crawling places when you're crit., type: Tweak}
   id: 1736
   time: '2022-06-21T02:00:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mimes no longer warned about their vow when just typing, type: Fix}
+  id: 1737
+  time: '2022-06-21T02:02:55.0000000+00:00'
