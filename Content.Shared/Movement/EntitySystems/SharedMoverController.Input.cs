@@ -45,7 +45,7 @@ public abstract partial class SharedMoverController
             .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
             .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(EntityManager, this))
             // Rider
-            // TODO: Relay to vehicle.
+            // TODO: Relay to vehicle if we don't have vehiclecomponent.
             // Shuttle
             .Bind(ContentKeyFunctions.ShuttleBrake, new ShuttleBrakeInputCmdHandler())
 
