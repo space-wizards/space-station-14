@@ -95,6 +95,8 @@ namespace Content.Client.Markings
                     continue;
                 }
 
+                var depth = sprite[targetLayer].DrawDepth;
+
                 for (int j = 0; j < markingPrototype.Sprites.Count(); j++)
                 {
                     var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
@@ -106,8 +108,11 @@ namespace Content.Client.Markings
                         sprite.LayerMapRemove(marking.MarkingId);
                     }
 
-                    int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                    int layer = sprite.AddLayer(markingPrototype.Sprites[j]);
                     sprite.LayerMapSet(layerId, layer);
+                    var theLayer = sprite[layer];
+                    theLayer.DrawDepth = depth;
+                    theLayer.RenderOrder = j + 1;
                     if (markingPrototype.FollowSkinColor)
                     {
                         sprite.LayerSetColor(layerId, appearance.SkinColor);
@@ -154,7 +159,10 @@ namespace Content.Client.Markings
                                     sprite.LayerMapRemove(markingPrototype.ID);
                                 }
 
-                                int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                                int layer = sprite.AddLayer(markingPrototype.Sprites[j]);
+                                var theLayer = sprite[layer];
+                                theLayer.DrawDepth = sprite[targetLayer].DrawDepth;
+                                theLayer.RenderOrder = j + 1;
                                 sprite.LayerMapSet(layerId, layer);
                                 sprite.LayerSetColor(layerId, appearance.SkinColor);
                             }

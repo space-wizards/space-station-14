@@ -38,6 +38,11 @@ public sealed class SlotDefinition
     ///     Offset for the clothing sprites.
     /// </summary>
     [DataField("offset")] public Vector2 Offset { get; } = Vector2.Zero;
+
+    /// <summary>
+    ///     The drawdepth to use for the sprite layers added by any clothing equipped to this slot.
+    /// </summary>
+    [DataField("drawDepth")] public readonly int DrawDepth;
 }
 
 public enum SlotUIContainer

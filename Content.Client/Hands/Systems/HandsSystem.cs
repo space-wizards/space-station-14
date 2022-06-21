@@ -221,7 +221,10 @@ namespace Content.Client.Hands
                 return;
             }
 
+            handComp.HandLayerDrawDepth.TryGetValue(hand.Location, out var depthOverride);
+
             // add the new layers
+            var order = 0;
             foreach (var (key, layerData) in ev.Layers)
             {
                 if (!revealedLayers.Add(key))
@@ -241,6 +244,10 @@ namespace Content.Client.Hands
                     sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
                 }
 
+                var layer = sprite[index];
+                layer.DrawDepth = handComp.DefaultDrawDepth;
+                layer.RenderOrder = order++;
+                layer.SetDrawDepthOverride(depthOverride);
                 sprite.LayerSetData(index, layerData);
             }
 

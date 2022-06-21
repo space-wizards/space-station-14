@@ -7,14 +7,6 @@
   skinColoration: HumanToned
 
 - type: species
-  id: Dwarf
-  name: species-name-dwarf
-  roundStart: false
-  prototype: MobDwarf
-  dollPrototype: MobDwarfDummy
-  skinColoration: HumanToned
-
-- type: species
   id: Reptilian
   name: species-name-reptilian
   roundStart: true

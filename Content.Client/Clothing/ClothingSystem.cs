@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Inventory;
@@ -11,6 +10,7 @@ using Content.Shared.Tag;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes;
 using static Robust.Client.GameObjects.SpriteComponent;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
@@ -44,10 +44,20 @@ public sealed class ClothingSystem : EntitySystem
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+
+    private ShaderInstance? _stencilDraw;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        if (_protoMan.TryIndex<ShaderPrototype>("StencilDraw", out var prototype))
+            _stencilDraw = prototype.Instance();
+        else
+        {
+            Logger.Error("Missing stencil shader");
+        }
 
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
@@ -217,14 +227,17 @@ public sealed class ClothingSystem : EntitySystem
         if(!Resolve(equipee, ref inventory, ref sprite) || !Resolve(equipment, ref clothingComponent, false))
             return;
 
-        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
+        // TODO gender stenciling should probably just be a property of the slot definition, not hard coded like this.
+        bool stencilShaderOverride = false;
+        if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var stencilLayer))
         {
-            sprite.LayerSetState(HumanoidVisualLayers.StencilMask, clothingComponent.FemaleMask switch
+            sprite.LayerSetState(stencilLayer, clothingComponent.FemaleMask switch
             {
                 FemaleClothingMask.NoMask => "female_none",
                 FemaleClothingMask.UniformTop => "female_top",
                 _ => "female_full",
             });
+            stencilShaderOverride = true;
         }
 
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
@@ -255,11 +268,8 @@ public sealed class ClothingSystem : EntitySystem
             return;
         }
 
-        // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
-        // bookmark to determine where in the list of layers we should insert the clothing layers.
-        bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
-
         // add the new layers
+        var order = 0;
         foreach (var (key, layerData) in ev.Layers)
         {
             if (!revealedLayers.Add(key))
@@ -268,23 +278,13 @@ public sealed class ClothingSystem : EntitySystem
                 continue;
             }
 
-            if (slotLayerExists)
-            {
-                index++;
-                // note that every insertion requires reshuffling & remapping all the existing layers.
-                sprite.AddBlankLayer(index);
-                sprite.LayerMapSet(key, index);
-            }
-            else
-                index = sprite.LayerMapReserveBlank(key);
-
-            if (sprite[index] is not Layer layer)
-                return;
+            var index = sprite.LayerMapReserveBlank(key);
+            var layer = sprite[index];
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
                 && layerData.TexturePath == null
-                && layer.RSI == null
+                && layer.Rsi == null
                 && TryComp(equipment, out SpriteComponent? clothingSprite))
             {
                 layer.SetRsi(clothingSprite.BaseRSI);
@@ -292,6 +292,11 @@ public sealed class ClothingSystem : EntitySystem
 
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
+            layer.DrawDepth = slotDef.DrawDepth;
+            layer.RenderOrder = order++;
+
+            if (stencilShaderOverride && _stencilDraw != null)
+                layer.Shader = _stencilDraw;
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));

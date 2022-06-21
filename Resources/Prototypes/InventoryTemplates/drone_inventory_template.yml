@@ -8,3 +8,4 @@
     uiWindowPos: 0,0
     displayName: Head
     offset: 0, -0.45
+    drawDepth: -4

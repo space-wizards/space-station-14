@@ -7,3 +7,4 @@
     uiContainer: BottomLeft
     uiWindowPos: 0,0
     displayName: Head
+    drawDepth: -4
