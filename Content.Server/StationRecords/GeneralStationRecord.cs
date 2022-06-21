@@ -20,6 +20,12 @@ public sealed class GeneralStationRecord
     public string JobTitle = string.Empty;
 
     /// <summary>
+    ///     Job icon tied to this station record.
+    /// </summary>
+    [ViewVariables]
+    public string JobIcon = string.Empty;
+
+    /// <summary>
     ///     Species tied to this station record.
     /// </summary>
     [ViewVariables]

@@ -112,6 +112,7 @@ public sealed class StationRecordsSystem : EntitySystem
         {
             Name = name,
             JobTitle = jobPrototype.Name,
+            JobIcon = jobPrototype.Icon,
             Species = species,
             Gender = gender,
             DisplayPriority = jobPrototype.Weight

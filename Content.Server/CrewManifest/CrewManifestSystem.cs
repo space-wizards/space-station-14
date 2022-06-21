@@ -73,7 +73,7 @@ public sealed class CrewManifestSystem : EntitySystem
             }
 
             var record = recordObject.Value.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.DisplayPriority);
+            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.DisplayPriority);
 
             foreach (var department in record.Departments)
             {
