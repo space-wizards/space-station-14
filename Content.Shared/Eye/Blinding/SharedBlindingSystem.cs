@@ -4,7 +4,7 @@ using Content.Shared.Item;
 
 namespace Content.Shared.Eye.Blinding
 {
-    public sealed class BlindingSystem : EntitySystem
+    public sealed class SharedBlindingSystem : EntitySystem
     {
         public override void Initialize()
         {
