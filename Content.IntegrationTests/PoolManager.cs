@@ -227,12 +227,9 @@ public static class PoolManager
             pair = GrabOptimalPair(poolSettings);
             if (pair != null)
             {
-                var mapManager = pair.Server.ResolveDependency<IMapManager>();
-                var mainGrid = GetMainGrid(mapManager);
                 var canSkip = pair.Settings.CanFastRecycle(poolSettings);
-                await TestContext.Out.WriteLineAsync($"canSkip: {canSkip}, maingrid:{mainGrid != null}");
 
-                if (!canSkip || mainGrid == null)
+                if (!canSkip)
                 {
                     await TestContext.Out.WriteLineAsync($"Cleaning existing pair");
                     await CleanPooledPair(poolSettings, pair);
@@ -411,39 +408,34 @@ public static class PoolManager
         return pair;
     }
 
-    public static TileRef GetMainTile(IMapManager manager)
+    public static async Task<TestMapData> CreateTestMap(PairTracker pairTracker)
     {
-        foreach (var grid in manager.GetAllGrids())
+        var server = pairTracker.Pair.Server;
+        var settings = pairTracker.Pair.Settings;
+        if (settings.NoServer) throw new Exception("Cannot setup test map without server");
+        var mapData = new TestMapData
         {
-            if (manager.GridExists(grid.GridEntityId))
-            {
-                foreach (var tile in grid.GetAllTiles())
-                {
-                    if(tile.IsSpace())continue;
-                    if(tile.IsBlockedTurf(false))continue;
-                    return tile;
-                }
-            }
+
+        };
+        await server.WaitPost(() =>
+        {
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            mapData.MapId = mapManager.CreateMap();
+            mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
+            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.GridEntityId, 0, 0);
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var plating = tileDefinitionManager["plating"];
+            var platingTile = new Tile(plating.TileId);
+            mapData.MapGrid.SetTile(mapData.GridCoords, platingTile);
+            mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
+            mapData.Tile = mapData.MapGrid.GetAllTiles().First();
+        });
+        if (!settings.Disconnected)
+        {
+            await RunTicksSync(pairTracker.Pair, 10);
         }
 
-        throw new Exception("Failed to find empty tile");
-    }
-
-    public static EntityCoordinates GetMainEntityCoordinates(IMapManager manager)
-    {
-        var gridId = GetMainGrid(manager).GridEntityId;
-        return new EntityCoordinates(gridId, -0.5f, -0.5f);
-    }
-
-    public static IMapGrid GetMainGrid(IMapManager manager)
-    {
-        foreach (var grid in manager.GetAllGrids())
-        {
-            if (manager.GridExists(grid.GridEntityId))
-                return grid;
-        }
-
-        return null;
+        return mapData;
     }
 
     public static async Task RunTicksSync(Pair pair, int ticks)
@@ -596,6 +588,15 @@ public sealed class PoolSettings
         if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
         return true;
     }
+}
+
+public sealed class TestMapData
+{
+    public MapId MapId { get; set; }
+    public IMapGrid MapGrid { get; set; }
+    public EntityCoordinates GridCoords { get; set; }
+    public MapCoordinates MapCoords { get; set; }
+    public TileRef Tile { get; set; }
 }
 
 public sealed class Pair
