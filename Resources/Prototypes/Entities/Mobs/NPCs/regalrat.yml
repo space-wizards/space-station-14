@@ -64,6 +64,7 @@
       Dead:
         Base: dead
   - type: Puller
+    needsHands: false
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Rat King
@@ -180,6 +181,7 @@
       Dead:
         Base: splat-3
   - type: Puller
+    needsHands: false
   - type: DiseaseCarrier
     carrierDiseases:
     - VentCough
