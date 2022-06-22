@@ -244,6 +244,22 @@ namespace Content.Shared.Movement.Systems
                 weightlessModifier = 1f;
                 accel = _mobAcceleration;
             }
+            
+            var profile = new MobMovementProfileEvent(
+                touching,
+                weightless,
+                friction,
+                weightlessModifier,
+                accel);
+
+            RaiseLocalEvent(xform.Owner, ref profile);
+
+            if (profile.Override)
+            {
+                friction = profile.Friction;
+                weightlessModifier = profile.WeightlessModifier;
+                accel = profile.Acceleration;
+            }
 
             Friction(frameTime, friction, ref velocity);
 

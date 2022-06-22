@@ -25,6 +25,18 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, GotUnequippedHandEvent>(OnJetpackHandUnequipped);
 
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
+        SubscribeLocalEvent<JetpackUserComponent, MobMovementProfileEvent>(OnJetpackUserMovement);
+    }
+
+    private void OnJetpackUserMovement(EntityUid uid, JetpackUserComponent component, ref MobMovementProfileEvent args)
+    {
+        // Only overwrite jetpack movement if they're offgrid.
+        if (args.Override || !args.Weightless) return;
+
+        args.Override = true;
+        args.Acceleration = component.Acceleration;
+        args.WeightlessModifier = component.WeightlessModifier;
+        args.Friction = component.Friction;
     }
 
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
