@@ -64,6 +64,14 @@
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
 
+- type: uplinkListing
+  id: UplinkHighTechAxe
+  category: Weapons
+  itemId: HighTechAxe
+  listingName: High Tech Axe
+  description: A high-tech axe that can slash people into bits, or pry open doors. Reliable, and heavy.
+  price: 16
+
 # Explosives
 
 - type: uplinkListing
@@ -178,6 +186,20 @@
 # Bundles
 
 - type: uplinkListing
+  id: UplinkRevolverBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledRevolver
+  price: 15
+  icon: /Textures/Objects/Weapons/Guns/Revolvers/python.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkPieCannonBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledPieCannon
+  price: 10
+  icon: /Textures/Objects/Weapons/Guns/Cannons/pie_cannon.rsi/piecannon.png
+
+- type: uplinkListing
   id: UplinkC20RBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
@@ -190,6 +212,20 @@
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
   price: 25
   icon: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkAKMSBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledLightRifle
+  price: 30
+  icon: /Textures/Objects/Weapons/Guns/Rifles/ak.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkLecterBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledRifle
+  price: 35
+  icon: /Textures/Objects/Weapons/Guns/Rifles/lecter.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
