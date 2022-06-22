@@ -14,6 +14,8 @@ public sealed class MobsterAccentSystem : EntitySystem
         { "let me", "lemme" },
         { "should", "oughta" },
         { "the", "da" },
+        { "them", "dem" },
+        { "attack", "whack" },
         { "kill", "whack" },
         { "murder", "whack" },
         { "dead", "sleepin' with da fishies"},
@@ -23,6 +25,8 @@ public sealed class MobsterAccentSystem : EntitySystem
         { "rules", "roolz" },
         { "you", "yous" },
         { "have to", "gotta" },
+        { "going to", "boutta" },
+        { "about to", "boutta" },
         { "here", "'ere" }
     };
 
