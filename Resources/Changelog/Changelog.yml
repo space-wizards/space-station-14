@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Corgis can no longer will doors to open., type: Fix}
-  id: 1247
-  time: '2022-03-25T21:10:50.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station is now fully stocked with pets., type: Add}
@@ -2980,3 +2975,8 @@ Entries:
   - {message: removing unbroken light bulbs now has a delay, type: Tweak}
   id: 1746
   time: '2022-06-22T00:55:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Examining a drink shows how much is left, type: Tweak}
+  id: 1747
+  time: '2022-06-22T02:02:25.0000000+00:00'
