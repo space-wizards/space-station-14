@@ -149,7 +149,7 @@ namespace Content.Server.Storage.Components
             }
 
             var @event = new StorageOpenAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -157,7 +157,7 @@ namespace Content.Server.Storage.Components
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             var @event = new StorageCloseAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }

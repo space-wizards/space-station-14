@@ -25,3 +25,26 @@
         - id: Medicine
         - id: Poison
         - id: Narcotic
+
+- type: entity
+  id: OrganSlimeLungs
+  parent: BaseHumanOrgan
+  name: slime gas sacs
+  description: "Collects nitrogen, which slime cells use for maintenance."
+  components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Slime ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0

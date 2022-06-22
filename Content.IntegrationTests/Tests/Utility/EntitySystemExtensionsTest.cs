@@ -37,24 +37,20 @@ namespace Content.IntegrationTests.Tests.Utility
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var sMapManager = server.ResolveDependency<IMapManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var mapCoordinates = testMap.MapCoords;
+            var entityCoordinates = testMap.GridCoords;
+
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadphaseSystem>();
 
             await server.WaitAssertion(() =>
             {
-                var grid = PoolManager.GetMainGrid(sMapManager);
-                var gridEnt = grid.GridEntityId;
-                var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).WorldPosition;
-                var entityCoordinates = PoolManager.GetMainEntityCoordinates(sMapManager);
 
                 // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable));
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable, out var entity));
                 Assert.NotNull(entity);
-
-                var mapId = PoolManager.GetMainGrid(sMapManager).ParentMapId;
-                var mapCoordinates = new MapCoordinates(gridPos.X, gridPos.Y, mapId);
 
                 // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, mapCoordinates, CollisionGroup.Impassable));

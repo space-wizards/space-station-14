@@ -5,3 +5,7 @@
 - type: lobbyBackground
   id: Supermatter
   background: /Textures/LobbyScreens/supermatter.png
+
+- type: lobbyBackground
+  id: Warden
+  background: /Textures/LobbyScreens/warden.png
