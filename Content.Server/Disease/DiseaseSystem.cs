@@ -142,8 +142,7 @@ namespace Content.Server.Disease
                     component.PastDiseases.Add(disease);
                 else
                 {
-                    // This doesn't really have any ill effects so not gonna panic too much
-                    Logger.Warning("Failed to index disease prototype + " + immunity + " for " + uid);
+                    Logger.Error("Failed to index disease prototype + " + immunity + " for " + uid);
                 }
             }
         }
