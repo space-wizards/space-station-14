@@ -18,6 +18,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;

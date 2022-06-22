@@ -1,7 +1,7 @@
 using Content.Shared.Movement.Components;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public sealed class SlowContactsSystem : EntitySystem
 {
@@ -65,8 +65,8 @@ public sealed class SlowContactsSystem : EntitySystem
         if (!_statusCapableInContact.ContainsKey(otherUid))
             _statusCapableInContact[otherUid] = 0;
         _statusCapableInContact[otherUid]++;
-        if (!EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
-            EntityManager.AddComponent<SlowsOnContactComponent>(otherUid);
+
+        EnsureComp<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
     }
 }
