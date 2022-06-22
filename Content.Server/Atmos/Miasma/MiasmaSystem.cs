@@ -116,13 +116,19 @@ namespace Content.Server.Atmos.Miasma
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
                 perishable.Progressing = false;
+                _ambientSound.SetAmbience(args.Entity, false);
+            }
         }
 
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
+                _ambientSound.SetAmbience(args.Entity, false);
                 perishable.Progressing = true;
+            }
         }
     }
 }

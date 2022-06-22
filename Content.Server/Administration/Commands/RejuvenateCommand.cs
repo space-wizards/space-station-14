@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Miasma;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
@@ -97,6 +98,11 @@ namespace Content.Server.Administration.Commands
             if (entMan.TryGetComponent<DiseaseCarrierComponent>(target, out var carrier))
             {
                 EntitySystem.Get<DiseaseSystem>().CureAllDiseases(target, carrier);
+            }
+
+            if (entMan.TryGetComponent<RottingComponent>(target, out var rotting))
+            {
+                entMan.RemoveComponent<RottingComponent>(target);
             }
         }
     }
