@@ -36,17 +36,6 @@ namespace Content.Shared.Disease
         /// it needs something to control its tickrate
         /// </summary>
         public float Accumulator = 0f;
-
-        /// <summary>
-        /// This controls the progression of the disease, used to stage disease effects
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float DiseaseSeverity
-        {
-            get => _diseaseServerity;
-            set => _diseaseServerity = Math.Clamp(value, 0f, 1f);
-        }
-        private float _diseaseServerity = 0f;
         /// <summary>
         /// List of effects the disease has that will
         /// run every second (by default anyway)
