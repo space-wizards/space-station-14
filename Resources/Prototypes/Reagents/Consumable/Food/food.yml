@@ -55,3 +55,21 @@
         amount: 1 # weaker than iron but pretty good all things considered
       - !type:SatiateHunger
 
+- type: reagent
+	id: Cholesterol
+	name: reagent-name-cholesterol
+	desc: reagent-desc-cholesterol
+	physicalDesc: reagent-physical-desc-crystalline
+	color: “#fcfcfc”
+	boilingPoint: 360
+	meltingPoint: 148
+	metabolisms:
+		Poison:
+			effects:
+			- !type:HealthChange
+				conditions:
+				- !type:ReagentThreshold
+					min: 7
+				damage:
+					groups:
+						Asphyxiation: 8
