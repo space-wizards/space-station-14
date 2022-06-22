@@ -24,7 +24,7 @@
         Blunt: -4
         Slash: -11
   - type: Clothing
-    size: 35
+    size: 200
     sprite: Objects/Weapons/Melee/high_tech_fireaxe.rsi
     quickEquip: false
     Slots:
