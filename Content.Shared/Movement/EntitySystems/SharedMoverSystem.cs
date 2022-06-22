@@ -48,7 +48,7 @@ namespace Content.Shared.Movement.EntitySystems
 
             if (owner != null && session != null)
             {
-                EntityManager.EventBus.RaiseLocalEvent(owner.Value, new RelayMoveInputEvent(session));
+                EntityManager.EventBus.RaiseLocalEvent(owner.Value, new RelayMoveInputEvent(session), true);
 
                 // For stuff like "Moving out of locker" or the likes
                 if (owner.Value.IsInContainer() &&
@@ -56,7 +56,7 @@ namespace Content.Shared.Movement.EntitySystems
                      mobState.IsAlive()))
                 {
                     var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
-                    EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent);
+                    EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent, true);
                 }
                 // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
                 if (TryComp<RiderComponent>(owner.Value, out var rider) && rider.Vehicle != null && rider.Vehicle.HasKey)

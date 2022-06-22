@@ -66,6 +66,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
             }
 
+            appearance?.SetData(PumpVisuals.Enabled, true);
+
             var inputStartingPressure = inlet.Air.Pressure;
             var outputStartingPressure = outlet.Air.Pressure;
 
@@ -77,7 +79,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if ((outputStartingPressure - inputStartingPressure > pump.OverclockThreshold) && pump.Overclocked)
                 return;
 
-            appearance?.SetData(PumpVisuals.Enabled, true);
             _ambientSoundSystem.SetAmbience(pump.Owner, true);
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.

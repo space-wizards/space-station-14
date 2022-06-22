@@ -3,6 +3,7 @@ using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Headset;
 using Content.Server.Players;
@@ -56,6 +57,8 @@ public sealed class ChatSystem : SharedChatSystem
     public override void Initialize()
     {
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
 
     public override void Shutdown()
@@ -70,6 +73,17 @@ public sealed class ChatSystem : SharedChatSystem
         _loocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
+    }
+
+    private void OnGameChange(GameRunLevelChangedEvent ev)
+    {
+        if (_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
+            return;
+
+        if (ev.New == GameRunLevel.InRound)
+            _configurationManager.SetCVar(CCVars.OocEnabled, false);
+        else if (ev.New == GameRunLevel.PostRound)
+            _configurationManager.SetCVar(CCVars.OocEnabled, true);
     }
 
     // ReSharper disable once InconsistentNaming

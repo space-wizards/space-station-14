@@ -161,7 +161,7 @@ namespace Content.Shared.Friction
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return 0.0f;
 
             if (!coords.IsValid(EntityManager)) return 0.0f;

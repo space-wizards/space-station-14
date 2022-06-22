@@ -63,7 +63,7 @@ namespace Content.Server.Ghost
             foreach (var ent in ents)
             {
                 var ghostBoo = new GhostBooEvent();
-                RaiseLocalEvent(ent, ghostBoo);
+                RaiseLocalEvent(ent, ghostBoo, true);
 
                 if (ghostBoo.Handled)
                     booCounter++;

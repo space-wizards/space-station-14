@@ -29,11 +29,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (old.Body == null)
                     {
-                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartEvent(old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartEvent(old), true);
                     }
                     else
                     {
-                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartInBodyEvent(old.Body, old));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new RemovedFromPartInBodyEvent(old.Body, old), true);
                     }
                 }
 
@@ -41,11 +41,11 @@ namespace Content.Shared.Body.Components
                 {
                     if (value.Body == null)
                     {
-                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartEvent(value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartEvent(value), true);
                     }
                     else
                     {
-                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartInBodyEvent(value.Body, value));
+                        _entMan.EventBus.RaiseLocalEvent(Owner, new AddedToPartInBodyEvent(value.Body, value), true);
                     }
                 }
             }

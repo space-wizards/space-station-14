@@ -67,7 +67,7 @@ namespace Content.Server.Shuttles.Systems
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.TryGetGrid(dockingXform.GridEntityId, out var grid) ||
+            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
                 !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
@@ -93,7 +93,7 @@ namespace Content.Server.Shuttles.Systems
 
             while (enumerator.MoveNext(out var otherGrid))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridEntityId) continue;
+                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
@@ -164,16 +164,18 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJoint = null;
             dockA.DockedWith = null;
 
-            // If these grids are ever invalid then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridEntityId).GridEntityId;
-            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridEntityId).GridEntityId;
+            // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
+            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridUid;
+            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridUid;
+            DebugTools.Assert(gridAUid != null);
+            DebugTools.Assert(gridBUid != null);
 
             var msg = new UndockEvent
             {
                 DockA = dockA,
                 DockB = dockB,
-                GridAUid = gridAUid,
-                GridBUid = gridBUid,
+                GridAUid = gridAUid!.Value,
+                GridBUid = gridBUid!.Value,
             };
 
             EntityManager.EventBus.RaiseLocalEvent(dockA.Owner, msg, false);
@@ -305,8 +307,10 @@ namespace Content.Server.Shuttles.Systems
             var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.Owner);
             var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.Owner);
 
-            var gridA = _mapManager.GetGrid(dockAXform.GridEntityId).GridEntityId;
-            var gridB = _mapManager.GetGrid(dockBXform.GridEntityId).GridEntityId;
+            DebugTools.Assert(dockAXform.GridUid != null);
+            DebugTools.Assert(dockBXform.GridUid != null);
+            var gridA = dockAXform.GridUid!.Value;
+            var gridB = dockBXform.GridUid!.Value;
 
             SharedJointSystem.LinearStiffness(
                 2f,

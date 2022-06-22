@@ -190,7 +190,17 @@ namespace Content.Server.Strip
                     var name = "None";
 
                     if (_inventorySystem.TryGetSlotEntity(uid, slot.Name, out var item))
-                        name = Name(item.Value);
+                    {
+                        if (!slot.StripHidden)
+                        {
+                            name = Name(item.Value);
+                        }
+
+                        else
+                        {
+                            name = Loc.GetString("strippable-bound-user-interface-stripping-menu-obfuscate");
+                        }
+                    }
 
                     inventory[(slot.Name, slot.DisplayName)] = name;
                 }
@@ -274,7 +284,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
+                return;
+            }
+
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -328,7 +344,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -374,7 +390,13 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
+            {
+                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
+                return;
+            }
+
+            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -389,7 +411,7 @@ namespace Content.Server.Strip
             if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var item) && _inventorySystem.TryUnequip(user, component.Owner, slot))
             {
                 // Raise a dropped event, so that things like gas tank internals properly deactivate when stripping
-                RaiseLocalEvent(item.Value, new DroppedEvent(user));
+                RaiseLocalEvent(item.Value, new DroppedEvent(user), true);
 
                 _handsSystem.PickupOrDrop(user, item.Value);
             }
@@ -425,7 +447,7 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.StripDelay, CancellationToken.None, component.Owner)
+            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
