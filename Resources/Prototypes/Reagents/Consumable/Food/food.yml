@@ -69,10 +69,10 @@
           - !type:HealthChange
             conditions:
             - !type:ReagentThreshold
-              min: 7
+              min: 15
             damage:
               groups:
-                Asphyxiation: 6
+                Asphyxiation: 8
           - !type:ModifyBleedAmounts #heart attacks cause blood to thicken slightly
             amount: -0.05
           - !type:PopupMessage # technically this should be different by gender but I don't want to complicate it
