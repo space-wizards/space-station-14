@@ -1,41 +1,4 @@
 Entries:
-- author: Seija
-  changes:
-  - {message: 'Fixed the cat sprites to use their respective cat sprites, not just
-      all use the black cat for the lot.', type: Tweak}
-  id: 1243
-  time: '2022-03-25T04:00:09.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Reptilians no longer have human limbs., type: Tweak}
-  - {message: Reptilians now need to breathe., type: Tweak}
-  - {message: Reptilians now have their own SKREEE!, type: Add}
-  id: 1244
-  time: '2022-03-25T17:29:23.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: You feel as though you will be respawned and kicked by accident less
-      often., type: Add}
-  id: 1245
-  time: '2022-03-25T18:00:20.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Popups moving with the viewer instead of the entity it's displayed on.,
-    type: Fix}
-  id: 1246
-  time: '2022-03-25T18:16:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Corgis can no longer will doors to open., type: Fix}
-  id: 1247
-  time: '2022-03-25T21:10:50.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station is now fully stocked with pets., type: Add}
-  - {message: Several lighting issues on Delta were fixed. More will likely exist.,
-    type: Tweak}
-  id: 1248
-  time: '2022-03-26T04:16:22.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
@@ -2984,3 +2947,34 @@ Entries:
   - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
   id: 1742
   time: '2022-06-21T14:00:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Slimes now have to breathe nitrogen. They still suffocate much, much
+      slower than other species.', type: Add}
+  id: 1743
+  time: '2022-06-21T16:32:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Bibles can no longer heal dead entities., type: Fix}
+  id: 1744
+  time: '2022-06-21T16:44:02.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Energy Swords are not considered knifes when turned off anymore!, type: Fix}
+  id: 1745
+  time: '2022-06-22T00:54:28.0000000+00:00'
+- author: themias
+  changes:
+  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
+  id: 1746
+  time: '2022-06-22T00:55:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Examining a drink shows how much is left, type: Tweak}
+  id: 1747
+  time: '2022-06-22T02:02:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
+  id: 1748
+  time: '2022-06-22T02:41:42.0000000+00:00'

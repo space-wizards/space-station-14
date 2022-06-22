@@ -257,7 +257,7 @@ namespace Content.Shared.Examine
             // Raise the event and let things that subscribe to it change the message...
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity, examinedEvent);
+            RaiseLocalEvent(entity, examinedEvent, true);
 
             message.Pop();
 
