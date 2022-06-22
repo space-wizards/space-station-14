@@ -26,6 +26,7 @@
       compatibility: Slime
       mechanisms:
         - SentientSlimeCore
+        - OrganSlimeLungs
 #    criticalThreshold: 100
 #    deadThreshold: 150
 

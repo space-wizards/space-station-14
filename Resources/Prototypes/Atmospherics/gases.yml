@@ -57,3 +57,14 @@
   gasOverlayState: water_vapor
   color: bffffd
   reagent: Water
+
+- type: gas
+  id: 6
+  name: Miasma
+  specificHeat: 20
+  heatCapacityRatio: 1.4
+  molarMass: 44
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: miasma
+  color: 56941E
+  reagent: Miasma

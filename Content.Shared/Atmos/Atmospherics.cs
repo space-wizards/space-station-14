@@ -168,7 +168,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 6;
+        public const int TotalNumberOfGases = 7;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -285,5 +285,6 @@ namespace Content.Shared.Atmos
         Plasma = 3,
         Tritium = 4,
         WaterVapor = 5,
+        Miasma = 6
     }
 }

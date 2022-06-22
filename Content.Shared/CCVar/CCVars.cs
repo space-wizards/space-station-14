@@ -728,6 +728,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> DisablingOOCDisablesRelay = CVarDef.Create("ooc.disabling_ooc_disables_relay", true, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether or not OOC chat should be enabled during a round.
+        /// </summary>
+        public static readonly CVarDef<bool> OocEnableDuringRound =
+            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED |CVar.SERVER);
+
         /*
          * LOOC
          */
@@ -991,5 +997,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> UpdateRestartDelay =
             CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
+
+        /*
+         * Ghost
+         */
+
+        /// <summary>
+        /// The time you must spend reading the rules, before the "Request" button is enabled
+        /// </summary>
+        public static readonly CVarDef<float> GhostRoleTime =
+            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
     }
 }

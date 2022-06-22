@@ -157,15 +157,15 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent());
+            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {
                 return true;
             }
 
-            SoundSystem.Play(Filter.Pvs(puddleComponent.Owner), puddleComponent.SpillSound.GetSound(),
-                puddleComponent.Owner);
+            SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
+                Filter.Pvs(puddleComponent.Owner), puddleComponent.Owner);
             return true;
         }
 

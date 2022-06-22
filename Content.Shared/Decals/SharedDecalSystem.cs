@@ -41,13 +41,13 @@ namespace Content.Shared.Decals
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            var comp = EntityManager.EnsureComponent<DecalGridComponent>(MapManager.GetGrid(msg.GridId).GridEntityId);
-            ChunkIndex[msg.GridId] = new();
+            var comp = EntityManager.EnsureComponent<DecalGridComponent>(msg.EntityUid);
+            ChunkIndex[msg.EntityUid] = new();
             foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
             {
                 foreach (var uid in decals.Keys)
                 {
-                    ChunkIndex[msg.GridId][uid] = indices;
+                    ChunkIndex[msg.EntityUid][uid] = indices;
                 }
             }
         }

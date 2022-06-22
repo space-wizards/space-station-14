@@ -28,7 +28,7 @@ namespace Content.Server.Weapon.Melee.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arc")]
-        public string Arc { get; set; } = "default";
+        public string? Arc { get; set; } = "default";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arcwidth")]

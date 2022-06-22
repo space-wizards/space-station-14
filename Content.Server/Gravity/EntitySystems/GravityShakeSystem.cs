@@ -48,10 +48,8 @@ namespace Content.Server.Gravity.EntitySystems
         {
             _gridsToShake[gridId] = ShakeTimes;
 
-            SoundSystem.Play(
-                Filter.BroadcastGrid(gridId),
-                comp.GravityShakeSound.GetSound(),
-                AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(comp.GravityShakeSound.GetSound(),
+                Filter.BroadcastGrid(gridId), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()
@@ -78,7 +76,7 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity is not {Valid: true} attached
-                    || EntityManager.GetComponent<TransformComponent>(attached).GridEntityId != gridId
+                    || EntityManager.GetComponent<TransformComponent>(attached).GridUid != gridId
                     || !EntityManager.HasComponent<CameraRecoilComponent>(attached))
                 {
                     continue;

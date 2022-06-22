@@ -5,6 +5,8 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Item
+    size: 50
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -23,6 +25,14 @@
   - type: Appearance
 
 - type: entity
+  id: BaseWeaponBatterySmall
+  parent: BaseWeaponBattery
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+
+- type: entity
   name: retro laser gun
   parent: BaseWeaponBattery
   id: WeaponLaserGun
@@ -37,7 +47,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
@@ -63,7 +72,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 48
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
@@ -90,7 +98,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -102,7 +109,7 @@
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
   description: A state of the art energy pistol favoured as a sidearm by the NT-ERT operatives.
   components:
@@ -115,7 +122,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -145,7 +151,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -177,7 +182,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Gun
     fireRate: 1.5
@@ -205,7 +209,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
     fireRate: 1.5
@@ -230,7 +233,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
     soundGunshot:
@@ -263,7 +265,7 @@
       shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    size: 24
+    size: 10
     quickEquip: false
     Slots:
     - Belt
@@ -273,7 +275,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaser
-    fireCost: 100
+    fireCost: 50
   - type: Battery
     maxCharge: 100
     startingCharge: 100
@@ -285,7 +287,7 @@
 
 - type: entity
   name: antique laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
   description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
@@ -298,7 +300,6 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
   - type: Gun
     soundGunshot:
@@ -306,6 +307,9 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
     fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
   - type: MagazineVisuals
     magState: mag
     steps: 5

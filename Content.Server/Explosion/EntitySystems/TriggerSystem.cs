@@ -94,7 +94,7 @@ namespace Content.Server.Explosion.EntitySystems
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
             return triggerEvent.Handled;
         }
 
@@ -162,7 +162,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 timer.TimeUntilBeep += timer.BeepInterval;
                 var filter = Filter.Pvs(timer.Owner, entityManager: EntityManager);
-                SoundSystem.Play(filter, timer.BeepSound.GetSound(), timer.Owner, timer.BeepParams);
+                SoundSystem.Play(timer.BeepSound.GetSound(), filter, timer.Owner, timer.BeepParams);
             }
 
             foreach (var uid in toRemove)
