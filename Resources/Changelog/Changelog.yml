@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Eating using the verb has been fixed., type: Fix}
-  id: 1255
-  time: '2022-03-27T22:50:49.0000000+00:00'
 - author: EmoGarbage
   changes:
   - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
@@ -2978,3 +2973,8 @@ Entries:
   - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
   id: 1754
   time: '2022-06-22T23:36:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat kings/servants can now actually say 'king' again., type: Fix}
+  id: 1755
+  time: '2022-06-22T23:39:29.0000000+00:00'
