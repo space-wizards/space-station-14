@@ -1,18 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: You feel as though you will be respawned and kicked by accident less
-      often., type: Add}
-  id: 1245
-  time: '2022-03-25T18:00:20.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Popups moving with the viewer instead of the entity it's displayed on.,
-    type: Fix}
-  id: 1246
-  time: '2022-03-25T18:16:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Corgis can no longer will doors to open., type: Fix}
   id: 1247
   time: '2022-03-25T21:10:50.0000000+00:00'
@@ -2982,3 +2970,13 @@ Entries:
   - {message: Bibles can no longer heal dead entities., type: Fix}
   id: 1744
   time: '2022-06-21T16:44:02.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Energy Swords are not considered knifes when turned off anymore!, type: Fix}
+  id: 1745
+  time: '2022-06-22T00:54:28.0000000+00:00'
+- author: themias
+  changes:
+  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
+  id: 1746
+  time: '2022-06-22T00:55:06.0000000+00:00'
