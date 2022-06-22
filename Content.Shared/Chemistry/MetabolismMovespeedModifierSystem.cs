@@ -32,11 +32,11 @@ namespace Content.Shared.Chemistry
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
 
-            if (EntityManager.TryGetComponent<SimpleMoverComponent>(uid, out var modifier) &&
+            if (EntityManager.TryGetComponent<MobMoverComponent>(uid, out var modifier) &&
                 (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
                  !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
             {
-                _movespeed.RefreshMovementSpeedModifiers(uid);
+                _movespeed.RefreshMovementSpeedModifiers(uid, modifier);
             }
 
             component.WalkSpeedModifier = cast.WalkSpeedModifier;

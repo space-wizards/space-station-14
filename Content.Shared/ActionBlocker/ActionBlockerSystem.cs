@@ -21,20 +21,20 @@ namespace Content.Shared.ActionBlocker
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SimpleMoverComponent, ComponentStartup>(OnMoverStartup);
+            SubscribeLocalEvent<MobMoverComponent, ComponentStartup>(OnMoverStartup);
         }
 
-        private void OnMoverStartup(EntityUid uid, SimpleMoverComponent component, ComponentStartup args)
+        private void OnMoverStartup(EntityUid uid, MobMoverComponent component, ComponentStartup args)
         {
             UpdateCanMove(uid, component);
         }
 
-        public bool CanMove(EntityUid uid, SimpleMoverComponent? component = null)
+        public bool CanMove(EntityUid uid, MobMoverComponent? component = null)
         {
             return Resolve(uid, ref component, false) && component.CanMove;
         }
 
-        public bool UpdateCanMove(EntityUid uid, SimpleMoverComponent? component = null)
+        public bool UpdateCanMove(EntityUid uid, MobMoverComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
                 return false;

@@ -103,14 +103,14 @@ public abstract partial class SharedMoverController
     /// <summary>
     /// Gets the movement input for this mob mover at this point in time.
     /// </summary>
-    public (Vector2 Walk, Vector2 Sprint) GetSimpleVelocityInput(SimpleMoverComponent component)
+    public (Vector2 Walk, Vector2 Sprint) GetSimpleVelocityInput(MobMoverComponent component)
     {
         if (!_gameTiming.InSimulation)
         {
             // Outside of simulation we'll be running client predicted movement per-frame.
             // So return a full-length vector as if it's a full tick.
             // Physics system will have the correct time step anyways.
-            var immediateDir = DirVecForButtons(component._heldMoveButtons);
+            var immediateDir = DirVecForButtons(component.HeldMoveButtons);
             return component.Sprinting ? (Vector2.Zero, immediateDir) : (immediateDir, Vector2.Zero);
         }
 
@@ -125,11 +125,11 @@ public abstract partial class SharedMoverController
         }
         else
         {
-            walk = component._curTickWalkMovement;
-            sprint = component._curTickSprintMovement;
+            walk = component.CurTickWalkMovement;
+            sprint = component.CurTickSprintMovement;
         }
 
-        var curDir = DirVecForButtons(component._heldMoveButtons) * remainingFraction;
+        var curDir = DirVecForButtons(component.HeldMoveButtons) * remainingFraction;
 
         if (component.Sprinting)
         {

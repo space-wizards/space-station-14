@@ -18,7 +18,7 @@ namespace Content.Client.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
 
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
-                !TryComp(player, out SimpleMoverComponent? mover) ||
+                !TryComp(player, out MobMoverComponent? mover) ||
                 !TryComp(player, out PhysicsComponent? body) ||
                 !TryComp(player, out TransformComponent? xform))
             {

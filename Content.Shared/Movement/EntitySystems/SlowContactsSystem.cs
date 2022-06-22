@@ -46,7 +46,7 @@ public sealed class SlowContactsSystem : EntitySystem
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, EndCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
-        if (!EntityManager.HasComponent<SimpleMoverComponent>(otherUid)
+        if (!EntityManager.HasComponent<MobMoverComponent>(otherUid)
             || !EntityManager.HasComponent<SlowsOnContactComponent>(otherUid))
             return;
         if (!_statusCapableInContact.ContainsKey(otherUid))
@@ -61,7 +61,7 @@ public sealed class SlowContactsSystem : EntitySystem
     private void OnEntityEnter(EntityUid uid, SlowContactsComponent component, StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
-        if (!EntityManager.HasComponent<SimpleMoverComponent>(otherUid))
+        if (!EntityManager.HasComponent<MobMoverComponent>(otherUid))
             return;
         if (!_statusCapableInContact.ContainsKey(otherUid))
             _statusCapableInContact[otherUid] = 0;

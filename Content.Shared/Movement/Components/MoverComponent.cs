@@ -4,7 +4,7 @@ namespace Content.Shared.Movement.Components;
 
 public abstract class MoverComponent : Component
 {
-    // TODO: Make a SimpleMoverComponent that's abstract that vehicles and mobmover can inherit from
+    // TODO: Make a MobMoverComponent that's abstract that vehicles and mobmover can inherit from
     // TODO: Move the accel movement cvars over to mobmover.
 
     /// <summary>
