@@ -1,10 +1,4 @@
 Entries:
-- author: Mith-randalf
-  changes:
-  - {message: Nanotrasen has rewritten the laws themselves to allow security officers
-      to brig for up to 10 minutes instead of five., type: Tweak}
-  id: 1250
-  time: '2022-03-27T01:15:21.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Nanotrasen has purchased more decoration for the stations, banners,
@@ -2979,3 +2973,8 @@ Entries:
       of your "shoudlers", type: Fix}
   id: 1749
   time: '2022-06-22T15:11:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Give Nuke Ops their access to console, type: Fix}
+  id: 1750
+  time: '2022-06-22T19:27:24.0000000+00:00'

@@ -396,7 +396,7 @@
   - type: Access
     groups:
     - AllAccess
-    
+
 - type: entity
   parent: CentcomIDCard
   id: ERTLeaderIDCard
@@ -436,7 +436,7 @@
         - state: idmusician
     - type: PresetIdCard
       job: Musician
-    
+
 - type: entity
   parent: CentcomIDCard
   id: CentcomIDCardDeathsquad
@@ -483,6 +483,9 @@
   - type: Sprite
     layers:
     - state: syndie
+  - type: Access
+    tags:
+    - NuclearOperative
 
 - type: entity
   parent: IDCardStandard
