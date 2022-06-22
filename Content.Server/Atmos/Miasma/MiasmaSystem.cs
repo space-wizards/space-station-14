@@ -4,10 +4,8 @@ using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
-using Content.Server.Popups;
 using Content.Shared.Examine;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Miasma
 {
@@ -15,8 +13,6 @@ namespace Content.Server.Atmos.Miasma
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -77,7 +73,7 @@ namespace Content.Server.Atmos.Miasma
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 return;
 
-            if (component.DeathAccumulator <= component.RotAfter.TotalSeconds)
+            if (!component.Rotting)
                 return;
 
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
@@ -87,13 +83,13 @@ namespace Content.Server.Atmos.Miasma
 
             foreach (var part in args.GibbedParts)
             {
-                EntityManager.QueueDeleteEntity(part);
+                EntityManager.DeleteEntity(part);
             }
         }
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
         {
-            if (component.DeathAccumulator >= component.RotAfter.TotalSeconds)
+            if (component.Rotting)
                 args.PushMarkup(Loc.GetString("miasma-rotting"));
         }
 
