@@ -254,7 +254,7 @@ namespace Content.Shared.Movement.Systems
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.LocalRotation = xform.GridUid != EntityUid.Invalid
+                xform.LocalRotation = xform.GridUid != null
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;

@@ -17,9 +17,9 @@
       "delays": [
         [
           0.2,
-		  0.2
+          0.2
         ]
-	  ]
+      ]
     },
     {
       "name": "inhand-left",
@@ -33,7 +33,7 @@
       "name": "equipped-BACKPACK",
       "directions": 4
     },
-	{
+    {
       "name": "on-equipped-BACKPACK",
       "directions": 4
     }
