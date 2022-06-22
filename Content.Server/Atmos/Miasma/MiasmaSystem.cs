@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.Miasma
@@ -13,6 +14,9 @@ namespace Content.Server.Atmos.Miasma
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+        /// Feel free to weak this if there are perf concerns
+        private float UpdateRate = 5f;
 
         public override void Update(float frameTime)
         {
@@ -30,10 +34,13 @@ namespace Content.Server.Atmos.Miasma
                     continue;
 
                 perishable.RotAccumulator += frameTime;
-                if (perishable.RotAccumulator < 1f)
+                if (perishable.RotAccumulator < UpdateRate) // This is where it starts to get noticable on larger animals, no need to run every second
                     continue;
 
-                perishable.RotAccumulator -= 1f;
+                perishable.RotAccumulator -= UpdateRate;
+
+                EnsureComp<FliesComponent>(perishable.Owner);
+                _ambientSound.SetAmbience(perishable.Owner, true);
 
                 DamageSpecifier damage = new();
                 damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
@@ -45,21 +52,34 @@ namespace Content.Server.Atmos.Miasma
                     continue;
                 // We need a way to get the mass of the mob alone without armor etc in the future
 
+                float molRate = perishable.MolsPerSecondPerUnitMass * UpdateRate;
+
                 var tileMix = _atmosphereSystem.GetTileMixture(Transform(perishable.Owner).Coordinates);
                 if (tileMix != null)
-                    tileMix.AdjustMoles(Gas.Miasma, perishable.MolsPerSecondPerUnitMass * physics.FixturesMass);
+                    tileMix.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
             }
         }
-
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        }
+
+        private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
+        {
+            RemComp<FliesComponent>(uid);
+            if (TryComp<PerishableComponent>(uid, out var perishable))
+            {
+                perishable.DeathAccumulator = 0;
+                perishable.RotAccumulator = 0;
+            }
+            _ambientSound.SetAmbience(uid, false); // Ideally this will support dynamic sources in the future, I really didn't want to make flies an entity
         }
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
