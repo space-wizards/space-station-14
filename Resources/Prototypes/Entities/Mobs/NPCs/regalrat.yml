@@ -103,7 +103,7 @@
     - id: ClothingHeadHatFancyCrown #how did that get there?
       amount: 1
   - type: DiseaseCarrier
-    carrierDiseases:
+    naturalImmunities: #Keep these synced with the miasma pool
     - VentCough
     - AMIV
     - SpaceCold
@@ -183,7 +183,7 @@
   - type: Puller
     needsHands: false
   - type: DiseaseCarrier
-    carrierDiseases:
+    naturalImmunities:
     - VentCough
     - AMIV
     - SpaceCold

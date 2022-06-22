@@ -39,6 +39,7 @@ namespace Content.Server.Disease
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
@@ -126,6 +127,26 @@ namespace Content.Server.Disease
         ///
         /// Event Handlers
         ///
+
+        /// <summary>
+        /// Fill in the natural immunities of this entity.
+        /// </summary>
+        private void OnInit(EntityUid uid, DiseaseCarrierComponent component, ComponentInit args)
+        {
+            if (component.NaturalImmunities == null || component.NaturalImmunities.Count == 0)
+                return;
+
+            foreach (var immunity in component.NaturalImmunities)
+            {
+                if (_prototypeManager.TryIndex<DiseasePrototype>(immunity, out var disease))
+                    component.PastDiseases.Add(disease);
+                else
+                {
+                    // This doesn't really have any ill effects so not gonna panic too much
+                    Logger.Warning("Failed to index disease prototype + " + immunity + " for " + uid);
+                }
+            }
+        }
 
         /// <summary>
         /// Used when something is trying to cure ANY disease on the target,
