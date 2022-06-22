@@ -197,7 +197,7 @@ namespace Content.Server.Communications
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
             if (comp.AnnounceGlobal)
             {
-                _chatSystem.DispatchGlobalStationAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
+                _chatSystem.DispatchGlobalStationAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
                 return;
             }
             _chatSystem.DispatchStationAnnouncement(uid, msg, title, colorOverride: comp.AnnouncementColor);

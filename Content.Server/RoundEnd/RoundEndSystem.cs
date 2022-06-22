@@ -82,7 +82,7 @@ namespace Content.Server.RoundEnd
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
             }
 
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, Color.Gold);
+            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"), false, null, Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
