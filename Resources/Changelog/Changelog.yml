@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage
-  changes:
-  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
-      for only 8TC at your local uplink.', type: Add}
-  id: 1256
-  time: '2022-03-28T04:03:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Crafting stackable-entities will now try to merge them into your hands,
@@ -2978,3 +2972,8 @@ Entries:
   - {message: Rat kings/servants can now actually say 'king' again., type: Fix}
   id: 1755
   time: '2022-06-22T23:39:29.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds a popup above a person being stripped/dressed., type: Add}
+  id: 1756
+  time: '2022-06-22T23:58:53.0000000+00:00'
