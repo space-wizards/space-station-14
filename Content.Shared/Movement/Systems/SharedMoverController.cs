@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -190,13 +191,21 @@ namespace Content.Shared.Movement.Systems
             UsedMobMovement[mover.Owner] = true;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
-            bool touching = true;
+            var touching = false;
 
             // Handle wall-pushes.
             if (weightless)
             {
-                // No gravity: is our entity touching anything?
-                touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                if (xform.GridUid != null)
+                    touching = true;
+
+                if (!touching)
+                {
+                    var ev = new CanWeightlessMoveEvent();
+                    RaiseLocalEvent(xform.Owner, ref ev);
+                    // No gravity: is our entity touching anything?
+                    touching = ev.CanMove || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                }
 
                 if (!touching)
                 {
@@ -260,7 +269,7 @@ namespace Content.Shared.Movement.Systems
 
             worldTotal *= weightlessModifier;
 
-            if (touching)
+            if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
             _physics.SetLinearVelocity(physicsComponent, velocity);

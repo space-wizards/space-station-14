@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Movement.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class SharedJetpackComponent : Component
+public sealed class JetpackComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
     public bool Enabled = false;
