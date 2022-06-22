@@ -1,4 +1,5 @@
 using Content.Shared.Inventory;
+using Content.Shared.Movement.EntitySystems;
 
 namespace Content.Shared.Movement.Events;
 

@@ -40,7 +40,7 @@ namespace Content.Server.Body.Systems
                 Comp<GhostOnMoveComponent>(newEntity).MustBeDead = true;
 
             // TODO: This is an awful solution.
-            if (!EntityManager.HasComponent<IMoverComponent>(newEntity))
+            if (!EntityManager.HasComponent<MoverComponent>(newEntity))
                 EntityManager.AddComponent<SharedDummyInputMoverComponent>(newEntity);
 
             oldMind.Mind?.TransferTo(newEntity);

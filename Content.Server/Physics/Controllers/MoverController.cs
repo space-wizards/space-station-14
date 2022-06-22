@@ -23,7 +23,7 @@ namespace Content.Server.Physics.Controllers
         /// client namespace.
         /// </summary>
         private HashSet<EntityUid> _excludedMobs = new();
-        private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>> _shuttlePilots = new();
+        private Dictionary<ShuttleComponent, List<(PilotComponent, MobMoverComponent)>> _shuttlePilots = new();
 
         protected override Filter GetSoundPlayers(EntityUid mover)
         {
@@ -40,16 +40,16 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
+            foreach (var (mover, physics, xform) in EntityManager.EntityQuery<MobMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover, xform, frameTime);
+                HandleMobMovement(mover, physics, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
             HandleVehicleMovement();
 
-            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            foreach (var (mover, physics) in EntityManager.EntityQuery<MobMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner)) continue;
 
@@ -59,7 +59,7 @@ namespace Content.Server.Physics.Controllers
 
         private void HandleShuttleMovement(float frameTime)
         {
-            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
+            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, MobMoverComponent)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
             foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
@@ -74,7 +74,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
                 {
-                    pilots = new List<(PilotComponent, IMoverComponent)>();
+                    pilots = new List<(PilotComponent, MobMoverComponent)>();
                     newPilots[shuttleComponent] = pilots;
                 }
 
@@ -274,7 +274,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (!_excludedMobs.Add(rider.Vehicle.Owner)) continue;
 
-                if (!TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
+                if (!TryComp<MoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
                     !TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
                     rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
 

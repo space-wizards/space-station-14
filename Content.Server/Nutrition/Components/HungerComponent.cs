@@ -80,7 +80,7 @@ namespace Content.Server.Nutrition.Components
             {
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
-                    _entMan.TryGetComponent(Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    _entMan.TryGetComponent(Owner, out MobMoverComponent? movementSlowdownComponent))
                 {
                     EntitySystem.Get<SharedMoverController>().RefreshMovementSpeedModifiers(Owner);
                 }

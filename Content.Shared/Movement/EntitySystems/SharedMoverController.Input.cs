@@ -260,15 +260,15 @@ public abstract partial class SharedMoverController
     private bool TryResetSubtickInput(MoverComponent component, out float remainingFraction)
     {
         // Reset the input if its last input was on a previous tick
-        if (_gameTiming.CurTick <= component._lastInputTick)
+        if (_gameTiming.CurTick <= component.LastInputTick)
         {
             remainingFraction = 1f;
             return false;
         }
 
-        component._lastInputTick = _gameTiming.CurTick;
-        component._lastInputSubTick = 0;
-        remainingFraction = (ushort.MaxValue - component._lastInputSubTick) / (float) ushort.MaxValue;
+        component.LastInputTick = _gameTiming.CurTick;
+        component.LastInputSubTick = 0;
+        remainingFraction = (ushort.MaxValue - component.LastInputSubTick) / (float) ushort.MaxValue;
         return true;
     }
 
@@ -280,10 +280,10 @@ public abstract partial class SharedMoverController
     {
         fraction = 0f;
 
-        if (subTick < component._lastInputSubTick) return false;
+        if (subTick < component.LastInputSubTick) return false;
 
-        fraction = (subTick - component._lastInputSubTick) / (float) ushort.MaxValue;
-        component._lastInputSubTick = subTick;
+        fraction = (subTick - component.LastInputSubTick) / (float) ushort.MaxValue;
+        component.LastInputSubTick = subTick;
         return true;
     }
 }

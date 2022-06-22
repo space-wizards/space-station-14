@@ -27,45 +27,13 @@ public abstract partial class SharedMoverController
     private const float FootstepVolume = 1f;
 
     /// <summary>
-    /// <see cref="CCVars.MinimumFrictionSpeed"/>
-    /// </summary>
-    private float _minimumFrictionSpeed;
-
-    /// <summary>
     /// <see cref="CCVars.StopSpeed"/>
     /// </summary>
     private float _stopSpeed;
 
     /// <summary>
-    /// <see cref="CCVars.MobAcceleration"/>
+    /// <see cref="CCVars.RelativeMovement"/>
     /// </summary>
-    private float _mobAcceleration;
-
-    /// <summary>
-    /// <see cref="CCVars.MobFriction"/>
-    /// </summary>
-    private float _frictionVelocity;
-
-    /// <summary>
-    /// <see cref="CCVars.MobWeightlessAcceleration"/>
-    /// </summary>
-    private float _mobWeightlessAcceleration;
-
-    /// <summary>
-    /// <see cref="CCVars.MobWeightlessFriction"/>
-    /// </summary>
-    private float _weightlessFrictionVelocity;
-
-    /// <summary>
-    /// <see cref="CCVars.MobWeightlessFrictionNoInput"/>
-    /// </summary>
-    private float _weightlessFrictionVelocityNoInput;
-
-    /// <summary>
-    /// <see cref="CCVars.MobWeightlessModifier"/>
-    /// </summary>
-    private float _mobWeightlessModifier;
-
     private bool _relativeMovement;
 
     /// <summary>
@@ -79,40 +47,17 @@ public abstract partial class SharedMoverController
         SubscribeLocalEvent<MobMoverComponent, ComponentHandleState>(OnMobHandleState);
         SubscribeLocalEvent<MobMoverComponent, ComponentInit>(OnMobInit);
 
-        // Hello
         _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
-        _configManager.OnValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed, true);
-        _configManager.OnValueChanged(CCVars.MobFriction, SetFrictionVelocity, true);
-        _configManager.OnValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity, true);
         _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-        _configManager.OnValueChanged(CCVars.MobAcceleration, SetMobAcceleration, true);
-        _configManager.OnValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration, true);
-        _configManager.OnValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput, true);
-        _configManager.OnValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier, true);
         UpdatesBefore.Add(typeof(SharedTileFrictionController));
     }
 
     private void SetRelativeMovement(bool value) => _relativeMovement = value;
-    private void SetMinimumFrictionSpeed(float value) => _minimumFrictionSpeed = value;
     private void SetStopSpeed(float value) => _stopSpeed = value;
-    private void SetFrictionVelocity(float value) => _frictionVelocity = value;
-    private void SetWeightlessFrictionVelocity(float value) => _weightlessFrictionVelocity = value;
-    private void SetMobAcceleration(float value) => _mobAcceleration = value;
-    private void SetMobWeightlessAcceleration(float value) => _mobWeightlessAcceleration = value;
-    private void SetWeightlessFrictionNoInput(float value) => _weightlessFrictionVelocityNoInput = value;
-    private void SetMobWeightlessModifier(float value) => _mobWeightlessModifier = value;
 
     private void ShutdownMobMovement()
     {
         _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
-        _configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
-        _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
-        _configManager.UnsubValueChanged(CCVars.MobFriction, SetFrictionVelocity);
-        _configManager.UnsubValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity);
-        _configManager.UnsubValueChanged(CCVars.MobAcceleration, SetMobAcceleration);
-        _configManager.UnsubValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration);
-        _configManager.UnsubValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput);
-        _configManager.UnsubValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier);
     }
 
     public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -136,8 +81,8 @@ public abstract partial class SharedMoverController
         component.WalkSpeedModifier = state.WalkSpeedModifier;
         component.SprintSpeedModifier = state.SprintSpeedModifier;
         component.HeldMoveButtons = state.Buttons;
-        component._lastInputTick = GameTick.Zero;
-        component._lastInputSubTick = 0;
+        component.LastInputTick = GameTick.Zero;
+        component.LastInputSubTick = 0;
         component.CanMove = state.CanMove;
     }
 
@@ -229,21 +174,21 @@ public abstract partial class SharedMoverController
         if (weightless)
         {
             if (worldTotal != Vector2.Zero && touching)
-                friction = _weightlessFrictionVelocity;
+                friction = mover.WeightlessFrictionVelocity;
             else
-                friction = _weightlessFrictionVelocityNoInput;
+                friction = mover.WeightlessFrictionVelocityNoInput;
 
-            weightlessModifier = _mobWeightlessModifier;
-            accel = _mobWeightlessAcceleration;
+            weightlessModifier = mover.WeightlessModifier;
+            accel = mover.WeightlessAcceleration;
         }
         else
         {
-            friction = _frictionVelocity;
+            friction = mover.FrictionVelocity;
             weightlessModifier = 1f;
-            accel = _mobAcceleration;
+            accel = mover.Acceleration;
         }
 
-        Friction(frameTime, friction, ref velocity);
+        Friction(mover, frameTime, friction, ref velocity);
 
         if (xform.GridUid != EntityUid.Invalid)
             mover.LastGridAngle = parentRotation;
@@ -273,11 +218,11 @@ public abstract partial class SharedMoverController
         _physics.SetLinearVelocity(physicsComponent, velocity);
     }
 
-    private void Friction(float frameTime, float friction, ref Vector2 velocity)
+    private void Friction(MobMoverComponent mover, float frameTime, float friction, ref Vector2 velocity)
     {
         var speed = velocity.Length;
 
-        if (speed < _minimumFrictionSpeed) return;
+        if (speed < mover.MinimumFrictionSpeed) return;
 
         var drop = 0f;
 
@@ -397,7 +342,7 @@ public abstract partial class SharedMoverController
         if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
             EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
         {
-            sound = modifier.SoundCollection.GetSound();
+            sound = modifier.SoundCollection.GetSound(_random, _protoManager);
             variation = modifier.Variation;
             return true;
         }
@@ -420,7 +365,7 @@ public abstract partial class SharedMoverController
         {
             if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
             {
-                sound = footstep.SoundCollection.GetSound();
+                sound = footstep.SoundCollection.GetSound(_random, _protoManager);
                 variation = footstep.Variation;
                 return true;
             }
@@ -428,7 +373,7 @@ public abstract partial class SharedMoverController
 
         // Walking on a tile.
         var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-        sound = def.FootstepSounds?.GetSound();
+        sound = def.FootstepSounds?.GetSound(_random, _protoManager);
         variation = FootstepVariation;
 
         return !string.IsNullOrEmpty(sound);

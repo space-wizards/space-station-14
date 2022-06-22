@@ -72,8 +72,6 @@ public sealed class MobMoverComponent : MoverComponent
     [ViewVariables]
     public Angle LastGridAngle { get; set; } = new(0);
 
-    #region Movement
-
     // This class has to be able to handle server TPS being lower than client FPS.
     // While still having perfectly responsive movement client side.
     // We do this by keeping track of the exact sub-tick values that inputs are pressed on the client,
@@ -147,5 +145,46 @@ public sealed class MobMoverComponent : MoverComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public bool CanMove { get; set; } = true;
 
-    #endregion
+    /// <summary>
+    /// Minimum speed a mob has to be moving before applying movement friction.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("minFrictionSpeed")]
+    public float MinimumFrictionSpeed = 0.005f;
+
+    /// <summary>
+    /// The acceleration applied to mobs when moving.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("acceleration")]
+    public float Acceleration = 14f;
+
+    /// <summary>
+    /// The negative velocity applied for friction.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("frictionVelocity")]
+    public float FrictionVelocity = 14f;
+
+    /// <summary>
+    /// The acceleration applied to mobs when moving and weightless.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("weightlessAcceleration")]
+    public float WeightlessAcceleration = 1f;
+
+    /// <summary>
+    /// The negative velocity applied for friction when weightless and providing inputs.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("weightlessFrictionVelocity")]
+    public float WeightlessFrictionVelocity = 1f;
+
+    /// <summary>
+    /// The negative velocity applied for friction when weightless and not providing inputs.
+    /// This is essentially how much their speed decreases per second.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("weightlessFrictionVelocityNoInput")]
+    public float WeightlessFrictionVelocityNoInput = 0.2f;
+
+    /// <summary>
+    /// The movement speed modifier applied to a mob's total input velocity when weightless.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("weightlessModifier")]
+    public float WeightlessModifier = 0.7f;
 }

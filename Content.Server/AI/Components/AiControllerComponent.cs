@@ -40,5 +40,7 @@ namespace Content.Server.AI.Components
             set => _visionRadius = value;
 
         }
+
+        public virtual void Update(float frameTime) {}
     }
 }

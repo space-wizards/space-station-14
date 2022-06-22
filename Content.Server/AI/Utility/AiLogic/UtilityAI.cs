@@ -16,7 +16,7 @@ namespace Content.Server.AI.Utility.AiLogic
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
     [ComponentProtoName("UtilityAI")]
-    [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
+    [ComponentReference(typeof(AiControllerComponent))]
     public sealed class UtilityAi : AiControllerComponent
     {
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
@@ -115,8 +115,6 @@ namespace Content.Server.AI.Utility.AiLogic
 
         public override void Update(float frameTime)
         {
-            base.Update(frameTime);
-
             // If we asked for a new action we don't want to dump the existing one.
             if (_actionRequest != null)
             {

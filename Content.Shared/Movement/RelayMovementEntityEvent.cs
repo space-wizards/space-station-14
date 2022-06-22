@@ -1,8 +1,12 @@
 namespace Content.Shared.Movement
 {
-    public sealed class RelayMovementEntityEvent : EntityEventArgs
+    /// <summary>
+    /// Raised on a mobmover whenever it tries to move inside a container.
+    /// </summary>
+    [ByRefEvent]
+    public readonly struct RelayMovementEntityEvent
     {
-        public EntityUid Entity { get; }
+        public readonly EntityUid Entity;
 
         public RelayMovementEntityEvent(EntityUid entity)
         {
