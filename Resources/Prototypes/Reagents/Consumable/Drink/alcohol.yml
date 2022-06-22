@@ -276,11 +276,6 @@
   physicalDesc: reagent-physical-desc-translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 # Mixed Alcohol
 
@@ -671,11 +666,6 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664e00"
   spritePath: glass_brown2.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 - type: reagent
   id: IcedBeer
@@ -780,11 +770,6 @@
   physicalDesc: reagent-physical-desc-bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 - type: reagent
   id: Margarita
@@ -820,11 +805,6 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: meadglass.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
 
 - type: reagent
   id: Mojito
