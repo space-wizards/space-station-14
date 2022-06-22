@@ -125,8 +125,8 @@
       groups:
         Brute: 5
   - type: Appearance
+  - type: BuckleVisuals
     visuals:
-    - type: BuckleVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Generic_mob_burning

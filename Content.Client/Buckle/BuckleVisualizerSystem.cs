@@ -1,6 +1,5 @@
-﻿using System;
 using Content.Shared.Buckle.Components;
-using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -10,49 +9,53 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Buckle
 {
-    [UsedImplicitly]
-    public sealed class BuckleVisualizer : AppearanceVisualizer
+    public sealed class BuckleVisualsSystem : VisualizerSystem<BuckleVisualsComponent>
     {
-        public override void OnChangeData(AppearanceComponent component)
+        protected override void OnAppearanceChange(EntityUid uid, BuckleVisualsComponent component,
+            ref AppearanceChangeEvent args)
         {
-            if (!component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
-                !buckled)
+
+            if (!args.Component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) || !buckled)
+            {
+                SetRotation(uid, Angle.FromDegrees(0));
+                return;
+            }
+
+            if (!args.Component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
             {
                 return;
             }
 
-            if (!component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
-            {
-                return;
-            }
-
-            SetRotation(component, Angle.FromDegrees(angle));
+            SetRotation(uid, Angle.FromDegrees(angle));
         }
 
-        private void SetRotation(AppearanceComponent component, Angle rotation)
+        private void SetRotation(EntityUid uid, Angle rotation)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            if (!TryComp(uid, out SpriteComponent? sprite))
+            {
+                return;
+            }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
+            if (!TryComp(sprite.Owner, out AnimationPlayerComponent? animationPlayer))
             {
                 sprite.Rotation = rotation;
                 return;
             }
 
-            if (animation.HasRunningAnimation("rotate"))
+            if (animationPlayer.HasRunningAnimation("rotate"))
             {
-                animation.Stop("rotate");
+                animationPlayer.Stop("rotate");
             }
 
-            animation.Play(new Animation
+            animationPlayer.Play(new Animation
             {
                 Length = TimeSpan.FromSeconds(0.125),
                 AnimationTracks =
                 {
                     new AnimationTrackComponentProperty
                     {
-                        ComponentType = typeof(ISpriteComponent),
-                        Property = nameof(ISpriteComponent.Rotation),
+                        ComponentType = typeof(SpriteComponent),
+                        Property = nameof(SpriteComponent.Rotation),
                         InterpolationMode = AnimationInterpolationMode.Linear,
                         KeyFrames =
                         {
@@ -63,5 +66,7 @@ namespace Content.Client.Buckle
                 }
             }, "rotate");
         }
+
+
     }
 }

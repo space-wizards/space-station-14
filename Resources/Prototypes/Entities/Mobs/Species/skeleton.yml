@@ -201,9 +201,9 @@
       90: 0.5
   - type: HeatResistance
   - type: Appearance
+  - type: BuckleVisuals
     visuals:
     - type: RotationVisualizer
-    - type: BuckleVisualizer
     - type: FireVisualizer
       sprite: Mobs/Effects/onfire.rsi
       normalState: Generic_mob_burning
