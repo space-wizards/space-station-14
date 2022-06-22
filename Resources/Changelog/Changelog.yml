@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Fired delivery boy who has been skimming pizza from the emergency pizza
-      crates, type: Fix}
-  id: 1254
-  time: '2022-03-27T21:04:58.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Eating using the verb has been fixed., type: Fix}
@@ -2979,3 +2973,8 @@ Entries:
   - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
   id: 1753
   time: '2022-06-22T23:26:13.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
+  id: 1754
+  time: '2022-06-22T23:36:46.0000000+00:00'
