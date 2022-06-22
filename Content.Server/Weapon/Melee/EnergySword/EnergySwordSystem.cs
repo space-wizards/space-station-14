@@ -80,8 +80,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
                 weaponComp.HitSound = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
 
-            if (TryComp<SharpComponent>(comp.Owner, out var sharpComp))
-                RemComp<SharpComponent>(comp.Owner);
+            RemComp<SharpComponent>(comp.Owner);
 
             SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
