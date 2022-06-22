@@ -1,11 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station is now fully stocked with pets., type: Add}
-  - {message: Several lighting issues on Delta were fixed. More will likely exist.,
-    type: Tweak}
-  id: 1248
-  time: '2022-03-26T04:16:22.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
@@ -2980,3 +2973,8 @@ Entries:
   - {message: Examining a drink shows how much is left, type: Tweak}
   id: 1747
   time: '2022-06-22T02:02:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
+  id: 1748
+  time: '2022-06-22T02:41:42.0000000+00:00'
