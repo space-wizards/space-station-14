@@ -141,7 +141,7 @@ public abstract partial class SharedMoverController
 
         UsedMobMovement[mover.Owner] = true;
         var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
-        var (walkDir, sprintDir) = GetSimpleVelocityInput(mover);
+        var (walkDir, sprintDir) = GetMobVelocityInput(mover);
         bool touching = true;
 
         // Handle wall-pushes.

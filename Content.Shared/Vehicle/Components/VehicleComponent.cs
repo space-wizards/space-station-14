@@ -17,7 +17,7 @@ namespace Content.Shared.Vehicle.Components
     {
         /// <summary>
         /// Whether someone is currently riding the vehicle
-        /// </summary
+        /// </summary>
         public bool HasRider = false;
 
         /// <summary>

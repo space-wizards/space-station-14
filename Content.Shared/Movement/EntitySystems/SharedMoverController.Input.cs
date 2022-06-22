@@ -103,7 +103,7 @@ public abstract partial class SharedMoverController
     /// <summary>
     /// Gets the movement input for this mob mover at this point in time.
     /// </summary>
-    public (Vector2 Walk, Vector2 Sprint) GetSimpleVelocityInput(MobMoverComponent component)
+    public (Vector2 Walk, Vector2 Sprint) GetMobVelocityInput(MobMoverComponent component)
     {
         if (!_gameTiming.InSimulation)
         {

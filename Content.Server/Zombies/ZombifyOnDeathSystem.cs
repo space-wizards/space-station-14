@@ -24,6 +24,7 @@ using Content.Server.Disease;
 using Robust.Shared.Containers;
 using Content.Shared.Movement.Components;
 using Content.Shared.MobState;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Zombies
 {
@@ -88,7 +89,7 @@ namespace Content.Server.Zombies
                 _sharedHuApp.ForceAppearanceUpdate(target, huApComp);
             }
 
-            if (!HasComp<SharedDummyInputMoverComponent>(target))
+            if (!HasComp<MoverComponent>(target))
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
@@ -123,7 +124,7 @@ namespace Content.Server.Zombies
 
             var mindcomp = EnsureComp<MindComponent>(target);
             if (mindcomp.Mind != null && mindcomp.Mind.TryGetSession(out var session))
-                _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));     
+                _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindcomp.HasMind) //this specific component gives build test trouble so pop off, ig
             {

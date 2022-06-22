@@ -41,7 +41,7 @@ namespace Content.Server.Body.Systems
 
             // TODO: This is an awful solution.
             if (!EntityManager.HasComponent<MoverComponent>(newEntity))
-                EntityManager.AddComponent<SharedDummyInputMoverComponent>(newEntity);
+                EntityManager.AddComponent<MobMoverComponent>(newEntity);
 
             oldMind.Mind?.TransferTo(newEntity);
         }
