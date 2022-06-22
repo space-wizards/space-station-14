@@ -206,6 +206,8 @@
           Quantity: 17
         - ReagentId: Vitamin
           Quantity: 9
+        - ReagentId: Cholesterol
+          Quantity: 7
   - type: Sprite
     state: bigbite
 # Tastes like bun, silver, magic.
@@ -229,6 +231,8 @@
           Quantity: 5
         - ReagentId: Blackpepper
           Quantity: 5
+        - ReagentId: Cholesterol
+          Quantity: 14
   - type: Sprite
     state: superbite
 # Tastes like bun, diabetes.
@@ -254,6 +258,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+        - ReagentId: Cholesterol
+          Quantity: 3
 
 # Tastes like bun, HEAT.
 
@@ -273,6 +279,8 @@
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Cholesterol
           Quantity: 1
 # Tastes like bun, HEAT.
 
@@ -302,6 +310,8 @@
           Quantity: 19
         - ReagentId: Vitamin
           Quantity: 5
+        - ReagentId: Cholesterol
+          Quantity: 6
 # Tastes like bun, bacon.
 
 - type: entity
@@ -342,6 +352,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Cholesterol
+          Quantity: 3
 # Tastes like bun, crab meat.
 
 - type: entity
@@ -384,6 +396,8 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Cholesterol
+          Quantity: 4
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -405,6 +419,8 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 1
+        ReagentId: Cholesterol
+          Quantity: 4
 # Tastes like muffin, bacon.
 
 - type: entity
@@ -426,6 +442,8 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 1
+        - ReagentId: Cholesterol
+          Quantity: 2
 # Tastes like bun, chicken.
 
 - type: entity
@@ -446,6 +464,8 @@
         - ReagentId: Protein
           Quantity: 7
         - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Cholesterol
           Quantity: 1
 # Tastes like bun, duck.
 
@@ -468,6 +488,8 @@
           Quantity: 7
         - ReagentId: Protein
           Quantity: 1
+        - ReagentId: Cholesterol
+          Quantity: 4
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate
