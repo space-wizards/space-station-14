@@ -85,7 +85,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     //general approximation
                     string remainingString;
-                    switch (_solutionContainerSystem.PercentFull(uid))
+                    switch ((int)_solutionContainerSystem.PercentFull(uid))
                     {
                         case int perc when perc == 100:
                             remainingString = "drink-component-on-examine-is-full";
