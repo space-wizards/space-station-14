@@ -67,17 +67,17 @@ public abstract partial class SharedMoverController
 
         if (TryGetSubtick(component, subTick, out var fraction))
         {
-            ref var lastMoveAmount = ref component.Sprinting ? ref component._curTickSprintMovement : ref component._curTickWalkMovement;
-            lastMoveAmount += DirVecForButtons(component._heldMoveButtons) * fraction;
+            ref var lastMoveAmount = ref component.Sprinting ? ref component.CurTickSprintMovement : ref component.CurTickWalkMovement;
+            lastMoveAmount += DirVecForButtons(component.HeldMoveButtons) * fraction;
         }
 
         if (enabled)
         {
-            component._heldMoveButtons |= bit;
+            component.HeldMoveButtons |= bit;
         }
         else
         {
-            component._heldMoveButtons &= ~bit;
+            component.HeldMoveButtons &= ~bit;
         }
 
         // TODO: Is this even needed?
@@ -90,8 +90,8 @@ public abstract partial class SharedMoverController
 
         if (TryGetSubtick(component, subTick, out var fraction))
         {
-            ref var lastMoveAmount = ref component.Sprinting ? ref component._curTickSprintMovement : ref component._curTickWalkMovement;
-            lastMoveAmount += DirVecForButtons(component._heldMoveButtons) * fraction;
+            ref var lastMoveAmount = ref component.Sprinting ? ref component.CurTickSprintMovement : ref component.CurTickWalkMovement;
+            lastMoveAmount += DirVecForButtons(component.HeldMoveButtons) * fraction;
         }
 
         component.Sprinting = !enabled;

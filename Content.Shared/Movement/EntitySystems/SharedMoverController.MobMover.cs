@@ -135,7 +135,7 @@ public abstract partial class SharedMoverController
         component.BaseSprintSpeed = state.BaseSprintSpeed;
         component.WalkSpeedModifier = state.WalkSpeedModifier;
         component.SprintSpeedModifier = state.SprintSpeedModifier;
-        component._heldMoveButtons = state.Buttons;
+        component.HeldMoveButtons = state.Buttons;
         component._lastInputTick = GameTick.Zero;
         component._lastInputSubTick = 0;
         component.CanMove = state.CanMove;
