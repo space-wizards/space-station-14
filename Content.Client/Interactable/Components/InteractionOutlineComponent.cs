@@ -25,7 +25,7 @@ namespace Content.Client.Interactable.Components
             _inRange = inInteractionRange;
             if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
-                // TODO why the fuck is this creating a new instance of the outline shader every time the mouse enters???
+                // TODO why is this creating a new instance of the outline shader every time the mouse enters???
                 sys.SetPostShader(Owner, MakeNewShader(inInteractionRange, renderScale), sprite);
                 sprite.RenderOrder = _entMan.CurrentTick.Value;
             }
