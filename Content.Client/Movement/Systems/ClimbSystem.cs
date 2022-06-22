@@ -4,12 +4,12 @@ using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
 using Robust.Shared.GameStates;
 
-namespace Content.Client.Movement;
+namespace Content.Client.Movement.Systems;
 
 public sealed class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
