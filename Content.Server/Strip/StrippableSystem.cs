@@ -13,6 +13,7 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Strip
 {
@@ -21,6 +22,7 @@ namespace Content.Server.Strip
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
@@ -300,6 +302,14 @@ namespace Content.Server.Strip
                 NeedHand = true,
             };
 
+            if (Check())
+            {
+                if (userHands.ActiveHandEntity != null)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", user), ("item", userHands.ActiveHandEntity)), component.Owner, Filter.Entities(component.Owner));
+                }
+            }
+
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
@@ -354,6 +364,14 @@ namespace Content.Server.Strip
                 NeedHand = true,
             };
 
+            if (Check() && userHands.Hands.TryGetValue(handName, out var handSlot))
+            {
+                if (handSlot.HeldEntity != null)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", user), ("item", handSlot.HeldEntity)), component.Owner, Filter.Entities(component.Owner));
+                }
+            }
+
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
@@ -405,6 +423,17 @@ namespace Content.Server.Strip
                 BreakOnUserMove = true,
             };
 
+            if (Check())
+            {
+                if (slotDef.StripHidden)
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner, Filter.Entities(component.Owner));
+                else
+                {
+                    if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var slotItem))
+                        _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", user), ("item", slotItem)), component.Owner, Filter.Entities(component.Owner));
+                }
+            }
+
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
 
@@ -455,6 +484,14 @@ namespace Content.Server.Strip
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
             };
+
+            if (Check() && hands.Hands.TryGetValue(handName, out var handSlot))
+            {
+                if (handSlot.HeldEntity != null)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", user), ("item", handSlot.HeldEntity)), component.Owner, Filter.Entities(component.Owner));
+                }
+            }
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
             if (result != DoAfterStatus.Finished) return;
