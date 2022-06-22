@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.Miasma;
 
-public sealed class KillSignSystem : EntitySystem
+public sealed class FliesSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -29,8 +29,6 @@ public sealed class KillSignSystem : EntitySystem
 
         if (sprite.LayerMapTryGet(FliesKey.Key, out var _))
             return;
-
-        var adj = sprite.Bounds.Height / 2 + ((1.0f/32) * 6.0f);
 
         var layer = sprite.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/flies.rsi"), "flies"));
         sprite.LayerMapSet(FliesKey.Key, layer);

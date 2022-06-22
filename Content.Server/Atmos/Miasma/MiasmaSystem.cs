@@ -2,7 +2,6 @@ using Content.Shared.MobState;
 using Content.Shared.Damage;
 using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
@@ -131,7 +130,6 @@ namespace Content.Server.Atmos.Miasma
                 _ambientSound.SetAmbience(args.Entity, false);
             }
         }
-
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
