@@ -1,9 +1,9 @@
 using Content.Client.ContextMenu.UI;
-using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -23,6 +23,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     /// <summary>
     ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
@@ -63,7 +64,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_spriteSystem);
     }
 
     public void SetEnabled(bool enabled)
@@ -82,7 +83,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_spriteSystem);
     }
 
     public override void FrameUpdate(float frameTime)
@@ -145,7 +146,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         {
             if (entityToClick != null && TryComp(entityToClick, out outline))
             {
-                outline.UpdateInRange(inRange, renderScale);
+                outline.UpdateInRange(inRange, renderScale, _spriteSystem);
             }
 
             return;
@@ -154,14 +155,14 @@ public sealed class InteractionOutlineSystem : EntitySystem
         if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity) &&
             TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_spriteSystem);
         }
 
         _lastHoveredEntity = entityToClick;
 
         if (_lastHoveredEntity != null && TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseEnter(inRange, renderScale);
+            outline.OnMouseEnter(inRange, renderScale, _spriteSystem);
         }
     }
 }
