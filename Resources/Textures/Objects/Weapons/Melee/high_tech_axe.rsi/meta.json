@@ -1,5 +1,7 @@
 {
   "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "This texture is custom-made by blankmann, and has no ties to any SS13 github commit",
   "size": {
     "x": 32,
     "y": 32
