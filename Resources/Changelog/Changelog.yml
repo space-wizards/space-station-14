@@ -1,13 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Nanotrasen has purchased more decoration for the stations, banners,
-      and some old robots they found somewhere deep in space-maint.', type: Add}
-  - {message: The records computer no longer has a green puke color., type: Tweak}
-  - {message: Someone found an empty nuclear bomb and decided to be funny and fill
-      it with cola. They are now dead and the cola is irradiated., type: Add}
-  id: 1251
-  time: '2022-03-27T06:15:19.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: You may no longer eat infinite slices of cake., type: Remove}
@@ -2978,3 +2969,9 @@ Entries:
   - {message: Give Nuke Ops their access to console, type: Fix}
   id: 1750
   time: '2022-06-22T19:27:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Lizards now have an animal metabolism. Have fun and be careful with
+      chocolate and caffeine!, type: Add}
+  id: 1751
+  time: '2022-06-22T23:23:02.0000000+00:00'
