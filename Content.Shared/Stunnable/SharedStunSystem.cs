@@ -24,7 +24,7 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SharedMoverController _movementSpeedModifierSystem = default!;
 
         public override void Initialize()
         {

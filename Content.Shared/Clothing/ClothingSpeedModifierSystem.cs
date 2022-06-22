@@ -7,7 +7,7 @@ namespace Content.Shared.Clothing;
 
 public sealed class ClothingSpeedModifierSystem : EntitySystem
 {
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private readonly SharedMoverController _movementSpeed = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()

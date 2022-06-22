@@ -172,7 +172,9 @@ public abstract partial class SharedMoverController
     /// </summary>
     private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, SimpleMoverComponent mover, IPhysBody collider)
     {
-        var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
+        if (mover is not MobMoverComponent mobMover) return false;
+
+        var enlargedAABB = collider.GetWorldAABB().Enlarged(mobMover.GrabRange);
 
         foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
         {

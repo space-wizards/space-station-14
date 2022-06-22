@@ -74,6 +74,12 @@ public abstract class SimpleMoverComponent : MoverComponent
     [DataField("baseSprintSpeed")]
     public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
 
+    [ViewVariables]
+    public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
+
+    [ViewVariables]
+    public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
+
     public bool Sprinting;
 
     [ViewVariables(VVAccess.ReadWrite)]
