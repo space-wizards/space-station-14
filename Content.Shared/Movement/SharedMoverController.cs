@@ -68,7 +68,7 @@ namespace Content.Shared.Movement
 
         protected Angle GetParentGridAngle(TransformComponent xform, IMoverComponent mover)
         {
-            if (xform.GridEntityId == EntityUid.Invalid || !_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return mover.LastGridAngle;
 
             return grid.WorldRotation;
@@ -90,11 +90,11 @@ namespace Content.Shared.Movement
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-            if (transform.GridEntityId != EntityUid.Invalid)
+            if (transform.GridUid != null)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
-                transform.LocalRotation = transform.GridEntityId != EntityUid.Invalid
+                transform.LocalRotation = transform.GridUid != null
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
 
@@ -130,7 +130,7 @@ namespace Content.Shared.Movement
 
                 if (!touching)
                 {
-                    if (xform.GridEntityId != EntityUid.Invalid)
+                    if (xform.GridUid != EntityUid.Invalid)
                         mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
                     xform.WorldRotation = physicsComponent.LinearVelocity.GetDir().ToAngle();
@@ -152,14 +152,14 @@ namespace Content.Shared.Movement
             if (weightless)
                 worldTotal *= mobMover.WeightlessStrength;
 
-            if (xform.GridEntityId != EntityUid.Invalid)
+            if (xform.GridUid != EntityUid.Invalid)
                 mover.LastGridAngle = parentRotation;
 
             if (worldTotal != Vector2.Zero)
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.LocalRotation = xform.GridEntityId != EntityUid.Invalid
+                xform.LocalRotation = xform.GridUid != EntityUid.Invalid
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
@@ -229,7 +229,7 @@ namespace Content.Shared.Movement
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
             var coordinates = xform.Coordinates;
-            var gridId = coordinates.GetGridEntityId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
@@ -252,7 +252,7 @@ namespace Content.Shared.Movement
                 return false;
             }
 
-            DebugTools.Assert(gridId != EntityUid.Invalid);
+            DebugTools.Assert(gridId != null);
             mobMover.LastPosition = coordinates;
 
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
@@ -267,7 +267,7 @@ namespace Content.Shared.Movement
                 return true;
             }
 
-            return TryGetFootstepSound(gridId, coordinates, out variation, out sound);
+            return TryGetFootstepSound(gridId!.Value, coordinates, out variation, out sound);
         }
 
         private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)

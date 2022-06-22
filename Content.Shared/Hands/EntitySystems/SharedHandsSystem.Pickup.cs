@@ -145,7 +145,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         RaiseLocalEvent(uid, didEquip, false);
 
         var gotEquipped = new GotEquippedHandEvent(uid, entity, hand);
-        RaiseLocalEvent(entity, gotEquipped);
+        RaiseLocalEvent(entity, gotEquipped, true);
 
         // TODO this should REALLY be a cancellable thing, not a handled event.
         // If one of the interactions resulted in the item being dropped, return early.

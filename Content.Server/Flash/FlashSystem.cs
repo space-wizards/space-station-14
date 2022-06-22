@@ -124,7 +124,7 @@ namespace Content.Server.Flash
         public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true)
         {
             var attempt = new FlashAttemptEvent(target, user, used);
-            RaiseLocalEvent(target, attempt);
+            RaiseLocalEvent(target, attempt, true);
 
             if (attempt.Cancelled)
                 return;
@@ -200,7 +200,7 @@ namespace Content.Server.Flash
                 if (args.Cancelled)
                     break;
                 if (_inventorySystem.TryGetSlotEntity(uid, slot, out var item, component))
-                    RaiseLocalEvent(item.Value, args);
+                    RaiseLocalEvent(item.Value, args, true);
             }
         }
 

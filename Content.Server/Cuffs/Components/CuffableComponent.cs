@@ -108,7 +108,7 @@ namespace Content.Server.Cuffs.Components
             _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
             UpdateAlert();
             UpdateHeldItems();
             Dirty(_entMan);
@@ -119,7 +119,7 @@ namespace Content.Server.Cuffs.Components
         {
             UpdateAlert();
             var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             var attempt = new UncuffAttemptEvent(user, Owner);
-            _entMan.EventBus.RaiseLocalEvent(user, attempt);
+            _entMan.EventBus.RaiseLocalEvent(user, attempt, true);
 
             if (attempt.Cancelled)
             {
@@ -264,7 +264,7 @@ namespace Content.Server.Cuffs.Components
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 var ev = new CuffedStateChangeEvent();
-                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
                 UpdateAlert();
                 Dirty(_entMan);
 

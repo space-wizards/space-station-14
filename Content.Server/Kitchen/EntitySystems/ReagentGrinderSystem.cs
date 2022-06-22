@@ -279,7 +279,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (EntityManager.HasComponent<StackComponent>(item))
                             {
-                                RaiseLocalEvent(item, juiceEvent);
+                                RaiseLocalEvent(item, juiceEvent, true);
                             }
 
                             if (component.BeakerSolution.CurrentVolume + juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar > component.BeakerSolution.MaxVolume)
