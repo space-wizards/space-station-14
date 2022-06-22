@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Advertise
 {
-    [RegisterComponent, Friend(typeof(AdvertiseSystem))]
+    [RegisterComponent, Access(typeof(AdvertiseSystem))]
     public sealed class AdvertiseComponent : Component
     {
         /// <summary>

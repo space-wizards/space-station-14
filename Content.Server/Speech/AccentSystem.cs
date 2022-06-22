@@ -16,7 +16,7 @@ namespace Content.Server.Speech
         {
             var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
-            RaiseLocalEvent(args.Sender, accentEvent);
+            RaiseLocalEvent(args.Sender, accentEvent, true);
             args.Message = accentEvent.Message;
         }
     }

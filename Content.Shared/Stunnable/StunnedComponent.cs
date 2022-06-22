@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stunnable
 {
-    [Friend(typeof(SharedStunSystem))]
+    [Access(typeof(SharedStunSystem))]
     [RegisterComponent, NetworkedComponent]
     public sealed class StunnedComponent : Component
     {

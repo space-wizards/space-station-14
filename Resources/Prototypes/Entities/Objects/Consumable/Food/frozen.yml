@@ -127,19 +127,6 @@
         - ReagentId: Theobromine
           Quantity: 1
 
-- type: entity
-  name: nogga black
-  parent: FoodFrozenBase
-  id: FoodFrozenPopsicleNogga
-  description: A salty licorice ice-cream. Those who cannot remember the past are doomed to repeat it.
-  components:
-  - type: Sprite
-    layers:
-    - state: stick
-    - state: nogga
-  - type: Food
-    trash: FoodFrozenPopsicleTrash
-
 # Snowcone
 
 # Use this one as a base for other colored snowcones. Apply a color to the alpha
