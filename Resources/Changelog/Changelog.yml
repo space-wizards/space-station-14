@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
-  id: 1249
-  time: '2022-03-26T19:16:58.0000000+00:00'
 - author: Mith-randalf
   changes:
   - {message: Nanotrasen has rewritten the laws themselves to allow security officers
@@ -2978,3 +2973,9 @@ Entries:
   - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
   id: 1748
   time: '2022-06-22T02:41:42.0000000+00:00'
+- author: Ranger6012
+  changes:
+  - {message: HoP's cloak description now correctly drapes over your shoulders instead
+      of your "shoudlers", type: Fix}
+  id: 1749
+  time: '2022-06-22T15:11:05.0000000+00:00'
