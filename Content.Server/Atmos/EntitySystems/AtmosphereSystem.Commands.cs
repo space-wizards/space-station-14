@@ -61,7 +61,7 @@ public sealed partial class AtmosphereSystem
 
        foreach (var gid in args)
        {
-           if(EntityUid.TryParse(gid, out var euid))
+           if(!EntityUid.TryParse(gid, out var euid))
            {
                shell.WriteError($"Failed to parse euid '{gid}'.");
                return;

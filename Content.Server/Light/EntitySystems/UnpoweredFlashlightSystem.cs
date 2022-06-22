@@ -65,7 +65,7 @@ namespace Content.Server.Light.EntitySystems
 
             SoundSystem.Play(flashlight.ToggleSound.GetSound(), Filter.Pvs(light.Owner), flashlight.Owner);
 
-            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn));
+            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn), true);
             _actionsSystem.SetToggled(flashlight.ToggleAction, flashlight.LightOn);
         }
     }
