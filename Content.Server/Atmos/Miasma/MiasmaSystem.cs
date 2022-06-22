@@ -4,7 +4,10 @@ using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
+using Content.Server.Popups;
+using Content.Shared.Examine;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Miasma
 {
@@ -12,6 +15,8 @@ namespace Content.Server.Atmos.Miasma
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -35,8 +40,8 @@ namespace Content.Server.Atmos.Miasma
                 perishable.RotAccumulator -= 1f;
 
                 DamageSpecifier damage = new();
-                damage.DamageDict.Add("Blunt", 0.25); // Slowly accumulate enough to gib after like half an hour
-                damage.DamageDict.Add("Cellular", 0.25); // Cloning rework might use this eventually
+                damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
+                damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
 
                 _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
 
@@ -56,6 +61,7 @@ namespace Content.Server.Atmos.Miasma
             base.Initialize();
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
+            SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         }
@@ -71,10 +77,24 @@ namespace Content.Server.Atmos.Miasma
             if (!TryComp<PhysicsComponent>(uid, out var physics))
                 return;
 
+            if (component.DeathAccumulator <= component.RotAfter.TotalSeconds)
+                return;
+
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
             var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
             if (tileMix != null)
                 tileMix.AdjustMoles(Gas.Miasma, molsToDump);
+
+            foreach (var part in args.GibbedParts)
+            {
+                EntityManager.QueueDeleteEntity(part);
+            }
+        }
+
+        private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
+        {
+            if (component.DeathAccumulator >= component.RotAfter.TotalSeconds)
+                args.PushMarkup(Loc.GetString("miasma-rotting"));
         }
 
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)

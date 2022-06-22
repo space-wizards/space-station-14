@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntitySystemExtensions))]
-    public sealed class EntitySystemExtensionsTest : ContentIntegrationTest
+    public sealed class EntitySystemExtensionsTest
     {
         private const string BlockerDummyId = "BlockerDummy";
 
@@ -34,29 +34,23 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(serverOptions);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
-            await server.WaitIdleAsync();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var mapCoordinates = testMap.MapCoords;
+            var entityCoordinates = testMap.GridCoords;
 
-            var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var broady = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedBroadphaseSystem>();
 
             await server.WaitAssertion(() =>
             {
-                var grid = GetMainGrid(sMapManager);
-                var gridEnt = grid.GridEntityId;
-                var gridPos = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(gridEnt).WorldPosition;
-                var entityCoordinates = GetMainEntityCoordinates(sMapManager);
 
                 // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable));
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable, out var entity));
                 Assert.NotNull(entity);
-
-                var mapId = GetMainMapId(sMapManager);
-                var mapCoordinates = new MapCoordinates(gridPos.X, gridPos.Y, mapId);
 
                 // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, mapCoordinates, CollisionGroup.Impassable));
@@ -85,6 +79,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, mapCoordinates, CollisionGroup.MidImpassable, out entity));
                 Assert.NotNull(entity);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

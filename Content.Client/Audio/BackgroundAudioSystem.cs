@@ -89,7 +89,7 @@ namespace Content.Client.Audio
         {
             if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity) return;
             if (!TryComp<TransformComponent>(message.Entity, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             var tileDef = (ContentTileDefinition) _tileDefMan[grid.GetTileRef(xform.Coordinates).Tile.TypeId];
 
