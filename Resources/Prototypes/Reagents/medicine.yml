@@ -47,10 +47,10 @@
 
 - type: reagent
   id: Ethylredoxrazine
-  name: ethylredoxrazine
+  name: reagent-name-ethylredoxrazine
   group: Medicine
-  desc: Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.
-  physicalDesc: opaque
+  desc: reagent-desc-ethylredoxrazine
+  physicalDesc: reagent-physical-desc-opaque
   color: "#2d5708"
   metabolisms:
     Medicine:
