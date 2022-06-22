@@ -8,6 +8,7 @@ using Content.Shared.Storage;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Movement.Events;
 
 namespace Content.Server.Resist;
 

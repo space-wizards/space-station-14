@@ -25,7 +25,6 @@ public abstract partial class SharedMoverController : VirtualController
         base.Initialize();
         _sawmill = Logger.GetSawmill("mover");
         InitializeInput();
-        InitializeMob();
         InitializeMobMovement();
     }
 

@@ -1,10 +1,11 @@
-using Content.Shared.CCVar;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Movement.Components;
 
+/// <summary>
+/// SimpleMover with footsteps.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed class MobMoverComponent : SimpleMoverComponent
 {

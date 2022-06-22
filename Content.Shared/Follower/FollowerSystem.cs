@@ -2,6 +2,7 @@
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.Follower;
