@@ -135,23 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
-                        if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                            _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has stopped taking dehydration damage");
-                        else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                           _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has started taking dehydration damage");
-
                         component.CurrentThirstThreshold = calculatedThirstThreshold;
                         UpdateEffects(component);
-                    }
-                    if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                    {
-                        if (!EntityManager.TryGetComponent(component.Owner, out MobStateComponent? mobState))
-                            return;
-
-                        if (!mobState.IsDead())
-                        {
-                            _damage.TryChangeDamage(component.Owner, component.Damage, true);
-                        }
                     }
                 }
                 _accumulatedFrameTime -= 1;

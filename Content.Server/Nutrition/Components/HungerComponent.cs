@@ -181,12 +181,6 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
-                var logManager = IoCManager.Resolve<IAdminLogManager>();
-                if (_currentHungerThreshold == HungerThreshold.Dead)
-                    logManager.Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has stopped starving");
-                else if (calculatedHungerThreshold == HungerThreshold.Dead)
-                    logManager.Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has started starving");
-
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
                 Dirty();
