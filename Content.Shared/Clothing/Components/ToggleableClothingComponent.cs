@@ -11,7 +11,7 @@ namespace Content.Shared.Clothing.Components;
 ///     This component gives an item an action that will equip or un-equip some clothing. Intended for use with
 ///     hardsuits and hardsuit helmets.
 /// </summary>
-[Access(typeof(ToggleableClothingSystem))]
+[Access(typeof(SharedToggleableClothingSystem))]
 [RegisterComponent]
 public sealed class ToggleableClothingComponent : Component
 {
@@ -22,6 +22,11 @@ public sealed class ToggleableClothingComponent : Component
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string ActionId = "ToggleSuitHelmet";
+
+    /// <summary>
+    /// Allows defining custom actions, e.g. masks
+    /// </summary>
+    [DataField("toggleAction")]
     public InstantAction? ToggleAction = null;
 
     /// <summary>
@@ -57,4 +62,12 @@ public sealed class ToggleableClothingComponent : Component
     /// </summary>
     [DataField("clothingUid")]
     public EntityUid? ClothingUid;
+
+    /// <summary>
+    /// Intended for toggleable clothing that is not tied to another, e.g. masks
+    /// </summary>
+    [DataField("selfToggle")]
+    public bool SelfToggle = false;
+
+    public bool IsToggled = false;
 }
