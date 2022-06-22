@@ -82,13 +82,8 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnTempChange(EntityUid uid, RottingComponent component, OnTemperatureChangeEvent args)
         {
-            if (args.CurrentTemperature < 274f)
-            {
-                _ambientSound.SetAmbience(uid, false);
-                if (TryComp<PerishableComponent>(uid, out var perishable))
-                    perishable.Progressing = false;
-                RemComp<FliesComponent>(uid);
-            }
+            bool decompose = (args.CurrentTemperature > 274f);
+            ToggleDecomposition(uid, decompose);
         }
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
@@ -110,10 +105,9 @@ namespace Content.Server.Atmos.Miasma
             if (tileMix != null)
                 tileMix.AdjustMoles(Gas.Miasma, molsToDump);
 
+            // Waste of entities to let these through
             foreach (var part in args.GibbedParts)
-            {
                 EntityManager.DeleteEntity(part);
-            }
         }
 
         private void OnExamined(EntityUid uid, PerishableComponent component, ExaminedEvent args)
@@ -125,18 +119,41 @@ namespace Content.Server.Atmos.Miasma
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
-            {
-                perishable.Progressing = false;
-                _ambientSound.SetAmbience(args.Entity, false);
-            }
+                ToggleDecomposition(args.Entity, false, perishable);
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+                ToggleDecomposition(args.Entity, true, perishable);
+        }
+
+        /// Public functions
+
+        public void ToggleDecomposition(EntityUid uid, bool decompose, PerishableComponent? perishable = null)
+        {
+            if (!Resolve(uid, ref perishable))
+                return;
+
+            if (decompose == perishable.Progressing) // Saved a few cycles
+                return;
+
+            if (!HasComp<RottingComponent>(uid))
+                return;
+
+            if (!perishable.Rotting)
+                return;
+
+            if (decompose)
             {
-                _ambientSound.SetAmbience(args.Entity, true);
                 perishable.Progressing = true;
+                EnsureComp<FliesComponent>(uid);
+                _ambientSound.SetAmbience(uid, true);
+                return;
             }
+
+            perishable.Progressing = false;
+            RemComp<FliesComponent>(uid);
+            _ambientSound.SetAmbience(uid, false);
         }
     }
 }
