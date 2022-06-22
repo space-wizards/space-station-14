@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Audio;
@@ -24,9 +25,6 @@ namespace Content.Server.Atmos.Miasma
             foreach (var (rotting, perishable) in EntityQuery<RottingComponent, PerishableComponent>())
             {
                 if (!perishable.Progressing)
-                    continue;
-
-                if (TryComp<TemperatureComponent>(perishable.Owner, out var temp) && temp.CurrentTemperature < 274f)
                     continue;
 
                 perishable.DeathAccumulator += frameTime;
@@ -64,6 +62,7 @@ namespace Content.Server.Atmos.Miasma
         {
             base.Initialize();
             SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<RottingComponent, OnTemperatureChangeEvent>(OnTempChange);
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
@@ -80,6 +79,17 @@ namespace Content.Server.Atmos.Miasma
                 perishable.RotAccumulator = 0;
             }
             _ambientSound.SetAmbience(uid, false); // Ideally this will support dynamic sources in the future, I really didn't want to make flies an entity
+        }
+
+        private void OnTempChange(EntityUid uid, RottingComponent component, OnTemperatureChangeEvent args)
+        {
+            if (args.CurrentTemperature < 274f)
+            {
+                _ambientSound.SetAmbience(uid, false);
+                if (TryComp<PerishableComponent>(uid, out var perishable))
+                    perishable.Progressing = false;
+                RemComp<FliesComponent>(uid);
+            }
         }
 
         private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
@@ -126,7 +136,7 @@ namespace Content.Server.Atmos.Miasma
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
             {
-                _ambientSound.SetAmbience(args.Entity, false);
+                _ambientSound.SetAmbience(args.Entity, true);
                 perishable.Progressing = true;
             }
         }
