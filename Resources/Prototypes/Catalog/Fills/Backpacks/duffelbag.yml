@@ -41,6 +41,32 @@
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
 
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledLightRifle
+  name: AKMS bundle
+  description: "Warbound: Contains the iconic AKMS Rifle, bundled with three magazines." 
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleAk
+      - id: MagazineLightRifle
+      - id: MagazineLightRifle
+
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledRifle
+  name: Lecter bundle
+  description: "Black-Ops: Contains the high-end, military grade Lecter, bundled with 6 magazines." 
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponRifleLecter
+      - id: BoxMagazineRifle
+
+
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledSMG
@@ -58,13 +84,27 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
-  description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
+  description: "Go loud and pround with a Magnum Python on your hip, bundled with three speed loaders."
   components:
   - type: StorageFill
     contents:
       - id: WeaponRevolverPython
       - id: SpeedLoaderMagnum
         amount: 2
+      - id: SpeedLoaderMagnumHighVelocity
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledPieCannon
+  name: Pie cannon bundle
+  description: "Clown around with a brand-new Pie Cannon! Comes with 5 Banana Cream Pies, and a Clown Mask."
+  components:
+  - type: StorageFill
+    contents:
+      - id: LauncherCreamPie
+      - id: ClothingMaskClown
+      - id: FoodPieBananaCream
+        amount: 5
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
