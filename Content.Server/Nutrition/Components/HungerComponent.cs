@@ -173,21 +173,6 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
-            // --> Current Hunger is below dead threshold
-
-            if (!_entMan.TryGetComponent(Owner, out MobStateComponent? mobState))
-                return;
-
-            if (!mobState.IsDead())
-            {
-                // --> But they are not dead yet.
-                _accumulatedFrameTime += frametime;
-                if (_accumulatedFrameTime >= 1)
-                {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
-                    _accumulatedFrameTime -= (int) _accumulatedFrameTime;
-                }
-            }
         }
 
         private void UpdateCurrentThreshold()
