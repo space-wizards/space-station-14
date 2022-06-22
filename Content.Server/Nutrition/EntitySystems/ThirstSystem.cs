@@ -19,7 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly DamageableSystem _damage = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+        [Dependency] private readonly SharedMoverController _movement = default!;
 
         private ISawmill _sawmill = default!;
         private float _accumulatedFrameTime;

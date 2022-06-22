@@ -12,7 +12,7 @@ namespace Content.Shared.Pulling.Systems
     public sealed class SharedPullerSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
-        [Dependency] private readonly SharedMoverController _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SharedMoverController _SharedMoverController = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
@@ -73,7 +73,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void RefreshMovementSpeed(SharedPullerComponent component)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers((component).Owner);
+            _SharedMoverController.RefreshMovementSpeedModifiers((component).Owner);
         }
     }
 }

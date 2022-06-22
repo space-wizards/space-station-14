@@ -24,7 +24,7 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
-        [Dependency] private readonly SharedMoverController _movementSpeedModifierSystem = default!;
+        [Dependency] private readonly SharedMoverController _SharedMoverController = default!;
 
         public override void Initialize()
         {
@@ -103,12 +103,12 @@ namespace Content.Shared.Stunnable
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+            _SharedMoverController.RefreshMovementSpeedModifiers(uid);
         }
 
         private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+            _SharedMoverController.RefreshMovementSpeedModifiers(uid);
         }
 
         private void OnRefreshMovespeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -183,7 +183,7 @@ namespace Content.Shared.Stunnable
                 slowed.WalkSpeedModifier *= walkSpeedMultiplier;
                 slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
-                _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+                _SharedMoverController.RefreshMovementSpeedModifiers(uid);
 
                 return true;
             }

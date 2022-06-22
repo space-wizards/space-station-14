@@ -5,7 +5,7 @@ namespace Content.Shared.Movement.Events;
 /// <summary>
 ///     Raised on an entity to determine its new movement speed. Any system that wishes to change movement speed
 ///     should hook into this event and set it then. If you want this event to be raised,
-///     call <see cref="MovementSpeedModifierSystem.RefreshMovementSpeedModifiers"/>.
+///     call <see cref="SharedMoverController.RefreshMovementSpeedModifiers"/>.
 /// </summary>
 public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
 {

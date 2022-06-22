@@ -41,11 +41,7 @@ namespace Content.Server.AI.Commands
                 return;
             }
 
-            // TODO: IMover refffaaccctttooorrr
-            if (_entities.HasComponent<IMoverComponent>(entId))
-            {
-                _entities.RemoveComponent<IMoverComponent>(entId);
-            }
+            _entities.RemoveComponent<MobMoverComponent>(entId);
 
             var comp = _entities.AddComponent<UtilityAi>(entId);
             var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();

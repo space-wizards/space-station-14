@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -266,7 +267,7 @@ namespace Content.Server.Physics.Controllers
         private void HandleVehicleMovement()
         {
             // TODO: Nuke this code. It's on my list.
-            foreach (var (rider, mover) in EntityQuery<RiderComponent, SharedPlayerInputMoverComponent>())
+            foreach (var (rider, mover) in EntityQuery<RiderComponent, MobMoverComponent>())
             {
                 if (rider.Vehicle == null) continue;
                 _excludedMobs.Add(mover.Owner);
