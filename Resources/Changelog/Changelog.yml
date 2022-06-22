@@ -1,14 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: You may no longer eat infinite slices of cake., type: Remove}
-  id: 1252
-  time: '2022-03-27T06:23:33.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Flashlights and flares now last a decent bit longer., type: Tweak}
-  id: 1253
-  time: '2022-03-27T06:29:00.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Fired delivery boy who has been skimming pizza from the emergency pizza
@@ -2975,3 +2965,17 @@ Entries:
       chocolate and caffeine!, type: Add}
   id: 1751
   time: '2022-06-22T23:23:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
+    type: Add}
+  - {message: Slimes now take 80% less cellular damage., type: Add}
+  id: 1752
+  time: '2022-06-22T23:25:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
+  - {message: Added recipe for sulfuric acid., type: Add}
+  - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
+  id: 1753
+  time: '2022-06-22T23:26:13.0000000+00:00'
