@@ -56,13 +56,13 @@
       - !type:SatiateHunger
 
 - type: reagent
-id: Cholesterol
-name: reagent-name-cholesterol
-desc: reagent-desc-cholesterol
-physicalDesc: reagent-physical-desc-crystalline
-color: “#fcfcfc”
-boilingPoint: 360
-meltingPoint: 148
+  id: Cholesterol
+  name: reagent-name-cholesterol
+  desc: reagent-desc-cholesterol
+  physicalDesc: reagent-physical-desc-crystalline
+  color: “#fcfcfc”
+  boilingPoint: 360
+  meltingPoint: 148
 metabolisms:
 Poison:
 effects:
