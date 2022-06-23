@@ -54,7 +54,7 @@ namespace Content.Server.Clothing
         // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
         private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
         {
-            if (mask.ToggleAction == null)
+            if (mask.ToggleAction?.Event?.GetType() != typeof(ToggleMaskEvent))
                 return;
 
             mask.IsToggled = false;
