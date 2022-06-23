@@ -1,6 +1,14 @@
 # Guns
 
 - type: uplinkListing
+  id: UplinkPistolSil22LR
+  category: Weapons
+  itemId: WeaponPistolSilenced22LR
+  listingName: Silenced .22LR Pistrol
+  description: A small, old, and underpowered pistol with a silencer. Alright choice for assassinations. Use pistol magazines (.22 LR).
+  price: 4
+
+- type: uplinkListing
   id: UplinkPistolViper
   category: Weapons
   itemId: WeaponPistolViper
@@ -39,7 +47,6 @@
 #  category: Weapons
 #  itemId: CrossbowEnergyMini
 #  price: 8
-
 
 - type: uplinkListing
   id: UplinkEsword
@@ -147,6 +154,13 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
 
+# For the .22LR Pistol
+- type: uplinkListing
+  id: UplinkMagazineLongRifle
+  category: Ammo
+  itemId: MagazineLongRifle
+  price: 2
+
 # For the mosin
 - type: uplinkListing
   id: UplinkMosinAmmo
@@ -191,6 +205,12 @@
   listingName: Hypopen
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   price: 4
+
+- type: uplinkListing
+  id: UplinkSyndieShoulderHolster
+  category: Utility
+  itemId: ClothingBeltSyndieHolster
+  price: 2
 
 # Bundles
 
@@ -375,10 +395,39 @@
   price: 4
 
 - type: uplinkListing
+  id: UplinkBriefcaseMoney
+  category: Misc
+  itemId: BriefcaseBrownMoneyFilled
+  description: A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices.
+  price: 1
+
+- type: uplinkListing
+  id: UplinkSyndieHeadset
+  category: Misc
+  itemId: ClothingHeadsetAltSyndicate
+  description: A syndicate-branded overear headset. It protects your ears from flashbangs, and grants you access to a super secret Traitor radio channel!
+  price: 4
+
+# TODO: Add this in when the Encryption Key gets added
+# - type: uplinkListing
+#   id: UplinkEncryptionKey
+#   category: Misc
+#   itemId: SyndieEncryptionKey
+#   description: A syndicate-branded encryption key. When implanted to a headset, it grants you access to a super secret Traitor radio channel!
+#   price: 2
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
   price: 20
+
+- type: uplinkListing
+  id: UplinkMRE
+  category: Misc
+  itemId: BoxMRE
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  price: 2
 
 - type: uplinkListing
   id: UplinkDecoyDisk
@@ -393,6 +442,13 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Misc
+  itemId: ClothingHeadHatOutlawHat
+  description: A black, brimmed hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
+  price: 1
 
 - type: uplinkListing
   id: UplinkCigarettes

@@ -62,52 +62,45 @@
     - type: MappedItemVisualizer
       sprite: Clothing/Belt/belt_overlay.rsi
 
-- type: entity
   parent: ClothingBeltStorageBase
-  id: ClothingBeltChiefEngineer
-  name: chief engineer's toolbelt
-  description: Holds tools, looks snazzy.
+  id: ClothingBeltGrenade
+  name: grenadier's belt
+  description: A belt designed to be used by Nuclear Operatives. Naturally, it holds explosives.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/ce.rsi
+    sprite: Clothing/Belt/grenadier.rsi
   - type: Clothing
-    sprite: Clothing/Belt/ce.rsi
+    sprite: Clothing/Belt/grenadier.rsi
   - type: Storage
-    capacity: 100
-    # TODO: Fill this out more.
+    capacity: 75
     whitelist:
       tags:
-        - Wirecutter
+        - SyndieMiniBomb
         - Crowbar
         - Screwdriver
-        - Flashlight
-        - Wrench
-#        - GeigerCounter
-        - Flare
-        - CableCoil
-        - Powerdrill
-        - JawsOfLife
+        - ExGrenade
+        - GrenadeFlashBang
+#        - GrenadeFluorosulfuricAcidSmoke
+#        - GrenadeSmoke
+#        - GrenadeGluon
+#        - GrenadeEMP
         - CigPack
       components:
-        - AirlockPainter
         - SignalLinker
-        - RCD
-        - RCDAmmo
-        - Welder
-        - Flash
+        - PayloadCase
+        - Explosive
         - Radio
-        - Handcuff
-        - PowerCell
+
   - type: ItemMapper
     mapLayers:
-      drill:
+      multitool:
+        whitelist:
+          components:
+          - SignalLinker
+      screwdriver_nuke:
         whitelist:
           tags:
-          - Powerdrill
-      cutters_red:
-        whitelist:
-          tags:
-          - Wirecutter
+          - Screwdriver
       crowbar:
         whitelist:
           tags:
@@ -116,22 +109,7 @@
         whitelist:
           tags:
           - CrowbarRed
-      jaws:
-        whitelist:
-          tags:
-          - JawsOfLife
-      screwdriver_nuke:
-        whitelist:
-          tags:
-          - Screwdriver
-      multitool:
-        whitelist:
-          components:
-          - SignalLinker
-      wrench:
-        whitelist:
-          tags:
-          - Wrench
+
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
@@ -436,6 +414,20 @@
     sprite: Clothing/Belt/holster.rsi
   - type: Storage
     capacity: 20
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSyndieHolster
+  name: syndicate shoulder holster
+  description: 'A deep shoulder holster capable of holding most forms of ballistic weaponry, and utility items. WARNING: Nuclear Badasses only.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Storage
+    capacity: 45
+
 
 - type: entity
   parent: ClothingBeltStorageBase
