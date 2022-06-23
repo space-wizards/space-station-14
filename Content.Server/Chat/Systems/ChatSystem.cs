@@ -5,7 +5,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Headset;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -23,22 +22,24 @@ using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Chat;
+namespace Content.Server.Chat.Systems;
 
 /// <summary>
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
-public sealed class ChatSystem : SharedChatSystem
+public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IChatSanitizationManager _sanitizer = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -56,6 +57,7 @@ public sealed class ChatSystem : SharedChatSystem
 
     public override void Initialize()
     {
+        InitializeRadio();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
@@ -63,6 +65,7 @@ public sealed class ChatSystem : SharedChatSystem
 
     public override void Shutdown()
     {
+        ShutdownRadio();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
     }
 
@@ -226,14 +229,18 @@ public sealed class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        _listener.PingListeners(source, message);
+        (message, var channel) = GetRadioPrefix(source, message);
+
+        if (channel != null)
+            _listener.PingListeners(source, message, channel);
+
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
         var ev = new EntitySpokeEvent(message);
-        RaiseLocalEvent(source, ev, false);
+        RaiseLocalEvent(source, ev);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
@@ -242,7 +249,6 @@ public sealed class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source)) return;
 
         message = TransformSpeech(source, message);
-        _listener.PingListeners(source, message);
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         var transformSource = Transform(source);
@@ -410,34 +416,8 @@ public sealed class ChatSystem : SharedChatSystem
 
     private string SanitizeMessageCapital(EntityUid source, string message)
     {
-        if (message.StartsWith(';'))
-        {
-            // Special case for ";" messages
-            if (message.Length == 1)
-                return "";
-
-            // Remove semicolon
-            message = message.Substring(1).TrimStart();
-
-            // Capitalize first letter
-            message = message[0].ToString().ToUpper() + message.Remove(0, 1);
-
-            if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
-                TryComp(entityUid, out HeadsetComponent? headset))
-            {
-                headset.RadioRequested = true;
-            }
-            else
-            {
-                _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
-            }
-        }
-        else
-        {
-            // Capitalize first letter
-            message = message[0].ToString().ToUpper() + message.Remove(0, 1);
-        }
-
+        // Capitalize first letter
+        message = message[0].ToString().ToUpper() + message.Remove(0, 1);
         return message;
     }
 
