@@ -1,8 +1,4 @@
-using Content.Server.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Nutrition.Components;
@@ -69,10 +65,6 @@ namespace Content.Server.Nutrition.Components
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
         };
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
 
         public void HungerThresholdEffect(bool force = false)
         {

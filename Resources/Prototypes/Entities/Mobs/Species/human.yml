@@ -46,13 +46,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   # Organs
   - type: InjectableSolution
     solution: chemicals
