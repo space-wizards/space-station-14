@@ -78,7 +78,7 @@ public sealed partial class EmergencyShuttleConsoleWindow : FancyWindow,
         base.Draw(handle);
         if (_earlyLaunchTime == null)
         {
-            Countdown.Text = "00:40";
+            Countdown.Text = "00:10";
         }
         else
         {
