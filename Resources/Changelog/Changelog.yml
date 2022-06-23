@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Nothing to see here, just moving televisions, some dressers, and a
-      fireplace to the storage room for later usage.', type: Add}
-  id: 1267
-  time: '2022-03-29T02:17:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix physics dying and rubberbanding the game., type: Fix}
@@ -2976,3 +2970,8 @@ Entries:
   - {message: Removed fun!, type: Remove}
   id: 1766
   time: '2022-06-23T07:21:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Docking no longer requires power., type: Tweak}
+  id: 1767
+  time: '2022-06-23T07:22:11.0000000+00:00'
