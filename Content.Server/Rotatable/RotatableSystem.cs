@@ -39,7 +39,9 @@ namespace Content.Server.Rotatable
             if (!component.RotateWhileAnchored &&
                 EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
+            {
                 return;
+            }
 
             Verb resetRotation = new ()
             {
