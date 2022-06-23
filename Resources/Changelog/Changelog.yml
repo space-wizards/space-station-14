@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar Update 5.3 - Now with basic virology and a bunch of other
-      changes. See Github PR 7310 for details., type: Add}
-  id: 1265
-  time: '2022-03-28T23:11:33.0000000+00:00'
 - author: Rane
   changes:
   - {message: Added new sounds related to diseases., type: Add}
@@ -2975,3 +2969,8 @@ Entries:
   - {message: Sentient Vending Machines can now throw their stock., type: Add}
   id: 1764
   time: '2022-06-23T04:52:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo pallets no longer y-fight., type: Fix}
+  id: 1765
+  time: '2022-06-23T06:59:49.0000000+00:00'
