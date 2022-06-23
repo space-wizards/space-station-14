@@ -1,12 +1,9 @@
 using Content.Server.Doors.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
-using Content.Shared.Verbs;
-using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -72,7 +69,6 @@ namespace Content.Server.Shuttles.Systems
             var transform = body.GetTransform();
             var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
 
-            // Happens if no power or whatever
             if (dockingFixture == null)
                 return null;
 

@@ -6,6 +6,7 @@
   components:
   - type: CargoPallet
   - type: Sprite
+    drawdepth: FloorTiles
     netsync: false
     layers:
     - texture: Structures/catwalk.rsi/catwalk_preview.png
