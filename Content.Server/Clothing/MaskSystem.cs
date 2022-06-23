@@ -23,7 +23,7 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<MaskComponent, ToggleMaskEvent>(OnToggleMask);
             SubscribeLocalEvent<MaskComponent, GetItemActionsEvent>(OnGetActions);
-            SubscribeLocalEvent<MaskComponent, GotEquippedEvent>(OnGotEquipped);
+            SubscribeLocalEvent<MaskComponent, GotUnequippedEvent>(OnGotUnequipped);
         }
 
         private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
@@ -51,8 +51,8 @@ namespace Content.Server.Clothing
             ToggleMaskComponents(uid, mask, args.Performer);
         }
 
-        // set to untoggled when equipped, so it isn't equipped in a 'pulled down' state
-        private void OnGotEquipped(EntityUid uid, MaskComponent mask, GotEquippedEvent args)
+        // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
+        private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
         {
             if (mask.ToggleAction == null)
                 return;
