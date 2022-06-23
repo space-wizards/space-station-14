@@ -29,7 +29,20 @@
     quickEquip: false
     Slots:
     - back
+  - type: TilePrying
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 1.5
+    energy: 1.5
+    color: blue
   - type: Tool
     qualities:
       - Prying
   - type: TilePrying
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 1.5
+    energy: 1.5
+    color: white
