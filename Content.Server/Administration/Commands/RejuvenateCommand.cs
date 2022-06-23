@@ -90,20 +90,13 @@ namespace Content.Server.Administration.Commands
                 sys.TryModifyBloodLevel(target, bloodStream.BloodSolution.AvailableVolume, bloodStream);
             }
 
-            if (entMan.HasComponent<JitteringComponent>(target))
-            {
-                entMan.RemoveComponent<JitteringComponent>(target);
-            }
-
             if (entMan.TryGetComponent<DiseaseCarrierComponent>(target, out var carrier))
             {
                 EntitySystem.Get<DiseaseSystem>().CureAllDiseases(target, carrier);
             }
 
-            if (entMan.TryGetComponent<RottingComponent>(target, out var rotting))
-            {
-                entMan.RemoveComponent<RottingComponent>(target);
-            }
+            entMan.RemoveComponent<JitteringComponent>(target);
+            entMan.RemoveComponent<RottingComponent>(target);
         }
     }
 }
