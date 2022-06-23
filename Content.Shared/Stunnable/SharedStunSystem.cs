@@ -32,7 +32,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
-            SubscribeLocalEvent<SlowedDownComponent, ComponentRemove>(OnSlowRemove);
+            SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
 
             SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
             SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
@@ -106,7 +106,7 @@ namespace Content.Shared.Stunnable
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
-        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
+        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
         {
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }

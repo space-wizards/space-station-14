@@ -52,7 +52,7 @@ public sealed class SlowContactsSystem : EntitySystem
             Logger.ErrorS("slowscontacts", $"The entity {otherUid} left a body ({uid}) it was never in.");
         _statusCapableInContact[otherUid]--;
         if (_statusCapableInContact[otherUid] == 0)
-            EntityManager.RemoveComponent<SlowsOnContactComponent>(otherUid);
+            EntityManager.RemoveComponentDeferred<SlowsOnContactComponent>(otherUid);
         _speedModifierSystem.RefreshMovementSpeedModifiers(otherUid);
 
     }
