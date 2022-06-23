@@ -1,4 +1,4 @@
-using Content.Server.Clothing.EntitySystems;
+using Content.Server.Clothing;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -9,7 +9,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 ///     In the event that more head-wear & mask functionality is added (like identity systems, or raising/lowering of
 ///     masks), then this component might become redundant.
 /// </remarks>
-[RegisterComponent, Access(typeof(FoodSystem), typeof(DrinkSystem), typeof(ToggleableClothingSystem))]
+[RegisterComponent, Access(typeof(FoodSystem), typeof(DrinkSystem), typeof(MaskSystem))]
 public sealed class IngestionBlockerComponent : Component
 {
     /// <summary>
