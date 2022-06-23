@@ -1,11 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed being unable to extract/juice fiber from some cloth stacks., type: Fix}
-  id: 1269
-  time: '2022-03-30T02:55:14.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fix the PDA UI briefly showing the uplink button to non-traitors., type: Fix}
   id: 1270
   time: '2022-03-30T02:56:58.0000000+00:00'
@@ -2975,3 +2970,8 @@ Entries:
   - {message: Displaying of player characters in the round end statistics, type: Tweak}
   id: 1768
   time: '2022-06-23T09:32:06.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Headsets can now use department-specific radio channels., type: Add}
+  id: 1769
+  time: '2022-06-23T10:11:03.0000000+00:00'
