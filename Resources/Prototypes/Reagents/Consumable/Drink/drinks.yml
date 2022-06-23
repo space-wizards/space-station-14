@@ -322,7 +322,7 @@
   id: Kvass
   name: reagent-name-kvass
   parent: BaseDrink
-  desc: reagent-desc-kvas
+  desc: reagent-desc-kvass
   physicalDesc: reagent-physical-desc-bubbly
   color: "#381600"
   spritePath: kvass.rsi
