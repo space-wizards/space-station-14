@@ -29,7 +29,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.4 #per second, scales with pressure and other constants.
+        Blunt: 0.1 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -198,7 +198,6 @@
     speedModifierThresholds:
       60: 0.9
       80: 0.7
-      90: 0.5
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -233,7 +232,7 @@
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     hitSound:
       collection: Punch
     range: 0.8

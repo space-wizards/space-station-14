@@ -23,7 +23,20 @@
   id: AllCaps
 
 - type: statusEffect
+  id: SeeingRainbows
+
+- type: statusEffect
   id: Electrocution
 
 - type: statusEffect
+  id: Drunk
+
+- type: statusEffect
+  id: SlurredSpeech
+  
+- type: statusEffect
   id: PressureImmunity
+
+- type: statusEffect
+  id: Muted
+  alert: Muted

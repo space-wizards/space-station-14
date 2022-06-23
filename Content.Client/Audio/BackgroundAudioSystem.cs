@@ -89,7 +89,7 @@ namespace Content.Client.Audio
         {
             if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity) return;
             if (!TryComp<TransformComponent>(message.Entity, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             var tileDef = (ContentTileDefinition) _tileDefMan[grid.GetTileRef(xform.Coordinates).Tile.TypeId];
 
@@ -119,7 +119,7 @@ namespace Content.Client.Audio
         {
             EndAmbience();
 
-            if (args.NewState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            if (args.NewState is LobbyState)
             {
                 StartLobbyMusic();
                 return;
@@ -137,10 +137,7 @@ namespace Content.Client.Audio
             if (_stateManager.CurrentState is LobbyState)
             {
                 EndAmbience();
-                if (_configManager.GetCVar(CCVars.LobbyMusicEnabled))
-                {
-                    StartLobbyMusic();
-                }
+                StartLobbyMusic();
             }
             else
             {
@@ -172,7 +169,7 @@ namespace Content.Client.Audio
             EndAmbience();
             if (!CanPlayCollection(_currentCollection)) return;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-            _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
+            _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
@@ -237,7 +234,7 @@ namespace Content.Client.Audio
             {
                 return;
             }
-            if (_stateManager.CurrentState is LobbyState && _configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            if (_stateManager.CurrentState is LobbyState)
             {
                 StartLobbyMusic();
             }
@@ -251,14 +248,14 @@ namespace Content.Client.Audio
 
         public void StartLobbyMusic()
         {
-            if (_lobbyStream != null) return;
+            if (_lobbyStream != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled)) return;
 
             var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.
             {
                 return;
             }
-            _lobbyStream = SoundSystem.Play(Filter.Local(), file, _lobbyParams);
+            _lobbyStream = SoundSystem.Play(file, Filter.Local(), _lobbyParams);
         }
 
         private void EndLobbyMusic()

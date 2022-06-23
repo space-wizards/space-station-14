@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
@@ -113,16 +114,15 @@ namespace Content.Server.Recycling
 
             if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
+                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
         }
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
-            // TODO: Power needs a helper for this jeez
             return HasComp<SharedBodyComponent>(entity) && !component.Safe &&
-                   TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && receiver.Powered;
+                   this.IsPowered(component.Owner, EntityManager);
         }
 
         public void Bloodstain(RecyclerComponent component)

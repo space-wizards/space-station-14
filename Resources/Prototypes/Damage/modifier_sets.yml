@@ -28,8 +28,8 @@
     Shock: 1.2
   flatReductions:
     Blunt: 14
-    Slash: 14
-    Piercing: 14
+    Slash: 15
+    Piercing: 15
     Shock: 10
     Heat: 10
 
@@ -86,6 +86,7 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
+    Cellular: 0.2
 
 - type: damageModifierSet
   id: Infernal

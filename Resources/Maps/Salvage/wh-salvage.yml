@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -1251,10 +1251,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 112
   type: ClosetBase
   components:
@@ -1263,10 +1260,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 113
   type: SalvageMaterialCrateSpawner
   components:

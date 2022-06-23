@@ -1,0 +1,2 @@
+atreides.ogg, c-20r.ogg, flaregun.ogg, mateba.ogg, minigun.ogg, mk58.ogg were taken from https://gitlab.com/cmdevs/colonial-warfare/-/tree/32cb5892413243cc74bb2d11df8e3085f8ef1164/sound/weapons
+They are licensed under CC-BY-SA 3.0

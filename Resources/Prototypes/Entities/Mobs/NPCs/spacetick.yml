@@ -38,10 +38,12 @@
       15: !type:DeadMobState {}
   - type: MovementIgnoreGravity
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      dead: dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno
@@ -53,7 +55,7 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 0.5
     arcwidth: 0
     arc: bite

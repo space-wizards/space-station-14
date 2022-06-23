@@ -13,7 +13,7 @@
   access:
   - Command
   - HeadOfPersonnel
-  - Security # HoPcurity strikes again
+  - Brig
   - Service
   - Quartermaster
   - Salvage

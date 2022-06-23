@@ -17,6 +17,8 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
+        public const string ContainerName = "paper_label";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,9 +33,9 @@ namespace Content.Server.Labels
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, component.Name, component.LabelSlot);
+            _itemSlotsSystem.AddItemSlot(uid, ContainerName, component.LabelSlot);
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(PaperLabelVisuals.HasLabel, false);
@@ -68,7 +70,7 @@ namespace Content.Server.Labels
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(item, out PaperComponent paper))
+            if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
                 // Assuming yaml has the correct entity whitelist, this should not happen.
                 return;
 
@@ -90,7 +92,7 @@ namespace Content.Server.Labels
             if (args.Container.ID != label.LabelSlot.ID)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem);

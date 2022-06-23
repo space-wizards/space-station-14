@@ -33,7 +33,7 @@ public sealed class ItemSystem : SharedItemSystem
 
         // if the item is in a container, it might be equipped to hands or inventory slots --> update visuals.
         if (_containerSystem.TryGetContainingContainer(uid, out var container))
-            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID));
+            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID), true);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public sealed class ItemSystem : SharedItemSystem
         if (!rsi.TryGetState(state, out var _))
             return false;
 
-        var layer = PrototypeLayerData.New();
+        var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layer.MapKeys = new() { state };

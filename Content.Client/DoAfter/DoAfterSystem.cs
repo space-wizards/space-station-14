@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.DoAfter.UI;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -30,6 +30,7 @@ namespace Content.Client.DoAfter
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
         /// <summary>
         ///     We'll use an excess time so stuff like finishing effects can show.
@@ -186,6 +187,8 @@ namespace Content.Client.DoAfter
             component.Gui?.CancelDoAfter(id);
         }
 
+        // TODO move this to an overlay
+        // TODO separate DoAfter & ActiveDoAfter components for the entity query.
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -203,30 +206,38 @@ namespace Content.Client.DoAfter
 
             var occluded = _examineSystem.IsOccluded(attached.Value);
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
-            var entXform = Transform(attached.Value);
-            var playerPos = entXform.MapPosition;
+            var xforms = GetEntityQuery<TransformComponent>();
+            var entXform = xforms.GetComponent(attached.Value);
+            var playerPos = _xformSystem.GetWorldPosition(entXform, xforms);
 
             foreach (var (comp, xform) in EntityManager.EntityQuery<DoAfterComponent, TransformComponent>(true))
             {
                 var doAfters = comp.DoAfters;
-                var compPos = xform.MapPosition;
 
-                if (doAfters.Count == 0 ||
-                    compPos.MapId != entXform.MapID ||
-                    !viewbox.Contains(compPos.Position))
+                if (doAfters.Count == 0 || xform.MapID != entXform.MapID)
                 {
                     Disable(comp);
                     continue;
                 }
 
-                var range = (compPos.Position - playerPos.Position).Length + 0.01f;
+                var compPos = _xformSystem.GetWorldPosition(xform, xforms);
+
+                if (!viewbox.Contains(compPos))
+                {
+                    Disable(comp);
+                    continue;
+                }
+
+                var range = (compPos - playerPos).Length + 0.01f;
 
                 if (occluded &&
                     comp.Owner != attached &&
+                    // Static ExamineSystemShared.InRangeUnOccluded has to die.
                     !ExamineSystemShared.InRangeUnOccluded(
-                        playerPos,
-                        compPos, range,
-                        (comp.Owner, attached), predicate))
+                        new(playerPos, entXform.MapID),
+                        new(compPos, entXform.MapID), range,
+                        (comp.Owner, attached), predicate,
+                        entMan: EntityManager))
                 {
                     Disable(comp);
                     continue;

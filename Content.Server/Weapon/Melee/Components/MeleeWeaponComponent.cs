@@ -4,8 +4,7 @@ using Content.Shared.Sound;
 namespace Content.Server.Weapon.Melee.Components
 {
     [RegisterComponent]
-    [Virtual]
-    public class MeleeWeaponComponent : Component
+    public sealed class MeleeWeaponComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
@@ -29,7 +28,7 @@ namespace Content.Server.Weapon.Melee.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arc")]
-        public string Arc { get; set; } = "default";
+        public string? Arc { get; set; } = "default";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("arcwidth")]

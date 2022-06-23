@@ -40,10 +40,6 @@ namespace Content.Server.AI.Components
         private bool _awake = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("startingGear")]
-        public string? StartingGearPrototype { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
         {
             get => _visionRadius;
@@ -57,20 +53,6 @@ namespace Content.Server.AI.Components
 
             // This component requires a physics component.
             Owner.EnsureComponent<PhysicsComponent>();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (StartingGearPrototype != null)
-            {
-                var stationSpawning = EntitySystem.Get<StationSpawningSystem>();
-                var protoManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var startingGear = protoManager.Index<StartingGearPrototype>(StartingGearPrototype);
-                stationSpawning.EquipStartingGear(Owner, startingGear, null);
-            }
         }
 
         /// <summary>
@@ -112,9 +94,6 @@ namespace Content.Server.AI.Components
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
         public float PushStrength { get; set; } = IMobMoverComponent.PushStrengthDefault;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float WeightlessStrength { get; set; } = IMobMoverComponent.WeightlessStrengthDefault;
 
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]

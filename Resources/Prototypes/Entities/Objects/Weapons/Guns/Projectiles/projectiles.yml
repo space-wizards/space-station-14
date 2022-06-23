@@ -1,16 +1,19 @@
 # One bullet to bring them all into the darkness and bind them
 - type: entity
-  id: BulletBase
-  name: bulletbase
+  id: BaseBullet
+  name: BaseBullet
   description: If you can see this you're probably dead!
   abstract: true
   components:
+  - type: FlyBySound
   - type: Clickable
   - type: Sprite
     netsync: false
     noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
-    state: bullet
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: bullet
+      shader: unshaded
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -21,22 +24,24 @@
         !type:PhysShapeAabb
         bounds: "-0.1,-0.1,0.1,0.1"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 14
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
-  id: TriggerBulletBase # Trigger-on-collide bullets
-  parent: BulletBase
+  id: BaseBulletTrigger # Trigger-on-collide bullets
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: TriggerOnCollide
+    fixtureID: projectile
   - type: Projectile
     damage:
       types:
@@ -47,14 +52,15 @@
         !type:PhysShapeAabb
         bounds: "-0.15,-0.45,0.15,0.15"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
 
 - type: entity
-  id: BulletBaseFlash
+  id: BaseBulletFlash
   name: base bullet flash
-  parent: TriggerBulletBase
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Projectile
@@ -67,20 +73,20 @@
       path: "/Audio/Effects/flash_bang.ogg"
 
 - type: entity
-  id: BulletBaseHV
+  id: BaseBulletHighVelocity
   name: base bullet high-velocity
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 12
+        Piercing: 17
 
 - type: entity
-  id: BulletBasePractice
+  id: BaseBulletPractice
   name: base bullet practice
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile
@@ -89,9 +95,9 @@
         Blunt: 2
 
 - type: entity
-  id: BulletBaseRubber
+  id: BaseBulletRubber
   name: base bullet rubber
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Projectile
@@ -108,12 +114,17 @@
 - type: entity
   name : taser bolt
   id: BulletTaser
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
   - type: Sprite
     noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     color: "#ffff33"
     layers:
     - state: spark
@@ -125,19 +136,18 @@
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - BulletImpassable
   - type: Ammo
-    isProjectile: true
-    ammoVelocity: 20
-    caliber: Energy
   - type: Projectile
     damage:
       types:
         Heat: 5
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundForce: true
   - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
@@ -145,13 +155,16 @@
 - type: entity
   name: emitter bolt
   id: EmitterBolt
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Sprite
     color: "#ffff33"
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: 'projectile'
+    layers:
+      - state: projectile
+        shader: unshaded
+  - type: Ammo
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -159,15 +172,14 @@
         !type:PhysShapeAabb
         bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
+      id: projectile
       mask:
       - Impassable
       - Opaque
   - type: Projectile
     damage:
       types:
-        Heat: 20
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+        Heat: 14
   - type: Tag
     tags:
     - EmitterBolt
@@ -176,13 +188,13 @@
 - type: entity
   id: BulletRocket
   name: rocket
-  parent: TriggerBulletBase
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -196,15 +208,15 @@
     energy: 0.5
 
 - type: entity
-  id: WeakBulletRocket
+  id: BulletWeakRocket
   name: weak rocket
-  parent: TriggerBulletBase
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
-    state: frag
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -217,17 +229,16 @@
     color: orange
     energy: 0.5
 
-
 - type: entity
   id: BulletGrenadeBaton
   name: baton grenade
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -242,13 +253,13 @@
 - type: entity
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: TriggerBulletBase
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -258,13 +269,13 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BulletBaseFlash
+  parent: BaseBulletFlash
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: FlashOnTrigger
     range: 7
 
@@ -272,13 +283,13 @@
 - type: entity
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: TriggerBulletBase
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
-    state: grenade
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -287,13 +298,13 @@
 - type: entity
   id: BulletFoam
   name: foam dart
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/toys.rsi
-    state: foamdart
+    layers:
+      - state: foamdart
   - type: Projectile
     deleteOnCollide: true
     damage:
@@ -305,13 +316,13 @@
 - type: entity
   id: BulletCap
   name: cap bullet
-  parent: BulletBase
+  parent: BaseBullet
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/toys.rsi
-    state: capbullet
+    layers:
+      - state: capbullet
   - type: Projectile
     deleteOnCollide: true
     damage:

@@ -14,6 +14,7 @@
   - type: ExplodeOnTrigger
   - type: DeleteOnTrigger
   - type: TriggerOnCollide
+    fixtureID: projectile
   - type: Projectile
     damage: {}
     deleteOnCollide: false
@@ -24,7 +25,6 @@
     maxIntensity: 45
   - type: Physics
     bodyType: Dynamic
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -32,6 +32,7 @@
         radius: 0.8
       mass: 200
       hard: true
+      id: projectile
       # Didn't use MapGrid for now as the bounds are stuffed.
       layer:
       - LargeMobLayer

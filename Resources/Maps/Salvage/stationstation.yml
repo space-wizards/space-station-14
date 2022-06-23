@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -880,10 +880,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 128
   type: LockerMedical
   components:
@@ -893,10 +890,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 129
   type: LockerMedical
   components:
@@ -906,10 +900,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 130
   type: LockerMedical
   components:
@@ -919,10 +910,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 131
   type: CrateMedical
   components:
@@ -933,9 +921,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 132
   type: CrateMedical
@@ -947,9 +935,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 133
   type: Beaker
@@ -1713,25 +1701,17 @@ entities:
   - chunkCollection: {}
     type: DecalGrid
 - uid: 180
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -1.47174,4.550247
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 181
-  type: LaserGun
+  type: WeaponLaserGun
   components:
   - pos: -0.6748645,4.487747
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BatteryBarrelComponent-ammo-container: !type:ContainerSlot {}
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 182
   type: Brutepack
   components:
@@ -1757,13 +1737,13 @@ entities:
     parent: 179
     type: Transform
 - uid: 186
-  type: PowerCellSmallHigh
+  type: PowerCellMedium
   components:
   - pos: -2.67511,-10.351
     parent: 179
     type: Transform
 - uid: 187
-  type: PowerCellSmallHigh
+  type: PowerCellMedium
   components:
   - pos: -2.55011,-10.6635
     parent: 179
@@ -2248,9 +2228,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 267
   type: Table
@@ -2573,10 +2553,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 320
   type: MedkitFilled
   components:
@@ -2606,10 +2583,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 323
   type: FireExtinguisher
   components:
@@ -2629,7 +2603,7 @@ entities:
     parent: 179
     type: Transform
 - uid: 326
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - pos: 0.5,-5.5
     parent: 179
@@ -2639,7 +2613,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 327
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 0.5,0.5
     parent: 179
@@ -3053,10 +3027,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 390
   type: WallSolid
   components:
@@ -3279,18 +3250,14 @@ entities:
   - pos: -1.934832,-5.154238
     parent: 179
     type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
+
 - uid: 422
   type: FlashlightLantern
   components:
   - pos: -2.017696,-5.71715
     parent: 179
     type: Transform
-  - containers:
-      cellslot_cell_container: !type:ContainerSlot {}
-    type: ContainerContainer
+
 - uid: 423
   type: Crowbar
   components:
@@ -3336,35 +3303,23 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 429
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.605512,7.638151
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 430
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.339887,7.669401
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 431
-  type: MagazinePistolSmg
+  type: MagazinePistolSubMachineGun
   components:
   - pos: -6.027387,7.622526
     parent: 179
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Ammunition.Components.RangedMagazineComponent-magazine: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 432
   type: ClothingBackpack
   components:
@@ -3392,24 +3347,24 @@ entities:
     parent: 179
     type: Transform
 - uid: 435
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -2.524035,7.579326
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 436
-  type: SmgC20r
+  type: WeaponSubMachineGunC20r
   components:
   - pos: -1.94591,7.485576
     parent: 179
     type: Transform
   - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-chamber: !type:ContainerSlot {}
-      Content.Server.Weapon.Ranged.Barrels.Components.MagazineBarrelComponent-magazine: !type:ContainerSlot {}
+      gun_chamber: !type:ContainerSlot {}
+      gun_magazine: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 437
   type: WallSolid
@@ -3516,10 +3471,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 454
   type: WallSolid
   components:
@@ -3968,10 +3920,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 525
   type: ClosetToolFilled
   components:
@@ -3981,10 +3930,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 526
   type: ClosetToolFilled
   components:
@@ -3994,10 +3940,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 527
   type: ClosetToolFilled
   components:
@@ -4007,10 +3950,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 528
   type: ClosetToolFilled
   components:
@@ -4020,10 +3960,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 529
   type: SheetGlass
   components:

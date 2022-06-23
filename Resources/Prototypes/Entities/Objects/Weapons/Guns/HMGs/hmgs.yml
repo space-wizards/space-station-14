@@ -1,77 +1,46 @@
 - type: entity
-  name: heavy machinegun
+  name: BaseWeaponHeavyMachineGun
   parent: BaseItem
-  id: HMGBase
+  id: BaseWeaponHeavyMachineGun
   description: Spray and pray
   abstract: true
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
-    size: 24
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    caliber: HRifle
-    magazineTypes:
-    - Box
+  - type: Gun
     fireRate: 20
-    minAngle: 5
-    maxAngle: 45
-    angleIncrease: 10
-    angleDecay: 20
-    magNeedsOpenBolt: false
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundAutoEject:
-      path: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/lmg_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
+  # No chamber because HMG may want its own
 
 - type: entity
   name: minigun
-  id: Minigun
-  parent: HMGBase
+  id: WeaponMinigun
+  parent: BaseWeaponHeavyMachineGun
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
     layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    magFillPrototype: MagazineMinigun
+  - type: Gun
     fireRate: 15
-    minAngle: 0
-    maxAngle: 15
-    angleIncrease: 15
-    angleDecay: 20
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/minigun.ogg
+  - type: BallisticAmmoProvider
+    proto: CartridgeMinigun
+    capacity: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true
-

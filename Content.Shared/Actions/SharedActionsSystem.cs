@@ -19,7 +19,7 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -113,7 +113,7 @@ public abstract class SharedActionsSystem : EntitySystem
         // Does the user actually have the requested action?
         if (!component.Actions.TryGetValue(ev.Action, out var act))
         {
-            _logSystem.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.Name}.");
             return;
         }
@@ -146,10 +146,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
 
                 if (entityAction.Event != null)
@@ -174,10 +174,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {mapTarget:target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {mapTarget:target}.");
 
                 if (worldAction.Event != null)
@@ -194,10 +194,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(act.Provider.Value):provider}.");
 
                 performEvent = instantAction.Event;
@@ -333,7 +333,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
         if (action.Sound != null)
-            SoundSystem.Play(filter, action.Sound.GetSound(), performer, action.AudioParams);
+            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;

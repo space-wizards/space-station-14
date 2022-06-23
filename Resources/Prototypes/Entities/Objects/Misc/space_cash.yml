@@ -6,7 +6,9 @@
   components:
   - type: Material
     materials:
-      Credit: 100
+      Credit: 1
+  - type: StaticPrice
+    price: 0
   - type: Stack
     stackType: Credit
     max: 1000000 # if you somehow get this rich consider buying a second station
@@ -45,6 +47,7 @@
   name: credit
   stack: Credit
   icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  price: 1
 
 - type: stack
   id: Credit

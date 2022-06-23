@@ -25,11 +25,10 @@ namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -110,7 +109,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, audioParams);
+        SoundSystem.Play(sound, filter, uid, audioParams);
     }
 
 #region DoAfters
@@ -217,9 +216,9 @@ public sealed class DoorSystem : SharedDoorSystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(access, user.Value)
+            _ => _accessReaderSystem.IsAllowed(user.Value, access)
         };
     }
 
@@ -239,7 +238,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var otherUid = args.OtherFixture.Body.Owner;
 
-        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+        if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
 
@@ -297,6 +296,18 @@ public sealed class DoorSystem : SharedDoorSystem
 
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
+    }
+
+    protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
+    {
+        if (component.BumpOpen)
+        {
+            foreach (var other in PhysicsSystem.GetCollidingEntities(body))
+            {
+                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
+                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+            }
+        }
     }
 }
 

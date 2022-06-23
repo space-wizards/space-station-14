@@ -68,17 +68,12 @@ namespace Content.Client.Entry
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
-
-            foreach (var ignoreName in IgnoredComponents.List)
-            {
-                factory.RegisterIgnore(ignoreName);
-            }
+            factory.IgnoreMissingComponents();
 
             factory.RegisterClass<SharedResearchConsoleComponent>();
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
@@ -129,6 +124,7 @@ namespace Content.Client.Entry
             IoCManager.Resolve<RulesManager>().Initialize();
             IoCManager.Resolve<ViewportManager>().Initialize();
             IoCManager.Resolve<GhostKickManager>().Initialize();
+            IoCManager.Resolve<ExtendedDisconnectInformationManager>().Initialize();
 
             IoCManager.InjectDependencies(this);
 
@@ -138,6 +134,7 @@ namespace Content.Client.Entry
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
+
         }
 
         /// <summary>
