@@ -4,10 +4,11 @@ using Content.Server.StationRecords;
 using Content.Shared.CrewManifest;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.CrewManifest;
 
-public sealed class CrewManifestSystem : EntitySystem
+public sealed class CrewManifestSystem : SharedCrewManifestSystem
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
