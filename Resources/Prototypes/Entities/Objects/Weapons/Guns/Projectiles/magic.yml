@@ -26,7 +26,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-    - state: energy
+    - state: spell
+      color: green
   - type: PolymorphOnCollide
     polymorph: WizardForcedCarp
     whitelist:
