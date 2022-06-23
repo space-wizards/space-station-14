@@ -42,7 +42,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover, xform);
+                HandleMobMovement(mover, physics, mobMover, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
