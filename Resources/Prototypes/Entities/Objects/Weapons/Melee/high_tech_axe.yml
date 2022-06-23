@@ -16,7 +16,7 @@
       types:
         Blunt: 6
         Heat: 5
-        Slash: 7
+        Slash: 6
   - type: Wieldable
   - type: IncreaseDamageOnWield
     modifiers:
@@ -29,11 +29,10 @@
     quickEquip: false
     Slots:
     - back
-  - type: TilePrying
   - type: PointLight
     netsync: false
     enabled: false
-    radius: 1.5
+    radius: 2
     energy: 1.5
     color: blue
   - type: Tool
