@@ -79,11 +79,12 @@
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
 
+# Add the second part in when this gets updated for limb removal
 - type: uplinkListing
   id: UplinkKatana
   category: Weapons
   itemId: Katana
-  description: Ancient craftwork made with not so ancient plasteel. There are claims spanning centuries back saying this was once a  precision limb removal sword.
+  description: Ancient craftwork made with not so ancient plasteel. # Great for precision limb removal.
   price: 10
 
 - type: uplinkListing
@@ -414,7 +415,7 @@
   description: A syndicate-branded overear headset. It protects your ears from flashbangs, and grants you access to a super secret Traitor radio channel!
   price: 4
 
-# TODO: figure out how to code the encryption key
+# TODO: Add this in when the Encryption Key gets added
 # - type: uplinkListing
 #   id: UplinkEncryptionKey
 #   category: Misc
