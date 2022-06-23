@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added new sounds related to diseases., type: Add}
-  id: 1266
-  time: '2022-03-28T23:11:45.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Nothing to see here, just moving televisions, some dressers, and a
@@ -2974,3 +2969,10 @@ Entries:
   - {message: Cargo pallets no longer y-fight., type: Fix}
   id: 1765
   time: '2022-06-23T06:59:49.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: 'Added Lighthouse, a fairly dimly lit station with a lot of offices
+      and dorms.', type: Add}
+  - {message: Removed fun!, type: Remove}
+  id: 1766
+  time: '2022-06-23T07:21:07.0000000+00:00'
