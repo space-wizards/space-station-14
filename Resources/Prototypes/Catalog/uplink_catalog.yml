@@ -425,7 +425,7 @@
   category: Misc
   itemId: BoxMRE
   description: A box of decades old military surplus rations. It is surprisingly not rotten.
-  price: 3
+  price: 2
 
 - type: uplinkListing
   id: UplinkDecoyDisk
