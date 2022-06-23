@@ -1,0 +1,11 @@
+
+- type: entity
+  id: BulletLongRifle
+  name: bullet (.22 LR)
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 13
