@@ -15,3 +15,27 @@
     intensitySlope: 6
     totalIntensity: 200
     maxTileBreak: 0
+
+- type: entity
+  id: ProjectilePolyboltCarp
+  name: carp polybolt
+  description: Nooo, I don't wanna be fish!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: energy
+  - type: PolymorphOnCollide
+    polymorph: WizardForcedCarp
+    whitelist:
+      components:
+      - Body
+    blacklist:
+      tags:
+      - Carp # can't re-polymorph
+  - type: Projectile
+    damage:
+      types:
+        Poison: 5
