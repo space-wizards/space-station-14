@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Split Station map! A new medium to large map that's split in half!,
-    type: Add}
-  id: 1274
-  time: '2022-03-31T19:08:55.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
@@ -2973,3 +2967,9 @@ Entries:
   - {message: Nerf L6 again., type: Tweak}
   id: 1773
   time: '2022-06-23T11:24:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
+      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
+  id: 1774
+  time: '2022-06-23T12:18:11.0000000+00:00'
