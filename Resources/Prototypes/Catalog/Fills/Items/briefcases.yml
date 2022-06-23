@@ -8,3 +8,14 @@
     contents:
       - id: Paper
         amount: 3
+
+- type: entity
+  id: BriefcaseBrownMoneyFilled
+  name: syndiecate briefcase full of cash
+  parent: BriefcaseBrown
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceCash1000
+        amount: 5
