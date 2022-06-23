@@ -46,6 +46,21 @@
         type: Remove
 
 - type: reagent
+  id: Ethylredoxrazine
+  name: reagent-name-ethylredoxrazine
+  group: Medicine
+  desc: reagent-desc-ethylredoxrazine
+  physicalDesc: reagent-physical-desc-opaque
+  color: "#2d5708"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 2.0
+        type: Remove
+
+- type: reagent
   id: Arithrazine
   name: reagent-name-arithrazine
   group: Medicine
@@ -88,6 +103,9 @@
         conditions:
         - !type:ReagentThreshold
           min: 30
+    Alcohol:
+      effects:
+      - !type:Drunk
 
 - type: reagent
   id: Cryoxadone

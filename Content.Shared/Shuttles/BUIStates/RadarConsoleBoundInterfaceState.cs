@@ -8,16 +8,28 @@ namespace Content.Shared.Shuttles.BUIStates;
 public class RadarConsoleBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly float MaxRange;
-    public readonly EntityUid? Entity;
+
+    /// <summary>
+    /// The relevant coordinates to base the radar around.
+    /// </summary>
+    public EntityCoordinates? Coordinates;
+
+    /// <summary>
+    /// The relevant rotation to rotate the angle around.
+    /// </summary>
+    public Angle? Angle;
+
     public readonly List<DockingInterfaceState> Docks;
 
     public RadarConsoleBoundInterfaceState(
         float maxRange,
-        EntityUid? entity,
+        EntityCoordinates? coordinates,
+        Angle? angle,
         List<DockingInterfaceState> docks)
     {
         MaxRange = maxRange;
-        Entity = entity;
+        Coordinates = coordinates;
+        Angle = angle;
         Docks = docks;
     }
 }

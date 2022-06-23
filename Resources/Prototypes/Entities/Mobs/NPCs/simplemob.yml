@@ -204,4 +204,6 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Bloodstream
     bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
 

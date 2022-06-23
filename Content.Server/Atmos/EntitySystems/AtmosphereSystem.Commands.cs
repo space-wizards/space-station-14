@@ -57,8 +57,6 @@ public sealed partial class AtmosphereSystem
        mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
        mixtures[5].Temperature = 5000f;
 
-       var entMan = IoCManager.Resolve<IEntityManager>();
-
        foreach (var gid in args)
        {
            if(!EntityUid.TryParse(gid, out var euid))
