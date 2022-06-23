@@ -15,3 +15,7 @@ action-description-spell-blink = Teleport to the clicked location.
 action-name-spell-summon-magicarp = Summon Magicarp
 action-description-spell-summon-magicarp = This spell summons three Magi-Carp to your aid! May or may not turn on user.
 action-speech-spell-summon-magicarp = AIE KHUSE EU
+
+action-name-spell-fireball = Fireball
+action-description-spell-fireball = Fires an explosive fireball towards the clicked location.
+action-speech-spell-fireball = ONI'SOMA!

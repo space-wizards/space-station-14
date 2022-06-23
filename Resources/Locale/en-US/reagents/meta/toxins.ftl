@@ -36,3 +36,6 @@ reagent-desc-vent-crud = A jet black substance found in poorly maintained ventil
 
 reagent-name-corpium = corpium
 reagent-desc-corpium = A Syndicate cocktail, carefully harvested from various sources. You wouldn't want this inside of you.
+
+reagent-name-uncooked-animal-proteins = uncooked animal proteins
+reagent-name-uncooked-animal-proteins = This is very risky for the stomachs of softer lifeforms to digest.
