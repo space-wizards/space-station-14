@@ -1,12 +1,19 @@
 # Guns
 
 - type: uplinkListing
-  id: UplinkPistol22LR
+  id: UplinkPistolSil22LR
   category: Weapons
   itemId: WeaponPistolSilenced22LR
   listingName: Silenced .22LR Pistrol
   description: A small, old, and underpowered pistol with a silencer. Alright choice for assassinations. Use pistol magazines (.22 LR).
   price: 4
+
+- type: uplinkListing
+  id: UplinkCombatKnife
+  category: Weapons
+  itemId: CombatKnife
+  description: A deadly knife intended for melee confrontations. Favored by Syndicate Agents for its added utility.
+  price: 3
 
 - type: uplinkListing
   id: UplinkPistolViper
@@ -71,6 +78,13 @@
   listingName: Energy Dagger
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
+
+- type: uplinkListing
+  id: UplinkKatana
+  category: Weapons
+  itemId: Katana
+  description: Ancient craftwork made with not so ancient plasteel. There are claims spanning centuries back saying this was once a  precision limb removal sword.
+  price: 10
 
 - type: uplinkListing
   id: UplinkHighTechAxe
@@ -146,6 +160,13 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
 
+# For the .22LR Pistol
+- type: uplinkListing
+  id: UplinkMagazineLongRifle
+  category: Ammo
+  itemId: MagazineLongRifle
+  price: 2
+
 # For the mosin
 - type: uplinkListing
   id: UplinkMosinAmmo
@@ -191,6 +212,12 @@
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   price: 4
 
+- type: uplinkListing
+  id: UplinkSyndieShoulderHolster
+  category: Utility
+  itemId: ClothingBeltSyndieHolster
+  price: 2
+
 # Bundles
 
 - type: uplinkListing
@@ -227,6 +254,13 @@
   itemId: ClothingBackpackDuffelSyndicateFilledLightRifle
   price: 30
   icon: /Textures/Objects/Weapons/Guns/Rifles/ak.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkGrenadierBeltBundle
+  category: Bundles
+  itemId: ClothingBeltGrenadeFilled 
+  price: 33
+  icon: /Textures/Clothing/Belt/grenadier.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkLecterBundle
@@ -374,6 +408,21 @@
   price: 1
 
 - type: uplinkListing
+  id: UplinkSyndieHeadset
+  category: Misc
+  itemId: ClothingHeadsetAltSyndicate
+  description: A syndicate-branded overear headset. It protects your ears from flashbangs, and grants you access to a super secret Traitor radio channel!
+  price: 4
+
+# TODO: figure out how to code the encryption key
+# - type: uplinkListing
+#   id: UplinkEncryptionKey
+#   category: Misc
+#   itemId: SyndieEncryptionKey
+#   description: A syndicate-branded encryption key. When implanted to a headset, it grants you access to a super secret Traitor radio channel!
+#   price: 2
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
@@ -399,6 +448,13 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Misc
+  itemId: ClothingHeadHatOutlawHat
+  description: A black, brimmed hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
+  price: 1
 
 - type: uplinkListing
   id: UplinkCigarettes
