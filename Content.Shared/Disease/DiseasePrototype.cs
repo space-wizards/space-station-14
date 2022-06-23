@@ -48,7 +48,7 @@ namespace Content.Shared.Disease
         /// float: the time it takes for the stage to begin.
         /// </summary>
         [DataField("Stages", serverOnly: true)]
-        public readonly Dictionary<int, float> Stages = new() { { 0, 0f } };
+        public readonly List<float> Stages = new() { 0f };
         /// <summary>
         /// List of effects the disease has that will
         /// run every second (by default anyway)

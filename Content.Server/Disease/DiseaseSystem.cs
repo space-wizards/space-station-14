@@ -108,13 +108,13 @@ namespace Content.Server.Disease
 
                     int stage = 0; //defaults to stage 0 because you should always have one
                     float lastTreshold = 0;
-                    foreach (var threshold in disease.Stages)
+                    for (var j = 0; j < disease.Stages.Count; j++)
                     {
-                        if (disease.TotalAccumulator > threshold.Value &&
-                            threshold.Value > lastTreshold)
+                        if (disease.TotalAccumulator > disease.Stages[j] &&
+                            disease.Stages[j] > lastTreshold)
                         {
-                            lastTreshold = threshold.Value;
-                            stage = threshold.Key;
+                            lastTreshold = disease.Stages[j];
+                            stage = j;
                         }
                     }
 
