@@ -41,6 +41,11 @@ public sealed partial class CargoSystem
 
     private const float ShuttleRecallRange = 100f;
 
+    /// <summary>
+    /// Minimum mass a grid needs to be to block a shuttle recall.
+    /// </summary>
+    private const float ShuttleCallMassThreshold = 300f;
+
     private const float CallOffset = 50f;
 
     private int _index;
@@ -59,7 +64,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
     #region Cargo Pilot Console
@@ -239,6 +243,8 @@ public sealed partial class CargoSystem
 
     private void AddShuttle(StationCargoOrderDatabaseComponent component)
     {
+        Setup();
+
         if (CargoMap == null || component.Shuttle != null) return;
 
         if (component.CargoShuttleProto != null)
@@ -319,7 +325,7 @@ public sealed partial class CargoSystem
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle) ||
             !TryComp<TransformComponent>(orderDatabase.Owner, out var xform)) return;
 
-        // Already called / not available (TODO: Send message)
+        // Already called / not available
         if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
             return;
 
@@ -341,8 +347,15 @@ public sealed partial class CargoSystem
             minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
         }
 
+        var offset = 0f;
+        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        {
+            var bounds = shuttleGrid.Grid.LocalAABB;
+            offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
+        }
+
         Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid,
-            center + _random.NextVector2(minRadius + 20f, minRadius + CallOffset));
+            center + _random.NextVector2(minRadius + offset, minRadius + CallOffset + offset));
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
         AddCargoContents(shuttle, orderDatabase);
@@ -389,10 +402,14 @@ public sealed partial class CargoSystem
             !Resolve(uid.Value, ref xform)) return true;
 
         var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleRecallRange);
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.GridIndex == other.Index) continue;
+            if (grid.GridIndex == other.Index ||
+                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
+                body.Mass < ShuttleCallMassThreshold) continue;
+
             reason = Loc.GetString("cargo-shuttle-console-proximity");
             return false;
         }
@@ -471,11 +488,6 @@ public sealed partial class CargoSystem
 
     #endregion
 
-    private void OnRoundStart(RoundStartingEvent ev)
-    {
-        Setup();
-    }
-
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         Cleanup();
@@ -485,6 +497,7 @@ public sealed partial class CargoSystem
     {
         if (CargoMap == null || !_mapManager.MapExists(CargoMap.Value))
         {
+            CargoMap = null;
             DebugTools.Assert(!EntityQuery<CargoShuttleComponent>().Any());
             return;
         }
@@ -501,11 +514,7 @@ public sealed partial class CargoSystem
 
     private void Setup()
     {
-        if (CargoMap != null)
-        {
-            _sawmill.Error($"Tried to setup cargo dimension when it's already setup!");
-            return;
-        }
+        if (CargoMap != null && _mapManager.MapExists(CargoMap.Value)) return;
 
         // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
         CargoMap = _mapManager.CreateMap();

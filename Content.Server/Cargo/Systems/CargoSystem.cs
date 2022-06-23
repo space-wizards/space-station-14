@@ -24,6 +24,12 @@ public sealed partial class CargoSystem : SharedCargoSystem
         SubscribeLocalEvent<StationInitializedEvent>(OnStationInit);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        Cleanup();
+    }
+
     private void OnStationInit(StationInitializedEvent ev)
     {
         EnsureComp<StationBankAccountComponent>(ev.Station);

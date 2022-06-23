@@ -121,7 +121,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
             foreach (var (ent, state) in gridDocks)
             {
-                var pressed = ent == DockingScreen.ViewedDock;
+                var pressed = state.Entity == DockingScreen.ViewedDock;
 
                 string suffix;
 
@@ -146,21 +146,21 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     _selectedDock = button;
                 }
 
-                button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
-                button.OnMouseExited += args => OnDockMouseExited(args, ent);
-                button.OnToggled += args => OnDockToggled(args, ent);
+                button.OnMouseEntered += args => OnDockMouseEntered(args, state);
+                button.OnMouseExited += args => OnDockMouseExited(args, state);
+                button.OnToggled += args => OnDockToggled(args, state);
                 DockPorts.AddChild(button);
                 index++;
             }
         }
     }
 
-    private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, EntityUid uid)
+    private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = uid;
+        RadarScreen.HighlightedDock = state.Entity;
     }
 
-    private void OnDockMouseExited(GUIMouseHoverEventArgs obj, EntityUid uid)
+    private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
         RadarScreen.HighlightedDock = null;
     }
@@ -168,12 +168,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Shows a docking camera instead of radar screen.
     /// </summary>
-    private void OnDockToggled(BaseButton.ButtonEventArgs obj, EntityUid ent)
+    private void OnDockToggled(BaseButton.ButtonEventArgs obj, DockingInterfaceState state)
     {
+        var ent = state.Entity;
+
         if (_selectedDock != null)
         {
             // If it got untoggled via other means then we'll stop viewing the old dock.
-            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != ent)
+            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != state.Entity)
             {
                 StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
             }
@@ -196,8 +198,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
-            if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var docks) &&
-                docks.TryGetValue(ent, out var state))
+            if (_shuttleUid != null)
             {
                 DockingScreen.Coordinates = state.Coordinates;
                 DockingScreen.Angle = state.Angle;
