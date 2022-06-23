@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Content.Shared.Tools.Components;
+using Content.Server.Station.Systems;
 
 namespace Content.Server.Disease
 {
@@ -28,6 +29,8 @@ namespace Content.Server.Disease
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
+
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
@@ -265,6 +268,17 @@ namespace Content.Server.Disease
 
             return report;
         }
+
+        public bool ServerHasDisease(DiseaseServerComponent server, DiseasePrototype disease)
+        {
+            bool has = false;
+            foreach (var serverDisease in server.Diseases)
+            {
+                if (serverDisease.ID == disease.ID)
+                    has = true;
+            }
+            return has;
+        }
         ///
         /// Appearance stuff
         ///
@@ -338,6 +352,27 @@ namespace Content.Server.Disease
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", args.Machine.Disease.Name));
                 contents = AssembleDiseaseReport(args.Machine.Disease);
+
+                bool known = false;
+
+                foreach (var server in EntityQuery<DiseaseServerComponent>())
+                {
+                    if (_stationSystem.GetOwningStation(server.Owner) != _stationSystem.GetOwningStation(uid))
+                        return;
+
+                    if (ServerHasDisease(server, args.Machine.Disease))
+                    {
+                       known = true;
+                    } else
+                    {
+                        server.Diseases.Add(args.Machine.Disease);
+                    }
+                }
+
+                if (!known)
+                {
+                    EntityManager.SpawnEntity("ResearchDisk5000", Transform(uid).Coordinates);
+                }
             } else
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report-none");
