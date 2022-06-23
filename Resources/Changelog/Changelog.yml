@@ -1,10 +1,4 @@
 Entries:
-- author: emisse
-  changes:
-  - {message: Winter coats are now in all applicable auto drobes. Command staffs are
-      in uniform printer., type: Add}
-  id: 1258
-  time: '2022-03-28T04:16:24.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'The sec door remote now properly opens brig doors, and the medical
@@ -2976,3 +2970,10 @@ Entries:
       a wall while on a grid and can float., type: Tweak}
   id: 1757
   time: '2022-06-23T02:13:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes two bugs with following, one where ghosts would be invisible
+      if following something inside a container and one where ghosts would rotate
+      with the followed entity.', type: Fix}
+  id: 1758
+  time: '2022-06-23T02:36:30.0000000+00:00'
