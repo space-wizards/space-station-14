@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix physics dying and rubberbanding the game., type: Fix}
-  id: 1268
-  time: '2022-03-29T08:02:18.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed being unable to extract/juice fiber from some cloth stacks., type: Fix}
@@ -2975,3 +2970,8 @@ Entries:
   - {message: Docking no longer requires power., type: Tweak}
   id: 1767
   time: '2022-06-23T07:22:11.0000000+00:00'
+- author: KIBORG04
+  changes:
+  - {message: Displaying of player characters in the round end statistics, type: Tweak}
+  id: 1768
+  time: '2022-06-23T09:32:06.0000000+00:00'
