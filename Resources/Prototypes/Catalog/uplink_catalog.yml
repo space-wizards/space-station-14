@@ -1,6 +1,14 @@
 # Guns
 
 - type: uplinkListing
+  id: UplinkPistol22LR
+  category: Weapons
+  itemId: WeaponPistolSilenced22LR
+  listingName: Silenced .22LR Pistrol
+  description: A small, old, and underpowered pistol with a silencer. Alright choice for assassinations. Use pistol magazines (.22 LR).
+  price: 4
+
+- type: uplinkListing
   id: UplinkPistolViper
   category: Weapons
   itemId: WeaponPistolViper
@@ -359,10 +367,24 @@
   price: 4
 
 - type: uplinkListing
+  id: UplinkBriefcaseMoney
+  category: Misc
+  itemId: BriefcaseBrownMoneyFilled
+  description: A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices.
+  price: 1
+
+- type: uplinkListing
   id: UplinkBalloon
   category: Misc
   itemId: BalloonSyn
   price: 20
+
+- type: uplinkListing
+  id: UplinkMRE
+  category: Misc
+  itemId: BoxMRE
+  description: A box of decades old military surplus rations. It is surprisingly not rotten.
+  price: 3
 
 - type: uplinkListing
   id: UplinkDecoyDisk
