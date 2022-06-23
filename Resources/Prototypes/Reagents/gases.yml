@@ -139,6 +139,10 @@
         conditions:
         - !type:OrganType
           type: Vox
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Slime
       # Converts Nitrogen into CO2
       - !type:ModifyLungGas
         conditions:

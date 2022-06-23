@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
@@ -13,10 +14,16 @@ namespace Content.Shared.Pulling
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {
-            if (!EntityManager.HasComponent<SharedPullerComponent>(puller))
+            if (!EntityManager.TryGetComponent<SharedPullerComponent>(puller, out var comp))
+            {
+                return false;
+            }
+
+            if (comp.NeedsHands && !_handsSystem.TryGetEmptyHand(puller, out _))
             {
                 return false;
             }
@@ -56,9 +63,9 @@ namespace Content.Shared.Pulling
             }
 
             var getPulled = new BeingPulledAttemptEvent(puller, pulled);
-            RaiseLocalEvent(pulled, getPulled);
+            RaiseLocalEvent(pulled, getPulled, true);
             var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller, startPull);
+            RaiseLocalEvent(puller, startPull, true);
             return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
@@ -81,7 +88,7 @@ namespace Content.Shared.Pulling
             }
 
             var msg = new StopPullingEvent(user);
-            RaiseLocalEvent(pullable.Owner, msg);
+            RaiseLocalEvent(pullable.Owner, msg, true);
 
             if (msg.Cancelled) return false;
 
@@ -176,7 +183,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            RaiseLocalEvent(pullable.Owner, pullAttempt);
+            RaiseLocalEvent(pullable.Owner, pullAttempt, true);
 
             if (pullAttempt.Cancelled)
                 return false;

@@ -63,14 +63,13 @@ namespace Content.IntegrationTests.Tests.Utility
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var mapCoordinates = testMap.MapCoords;
+
             var sEntities = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
-                var mapId = PoolManager.GetMainGrid(mapManager).ParentMapId;
-                var mapCoordinates = new MapCoordinates(0, 0, mapId);
-
                 var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
                 var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
 
