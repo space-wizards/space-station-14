@@ -1,45 +1,46 @@
-﻿using Content.Client.Cargo.Components;
 using Content.Client.Cargo.UI;
+using Content.Shared.Access.Systems;
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Events;
+using Content.Shared.Cargo.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Cargo.Components.SharedCargoConsoleComponent;
+using Robust.Client.Player;
+using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Cargo
+namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private CargoConsoleMenu? _menu;
 
+        /// <summary>
+        /// This is the separate popup window for individual orders.
+        /// </summary>
         [ViewVariables]
         private CargoConsoleOrderMenu? _orderMenu;
 
         [ViewVariables]
-        public CargoOrderDatabaseComponent? Orders { get; private set; }
-
-        [ViewVariables]
-        public bool RequestOnly { get; private set; }
-
-        [ViewVariables]
-        public int BankId { get; private set; }
-
-        [ViewVariables]
-        public string? BankName { get; private set; }
+        public string? AccountName { get; private set; }
 
         [ViewVariables]
         public int BankBalance { get; private set; }
 
         [ViewVariables]
-        public (int CurrentCapacity, int MaxCapacity) ShuttleCapacity { get; private set; }
+        public int OrderCapacity { get; private set; }
 
+        [ViewVariables]
+        public int OrderCount { get; private set; }
+
+        /// <summary>
+        /// Currently selected product
+        /// </summary>
         private CargoProductPrototype? _product;
 
-        public CargoConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
@@ -47,30 +48,29 @@ namespace Content.Client.Cargo
         {
             base.Open();
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner.Owner, out CargoOrderDatabaseComponent? orders)) return;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sysManager = entityManager.EntitySysManager;
+            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
+            _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
+            var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
 
-            Orders = orders;
+            string orderRequester;
 
-            _menu = new CargoConsoleMenu(this);
+            if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
+                orderRequester = metadata.EntityName;
+            else
+                orderRequester = string.Empty;
+
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
 
-            _menu.Populate();
-
-            Orders.OnDatabaseUpdated += _menu.PopulateOrders;
-
-            _menu.CallShuttleButton.OnPressed += (_) =>
-            {
-                SendMessage(new CargoConsoleShuttleMessage());
-            };
             _menu.OnItemSelected += (args) =>
             {
                 if (args.Button.Parent is not CargoProductRow row)
                     return;
                 _product = row.Product;
-                _orderMenu.Requester.Text = "";
+                _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;
                 _orderMenu.OpenCentered();
@@ -86,7 +86,15 @@ namespace Content.Client.Cargo
             };
 
             _menu.OpenCentered();
+        }
 
+        private void Populate(List<CargoOrderData> orders)
+        {
+            if (_menu == null) return;
+
+            _menu.PopulateProducts();
+            _menu.PopulateCategories();
+            _menu.PopulateOrders(orders);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -95,17 +103,16 @@ namespace Content.Client.Cargo
 
             if (state is not CargoConsoleInterfaceState cState)
                 return;
-            if (RequestOnly != cState.RequestOnly)
-            {
-                RequestOnly = cState.RequestOnly;
-                _menu?.UpdateRequestOnly();
-            }
-            BankId = cState.BankId;
-            BankName = cState.BankName;
-            BankBalance = cState.BankBalance;
-            ShuttleCapacity = cState.ShuttleCapacity;
-            _menu?.UpdateCargoCapacity();
-            _menu?.UpdateBankData();
+
+            OrderCapacity = cState.Capacity;
+            OrderCount = cState.Count;
+            BankBalance = cState.Balance;
+
+            AccountName = cState.Name;
+
+            Populate(cState.Orders);
+            _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
+            _menu?.UpdateBankData(AccountName, BankBalance);
         }
 
         protected override void Dispose(bool disposing)
@@ -114,11 +121,6 @@ namespace Content.Client.Cargo
 
             if (!disposing) return;
 
-            if (Orders != null && _menu != null)
-            {
-                Orders.OnDatabaseUpdated -= _menu.PopulateOrders;
-            }
-
             _menu?.Dispose();
             _orderMenu?.Dispose();
         }
@@ -126,7 +128,7 @@ namespace Content.Client.Cargo
         private bool AddOrder()
         {
             int orderAmt = _orderMenu?.Amount.Value ?? 0;
-            if (orderAmt < 1 || orderAmt > ShuttleCapacity.MaxCapacity)
+            if (orderAmt < 1 || orderAmt > OrderCapacity)
             {
                 return false;
             }
@@ -153,11 +155,12 @@ namespace Content.Client.Cargo
             if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
-            if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
+            if (OrderCount >= OrderCapacity)
                 return;
 
             SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
-            _menu?.UpdateCargoCapacity();
+            // Most of the UI isn't predicted anyway so.
+            // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
         }
     }
 }

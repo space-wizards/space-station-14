@@ -3,7 +3,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 
-namespace Content.Client.Cargo;
+namespace Content.Client.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {

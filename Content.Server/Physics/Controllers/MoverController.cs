@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
@@ -61,9 +62,18 @@ namespace Content.Server.Physics.Controllers
             var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
-            foreach (var (pilot, mover, xform) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent, TransformComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
-                if (pilot.Console == null) continue;
+                var consoleEnt = pilot.Console?.Owner;
+
+                // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
+                if (TryComp<CargoPilotConsoleComponent>(consoleEnt, out var cargoConsole))
+                {
+                    consoleEnt = cargoConsole.Entity;
+                }
+
+                if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
+
                 _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridUid;

@@ -24,6 +24,7 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not RadarConsoleBoundInterfaceState cState) return;
 
+        _window?.SetMatrix(cState.Coordinates, cState.Angle);
         _window?.UpdateState(cState);
     }
 }

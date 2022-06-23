@@ -1,7 +1,7 @@
 using Content.Shared.Cargo;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Cargo;
+namespace Content.Client.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
