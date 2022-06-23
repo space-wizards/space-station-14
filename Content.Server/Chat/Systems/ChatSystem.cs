@@ -5,7 +5,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Headset;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -14,7 +13,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Content.Shared.Radio;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Robust.Server.Player;
@@ -28,13 +26,13 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Chat;
+namespace Content.Server.Chat.Systems;
 
 /// <summary>
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
-public sealed class ChatSystem : SharedChatSystem
+public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -59,6 +57,7 @@ public sealed class ChatSystem : SharedChatSystem
 
     public override void Initialize()
     {
+        InitializeRadio();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
@@ -66,6 +65,7 @@ public sealed class ChatSystem : SharedChatSystem
 
     public override void Shutdown()
     {
+        ShutdownRadio();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
     }
 
@@ -229,8 +229,7 @@ public sealed class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        RadioChannelPrototype? channel;
-        (message, channel) = RadioPrefix(source, message);
+        (message, var channel) = RadioPrefix(source, message);
 
         if (channel != null)
             _listener.PingListeners(source, message, channel);
@@ -413,62 +412,6 @@ public sealed class ChatSystem : SharedChatSystem
             .Recipients
             .Union(_adminManager.ActiveAdmins)
             .Select(p => p.ConnectedClient);
-    }
-
-    private (string, RadioChannelPrototype?) RadioPrefix(EntityUid source, string message)
-    {
-        bool channelMessage = message.StartsWith(':') || message.StartsWith('.');
-        bool radioMessage = message.StartsWith(';') || channelMessage;
-        if (radioMessage)
-        {
-            // Special case for empty messages
-            if (message.Length == 1)
-                return ("", null);
-
-            // Look for a prefix indicating a destination radio channel.
-            RadioChannelPrototype? chan = null;
-            if (channelMessage && message.Length >= 2)
-            {
-                foreach (var channel in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
-                {
-                    if (channel.KeyCode == message[1])
-                    {
-                        chan = channel;
-                        break;
-                    }
-                }
-
-                if (chan == null)
-                {
-                    _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
-                    chan = null;
-                }
-
-                // Strip message prefix.
-                var parts = message.Split(' ').ToList();
-                parts.RemoveAt(0);
-                message = string.Join(" ", parts);
-            }
-            else
-            {
-                // Remove semicolon
-                message = message.Substring(1).TrimStart();
-                chan = null;
-            }
-
-            if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
-                TryComp(entityUid, out HeadsetComponent? headset))
-            {
-                headset.RadioRequested = true;
-            }
-            else
-            {
-                _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
-            }
-
-            return (message, chan);
-        }
-        return (message, null);
     }
 
     private string SanitizeMessageCapital(EntityUid source, string message)

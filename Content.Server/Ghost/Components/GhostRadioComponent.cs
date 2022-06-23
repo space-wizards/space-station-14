@@ -1,5 +1,6 @@
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
+using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 
@@ -13,9 +14,9 @@ namespace Content.Server.Ghost.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        private List<RadioChannelPrototype> _channels = new(){1459};
 
-        public IReadOnlyList<int> Channels => _channels;
+        public IReadOnlyList<RadioChannelPrototype> Channels => _channels;
 
         public void Receive(string message, int channel, EntityUid speaker)
         {
@@ -33,6 +34,6 @@ namespace Content.Server.Ghost.Components
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 
-        public void Broadcast(string message, EntityUid speaker, int channel) { }
+        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel) { }
     }
 }

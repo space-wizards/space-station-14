@@ -1,7 +1,9 @@
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Radio;
 
 namespace Content.Server.Radio.Components
 {
@@ -19,11 +21,11 @@ namespace Content.Server.Radio.Components
 
         private bool _radioOn;
         [DataField("channels")]
-        private List<int> _channels = new(){0};
+        private List<RadioChannelPrototype> _channels = new(){};
 
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel")]
-        public int BroadcastFrequency { get; set; } = 0;
+        [DataField("broadcastChannel", required: true)]
+        public RadioChannelPrototype BroadcastFrequency { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -38,7 +40,7 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        [ViewVariables] public IReadOnlyList<int> Channels => _channels;
+        [ViewVariables] public IReadOnlyList<RadioChannelPrototype> Channels => _channels;
 
         protected override void Initialize()
         {
@@ -72,7 +74,7 @@ namespace Content.Server.Radio.Components
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
-        public void Receive(string message, int channel, EntityUid speaker)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
         {
             if (RadioOn)
             {
@@ -80,12 +82,12 @@ namespace Content.Server.Radio.Components
             }
         }
 
-        public void Listen(string message, EntityUid speaker, int channel)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
             Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, EntityUid speaker, int channel)
+        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
             _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }

@@ -60,7 +60,7 @@ namespace Content.Server.Headset
             return RadioRequested;
         }
 
-        public void Receive(string message, int channel, EntityUid source)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
         {
             if (Owner.TryGetContainer(out var container))
             {
