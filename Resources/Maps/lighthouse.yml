@@ -114,7 +114,7 @@ grids:
   - ind: -3,2
     tiles: NwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAACMAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAIQAAADEAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAA3AAAAMQAAACEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAACEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAArAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAIQAAADEAAAAAAAAAAAAAAAAAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAAA==
   - ind: -3,-1
-    tiles: NwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACsAAAA3AAAANwAAACsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAArAAAAHgAAAB4AAAAeAAAAHgAAACsAAAArAAAAHgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAC4AAAA3AAAAKwAAADEAAAAxAAAAMQAAADEAAAA3AAAAHgAAAB4AAAA3AAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAANwAAACsAAAAxAAAAMQAAADEAAAAxAAAANwAAAB4AAAAxAAAANwAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAA3AAAAMQAAACsAAAA3AAAANwAAADcAAAArAAAAMQAAADcAAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAALgAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADEAAAArAAAAKwAAADEAAAArAAAAKwAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
+    tiles: NwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACsAAAA3AAAANwAAACsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAArAAAAHgAAAB4AAAAeAAAAHgAAACsAAAArAAAAHgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAC4AAAA3AAAAKwAAADEAAAAxAAAAMQAAADEAAAA3AAAAHgAAAB4AAAA3AAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAAB4AAAAxAAAANwAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAA3AAAAMQAAACsAAAA3AAAANwAAADcAAAArAAAAMQAAADcAAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAALgAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADEAAAArAAAAKwAAADEAAAArAAAAKwAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
   - ind: -1,3
     tiles: NAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAA3AAAANwAAADQAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAA3AAAAIwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAjAAAAIwAAACMAAAAhAAAAMQAAADEAAAAxAAAAMQAAADEAAAAhAAAAMQAAADEAAAAxAAAAIQAAADEAAAAxAAAAIwAAACMAAAAjAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAACMAAAAjAAAAIwAAADEAAAAxAAAANwAAACsAAAArAAAAKwAAACsAAAArAAAANwAAAB4AAAA3AAAANwAAADEAAAA3AAAANwAAADcAAAArAAAAMQAAADcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAAOAAAAMQAAADEAAAArAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAAHgAAAB4AAAA3AAAANwAAADcAAAA3AAAADgAAACwAAAAxAAAAKwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAAA4AAAAxAAAAMQAAADEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAAOAAAALAAAADEAAAArAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAAHgAAAB4AAAArAAAAKwAAADcAAAA3AAAADgAAADEAAAAxAAAAKwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA4AAAAxAAAAMQAAACsAAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAOAAAANwAAADcAAAA3AAAANwAAADcAAAAOAAAAKwAAADEAAAA3AAAAKwAAACsAAAArAAAAKwAAACsAAAA3AAAADgAAADcAAAAOAAAADgAAAA4AAAAOAAAANwAAAA==
   - ind: -2,3
@@ -140,7 +140,7 @@ grids:
   - ind: -2,-3
     tiles: KwAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAGQAAABkAAAAZAAAAGQAAACsAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAArAAAAFAAAABQAAAAXAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAFAAAAKwAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAACsAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAArAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAKwAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAXAAAAFAAAACsAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAArAAAAFAAAABQAAAAUAAAAFwAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAANwAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAADcAAAA3AAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAxAAAANwAAADcAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAMQAAADEAAAA3AAAANwAAACsAAAArAAAAKwAAACsAAAA3AAAANwAAADcAAAArAAAAKwAAACsAAAArAAAANwAAADEAAAAxAAAAMQAAACsAAAAjAAAAIwAAACMAAAAjAAAAKwAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAAhAAAAIQAAADEAAAArAAAAIwAAACMAAAAjAAAAIwAAACsAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAAIwAAACEAAAAxAAAAKwAAACMAAAAjAAAAIwAAACMAAAArAAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAA==
   - ind: -4,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAACsAAAArAAAAKwAAADcAAAA3AAAAKwAAACsAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAArAAAAKwAAACsAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAKwAAACsAAAArAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAACsAAAArAAAAKwAAACsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKwAAACsAAAArAAAAKwAAACsAAAAxAAAAMQAAADEAAAAxAAAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsAAAArAAAAKwAAACsAAAArAAAAMQAAADEAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAAKwAAACsAAAArAAAAKwAAADEAAAAxAAAAMQAAADEAAAAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAAA==
   - ind: -4,-2
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAAA==
   - ind: -4,0
@@ -4078,131 +4078,131 @@ entities:
           color: '#7900003C'
           id: FullTileOverlayGreyscale
           coordinates: 15,46
+        2041:
+          color: '#FF4C63FF'
+          id: Flowerspv2
+          coordinates: 11,52
         2042:
           color: '#FF4C63FF'
           id: Flowerspv2
-          coordinates: 11,52
+          coordinates: 17,55
         2043:
           color: '#FF4C63FF'
           id: Flowerspv2
-          coordinates: 17,55
-        2044:
-          color: '#FF4C63FF'
-          id: Flowerspv2
           coordinates: 21,51
-        2045:
+        2044:
           color: '#FF4C63FF'
           id: Flowersy2
           coordinates: 10,52
-        2046:
+        2045:
           color: '#FF4C63FF'
           id: Flowersy2
           coordinates: 17,55
-        2047:
+        2046:
           color: '#FF8263FF'
           id: Flowersy4
           coordinates: 15,55
-        2048:
+        2047:
           color: '#FF8263FF'
           id: Flowersy4
           coordinates: 11,51
-        2049:
+        2048:
           color: '#FF8263FF'
           id: Flowersbr2
           coordinates: 21,52
-        2050:
+        2049:
           color: '#FF3FA7FF'
           id: Flowerspv3
           coordinates: 16,55
-        2051:
+        2050:
           color: '#FF3FA7FF'
           id: Flowerspv3
           coordinates: 21,52
-        2052:
+        2051:
           color: '#CA3FA7FF'
           id: Flowersy2
           coordinates: 22,52
-        2053:
+        2052:
           color: '#FF9F76FF'
           id: Flowersbr2
           coordinates: 21,51
-        2054:
+        2053:
           color: '#FF9F76FF'
           id: Flowersbr2
           coordinates: 11,52
-        2055:
+        2054:
           color: '#FF9F76FF'
           id: Flowerspv2
           coordinates: 11,51
-        2056:
+        2055:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 10.600306,51.86295
-        2057:
+        2056:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 11.225306,51.4567
-        2058:
+        2057:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 15.522181,54.86295
-        2059:
+        2058:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 16.475306,55.11295
-        2060:
+        2059:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 21.537806,51.847324
-        2061:
+        2060:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 20.86593,51.441074
-        2062:
+        2061:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 21.194056,50.7692
-        2063:
+        2062:
           color: '#FF9F7679'
           id: Bushi1
           coordinates: 9.740931,52.222324
-        2064:
+        2063:
           color: '#FF9F7679'
           id: Flowersbr1
           coordinates: 10.475306,51.909824
-        2065:
+        2064:
           color: '#FF9F7679'
           id: Flowersbr1
           coordinates: 15.522181,54.972324
-        2066:
+        2065:
           color: '#FF9F7679'
           id: Flowersbr1
           coordinates: 16.537806,54.9567
-        2067:
+        2066:
           color: '#FF9F7679'
           id: Flowersbr1
           coordinates: 21.069056,51.42545
-        2068:
+        2067:
           color: '#FF9F7679'
           id: Flowersbr1
           coordinates: 21.537806,52.0192
-        2069:
+        2068:
           color: '#FF9F7679'
           id: Bushi4
           coordinates: 10.772181,50.8942
-        2070:
+        2069:
           color: '#FF9F7679'
           id: Bushi4
           coordinates: 22.02218,52.222324
-        2071:
+        2070:
           color: '#FF9F7679'
           id: Bushi4
           coordinates: 17.162806,54.941074
-        2072:
+        2071:
           color: '#FF9F7679'
           id: Bushi4
           coordinates: 14.803431,54.784824
-        2073:
+        2072:
           color: '#FF9F7679'
           id: Bushi4
           coordinates: 11.209681,52.159824
@@ -8059,30 +8059,30 @@ entities:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
           coordinates: -44,-6
-        688:
+        2073:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
-          coordinates: -48,-6
-        689:
+          coordinates: -48,-7
+        2074:
+          color: '#A4610696'
+          id: FullTileOverlayGreyscale
+          coordinates: -49,-7
+        2075:
+          color: '#A4610696'
+          id: FullTileOverlayGreyscale
+          coordinates: -49,-8
+        2076:
+          color: '#A4610696'
+          id: FullTileOverlayGreyscale
+          coordinates: -52,-8
+        2078:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale180
-          coordinates: -49,-6
-        690:
+          coordinates: -51,-8
+        2077:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
-          coordinates: -50,-6
-        691:
-          color: '#A4610696'
-          id: FullTileOverlayGreyscale
-          coordinates: -51,-6
-        692:
-          color: '#A4610696'
-          id: FullTileOverlayGreyscale
-          coordinates: -52,-6
-        693:
-          color: '#A4610696'
-          id: FullTileOverlayGreyscale
-          coordinates: -53,-6
+          coordinates: -52,-7
         694:
           color: '#A4610696'
           id: FullTileOverlayGreyscale
@@ -8612,6 +8612,10 @@ entities:
           color: '#EFB341B7'
           id: Bushh1
           coordinates: -34.49293,-31.391151
+        2079:
+          color: '#A4610696'
+          id: HalfTileOverlayGreyscale180
+          coordinates: -50,-8
       -2,-2:
         251:
           color: '#63B56CBD'
@@ -15312,7 +15316,7 @@ entities:
       -48,-10: 0
       -48,-9: 0
       -48,-8: 0
-      -48,-7: 0
+      -48,-7: 1
       -48,-6: 0
       -48,-5: 0
       -48,-4: 0
@@ -15795,11 +15799,11 @@ entities:
       -17,-35: 0
       -17,-34: 0
       -17,-33: 0
-      -58,-4: 0
-      -58,-3: 0
-      -58,-2: 0
+      -58,-4: 2
+      -58,-3: 3
+      -58,-2: 4
       -58,-1: 0
-      -57,-4: 0
+      -57,-4: 5
       -57,-3: 0
       -57,-2: 0
       -57,-1: 0
@@ -15825,14 +15829,14 @@ entities:
       -53,-3: 0
       -53,-2: 0
       -53,-1: 0
-      -52,-7: 0
+      -52,-7: 6
       -52,-6: 0
       -52,-5: 0
       -52,-4: 0
       -52,-3: 0
       -52,-2: 0
       -52,-1: 0
-      -51,-7: 0
+      -51,-7: 7
       -51,-6: 0
       -51,-5: 0
       -51,-4: 0
@@ -15842,7 +15846,7 @@ entities:
       -50,-16: 0
       -50,-15: 0
       -50,-14: 0
-      -50,-7: 0
+      -50,-7: 8
       -50,-6: 0
       -50,-5: 0
       -50,-4: 0
@@ -15852,7 +15856,7 @@ entities:
       -49,-16: 0
       -49,-15: 0
       -49,-14: 0
-      -49,-7: 0
+      -49,-7: 9
       -49,-6: 0
       -49,-5: 0
       -49,-4: 0
@@ -17871,8 +17875,8 @@ entities:
       12,51: 0
       12,52: 0
       14,53: 0
-      16,54: 1
-      17,54: 2
+      16,54: 10
+      17,54: 11
       18,53: 0
       19,53: 0
       31,-13: 0
@@ -18108,7 +18112,7 @@ entities:
       -31,-40: 0
       -19,-41: 0
       -19,-40: 0
-      -58,-5: 0
+      -58,-5: 3
       -57,-5: 0
       -56,-5: 0
       -55,-8: 0
@@ -18121,7 +18125,7 @@ entities:
       -51,-15: 0
       -50,-8: 0
       -49,-13: 0
-      -49,-9: 0
+      -49,-9: 12
       -49,-8: 0
       -53,-24: 0
       -52,-24: 0
@@ -18277,7 +18281,7 @@ entities:
       -10,-49: 0
       -9,-50: 0
       -8,-54: 0
-      -8,-53: 3
+      -8,-53: 13
       -8,-52: 0
       -8,-51: 0
       -8,-50: 0
@@ -18869,10 +18873,10 @@ entities:
       -23,-46: 0
       -23,-45: 0
       -58,-7: 0
-      -58,-6: 0
-      -57,-7: 0
+      -58,-6: 4
+      -57,-7: 7
       -57,-6: 0
-      -56,-7: 0
+      -56,-7: 6
       -56,-6: 0
       -52,-31: 0
       -51,-32: 0
@@ -19037,18 +19041,18 @@ entities:
       -10,-55: 0
       -10,-54: 0
       -9,-58: 0
-      -9,-57: 4
+      -9,-57: 14
       -9,-56: 0
-      -9,-55: 5
+      -9,-55: 15
       -9,-54: 0
       -8,-58: 0
-      -8,-57: 4
+      -8,-57: 14
       -8,-56: 0
-      -8,-55: 5
+      -8,-55: 15
       -7,-58: 0
-      -7,-57: 4
+      -7,-57: 14
       -7,-56: 0
-      -7,-55: 5
+      -7,-55: 15
       -79,27: 0
       -78,26: 0
       -78,27: 0
@@ -19222,7 +19226,7 @@ entities:
       -26,-59: 0
       -26,-58: 0
       -26,-57: 0
-      -25,-57: 6
+      -25,-57: 16
       -55,-58: 0
       -55,-55: 0
       -54,-58: 0
@@ -19651,7 +19655,7 @@ entities:
       13,56: 0
       31,41: 0
       20,53: 0
-      21,53: 7
+      21,53: 2
       22,53: 0
       23,53: 0
       24,53: 0
@@ -20358,8 +20362,8 @@ entities:
       -9,-62: 0
       -9,-61: 0
       -9,-60: 0
-      -9,-59: 6
-      -9,-53: 3
+      -9,-59: 16
+      -9,-53: 13
       -9,-52: 0
       -9,-51: 0
       -8,-64: 0
@@ -20367,15 +20371,15 @@ entities:
       -8,-62: 0
       -8,-61: 0
       -8,-60: 0
-      -8,-59: 6
+      -8,-59: 16
       -7,-64: 0
       -7,-63: 0
       -7,-62: 0
       -7,-61: 0
       -7,-60: 0
-      -7,-59: 6
+      -7,-59: 16
       -7,-54: 0
-      -7,-53: 3
+      -7,-53: 13
       -7,-52: 0
       -6,-64: 0
       -6,-63: 0
@@ -20859,7 +20863,7 @@ entities:
       -24,-60: 0
       -24,-59: 0
       -24,-58: 0
-      -24,-57: 6
+      -24,-57: 16
       -24,-56: 0
       -24,-55: 0
       -24,-54: 0
@@ -21866,10 +21870,10 @@ entities:
       14,55: 0
       14,56: 0
       14,57: 0
-      15,54: 8
+      15,54: 6
       15,59: 0
-      16,55: 9
-      16,56: 10
+      16,55: 17
+      16,56: 18
       16,57: 0
       16,58: 0
       16,59: 0
@@ -21883,13 +21887,136 @@ entities:
       20,52: 0
       20,54: 0
       20,55: 0
-      21,52: 11
+      21,52: 12
+      9,54: 16
+      10,53: 16
+      10,54: 16
+      10,55: 16
+      11,54: 16
+      11,57: 16
+      13,55: 16
+      15,55: 16
+      15,56: 16
+      15,57: 16
+      17,55: 16
+      17,56: 16
+      18,56: 16
+      21,51: 16
+      21,54: 16
+      21,55: 16
+      21,56: 16
+      22,51: 16
+      22,52: 16
+      22,54: 16
+      23,51: 16
+      23,52: 16
+      23,54: 16
+      24,51: 16
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 291.73178
+      moles:
+      - 21.718313
+      - 81.702225
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 184.23125
+      moles:
+      - 13.64055
+      - 51.31445
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.53749
+      moles:
+      - 16.36866
+      - 61.57734
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 202.38438
+      moles:
+      - 15.004604
+      - 56.445892
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 265.9203
+      moles:
+      - 19.778797
+      - 74.40595
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.5375
+      moles:
+      - 16.36866
+      - 61.57734
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 202.38437
+      moles:
+      - 15.004604
+      - 56.445892
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 270.4586
+      moles:
+      - 20.119812
+      - 75.68881
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 287.47714
+      moles:
+      - 21.398613
+      - 80.49954
       - 0
       - 0
       - 0
@@ -21919,6 +22046,17 @@ entities:
       - 0
       - 0
     - volume: 2500
+      temperature: 147.925
+      moles:
+      - 10.912439
+      - 41.05156
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
       temperature: 293.15
       moles:
       - 0
@@ -21956,28 +22094,6 @@ entities:
       moles:
       - 0
       - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 184.23125
-      moles:
-      - 13.64055
-      - 51.31445
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 220.5375
-      moles:
-      - 16.36866
-      - 61.57734
       - 0
       - 0
       - 0
@@ -22000,17 +22116,6 @@ entities:
       moles:
       - 8.099076
       - 30.467955
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 147.925
-      moles:
-      - 10.912439
-      - 41.05156
       - 0
       - 0
       - 0
@@ -34747,7 +34852,7 @@ entities:
 - uid: 1956
   type: WeaponPistolMk58
   components:
-  - pos: 13.393679,50.761547
+  - pos: 13.378744,50.806164
     parent: 100
     type: Transform
   - canCollide: False
@@ -42251,11 +42356,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3064
-  type: Grille
+  type: NitrogenTankFilled
   components:
-  - pos: -47.5,-8.5
+  - pos: -48.337696,-0.46368888
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3065
   type: WallReinforced
   components:
@@ -42317,11 +42424,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3075
-  type: ReinforcedWindow
+  type: PartRodMetal
   components:
-  - pos: -47.5,-8.5
+  - pos: -22.50004,-50.471188
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3076
   type: WallSolid
   components:
@@ -42541,7 +42650,8 @@ entities:
 - uid: 3111
   type: BlastDoor
   components:
-  - name: Salvage Blast Door B
+  - desc: This one says 'BLAST DONGER'. Someone has etched in on the side with a blade 'STOP SPACING THE STATION'.
+    name: Salvage Blast Door B
     type: MetaData
   - pos: -44.5,-17.5
     parent: 100
@@ -42591,7 +42701,8 @@ entities:
 - uid: 3116
   type: AirlockExternalGlassLocked
   components:
-  - name: Salvage Externals
+  - desc: Try not to space yourself.
+    name: Salvage Externals
     type: MetaData
   - pos: -44.5,-15.5
     parent: 100
@@ -42625,19 +42736,18 @@ entities:
 - uid: 3121
   type: CrowbarRed
   components:
-  - pos: -50.37634,-5.4833074
+  - pos: -48.618946,-6.276189
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 3122
-  type: OxygenTankFilled
+  type: ChairOfficeDark
   components:
-  - pos: -50.82854,-5.25492
+  - rot: 1.5707963267948966 rad
+    pos: -49.5,-7.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3123
   type: WallReinforced
   components:
@@ -42683,55 +42793,20 @@ entities:
     parent: 100
     type: Transform
 - uid: 3130
-  type: AirlockExternalGlassShuttleLocked
+  type: OxygenTankFilled
   components:
-  - name: Cargo Shuttle Dock
-    type: MetaData
-  - rot: -1.5707963267948966 rad
-    pos: -57.5,-3.5
+  - pos: -51.59536,-7.0019474
     parent: 100
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
+  - canCollide: False
+    type: Physics
 - uid: 3131
-  type: BlastDoor
+  type: WallReinforced
   components:
-  - name: Blast Door A
-    type: MetaData
-  - pos: -57.5,-1.5
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-6.5
     parent: 100
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 13252
-    type: SignalReceiver
 - uid: 3132
   type: AirlockMaintCargoLocked
   components:
@@ -42753,29 +42828,47 @@ entities:
     parent: 100
     type: Transform
 - uid: 3135
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -54.5,-6.5
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-7.5
     parent: 100
     type: Transform
 - uid: 3136
-  type: WallReinforced
+  type: SignalButton
   components:
-  - pos: -49.5,-6.5
+  - desc: It's a button for activating the blast doors closest to you.
+    name: Blast Doors B
+    type: MetaData
+  - pos: -52.271507,-6.2767167
     parent: 100
     type: Transform
+  - fixtures: []
+    type: Fixtures
+  - outputs:
+      Pressed: []
+    type: SignalTransmitter
 - uid: 3137
-  type: WallReinforced
+  type: BlastDoor
+  components:
+  - name: Blast Door A
+    type: MetaData
+  - pos: -57.5,-5.5
+    parent: 100
+    type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 3138
+  type: GasPipeStraight
   components:
   - pos: -48.5,-6.5
     parent: 100
     type: Transform
-- uid: 3138
-  type: WallReinforced
-  components:
-  - pos: -47.5,-6.5
-    parent: 100
-    type: Transform
+  - color: '#F59C42FF'
+    type: AtmosPipeColor
 - uid: 3139
   type: WallSolid
   components:
@@ -42795,11 +42888,22 @@ entities:
     parent: 100
     type: Transform
 - uid: 3142
-  type: WallReinforced
+  type: PoweredSmallLight
   components:
-  - pos: -52.5,-6.5
+  - rot: 3.141592653589793 rad
+    pos: -55.5,-5.5
     parent: 100
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 3143
   type: WallReinforced
   components:
@@ -42807,27 +42911,22 @@ entities:
     parent: 100
     type: Transform
 - uid: 3144
-  type: ReinforcedWindow
+  type: Grille
   components:
-  - pos: -55.5,-6.5
+  - pos: -49.5,-8.5
     parent: 100
     type: Transform
 - uid: 3145
-  type: DrinkBottleBeer
+  type: Grille
   components:
-  - pos: -51.04984,-4.605696
+  - pos: -48.5,-8.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 3146
   type: WallReinforced
   components:
-  - pos: -53.5,-5.5
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-8.5
     parent: 100
     type: Transform
 - uid: 3147
@@ -42915,17 +43014,19 @@ entities:
     parent: 100
     type: Transform
 - uid: 3159
-  type: DrinkBottleBeer
+  type: BlastDoor
   components:
-  - pos: -52.64359,-5.308821
+  - desc: This one says 'BLAST DONGER'. Someone has etched in on the side with a blade 'STOP SPACING THE STATION'.
+    name: Blast Door B
+    type: MetaData
+  - pos: -53.5,-5.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
+  - inputs:
+      Open: []
+      Close: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 3160
   type: SignCargo
   components:
@@ -43041,19 +43142,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3177
-  type: ComputerSupplyRequest
+  type: WeaponLaserCarbine
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -41.5,-1.5
+  - pos: 19.525541,52.556164
     parent: 100
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
+  - canCollide: False
+    type: Physics
 - uid: 3178
   type: BoxFolderYellow
   components:
@@ -43196,90 +43291,61 @@ entities:
     parent: 100
     type: Transform
 - uid: 3193
-  type: cargoTelepad
+  type: WeaponShotgunKammerer
   components:
-  - pos: -43.5,-4.5
+  - pos: 13.478666,52.524914
     parent: 100
     type: Transform
+  - unspawnedCount: 4
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
-  - inputs:
-      OrderReceiver: []
-    type: SignalReceiver
-- uid: 3194
-  type: ComputerSupplyOrdering
-  components:
-  - pos: -43.5,-5.5
-    parent: 100
-    type: Transform
   - containers:
-      board: !type:Container
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
-- uid: 3195
-  type: DrinkBeer
+- uid: 3194
+  type: WeaponPistolMk58
   components:
-  - pos: -49.76859,-5.105696
+  - pos: 13.378744,50.44679
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 3196
-  type: AirlockExternalGlassLocked
+- uid: 3195
+  type: CableApcExtension
   components:
-  - name: Cargo Shuttle Dock
-    type: MetaData
-  - pos: -53.5,-4.5
+  - pos: -54.5,-3.5
     parent: 100
     type: Transform
-- uid: 3197
-  type: AirlockExternalGlassLocked
+- uid: 3196
+  type: GasPipeStraight
   components:
-  - name: Cargo Shuttle Dock
-    type: MetaData
-  - pos: -53.5,-3.5
+  - pos: -49.5,-4.5
+    parent: 100
+    type: Transform
+  - color: '#42F5F5FF'
+    type: AtmosPipeColor
+- uid: 3197
+  type: Table
+  components:
+  - pos: -51.5,-6.5
     parent: 100
     type: Transform
 - uid: 3198
-  type: AirlockExternalGlassShuttleLocked
+  type: SignalButton
   components:
-  - name: Cargo Shuttle Dock
+  - desc: It's a button for activating the blast doors that are close to space.
+    name: Blast Doors A
     type: MetaData
-  - rot: -1.5707963267948966 rad
-    pos: -57.5,-4.5
+  - pos: -52.271507,-6.5735917
     parent: 100
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
+  - fixtures: []
     type: Fixtures
+  - outputs:
+      Pressed: []
+    type: SignalTransmitter
 - uid: 3199
   type: BlastDoor
   components:
@@ -43311,95 +43377,17 @@ entities:
         uid: 3348
     type: SignalReceiver
 - uid: 3201
-  type: TwoWayLever
+  type: Grille
   components:
-  - desc: A two way lever for the cargo shuttle conveyor belts. It yearns for use.
-    name: Cargo Shuttle Belts
-    type: MetaData
-  - pos: -55.5,-3.5
+  - rot: -1.5707963267948966 rad
+    pos: -53.5,-3.5
     parent: 100
     type: Transform
-  - outputs:
-      Left:
-      - port: Forward
-        uid: 13260
-      - port: Forward
-        uid: 13254
-      - port: Forward
-        uid: 13261
-      - port: Forward
-        uid: 13255
-      - port: Forward
-        uid: 13262
-      - port: Forward
-        uid: 13256
-      - port: Forward
-        uid: 13263
-      - port: Forward
-        uid: 13257
-      - port: Forward
-        uid: 13264
-      - port: Forward
-        uid: 13258
-      - port: Forward
-        uid: 13259
-      - port: Forward
-        uid: 13265
-      Right:
-      - port: Reverse
-        uid: 13260
-      - port: Reverse
-        uid: 13254
-      - port: Reverse
-        uid: 13261
-      - port: Reverse
-        uid: 13255
-      - port: Reverse
-        uid: 13262
-      - port: Reverse
-        uid: 13256
-      - port: Reverse
-        uid: 13263
-      - port: Reverse
-        uid: 13257
-      - port: Reverse
-        uid: 13264
-      - port: Reverse
-        uid: 13258
-      - port: Reverse
-        uid: 13259
-      - port: Reverse
-        uid: 13265
-      Middle:
-      - port: Off
-        uid: 13260
-      - port: Off
-        uid: 13254
-      - port: Off
-        uid: 13261
-      - port: Off
-        uid: 13255
-      - port: Off
-        uid: 13262
-      - port: Off
-        uid: 13256
-      - port: Off
-        uid: 13263
-      - port: Off
-        uid: 13257
-      - port: Off
-        uid: 13264
-      - port: Off
-        uid: 13258
-      - port: Off
-        uid: 13259
-      - port: Off
-        uid: 13265
-    type: SignalTransmitter
 - uid: 3202
   type: BlastDoor
   components:
-  - name: Blast Door B
+  - desc: This one says 'BLAST DONGER'. Someone has etched in on the side with a blade 'STOP SPACING THE STATION'.
+    name: Blast Door B
     type: MetaData
   - pos: -53.5,-1.5
     parent: 100
@@ -43407,9 +43395,7 @@ entities:
   - inputs:
       Open: []
       Close: []
-      Toggle:
-      - port: Pressed
-        uid: 13253
+      Toggle: []
     type: SignalReceiver
 - uid: 3203
   type: SignCargo
@@ -43424,17 +43410,20 @@ entities:
     parent: 100
     type: Transform
 - uid: 3205
-  type: Grille
+  type: Table
   components:
-  - pos: -50.5,-6.5
+  - pos: -51.5,-7.5
     parent: 100
     type: Transform
 - uid: 3206
-  type: Grille
+  type: GasPipeStraight
   components:
-  - pos: -51.5,-6.5
+  - rot: 1.5707963267948966 rad
+    pos: -49.5,-4.5
     parent: 100
     type: Transform
+  - color: '#F59C42FF'
+    type: AtmosPipeColor
 - uid: 3207
   type: Grille
   components:
@@ -43485,20 +43474,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 3213
-  type: BlastDoor
+  type: GasPipeStraight
   components:
-  - name: Blast Door B
-    type: MetaData
-  - pos: -53.5,-2.5
+  - pos: -49.5,-6.5
     parent: 100
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 13253
-    type: SignalReceiver
+  - color: '#42F5F5FF'
+    type: AtmosPipeColor
 - uid: 3214
   type: GasVentPump
   components:
@@ -43509,15 +43491,19 @@ entities:
   - color: '#42F5F5FF'
     type: AtmosPipeColor
 - uid: 3215
-  type: ReinforcedWindow
+  type: GasPipeBend
   components:
-  - pos: -51.5,-6.5
+  - rot: 3.141592653589793 rad
+    pos: -50.5,-4.5
     parent: 100
     type: Transform
+  - color: '#F59C42FF'
+    type: AtmosPipeColor
 - uid: 3216
-  type: ReinforcedWindow
+  type: Grille
   components:
-  - pos: -50.5,-6.5
+  - rot: -1.5707963267948966 rad
+    pos: -50.5,-8.5
     parent: 100
     type: Transform
 - uid: 3217
@@ -43565,7 +43551,8 @@ entities:
 - uid: 3223
   type: Grille
   components:
-  - pos: -56.5,-6.5
+  - rot: -1.5707963267948966 rad
+    pos: -57.5,-3.5
     parent: 100
     type: Transform
 - uid: 3224
@@ -43788,9 +43775,10 @@ entities:
     parent: 100
     type: Transform
 - uid: 3251
-  type: Table
+  type: Grille
   components:
-  - pos: -52.5,-5.5
+  - rot: -1.5707963267948966 rad
+    pos: -51.5,-8.5
     parent: 100
     type: Transform
 - uid: 3252
@@ -43800,21 +43788,24 @@ entities:
     parent: 100
     type: Transform
 - uid: 3253
-  type: Table
+  type: WallReinforced
   components:
-  - pos: -51.5,-5.5
+  - rot: -1.5707963267948966 rad
+    pos: -47.5,-8.5
     parent: 100
     type: Transform
 - uid: 3254
-  type: Table
+  type: WallReinforced
   components:
-  - pos: -50.5,-5.5
+  - rot: 1.5707963267948966 rad
+    pos: -55.5,-6.5
     parent: 100
     type: Transform
 - uid: 3255
-  type: Table
+  type: Grille
   components:
-  - pos: -49.5,-5.5
+  - rot: -1.5707963267948966 rad
+    pos: -55.5,-3.5
     parent: 100
     type: Transform
 - uid: 3256
@@ -43928,9 +43919,12 @@ entities:
     parent: 100
     type: Transform
 - uid: 3272
-  type: ReinforcedWindow
+  type: AirlockExternalGlassLocked
   components:
-  - pos: -56.5,-6.5
+  - desc: Try not to space yourself.
+    name: Cargo Shuttle Dock
+    type: MetaData
+  - pos: -53.5,-4.5
     parent: 100
     type: Transform
 - uid: 3273
@@ -43950,24 +43944,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3275
-  type: CrateMedicalSupplies
+  type: WallReinforced
   components:
-  - pos: -48.5,-5.5
+  - rot: 1.5707963267948966 rad
+    pos: -56.5,-6.5
     parent: 100
     type: Transform
-  - containers:
-    - EntityStorageComponent
-    type: Construction
-  - isPlaceable: False
-    type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-      PaperLabel: !type:ContainerSlot {}
-      entity_storage: !type:Container
-        ents: []
-      paper_label: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 3276
   type: Rack
   components:
@@ -44011,13 +43993,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3282
-  type: SheetGlass
+  type: ReinforcedWindow
   components:
-  - pos: -48.34509,-0.4833074
+  - rot: -1.5707963267948966 rad
+    pos: -50.5,-8.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3283
   type: SheetPlastic
   components:
@@ -44027,19 +44008,22 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3284
-  type: SheetPlastic
+  type: Chair
   components:
-  - pos: -46.37634,-0.4676824
+  - rot: -1.5707963267948966 rad
+    pos: -50.5,-6.5
+    parent: 100
+    type: Transform
+- uid: 3285
+  type: DrinkBeer
+  components:
+  - pos: -51.712696,-6.198064
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 3285
-  type: Chair
-  components:
-  - pos: -51.5,-4.5
-    parent: 100
-    type: Transform
+  - solution: drink
+    type: DrainableSolution
 - uid: 3286
   type: WallReinforced
   components:
@@ -44047,15 +44031,12 @@ entities:
     parent: 100
     type: Transform
 - uid: 3287
-  type: DrinkBeer
+  type: ReinforcedWindow
   components:
-  - pos: -49.81384,-5.2645574
+  - rot: -1.5707963267948966 rad
+    pos: -57.5,-3.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 3288
   type: DrinkBeer
   components:
@@ -44073,13 +44054,12 @@ entities:
     parent: 100
     type: Transform
 - uid: 3290
-  type: CableApcStack
+  type: ReinforcedWindow
   components:
-  - pos: -52.34509,-5.2333074
+  - rot: -1.5707963267948966 rad
+    pos: -53.5,-3.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3291
   type: CableApcExtension
   components:
@@ -44705,13 +44685,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3372
-  type: SheetPlastic
+  type: DrinkBottleBeer
   components:
-  - pos: -21.219955,-11.308055
+  - pos: -49.07207,-6.869939
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
 - uid: 3373
   type: SheetSteel
   components:
@@ -44721,13 +44705,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3374
-  type: SheetSteel
+  type: DrinkBottleBeer
   components:
-  - pos: -20.26683,-11.38618
+  - pos: -51.806446,-6.573064
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
 - uid: 3375
   type: SheetGlass
   components:
@@ -44737,13 +44725,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3376
-  type: SheetGlass
+  type: BoxLightbulb
   components:
-  - pos: -19.209448,-11.317675
+  - pos: -48.35332,-6.401189
     parent: 100
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3377
   type: Grille
   components:
@@ -48613,13 +48605,12 @@ entities:
     parent: 100
     type: Transform
 - uid: 3955
-  type: NitrogenTankFilled
+  type: ReinforcedWindow
   components:
-  - pos: -51.23808,-5.310487
+  - rot: -1.5707963267948966 rad
+    pos: -55.5,-3.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3956
   type: CableApcExtension
   components:
@@ -52848,19 +52839,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 4568
-  type: ComputerSupplyRequest
+  type: MagazineBoxPistol
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -2.5,73.5
+  - pos: 17.306791,53.712414
     parent: 100
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
+  - unspawnedCount: 60
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 4569
   type: TableReinforced
   components:
@@ -53436,10 +53423,10 @@ entities:
     parent: 100
     type: Transform
   - ringtone:
-    - C
     - D
-    - C
-    - D
+    - G
+    - G
+    - E
     type: Ringer
   - canCollide: False
     type: Physics
@@ -54950,6 +54937,8 @@ entities:
   - pos: -5.608796,59.709587
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4885
   type: AsteroidRock
   components:
@@ -61246,13 +61235,11 @@ entities:
   - color: '#42F5F5FF'
     type: AtmosPipeColor
 - uid: 5693
-  type: GasVentScrubber
+  type: WindoorSecureCargoLocked
   components:
-  - pos: -41.5,-2.5
+  - pos: -39.5,-2.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
 - uid: 5694
   type: GasPipeStraight
   components:
@@ -61297,32 +61284,58 @@ entities:
   - color: '#F59C42FF'
     type: AtmosPipeColor
 - uid: 5699
-  type: GasPipeStraight
+  type: GasPipeBend
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: 1.5707963267948966 rad
     pos: -48.5,-5.5
     parent: 100
     type: Transform
   - color: '#F59C42FF'
     type: AtmosPipeColor
 - uid: 5700
-  type: GasPipeStraight
+  type: AirlockExternalGlassShuttleLocked
   components:
+  - name: Cargo Shuttle Dock
+    type: MetaData
   - rot: -1.5707963267948966 rad
-    pos: -49.5,-5.5
+    pos: -57.5,-2.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 5701
-  type: GasPipeStraight
+  type: AirlockExternalGlassLocked
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -50.5,-5.5
+  - desc: Try not to space yourself.
+    name: Cargo Shuttle Dock
+    type: MetaData
+  - pos: -53.5,-2.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
 - uid: 5702
   type: GasPipeStraight
   components:
@@ -61342,32 +61355,29 @@ entities:
   - color: '#F59C42FF'
     type: AtmosPipeColor
 - uid: 5704
-  type: GasPipeStraight
+  type: ComputerCargoShuttle
   components:
   - rot: -1.5707963267948966 rad
-    pos: -49.5,-4.5
+    pos: -48.5,-7.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 5705
-  type: GasVentScrubber
+  type: ReinforcedWindow
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -51.5,-5.5
+  - rot: -1.5707963267948966 rad
+    pos: -51.5,-8.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
 - uid: 5706
-  type: GasPipeBend
+  type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: -50.5,-4.5
+  - pos: -56.5,-3.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
 - uid: 5707
   type: GasPipeStraight
   components:
@@ -61439,19 +61449,16 @@ entities:
   - color: '#42F5F5FF'
     type: AtmosPipeColor
 - uid: 5715
-  type: GasPipeStraight
+  type: WallReinforced
   components:
-  - rot: 3.141592653589793 rad
-    pos: -49.5,-4.5
+  - rot: 1.5707963267948966 rad
+    pos: -54.5,-6.5
     parent: 100
     type: Transform
-  - color: '#42F5F5FF'
-    type: AtmosPipeColor
 - uid: 5716
-  type: GasVentPump
+  type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: -49.5,-5.5
+  - pos: -49.5,-5.5
     parent: 100
     type: Transform
   - color: '#42F5F5FF'
@@ -100875,9 +100882,9 @@ entities:
     parent: 100
     type: Transform
 - uid: 11013
-  type: WallReinforced
+  type: Table
   components:
-  - pos: -57.5,-5.5
+  - pos: -48.5,-6.5
     parent: 100
     type: Transform
 - uid: 11014
@@ -100907,17 +100914,14 @@ entities:
     parent: 100
     type: Transform
 - uid: 11018
-  type: BoxLightbulb
+  type: GasVentScrubber
   components:
-  - pos: -49.39359,-5.371321
+  - rot: 3.141592653589793 rad
+    pos: -48.5,-7.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
+  - color: '#F59C42FF'
+    type: AtmosPipeColor
 - uid: 11019
   type: CableApcExtension
   components:
@@ -113357,7 +113361,7 @@ entities:
 - uid: 12447
   type: MagazinePistolRubber
   components:
-  - pos: 13.724764,50.739845
+  - pos: 13.659994,50.774914
     parent: 100
     type: Transform
   - unspawnedCount: 10
@@ -113367,7 +113371,7 @@ entities:
 - uid: 12448
   type: WeaponPistolMk58
   components:
-  - pos: 13.487429,50.527172
+  - pos: 13.378744,50.63429
     parent: 100
     type: Transform
   - canCollide: False
@@ -115355,19 +115359,14 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 12698
-  type: Poweredlight
+  type: GasVentPump
   components:
   - rot: 3.141592653589793 rad
-    pos: -49.5,-5.5
+    pos: -49.5,-7.5
     parent: 100
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
+  - color: '#42F5F5FF'
+    type: AtmosPipeColor
 - uid: 12699
   type: EmergencyLight
   components:
@@ -119528,17 +119527,50 @@ entities:
     parent: 100
     type: Transform
 - uid: 13249
-  type: Grille
+  type: AirlockExternalGlassShuttleLocked
   components:
-  - pos: -55.5,-6.5
+  - name: Cargo Shuttle Dock
+    type: MetaData
+  - rot: -1.5707963267948966 rad
+    pos: -57.5,-4.5
     parent: 100
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 13250
-  type: Grille
+  type: ComputerShuttleCargo
   components:
-  - pos: -54.5,-6.5
+  - pos: -43.5,-5.5
     parent: 100
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 13251
   type: CableHV
   components:
@@ -119546,41 +119578,41 @@ entities:
     parent: 100
     type: Transform
 - uid: 13252
-  type: SignalButton
+  type: ConveyorBelt
   components:
-  - desc: It's a button for activating blast doors A.
-    name: Blast Doors A
-    type: MetaData
-  - pos: -57.5,-5.5
+  - rot: 1.5707963267948966 rad
+    pos: -57.5,-5.5
     parent: 100
     type: Transform
-  - fixtures: []
-    type: Fixtures
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 13390
-      - port: Toggle
-        uid: 3131
-    type: SignalTransmitter
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 16286
+      Forward:
+      - port: Left
+        uid: 16286
+      Off:
+      - port: Middle
+        uid: 16286
+    type: SignalReceiver
 - uid: 13253
-  type: SignalButton
+  type: ConveyorBelt
   components:
-  - desc: It's a button for activating blast doors B.
-    name: Blast Doors B
-    type: MetaData
-  - pos: -53.5,-5.5
+  - rot: 1.5707963267948966 rad
+    pos: -56.5,-5.5
     parent: 100
     type: Transform
-  - fixtures: []
-    type: Fixtures
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 3213
-      - port: Toggle
-        uid: 3202
-    type: SignalTransmitter
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 16286
+      Forward:
+      - port: Left
+        uid: 16286
+      Off:
+      - port: Middle
+        uid: 16286
+    type: SignalReceiver
 - uid: 13254
   type: ConveyorBelt
   components:
@@ -119591,13 +119623,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13255
   type: ConveyorBelt
@@ -119609,13 +119641,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13256
   type: ConveyorBelt
@@ -119627,13 +119659,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13257
   type: ConveyorBelt
@@ -119645,13 +119677,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13258
   type: ConveyorBelt
@@ -119663,13 +119695,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13259
   type: ConveyorBelt
@@ -119681,134 +119713,115 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13260
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
-    pos: -57.5,-2.5
+    pos: -55.5,-5.5
     parent: 100
     type: Transform
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13261
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
-    pos: -56.5,-2.5
+    pos: -54.5,-5.5
     parent: 100
     type: Transform
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13262
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
-    pos: -55.5,-2.5
+    pos: -53.5,-5.5
     parent: 100
     type: Transform
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13263
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
-    pos: -54.5,-2.5
+    pos: -52.5,-5.5
     parent: 100
     type: Transform
   - inputs:
       Reverse:
       - port: Right
-        uid: 3201
+        uid: 16286
       Forward:
       - port: Left
-        uid: 3201
+        uid: 16286
       Off:
       - port: Middle
-        uid: 3201
+        uid: 16286
     type: SignalReceiver
 - uid: 13264
-  type: ConveyorBelt
+  type: BlastDoor
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -53.5,-2.5
+  - name: Blast Door A
+    type: MetaData
+  - pos: -57.5,-1.5
     parent: 100
     type: Transform
   - inputs:
-      Reverse:
-      - port: Right
-        uid: 3201
-      Forward:
-      - port: Left
-        uid: 3201
-      Off:
-      - port: Middle
-        uid: 3201
+      Open: []
+      Close: []
+      Toggle: []
     type: SignalReceiver
 - uid: 13265
-  type: ConveyorBelt
+  type: Grille
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -52.5,-2.5
+  - pos: -54.5,-3.5
     parent: 100
     type: Transform
-  - inputs:
-      Reverse:
-      - port: Right
-        uid: 3201
-      Forward:
-      - port: Left
-        uid: 3201
-      Off:
-      - port: Middle
-        uid: 3201
-    type: SignalReceiver
 - uid: 13266
-  type: Multitool
+  type: Grille
   components:
-  - pos: -44.944458,-5.249181
+  - pos: -56.5,-3.5
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 13267
-  type: CableApcExtension
+  type: ReinforcedWindow
   components:
-  - pos: -52.5,-4.5
+  - pos: -54.5,-3.5
     parent: 100
     type: Transform
 - uid: 13268
@@ -120416,6 +120429,8 @@ entities:
   - pos: -5.374421,59.912712
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 13363
@@ -120607,20 +120622,11 @@ entities:
     parent: 100
     type: Transform
 - uid: 13390
-  type: BlastDoor
+  type: ReinforcedWindow
   components:
-  - name: Blast Door A
-    type: MetaData
-  - pos: -57.5,-2.5
+  - pos: -56.5,-3.5
     parent: 100
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 13252
-    type: SignalReceiver
 - uid: 13391
   type: CableMV
   components:
@@ -124895,15 +124901,19 @@ entities:
     parent: 100
     type: Transform
 - uid: 14009
-  type: MagazinePistolRubber
+  type: WeaponShotgunKammerer
   components:
-  - pos: 13.802889,50.41172
+  - pos: 13.478666,52.368664
     parent: 100
     type: Transform
-  - unspawnedCount: 10
+  - unspawnedCount: 4
     type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
+  - containers:
+      ballistic-ammo: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 14010
   type: ReinforcedPlasmaWindow
   components:
@@ -139957,19 +139967,15 @@ entities:
 - uid: 15921
   type: Paper
   components:
-  - pos: -22.677204,-50.49613
+  - pos: -21.859415,-50.283688
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 15922
   type: Paper
   components:
-  - pos: -22.06783,-50.386757
+  - pos: -21.908514,-50.564938
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 15923
   type: Paper
   components:
@@ -139991,11 +139997,9 @@ entities:
 - uid: 15925
   type: DrinkWaterBottleFull
   components:
-  - pos: -23.177204,-50.324257
+  - pos: -24.206469,-50.814938
     parent: 100
     type: Transform
-  - canCollide: False
-    type: Physics
   - solution: drink
     type: DrainableSolution
 - uid: 15926
@@ -141821,19 +141825,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 16181
-  type: WeaponShotgunKammerer
+  type: MagazineBoxPistolRubber
   components:
-  - pos: 13.517178,52.38902
+  - pos: 17.509916,53.587414
     parent: 100
     type: Transform
-  - unspawnedCount: 4
+  - unspawnedCount: 60
     type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
-  - containers:
-      ballistic-ammo: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 16182
   type: WeaponLaserCarbine
   components:
@@ -141863,29 +141863,25 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 16185
-  type: BoxMagazinePistol
+  type: MagazineBoxPistol
   components:
-  - pos: 17.742231,53.67262
+  - pos: 17.759916,53.47804
     parent: 100
     type: Transform
+  - unspawnedCount: 60
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 16186
-  type: BoxMagazinePistolRubber
+  type: MagazinePistolRubber
   components:
-  - pos: 17.242231,53.67262
+  - pos: 13.753744,50.66554
     parent: 100
     type: Transform
+  - unspawnedCount: 10
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 16187
   type: RailingCornerSmall
   components:
@@ -141958,6 +141954,8 @@ entities:
   - pos: 12.456029,56.749344
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -141969,11 +141967,15 @@ entities:
     parent: 100
     type: Transform
 - uid: 16199
-  type: PortableFlasher
+  type: MagazinePistolRubber
   components:
-  - pos: 16.5,48.5
+  - pos: 13.816244,50.57179
     parent: 100
     type: Transform
+  - unspawnedCount: 10
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 16200
   type: EmergencyLight
   components:
@@ -142527,10 +142529,345 @@ entities:
   - pos: -5.624421,59.272087
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 16276
   type: ClothingBeltChampion
   components:
   - pos: -5.280671,59.318962
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16277
+  type: PartRodMetal
+  components:
+  - pos: -22.828165,-50.361813
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16278
+  type: ComputerCargoOrders
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,73.5
+    parent: 100
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 16279
+  type: ComputerCargoOrders
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -41.5,-1.5
+    parent: 100
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 16280
+  type: DrinkBottleBeer
+  components:
+  - pos: -54.806446,-2.5105639
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
+- uid: 16281
+  type: DrinkBottleBeer
+  components:
+  - pos: -56.337696,-5.260564
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: RefillableSolution
+  - solution: drink
+    type: DrainableSolution
+- uid: 16282
+  type: ReinforcedWindow
+  components:
+  - pos: -49.5,-8.5
+    parent: 100
+    type: Transform
+- uid: 16283
+  type: ReinforcedWindow
+  components:
+  - pos: -48.5,-8.5
+    parent: 100
+    type: Transform
+- uid: 16284
+  type: CableApcStack
+  components:
+  - pos: -51.493946,-7.3765297
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16285
+  type: Paper
+  components:
+  - pos: -51.32207,-6.3765297
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16286
+  type: TwoWayLever
+  components:
+  - name: Cargo Shuttle Belts
+    type: MetaData
+  - pos: -52.5,-3.5
+    parent: 100
+    type: Transform
+  - outputs:
+      Left:
+      - port: Forward
+        uid: 13254
+      - port: Forward
+        uid: 13255
+      - port: Forward
+        uid: 13256
+      - port: Forward
+        uid: 13257
+      - port: Forward
+        uid: 13258
+      - port: Forward
+        uid: 13259
+      - port: Forward
+        uid: 16288
+      - port: Forward
+        uid: 13252
+      - port: Forward
+        uid: 13253
+      - port: Forward
+        uid: 13260
+      - port: Forward
+        uid: 13261
+      - port: Forward
+        uid: 13262
+      - port: Forward
+        uid: 13263
+      - port: Forward
+        uid: 16287
+      Right:
+      - port: Reverse
+        uid: 13254
+      - port: Reverse
+        uid: 13255
+      - port: Reverse
+        uid: 13256
+      - port: Reverse
+        uid: 13257
+      - port: Reverse
+        uid: 13258
+      - port: Reverse
+        uid: 13259
+      - port: Reverse
+        uid: 16288
+      - port: Reverse
+        uid: 13252
+      - port: Reverse
+        uid: 13253
+      - port: Reverse
+        uid: 13260
+      - port: Reverse
+        uid: 13261
+      - port: Reverse
+        uid: 13262
+      - port: Reverse
+        uid: 13263
+      - port: Reverse
+        uid: 16287
+      Middle:
+      - port: Off
+        uid: 13254
+      - port: Off
+        uid: 13255
+      - port: Off
+        uid: 13256
+      - port: Off
+        uid: 13257
+      - port: Off
+        uid: 13258
+      - port: Off
+        uid: 13259
+      - port: Off
+        uid: 16288
+      - port: Off
+        uid: 13252
+      - port: Off
+        uid: 13253
+      - port: Off
+        uid: 13260
+      - port: Off
+        uid: 13261
+      - port: Off
+        uid: 13262
+      - port: Off
+        uid: 13263
+      - port: Off
+        uid: 16287
+    type: SignalTransmitter
+- uid: 16287
+  type: ConveyorBelt
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,-5.5
+    parent: 100
+    type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 16286
+      Forward:
+      - port: Left
+        uid: 16286
+      Off:
+      - port: Middle
+        uid: 16286
+    type: SignalReceiver
+- uid: 16288
+  type: ConveyorBelt
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,-1.5
+    parent: 100
+    type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 16286
+      Forward:
+      - port: Left
+        uid: 16286
+      Off:
+      - port: Middle
+        uid: 16286
+    type: SignalReceiver
+- uid: 16289
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-5.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 16290
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-4.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 16291
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-2.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 16292
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -52.5,-1.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 16293
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -51.5,-7.5
+    parent: 100
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 16294
+  type: CableApcExtension
+  components:
+  - pos: -52.5,-4.5
+    parent: 100
+    type: Transform
+- uid: 16295
+  type: CableApcExtension
+  components:
+  - pos: -51.5,-4.5
+    parent: 100
+    type: Transform
+- uid: 16296
+  type: CableApcExtension
+  components:
+  - pos: -50.5,-4.5
+    parent: 100
+    type: Transform
+- uid: 16297
+  type: CableApcExtension
+  components:
+  - pos: -50.5,-5.5
+    parent: 100
+    type: Transform
+- uid: 16298
+  type: CableApcExtension
+  components:
+  - pos: -50.5,-6.5
+    parent: 100
+    type: Transform
+- uid: 16299
+  type: CableApcExtension
+  components:
+  - pos: -50.5,-7.5
+    parent: 100
+    type: Transform
+- uid: 16300
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -43.5,-15.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
+- uid: 16301
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -43.5,-17.5
+    parent: 100
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 ...
