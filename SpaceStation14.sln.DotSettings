@@ -320,7 +320,7 @@ public abstract class $CLASS$ : Component {
 [Serializable, NetSerializable]
 public sealed class $CLASS$State : ComponentState {
     public $CLASS$State($CLASS$ component) {
-        
+
     }
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A04E4F8184AF3244891524889B282DB9/UITag/@EntryValue">SS14</s:String>
@@ -401,11 +401,11 @@ public sealed class $CLASS$ : IPrototype, IInheritingPrototype {
     /// &lt;inheritdoc/&gt;
     [IdDataField]
     public string ID { get; } = default!;
-    
+
     /// &lt;inheritdoc/&gt;
     [ParentDataField(typeof(AbstractPrototypeIdSerializer&lt;$CLASS$&gt;))]
     public string? Parent { get; }
-    
+
     /// &lt;inheritdoc/&gt;
     [NeverPushInheritance]
     [AbstractDataField]

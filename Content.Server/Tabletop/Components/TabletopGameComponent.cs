@@ -3,7 +3,7 @@ namespace Content.Server.Tabletop.Components
     /// <summary>
     /// A component that makes an object playable as a tabletop game.
     /// </summary>
-    [RegisterComponent, Friend(typeof(TabletopSystem))]
+    [RegisterComponent, Access(typeof(TabletopSystem))]
     public sealed class TabletopGameComponent : Component
     {
         [DataField("boardName")]

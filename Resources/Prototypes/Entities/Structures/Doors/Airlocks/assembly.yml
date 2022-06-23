@@ -10,7 +10,6 @@
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: "assembly"
   - type: Physics
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

@@ -156,7 +156,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             // the highest network alarm state at any time
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
                 || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable)
-                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn))
+                || !EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
                 return;
 
             // ignore packets from self, ignore from different frequency
@@ -342,9 +342,9 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (state == AtmosMonitorAlarmType.Danger) PlayAlertSound(uid, monitor);
 
-            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent alarmable)
+            if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
                 && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork));
+                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
             // TODO: Central system that grabs *all* alarms from wired network
         }
 
@@ -352,7 +352,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref monitor)) return;
 
-            SoundSystem.Play(Filter.Pvs(uid), monitor.AlarmSound.GetSound(), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
+            SoundSystem.Play(monitor.AlarmSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
         }
 
         /// <summary>

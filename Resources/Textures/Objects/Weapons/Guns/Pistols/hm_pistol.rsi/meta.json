@@ -14,12 +14,6 @@
       "name": "base"
     },
     {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
-    },
-    {
       "name": "inhand-left",
       "directions": 4
     },

@@ -394,9 +394,20 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
     groups:
     - AllAccess
+
+- type: entity
+  parent: CentcomIDCard
+  id: ERTLeaderIDCard
+  name: ERT ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: gold
+    - state: ert_commander # we have the sprites but don't need individual ID entities for now.
+  - type: Clothing
+    HeldPrefix: gold
 
 - type: entity
   parent: IDCardStandard
@@ -425,6 +436,19 @@
         - state: idmusician
     - type: PresetIdCard
       job: Musician
+
+- type: entity
+  parent: CentcomIDCard
+  id: CentcomIDCardDeathsquad
+  name: Deathsquad ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Clothing
+    HeldPrefix: blue
+  - type: IdCard
+    jobTitle: Centcom Agent
 
 - type: entity
   parent: PassengerIDCard
@@ -459,3 +483,28 @@
   - type: Sprite
     layers:
     - state: syndie
+  - type: Access
+    tags:
+    - NuclearOperative
+
+- type: entity
+  parent: IDCardStandard
+  id: PsychologistIDCard
+  name: psychologist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idpsychologist
+  - type: PresetIdCard
+    job: Psychologist
+
+- type: entity
+  parent: IDCardStandard
+  id: ReporterIDCard
+  name: reporter ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idreporter
+  - type: PresetIdCard
+    job: Reporter

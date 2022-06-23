@@ -55,6 +55,8 @@ public sealed partial class StationJobsSystem
     {
         DebugTools.Assert(stations.Count > 0);
 
+        InitializeRoundStart();
+
         if (profiles.Count == 0)
             return new Dictionary<NetUserId, (string, EntityUid)>();
 

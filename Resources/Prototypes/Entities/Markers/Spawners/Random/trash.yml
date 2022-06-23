@@ -15,8 +15,13 @@
       rareChance: 0.03
       prototypes:
 #        - TrashCandy
+        - FoodPacketBoritosTrash
         - FoodPacketCheesieTrash
         - FoodPacketChipsTrash
+        - FoodPacketChocolateTrash
+        - FoodPacketChowMeinTrash
+        - FoodPacketDanDanTrash
+        - FoodPacketEnergyTrash
         - FoodPacketPistachioTrash
 #        - TrashPlasticBag
         - FoodPacketPopcornTrash

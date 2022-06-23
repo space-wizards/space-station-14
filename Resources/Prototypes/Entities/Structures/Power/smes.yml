@@ -23,7 +23,7 @@
       visuals:
         - type: SmesVisualizer
     - type: Battery
-      maxCharge: 1000
+      maxCharge: 10000000
       startingCharge: 0
     - type: ExaminableBattery
     - type: NodeContainer
@@ -59,6 +59,10 @@
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 # SMES' in use
 

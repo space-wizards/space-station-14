@@ -169,5 +169,5 @@
         - DieCondition
   conditions:
     - !type:StealCondition
-      prototype: AntiqueLaserGun
-      
+      prototype: WeaponAntiqueLaser
+

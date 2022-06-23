@@ -1,7 +1,7 @@
 - type: entity
   name: BasePistol
   parent: BaseItem
-  id: PistolBase
+  id: BaseWeaponPistol
   description: A rooty tooty point and shooty.
   abstract: true
   components:
@@ -9,444 +9,157 @@
     netsync: false
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    state: icon
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     size: 10
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fireRate: 8
-    minAngle: 5
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 15
-    magFillPrototype: MagazinePistol
+  - type: Gun
+    fireRate: 6
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: clarissa
-  parent: PistolBase
-  id: PistolClarissa
+  name: viper
+  parent: BaseWeaponPistol
+  id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    - HCPistol
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-
-- type: entity
-  name: colt M1911
-  parent: PistolBase
-  id: PistolColt
-  description: An outdated but classic pistol.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-
-- type: entity
-  name: giskard
-  parent: PistolBase
-  id: PistolGiskard
-  description: A popular "Frozen Star" brand pocket pistol.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+            - MagazinePistolHighCapacity
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: handmade pistol
-  parent: PistolBase
-  id: PistolHMPistol
+  parent: BaseWeaponPistol
+  id: WeaponPistolHandmade
   description: Looks unreliable.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
+        map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    currentSelector: Single
-    allSelectors:
-    - Single
-    magazineTypes:
-    - Pistol
-    fireRate: 8
-    minAngle: 5
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 15
-    magFillPrototype: MagazinePistol
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
 
 - type: entity
-  name: lamia
-  parent: PistolBase
-  id: PistolLamia
-  description: A heavy pistol chambered in .40 Magnum.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-    - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Magnum
-    magazineTypes:
-    - Pistol
-    magFillPrototype: MagazineMagnum
-    autoEjectMag: true
-    fireRate: 3
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/hpistol_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: mandella
-  parent: PistolBase
-  id: PistolMandella
+  name: cobra
+  parent: BaseWeaponPistol
+  id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: ClRifle
-    magazineTypes:
-    - Pistol
-    magFillPrototype: MagazineClRiflePistol
-    canMuzzleFlash: false # Dat in-built suppressor
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+  - type: Gun
+    fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: mk 58
-  parent: PistolBase
-  id: PistolMk58
+  parent: BaseWeaponPistol
+  id: WeaponPistolMk58
   description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
+  - type: Gun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-
-- type: entity
-  name: mk 58 (wood)
-  parent: PistolBase
-  id: PistolMk58Wood
-  description: A cheap, ubiquitous sidearm, that was produced by a NanoTrasen subsidiary.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-
-- type: entity
-  name: molly
-  parent: PistolBase
-  id: PistolMolly
-  description: An experimental fully automatic pistol.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    magazineTypes:
-    - HCPistol
-    - Smg
-    magFillPrototype: MagazinePistolSmg
-    autoEjectMag: true
-    fireRate: 6
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-
-- type: entity
-  name: basilisk
-  parent: PistolBase
-  id: PistolBasilisk
-  description: A fully automatic handgun chambered in .40 magnum. Can use both pistol and SMG type magazines.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Magnum
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    magazineTypes:
-    - Pistol
-    - Smg
-    magFillPrototype: MagazineMagnum
-    autoEjectMag: true
-    fireRate: 6
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-
-- type: entity
-  name: olivaw
-  parent: PistolBase
-  id: PistolOlivaw
-  description: A popular "Frozen Star" machine pistol.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    - HCPistol
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-
-- type: entity
-  name: paco
-  parent: PistolBase
-  id: PistolPaco
-  description: A modern and reliable sidearm for the soldier in the field.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: Item
-    size: 10
-    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
-    autoEjectMag: true
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg

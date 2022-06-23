@@ -34,7 +34,7 @@ namespace Content.Server.Disease
         public override void Effect(DiseaseEffectArgs args)
         {
             if (SnoughSound != null)
-                SoundSystem.Play(Filter.Pvs(args.DiseasedEntity), SnoughSound.GetSound(), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
+                SoundSystem.Play(SnoughSound.GetSound(), Filter.Pvs(args.DiseasedEntity), args.DiseasedEntity, AudioHelpers.WithVariation(0.2f));
             EntitySystem.Get<DiseaseSystem>().SneezeCough(args.DiseasedEntity, args.Disease, SnoughMessage, AirTransmit);
         }
     }

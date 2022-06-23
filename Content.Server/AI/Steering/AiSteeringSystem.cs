@@ -242,7 +242,8 @@ namespace Content.Server.AI.Steering
             if (Deleted(entity) ||
                 !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
                 !controller.CanMove ||
-                !EntityManager.GetComponent<TransformComponent>(entity).GridID.IsValid())
+                !TryComp(entity, out TransformComponent? xform) ||
+                xform.GridUid == null)
             {
                 return SteeringStatus.NoPath;
             }
@@ -255,7 +256,7 @@ namespace Content.Server.AI.Steering
                 return SteeringStatus.NoPath;
             }
 
-            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridID))
+            if (_mapManager.IsGridPaused(xform.GridUid.Value))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;
@@ -263,14 +264,14 @@ namespace Content.Server.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (EntityManager.GetComponent<TransformComponent>(entity).GridID != steeringRequest.TargetGrid.GetGridId(EntityManager))
+            if (xform.GridUid != steeringRequest.TargetGrid.GetGridUid(EntityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
 
             // Check if we have arrived
-            var targetDistance = (EntityManager.GetComponent<TransformComponent>(entity).MapPosition.Position - steeringRequest.TargetMap.Position).Length;
+            var targetDistance = (xform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
             steeringRequest.TimeUntilInteractionCheck -= frameTime;
 
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
@@ -407,9 +408,13 @@ namespace Content.Server.AI.Steering
                 return;
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+
             var cancelToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
-            var startTile = gridManager.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var gridManager = _mapManager.GetGrid(xform.GridUid.Value);
+            var startTile = gridManager.GetTileRef(xform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
             if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
@@ -439,7 +444,10 @@ namespace Content.Server.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -508,7 +516,12 @@ namespace Content.Server.AI.Steering
         {
             if (_paths[entity].Count == 0) return;
             var nextTile = dequeue ? _paths[entity].Dequeue() : _paths[entity].Peek();
-            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID).GridTileToLocal(nextTile.GridIndices);
+
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+
+            var nextGrid = _mapManager.GetGrid(xform.GridUid.Value).GridTileToLocal(nextTile.GridIndices);
             _nextGrid[entity] = nextGrid;
         }
 
@@ -630,8 +643,13 @@ namespace Content.Server.AI.Steering
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
-            var entityGridCoords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
+
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return default;
+
+            var entityGridCoords = xform.Coordinates;
+            var grid = _mapManager.GetGrid(xform.GridUid.Value);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
             var nextTile = grid.GetTileRef(entityGridCoords.Offset(direction));
@@ -660,7 +678,8 @@ namespace Content.Server.AI.Steering
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
                     if (EntityManager.TryGetComponent(physicsEntity, out IPhysBody? otherPhysics) &&
-                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
+                        (!otherPhysics.Hard ||
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0))
                     {
                         continue;
                     }

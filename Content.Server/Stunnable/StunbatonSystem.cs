@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Server.Power.Components;
 using Content.Server.Power.Events;
-using Content.Server.PowerCell;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
@@ -10,7 +10,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;
-using Content.Shared.PowerCell.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -26,7 +25,6 @@ namespace Content.Server.Stunnable
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
-        [Dependency] private readonly PowerCellSystem _cellSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -36,7 +34,6 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
-            SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
         }
 
@@ -45,7 +42,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated || !args.HitEntities.Any() || args.Handled)
                 return;
 
-            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
+            if (!TryComp<BatteryComponent>(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (EntityUid entity in args.HitEntities)
@@ -75,7 +72,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!_cellSystem.TryGetBatteryFromSlot(uid, out var battery))
+            if (!TryComp<BatteryComponent>(uid, out var battery))
                 return;
 
             if (_robustRandom.Prob(comp.OnThrowStunChance) && battery.TryUseCharge(comp.EnergyPerUse))
@@ -85,25 +82,15 @@ namespace Content.Server.Stunnable
             }
         }
 
-        private void OnPowerCellChanged(EntityUid uid, StunbatonComponent comp, PowerCellChangedEvent args)
-        {
-            if (!comp.Activated)
-                return;
-
-            if (args.Ejected
-                || !_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery)
-                || battery.CurrentCharge < comp.EnergyPerUse)
-            {
-                TurnOff(comp);
-            }
-        }
-
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
             var msg = comp.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
             args.PushMarkup(msg);
+            if(TryComp<BatteryComponent>(uid, out var battery))
+                args.PushMarkup(Loc.GetString("stunbaton-component-on-examine-charge",
+                    ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
         }
 
         private void StunEntity(EntityUid entity, StunbatonComponent comp)
@@ -112,7 +99,7 @@ namespace Content.Server.Stunnable
 
             // TODO: Make slowdown inflicted customizable.
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.StunSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
@@ -132,10 +119,10 @@ namespace Content.Server.Stunnable
             _jitterSystem.DoJitter(entity, slowdownTime, true, status:status);
             _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
-            if (!_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery) || !(battery.CurrentCharge < comp.EnergyPerUse))
+            if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || !(battery.CurrentCharge < comp.EnergyPerUse))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
         }
 
@@ -149,7 +136,7 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
                 !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item)) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
             // TODO stunbaton visualizer
             sprite.LayerSetState(0, "stunbaton_off");
@@ -168,21 +155,14 @@ namespace Content.Server.Stunnable
                 return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
-            if (!_cellSystem.TryGetBatteryFromSlot(comp.Owner, out var battery))
+            if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
-                SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-                user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
+                SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+                user.PopupMessage(Loc.GetString("stunbaton-component-low-charge"));
                 return;
             }
 
-            if (battery.CurrentCharge < comp.EnergyPerUse)
-            {
-                SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-                user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
-                return;
-            }
-
-            SoundSystem.Play(playerFilter, comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");

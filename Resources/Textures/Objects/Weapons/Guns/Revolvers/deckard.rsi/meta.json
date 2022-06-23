@@ -8,16 +8,7 @@
   },
   "states": [
     {
-      "name": "icon"
-    },
-    {
       "name": "base"
-    },
-    {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
     },
     {
       "name": "mag-unshaded-0"
