@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
 
             // Check if the source is cancelling the transfer
-            RaiseLocalEvent(sourceEntity, transferAttempt);
+            RaiseLocalEvent(sourceEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
                 sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
@@ -92,7 +92,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Check if the target is cancelling the transfer
-            RaiseLocalEvent(targetEntity, transferAttempt);
+            RaiseLocalEvent(targetEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
                 sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);

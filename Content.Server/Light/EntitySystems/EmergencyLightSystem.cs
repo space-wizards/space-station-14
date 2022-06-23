@@ -71,7 +71,7 @@ namespace Content.Server.Light.EntitySystems
             if (component.State == state) return;
 
             component.State = state;
-            RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state));
+            RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state), true);
         }
 
         public override void Update(float frameTime)

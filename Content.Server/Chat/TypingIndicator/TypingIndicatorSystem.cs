@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chat.TypingIndicator;
 using Robust.Server.GameObjects;
 
@@ -43,7 +43,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         }
 
         // check if this entity can speak or emote
-        if (!_actionBlocker.CanSpeak(ev.Uid) && !_actionBlocker.CanEmote(ev.Uid))
+        if (!_actionBlocker.CanEmote(ev.Uid) && !_actionBlocker.CanSpeak(ev.Uid))
         {
             // nah, make sure that typing indicator is disabled
             SetTypingIndicatorEnabled(ev.Uid, false);

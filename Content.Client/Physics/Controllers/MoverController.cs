@@ -66,7 +66,7 @@ namespace Content.Client.Physics.Controllers
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (TryComp(player, out IMobMoverComponent? mobMover))
             {
-                HandleMobMovement(mover, body, mobMover, xform);
+                HandleMobMovement(mover, body, mobMover, xform, frameTime);
                 return;
             }
 

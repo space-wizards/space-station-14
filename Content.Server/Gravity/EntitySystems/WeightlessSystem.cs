@@ -34,6 +34,11 @@ namespace Content.Server.Gravity.EntitySystems
         public void AddAlert(AlertsComponent status)
         {
             var xform = Transform(status.Owner);
+            if (xform.GridUid != null)
+            {
+                var alerts = _alerts.GetOrNew(xform.GridUid.Value);
+                alerts.Add(status);
+            }
 
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
