@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Mercury and Uranium are no longer mistakenly metabolized as medicines.,
-    type: Tweak}
-  id: 1260
-  time: '2022-03-28T08:33:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added a new Traitor objective: stealing corgi meat.', type: Add}
@@ -2976,3 +2970,8 @@ Entries:
   - {message: Extended is no longer in the game mode voting pool., type: Fix}
   id: 1759
   time: '2022-06-23T02:41:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Slow on damage now actually works properly., type: Fix}
+  id: 1760
+  time: '2022-06-23T02:42:55.0000000+00:00'
