@@ -34,7 +34,7 @@
   name: reagent-name-ichor
   group: Biological
   desc: reagent-desc-ichor
-  physicalDesc: roaring
+  physicalDesc: reagent-physical-desc-roaring
   color: "#f4692e"
   metabolisms:
     Drink:
