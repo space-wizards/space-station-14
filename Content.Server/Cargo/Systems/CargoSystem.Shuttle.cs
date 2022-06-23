@@ -413,7 +413,7 @@ public sealed partial class CargoSystem
             if (grid.GridIndex == other.Index ||
                 !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
                 body.Mass < ShuttleCallMassThreshold) continue;
-            
+
             reason = Loc.GetString("cargo-shuttle-console-proximity");
             return false;
         }
