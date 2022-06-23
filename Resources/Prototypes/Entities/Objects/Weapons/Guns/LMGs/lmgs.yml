@@ -14,7 +14,7 @@
     maxAngle: 20
     angleIncrease: 4
     angleDecay: 16
-    fireRate: 6
+    fireRate: 8
     selectedMode: FullAuto
     availableModes:
       - FullAuto
