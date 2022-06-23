@@ -97,6 +97,7 @@ namespace Content.Server.Disease
                 {
                     var disease = carrierComp.Diseases[i];
                     disease.Accumulator += frameTime;
+                    disease.TotalAccumulator += frameTime;
 
                     if (disease.Accumulator < disease.TickTime) continue;
 
@@ -105,9 +106,21 @@ namespace Content.Server.Disease
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator -= disease.TickTime;
 
+                    int stage = 0; //defaults to stage 0 because you should always have one
+                    float lastTreshold = 0;
+                    foreach (var threshold in disease.Stages)
+                    {
+                        if (disease.TotalAccumulator > threshold.Value &&
+                            threshold.Value > lastTreshold)
+                        {
+                            lastTreshold = threshold.Value;
+                            stage = threshold.Key;
+                        }
+                    }
+
                     foreach (var cure in disease.Cures)
                     {
-                        if (cure.Cure(args))
+                        if (cure.Stages.Contains(stage) && cure.Cure(args))
                             CureDisease(carrierComp, disease);
                     }
 
@@ -115,7 +128,7 @@ namespace Content.Server.Disease
                     {
                         foreach (var effect in disease.Effects)
                         {
-                            if (_random.Prob(effect.Probability))
+                            if (effect.Stages.Contains(stage) && _random.Prob(effect.Probability))
                                 effect.Effect(args);
                         }
                     }
