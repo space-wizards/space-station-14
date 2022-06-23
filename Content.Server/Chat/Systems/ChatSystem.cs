@@ -229,7 +229,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        (message, var channel) = RadioPrefix(source, message);
+        (message, var channel) = GetRadioPrefix(source, message);
 
         if (channel != null)
             _listener.PingListeners(source, message, channel);

@@ -7,6 +7,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Headset
 {
@@ -22,18 +23,15 @@ namespace Content.Server.Headset
 
         private RadioSystem _radioSystem = default!;
 
-        [DataField("channels", customTypeSerializer:typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
-        private List<String> _channels = new(){"broadcast"};
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel")]
-        public int BroadcastFrequency { get; set; } = 0;
+        [DataField("channels", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        public HashSet<string> Channels = new()
+        {
+            "Common"
+        };
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
         public int ListenRange { get; private set; }
-
-        public IReadOnlyList<RadioChannelPrototype> Channels => getChannels();
 
         public bool RadioRequested { get; set; }
 
@@ -44,39 +42,28 @@ namespace Content.Server.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        private List<RadioChannelPrototype> getChannels()
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
         {
-            List<RadioChannelPrototype> ret = new List<RadioChannelPrototype>();
-            foreach (string channelId in _channels)
-            {
-                if (IoCManager.Resolve<IPrototypeManager>().TryIndex(channelId, out RadioChannelPrototype? proto))
-                    ret.Add(proto);
-            }
-            return ret;
-        }
-
-        public bool CanListen(string message, EntityUid source)
-        {
-            return RadioRequested;
+            return Channels.Contains(prototype.ID) && RadioRequested;
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
         {
-            if (Owner.TryGetContainer(out var container))
+            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container)) return;
+
+            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor)) return;
+
+            var playerChannel = actor.PlayerSession.ConnectedClient;
+
+            var msg = new MsgChatMessage
             {
-                if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
-                    return;
-
-                var playerChannel = actor.PlayerSession.ConnectedClient;
-
-                var msg = new MsgChatMessage();
-
-                msg.Channel = ChatChannel.Radio;
-                msg.Message = message;
+                Channel = ChatChannel.Radio,
+                Message = message,
                 //Square brackets are added here to avoid issues with escaping
-                msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName));
-                _netManager.ServerSendMessage(msg, playerChannel);
-            }
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.Name}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName))
+            };
+
+            _netManager.ServerSendMessage(msg, playerChannel);
         }
 
         public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
@@ -86,8 +73,9 @@ namespace Content.Server.Headset
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            if (getChannels().Contains(channel))
-                _radioSystem.SpreadMessage(this, speaker, message, channel);
+            if (!Channels.Contains(channel.ID)) return;
+
+            _radioSystem.SpreadMessage(this, speaker, message, channel);
             RadioRequested = false;
         }
     }

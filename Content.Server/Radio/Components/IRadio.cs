@@ -4,8 +4,6 @@ namespace Content.Server.Radio.Components
 {
     public interface IRadio : IComponent
     {
-        IReadOnlyList<RadioChannelPrototype> Channels { get; }
-
         void Receive(string message, RadioChannelPrototype channel, EntityUid speaker);
 
         void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel);

@@ -3,6 +3,7 @@ using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Ghost.Components
 {
@@ -13,24 +14,24 @@ namespace Content.Server.Ghost.Components
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [DataField("channels")]
-        private List<RadioChannelPrototype> _channels = new(){1459};
+        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        private HashSet<string> _channels = new();
 
-        public IReadOnlyList<RadioChannelPrototype> Channels => _channels;
-
-        public void Receive(string message, int channel, EntityUid speaker)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
         {
-            if (!_entMan.TryGetComponent(Owner, out ActorComponent? actor))
+            if (!_channels.Contains(channel.ID) || !_entMan.TryGetComponent(Owner, out ActorComponent? actor))
                 return;
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
-            var msg = new MsgChatMessage();
+            var msg = new MsgChatMessage
+            {
+                Channel = ChatChannel.Radio,
+                Message = message,
+                //Square brackets are added here to avoid issues with escaping
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel.Name}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(speaker).EntityName))
+            };
 
-            msg.Channel = ChatChannel.Radio;
-            msg.Message = message;
-            //Square brackets are added here to avoid issues with escaping
-            msg.MessageWrap = Loc.GetString("chat-radio-message-wrap", ("channel", $"\\[{channel}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(speaker).EntityName));
             _netManager.ServerSendMessage(msg, playerChannel);
         }
 

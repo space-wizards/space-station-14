@@ -19,14 +19,14 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - command
-    - engineering
-    - medical
-    - science
-    - security
-    - service
-    - supply
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -39,8 +39,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - medical
+    - Common
+    - Medical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -53,8 +53,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - security
+    - Common
+    - Security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -68,8 +68,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - syndicate
+    - Common
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

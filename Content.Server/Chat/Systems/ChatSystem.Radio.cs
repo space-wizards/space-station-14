@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.RegularExpressions;
 using Content.Server.Headset;
 using Content.Shared.Radio;
 using Robust.Shared.Player;
@@ -16,9 +17,15 @@ public sealed partial class ChatSystem
     private void InitializeRadio()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
+        CacheRadios();
     }
 
     private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+    {
+        CacheRadios();
+    }
+
+    private void CacheRadios()
     {
         _keyCodes.Clear();
 
@@ -33,15 +40,16 @@ public sealed partial class ChatSystem
         _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
     }
 
-    private (string, RadioChannelPrototype?) RadioPrefix(EntityUid source, string message)
+    private (string, RadioChannelPrototype?) GetRadioPrefix(EntityUid source, string message)
     {
+        // TODO: Turn common into a true frequency and support multiple aliases.
         var channelMessage = message.StartsWith(':') || message.StartsWith('.');
         var radioMessage = message.StartsWith(';') || channelMessage;
         if (!radioMessage) return (message, null);
 
         // Special case for empty messages
         if (message.Length <= 1)
-            return ("", null);
+            return (string.Empty, null);
 
         // Look for a prefix indicating a destination radio channel.
         RadioChannelPrototype? chan;
@@ -56,15 +64,13 @@ public sealed partial class ChatSystem
             }
 
             // Strip message prefix.
-            var parts = message.Split(' ').ToList();
-            parts.RemoveAt(0);
-            message = string.Join(" ", parts);
+            message = message[2..].TrimStart();
         }
         else
         {
             // Remove semicolon
             message = message[1..].TrimStart();
-            chan = null;
+            chan = _prototypeManager.Index<RadioChannelPrototype>("Common");
         }
 
         if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&

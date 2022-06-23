@@ -32,11 +32,8 @@ namespace Content.Server.Radio.EntitySystems
 
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
-                if (radio.Channels.Contains(channel))
-                {
-                    //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                    radio.Receive(message, channel, speaker);
-                }
+                //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
+                radio.Receive(message, channel, speaker);
             }
 
             _messages.Remove(message);

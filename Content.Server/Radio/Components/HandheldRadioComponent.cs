@@ -4,6 +4,9 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components
 {
@@ -20,12 +23,16 @@ namespace Content.Server.Radio.Components
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
-        [DataField("channels")]
-        private List<RadioChannelPrototype> _channels = new(){};
+        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        private HashSet<string> _channels = new();
 
+        public int BroadcastFrequency => IoCManager.Resolve<IPrototypeManager>()
+            .Index<RadioChannelPrototype>(BroadcastChannel).Frequency;
+
+        // TODO: Assert in componentinit that channels has this.
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel", required: true)]
-        public RadioChannelPrototype BroadcastFrequency { get; set; } = default!;
+        [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+        public string BroadcastChannel { get; set; } = "Common";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -39,8 +46,6 @@ namespace Content.Server.Radio.Components
                 Dirty();
             }
         }
-
-        [ViewVariables] public IReadOnlyList<RadioChannelPrototype> Channels => _channels;
 
         protected override void Initialize()
         {
@@ -68,15 +73,17 @@ namespace Content.Server.Radio.Components
             return true;
         }
 
-        public bool CanListen(string message, EntityUid source)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
         {
+            if (!_channels.Contains(prototype.ID)) return false;
+
             return RadioOn &&
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
         {
-            if (RadioOn)
+            if (_channels.Contains(channel.ID) && RadioOn)
             {
                 Speak(message);
             }
@@ -89,7 +96,7 @@ namespace Content.Server.Radio.Components
 
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
+            _radioSystem.SpreadMessage(this, speaker, message, channel);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

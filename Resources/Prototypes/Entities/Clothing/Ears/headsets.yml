@@ -21,8 +21,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - supply
+    - Common
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
 
@@ -34,15 +34,15 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - command
-    - centcom
-    - engineering
-    - medical
-    - science
-    - security
-    - service
-    - supply
+    - Common
+    - Command
+    - Centcom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
@@ -54,14 +54,14 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - command
-    - engineering
-    - medical
-    - science
-    - security
-    - service
-    - supply
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
 
@@ -73,8 +73,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - engineering
+    - Common
+    - Engineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
 
@@ -86,8 +86,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - medical
+    - Common
+    - Medical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
 
@@ -99,9 +99,9 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - medical
-    - science
+    - Common
+    - Medical
+    - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
 
@@ -131,8 +131,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - science
+    - Common
+    - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
 
@@ -144,8 +144,8 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - security
+    - Common
+    - Security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
 
@@ -157,7 +157,7 @@
   components:
   - type: Headset
     channels:
-    - broadcast
-    - service
+    - Common
+    - Service
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi

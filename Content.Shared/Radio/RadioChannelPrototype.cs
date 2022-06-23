@@ -15,10 +15,9 @@ namespace Content.Shared.Radio
         /// </summary>
         [ViewVariables] [DataField("keycode")] public char KeyCode { get; private set; } = '\0';
 
-        // Integer frequency of this channel.
-        [ViewVariables] [DataField("channel")] public int Channel { get; private set; } = 0;
+        [ViewVariables] [DataField("frequency")] public int Frequency { get; private set; } = 0;
 
-        [ViewVariables] [DataField("color")] public Color Color { get; private set; } = Color.White;
+        [ViewVariables] [DataField("color")] public Color Color { get; private set; } = Color.Lime;
 
         [ViewVariables]
         [IdDataFieldAttribute]

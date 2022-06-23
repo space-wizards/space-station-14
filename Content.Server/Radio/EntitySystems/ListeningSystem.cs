@@ -11,8 +11,9 @@ namespace Content.Server.Radio.EntitySystems
         {
             foreach (var listener in EntityManager.EntityQuery<IListen>(true))
             {
+                // TODO: Listening code is hella stinky so please refactor it someone.
                 // TODO: Map Position distance
-                if (listener.CanListen(message, source))
+                if (listener.CanListen(message, source, channel))
                 {
                     listener.Listen(message, source, channel);
                 }
