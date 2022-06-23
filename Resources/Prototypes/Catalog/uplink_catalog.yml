@@ -72,14 +72,6 @@
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
 
-- type: uplinkListing
-  id: UplinkHighTechAxe
-  category: Weapons
-  itemId: HighTechAxe
-  listingName: High Tech Axe
-  description: A high-tech axe that can slash people into bits, or pry open doors. Reliable, and heavy.
-  price: 14
-
 # Explosives
 
 - type: uplinkListing
