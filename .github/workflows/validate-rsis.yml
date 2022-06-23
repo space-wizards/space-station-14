@@ -1,7 +1,7 @@
 name: RSI Validator
 
 on:
-  pull_request: 
+  pull_request:
     paths:
       - '**.rsi/**'
 jobs:
@@ -9,7 +9,9 @@ jobs:
     name: Validate RSIs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Master
+        uses: actions/checkout@v2
+
       - name: Parse files
         uses: space-wizards/json-schema-validator@v1.0.2
         with:

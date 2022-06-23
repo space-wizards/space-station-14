@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Master + Submodules
+      uses: actions/checkout@v2
       with:
         submodules: 'recursive'
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -25,6 +27,13 @@ jobs:
       run: |
         cd RobustToolbox
         git fetch --depth=1
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
 
     - name: Package client
       run: |
@@ -56,4 +65,3 @@ jobs:
         username: wizards-build-push
         key: ${{ secrets.CENTCOMM_WIZARDS_BUILDS_PUSH_KEY }}
         script: /home/wizards-build-push/push.ps1 ${{ github.sha }}
-
