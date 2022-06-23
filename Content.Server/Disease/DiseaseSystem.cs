@@ -110,7 +110,7 @@ namespace Content.Server.Disease
                     float lastTreshold = 0;
                     foreach (var threshold in disease.Stages)
                     {
-                        if (disease.TotalAccumulator > threshold.Value &&
+                        if (disease.TotalAccumulator >= threshold.Value &&
                             threshold.Value > lastTreshold)
                         {
                             lastTreshold = threshold.Value;
