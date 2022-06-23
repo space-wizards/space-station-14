@@ -41,6 +41,11 @@ public sealed partial class CargoSystem
 
     private const float ShuttleRecallRange = 100f;
 
+    /// <summary>
+    /// Minimum mass a grid needs to be to block a shuttle recall.
+    /// </summary>
+    private const float ShuttleCallMassThreshold = 300f;
+
     private const float CallOffset = 50f;
 
     private int _index;
@@ -401,10 +406,14 @@ public sealed partial class CargoSystem
             !Resolve(uid.Value, ref xform)) return true;
 
         var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleRecallRange);
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.GridIndex == other.Index) continue;
+            if (grid.GridIndex == other.Index ||
+                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
+                body.Mass < ShuttleCallMassThreshold) continue;
+            
             reason = Loc.GetString("cargo-shuttle-console-proximity");
             return false;
         }
