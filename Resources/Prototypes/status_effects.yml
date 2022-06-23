@@ -29,6 +29,12 @@
   id: Electrocution
 
 - type: statusEffect
+  id: Drunk
+
+- type: statusEffect
+  id: SlurredSpeech
+  
+- type: statusEffect
   id: PressureImmunity
 
 - type: statusEffect
