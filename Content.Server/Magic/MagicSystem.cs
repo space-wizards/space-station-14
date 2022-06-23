@@ -4,7 +4,9 @@ using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
+using Content.Server.Popups;
 using Content.Server.Spawners.Components;
+using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Doors.Components;
@@ -33,6 +35,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly GunSystem _gunSystem = default!;
 
     public override void Initialize()
     {
@@ -47,7 +50,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
-
+        SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -140,6 +143,20 @@ public sealed class MagicSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnProjectileSpell(ProjectileSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        var xform = Transform(ev.Performer);
+
+        foreach (var pos in GetSpawnPositions(xform, ev.Pos))
+        {
+            var ent = Spawn(ev.Prototype, pos.SnapToGrid(EntityManager, _mapManager));
+            _gunSystem.ShootProjectile(ent,ev.Target.Position - Transform(ent).MapPosition.Position, ev.Performer);
+        }
     }
 
     private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)

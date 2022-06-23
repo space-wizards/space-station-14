@@ -8,6 +8,7 @@
 # Should be moved to a suit storage unit when/if they are added.
       - id: ClothingOuterHardsuitSalvage
       - id: YellowOxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
       - id: OreBag

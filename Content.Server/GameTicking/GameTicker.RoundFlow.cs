@@ -262,6 +262,11 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
+            ShowRoundEndScoreboard(text);
+        }
+
+        public void ShowRoundEndScoreboard(string text = "")
+        {
             //Tell every client the round has ended.
             var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
@@ -314,6 +319,7 @@ namespace Content.Server.GameTicking
                         PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                         // Character name takes precedence over current entity name
                         PlayerICName = playerIcName,
+                        PlayerEntityUid = mind.OwnedEntity,
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -370,7 +376,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-
+        
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.

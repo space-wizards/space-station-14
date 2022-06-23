@@ -26,7 +26,7 @@
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorBrown
     id: CEPDA
-    ears: ClothingHeadsetEngineering
+    ears: ClothingHeadsetCE
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelEngineeringFilled
