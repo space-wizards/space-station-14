@@ -92,7 +92,6 @@
       - id: SpeedLoaderMagnum
         amount: 3
 
-
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledPieCannon
