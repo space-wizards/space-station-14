@@ -36,7 +36,7 @@
     channels:
     - Common
     - Command
-    - Centcom
+    - CentCom
     - Engineering
     - Medical
     - Science

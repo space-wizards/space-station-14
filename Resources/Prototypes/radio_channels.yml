@@ -5,7 +5,7 @@
   frequency: 1459
 
 - type: radioChannel
-  id: Centcom
+  id: CentCom
   name: "CentCom"
   keycode: 'y'
   frequency: 1337
