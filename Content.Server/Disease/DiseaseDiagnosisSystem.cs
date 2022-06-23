@@ -358,7 +358,7 @@ namespace Content.Server.Disease
                 foreach (var server in EntityQuery<DiseaseServerComponent>())
                 {
                     if (_stationSystem.GetOwningStation(server.Owner) != _stationSystem.GetOwningStation(uid))
-                        return;
+                        continue;
 
                     if (ServerHasDisease(server, args.Machine.Disease))
                     {
