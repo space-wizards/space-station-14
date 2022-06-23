@@ -153750,7 +153750,7 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 17876
-  type: ComputerCargoOrders
+  type: CargoTelepad
   components:
   - pos: 50.5,11.5
     parent: 60
