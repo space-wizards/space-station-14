@@ -138,6 +138,112 @@
     sprite: Decals/markings.rsi
     state: warn_box_greyscale
 
+# TODO: Remove from here to...
+
+- type: decal
+  id: WarnEnd
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end
+
+- type: decal
+  id: WarnEndGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_greyscale
+
+# TODO: Down here
+
+- type: decal
+  id: WarnFull
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_full
+
+- type: decal
+  id: WarnFullGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_full_greyscale
+
+# TODO: remove from here down to...
+
+- type: decal
+  id: WarningLine
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warningline
+
+- type: decal
+  id: WarningLineGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warningline_greyscale
+
+- type: decal
+  id: WarningLineCorner
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner
+
+- type: decal
+  id: WarningLineCornerGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner_greyscale
+
+- type: decal
+  id: WarningLineCornerFlipped
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner_flipped
+
+- type: decal
+  id: WarningLineCornerFlippedGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warninglinecorner_flipped_greyscale
+
+- type: decal
+  id: WarnCorner
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner
+
+- type: decal
+  id: WarnCornerGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale
+
+- type: decal
+  id: WarnCornerFlipped
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_flipped
+
+- type: decal
+  id: WarnCornerFlippedGreyscale
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_flipped_greyscale
+
+# TODO: here
+
 - type: decal
   id: WarnCornerGreyscaleNE
   tags: ["station", "markings"]
@@ -361,19 +467,3 @@
   sprite:
     sprite: Decals/markings.rsi
     state: warn_line_greyscale_w
-
-- type: decal
-  id: WarnFull
-  tags: ["station", "markings"]
-  sprite:
-    sprite: Decals/markings.rsi
-    state: warn_full
-
-- type: decal
-  id: WarnFullGreyscale
-  tags: ["station", "markings"]
-  sprite:
-    sprite: Decals/markings.rsi
-    state: warn_full_greyscale
-
-

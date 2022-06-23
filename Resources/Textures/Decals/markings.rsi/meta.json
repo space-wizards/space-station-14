@@ -14,16 +14,16 @@
       "name": "arrows_greyscale"
     },
     {
-      "name": "bot"
+      "name": "bot",
     },
     {
-      "name": "bot_greyscale"
+      "name": "bot_greyscale",
     },
     {
-      "name": "bot_left"
+      "name": "bot_left",
     },
     {
-      "name": "bot_left_greyscale"
+      "name": "bot_left_greyscale",
     },
     {
       "name": "bot_right"
@@ -41,16 +41,16 @@
       "name": "caution"
     },
     {
-      "name": "caution_greyscale"
+      "name": "caution_greyscale",
     },
     {
-      "name": "delivery"
+      "name": "delivery",
     },
     {
-      "name": "delivery_greyscale"
+      "name": "delivery_greyscale",
     },
     {
-      "name": "loading_area"
+      "name": "loading_area",
     },
     {
       "name": "loading_area_greyscale"
@@ -66,6 +66,48 @@
     },
     {
       "name": "warn_box_greyscale"
+    },
+    {
+      "name": "warn_end"
+    },
+    {
+      "name": "warn_end_greyscale",
+    },
+    {
+      "name": "warn_full",
+    },
+    {
+      "name": "warn_full_greyscale",
+    },
+    {
+      "name": "warningline",
+    },
+    {
+      "name": "warningline_greyscale"
+    },
+    {
+      "name": "warninglinecorner"
+    },
+    {
+      "name": "warninglinecorner_greyscale"
+    },
+    {
+      "name": "warninglinecorner_flipped"
+    },
+    {
+      "name": "warninglinecorner_flipped_greyscale"
+    },
+    {
+      "name": "warn_corner"
+    },
+    {
+      "name": "warn_corner_greyscale"
+    },
+    {
+      "name": "warn_corner_flipped"
+    },
+    {
+      "name": "warn_corner_flipped_greyscale"
     },
     {
       "name": "warn_corner_greyscale_ne"
@@ -138,12 +180,6 @@
     },
     {
       "name": "warn_end_greyscale_w"
-    },
-    {
-      "name": "warn_full"
-    },
-    {
-      "name": "warn_full_greyscale"
     },
     {
       "name": "warn_line_e"
