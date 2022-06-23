@@ -15,7 +15,8 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
 
     private void OnComponentInit(EntityUid uid, AMEShieldingVisualsComponent component, ComponentInit args)
     {
-        if(EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite)) {
+        if(TryComp<SpriteComponent>(uid, out var sprite))
+        {
             sprite.LayerMapSet(AMEShieldingVisualsLayer.Core, sprite.AddLayerState("core"));
             sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, false);
             sprite.LayerMapSet(AMEShieldingVisualsLayer.CoreState, sprite.AddLayerState("core_weak"));
@@ -25,23 +26,27 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
 
     protected override void OnAppearanceChange(EntityUid uid, AMEShieldingVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if(args.Sprite == null) {
+        if(args.Sprite == null)
             return;
-        }
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.Core, out var core)) {
+        if(args.Component.TryGetData<string>(AMEShieldVisuals.Core, out var core))
+        {
             if (core == "isCore")
             {
                 args.Sprite.LayerSetState(AMEShieldingVisualsLayer.Core, "core");
                 args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, true);
 
-            } else {
+            }
+            else
+            {
                 args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, false);
             }
         }
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.CoreState, out var coreState)) {
-            switch(coreState) {
+        if(args.Component.TryGetData<string>(AMEShieldVisuals.CoreState, out var coreState))
+        {
+            switch(coreState)
+            {
                 case "weak":
                     args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_weak");
                     args.Sprite.LayerSetVisible(AMEShieldingVisualsLayer.CoreState, true);

@@ -15,7 +15,8 @@ public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControll
 
     private void OnComponentInit(EntityUid uid, AMEControllerVisualsComponent component, ComponentInit args)
     {
-        if(EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite)) {
+        if(TryComp<SpriteComponent>(uid, out var sprite))
+        {
             sprite.LayerMapSet(AMEControllerVisualLayers.Display, sprite.AddLayerState("control_on"));
             sprite.LayerSetVisible(AMEControllerVisualLayers.Display, false);
         }
@@ -26,8 +27,8 @@ public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControll
         base.OnAppearanceChange(uid, component, ref args);
 
         if(args.Sprite != null
-            && args.Component.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state)
-        ) {
+            && args.Component.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state))
+        {
             switch(state)
             {
                 case "on":
