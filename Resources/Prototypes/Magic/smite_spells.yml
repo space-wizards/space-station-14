@@ -15,4 +15,4 @@
   icon:
     sprite: Objects/Magic/magicactions.rsi
     state: gib
-  event: !type:SmiteSpellEvent
+  serverEvent: !type:SmiteSpellEvent
