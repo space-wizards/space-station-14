@@ -24,7 +24,7 @@
   group: Toxins
   desc: reagent-desc-carpotoxin
   color: "#e2a38c"
-  physicalDesc: exotic-smelling
+  physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
