@@ -417,6 +417,20 @@
 
 - type: entity
   parent: ClothingBeltStorageBase
+  id: ClothingBeltSyndieHolster
+  name: syndicate shoulder holster
+  description: 'A deep shoulder holster capable of holding most forms of ballistic weaponry, and utility items. WARNING: Nuclear Badasses only.'
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Storage
+    capacity: 45
+
+
+- type: entity
+  parent: ClothingBeltStorageBase
   id: ClothingBeltSecurityWebbing
   name: security webbing
   description: Unique and versatile chest rig, can hold security gear.
