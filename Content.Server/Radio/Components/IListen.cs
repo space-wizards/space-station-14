@@ -1,3 +1,5 @@
+using Content.Shared.Radio;
+
 namespace Content.Server.Radio.Components
 {
     /// <summary>
@@ -10,6 +12,6 @@ namespace Content.Server.Radio.Components
 
         bool CanListen(string message, EntityUid source);
 
-        void Listen(string message, EntityUid speaker, int channel = 0);
+        void Listen(string message, EntityUid speaker, RadioChannelPrototype channel);
     }
 }

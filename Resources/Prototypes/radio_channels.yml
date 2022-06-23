@@ -1,7 +1,7 @@
 - type: radioChannel
   id: broadcast
-  name: "General"
-  channel: 0
+  name: "Common"
+  color:
 
 - type: radioChannel
   id: command

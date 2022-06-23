@@ -111,8 +111,6 @@ public sealed class ChatSystem : SharedChatSystem
 
         bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
 
-        int channel;
-        (message, channel) = RadioPrefix(source, message);
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize);
 
         // Was there an emote in the message? If so, send it.
@@ -129,10 +127,10 @@ public sealed class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, hideChat, channel);
+                SendEntitySpeak(source, message, hideChat);
                 break;
             case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, hideChat, channel);
+                SendEntityWhisper(source, message, hideChat);
                 break;
             case InGameICChatType.Emote:
                 SendEntityEmote(source, message, hideChat);
@@ -226,28 +224,32 @@ public sealed class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false, int channel = 0)
+    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
         message = TransformSpeech(source, message);
 
-        _listener.PingListeners(source, message, channel);
+        RadioChannelPrototype? channel;
+        (message, channel) = RadioPrefix(source, message);
+
+        if (channel != null)
+            _listener.PingListeners(source, message, channel);
+
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
 
         SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
 
         var ev = new EntitySpokeEvent(message);
-        RaiseLocalEvent(source, ev, false);
+        RaiseLocalEvent(source, ev);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
     }
 
-    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false, int channel = 0)
+    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
 
         message = TransformSpeech(source, message);
-        _listener.PingListeners(source, message, channel);
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         var transformSource = Transform(source);
@@ -413,7 +415,7 @@ public sealed class ChatSystem : SharedChatSystem
             .Select(p => p.ConnectedClient);
     }
 
-    private (string, int) RadioPrefix(EntityUid source, string message)
+    private (string, RadioChannelPrototype?) RadioPrefix(EntityUid source, string message)
     {
         bool channelMessage = message.StartsWith(':') || message.StartsWith('.');
         bool radioMessage = message.StartsWith(';') || channelMessage;
@@ -421,24 +423,25 @@ public sealed class ChatSystem : SharedChatSystem
         {
             // Special case for empty messages
             if (message.Length == 1)
-                return ("", -1);
+                return ("", null);
 
             // Look for a prefix indicating a destination radio channel.
-            int chan = -1;
+            RadioChannelPrototype? chan = null;
             if (channelMessage && message.Length >= 2)
             {
                 foreach (var channel in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
                 {
                     if (channel.KeyCode == message[1])
                     {
-                        chan = channel.Channel;
+                        chan = channel;
                         break;
                     }
                 }
 
-                if (chan == -1) {
+                if (chan == null)
+                {
                     _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
-                    chan = -1;
+                    chan = null;
                 }
 
                 // Strip message prefix.
@@ -450,7 +453,7 @@ public sealed class ChatSystem : SharedChatSystem
             {
                 // Remove semicolon
                 message = message.Substring(1).TrimStart();
-                chan = 0;
+                chan = null;
             }
 
             if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
@@ -465,7 +468,7 @@ public sealed class ChatSystem : SharedChatSystem
 
             return (message, chan);
         }
-        return (message, -1);
+        return (message, null);
     }
 
     private string SanitizeMessageCapital(EntityUid source, string message)

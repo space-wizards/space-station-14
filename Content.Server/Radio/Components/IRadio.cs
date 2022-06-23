@@ -1,11 +1,13 @@
+using Content.Shared.Radio;
+
 namespace Content.Server.Radio.Components
 {
     public interface IRadio : IComponent
     {
-        IReadOnlyList<int> Channels { get; }
+        IReadOnlyList<RadioChannelPrototype> Channels { get; }
 
-        void Receive(string message, int channel, EntityUid speaker);
+        void Receive(string message, RadioChannelPrototype channel, EntityUid speaker);
 
-        void Broadcast(string message, EntityUid speaker, int channel);
+        void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel);
     }
 }

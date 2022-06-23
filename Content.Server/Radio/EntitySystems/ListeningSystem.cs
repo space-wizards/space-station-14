@@ -1,4 +1,5 @@
 ﻿using Content.Server.Radio.Components;
+using Content.Shared.Radio;
 using JetBrains.Annotations;
 
 namespace Content.Server.Radio.EntitySystems
@@ -6,7 +7,7 @@ namespace Content.Server.Radio.EntitySystems
     [UsedImplicitly]
     public sealed class ListeningSystem : EntitySystem
     {
-        public void PingListeners(EntityUid source, string message, int channel)
+        public void PingListeners(EntityUid source, string message, RadioChannelPrototype channel)
         {
             foreach (var listener in EntityManager.EntityQuery<IListen>(true))
             {

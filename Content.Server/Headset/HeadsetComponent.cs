@@ -33,7 +33,7 @@ namespace Content.Server.Headset
         [DataField("listenRange")]
         public int ListenRange { get; private set; }
 
-        public IReadOnlyList<int> Channels => getChannels();
+        public IReadOnlyList<RadioChannelPrototype> Channels => getChannels();
 
         public bool RadioRequested { get; set; }
 
@@ -44,13 +44,13 @@ namespace Content.Server.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        private List<int> getChannels()
+        private List<RadioChannelPrototype> getChannels()
         {
-            List<int> ret = new List<int>();
+            List<RadioChannelPrototype> ret = new List<RadioChannelPrototype>();
             foreach (string channelId in _channels)
             {
                 if (IoCManager.Resolve<IPrototypeManager>().TryIndex(channelId, out RadioChannelPrototype? proto))
-                    ret.Add(proto.Channel);
+                    ret.Add(proto);
             }
             return ret;
         }
@@ -79,16 +79,15 @@ namespace Content.Server.Headset
             }
         }
 
-        public void Listen(string message, EntityUid speaker, int channel)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
             Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, EntityUid speaker, int channel)
+        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            var destChannel = channel == 0 ? BroadcastFrequency : channel;
-            if (getChannels().Contains(destChannel))
-                _radioSystem.SpreadMessage(this, speaker, message, destChannel);
+            if (getChannels().Contains(channel))
+                _radioSystem.SpreadMessage(this, speaker, message, channel);
             RadioRequested = false;
         }
     }
