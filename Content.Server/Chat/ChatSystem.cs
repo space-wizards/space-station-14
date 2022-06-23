@@ -51,12 +51,10 @@ public sealed class ChatSystem : SharedChatSystem
     private const string AnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     private readonly Dictionary<string,string> _toneSuffixes = new Dictionary<string,string>() {
-        {"?!", "chat-manager-entity-exclaims-wrap-message"},
-        {"!?", "chat-manager-entity-exclaims-wrap-message"},
         {"?", "chat-manager-entity-ask-wrap-message"},
         {"!!!", "chat-manager-entity-scream-wrap-message"},
-        {"!!", "chat-manager-entity-shout-wrap-message"},
-        {"!", "chat-manager-entity-yell-wrap-message"},
+        {"!!", "chat-manager-entity-yell-wrap-message"},
+        {"!", "chat-manager-entity-exclaims-wrap-message"},
     };
 
     private bool _loocEnabled = true;
@@ -343,7 +341,6 @@ public sealed class ChatSystem : SharedChatSystem
     /// <summary>
     ///     Input a string, outputs the correct tone that you can get with Loc.GetString
     /// </summary>
-
     private string GetToneBySuffix(string s)
     {
         var LOCtone = "chat-manager-entity-say-wrap-message";
