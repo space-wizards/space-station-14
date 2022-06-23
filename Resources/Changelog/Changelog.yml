@@ -1,75 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: You feel as though you will be respawned and kicked by accident less
-      often., type: Add}
-  id: 1245
-  time: '2022-03-25T18:00:20.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Popups moving with the viewer instead of the entity it's displayed on.,
-    type: Fix}
-  id: 1246
-  time: '2022-03-25T18:16:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Corgis can no longer will doors to open., type: Fix}
-  id: 1247
-  time: '2022-03-25T21:10:50.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station is now fully stocked with pets., type: Add}
-  - {message: Several lighting issues on Delta were fixed. More will likely exist.,
-    type: Tweak}
-  id: 1248
-  time: '2022-03-26T04:16:22.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
-  id: 1249
-  time: '2022-03-26T19:16:58.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Nanotrasen has rewritten the laws themselves to allow security officers
-      to brig for up to 10 minutes instead of five., type: Tweak}
-  id: 1250
-  time: '2022-03-27T01:15:21.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Nanotrasen has purchased more decoration for the stations, banners,
-      and some old robots they found somewhere deep in space-maint.', type: Add}
-  - {message: The records computer no longer has a green puke color., type: Tweak}
-  - {message: Someone found an empty nuclear bomb and decided to be funny and fill
-      it with cola. They are now dead and the cola is irradiated., type: Add}
-  id: 1251
-  time: '2022-03-27T06:15:19.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: You may no longer eat infinite slices of cake., type: Remove}
-  id: 1252
-  time: '2022-03-27T06:23:33.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Flashlights and flares now last a decent bit longer., type: Tweak}
-  id: 1253
-  time: '2022-03-27T06:29:00.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Fired delivery boy who has been skimming pizza from the emergency pizza
-      crates, type: Fix}
-  id: 1254
-  time: '2022-03-27T21:04:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Eating using the verb has been fixed., type: Fix}
-  id: 1255
-  time: '2022-03-27T22:50:49.0000000+00:00'
-- author: EmoGarbage
-  changes:
-  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
-      for only 8TC at your local uplink.', type: Add}
-  id: 1256
-  time: '2022-03-28T04:03:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Crafting stackable-entities will now try to merge them into your hands,
@@ -2982,3 +2911,69 @@ Entries:
   - {message: Bibles can no longer heal dead entities., type: Fix}
   id: 1744
   time: '2022-06-21T16:44:02.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Energy Swords are not considered knifes when turned off anymore!, type: Fix}
+  id: 1745
+  time: '2022-06-22T00:54:28.0000000+00:00'
+- author: themias
+  changes:
+  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
+  id: 1746
+  time: '2022-06-22T00:55:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Examining a drink shows how much is left, type: Tweak}
+  id: 1747
+  time: '2022-06-22T02:02:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
+  id: 1748
+  time: '2022-06-22T02:41:42.0000000+00:00'
+- author: Ranger6012
+  changes:
+  - {message: HoP's cloak description now correctly drapes over your shoulders instead
+      of your "shoudlers", type: Fix}
+  id: 1749
+  time: '2022-06-22T15:11:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Give Nuke Ops their access to console, type: Fix}
+  id: 1750
+  time: '2022-06-22T19:27:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Lizards now have an animal metabolism. Have fun and be careful with
+      chocolate and caffeine!, type: Add}
+  id: 1751
+  time: '2022-06-22T23:23:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
+    type: Add}
+  - {message: Slimes now take 80% less cellular damage., type: Add}
+  id: 1752
+  time: '2022-06-22T23:25:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
+  - {message: Added recipe for sulfuric acid., type: Add}
+  - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
+  id: 1753
+  time: '2022-06-22T23:26:13.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
+  id: 1754
+  time: '2022-06-22T23:36:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat kings/servants can now actually say 'king' again., type: Fix}
+  id: 1755
+  time: '2022-06-22T23:39:29.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds a popup above a person being stripped/dressed., type: Add}
+  id: 1756
+  time: '2022-06-22T23:58:53.0000000+00:00'
