@@ -289,9 +289,9 @@
 
 - type: reagent
   id: Ipecac
-  name: ipecac
+  name: reagent-name-ipecac
   group: Medicine
-  desc: Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
+  desc: reagent-desc-ipecac
   physicalDesc: inky
   color: "#422912"
   metabolisms:
@@ -367,9 +367,9 @@
 
 - type: reagent
   id: Barozine
-  name: barozine
+  name: reagent-name-barozine
   group: Medicine
-  desc: A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+  desc: reagent-desc-barozine
   physicalDesc: viscous
   color: "#ff867d"
   metabolisms:
