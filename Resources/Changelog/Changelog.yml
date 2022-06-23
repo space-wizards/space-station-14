@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
-  id: 1275
-  time: '2022-03-31T19:08:55.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now has emergency lights., type: Tweak}
@@ -2973,3 +2968,9 @@ Entries:
       on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
   id: 1774
   time: '2022-06-23T12:18:11.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
+    type: Fix}
+  id: 1775
+  time: '2022-06-23T12:23:23.0000000+00:00'
