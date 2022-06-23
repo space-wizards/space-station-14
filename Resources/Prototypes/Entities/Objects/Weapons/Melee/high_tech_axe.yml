@@ -14,17 +14,17 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 5
-        Heat: 3
+        Blunt: 6
+        Heat: 5
         Slash: 6
   - type: Wieldable
   - type: IncreaseDamageOnWield
     modifiers:
       flatReductions:
-        Blunt: -5
+        Blunt: -6
         Slash: -12
   - type: Clothing
-    size: 201
+    size: 50
     sprite: Objects/Weapons/Melee/high_tech_fireaxe.rsi
     quickEquip: false
     Slots:
