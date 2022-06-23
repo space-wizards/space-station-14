@@ -37,7 +37,7 @@ public class DockingControl : Control
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
-    public Dictionary<EntityUid, Dictionary<EntityUid, DockingInterfaceState>> Docks = new();
+    public Dictionary<EntityUid, List<DockingInterfaceState>> Docks = new();
 
     public DockingControl()
     {
@@ -195,7 +195,7 @@ public class DockingControl : Control
             // Draw any docks on that grid
             if (Docks.TryGetValue(grid.GridEntityId, out var gridDocks))
             {
-                foreach (var (_, dock) in gridDocks)
+                foreach (var dock in gridDocks)
                 {
                     var position = matty.Transform(dock.Coordinates.Position);
 
