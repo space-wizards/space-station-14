@@ -182,13 +182,13 @@ public abstract class AlertsSystem : EntitySystem
 
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
     {
-        RaiseLocalEvent(uid, new AlertSyncEvent(uid));
+        RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
         _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
     }
 
     private void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
     {
-        RaiseLocalEvent(uid, new AlertSyncEvent(uid));
+        RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
         _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
     }
 

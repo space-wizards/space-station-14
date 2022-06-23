@@ -23,8 +23,9 @@ namespace Content.IntegrationTests.Tests.Destructible
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             var sEntityManager = server.ResolveDependency<IEntityManager>();
-            var sMapManager = server.ResolveDependency<IMapManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
@@ -35,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var coordinates = PoolManager.GetMainEntityCoordinates(sMapManager);
+                var coordinates = testMap.GridCoords;
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = IoCManager.Resolve<IEntityManager>().GetComponent<DamageableComponent>(sDestructibleEntity);

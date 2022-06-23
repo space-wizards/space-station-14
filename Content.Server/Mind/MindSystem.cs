@@ -42,7 +42,7 @@ public sealed class MindSystem : EntitySystem
             return;
 
         mind.Mind = value;
-        RaiseLocalEvent(uid, new MindAddedMessage());
+        RaiseLocalEvent(uid, new MindAddedMessage(), true);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public sealed class MindSystem : EntitySystem
             return;
 
         if (!Deleted(uid))
-            RaiseLocalEvent(uid, new MindRemovedMessage());
+            RaiseLocalEvent(uid, new MindRemovedMessage(), true);
 
         mind.Mind = null;
     }
