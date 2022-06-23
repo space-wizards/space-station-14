@@ -1,9 +1,4 @@
 Entries:
-- author: Delete
-  changes:
-  - {message: Added trees and flora for mappers., type: Add}
-  id: 1262
-  time: '2022-03-28T20:53:13.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Eating can now be done by alt+clicking a food item., type: Tweak}
@@ -2977,3 +2972,8 @@ Entries:
       even without a recipe., type: Add}
   id: 1761
   time: '2022-06-23T04:13:14.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Extra checks for Field Generators so Singuloose is harder, type: Tweak}
+  id: 1762
+  time: '2022-06-23T04:27:50.0000000+00:00'
