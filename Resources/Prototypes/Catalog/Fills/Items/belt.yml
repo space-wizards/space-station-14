@@ -100,3 +100,28 @@
         amount: 1
       - id: MedkitCombatFilled  
       
+#TODO: sob and whine and cry about the missing stuff until it gets added
+
+- type: entity
+  id: ClothingBeltGrenadeFilled
+  parent: ClothingBeltGrenade
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndieMiniBomb
+        amount: 2
+#     - id: GrenadeGluon
+#       amount: 3
+#     - id: GrenadeEMP
+#       amount: 2
+      - id: ExGrenade
+        amount: 5 
+      - id: GrenadeFlashBang
+        amount: 2 
+#     - id: GrenadeFluorosulfuricAcidSmoke
+#       amount: 1
+#     - id: GrenadeSmoke
+#       amount: 4
+      - id: Screwdriver
+      - id: Multitool
