@@ -153,7 +153,7 @@ namespace Content.Server.Clothing.EntitySystems
             //toggle breath tool conneciton
             if (TryComp<BreathToolComponent>(uid, out var breathTool))
             {
-                if (wearer != default) //connected to internals, so skip if just resetting
+                if (wearer != default)
                 {
                     if (component.IsToggled)
                         breathTool.DisconnectInternals();

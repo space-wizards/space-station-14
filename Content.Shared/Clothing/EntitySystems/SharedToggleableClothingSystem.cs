@@ -130,11 +130,6 @@ public abstract class SharedToggleableClothingSystem : EntitySystem
         _toInsert.Enqueue(component.AttachedUid);
     }
 
-    private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
-    {
-        
-    }
-
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
     {
         component.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.ContainerId);
@@ -146,6 +141,11 @@ public abstract class SharedToggleableClothingSystem : EntitySystem
     /// </summary>
     private void OnMapInit(EntityUid uid, ToggleableClothingComponent component, MapInitEvent args)
     {
+        if (component.SelfToggle)
+        {
+            return;
+        }
+
         if (component.Container!.ContainedEntity is EntityUid ent)
         {
             DebugTools.Assert(component.ClothingUid == ent, "Unexpected entity present inside of a toggleable clothing container.");
@@ -164,7 +164,7 @@ public abstract class SharedToggleableClothingSystem : EntitySystem
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
             DebugTools.Assert(comp?.AttachedUid == uid, "Toggleable clothing uid mismatch");
         }
-        else if(!component.SelfToggle)
+        else
         {
             var xform = Transform(uid);
             component.ClothingUid = Spawn(component.ClothingPrototype, xform.Coordinates);
