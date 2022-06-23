@@ -84,6 +84,7 @@
   id: UplinkKatana
   category: Weapons
   itemId: Katana
+  listingName: Katana
   description: Ancient craftwork made with not so ancient plasteel. # Great for precision limb removal.
   price: 10
 
@@ -93,7 +94,7 @@
   itemId: HighTechAxe
   listingName: High Tech Axe
   description: A high-tech axe that can slash people into bits, or pry open doors. Reliable, and heavy.
-  price: 16
+  price: 13
 
 # Explosives
 
@@ -225,7 +226,7 @@
   id: UplinkRevolverBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledRevolver
-  price: 15
+  price: 13
   icon: /Textures/Objects/Weapons/Guns/Revolvers/python.rsi/icon.png
 
 - type: uplinkListing
