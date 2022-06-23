@@ -3,64 +3,67 @@
   name: "Common"
   keycode: ";"
   frequency: 1459
+  color: "#1ecc43"
 
 - type: radioChannel
   id: CentCom
   name: "CentCom"
   keycode: 'y'
   frequency: 1337
+  color: "#2681a5"
 
 - type: radioChannel
   id: Command
   name: "Command"
   keycode: 'c'
   frequency: 1353
-  color: "#334e6d"
+  color: "#fcdf03"
 
 - type: radioChannel
   id: Engineering
   name: "Engineering"
   keycode: 'e'
   frequency: 1357
-  color: "#efb341"
+  color: "#f37746"
 
 - type: radioChannel
   id: Medical
   name: "Medical"
   keycode: 'm'
   frequency: 1355
-  color: "#52b4e9"
+  color: "#57b8f0"
 
 - type: radioChannel
   id: Science
   name: "Science"
   keycode: 'n'
   frequency: 1351
-  color: "#d381c9"
+  color: "#c68cfa"
 
 - type: radioChannel
   id: Security
   name: "Security"
   keycode: 's'
   frequency: 1359
-  color: "#de3a3a"
+  color: "#dd3535"
 
 - type: radioChannel
   id: Service
   name: "Service"
   keycode: 'v'
   frequency: 1349
-  color: "#9fed58"
+  color: "#6ca729"
 
 - type: radioChannel
   id: Supply
   name: "Supply"
   keycode: 'u'
   frequency: 1347
-  color: "#a46106"
+  color: "#b88646"
 
 - type: radioChannel
   id: Syndicate
   name: "Syndicate"
   keycode: 't'
   frequency: 1213
+  color: "#8f4a4b"
