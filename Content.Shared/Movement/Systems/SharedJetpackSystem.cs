@@ -18,7 +18,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
-        SubscribeLocalEvent<JetpackComponent, ToggleActionEvent>(OnJetpackToggle);
+        SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
         SubscribeLocalEvent<JetpackComponent, GotEquippedEvent>(OnJetpackEquipped);
         SubscribeLocalEvent<JetpackComponent, GotEquippedHandEvent>(OnJetpackHandEquipped);
         SubscribeLocalEvent<JetpackComponent, GotUnequippedEvent>(OnJetpackUnequipped);
@@ -47,13 +47,13 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackHandUnequipped(EntityUid uid, JetpackComponent component, GotUnequippedHandEvent args)
     {
         if (!component.Enabled) return;
-        RemComp<JetpackUserComponent>(uid);
+        RemComp<JetpackUserComponent>(args.User);
     }
 
     private void OnJetpackUnequipped(EntityUid uid, JetpackComponent component, GotUnequippedEvent args)
     {
         if (!component.Enabled) return;
-        RemComp<JetpackUserComponent>(uid);
+        RemComp<JetpackUserComponent>(args.Equipee);
     }
 
     private void OnJetpackHandEquipped(EntityUid uid, JetpackComponent component, GotEquippedHandEvent args)
@@ -68,7 +68,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         EnsureComp<JetpackUserComponent>(args.Equipee);
     }
 
-    private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleActionEvent args)
+    private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
     {
         if (args.Handled) return;
 

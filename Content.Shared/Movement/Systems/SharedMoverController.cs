@@ -244,7 +244,7 @@ namespace Content.Shared.Movement.Systems
                 weightlessModifier = 1f;
                 accel = _mobAcceleration;
             }
-            
+
             var profile = new MobMovementProfileEvent(
                 touching,
                 weightless,

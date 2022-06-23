@@ -34,7 +34,7 @@
         name: action-name-jetpack-toggle
         description: action-decription-jetpack-toggle
         itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
+        event: !type:ToggleJetpackEvent
     - type: Appearance
 
 #Empty blue

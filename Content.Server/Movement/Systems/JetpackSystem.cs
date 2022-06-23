@@ -53,6 +53,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
             }
 
             gasTank.RemoveAirVolume(comp.VolumeUsage);
+            gasTank.UpdateUserInterface();
         }
 
         foreach (var comp in toDisable)
