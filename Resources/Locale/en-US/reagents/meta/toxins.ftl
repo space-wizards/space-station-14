@@ -1,5 +1,8 @@
 reagent-name-toxin = toxin
-reagent-desc-toxin = A Toxic chemical.
+reagent-desc-toxin = A toxic chemical.
+
+reagent-name-carpotoxin = carpotoxin
+reagent-desc-carpotoxin = Toxic secretions of a space carp. Causes a painful burning sensation.
 
 reagent-name-polytrinic-acid = polytrinic acid
 reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
