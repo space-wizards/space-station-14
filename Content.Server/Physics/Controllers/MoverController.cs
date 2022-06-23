@@ -42,7 +42,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover, xform);
+                HandleMobMovement(mover, physics, mobMover, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
@@ -66,7 +66,7 @@ namespace Content.Server.Physics.Controllers
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner);
 
-                var gridId = xform.GridEntityId;
+                var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
                     !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;

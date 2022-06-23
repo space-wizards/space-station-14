@@ -175,7 +175,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = target;
-        RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityStuckEvent(target, user), true);
     }
 
     public void UnstickFromEntity(EntityUid uid, EntityUid user, StickyComponent? component = null)
@@ -210,7 +210,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = null;
-        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
 
     private sealed class StickSuccessfulEvent : EntityEventArgs

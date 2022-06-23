@@ -95,9 +95,6 @@ namespace Content.Server.AI.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float PushStrength { get; set; } = IMobMoverComponent.PushStrengthDefault;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float WeightlessStrength { get; set; } = IMobMoverComponent.WeightlessStrengthDefault;
-
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange { get; set; } = IMobMoverComponent.GrabRangeDefault;

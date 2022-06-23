@@ -110,13 +110,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockPorts.DisposeAllChildren();
         DockingScreen.Docks = _docks;
 
-        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform))
+        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform)
+            || !xform.GridUid.HasValue)
         {
             // TODO: Show Placeholder
             return;
         }
 
-        if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
+        if (_docks.TryGetValue(xform.GridUid.Value, out var gridDocks))
         {
             var index = 1;
 
@@ -194,7 +195,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = ent;
             StartAutodockPressed?.Invoke(ent);
-            DockingScreen.GridEntity = xform?.GridEntityId;
+            DockingScreen.GridEntity = xform?.GridUid;
             _selectedDock = obj.Button;
         }
     }
@@ -215,8 +216,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         base.Draw(handle);
 
         if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var entXform) ||
-            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridBody) ||
-            !_entManager.TryGetComponent<TransformComponent>(entXform.GridEntityId, out var gridXform))
+            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridUid, out var gridBody) ||
+            !_entManager.TryGetComponent<TransformComponent>(entXform.GridUid, out var gridXform))
         {
             return;
         }

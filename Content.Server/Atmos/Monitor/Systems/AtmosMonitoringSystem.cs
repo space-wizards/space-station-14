@@ -344,7 +344,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
                 && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork));
+                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
             // TODO: Central system that grabs *all* alarms from wired network
         }
 

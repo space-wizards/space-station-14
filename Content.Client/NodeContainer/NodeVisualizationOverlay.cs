@@ -76,9 +76,10 @@ namespace Content.Client.NodeContainer
             var node = _system.NodeLookup[(groupId, nodeId)];
 
 
-            var gridId = _entityManager.GetComponent<TransformComponent>(node.Entity).GridEntityId;
-            var grid = _mapManager.GetGrid(gridId);
-            var gridTile = grid.TileIndicesFor(_entityManager.GetComponent<TransformComponent>(node.Entity).Coordinates);
+            var xform = _entityManager.GetComponent<TransformComponent>(node.Entity);
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return;
+            var gridTile = grid.TileIndicesFor(xform.Coordinates);
 
             var sb = new StringBuilder();
             sb.Append($"entity: {node.Entity}\n");

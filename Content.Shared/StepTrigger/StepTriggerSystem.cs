@@ -77,7 +77,7 @@ public sealed class StepTriggerSystem : EntitySystem
             return false;
 
         var ev = new StepTriggeredEvent { Source = component.Owner, Tripper = otherUid };
-        RaiseLocalEvent(component.Owner, ref ev);
+        RaiseLocalEvent(component.Owner, ref ev, true);
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(component);
@@ -91,7 +91,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
 
-        RaiseLocalEvent(uid, ref msg);
+        RaiseLocalEvent(uid, ref msg, true);
 
         return msg.Continue;
     }

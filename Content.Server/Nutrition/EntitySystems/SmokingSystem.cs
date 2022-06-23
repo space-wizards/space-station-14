@@ -101,7 +101,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 if (solution.TotalVolume == FixedPoint2.Zero)
                 {
-                    RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent());
+                    RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
                 }
 
                 if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
