@@ -1,0 +1,10 @@
+- type: entity
+  id: AmbientSoundSourceFlies
+  name: ambient sound source
+  suffix: flies
+  components:
+  - type: AmbientSound
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Temporary/flies.ogg

@@ -14,7 +14,6 @@ namespace Content.Server.Atmos.Miasma
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         /// Feel free to weak this if there are perf concerns
         private float UpdateRate = 5f;
 
@@ -37,7 +36,6 @@ namespace Content.Server.Atmos.Miasma
                 perishable.RotAccumulator -= UpdateRate;
 
                 EnsureComp<FliesComponent>(perishable.Owner);
-                _ambientSound.SetAmbience(perishable.Owner, true);
 
                 DamageSpecifier damage = new();
                 damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
@@ -60,13 +58,18 @@ namespace Content.Server.Atmos.Miasma
         public override void Initialize()
         {
             base.Initialize();
+            // Core rotting stuff
             SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<RottingComponent, OnTemperatureChangeEvent>(OnTempChange);
             SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<PerishableComponent, BeingGibbedEvent>(OnGibbed);
             SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnExamined);
+            // Containers
             SubscribeLocalEvent<AntiRottingContainerComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<AntiRottingContainerComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+            // Fly audiovisual stuff
+            SubscribeLocalEvent<FliesComponent, ComponentInit>(OnFliesInit);
+            SubscribeLocalEvent<FliesComponent, ComponentShutdown>(OnFliesShutdown);
         }
 
         private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
@@ -77,7 +80,6 @@ namespace Content.Server.Atmos.Miasma
                 perishable.DeathAccumulator = 0;
                 perishable.RotAccumulator = 0;
             }
-            _ambientSound.SetAmbience(uid, false); // Ideally this will support dynamic sources in the future, I really didn't want to make flies an entity
         }
 
         private void OnTempChange(EntityUid uid, RottingComponent component, OnTemperatureChangeEvent args)
@@ -116,6 +118,8 @@ namespace Content.Server.Atmos.Miasma
                 args.PushMarkup(Loc.GetString("miasma-rotting"));
         }
 
+        /// Containers
+
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
@@ -125,6 +129,20 @@ namespace Content.Server.Atmos.Miasma
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
                 ToggleDecomposition(args.Entity, true, perishable);
+        }
+
+
+        /// Fly stuff
+
+        private void OnFliesInit(EntityUid uid, FliesComponent component, ComponentInit args)
+        {
+            component.VirtFlies = EntityManager.SpawnEntity("AmbientSoundSourceFlies", Transform(uid).Coordinates);
+            Transform(component.VirtFlies).ParentUid = uid;
+        }
+
+        private void OnFliesShutdown(EntityUid uid, FliesComponent component, ComponentShutdown args)
+        {
+            EntityManager.DeleteEntity(component.VirtFlies);
         }
 
         /// Public functions
@@ -147,13 +165,11 @@ namespace Content.Server.Atmos.Miasma
             {
                 perishable.Progressing = true;
                 EnsureComp<FliesComponent>(uid);
-                _ambientSound.SetAmbience(uid, true);
                 return;
             }
 
             perishable.Progressing = false;
             RemComp<FliesComponent>(uid);
-            _ambientSound.SetAmbience(uid, false);
         }
     }
 }

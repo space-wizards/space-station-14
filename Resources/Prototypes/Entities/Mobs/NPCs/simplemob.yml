@@ -151,12 +151,6 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
-  - type: AmbientSound #Ideally in the future this will support multiple sources
-    enabled: false
-    volume: -5
-    range: 3
-    sound:
-      path: /Audio/Ambience/Temporary/flies.ogg
 
 - type: entity
   save: false
