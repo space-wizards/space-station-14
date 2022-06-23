@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Server.Cargo.Systems;
-using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -14,7 +13,7 @@ namespace Content.IntegrationTests.Tests;
 public sealed class CargoTest
 {
     [Test]
-    public async Task Arbitrage()
+    public async Task NoArbitrage()
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
         var server = pairTracker.Pair.Server;
