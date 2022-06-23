@@ -5,7 +5,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
-using Content.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.Miasma
