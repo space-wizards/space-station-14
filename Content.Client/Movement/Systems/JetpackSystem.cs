@@ -1,6 +1,8 @@
 using Content.Client.Clothing;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -12,7 +14,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly EffectSystem _effects = default!;
 
     public override void Initialize()
     {
@@ -62,38 +63,25 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void CreateParticles(EntityUid uid)
     {
-        var xform = Transform(uid);
-        var coordinates = xform.Coordinates;
+        var uidXform = Transform(uid);
+        var coordinates = uidXform.Coordinates;
         var gridUid = coordinates.GetGridUid(EntityManager);
 
         if (_mapManager.TryGetGrid(gridUid, out var grid))
         {
             coordinates = new EntityCoordinates(grid.GridEntityId, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
         }
-        else if (xform.MapUid != null)
+        else if (uidXform.MapUid != null)
         {
-            coordinates = new EntityCoordinates(xform.MapUid.Value, xform.WorldPosition);
+            coordinates = new EntityCoordinates(uidXform.MapUid.Value, uidXform.WorldPosition);
         }
         else
         {
             return;
         }
 
-        var startTime = _timing.CurTime;
-        var deathTime = startTime + TimeSpan.FromSeconds(2);
-        var effect = new EffectSystemMessage
-        {
-            EffectSprite = "Effects/atmospherics.rsi",
-            Born = startTime,
-            DeathTime = deathTime,
-            Coordinates = coordinates,
-            RsiState = "freon_old",
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
-            ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
-            AnimationLoops = true,
-            Shaded = false,
-        };
-
-        _effects.CreateEffect(effect);
+        var ent = Spawn("JetpackEffect", coordinates);
+        var xform = Transform(ent);
+        xform.Coordinates = coordinates;
     }
 }
