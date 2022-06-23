@@ -20,6 +20,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 
         _menu.ShuttleCallRequested += OnShuttleCall;
         _menu.ShuttleRecallRequested += OnShuttleRecall;
+        _menu.OnClose += Close;
 
         _menu.OpenCentered();
     }

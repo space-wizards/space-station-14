@@ -64,12 +64,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnCargoOrderStartup);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-    }
-
-    private void ShutdownShuttle()
-    {
-        Cleanup();
     }
 
     #region Cargo Pilot Console
@@ -249,6 +243,8 @@ public sealed partial class CargoSystem
 
     private void AddShuttle(StationCargoOrderDatabaseComponent component)
     {
+        Setup();
+
         if (CargoMap == null || component.Shuttle != null) return;
 
         if (component.CargoShuttleProto != null)
@@ -491,11 +487,6 @@ public sealed partial class CargoSystem
     }
 
     #endregion
-
-    private void OnRoundStart(RoundStartingEvent ev)
-    {
-        Setup();
-    }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
