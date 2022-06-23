@@ -4,6 +4,9 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Throwing;
@@ -24,6 +27,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _action = default!;
 
         public override void Initialize()
         {
@@ -34,6 +38,9 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -43,6 +50,12 @@ namespace Content.Server.VendingMachines
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver))
             {
                 TryUpdateVisualState(uid, null, component);
+            }
+
+            if (component.Action != null)
+            {
+                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
+                _action.AddAction(uid, action, uid);
             }
 
             InitializeFromPrototype(uid, component);
@@ -90,6 +103,24 @@ namespace Content.Server.VendingMachines
 
             component.Emagged = true;
             args.Handled = true;
+        }
+        
+        private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
+        {
+            if (component.DispenseOnHitChance == null || args.DamageDelta == null)
+                return;
+
+            if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
+                EjectRandom(uid, true, component);
+        }
+
+        private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            EjectRandom(uid, true, component);
         }
 
         public void InitializeFromPrototype(EntityUid uid, VendingMachineComponent? vendComponent = null)

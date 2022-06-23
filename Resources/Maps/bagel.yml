@@ -119308,14 +119308,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 13084
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - pos: 43.5,10.5
     parent: 60
     type: Transform
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []
@@ -119382,7 +119379,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 13095
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: 43.5,14.5
@@ -120078,15 +120075,12 @@ entities:
         uid: 13173
     type: SignalReceiver
 - uid: 13172
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 56.5,13.5
     parent: 60
     type: Transform
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []
@@ -153756,7 +153750,7 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 17876
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 50.5,11.5
     parent: 60
@@ -162231,7 +162225,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 19004
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 49.5,11.5
     parent: 60
@@ -162509,15 +162503,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 19043
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 41.5,3.5
     parent: 60
     type: Transform
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
   - containers:
       board: !type:Container
         ents: []
