@@ -514,11 +514,7 @@ public sealed partial class CargoSystem
 
     private void Setup()
     {
-        if (CargoMap != null)
-        {
-            _sawmill.Error($"Tried to setup cargo dimension when it's already setup!");
-            return;
-        }
+        if (CargoMap != null && _mapManager.MapExists(CargoMap.Value)) return;
 
         // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
         CargoMap = _mapManager.CreateMap();
