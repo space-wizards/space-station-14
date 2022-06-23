@@ -243,13 +243,6 @@
   icon: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi/icon.png
 
 - type: uplinkListing
-  id: UplinkAKMSBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelSyndicateFilledLightRifle
-  price: 30
-  icon: /Textures/Objects/Weapons/Guns/Rifles/ak.rsi/icon.png
-
-- type: uplinkListing
   id: UplinkGrenadierBeltBundle
   category: Bundles
   itemId: ClothingBeltGrenadeFilled 
