@@ -63,3 +63,17 @@
     - type: Spellbook
       instantSpells:
         Knock: -1
+
+- type: entity
+  id: FireballSpellbook
+  name: fireball spellbook
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Magic/spellbooks.rsi
+    layers:
+    - state: bookfireball
+  - type: Spellbook
+    worldSpells:
+      Fireball: -1
