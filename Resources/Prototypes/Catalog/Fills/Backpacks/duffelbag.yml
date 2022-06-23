@@ -90,21 +90,20 @@
     contents:
       - id: WeaponRevolverPython
       - id: SpeedLoaderMagnum
-        amount: 2
-      - id: SpeedLoaderMagnumHighVelocity
+        amount: 3
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledPieCannon
   name: Pie cannon bundle
-  description: "Clown around with a brand-new Pie Cannon! Comes with 5 Banana Cream Pies, and a Clown Mask."
+  description: "Clown around with a brand-new Pie Cannon! Comes with 8 Banana Cream Pies, and a Clown Mask."
   components:
   - type: StorageFill
     contents:
       - id: LauncherCreamPie
       - id: ClothingMaskClown
       - id: FoodPieBananaCream
-        amount: 5
+        amount: 8
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
