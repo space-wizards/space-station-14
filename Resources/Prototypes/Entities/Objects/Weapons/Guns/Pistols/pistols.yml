@@ -103,48 +103,6 @@
       - SemiAuto
 
 - type: entity
-  name: silenced .22LR pistol
-  parent: BaseWeaponPistol
-  id: WeaponPistolSilenced22LR
-  description: A small, old, and underpowered pistol with an inbuilt silencer.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/silenced_22LR.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/silenced_22LR.rsi
-  - type: Gun
-    fireRate: 6
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineLongRifle
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineLongRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLongRifle
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLongRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-
-- type: entity
   name: cobra
   parent: BaseWeaponPistol
   id: WeaponPistolCobra
