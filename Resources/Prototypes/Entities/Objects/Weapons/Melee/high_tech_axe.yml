@@ -29,6 +29,12 @@
     quickEquip: false
     Slots:
     - back
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 1.5
+    color: #3087ff
   - type: Tool
     qualities:
       - Prying
