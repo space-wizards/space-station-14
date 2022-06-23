@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
-    type: Add}
-  id: 1271
-  time: '2022-03-30T04:56:31.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Some bombs can no longer cause a large quantity of smaller explosions,
@@ -2975,3 +2969,9 @@ Entries:
   - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
   id: 1770
   time: '2022-06-23T10:24:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost radios., type: Fix}
+  - {message: Adjusted radio colours., type: Tweak}
+  id: 1771
+  time: '2022-06-23T10:48:26.0000000+00:00'
