@@ -324,7 +324,7 @@ public sealed partial class CargoSystem
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle) ||
             !TryComp<TransformComponent>(orderDatabase.Owner, out var xform)) return;
 
-        // Already called / not available (TODO: Send message)
+        // Already called / not available
         if (shuttle.NextCall == null || _timing.CurTime < shuttle.NextCall)
             return;
 
@@ -346,8 +346,15 @@ public sealed partial class CargoSystem
             minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
         }
 
+        var offset = 0f;
+        if (TryComp<IMapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
+        {
+            var bounds = shuttleGrid.Grid.LocalAABB;
+            offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
+        }
+
         Transform(shuttle.Owner).Coordinates = new EntityCoordinates(xform.ParentUid,
-            center + _random.NextVector2(minRadius + 20f, minRadius + CallOffset));
+            center + _random.NextVector2(minRadius + offset, minRadius + CallOffset + offset));
         DebugTools.Assert(!MetaData(shuttle.Owner).EntityPaused);
 
         AddCargoContents(shuttle, orderDatabase);
