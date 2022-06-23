@@ -9,6 +9,10 @@ action-name-spell-knock = Knock
 action-description-spell-knock = This spell opens nearby doors.
 action-speech-spell-knock = AULIE OXIN FIERA
 
+action-name-spell-smite = Smite
+action-description-spell-smite = Instantly gibs a target.
+action-speech-spell-smite = EI NATH!
+
 action-name-spell-blink = Blink
 action-description-spell-blink = Teleport to the clicked location.
 
