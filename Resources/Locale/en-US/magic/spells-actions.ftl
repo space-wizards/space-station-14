@@ -18,4 +18,4 @@ action-speech-spell-summon-magicarp = AIE KHUSE EU
 
 action-name-spell-fireball = Fireball
 action-description-spell-fireball = Fires an explosive fireball towards the clicked location.
-action-speech-spell-fireball = ONI'SOMA
+action-speech-spell-fireball = ONI'SOMA!
