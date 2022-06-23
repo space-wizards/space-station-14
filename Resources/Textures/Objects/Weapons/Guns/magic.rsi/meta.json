@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "death",
+      "name": "death-1",
       "delays": [
         [
           0.3,
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "poly",
+      "name": "poly-1",
       "delays": [
         [
           0.5,
@@ -84,10 +84,10 @@
       ]
     },
     {
-      "name": "death-drained"
+      "name": "death-0"
     },
     {
-      "name": "poly-drained"
+      "name": "poly-0"
     }
   ]
 }

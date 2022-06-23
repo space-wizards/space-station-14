@@ -32,11 +32,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/magic.rsi
     layers:
-    - state: poly
-      map: ["enum.GunVisualLayers.Base"]
+    - state: poly-1
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     sprite: Objects/Weapons/Guns/magic.rsi
-    state: poly
+    state: poly-1
   - type: Gun
     fireRate: 8
     selectedMode: SemiAuto
@@ -47,3 +47,8 @@
   - type: AmmoCounter
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCarp
+    capacity: 10
+  - type: MagazineVisuals
+    steps: 2
+    magState: poly
+    zeroVisible: true
