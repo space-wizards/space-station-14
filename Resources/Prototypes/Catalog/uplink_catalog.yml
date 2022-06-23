@@ -9,13 +9,6 @@
   price: 4
 
 - type: uplinkListing
-  id: UplinkCombatKnife
-  category: Weapons
-  itemId: CombatKnife
-  description: A deadly knife intended for melee confrontations. Favored by Syndicate Agents for its added utility.
-  price: 3
-
-- type: uplinkListing
   id: UplinkPistolViper
   category: Weapons
   itemId: WeaponPistolViper
