@@ -5,6 +5,7 @@ using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
