@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -50,11 +51,11 @@ public sealed class ChatSystem : SharedChatSystem
     private const int WhisperRange = 2; // how far whisper goes in world units
     private const string AnnouncementSound = "/Audio/Announcements/announce.ogg";
 
-    private readonly Dictionary<string,string> _toneSuffixes = new Dictionary<string,string>() {
-        {"?", "chat-manager-entity-ask-wrap-message"},
-        {"!!!", "chat-manager-entity-scream-wrap-message"},
-        {"!!", "chat-manager-entity-yell-wrap-message"},
-        {"!", "chat-manager-entity-exclaims-wrap-message"},
+    private readonly Dictionary<string,string> _toneSuffixes = new Dictionary<string, string>() {
+        {@"\?$", "chat-manager-entity-ask-wrap-message"},
+        {@"\!\!\!$", "chat-manager-entity-scream-wrap-message"},
+        {@"\!\!$", "chat-manager-entity-yell-wrap-message"},
+        {@"\!$", "chat-manager-entity-exclaims-wrap-message"}
     };
 
     private bool _loocEnabled = true;
@@ -346,7 +347,7 @@ public sealed class ChatSystem : SharedChatSystem
         var LOCtone = "chat-manager-entity-say-wrap-message";
 
         foreach(var tone in _toneSuffixes) {
-            if (s.EndsWith(tone.Key)) {
+            if (Regex.IsMatch(s, tone.Key)) {
                 LOCtone = tone.Value;
                 break;
             }
