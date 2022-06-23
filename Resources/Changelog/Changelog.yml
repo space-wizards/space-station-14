@@ -1,9 +1,4 @@
 Entries:
-- author: areit
-  changes:
-  - {message: Added a stun chemical that you can get from the uplink., type: Add}
-  id: 1264
-  time: '2022-03-28T20:53:27.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: NSS_Pillar Update 5.3 - Now with basic virology and a bunch of other
@@ -2973,3 +2968,10 @@ Entries:
   - {message: Some drugs now cause a visual effect when metabolised., type: Add}
   id: 1763
   time: '2022-06-23T04:33:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vending machines now have a chance to drop their contents when notably
+      abused or destroyed., type: Add}
+  - {message: Sentient Vending Machines can now throw their stock., type: Add}
+  id: 1764
+  time: '2022-06-23T04:52:28.0000000+00:00'
