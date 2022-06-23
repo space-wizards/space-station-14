@@ -19,6 +19,10 @@
   name: cargo headset
   description: A headset used by the quartermaster and his slaves.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
 
@@ -28,6 +32,17 @@
   name: centcomm headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
@@ -37,6 +52,16 @@
   name: command headset
   description: A headset with a commanding channel.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
 
@@ -46,6 +71,10 @@
   name: engineering headset
   description: A headset for engineers to chat while the station burns around them.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Engineering
   - type: Sprite
     sprite: Clothing/Ears/Headsets/engineering.rsi
 
@@ -55,6 +84,10 @@
   name: medical headset
   description: A headset for the trained staff of the medbay.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Medical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
 
@@ -64,6 +97,11 @@
   name: medical research headset
   description: A headset that is a result of the mating between medical and science.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Medical
+    - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medicalscience.rsi
 
@@ -91,6 +129,10 @@
   name: science headset
   description: A sciency headset. Like usual.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/science.rsi
 
@@ -100,6 +142,10 @@
   name: security headset
   description: This is used by your elite security force.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
 
@@ -109,5 +155,9 @@
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Service
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
