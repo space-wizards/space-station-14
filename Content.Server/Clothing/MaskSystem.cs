@@ -37,7 +37,9 @@ namespace Content.Server.Clothing
             if (mask.ToggleAction == null)
                 return;
 
-            if (_inventorySystem.TryEquip(args.Performer, mask.Owner, "mask"))
+            // return if we equipped, or failed to equip due to something else in mask slot
+            if (_inventorySystem.TryEquip(args.Performer, mask.Owner, "mask") ||
+                (_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) && !mask.Owner.Equals(existing)))
                 return;
 
             mask.IsToggled ^= true;
