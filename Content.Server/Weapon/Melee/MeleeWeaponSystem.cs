@@ -92,7 +92,7 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
                     var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
@@ -124,6 +124,8 @@ namespace Content.Server.Weapon.Melee
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
         {
+            if (string.IsNullOrEmpty(comp.Arc)) return;
+
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
@@ -174,7 +176,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 

@@ -96,8 +96,8 @@
         - Wall
     spawnAction:
       event: !type:DragonSpawnActionEvent
-      icon: Interface/Actions/carpbirth.png
-      name: action-name-carp-birth
-      description: action-description-carp-birth
+      icon: Interface/Actions/carp_summon.png
+      name: action-name-carp-summon
+      description: action-description-carp-summon
       useDelay: 5
 

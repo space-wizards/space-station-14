@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Movement.EntitySystems;
 
@@ -29,7 +29,7 @@ namespace Content.Shared.Damage
             var total = damage.TotalDamage;
             foreach (var thres in component.SpeedModifierThresholds)
             {
-                if (FixedPoint2.Dist(thres.Key, total) < FixedPoint2.Dist(closest, total))
+                if (total >= thres.Key && thres.Key > closest)
                     closest = thres.Key;
             }
 

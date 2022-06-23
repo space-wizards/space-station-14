@@ -123,7 +123,7 @@ public sealed class PricingSystem : EntitySystem
     public double GetPrice(EntityUid uid)
     {
         var ev = new PriceCalculationEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ref ev, true);
 
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
 

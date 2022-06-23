@@ -79,7 +79,7 @@ public sealed class FollowerSystem : EntitySystem
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
 
-        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(follower, followerEv, true);
         RaiseLocalEvent(entity, entityEv, false);
     }
 
@@ -107,7 +107,7 @@ public sealed class FollowerSystem : EntitySystem
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 
-        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
     }
 

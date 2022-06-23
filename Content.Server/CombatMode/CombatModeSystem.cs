@@ -1,16 +1,20 @@
 using Content.Server.Actions.Events;
 using Content.Server.Administration.Logs;
+using Content.Server.CombatMode.Disarm;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Physics;
 
 namespace Content.Server.CombatMode
 {
@@ -38,9 +42,17 @@ namespace Content.Server.CombatMode
             if (!_actionBlockerSystem.CanAttack(args.Performer))
                 return;
 
+            if (TryComp<HandsComponent>(args.Performer, out var hands)
+                && hands.ActiveHand != null
+                && !hands.ActiveHand.IsEmpty)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disarm-action-free-hand"), args.Performer, Filter.Entities(args.Performer));
+                return;
+            }
+
             EntityUid? inTargetHand = null;
 
-            if (EntityManager.TryGetComponent<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
+            if (TryComp<HandsComponent>(args.Target, out HandsComponent? targetHandsComponent)
                 && targetHandsComponent.ActiveHand != null
                 && !targetHandsComponent.ActiveHand.IsEmpty)
             {
@@ -51,9 +63,9 @@ namespace Content.Server.CombatMode
 
             if (inTargetHand != null)
             {
-                RaiseLocalEvent(inTargetHand.Value, attemptEvent);
+                RaiseLocalEvent(inTargetHand.Value, attemptEvent, true);
             }
-            RaiseLocalEvent(args.Target, attemptEvent);
+            RaiseLocalEvent(args.Target, attemptEvent, true);
             if (attemptEvent.Cancelled)
                 return;
 
@@ -64,8 +76,8 @@ namespace Content.Server.CombatMode
             var filterOther = filterAll.RemoveWhereAttachedEntity(e => e == args.Performer);
 
             args.Handled = true;
-
-            if (_random.Prob(component.DisarmFailChance))
+            var chance = CalculateDisarmChance(args.Performer, args.Target, inTargetHand, component);
+            if (_random.Prob(chance))
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
@@ -89,8 +101,40 @@ namespace Content.Server.CombatMode
             SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
-            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = component.DisarmPushChance };
-            RaiseLocalEvent(args.Target, eventArgs);
+            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = chance };
+            RaiseLocalEvent(args.Target, eventArgs, true);
+        }
+
+
+        private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
+        {
+            float healthMod = 0;
+            if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
+            {
+                // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
+                healthMod = (((float) disarmedDamage.TotalDamage - (float) disarmerDamage.TotalDamage) / 200); // Ex. You have 0 damage, they have 90, you get a 45% chance increase
+            }
+
+            float massMod = 0;
+
+            if (TryComp<PhysicsComponent>(disarmer, out var disarmerPhysics) && TryComp<PhysicsComponent>(disarmed, out var disarmedPhysics))
+            {
+                if (disarmerPhysics.FixturesMass != 0) // yeah this will never happen but let's not kill the server if it does
+                    massMod = (((disarmedPhysics.FixturesMass / disarmerPhysics.FixturesMass - 1 ) / 2)); // Ex, you weigh 120, they weigh 70, you get a 29% bonus
+            }
+
+            float chance = (disarmerComp.BaseDisarmFailChance - healthMod - massMod);
+            if (HasComp<SlowedDownComponent>(disarmer)) // might need to revisit this part after stamina damage, right now this is basically "pre-stun"
+                chance += 0.35f;
+            if (HasComp<SlowedDownComponent>(disarmed))
+                chance -= 0.35f;
+
+            if (inTargetHand != null && TryComp<DisarmMalusComponent>(inTargetHand, out var malus))
+            {
+                chance += malus.Malus;
+            }
+
+            return Math.Clamp(chance, 0f, 1f);
         }
     }
 }
