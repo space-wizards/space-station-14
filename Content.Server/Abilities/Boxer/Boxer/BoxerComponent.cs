@@ -8,9 +8,6 @@ namespace Content.Server.Abilities.Boxer
     [RegisterComponent]
     public sealed class BoxerComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled = true;
-
         [DataField("paralyzeChanceNoSlowdown")]
         public float ParalyzeChanceNoSlowdown { get; set; } = 0.2f;
 

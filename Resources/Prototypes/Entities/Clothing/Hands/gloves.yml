@@ -9,10 +9,13 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: BoxingGloves
+  - type: UnarmedWeapon
     damage:
       types:
         Blunt: 1
         Asphyxiation: 4
+    hitSound:
+      collection: BoxingHit
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed

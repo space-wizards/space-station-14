@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Clothing.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -10,6 +11,7 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.Inventory.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Physics;
@@ -42,6 +44,8 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnHandSelected);
             SubscribeLocalEvent<MeleeWeaponComponent, ClickAttackEvent>(OnClickAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
+            SubscribeLocalEvent<UnarmedWeaponComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<UnarmedWeaponComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         }
 
@@ -196,6 +200,40 @@ namespace Content.Server.Weapon.Melee
             comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.ArcCooldownTime);
 
             RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+        }
+
+        private void OnEquipped(EntityUid uid, UnarmedWeaponComponent component, GotEquippedEvent args)
+        {
+            // This only works on clothing
+            if (!TryComp<ClothingComponent>(uid, out var clothing))
+                return;
+            // Is the clothing in its actual slot?
+            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+                return;
+
+            // Set the component to active to the unequip check isn't CBT
+            component.IsActive = true;
+
+            if (TryComp<MeleeWeaponComponent>(args.Equipee, out var meleeComponent))
+            {
+                meleeComponent.HitSound = component.HitSound;
+                component.OldDamage = meleeComponent.Damage;
+                meleeComponent.Damage = component.Damage;
+            }
+        }
+
+        private void OnUnequipped(EntityUid uid, UnarmedWeaponComponent component, GotUnequippedEvent args)
+        {
+            // Only undo the resistance if it was affecting the user
+            if (!component.IsActive)
+                return;
+            if (TryComp<MeleeWeaponComponent>(args.Equipee, out var meleeComponent))
+            {
+                meleeComponent.HitSound = new SoundCollectionSpecifier("GenericHit");
+                meleeComponent.Damage = component.OldDamage;
+                component.OldDamage = default!;
+            }
+            component.IsActive = false;
         }
 
         public static string? GetHighestDamageSound(DamageSpecifier modifiedDamage, IPrototypeManager protoManager)

@@ -1,6 +1,5 @@
 using Content.Server.Weapon.Melee;
 using Content.Shared.StatusEffect;
-using Content.Shared.Sound;
 using Content.Server.Stunnable;
 using Content.Shared.Stunnable;
 using Content.Shared.Inventory.Events;
@@ -34,7 +33,7 @@ namespace Content.Server.Abilities.Boxer
         private void OnMeleeHit(EntityUid uid, BoxingComponent component, MeleeHitEvent args)
         {
             float boxModifier = 1f;
-            if (!TryComp<BoxerComponent>(uid, out var boxer) || !boxer.Enabled)
+            if (!TryComp<BoxerComponent>(uid, out var boxer))
                 boxModifier *= 0.3f;
 
             if (boxer != null)
@@ -58,20 +57,11 @@ namespace Content.Server.Abilities.Boxer
             // Is the clothing in its actual slot?
             if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
                 return;
-            if (TryComp<BoxerComponent>(args.Equipee, out var boxer))
-                boxer.Enabled = true;
 
             // Set the component to active to the unequip check isn't CBT
             component.IsActive = true;
 
             EnsureComp<BoxingComponent>(args.Equipee);
-
-            if (TryComp<MeleeWeaponComponent>(args.Equipee, out var meleeComponent))
-            {
-                meleeComponent.HitSound = component.HitSound;
-                component.OldDamage = meleeComponent.Damage;
-                meleeComponent.Damage = component.Damage;
-            }
         }
 
         private void OnUnequipped(EntityUid uid, BoxingGlovesComponent component, GotUnequippedEvent args)
@@ -79,14 +69,6 @@ namespace Content.Server.Abilities.Boxer
             // Only undo the resistance if it was affecting the user
             if (!component.IsActive)
                 return;
-            if(TryComp<BoxerComponent>(args.Equipee, out var boxer))
-                boxer.Enabled = false;
-            if (TryComp<MeleeWeaponComponent>(args.Equipee, out var meleeComponent))
-            {
-                meleeComponent.HitSound = new SoundCollectionSpecifier("GenericHit");
-                meleeComponent.Damage = component.OldDamage;
-                component.OldDamage = default!;
-            }
             component.IsActive = false;
             RemComp<BoxingComponent>(args.Equipee);
         }
