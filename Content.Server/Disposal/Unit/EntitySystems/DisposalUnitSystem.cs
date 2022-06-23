@@ -399,6 +399,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (component.Engaged)
                 {
                     TryFlush(component);
+                    state = component.State;
                 }
             }
 
