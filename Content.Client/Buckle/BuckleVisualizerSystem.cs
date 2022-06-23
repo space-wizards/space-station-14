@@ -1,11 +1,7 @@
 using Content.Shared.Buckle.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
-using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Buckle
 {
