@@ -110,8 +110,8 @@ namespace Content.Server.Disease
                     float lastTreshold = 0;
                     for (var j = 0; j < disease.Stages.Count; j++)
                     {
-                        if (disease.TotalAccumulator >= threshold.Value &&
-                            threshold.Value > lastTreshold)
+                        if (disease.TotalAccumulator >= disease.Stages[j] &&
+                            disease.Stages[j] > lastTreshold)
                         {
                             lastTreshold = disease.Stages[j];
                             stage = j;
