@@ -1,0 +1,49 @@
+﻿- type: entity
+  name: fireball staff
+  parent: BaseWeaponLauncher
+  id: WeaponStaffFireball
+  description: This is a gun.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/magic.rsi
+    layers:
+    - state: fire
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/magic.rsi
+    state: fire
+  - type: Gun
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Magic/fireball.ogg
+  - type: AmmoCounter
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileFireball
+
+- type: entity
+  name: staff of polymorph
+  parent: BaseWeaponLauncher
+  id: WeaponStaffPolymorph
+  description: This is a gun.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/magic.rsi
+    layers:
+    - state: poly
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/magic.rsi
+    state: poly
+  - type: Gun
+    fireRate: 8
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Magic/staff_animation.ogg
+  - type: AmmoCounter
+  - type: BasicEntityAmmoProvider
+    proto: ProjectilePolyboltCarp

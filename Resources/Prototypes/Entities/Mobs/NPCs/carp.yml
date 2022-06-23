@@ -67,6 +67,9 @@
   - type: TypingIndicator
     proto: alien
   - type: NoSlip
+  - type: Tag
+    tags:
+    - Carp
 
 - type: entity
   name: magicarp

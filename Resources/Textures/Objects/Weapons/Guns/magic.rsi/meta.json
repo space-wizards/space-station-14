@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "/tg/station at https://github.com/tgstation/tgstation/commit/270acce4f551253d8ac75de19236b8b4be598f7f",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "animation",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "healing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "door",
+      "delays": [
+        [
+          2,
+          2,
+          2,
+          2
+        ]
+      ]
+    },
+    {
+      "name": "death",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "poly",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "fire",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "death-drained"
+    },
+    {
+      "name": "poly-drained"
+    }
+  ]
+}

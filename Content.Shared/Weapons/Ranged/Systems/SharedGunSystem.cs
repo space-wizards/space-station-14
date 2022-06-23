@@ -71,6 +71,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();
+        InitializeBasicEntity();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);

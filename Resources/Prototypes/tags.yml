@@ -52,6 +52,9 @@
   id: CaptainSabre
 
 - type: Tag
+  id: Carp
+
+- type: Tag
   id: Cartridge
 
 - type: Tag
