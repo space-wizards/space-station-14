@@ -97808,7 +97808,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 10553
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: -29.5,-25.5
