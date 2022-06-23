@@ -20,11 +20,11 @@
 
 - type: reagent
   id: CarpoToxin
-  name: Carpotoxin
+  name: reagent-name-carpotoxin
   group: Toxins
-  desc: Toxic secretions of a space carp. Causes a painful burning sensation.
+  desc: reagent-desc-carpotoxin
   color: "#e2a38c"
-  physicalDesc: exotic-smelling
+  physicalDesc: reagent-physical-desc-exotic-smelling
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
