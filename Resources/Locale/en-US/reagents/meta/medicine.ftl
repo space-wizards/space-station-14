@@ -78,3 +78,6 @@ reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well
 
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
+
+reagent-name-ethylredoxrazine = ethylredoxrazine
+reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.

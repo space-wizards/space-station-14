@@ -187,17 +187,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // TODO: Make this a prototype
         var map = "/Maps/infiltrator.yml";
 
-        var aabbs = _stationSystem.Stations.SelectMany(x =>
-            Comp<StationDataComponent>(x).Grids.Select(x => _mapManager.GetGridComp(x).Grid.WorldAABB)).ToArray();
-        var aabb = aabbs[0];
-        for (int i = 1; i < aabbs.Length; i++)
+        var center = new Vector2();
+        var minRadius = 0f;
+        Box2? aabb = null;
+
+        foreach (var uid in _stationSystem.Stations)
         {
-            aabb.Union(aabbs[i]);
+            var grid = Comp<IMapGridComponent>(uid).Grid;
+
+            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+        }
+
+        if (aabb != null)
+        {
+            center = aabb.Value.Center;
+            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
         }
 
         var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
-            Offset = aabb.Center + MathF.Max(aabb.Height / 2f, aabb.Width / 2f) * 2.5f
+            Offset = center + MathF.Max(minRadius, minRadius) + 1000f,
         });
 
         if (!gridId.HasValue)
