@@ -59,13 +59,21 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackHandEquipped(EntityUid uid, JetpackComponent component, GotEquippedHandEvent args)
     {
         if (!component.Enabled) return;
-        EnsureComp<JetpackUserComponent>(args.User);
+        SetupUser(args.User, component);
     }
 
     private void OnJetpackEquipped(EntityUid uid, JetpackComponent component, GotEquippedEvent args)
     {
         if (!component.Enabled) return;
-        EnsureComp<JetpackUserComponent>(args.Equipee);
+        SetupUser(args.Equipee, component);
+    }
+
+    private void SetupUser(EntityUid uid, JetpackComponent component)
+    {
+        var user = EnsureComp<JetpackUserComponent>(uid);
+        user.Acceleration = component.Acceleration;
+        user.Friction = component.Friction;
+        user.WeightlessModifier = component.WeightlessModifier;
     }
 
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)

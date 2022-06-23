@@ -8,7 +8,6 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class JetpackUserComponent : Component
 {
-    // TODO: Slap this on jetpackcomponent and network it.
     public float Acceleration = 1f;
     public float Friction = 0.3f;
     public float WeightlessModifier = 1.2f;
