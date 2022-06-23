@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Crafting stackable-entities will now try to merge them into your hands,
-      instead of just dropping them.', type: Tweak}
-  - {message: 'Stack merging should now be predicted, so picking up lots of individual
-      floor tiles should be a bit easier.', type: Tweak}
-  id: 1257
-  time: '2022-03-28T04:03:14.0000000+00:00'
 - author: emisse
   changes:
   - {message: Winter coats are now in all applicable auto drobes. Command staffs are
@@ -2977,3 +2969,10 @@ Entries:
   - {message: Adds a popup above a person being stripped/dressed., type: Add}
   id: 1756
   time: '2022-06-22T23:58:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Movement now has a slight acceleration to it., type: Tweak}
+  - {message: Weightless movement has been changed. You no longer need to be near
+      a wall while on a grid and can float., type: Tweak}
+  id: 1757
+  time: '2022-06-23T02:13:22.0000000+00:00'
