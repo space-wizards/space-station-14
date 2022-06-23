@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Content.Server.Body.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
@@ -9,6 +10,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Body.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
@@ -49,6 +51,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
+        SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
     }
@@ -262,6 +265,30 @@ public sealed class MagicSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnSmiteSpell(SmiteSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        if (!TryComp<BodyComponent>(ev.Target, out var body))
+            return;
+
+        var ents = body.Gib(true);
+
+        if (!ev.DeleteNonBrainParts)
+            return;
+
+        foreach (var part in ents)
+        {
+            // just leaves a brain and clothes
+            if ((HasComp<BodyPartComponent>(part) || HasComp<MechanismComponent>(part))
+                && !HasComp<BrainComponent>(part))
+            {
+                QueueDel(part);
+            }
+        }
     }
 
     /// <summary>

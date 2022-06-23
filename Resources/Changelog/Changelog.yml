@@ -1,33 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
-    type: Add}
-  id: 1271
-  time: '2022-03-30T04:56:31.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Some bombs can no longer cause a large quantity of smaller explosions,
-    type: Fix}
-  id: 1272
-  time: '2022-03-30T13:29:01.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
-      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
-  id: 1273
-  time: '2022-03-31T07:08:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Split Station map! A new medium to large map that's split in half!,
-    type: Add}
-  id: 1274
-  time: '2022-03-31T19:08:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
-  id: 1275
-  time: '2022-03-31T19:08:55.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now has emergency lights., type: Tweak}
@@ -2975,3 +2946,31 @@ Entries:
   - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
   id: 1770
   time: '2022-06-23T10:24:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost radios., type: Fix}
+  - {message: Adjusted radio colours., type: Tweak}
+  id: 1771
+  time: '2022-06-23T10:48:26.0000000+00:00'
+- author: OldDanceJacket
+  changes:
+  - {message: Added lighthouse ACTUALLY, type: Add}
+  id: 1772
+  time: '2022-06-23T11:14:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf L6 again., type: Tweak}
+  id: 1773
+  time: '2022-06-23T11:24:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
+      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
+  id: 1774
+  time: '2022-06-23T12:18:11.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
+    type: Fix}
+  id: 1775
+  time: '2022-06-23T12:23:23.0000000+00:00'

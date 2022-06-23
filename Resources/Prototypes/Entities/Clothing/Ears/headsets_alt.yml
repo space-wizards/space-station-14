@@ -39,6 +39,7 @@
   components:
   - type: Headset
     channels:
+    - Command
     - Common
     - Medical
   - type: Sprite
@@ -53,6 +54,7 @@
   components:
   - type: Headset
     channels:
+    - Command
     - Common
     - Security
   - type: Sprite
