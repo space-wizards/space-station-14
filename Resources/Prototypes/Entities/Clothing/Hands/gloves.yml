@@ -8,9 +8,14 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
+  - type: BoxingGloves
+    damage:
+      types:
+        Blunt: 1
+        Asphyxiation: 4
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingBlue
   name: blue boxing gloves
   description: Blue gloves for competitive boxing.
@@ -23,7 +28,7 @@
     HeldPrefix: blue
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingGreen
   name: green boxing gloves
   description: Green gloves for competitive boxing.
@@ -34,6 +39,19 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: green
+
+- type: entity
+  parent: ClothingHandsGlovesBoxingRed
+  id: ClothingHandsGlovesBoxingYellow
+  name: yellow boxing gloves
+  description: Yellow gloves for competitive boxing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    state: icon-yellow
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/boxing.rsi
+    HeldPrefix: yellow
 
 - type: entity
   parent: ClothingHandsBase
