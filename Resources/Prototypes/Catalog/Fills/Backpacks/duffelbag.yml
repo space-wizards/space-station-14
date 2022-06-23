@@ -84,14 +84,16 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
-  description: "Go loud and pround with a Magnum Python on your hip, bundled with three speed loaders."
+  description: "Go loud and pround with a Magnum Python on your hip, bundled with four speed loaders, and a cool hat."
   components:
   - type: StorageFill
     contents:
       - id: WeaponRevolverPython
       - id: SpeedLoaderMagnum
         amount: 2
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnumHighVelocity        
+        amount: 2
+      - id: ClothingHeadHatOutlawHat
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
