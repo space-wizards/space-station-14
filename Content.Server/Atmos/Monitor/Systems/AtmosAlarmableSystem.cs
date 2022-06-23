@@ -34,7 +34,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 {
                     component.LastAlarmState = state;
                     component.HighestNetworkState = netMax;
-                    RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax));
+                    RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax), true);
                 }
             }
         }

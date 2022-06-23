@@ -56,16 +56,14 @@ namespace Content.Server.Tiles
                             continue;
 
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
-                        return;
                     }
                 }
-                if (HasBaseTurf(currentTileDefinition, "space"))
+                else if (HasBaseTurf(currentTileDefinition, "space"))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;
                     location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
-                    return;
                 }
             }
         }
@@ -85,7 +83,7 @@ namespace Content.Server.Tiles
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            SoundSystem.Play(Filter.Pvs(location), placeSound.GetSound(), location, AudioHelpers.WithVariation(0.125f, _random));
+            SoundSystem.Play(placeSound.GetSound(), Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }

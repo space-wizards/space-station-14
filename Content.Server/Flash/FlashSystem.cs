@@ -113,7 +113,7 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.Sound.GetSound(), comp.Owner, AudioParams.Default);
+                SoundSystem.Play(comp.Sound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
 
                 return true;
             }
@@ -124,7 +124,7 @@ namespace Content.Server.Flash
         public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true)
         {
             var attempt = new FlashAttemptEvent(target, user, used);
-            RaiseLocalEvent(target, attempt);
+            RaiseLocalEvent(target, attempt, true);
 
             if (attempt.Cancelled)
                 return;
@@ -169,7 +169,7 @@ namespace Content.Server.Flash
             }
             if (sound != null)
             {
-                SoundSystem.Play(Filter.Pvs(transform), sound.GetSound(), transform.Coordinates);
+                SoundSystem.Play(sound.GetSound(), Filter.Pvs(transform), transform.Coordinates);
             }
         }
 
@@ -195,12 +195,13 @@ namespace Content.Server.Flash
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
         {
-            // Forward the event to a worn helmet, if one is equipped.
-            if (_inventorySystem.TryGetSlotEntity(uid, "head", out var maskSlotEntity, component))
-                RaiseLocalEvent(maskSlotEntity.Value, args);
-            // Forward the event to the glasses, if any.
-            if(!args.Cancelled && _inventorySystem.TryGetSlotEntity(uid, "eyes", out var eyeSlotEntity, component))
-                RaiseLocalEvent(eyeSlotEntity.Value, args);
+            foreach (var slot in new string[]{"head", "eyes", "mask"})
+            {
+                if (args.Cancelled)
+                    break;
+                if (_inventorySystem.TryGetSlotEntity(uid, slot, out var item, component))
+                    RaiseLocalEvent(item.Value, args, true);
+            }
         }
 
         private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)

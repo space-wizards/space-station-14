@@ -10,6 +10,7 @@ namespace Content.Server.Entry
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
             "EffectVisuals",
+            "DamageStateVisuals",
             "AnimationsTest",
             "ItemStatus",
             "VehicleVisuals",
@@ -24,11 +25,13 @@ namespace Content.Server.Entry
             "HandheldGPS",
             "SpentAmmoVisuals",
             "MagazineVisuals",
+            "PowerCellVisuals",
             "ToggleableLightVisuals",
             "CableVisualizer",
             "PotencyVisuals",
             "PaperVisuals",
             "SurveillanceCameraVisuals",
+            "KudzuVisuals",
         };
     }
 }

@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing;
 
-[RegisterComponent, NetworkedComponent, Friend(typeof(ClothingSpeedModifierSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ClothingSpeedModifierSystem))]
 public sealed class ClothingSpeedModifierComponent : Component
 {
     [DataField("walkModifier", required: true)] [ViewVariables(VVAccess.ReadWrite)]

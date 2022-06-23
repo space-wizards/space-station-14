@@ -344,7 +344,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (EntityManager.TryGetComponent(monitor.Owner, out AtmosAlarmableComponent? alarmable)
                 && !alarmable.IgnoreAlarms)
-                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork));
+                RaiseLocalEvent(monitor.Owner, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork), true);
             // TODO: Central system that grabs *all* alarms from wired network
         }
 
@@ -352,7 +352,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref monitor)) return;
 
-            SoundSystem.Play(Filter.Pvs(uid), monitor.AlarmSound.GetSound(), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
+            SoundSystem.Play(monitor.AlarmSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(monitor.AlarmVolume));
         }
 
         /// <summary>

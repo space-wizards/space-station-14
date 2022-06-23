@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public sealed class DoAfterServerTest : ContentIntegrationTest
+    public sealed class DoAfterServerTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -25,11 +25,11 @@ namespace Content.IntegrationTests.Tests.DoAfter
         public async Task TestFinished()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             // That it finishes successfully
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mapManager = IoCManager.Resolve<IMapManager>();
@@ -43,16 +43,19 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await server.WaitRunTicks(1);
             Assert.That(task.Result == DoAfterStatus.Finished);
+
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestCancelled()
         {
             Task<DoAfterStatus> task = null;
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
 
-            server.Post(() =>
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
+
+            await server.WaitPost(() =>
             {
                 var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mapManager = IoCManager.Resolve<IMapManager>();
@@ -67,6 +70,8 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await server.WaitRunTicks(3);
             Assert.That(task.Result == DoAfterStatus.Cancelled, $"Result was {task.Result}");
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

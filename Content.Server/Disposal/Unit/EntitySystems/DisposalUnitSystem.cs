@@ -200,7 +200,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
                     TogglePower(component);
-                    SoundSystem.Play(Filter.Pvs(component.Owner), "/Audio/Machines/machine_switch.ogg", component.Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play("/Audio/Machines/machine_switch.ogg", Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -477,9 +477,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridID);
-            var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
-            var entry = grid.GetLocal(coords)
+            var xform = Transform(component.Owner);
+            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+                return false;
+
+            var coords = xform.Coordinates;
+            var entry = grid.Grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)
@@ -490,7 +493,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
 
-            if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.Coordinates, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 

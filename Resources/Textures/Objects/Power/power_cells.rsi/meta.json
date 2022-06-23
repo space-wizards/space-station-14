@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/7dcdbc1468ffdc8689b984cb6b181d48ae41dbf2",
+    "states": [
+        {
+            "name": "potato"
+        },
+        {
+            "name": "small"
+        },
+        {
+            "name": "medium"
+        },
+        {
+            "name": "high"
+        },
+        {
+            "name": "hyper"
+        },
+        {
+            "name": "microreactor"
+        },
+        {
+            "name": "antique"
+        },
+        {
+            "name": "o1"
+        },
+        {
+            "name": "o2"
+        }
+    ]
+}
