@@ -29,7 +29,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridEntityId, out var grid))
+            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
                 return;
 
             var mask = WireVisDirFlags.None;

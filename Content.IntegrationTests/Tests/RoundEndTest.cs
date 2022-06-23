@@ -12,14 +12,15 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : ContentIntegrationTest, IEntityEventSubscriber
+    public sealed class RoundEndTest : IEntityEventSubscriber
     {
         [Test]
         public async Task Test()
         {
-            var eventCount = 0;
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var server = pairTracker.Pair.Server;
 
-            var (_, server) = await StartConnectedServerClientPair();
+            var eventCount = 0;
 
             await server.WaitAssertion(() =>
             {
@@ -106,10 +107,12 @@ namespace Content.IntegrationTests.Tests
                 var currentCount = Thread.VolatileRead(ref eventCount);
                 while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
                 {
-                    await server.WaitRunTicks(1);
+                    await PoolManager.RunTicksSync(pairTracker.Pair, 5);
                 }
                 if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

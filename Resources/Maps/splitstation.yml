@@ -70993,7 +70993,7 @@ entities:
     parent: 69
     type: Transform
 - uid: 6473
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: 3.141592653589793 rad
     pos: 13.5,-70.5
@@ -71003,9 +71003,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 6474
   type: AirlockGlass
   components:
@@ -186003,7 +186000,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21911
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 21.5,-71.5
     parent: 69
@@ -186116,7 +186113,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 21928
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: 22.5,-71.5

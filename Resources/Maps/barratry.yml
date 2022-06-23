@@ -44158,7 +44158,7 @@ entities:
         uid: 9045
     type: SignalReceiver
 - uid: 3558
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: -32.5,-13.5
     parent: 106
@@ -44235,7 +44235,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 3564
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: 3.141592653589793 rad
     pos: -31.5,-18.5
@@ -44245,9 +44245,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 3565
   type: FirelockEdge
   components:
@@ -46747,7 +46744,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3905
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: -31.5,-13.5
@@ -46785,7 +46782,7 @@ entities:
     parent: 106
     type: Transform
 - uid: 3910
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: -38.5,-12.5
@@ -46795,9 +46792,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 3911
   type: Table
   components:

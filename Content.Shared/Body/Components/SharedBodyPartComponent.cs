@@ -261,7 +261,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body), true);
             }
         }
 
@@ -276,7 +276,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old), true);
             }
         }
 
@@ -287,12 +287,17 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Gibs the body part.
         /// </summary>
-        public virtual void Gib()
+        public virtual HashSet<EntityUid> Gib()
         {
+            var gibs = new HashSet<EntityUid>();
+
             foreach (var mechanism in _mechanisms)
             {
+                gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
             }
+
+            return gibs;
         }
     }
 

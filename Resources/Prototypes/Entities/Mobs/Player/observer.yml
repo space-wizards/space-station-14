@@ -31,6 +31,7 @@
   - type: Ghost
   - type: GhostRadio
   - type: Sprite
+    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
     netsync: false
     noRot: true
     drawdepth: Ghosts
