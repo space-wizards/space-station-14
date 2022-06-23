@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Eating can now be done by alt+clicking a food item., type: Tweak}
-  - {message: Mice can now squeak using an action., type: Tweak}
-  - {message: 'Mice can now go under doors, and they get hungry much faster. Use these
-      two pieces of information in tandem.', type: Tweak}
-  - {message: Mice are now rendered under tables and what not., type: Tweak}
-  id: 1263
-  time: '2022-03-28T20:53:21.0000000+00:00'
 - author: areit
   changes:
   - {message: Added a stun chemical that you can get from the uplink., type: Add}
@@ -2977,3 +2968,8 @@ Entries:
   - {message: Extra checks for Field Generators so Singuloose is harder, type: Tweak}
   id: 1762
   time: '2022-06-23T04:27:50.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Some drugs now cause a visual effect when metabolised., type: Add}
+  id: 1763
+  time: '2022-06-23T04:33:07.0000000+00:00'
