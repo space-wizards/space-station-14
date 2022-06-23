@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
-      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
-  id: 1273
-  time: '2022-03-31T07:08:30.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Split Station map! A new medium to large map that's split in half!,
@@ -2974,3 +2968,8 @@ Entries:
   - {message: Added lighthouse ACTUALLY, type: Add}
   id: 1772
   time: '2022-06-23T11:14:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf L6 again., type: Tweak}
+  id: 1773
+  time: '2022-06-23T11:24:36.0000000+00:00'
