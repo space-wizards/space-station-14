@@ -61237,6 +61237,8 @@ entities:
 - uid: 5693
   type: WindoorSecureCargoLocked
   components:
+  - name: Cargo Office
+    type: MetaData
   - pos: -39.5,-2.5
     parent: 100
     type: Transform
@@ -61373,11 +61375,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 5706
-  type: CableApcExtension
+  type: AppraisalTool
   components:
-  - pos: -56.5,-3.5
+  - pos: -44.8372,-5.3830533
     parent: 100
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 5707
   type: GasPipeStraight
   components:
@@ -61449,20 +61453,18 @@ entities:
   - color: '#42F5F5FF'
     type: AtmosPipeColor
 - uid: 5715
+  type: CableApcExtension
+  components:
+  - pos: -56.5,-3.5
+    parent: 100
+    type: Transform
+- uid: 5716
   type: WallReinforced
   components:
   - rot: 1.5707963267948966 rad
     pos: -54.5,-6.5
     parent: 100
     type: Transform
-- uid: 5716
-  type: GasPipeStraight
-  components:
-  - pos: -49.5,-5.5
-    parent: 100
-    type: Transform
-  - color: '#42F5F5FF'
-    type: AtmosPipeColor
 - uid: 5717
   type: GasPipeBend
   components:
@@ -100882,11 +100884,13 @@ entities:
     parent: 100
     type: Transform
 - uid: 11013
-  type: Table
+  type: GasPipeStraight
   components:
-  - pos: -48.5,-6.5
+  - pos: -49.5,-5.5
     parent: 100
     type: Transform
+  - color: '#42F5F5FF'
+    type: AtmosPipeColor
 - uid: 11014
   type: AsteroidRock
   components:
@@ -100914,14 +100918,11 @@ entities:
     parent: 100
     type: Transform
 - uid: 11018
-  type: GasVentScrubber
+  type: Table
   components:
-  - rot: 3.141592653589793 rad
-    pos: -48.5,-7.5
+  - pos: -48.5,-6.5
     parent: 100
     type: Transform
-  - color: '#F59C42FF'
-    type: AtmosPipeColor
 - uid: 11019
   type: CableApcExtension
   components:
@@ -115359,13 +115360,13 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 12698
-  type: GasVentPump
+  type: GasVentScrubber
   components:
   - rot: 3.141592653589793 rad
-    pos: -49.5,-7.5
+    pos: -48.5,-7.5
     parent: 100
     type: Transform
-  - color: '#42F5F5FF'
+  - color: '#F59C42FF'
     type: AtmosPipeColor
 - uid: 12699
   type: EmergencyLight
@@ -119527,6 +119528,15 @@ entities:
     parent: 100
     type: Transform
 - uid: 13249
+  type: GasVentPump
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -49.5,-7.5
+    parent: 100
+    type: Transform
+  - color: '#42F5F5FF'
+    type: AtmosPipeColor
+- uid: 13250
   type: AirlockExternalGlassShuttleLocked
   components:
   - name: Cargo Shuttle Dock
@@ -119561,7 +119571,13 @@ entities:
       hard: False
       id: docking
     type: Fixtures
-- uid: 13250
+- uid: 13251
+  type: CableHV
+  components:
+  - pos: -10.5,-22.5
+    parent: 100
+    type: Transform
+- uid: 13252
   type: ComputerShuttleCargo
   components:
   - pos: -43.5,-5.5
@@ -119571,13 +119587,7 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 13251
-  type: CableHV
-  components:
-  - pos: -10.5,-22.5
-    parent: 100
-    type: Transform
-- uid: 13252
+- uid: 13253
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -119587,31 +119597,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
-    type: SignalReceiver
-- uid: 13253
-  type: ConveyorBelt
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -56.5,-5.5
-    parent: 100
-    type: Transform
-  - inputs:
-      Reverse:
-      - port: Right
-        uid: 16286
-      Forward:
-      - port: Left
-        uid: 16286
-      Off:
-      - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13254
   type: ConveyorBelt
@@ -119623,13 +119615,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13255
   type: ConveyorBelt
@@ -119641,13 +119633,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13256
   type: ConveyorBelt
@@ -119659,13 +119651,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13257
   type: ConveyorBelt
@@ -119677,13 +119669,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13258
   type: ConveyorBelt
@@ -119695,13 +119687,13 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13259
   type: ConveyorBelt
@@ -119713,15 +119705,33 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
 - uid: 13260
+  type: ConveyorBelt
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -56.5,-5.5
+    parent: 100
+    type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 16287
+      Forward:
+      - port: Left
+        uid: 16287
+      Off:
+      - port: Middle
+        uid: 16287
+    type: SignalReceiver
+- uid: 13261
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -119731,15 +119741,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 13261
+- uid: 13262
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -119749,15 +119759,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 13262
+- uid: 13263
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -119767,15 +119777,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 13263
+- uid: 13264
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -119785,15 +119795,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 13264
+- uid: 13265
   type: BlastDoor
   components:
   - name: Blast Door A
@@ -119806,22 +119816,16 @@ entities:
       Close: []
       Toggle: []
     type: SignalReceiver
-- uid: 13265
-  type: Grille
-  components:
-  - pos: -54.5,-3.5
-    parent: 100
-    type: Transform
 - uid: 13266
   type: Grille
   components:
-  - pos: -56.5,-3.5
+  - pos: -54.5,-3.5
     parent: 100
     type: Transform
 - uid: 13267
-  type: ReinforcedWindow
+  type: Grille
   components:
-  - pos: -54.5,-3.5
+  - pos: -56.5,-3.5
     parent: 100
     type: Transform
 - uid: 13268
@@ -120624,7 +120628,7 @@ entities:
 - uid: 13390
   type: ReinforcedWindow
   components:
-  - pos: -56.5,-3.5
+  - pos: -54.5,-3.5
     parent: 100
     type: Transform
 - uid: 13391
@@ -140330,7 +140334,7 @@ entities:
   - desc: Seem's like it's been dunked in water...
     name: Soggy Note
     type: MetaData
-  - pos: -74.54512,46.56688
+  - pos: -74.53463,46.796375
     parent: 100
     type: Transform
   - content: >
@@ -140342,8 +140346,6 @@ entities:
 
       Where's the fucking money shithead?!
     type: Paper
-  - canCollide: False
-    type: Physics
 - uid: 15959
   type: SubstationBasic
   components:
@@ -142540,6 +142542,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 16277
+  type: ReinforcedWindow
+  components:
+  - pos: -56.5,-3.5
+    parent: 100
+    type: Transform
+- uid: 16278
   type: PartRodMetal
   components:
   - pos: -22.828165,-50.361813
@@ -142547,7 +142555,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 16278
+- uid: 16279
   type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
@@ -142558,7 +142566,7 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 16279
+- uid: 16280
   type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
@@ -142569,7 +142577,7 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 16280
+- uid: 16281
   type: DrinkBottleBeer
   components:
   - pos: -54.806446,-2.5105639
@@ -142581,7 +142589,7 @@ entities:
     type: RefillableSolution
   - solution: drink
     type: DrainableSolution
-- uid: 16281
+- uid: 16282
   type: DrinkBottleBeer
   components:
   - pos: -56.337696,-5.260564
@@ -142593,19 +142601,19 @@ entities:
     type: RefillableSolution
   - solution: drink
     type: DrainableSolution
-- uid: 16282
+- uid: 16283
   type: ReinforcedWindow
   components:
   - pos: -49.5,-8.5
     parent: 100
     type: Transform
-- uid: 16283
+- uid: 16284
   type: ReinforcedWindow
   components:
   - pos: -48.5,-8.5
     parent: 100
     type: Transform
-- uid: 16284
+- uid: 16285
   type: CableApcStack
   components:
   - pos: -51.493946,-7.3765297
@@ -142613,7 +142621,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 16285
+- uid: 16286
   type: Paper
   components:
   - pos: -51.32207,-6.3765297
@@ -142621,7 +142629,7 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 16286
+- uid: 16287
   type: TwoWayLever
   components:
   - name: Cargo Shuttle Belts
@@ -142644,9 +142652,7 @@ entities:
       - port: Forward
         uid: 13259
       - port: Forward
-        uid: 16288
-      - port: Forward
-        uid: 13252
+        uid: 16289
       - port: Forward
         uid: 13253
       - port: Forward
@@ -142658,7 +142664,9 @@ entities:
       - port: Forward
         uid: 13263
       - port: Forward
-        uid: 16287
+        uid: 13264
+      - port: Forward
+        uid: 16288
       Right:
       - port: Reverse
         uid: 13254
@@ -142673,9 +142681,7 @@ entities:
       - port: Reverse
         uid: 13259
       - port: Reverse
-        uid: 16288
-      - port: Reverse
-        uid: 13252
+        uid: 16289
       - port: Reverse
         uid: 13253
       - port: Reverse
@@ -142687,7 +142693,9 @@ entities:
       - port: Reverse
         uid: 13263
       - port: Reverse
-        uid: 16287
+        uid: 13264
+      - port: Reverse
+        uid: 16288
       Middle:
       - port: Off
         uid: 13254
@@ -142702,9 +142710,7 @@ entities:
       - port: Off
         uid: 13259
       - port: Off
-        uid: 16288
-      - port: Off
-        uid: 13252
+        uid: 16289
       - port: Off
         uid: 13253
       - port: Off
@@ -142716,9 +142722,11 @@ entities:
       - port: Off
         uid: 13263
       - port: Off
-        uid: 16287
+        uid: 13264
+      - port: Off
+        uid: 16288
     type: SignalTransmitter
-- uid: 16287
+- uid: 16288
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -142728,15 +142736,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 16288
+- uid: 16289
   type: ConveyorBelt
   components:
   - rot: 1.5707963267948966 rad
@@ -142746,15 +142754,15 @@ entities:
   - inputs:
       Reverse:
       - port: Right
-        uid: 16286
+        uid: 16287
       Forward:
       - port: Left
-        uid: 16286
+        uid: 16287
       Off:
       - port: Middle
-        uid: 16286
+        uid: 16287
     type: SignalReceiver
-- uid: 16289
+- uid: 16290
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
@@ -142765,7 +142773,7 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 16290
+- uid: 16291
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
@@ -142776,7 +142784,7 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 16291
+- uid: 16292
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
@@ -142787,7 +142795,7 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 16292
+- uid: 16293
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
@@ -142798,7 +142806,7 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 16293
+- uid: 16294
   type: Poweredlight
   components:
   - rot: 1.5707963267948966 rad
@@ -142812,43 +142820,43 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
-- uid: 16294
+- uid: 16295
   type: CableApcExtension
   components:
   - pos: -52.5,-4.5
     parent: 100
     type: Transform
-- uid: 16295
+- uid: 16296
   type: CableApcExtension
   components:
   - pos: -51.5,-4.5
     parent: 100
     type: Transform
-- uid: 16296
+- uid: 16297
   type: CableApcExtension
   components:
   - pos: -50.5,-4.5
     parent: 100
     type: Transform
-- uid: 16297
+- uid: 16298
   type: CableApcExtension
   components:
   - pos: -50.5,-5.5
     parent: 100
     type: Transform
-- uid: 16298
+- uid: 16299
   type: CableApcExtension
   components:
   - pos: -50.5,-6.5
     parent: 100
     type: Transform
-- uid: 16299
+- uid: 16300
   type: CableApcExtension
   components:
   - pos: -50.5,-7.5
     parent: 100
     type: Transform
-- uid: 16300
+- uid: 16301
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
@@ -142859,7 +142867,7 @@ entities:
     type: Airtight
   - canCollide: False
     type: Physics
-- uid: 16301
+- uid: 16302
   type: FirelockEdge
   components:
   - rot: -1.5707963267948966 rad
