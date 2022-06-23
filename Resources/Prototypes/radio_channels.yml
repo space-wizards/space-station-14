@@ -15,49 +15,49 @@
   name: "Command"
   keycode: 'c'
   frequency: 1353
-  color: "#334e6dc8"
+  color: "#334e6d"
 
 - type: radioChannel
   id: Engineering
   name: "Engineering"
   keycode: 'e'
   frequency: 1357
-  color: "#efb34196"
+  color: "#efb341"
 
 - type: radioChannel
   id: Medical
   name: "Medical"
   keycode: 'm'
   frequency: 1355
-  color: "#52b4e996"
+  color: "#52b4e9"
 
 - type: radioChannel
   id: Science
   name: "Science"
   keycode: 'n'
   frequency: 1351
-  color: "#d381c996"
+  color: "#d381c9"
 
 - type: radioChannel
   id: Security
   name: "Security"
   keycode: 's'
   frequency: 1359
-  color: "#de3a3a96"
+  color: "#de3a3a"
 
 - type: radioChannel
   id: Service
   name: "Service"
   keycode: 'v'
   frequency: 1349
-  color: "#9fed5896"
+  color: "#9fed58"
 
 - type: radioChannel
   id: Supply
   name: "Supply"
   keycode: 'u'
   frequency: 1347
-  color: "#a4610696"
+  color: "#a46106"
 
 - type: radioChannel
   id: Syndicate
