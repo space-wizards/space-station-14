@@ -136,7 +136,7 @@ namespace Content.Server.Atmos.Miasma
         private void OnFliesInit(EntityUid uid, FliesComponent component, ComponentInit args)
         {
             component.VirtFlies = EntityManager.SpawnEntity("AmbientSoundSourceFlies", Transform(uid).Coordinates);
-            Transform(component.VirtFlies).ParentUid = uid;
+            Transform(component.VirtFlies).AttachParent(uid);
         }
 
         private void OnFliesShutdown(EntityUid uid, FliesComponent component, ComponentShutdown args)
