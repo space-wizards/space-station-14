@@ -419,7 +419,7 @@
           Quantity: 7
         - ReagentId: Vitamin
           Quantity: 1
-        ReagentId: Cholesterol
+        - ReagentId: Cholesterol
           Quantity: 4
 # Tastes like muffin, bacon.
 
