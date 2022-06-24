@@ -78,7 +78,7 @@
     sprite: Mobs/Animals/cow.rsi
     state: cow
   product: CrateNPCCow
-  cost: 1000
+  cost: 3200
   category: Livestock
   group: market
 
@@ -129,7 +129,7 @@
   cost: 1500
   category: Livestock
   group: market
-  
+
 - type: cargoProduct
   name: "mice crate"
   id: LivestockMouse
