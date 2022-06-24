@@ -14,13 +14,19 @@ public sealed class MobsterAccentSystem : EntitySystem
         { "let me", "lemme" },
         { "should", "oughta" },
         { "the", "da" },
+        { "them", "dem" },
+        { "attack", "whack" },
         { "kill", "whack" },
         { "murder", "whack" },
         { "dead", "sleepin' with da fishies"},
         { "hey", "ey'o" },
+        { "hi", "ey'o"},
+        { "hello", "ey'o"},
         { "rules", "roolz" },
         { "you", "yous" },
         { "have to", "gotta" },
+        { "going to", "boutta" },
+        { "about to", "boutta" },
         { "here", "'ere" }
     };
 
@@ -45,7 +51,8 @@ public sealed class MobsterAccentSystem : EntitySystem
         }
 
         // thinking -> thinkin'
-        msg = Regex.Replace(msg, @"ing(?!\w)", "in'", RegexOptions.IgnoreCase);
+        // king -> king
+        msg = Regex.Replace(msg, @"(?<=\w\w)ing(?!\w)", "in'", RegexOptions.IgnoreCase);
 
         // or -> uh and ar -> ah in the middle of words (fuhget, tahget)
         msg = Regex.Replace(msg, @"(?<=\w)or(?=\w)", "uh", RegexOptions.IgnoreCase);

@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Miasma;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
@@ -89,15 +90,13 @@ namespace Content.Server.Administration.Commands
                 sys.TryModifyBloodLevel(target, bloodStream.BloodSolution.AvailableVolume, bloodStream);
             }
 
-            if (entMan.HasComponent<JitteringComponent>(target))
-            {
-                entMan.RemoveComponent<JitteringComponent>(target);
-            }
-
             if (entMan.TryGetComponent<DiseaseCarrierComponent>(target, out var carrier))
             {
                 EntitySystem.Get<DiseaseSystem>().CureAllDiseases(target, carrier);
             }
+
+            entMan.RemoveComponent<JitteringComponent>(target);
+            entMan.RemoveComponent<RottingComponent>(target);
         }
     }
 }

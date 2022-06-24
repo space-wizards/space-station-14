@@ -380,6 +380,54 @@ namespace Content.Shared.CCVar
          * Physics
          */
 
+        /*
+         * WARNING: These are liable to get changed to datafields whenever movement refactor occurs and may no longer be valid.
+         * You were warned!
+         */
+
+        /// <summary>
+        /// Minimum speed a mob has to be moving before applying movement friction.
+        /// </summary>
+        public static readonly CVarDef<float> MinimumFrictionSpeed =
+            CVarDef.Create("physics.minimum_friction_speed", 0.005f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving.
+        /// </summary>
+        public static readonly CVarDef<float> MobAcceleration =
+            CVarDef.Create("physics.mob_acceleration", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        public static readonly CVarDef<float> MobFriction =
+            CVarDef.Create("physics.mob_friction", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving and weightless.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessAcceleration =
+            CVarDef.Create("physics.mob_weightless_acceleration", 1f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and providing inputs.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessFriction =
+            CVarDef.Create("physics.mob_weightless_friction", 1f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and not providing inputs.
+        /// This is essentially how much their speed decreases per second.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessFrictionNoInput =
+            CVarDef.Create("physics.mob_weightless_friction_no_input", 0.2f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The movement speed modifier applied to a mob's total input velocity when weightless.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessModifier =
+            CVarDef.Create("physics.mob_weightless_modifier", 0.7f, CVar.ARCHIVE | CVar.REPLICATED);
+
         /// <summary>
         /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
         /// </summary>
@@ -387,10 +435,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED);
 
         public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tile_friction", 40.0f);
+            CVarDef.Create("physics.tile_friction", 40.0f, CVar.ARCHIVE | CVar.REPLICATED);
 
         public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stop_speed", 0.1f);
+            CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// Whether mobs can push objects like lockers.

@@ -3,7 +3,7 @@
   mapName: 'Saltern'
   mapPath: /Maps/saltern.yml
   minPlayers: 0
-  maxPlayers: 29
+  maxPlayers: 35
   fallback: true
   stations:
     Saltern:
@@ -14,7 +14,7 @@
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 1, 2 ]
+        CargoTechnician: [ 2, 2 ]
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 2, 2 ]
@@ -25,15 +25,15 @@
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 2, 3 ]
-        AtmosphericTechnician: [ 1, 2 ]
+        StationEngineer: [ 3, 3 ]
+        AtmosphericTechnician: [ 2, 2 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 2, 3 ]
-        Chemist: [ 1, 1 ]
+        MedicalDoctor: [ 2, 2 ]
+        Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
-        Scientist: [ 2, 3 ]
+        Scientist: [ 3, 3 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 2, 3 ]
+        SecurityOfficer: [ 3, 3 ]
         Chaplain: [ 1, 1 ]
         Librarian: [ 1, 1 ]
         Musician: [ 1, 1 ]

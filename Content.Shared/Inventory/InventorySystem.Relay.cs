@@ -1,7 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Slippery;
 
 namespace Content.Shared.Inventory;

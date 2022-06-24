@@ -23,7 +23,7 @@
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
-    ears: ClothingHeadsetCargo
+    ears: ClothingHeadsetQM
   innerclothingskirt: ClothingUniformJumpskirtQM
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

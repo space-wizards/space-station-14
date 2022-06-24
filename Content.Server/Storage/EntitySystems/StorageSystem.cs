@@ -28,6 +28,7 @@ using Content.Server.Popups;
 using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems
 {

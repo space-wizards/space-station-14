@@ -74,7 +74,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();

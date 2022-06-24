@@ -34,6 +34,9 @@ reagent-desc-epinephrine = Effective at bringing people back from a critical sta
 reagent-name-hyronalin = hyronalin
 reagent-desc-hyronalin = A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
 
+reagent-name-ipecac = ipecac
+reagent-desc-ipecac = Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
+
 reagent-name-inaprovaline = inaprovaline
 reagent-desc-inaprovaline = Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
 
@@ -42,6 +45,9 @@ reagent-desc-kelotane = Treats burn damage and prevents infection.
 
 reagent-name-leporazine = leporazine
 reagent-desc-leporazine = This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
+
+reagent-name-barozine = barozine
+reagent-desc-barozine = A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
@@ -73,8 +79,11 @@ reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from 
 reagent-name-lipozine = lipozine
 reagent-desc-lipozine = Causes weight loss upon consumption.
 
-reagent-name-omnizine = Omnizine
+reagent-name-omnizine = omnizine
 reagent-desc-omnizine = A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
 
 reagent-name-ultravasculine = ultravasculine
 reagent-desc-ultravasculine = Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
+
+reagent-name-ethylredoxrazine = ethylredoxrazine
+reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood stream. Though it is commonly needed, it is rarely requested.

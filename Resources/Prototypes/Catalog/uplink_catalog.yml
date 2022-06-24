@@ -64,6 +64,14 @@
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
 
+- type: uplinkListing
+  id: UplinkFireAxeFlaming
+  category: Weapons
+  itemId: FireAxeFlaming
+  listingName: Fire Axe
+  description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+  price: 9
+
 # Explosives
 
 - type: uplinkListing
