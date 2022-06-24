@@ -1,8 +1,6 @@
 ﻿<screens:DefaultGameScreen
     xmlns="https://spacestation14.io"
     xmlns:screens="clr-namespace:Content.Client.UserInterface.Screens"
-    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Widgets"
     xmlns:widgets1="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
     xmlns:widgets2="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
     xmlns:widgets3="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
