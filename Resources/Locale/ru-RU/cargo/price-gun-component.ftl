@@ -1,1 +1,1 @@
-price-gun-pricing-result = The device deems { THE($object) } to be worth { $price } credits.
+price-gun-pricing-result = Прибор показывает, что { $object } имеет ценность в { $price } кредитов.

@@ -1,2 +1,2 @@
-miasma-smell = Something smells foul!
-miasma-rotting = [color=orange]It's rotting![/color]
+miasma-smell = Что-то дурно попахивает!
+miasma-rotting = [color=orange]Это гниёт![/color]

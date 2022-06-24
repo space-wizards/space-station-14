@@ -1,3 +1,3 @@
-ent-ProjectileFireball = fireball
-    .desc = You better GITTAH WEIGH.
+ent-ProjectileFireball = огненный шар
+    .desc = По мнению волшебников явлется средством от всех проблем.
     .suffix = { "" }

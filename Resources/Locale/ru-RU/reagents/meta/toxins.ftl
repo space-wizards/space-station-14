@@ -1,7 +1,7 @@
 reagent-name-toxin = токсин
 reagent-desc-toxin = Токсичный химикат.
-reagent-name-carpotoxin = carpotoxin
-reagent-desc-carpotoxin = Toxic secretions of a space carp. Causes a painful burning sensation.
+reagent-name-carpotoxin = карпотоксин
+reagent-desc-carpotoxin = Токсичные выделения космического карпа. Вызывает болезненное чувство жжения.
 reagent-name-polytrinic-acid = политриновая кислота
 reagent-desc-polytrinic-acid = Чрезвычайно едкое химическое вещество. Малейшее касание этого вещества расплавит большинство масок и головных уборов, и оно наносит сильнейшие повреждения всем, кто вступает с ним в непосредственный контакт.
 reagent-name-fluorosulfuric-acid = фторсерная кислота
@@ -26,4 +26,4 @@ reagent-name-vent-crud = вентиляционная грязь
 reagent-desc-vent-crud = Черное вещество, которое можно встретить в плохо обслуживаемых вентиляционных системах.
 reagent-name-corpium = корпиум
 reagent-desc-corpium = Коктейль Синдиката, тщательно собранный из различных источников. Вы не захотите, чтобы это оказалось внутри вас.
-reagent-name-uncooked-animal-proteins = uncooked animal proteins
+reagent-name-uncooked-animal-proteins = непрожаренные животные протеины

@@ -1,5 +1,5 @@
-comp-containment-turned-on = The containment field generator boots up.
-comp-containment-turned-off = The containment field generator shuts down.
-comp-containment-connected = The containment field generator shoots out a light as it establishes a connection!
-comp-containment-disconnected = The containment field generator light fades away, severing the connection.
-comp-containment-anchor-warning = You cannot unanchor the containment field generator while it's on or connected!
+comp-containment-turned-on = Генератор сдерживающего поля включается.
+comp-containment-turned-off = Генератор сдерживающего поля выключается.
+comp-containment-connected = Генератор сдерживающего поля начинает светиться, установив барьер!
+comp-containment-disconnected = Генератора сдерживающего поля перестаёт светиться, разрывая барьер.
+comp-containment-anchor-warning = Вы не можете открепить генератор сдерживающего поля пока установлен барьер!

@@ -1,6 +1,6 @@
-ent-TorsoRat = animal torso
+ent-TorsoRat = туловище животного
     .desc = { ent-PartAnimal.desc }
     .suffix = { "" }
-ent-OrganRatLungs = lungs
+ent-OrganRatLungs = лёгкие
     .desc = { ent-BaseAnimalOrgan.desc }
     .suffix = { "" }
