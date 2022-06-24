@@ -26,7 +26,7 @@ namespace Content.Server.RoleTimers
         {
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             IoCManager.Resolve<IEntityManager>().EventBus
-                .SubscribeEvent<RoundRestartCleanupEvent>(EventSource.Local, this, _ => SaveFullCacheToDb());
+                .SubscribeEvent<RoundRestartCleanupEvent>(EventSource.Local, this, _ => OnRoundEnd());
         }
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
@@ -58,6 +58,15 @@ namespace Content.Server.RoleTimers
             }
 
             _cachedPlayerData[player] = cacheObject;
+        }
+
+        private void OnRoundEnd()
+        {
+            SaveFullCacheToDb();
+            foreach (var (_, value) in _cachedPlayerData)
+            {
+                value.CurrentRoles.Clear();
+            }
         }
 
         private void ClearPlayerFromCache(NetUserId player)
