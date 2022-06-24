@@ -29,30 +29,6 @@
       path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
-  name: Deckard
-  parent: BaseWeaponRevolver
-  id: WeaponRevolverDeckard
-  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-3
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Item
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-  - type: RevolverAmmoProvider
-    capacity: 5
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: true
-  - type: Appearance
-
-- type: entity
   name: Inspector
   parent: BaseWeaponRevolver
   id: WeaponRevolverInspector
