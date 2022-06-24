@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.DoAfter;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
@@ -19,6 +20,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System.Threading;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -36,6 +38,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -55,6 +58,9 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
+
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCompleteEvent>(OnEjectBulbComplete);
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCancelledEvent>(OnEjectBulbCancelled);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -85,6 +91,9 @@ namespace Content.Server.Light.EntitySystems
         private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
         {
             if (args.Handled)
+                return;
+
+            if (light.CancelToken != null)
                 return;
 
             // check if light has bulb to eject
@@ -121,9 +130,34 @@ namespace Content.Server.Light.EntitySystems
                 }
             }
 
-            // all checks passed
-            // just try to eject bulb
-            args.Handled = EjectBulb(uid, userUid, light) != null;
+
+            //removing a broken/burned bulb, so allow instant removal
+            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            {
+                args.Handled = EjectBulb(uid, userUid, light) != null;
+                return;
+            }
+
+            // removing a working bulb, so require a delay
+            light.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs((EntityUid) userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
+            {
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                TargetFinishedEvent = new EjectBulbCompleteEvent()
+                {
+                    Component = light,
+                    User = userUid,
+                    Target = uid,
+                },
+                TargetCancelledEvent = new EjectBulbCancelledEvent()
+                {
+                    Component = light,
+                }
+            });
+
+            args.Handled = true;
         }
 
         #region Bulb Logic API
@@ -391,6 +425,29 @@ namespace Content.Server.Light.EntitySystems
 
             light.On = state;
             UpdateLight(uid, light);
+        }
+
+        private void OnEjectBulbComplete(EntityUid uid, PoweredLightComponent component, EjectBulbCompleteEvent args)
+        {
+            args.Component.CancelToken = null;
+            EjectBulb(args.Target, args.User, args.Component);
+        }
+
+        private static void OnEjectBulbCancelled(EntityUid uid, PoweredLightComponent component, EjectBulbCancelledEvent args)
+        {
+            args.Component.CancelToken = null;
+        }
+
+        private sealed class EjectBulbCompleteEvent : EntityEventArgs
+        {
+            public PoweredLightComponent Component { get; init; } = default!;
+            public EntityUid User { get; init; }
+            public EntityUid Target { get; init; }
+        }
+
+        private sealed class EjectBulbCancelledEvent : EntityEventArgs
+        {
+            public PoweredLightComponent Component { get; init; } = default!;
         }
     }
 }

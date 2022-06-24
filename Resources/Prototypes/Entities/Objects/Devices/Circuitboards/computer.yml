@@ -57,7 +57,7 @@
   description: A computer printed circuit board for a supply ordering console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyOrdering
+      prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
 
@@ -68,7 +68,7 @@
   description: A computer printed circuit board for a supply request console
   components:
     - type: ComputerBoard
-      prototype: ComputerSupplyRequest
+      prototype: ComputerCargoOrders
 
 - type: entity
   parent: BaseComputerCircuitboard

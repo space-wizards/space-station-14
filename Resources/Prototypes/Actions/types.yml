@@ -48,3 +48,10 @@
   userPopup: action-popup-combat
   popupToggleSuffix: -disabling
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: VendingThrow
+  name: vending-machine-action-name
+  description: vending-machine-action-description
+  useDelay: 30
+  event: !type:VendingMachineSelfDispenseEvent

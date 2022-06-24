@@ -384,11 +384,11 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
+}
 
-    public enum EffectLayers : byte
-    {
-        Unshaded,
-    }
+public enum EffectLayers : byte
+{
+    Unshaded,
 }
 
 [Serializable, NetSerializable]

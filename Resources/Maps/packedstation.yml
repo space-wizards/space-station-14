@@ -28883,7 +28883,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2135
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 13.5,30.5
@@ -28897,7 +28897,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 2136
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - pos: 20.5,23.5
     parent: 2
@@ -28906,9 +28906,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 2137
   type: CableHV
   components:
@@ -94282,7 +94279,7 @@ entities:
     parent: 2
     type: Transform
 - uid: 11095
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 11.5,24.5
     parent: 2
@@ -94293,7 +94290,7 @@ entities:
       OrderReceiver: []
     type: SignalReceiver
 - uid: 11096
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 11.5,25.5
     parent: 2

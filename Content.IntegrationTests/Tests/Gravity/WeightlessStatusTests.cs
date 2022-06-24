@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -43,10 +44,11 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             EntityUid human = default;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             await server.WaitAssertion(() =>
             {
-                var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanDummy", testMap.GridCoords);
 
                 Assert.True(entityManager.TryGetComponent(human, out AlertsComponent alerts));
             });

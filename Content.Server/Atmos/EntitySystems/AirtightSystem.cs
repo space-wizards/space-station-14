@@ -86,7 +86,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight);
-            RaiseLocalEvent(uid, new AirtightChanged(airtight));
+            RaiseLocalEvent(uid, new AirtightChanged(airtight), true);
         }
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight, xform);
-            RaiseLocalEvent(airtight.Owner, new AirtightChanged(airtight));
+            RaiseLocalEvent(airtight.Owner, new AirtightChanged(airtight), true);
         }
 
         public void UpdatePosition(AirtightComponent airtight, TransformComponent? xform = null)
