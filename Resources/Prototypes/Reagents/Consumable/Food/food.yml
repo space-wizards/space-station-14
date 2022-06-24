@@ -73,7 +73,7 @@
             damage:
               groups:
                 Asphyxiation: 8
-          - !type:ModifyBleedAmounts #heart attacks cause blood to thicken slightly
+          - !type:ModifyBleedAmount #heart attacks cause blood to thicken slightly
             amount: -0.05
           - !type:PopupMessage # technically this should be different by gender but I don't want to complicate it
             messages: [“ephedrine-effect-tight-pain”, “ephedrine-effect-heart-pounds”]
