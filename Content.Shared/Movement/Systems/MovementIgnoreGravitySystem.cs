@@ -1,8 +1,7 @@
-﻿using Content.Shared.Alert;
-using Content.Shared.Movement.Components;
+﻿using Content.Shared.Movement.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public sealed class MovementIgnoreGravitySystem : EntitySystem
 {

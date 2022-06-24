@@ -3,26 +3,13 @@ using Content.Shared.Movement.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Movement.EntitySystems
+namespace Content.Shared.Movement.Systems
 {
     public sealed class MovementSpeedModifierSystem : EntitySystem
     {
-        private readonly HashSet<EntityUid> _needsRefresh = new();
-
-        public override void Update(float frameTime)
-        {
-            foreach (var uid in _needsRefresh)
-            {
-                RecalculateMovementSpeedModifiers(uid);
-            }
-
-            _needsRefresh.Clear();
-        }
-
         public override void Initialize()
         {
             base.Initialize();
-            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<MovementSpeedModifierComponent, ComponentHandleState>(OnHandleState);
         }
@@ -47,23 +34,18 @@ namespace Content.Shared.Movement.EntitySystems
             component.SprintSpeedModifier = state.SprintSpeedModifier;
         }
 
-        public void RefreshMovementSpeedModifiers(EntityUid uid)
-        {
-            _needsRefresh.Add(uid);
-        }
-
-        private void RecalculateMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
+        public void RefreshMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
                 return;
 
             var ev = new RefreshMovementSpeedModifiersEvent();
-            RaiseLocalEvent(uid, ev, false);
+            RaiseLocalEvent(uid, ev);
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
 
-            move.Dirty();
+            Dirty(move);
         }
 
         [Serializable, NetSerializable]

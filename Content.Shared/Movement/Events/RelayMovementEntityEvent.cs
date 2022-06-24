@@ -1,4 +1,4 @@
-namespace Content.Shared.Movement
+namespace Content.Shared.Movement.Events
 {
     public sealed class RelayMovementEntityEvent : EntityEventArgs
     {

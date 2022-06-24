@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -16,14 +17,15 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Movement
+namespace Content.Shared.Movement.Systems
 {
     /// <summary>
     ///     Handles player and NPC mob movement.
     ///     NPCs are handled server-side only.
     /// </summary>
-    public abstract class SharedMoverController : VirtualController
+    public abstract partial class SharedMoverController : VirtualController
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -86,17 +88,18 @@ namespace Content.Shared.Movement
         public override void Initialize()
         {
             base.Initialize();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            InitializeInput();
+            InitializePushing();
             // Hello
-            configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
-            configManager.OnValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed, true);
-            configManager.OnValueChanged(CCVars.MobFriction, SetFrictionVelocity, true);
-            configManager.OnValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity, true);
-            configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-            configManager.OnValueChanged(CCVars.MobAcceleration, SetMobAcceleration, true);
-            configManager.OnValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration, true);
-            configManager.OnValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput, true);
-            configManager.OnValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier, true);
+            _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
+            _configManager.OnValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed, true);
+            _configManager.OnValueChanged(CCVars.MobFriction, SetFrictionVelocity, true);
+            _configManager.OnValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity, true);
+            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+            _configManager.OnValueChanged(CCVars.MobAcceleration, SetMobAcceleration, true);
+            _configManager.OnValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration, true);
+            _configManager.OnValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput, true);
+            _configManager.OnValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier, true);
             UpdatesBefore.Add(typeof(SharedTileFrictionController));
         }
 
@@ -113,16 +116,17 @@ namespace Content.Shared.Movement
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
-            configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
-            configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
-            configManager.UnsubValueChanged(CCVars.MobFriction, SetFrictionVelocity);
-            configManager.UnsubValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity);
-            configManager.UnsubValueChanged(CCVars.MobAcceleration, SetMobAcceleration);
-            configManager.UnsubValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration);
-            configManager.UnsubValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput);
-            configManager.UnsubValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier);
+            ShutdownInput();
+            ShutdownPushing();
+            _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
+            _configManager.UnsubValueChanged(CCVars.MinimumFrictionSpeed, SetMinimumFrictionSpeed);
+            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
+            _configManager.UnsubValueChanged(CCVars.MobFriction, SetFrictionVelocity);
+            _configManager.UnsubValueChanged(CCVars.MobWeightlessFriction, SetWeightlessFrictionVelocity);
+            _configManager.UnsubValueChanged(CCVars.MobAcceleration, SetMobAcceleration);
+            _configManager.UnsubValueChanged(CCVars.MobWeightlessAcceleration, SetMobWeightlessAcceleration);
+            _configManager.UnsubValueChanged(CCVars.MobWeightlessFrictionNoInput, SetWeightlessFrictionNoInput);
+            _configManager.UnsubValueChanged(CCVars.MobWeightlessModifier, SetMobWeightlessModifier);
         }
 
         public override void UpdateAfterSolve(bool prediction, float frameTime)
@@ -187,13 +191,21 @@ namespace Content.Shared.Movement
             UsedMobMovement[mover.Owner] = true;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
-            bool touching = true;
+            var touching = false;
 
             // Handle wall-pushes.
             if (weightless)
             {
-                // No gravity: is our entity touching anything?
-                touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                if (xform.GridUid != null)
+                    touching = true;
+
+                if (!touching)
+                {
+                    var ev = new CanWeightlessMoveEvent();
+                    RaiseLocalEvent(xform.Owner, ref ev);
+                    // No gravity: is our entity touching anything?
+                    touching = ev.CanMove || IsAroundCollider(_physics, xform, mobMover, physicsComponent);
+                }
 
                 if (!touching)
                 {
@@ -233,6 +245,22 @@ namespace Content.Shared.Movement
                 accel = _mobAcceleration;
             }
 
+            var profile = new MobMovementProfileEvent(
+                touching,
+                weightless,
+                friction,
+                weightlessModifier,
+                accel);
+
+            RaiseLocalEvent(xform.Owner, ref profile);
+
+            if (profile.Override)
+            {
+                friction = profile.Friction;
+                weightlessModifier = profile.WeightlessModifier;
+                accel = profile.Acceleration;
+            }
+
             Friction(frameTime, friction, ref velocity);
 
             if (xform.GridUid != EntityUid.Invalid)
@@ -242,7 +270,7 @@ namespace Content.Shared.Movement
             {
                 // This should have its event run during island solver soooo
                 xform.DeferUpdates = true;
-                xform.LocalRotation = xform.GridUid != EntityUid.Invalid
+                xform.LocalRotation = xform.GridUid != null
                     ? total.ToWorldAngle()
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
@@ -257,7 +285,7 @@ namespace Content.Shared.Movement
 
             worldTotal *= weightlessModifier;
 
-            if (touching)
+            if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
             _physics.SetLinearVelocity(physicsComponent, velocity);

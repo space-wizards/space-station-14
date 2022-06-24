@@ -1,47 +1,43 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
 
-namespace Content.Shared.Movement.EntitySystems
+namespace Content.Shared.Movement.Systems
 {
     /// <summary>
     ///     Handles converting inputs into movement.
     /// </summary>
-    public sealed class SharedMoverSystem : EntitySystem
+    public abstract partial class SharedMoverController
     {
-        public override void Initialize()
+        private void InitializeInput()
         {
-            base.Initialize();
-
-            var moveUpCmdHandler = new MoverDirInputCmdHandler(Direction.North);
-            var moveLeftCmdHandler = new MoverDirInputCmdHandler(Direction.West);
-            var moveRightCmdHandler = new MoverDirInputCmdHandler(Direction.East);
-            var moveDownCmdHandler = new MoverDirInputCmdHandler(Direction.South);
+            var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
+            var moveLeftCmdHandler = new MoverDirInputCmdHandler(this, Direction.West);
+            var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
+            var moveDownCmdHandler = new MoverDirInputCmdHandler(this, Direction.South);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-                .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
-                .Register<SharedMoverSystem>();
+                .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
+                .Register<SharedMoverController>();
         }
 
-        /// <inheritdoc />
-        public override void Shutdown()
+        private void ShutdownInput()
         {
-            CommandBinds.Unregister<SharedMoverSystem>();
-            base.Shutdown();
+            CommandBinds.Unregister<SharedMoverController>();
         }
 
         private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
-            if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
+            if (!TryComp<IMoverComponent>(session?.AttachedEntity, out var moverComp))
                 return;
 
             var owner = session?.AttachedEntity;
@@ -71,9 +67,9 @@ namespace Content.Shared.Movement.EntitySystems
             moverComp.SetVelocityDirection(dir, subTick, state);
         }
 
-        private static void HandleRunChange(ICommonSession? session, ushort subTick, bool walking)
+        private void HandleRunChange(ICommonSession? session, ushort subTick, bool walking)
         {
-            if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
+            if (!TryComp<IMoverComponent>(session?.AttachedEntity, out var moverComp))
             {
                 return;
             }
@@ -81,68 +77,42 @@ namespace Content.Shared.Movement.EntitySystems
             moverComp.SetSprinting(subTick, walking);
         }
 
-        private static bool TryGetAttachedComponent<T>(ICommonSession? session, [NotNullWhen(true)] out T? component)
-            where T : class, IComponent
-        {
-            component = default;
-
-            var ent = session?.AttachedEntity;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (ent == null || !entMan.EntityExists(ent.Value))
-                return false;
-
-            if (!entMan.TryGetComponent(ent.Value, out T? comp))
-                return false;
-
-            component = comp;
-            return true;
-        }
-
         private sealed class MoverDirInputCmdHandler : InputCmdHandler
         {
+            private SharedMoverController _controller;
             private readonly Direction _dir;
 
-            public MoverDirInputCmdHandler(Direction dir)
+            public MoverDirInputCmdHandler(SharedMoverController controller, Direction dir)
             {
+                _controller = controller;
                 _dir = dir;
             }
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full)
-                {
-                    return false;
-                }
+                if (message is not FullInputCmdMessage full) return false;
 
-                Get<SharedMoverSystem>().HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
         }
 
         private sealed class WalkInputCmdHandler : InputCmdHandler
         {
+            private SharedMoverController _controller;
+
+            public WalkInputCmdHandler(SharedMoverController controller)
+            {
+                _controller = controller;
+            }
+
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full)
-                {
-                    return false;
-                }
+                if (message is not FullInputCmdMessage full) return false;
 
-                HandleRunChange(session, full.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleRunChange(session, full.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
-        }
-    }
-
-    public sealed class RelayMoveInputEvent : EntityEventArgs
-    {
-        public ICommonSession Session { get; }
-
-        public RelayMoveInputEvent(ICommonSession session)
-        {
-            Session = session;
         }
     }
 }
