@@ -60,7 +60,7 @@
   name: reagent-name-cholesterol
   desc: reagent-desc-cholesterol
   physicalDesc: reagent-physical-desc-crystalline
-  color: “#ffffff”
+  color: “#FFFFFF”
   boilingPoint: 360
   meltingPoint: 148
   metabolisms:
