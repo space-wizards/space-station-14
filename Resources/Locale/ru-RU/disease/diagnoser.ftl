@@ -1,7 +1,7 @@
 diagnoser-cant-use-swab = { CAPITALIZE($machine) } не принимает { $swab }.
 diagnoser-insert-swab = Вы вставляете { $swab } в { $machine }.
 diagnoser-disease-report = Отчет о болезни: { CAPITALIZE($disease) }
-diagnoser-disease-report-none = Отчет о хорошем здоровье
+diagnoser-disease-report-none = Справка о состоянии здоровья
 diagnoser-disease-report-none-contents = [color=green]В этом образце не было обнаружено никаких заболеваний.[/color]
 diagnoser-disease-report-name = Название болезни: { CAPITALIZE($disease) }
 diagnoser-disease-report-infectious = Передаётся: [color=red]Да[/color]
