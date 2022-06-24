@@ -31,7 +31,7 @@
     state: poly-1
   - type: Gun
     soundGunshot:
-      path: /Audio/Magic/staff_animation.ogg
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCarp
 
@@ -67,7 +67,7 @@
     state: healing
   - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/staff_healing.ogg
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
 
@@ -85,6 +85,6 @@
     state: door
   - type: Gun
     soundGunshot:
-      path: /Audio/Magic/staff_door.ogg
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
