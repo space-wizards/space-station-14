@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
 
-namespace Content.Client.UserInterface.Systems.Actions;
+namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
 [GenerateTypedNameReferences]
 public sealed partial class ActionButton : Control

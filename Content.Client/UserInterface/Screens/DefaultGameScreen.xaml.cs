@@ -13,6 +13,7 @@ public sealed partial class DefaultGameScreen : UIScreen
         RobustXamlLoader.Load(this);
         AutoscaleMaxResolution = new Vector2i(1080,770);
         SetAnchorAndMarginPreset(TopBarUI, LayoutPreset.TopLeft, margin:10);
+        SetAnchorAndMarginPreset(Chat, LayoutPreset.TopRight, margin:10);
         SetAnchorAndMarginPreset(ActionUI, LayoutPreset.BottomLeft, margin:10);
         SetAnchorAndMarginPreset(HandUI, LayoutPreset.BottomWide, margin:75);
     }

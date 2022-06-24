@@ -1,0 +1,27 @@
+﻿<widgets:ChatBox
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls"
+    MouseFilter="Stop"
+    MinSize="200 128">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
+        </PanelContainer.PanelOverride>
+
+        <BoxContainer Orientation="Vertical">
+            <OutputPanel Name="Contents" VerticalExpand="True" />
+            <PanelContainer StyleClasses="ChatSubPanel">
+                <BoxContainer Orientation="Horizontal" SeparationOverride="4">
+                    <controls:ChannelSelectorButton Name="ChannelSelector" ToggleMode="True"
+                                                  StyleClasses="chatSelectorOptionButton" MinWidth="75" />
+                    <HistoryLineEdit Name="Input" PlaceHolder="{Loc 'hud-chatbox-info'}" HorizontalExpand="True"
+                                     StyleClasses="chatLineEdit" />
+                    <controls:FilterButton Name="FilterButton" StyleClasses="chatFilterOptionButton" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </PanelContainer>
+</widgets:ChatBox>
