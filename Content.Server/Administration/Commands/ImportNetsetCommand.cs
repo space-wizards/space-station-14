@@ -14,8 +14,10 @@ public sealed class ImportNetsetCommand : IConsoleCommand
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly IServerDbManager _serverDbManager = default!;
 
+    public static NetUserId AutomationBanningUser = new(new Guid("a17aa146-807c-48bb-8573-65e3cb05119d"));
+
     public string Command => "importnetset";
-    public string Description => "Import a .netset file into the ban db";
+    public string Description => "Import a .netset file into the ban database.";
     public string Help => "importnetset <filepath in vfs> \"<ban reason>\"";
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -95,7 +97,7 @@ public sealed class ImportNetsetCommand : IConsoleCommand
                 DateTimeOffset.UnixEpoch,
                 null,
                 args[1],
-                new NetUserId(new Guid("a17aa146-807c-48bb-8573-65e3cb05119d")),
+                AutomationBanningUser,
                 null);
 
             bansToAdd.Add(def);
