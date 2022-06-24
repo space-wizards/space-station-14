@@ -1,5 +1,12 @@
 name: Build & Test Debug
 
+env:
+  DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+  DOTNET_NOLOGO: true
+
 on:
   push:
     branches: [ master ]
