@@ -41,7 +41,7 @@ namespace Content.Server.Zombies
 
             var items = 0f;
             var total = 0f;
-            while  (enumerator.MoveNext(out var con))
+            while (enumerator.MoveNext(out var con))
             {
                 total++;
                 if (con.ContainedEntity != null)
