@@ -16,6 +16,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+        - ReagentId: Cholesterol
+          Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
@@ -103,6 +105,8 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+        - ReagentId: Cholesterol
+          
 
 - type: entity
   name: energy bar
@@ -203,6 +207,8 @@
           Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 5
   - type: Food
     trash: FoodPacketChowMeinTrash
           
@@ -226,6 +232,8 @@
           Quantity: 2
         - ReagentId: Soysauce
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 5
   - type: Food
     trash: FoodPacketDanDanTrash
 
@@ -243,6 +251,8 @@
         maxVol: 1
         reagents:
         - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Cholesterol
           Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
