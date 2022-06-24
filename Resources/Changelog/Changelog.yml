@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed the disarm action not working., type: Fix}
-  id: 1282
-  time: '2022-04-04T05:45:27.0000000+00:00'
 - author: DubiousDoggo
   changes:
   - {message: Overhauled machine linking, type: Tweak}
@@ -2977,3 +2972,9 @@ Entries:
   - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
   id: 1781
   time: '2022-06-24T14:43:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
+      the new name., type: Tweak}
+  id: 1782
+  time: '2022-06-24T14:45:32.0000000+00:00'
