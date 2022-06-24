@@ -14,5 +14,5 @@ ent-WeaponShotgunKammerer = Kammerer
     .desc = When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
     .suffix = { "" }
 ent-WeaponShotgunSawn = sawn-off shotgun
-    .desc = Omar's coming!
+    .desc = Groovy!
     .suffix = { "" }

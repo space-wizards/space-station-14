@@ -10,3 +10,6 @@ ent-DebugThruster = thruster
 ent-Gyroscope = Gyroscope
     .desc = Increases the shuttle's potential angular rotation.
     .suffix = { "" }
+ent-DebugGyroscope = gyroscope
+    .desc = Increases the shuttle's potential angular rotation.
+    .suffix = DEBUG
