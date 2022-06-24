@@ -217,12 +217,9 @@ namespace Content.Server.Storage.Components
             // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
             // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
 
-            // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-            var attemptEvent = new StorageEatAttemptEvent();
+            var attemptEvent = new InsertIntoStorageAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(entity, attemptEvent);
             if (attemptEvent.Cancelled)
-                return false;
-            if (_entMan.HasComponent<GhostComponent>(entity))
                 return false;
 
             // checks
@@ -242,12 +239,6 @@ namespace Content.Server.Storage.Components
             {
                 if (!storageIsItem)
                     allowedToEat = true;
-                else
-                {
-                    // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
-                    //allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
-
-                }
             }
 
             _entMan.EventBus.RaiseLocalEvent(entity, allowedToEat);
@@ -373,7 +364,7 @@ namespace Content.Server.Storage.Components
         }
     }
 
-    public sealed class StorageEatAttemptEvent : CancellableEntityEventArgs
+    public sealed class InsertIntoStorageAttemptEvent : CancellableEntityEventArgs
     {
 
     }

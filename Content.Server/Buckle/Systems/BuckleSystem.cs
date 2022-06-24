@@ -33,7 +33,7 @@ namespace Content.Server.Buckle.Systems
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
             SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
-            SubscribeLocalEvent<BuckleComponent, StorageEatAttemptEvent>(OnStorageEat);
+            SubscribeLocalEvent<BuckleComponent, InsertIntoStorageAttemptEvent>(OnStorageInsertAttempt);
         }
 
         private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -136,14 +136,10 @@ namespace Content.Server.Buckle.Systems
             }
         }
 
-        public void OnStorageEat(EntityUid uid, BuckleComponent comp, StorageEatAttemptEvent args)
+        public void OnStorageInsertAttempt(EntityUid uid, BuckleComponent comp, InsertIntoStorageAttemptEvent args)
         {
-            Logger.Info("Eaten");
             if (comp.Buckled)
-            {
-                Logger.Info("Cancelling");
                 args.Cancel();
-            }
         }
     }
 }
