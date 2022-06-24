@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 60
   stations:
-    Station:
+    lighthouse:
       mapNameTemplate: '{0} Lighthouse {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator

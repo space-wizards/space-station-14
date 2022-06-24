@@ -32,6 +32,8 @@ namespace Content.Server.Entry
             "PaperVisuals",
             "SurveillanceCameraVisuals",
             "KudzuVisuals",
+            "AMEControllerVisuals",
+            "AMEShieldingVisuals",
         };
     }
 }

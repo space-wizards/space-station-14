@@ -1,68 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix the PDA UI briefly showing the uplink button to non-traitors., type: Fix}
-  id: 1270
-  time: '2022-03-30T02:56:58.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
-    type: Add}
-  id: 1271
-  time: '2022-03-30T04:56:31.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Some bombs can no longer cause a large quantity of smaller explosions,
-    type: Fix}
-  id: 1272
-  time: '2022-03-30T13:29:01.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
-      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
-  id: 1273
-  time: '2022-03-31T07:08:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Split Station map! A new medium to large map that's split in half!,
-    type: Add}
-  id: 1274
-  time: '2022-03-31T19:08:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
-  id: 1275
-  time: '2022-03-31T19:08:55.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now has emergency lights., type: Tweak}
-  id: 1276
-  time: '2022-04-01T02:06:09.0000000+00:00'
-- author: ElectroSr
-  changes:
-  - {message: Explosions have been entirely redesigned to be graphically and technically
-      better. They should be a bit more interesting to look at now., type: Add}
-  - {message: Nuke has an actual explosion., type: Add}
-  - {message: Meteor explosion works again., type: Fix}
-  id: 1277
-  time: '2022-04-01T02:39:26.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixes a bug that was causing some overlays (e.g. gasses) to be unshaded.,
-    type: Fix}
-  id: 1278
-  time: '2022-04-01T12:16:11.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Ghost roles window now better organized. You can follow ghost role targets
-      before possessing them., type: Tweak}
-  id: 1279
-  time: '2022-04-02T22:06:30.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
-  id: 1280
-  time: '2022-04-04T01:02:38.0000000+00:00'
 - author: Radosvik
   changes:
   - {message: Current Player Count to the Lobby, type: Add}
@@ -2975,3 +2911,70 @@ Entries:
   - {message: Headsets can now use department-specific radio channels., type: Add}
   id: 1769
   time: '2022-06-23T10:11:03.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
+  id: 1770
+  time: '2022-06-23T10:24:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost radios., type: Fix}
+  - {message: Adjusted radio colours., type: Tweak}
+  id: 1771
+  time: '2022-06-23T10:48:26.0000000+00:00'
+- author: OldDanceJacket
+  changes:
+  - {message: Added lighthouse ACTUALLY, type: Add}
+  id: 1772
+  time: '2022-06-23T11:14:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf L6 again., type: Tweak}
+  id: 1773
+  time: '2022-06-23T11:24:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
+      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
+  id: 1774
+  time: '2022-06-23T12:18:11.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
+    type: Fix}
+  id: 1775
+  time: '2022-06-23T12:23:23.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where disposals could get stuck pressurizing, type: Fix}
+  id: 1776
+  time: '2022-06-24T01:26:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
+      on fire with a single strike.', type: Add}
+  id: 1777
+  time: '2022-06-24T01:27:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Barratry has received one last set of small tweaks and additions before
+      the big rework. Coming soon:tm:', type: Add}
+  id: 1778
+  time: '2022-06-24T01:49:23.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Pills can now be dissolved into beakers. And, you can crack eggs into
+      bowls now! The future is now!', type: Add}
+  id: 1779
+  time: '2022-06-24T02:26:54.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Corpses are now circled by buzzing flies when they've started to rot.,
+    type: Add}
+  - {message: 'Do you know how heavy cows are? It''s wack. They''re expensive to transport,
+      and the cow crate price has been increased.', type: Tweak}
+  - {message: Freezer crates now stop rotting., type: Fix}
+  - {message: Rejuvenation properly removes rotting., type: Fix}
+  - {message: Body parts should gib from rotting for real this time., type: Fix}
+  id: 1780
+  time: '2022-06-24T08:20:52.0000000+00:00'
