@@ -63,7 +63,7 @@
   color: “#fcfcfc”
   boilingPoint: 360
   meltingPoint: 148
-    metabolisms:
+  metabolisms:
       Poison:
         effects:
           - !type:HealthChange
