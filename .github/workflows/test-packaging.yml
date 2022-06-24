@@ -49,12 +49,12 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - uses: actions/cache@v3
+      - uses: wrexbe/cache@mycache
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          key: ${{ runner.os }}-nuget-wrexbe-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-
+            ${{ runner.os }}-nuget-wrexbe-
 
       - name: Install dependencies
         run: dotnet restore
