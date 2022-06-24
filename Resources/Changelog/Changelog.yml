@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some interactions with smoke, foam, and the bloodstream that
-      enabled mass smoke/foam production.', type: Fix}
-  id: 1284
-  time: '2022-04-04T16:02:33.0000000+00:00'
 - author: moony
   changes:
   - {message: Minibombs beep again., type: Tweak}
@@ -2978,3 +2972,8 @@ Entries:
   - {message: Crates cannot eat you while buckled anymore!, type: Fix}
   id: 1783
   time: '2022-06-24T19:26:57.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Counters can now be vaulted again., type: Fix}
+  id: 1784
+  time: '2022-06-24T19:34:09.0000000+00:00'
