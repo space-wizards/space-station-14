@@ -34,7 +34,7 @@ public sealed class BlockingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<BlockingComponent, GotEquippedHandEvent>(OnEquip);
-        SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
+        SubscribeLocalEvent<BlockingComponent, GotUnequippedHandEvent>(OnUnequip);
 
         SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
@@ -49,8 +49,8 @@ public sealed class BlockingSystem : EntitySystem
         component.User = args.User;
 
         //To make sure that this bodytype doesn't get set as anything but the original
-        if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static
-                                                                          && !TryComp(args.User, out BlockingUserComponent? blockingUserComponent))
+        if (TryComp<PhysicsComponent>(args.User, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static
+                                                                          && !TryComp<BlockingUserComponent>(args.User, out var blockingUserComponent))
         {
             var userComp = EnsureComp<BlockingUserComponent>(args.User);
             userComp.BlockingItem = uid;
@@ -58,7 +58,7 @@ public sealed class BlockingSystem : EntitySystem
         }
     }
 
-    private void OnDrop(EntityUid uid, BlockingComponent component, DroppedEvent args)
+    private void OnUnequip(EntityUid uid, BlockingComponent component, GotUnequippedHandEvent args)
     {
         BlockingShutdownHelper(uid, component, args.User);
     }
