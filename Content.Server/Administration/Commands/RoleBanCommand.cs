@@ -54,9 +54,6 @@ public sealed class RoleBanCommand : IConsoleCommand
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        var proto = IoCManager.Resolve<IPrototypeManager>();
-        var player = IoCManager.Resolve<IPlayerManager>();
-
         var durOpts = new CompletionOption[]
         {
             new("0", Loc.GetString("cmd-roleban-hint-duration-1")),
@@ -66,9 +63,9 @@ public sealed class RoleBanCommand : IConsoleCommand
 
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(player.ServerSessions.Select(s => s.Name).OrderBy(s => s),
+            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
                 Loc.GetString("cmd-roleban-hint-1")),
-            2 => CompletionResult.FromHintOptions(proto.EnumeratePrototypes<JobPrototype>().Select(j => j.ID),
+            2 => CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<JobPrototype>(),
                 Loc.GetString("cmd-roleban-hint-2")),
             3 => CompletionResult.FromHint(Loc.GetString("cmd-roleban-hint-3")),
             4 => CompletionResult.FromHintOptions(durOpts, Loc.GetString("cmd-roleban-hint-4")),

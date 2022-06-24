@@ -93,12 +93,11 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        var player = IoCManager.Resolve<IPlayerManager>();
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(player.ServerSessions.Select(s => s.Name).OrderBy(s => s),
+            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
                 Loc.GetString("cmd-rolebanlist-hint-1")),
-            2 => CompletionResult.FromHintOptions(new[] { bool.FalseString, bool.TrueString },
+            2 => CompletionResult.FromHintOptions(CompletionHelper.Booleans,
                 Loc.GetString("cmd-rolebanlist-hint-2")),
             _ => CompletionResult.Empty
         };
