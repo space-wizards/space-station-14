@@ -6821,7 +6821,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 638
-    type: ComputerSupplyOrdering
+    type: ComputerCargoOrders
     components:
       - pos: -2.5,-4.5
         parent: 79
@@ -7221,7 +7221,7 @@ entities:
             ents: []
         type: ContainerContainer
   - uid: 687
-    type: cargoTelepad
+    type: CargoTelepad
     components:
       - pos: 3.5,0.5
         parent: 79

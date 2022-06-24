@@ -9,16 +9,17 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class DummyIconTest : ContentIntegrationTest
+    public sealed class DummyIconTest
     {
         [Test]
         public async Task Test()
         {
-            var (client, _) = await StartConnectedServerClientPair(new ClientContentIntegrationOption(){ Pool = false }, new ServerContentIntegrationOption() { Pool = false });
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var client = pairTracker.Pair.Client;
 
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
-
+            await client.WaitRunTicks(5);
             await client.WaitAssertion(() =>
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
@@ -32,6 +33,8 @@ namespace Content.IntegrationTests.Tests
                         proto.ID);
                 }
             });
+            await client.WaitRunTicks(5);
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

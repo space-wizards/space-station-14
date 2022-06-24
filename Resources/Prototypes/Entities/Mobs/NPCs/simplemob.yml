@@ -146,10 +146,8 @@
     group: GenericNumber
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.8
-      60: 0.6
-      80: 0.4
-      90: 0.2
+      60: 0.7
+      80: 0.5
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
@@ -206,4 +204,6 @@
         Heat : 1 #per second, scales with temperature & other constants
   - type: Bloodstream
     bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
 

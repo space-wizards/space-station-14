@@ -2603,7 +2603,7 @@ entities:
     parent: 179
     type: Transform
 - uid: 326
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - pos: 0.5,-5.5
     parent: 179
@@ -2613,7 +2613,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 327
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 0.5,0.5
     parent: 179

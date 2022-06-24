@@ -55,3 +55,6 @@ ent-ClothingOuterSkub = костюм скуба
 ent-ClothingOuterPlagueSuit = костюм чумного доктора
     .desc = Плохой знак.
     .suffix = { "" }
+ent-ClothingOuterNunRobe = nun robe
+    .desc = Maximum piety in this star system.
+    .suffix = { "" }

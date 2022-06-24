@@ -11,7 +11,6 @@
             Heat: 12.5
             Blunt: -7
     litDisarmMalus: 0.6
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -23,7 +22,7 @@
         map: [ "blade" ]
   - type: MeleeWeapon
     hitSound:
-      path: /Audio/Weapons/eblade1.ogg
+      path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
         Blunt: 7

@@ -118,3 +118,6 @@ ent-ClothingHeadPaperSackSmile = улыбающаяся шапка из бума
 ent-ClothingHeadFishCap = кепка рыбака
     .desc = Женщины боятся меня. Рыбы боятся меня. Мужчины отворачиваются от меня. Когда я иду, ни один зверь не осмеливается издать ни звука в моем присутствии. Я один на этой бесплодной Земле.
     .suffix = { "" }
+ent-ClothingHeadNurseHat = nurse hat
+    .desc = Somehow I feel I'm not supposed to leave this place.
+    .suffix = { "" }

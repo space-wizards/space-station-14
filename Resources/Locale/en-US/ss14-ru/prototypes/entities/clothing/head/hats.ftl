@@ -118,3 +118,6 @@ ent-ClothingHeadPaperSackSmile = smiling papersack hat
 ent-ClothingHeadFishCap = fishing cap
     .desc = Women fear me. Fish fear me. Men turn their eyes away from me. As I walk no beast dares make a sound in my presence. I am alone on this barren Earth.
     .suffix = { "" }
+ent-ClothingHeadNurseHat = nurse hat
+    .desc = Somehow I feel I'm not supposed to leave this place.
+    .suffix = { "" }

@@ -18704,7 +18704,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 592
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 14.5,43.5
     parent: 82
@@ -33056,7 +33056,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2222
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - pos: 16.5,33.5
     parent: 82
@@ -33065,9 +33065,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 2223
   type: WallSolid
   components:
@@ -33856,7 +33853,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2312
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 10.5,36.5
     parent: 82
@@ -33978,7 +33975,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2326
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: -1.5707963267948966 rad
     pos: 17.5,36.5
@@ -68591,7 +68588,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6330
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 28.5,-35.5
     parent: 82

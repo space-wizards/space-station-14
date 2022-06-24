@@ -55,3 +55,6 @@ ent-ClothingOuterSkub = skub suit
 ent-ClothingOuterPlagueSuit = plague doctor suit
     .desc = A bad omen.
     .suffix = { "" }
+ent-ClothingOuterNunRobe = nun robe
+    .desc = Maximum piety in this star system.
+    .suffix = { "" }

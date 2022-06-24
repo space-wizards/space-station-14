@@ -62,3 +62,8 @@ jobs:
     - name: Run Content.Tests
       run: dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
 
+    - name: Run Content.IntegrationTests
+      shell: pwsh
+      run: |
+        $env:DOTNET_gcServer=1
+        dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0

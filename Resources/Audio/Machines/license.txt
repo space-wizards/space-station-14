@@ -9,3 +9,5 @@ uniformprinter.ogg taken from https://freesound.org/people/sukaton/sounds/60640/
 vaccinator_running.ogg taken from https://freesound.org/people/RutgerMuller/sounds/365413/ and edited
 
 vending_jingle.ogg made by github.com/hubismal licensed under CC-BY-3.0
+
+lightswitch.ogg taken from https://github.com/Skyrat-SS13/Skyrat-tg/blob/3f6099bbc3c2afdc609bf1991c2f06297a0f13c2/modular_skyrat/modules/aesthetics/lightswitch/sound/lightswitch.ogg under CC-BY-SA 3.0

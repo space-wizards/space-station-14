@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
@@ -17,10 +18,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 {
     private readonly IEntityManager _entManager;
 
-    /// <summary>
-    /// EntityUid of the open console.
-    /// </summary>
-    private EntityUid? _entity;
+    private EntityUid? _shuttleUid;
 
     /// <summary>
     /// Currently selected dock button for camera.
@@ -84,9 +82,14 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UndockPressed?.Invoke(DockingScreen.ViewedDock.Value);
     }
 
+    public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
+    {
+        _shuttleUid = coordinates?.EntityId;
+        RadarScreen.SetMatrix(coordinates, angle);
+    }
+
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
-        _entity = scc.Entity;
         UpdateDocks(scc.Docks);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
@@ -110,20 +113,16 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockPorts.DisposeAllChildren();
         DockingScreen.Docks = _docks;
 
-        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var xform))
-        {
-            // TODO: Show Placeholder
-            return;
-        }
 
-        if (_docks.TryGetValue(xform.GridEntityId, out var gridDocks))
+        // TODO: Show Placeholder
+        if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var gridDocks))
         {
             var index = 1;
 
             foreach (var state in gridDocks)
             {
-                var ent = state.Entity;
-                var pressed = ent == DockingScreen.ViewedDock;
+                var pressed = state.Entity == DockingScreen.ViewedDock;
+
                 string suffix;
 
                 if (state.Connected)
@@ -142,21 +141,26 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     Pressed = pressed,
                 };
 
-                button.OnMouseEntered += args => OnDockMouseEntered(args, ent);
-                button.OnMouseExited += args => OnDockMouseExited(args, ent);
-                button.OnToggled += args => OnDockToggled(args, ent);
+                if (pressed)
+                {
+                    _selectedDock = button;
+                }
+
+                button.OnMouseEntered += args => OnDockMouseEntered(args, state);
+                button.OnMouseExited += args => OnDockMouseExited(args, state);
+                button.OnToggled += args => OnDockToggled(args, state);
                 DockPorts.AddChild(button);
                 index++;
             }
         }
     }
 
-    private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, EntityUid uid)
+    private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = uid;
+        RadarScreen.HighlightedDock = state.Entity;
     }
 
-    private void OnDockMouseExited(GUIMouseHoverEventArgs obj, EntityUid uid)
+    private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
         RadarScreen.HighlightedDock = null;
     }
@@ -164,10 +168,18 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Shows a docking camera instead of radar screen.
     /// </summary>
-    private void OnDockToggled(BaseButton.ButtonEventArgs obj, EntityUid ent)
+    private void OnDockToggled(BaseButton.ButtonEventArgs obj, DockingInterfaceState state)
     {
+        var ent = state.Entity;
+
         if (_selectedDock != null)
         {
+            // If it got untoggled via other means then we'll stop viewing the old dock.
+            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != state.Entity)
+            {
+                StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
+            }
+
             _selectedDock.Pressed = false;
             _selectedDock = null;
         }
@@ -186,15 +198,23 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
         else
         {
-            // DebugTools.Assert(DockingScreen.ViewedDock == null);
-            _entManager.TryGetComponent<TransformComponent>(_entity, out var xform);
+            if (_shuttleUid != null)
+            {
+                DockingScreen.Coordinates = state.Coordinates;
+                DockingScreen.Angle = state.Angle;
+            }
+            else
+            {
+                DockingScreen.Coordinates = null;
+                DockingScreen.Angle = null;
+            }
 
             UndockButton.Disabled = false;
             RadarScreen.Visible = false;
             DockingScreen.Visible = true;
             DockingScreen.ViewedDock = ent;
             StartAutodockPressed?.Invoke(ent);
-            DockingScreen.GridEntity = xform?.GridEntityId;
+            DockingScreen.GridEntity = _shuttleUid;
             _selectedDock = obj.Button;
         }
     }
@@ -214,9 +234,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     {
         base.Draw(handle);
 
-        if (!_entManager.TryGetComponent<TransformComponent>(_entity, out var entXform) ||
-            !_entManager.TryGetComponent<PhysicsComponent>(entXform.GridEntityId, out var gridBody) ||
-            !_entManager.TryGetComponent<TransformComponent>(entXform.GridEntityId, out var gridXform))
+        if (!_entManager.TryGetComponent<PhysicsComponent>(_shuttleUid, out var gridBody) ||
+            !_entManager.TryGetComponent<TransformComponent>(_shuttleUid, out var gridXform))
         {
             return;
         }
