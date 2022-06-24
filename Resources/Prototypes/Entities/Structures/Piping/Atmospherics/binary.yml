@@ -143,12 +143,11 @@
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualLayers.Enabled" ]
     - type: Appearance
-      visuals:
-        - type: GasValveVisualizer
-          disabledState: pumpManualValve
-          enabledState: pumpManualValveOn
+    - type: GasValveVisuals
+      disabledState: pumpManualValve
+      enabledState: pumpManualValveOn
     - type: PipeColorVisuals
     - type: GasValve
     - type: NodeContainer

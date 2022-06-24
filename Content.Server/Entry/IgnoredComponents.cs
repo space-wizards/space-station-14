@@ -36,6 +36,7 @@ namespace Content.Server.Entry
             "AMEShieldingVisuals",
             "PipeColorVisuals",
             "GasFilterVisuals",
+            "GasValveVisuals",
         };
     }
 }
