@@ -71,7 +71,7 @@
             - !type:ReagentThreshold
               min: 15
             damage:
-              groups:
+              types:
                 Asphyxiation: 8
           - !type:ModifyBleedAmount #heart attacks cause blood to thicken slightly
             amount: -0.05
