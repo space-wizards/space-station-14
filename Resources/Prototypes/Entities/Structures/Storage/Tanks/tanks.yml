@@ -103,7 +103,7 @@
 - type: entity
   id: KvassTank
   parent: StorageTank
-  name: KBAC # these are english letters
+  name: КВАС
   suffix: Empty
   description: A cool refreshing drink with a taste of socialism.
   components:
