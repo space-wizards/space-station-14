@@ -37,6 +37,7 @@ namespace Content.Server.Entry
             "PipeColorVisuals",
             "GasFilterVisuals",
             "GasValveVisuals",
+            "PressurePumpVisuals",
         };
     }
 }
