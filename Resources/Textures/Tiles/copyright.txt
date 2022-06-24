@@ -1,12 +1,10 @@
 Alright because tiles don't use RSIs (yet) I gotta write this out.
 
-steel.png, steel_dirty.png, white.png, dark.png, hydro.png taken from Baystation12 commit c333c682c49202eb10eeb6554ccd5eb0998523e7
+steel.png, dark.png, hydro.png, plating.png, reinforced.png,  steel_dirty.png, white.png, bar.png, laundry.png, mime.png, clown.png, kitchen.png taken from https://github.com/TauCetiStation/TauCetiClassic/commit/4cd533cf0a4243050364023af9a4fcaca209dce7, licensed under CC-BY-SA-3.0
 
-bar.png, laundry.png, mime.png, clown.png and kitchen.png are under CC-BY-SA-3.0
+
 snow.png taken from TG at commit 67a5373b4649937dd63dd94153e05e8506f40a5d
 grass.png taken from TG at commit 73a638214c94da9b8c485f1c75f615cb79770883
-reinforced.png taken from /tg/ at commit https://github.com/tgstation/tgstation/commit/4e2a36fe7e56fad93495adf01c697f4b5de04e90, licensed under CC-BY-SA-3.0
-
 
 
 ironsand1-4, junglegrass, eightiesred and eighties taken from TG station at https://github.com/tgstation/tgstation/commit/8abb19545828230d92ba18827feeb42a67a55d49
