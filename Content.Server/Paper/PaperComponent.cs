@@ -1,4 +1,5 @@
 using Content.Shared.Paper;
+using System.Threading;
 
 namespace Content.Server.Paper
 {
@@ -19,5 +20,9 @@ namespace Content.Server.Paper
         /// </summary>
         [DataField("stampState")]
         public string? StampState { get; set; }
+
+        public CancellationTokenSource? CancelToken = null;
+
+        public float FoldDelay = 1.0f;
     }
 }

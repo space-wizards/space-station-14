@@ -448,3 +448,22 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-ce
+
+- type: entity
+  name: paper plane
+  parent: BaseItem
+  id: PaperPlane
+  description: 'A piece of paper folded into a plane.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: "paper_plane"
+    netsync: false
+  - type: PaperPlane
+  - type: TileFrictionModifier
+    modifier: 0.01 #wheeeee
+  - type: Tag
+    tags:
+    - NoSpinOnThrow
+    - Trash
+  
