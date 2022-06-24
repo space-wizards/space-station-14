@@ -11,7 +11,7 @@ namespace Content.Server.Administration.Commands
     {
         public string Command => "getroletimers";
         public string Description => "Gets all or one role timers from a player";
-        public string Help => $"Usage: {Command} <name or user ID> [from database]";
+        public string Help => $"Usage: {Command} <name or user ID> [role]";
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -35,31 +35,33 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (args.Length >= 2)
+            if (args.Length == 1)
             {
-                if (bool.TryParse(args[1], out var useDb))
+                var rt = IoCManager.Resolve<RoleTimerManager>();
+                var timers = rt.GetCachedRoleTimersForPlayer(targetSessionInst.UserId);
+                if (timers == null)
                 {
-                    var db = IoCManager.Resolve<IServerDbManager>();
-                    var timers = await db.GetRoleTimers(targetSessionInst.UserId);
-                    foreach (var timer in timers)
-                    {
-                        shell.WriteLine($"Role: {timer.Role}, Playtime: {timer.TimeSpent}");
-                    }
+                    shell.WriteLine("Couldn't get any information from cache (player info may not be cached yet)");
+                    return;
+                }
+
+                foreach (var (role, time) in timers)
+                {
+                    shell.WriteLine($"Role: {role}, Playtime: {time}");
+                }
+            }
+
+            if (args.Length == 2)
+            {
+                var rt = IoCManager.Resolve<RoleTimerManager>();
+                var time = rt.GetPlayTimeForRole(targetSessionInst.UserId, args[1]);
+                if (time != null)
+                {
+                    shell.WriteLine($"Playtime: {time}");
                 }
                 else
                 {
-                    var rt = IoCManager.Resolve<RoleTimerManager>();
-                    var timers = rt.GetCachedRoleTimersForPlayer(targetSessionInst.UserId);
-                    if (timers == null)
-                    {
-                        shell.WriteLine("Couldn't get any information from cache (player info may not be cached yet)");
-                        return;
-                    }
-
-                    foreach (var (role, time) in timers)
-                    {
-                        shell.WriteLine($"Role: {role}, Playtime: {time}");
-                    }
+                    shell.WriteLine("Couldn't find that role in the cache, id may be misspelled or user isn't cached yet.");
                 }
             }
         }

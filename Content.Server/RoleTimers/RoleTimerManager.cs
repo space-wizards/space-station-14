@@ -254,7 +254,7 @@ namespace Content.Server.RoleTimers
     /// A dictionary of cached role timers, including the last time they were saved, and the time spent playing them
     /// as well as a HashSet of the roles they're currently playing.
     /// </summary>
-    public class CachedPlayerRoleTimers
+    public sealed class CachedPlayerRoleTimers
     {
         public CachedPlayerRoleTimers()
         {
