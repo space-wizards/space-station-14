@@ -104,6 +104,7 @@ namespace Content.Server.RoleTimers
         {
             if (!IsPlayerTimeCached(player))
             {
+                // This probably won't lose too much time overall, but there's probably a way to make sure it never happens. Eh.
                 Logger.WarningS("RoleTimers", "Tried to change the player roles of an uncached player.");
                 return;
             }
