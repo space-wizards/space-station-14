@@ -217,7 +217,7 @@ namespace Content.Server.Storage.Components
             // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
             // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
 
-            var attemptEvent = new InsertIntoStorageAttemptEvent();
+            var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(entity, attemptEvent);
             if (attemptEvent.Cancelled)
                 return false;
@@ -364,7 +364,7 @@ namespace Content.Server.Storage.Components
         }
     }
 
-    public sealed class InsertIntoStorageAttemptEvent : CancellableEntityEventArgs
+    public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs
     {
 
     }

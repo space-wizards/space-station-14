@@ -52,7 +52,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
-            SubscribeLocalEvent<GhostComponent, InsertIntoStorageAttemptEvent>(OnStorageInsertAttempt);
+            SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -268,10 +268,9 @@ namespace Content.Server.Ghost
             return players;
         }
 
-        public void OnStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoStorageAttemptEvent args)
+        public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
         {
-            if (TryComp<GhostComponent>(uid, out var ghostcomp))
-                args.Cancel();
+            args.Cancel();
         }
     }
 }
