@@ -1,372 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed gas tank UIs not showing the current output pressure when opened.,
-    type: Fix}
-  id: 1220
-  time: '2022-03-16T21:30:40.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: Bullets now fly through Guardians in accordance with the Cybersun handbook.
-      Better aim for the owner!, type: Fix}
-  - {message: Stun bolts also pass through guardians. Laser beams however don't.,
-    type: Tweak}
-  id: 1221
-  time: '2022-03-17T18:46:11.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: 'Traitors can now purchase a hypopen: a stealthy 15u hypospray disguised
-      as a pen', type: Add}
-  - {message: 'Replaced the basic ink pen with a Cybersun legal pen, bumped the price
-      to 4 TC for obvious reasons.', type: Tweak}
-  id: 1222
-  time: '2022-03-17T18:46:19.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The game now supports an automated map rotation that cycles through
-      all eligible maps, preferring whatever maps haven''t been played recently.',
-    type: Add}
-  - {message: 'Map voting has been disabled on Wizard''s Den, in favor of automated
-      rotation.', type: Tweak}
-  id: 1223
-  time: '2022-03-17T18:59:53.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Pulling throwing no longer gives you perpetual motion., type: Fix}
-  id: 1224
-  time: '2022-03-18T03:18:35.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'A port of Delta Station, the largest map ever made for Space Station
-      13, is now playable! The map is still a beta.', type: Add}
-  id: 1225
-  time: '2022-03-18T21:43:53.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Fixes a number of issues on Delta Station. Thank you for testing it!
-      Please continue to report any issues you're having., type: Tweak}
-  id: 1226
-  time: '2022-03-19T00:50:59.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new directional signs for more departments. Look out for these
-      in a future map update., type: Add}
-  id: 1227
-  time: '2022-03-19T03:27:45.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Added formal clothing for captain and HoS., type: Add}
-  - {message: Added atmospheric technician firesuit., type: Add}
-  - {message: Added admin cloak and miner cloak., type: Add}
-  - {message: All hardsuits now have accurate stats and movespeeds, type: Add}
-  id: 1228
-  time: '2022-03-19T07:19:44.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: You must be 16 or older to play now. Users under 16 will be banned.,
-    type: Tweak}
-  id: 1229
-  time: '2022-03-19T18:03:34.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Doctor and CMO PDAs now behave as health analyzers when used on people.,
-    type: Add}
-  id: 1230
-  time: '2022-03-19T18:20:20.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Emitter crates now cost 3000 credits for Cargo., type: Tweak}
-  id: 1231
-  time: '2022-03-19T18:22:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Crafting items via the construction menu should no longer attempt to
-      take items from other users inventories., type: Fix}
-  id: 1232
-  time: '2022-03-20T01:46:08.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: Nanotrasen finally figured out that still water in hydroponics trays
-      attracts space mosquitos and installed micropumps., type: Add}
-  - {message: Nanotrasen has finally installed ventilation on their R&D servers.,
-    type: Add}
-  - {message: The volume and quality of the game's ambience can be adjusted in settings.,
-    type: Add}
-  id: 1233
-  time: '2022-03-20T04:45:52.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Gas analyzers can now be used to examine contents of pipes., type: Add}
-  id: 1234
-  time: '2022-03-20T05:10:48.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Pineapple botany sprite was fixed., type: Fix}
-  id: 1235
-  time: '2022-03-20T12:46:41.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: fixed holoparasite ToS not being readable, type: Fix}
-  id: 1236
-  time: '2022-03-20T13:04:47.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: fixed the popup for inserting TC into the uplink, type: Fix}
-  - {message: updated emag to look more like the rest of the ID cards, type: Tweak}
-  id: 1237
-  time: '2022-03-20T21:59:50.0000000+00:00'
-- author: CrudeWax
-  changes:
-  - {message: fixes all written information to be actually readable. You are finally
-      free to enjoy books!, type: Fix}
-  id: 1238
-  time: '2022-03-20T21:59:57.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Disease Outbreak event will no longer infect dead mobs., type: Fix}
-  - {message: Fixed typo in the name of a drink., type: Fix}
-  - {message: Renamed 'Medicine Resistance' in the disease report to 'Spaceacillin
-      Resistance' to make it more clear., type: Tweak}
-  - {message: Disease reports now use the player-facing name of any special cure reagents.,
-    type: Tweak}
-  - {message: Updated vaccine description to help out people who have somehow made
-      it to 2022 anno Domini without understanding what a vaccine is for., type: Tweak}
-  id: 1239
-  time: '2022-03-20T22:29:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing clothing layers to be drawn in the order that they
-      were equipped., type: Fix}
-  id: 1240
-  time: '2022-03-20T22:29:20.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's beta atmos system is now complete!, type: Tweak}
-  - {message: Fixed the chemistry desk and EVA on Delta., type: Tweak}
-  - {message: Added some lights to Delta. Please let me know of any spots that are
-      too dim., type: Tweak}
-  id: 1241
-  time: '2022-03-20T23:04:53.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Touching a lightbulb no longer causes third-degree burns (20 -> 5),
-    type: Tweak}
-  id: 1242
-  time: '2022-03-21T04:48:58.0000000+00:00'
-- author: Seija
-  changes:
-  - {message: 'Fixed the cat sprites to use their respective cat sprites, not just
-      all use the black cat for the lot.', type: Tweak}
-  id: 1243
-  time: '2022-03-25T04:00:09.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Reptilians no longer have human limbs., type: Tweak}
-  - {message: Reptilians now need to breathe., type: Tweak}
-  - {message: Reptilians now have their own SKREEE!, type: Add}
-  id: 1244
-  time: '2022-03-25T17:29:23.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: You feel as though you will be respawned and kicked by accident less
-      often., type: Add}
-  id: 1245
-  time: '2022-03-25T18:00:20.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Popups moving with the viewer instead of the entity it's displayed on.,
-    type: Fix}
-  id: 1246
-  time: '2022-03-25T18:16:30.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Corgis can no longer will doors to open., type: Fix}
-  id: 1247
-  time: '2022-03-25T21:10:50.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station is now fully stocked with pets., type: Add}
-  - {message: Several lighting issues on Delta were fixed. More will likely exist.,
-    type: Tweak}
-  id: 1248
-  time: '2022-03-26T04:16:22.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: The rule popup doesn't show up in local servers anymore., type: Tweak}
-  id: 1249
-  time: '2022-03-26T19:16:58.0000000+00:00'
-- author: Mith-randalf
-  changes:
-  - {message: Nanotrasen has rewritten the laws themselves to allow security officers
-      to brig for up to 10 minutes instead of five., type: Tweak}
-  id: 1250
-  time: '2022-03-27T01:15:21.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Nanotrasen has purchased more decoration for the stations, banners,
-      and some old robots they found somewhere deep in space-maint.', type: Add}
-  - {message: The records computer no longer has a green puke color., type: Tweak}
-  - {message: Someone found an empty nuclear bomb and decided to be funny and fill
-      it with cola. They are now dead and the cola is irradiated., type: Add}
-  id: 1251
-  time: '2022-03-27T06:15:19.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: You may no longer eat infinite slices of cake., type: Remove}
-  id: 1252
-  time: '2022-03-27T06:23:33.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Flashlights and flares now last a decent bit longer., type: Tweak}
-  id: 1253
-  time: '2022-03-27T06:29:00.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Fired delivery boy who has been skimming pizza from the emergency pizza
-      crates, type: Fix}
-  id: 1254
-  time: '2022-03-27T21:04:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Eating using the verb has been fixed., type: Fix}
-  id: 1255
-  time: '2022-03-27T22:50:49.0000000+00:00'
-- author: EmoGarbage
-  changes:
-  - {message: 'Added the Grenade Penguin, a living bomb from the Syndicate. Available
-      for only 8TC at your local uplink.', type: Add}
-  id: 1256
-  time: '2022-03-28T04:03:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Crafting stackable-entities will now try to merge them into your hands,
-      instead of just dropping them.', type: Tweak}
-  - {message: 'Stack merging should now be predicted, so picking up lots of individual
-      floor tiles should be a bit easier.', type: Tweak}
-  id: 1257
-  time: '2022-03-28T04:03:14.0000000+00:00'
-- author: emisse
-  changes:
-  - {message: Winter coats are now in all applicable auto drobes. Command staffs are
-      in uniform printer., type: Add}
-  id: 1258
-  time: '2022-03-28T04:16:24.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'The sec door remote now properly opens brig doors, and the medical
-      door remote now properly opens chem doors.', type: Fix}
-  id: 1259
-  time: '2022-03-28T04:25:23.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Mercury and Uranium are no longer mistakenly metabolized as medicines.,
-    type: Tweak}
-  id: 1260
-  time: '2022-03-28T08:33:07.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added a new Traitor objective: stealing corgi meat.', type: Add}
-  id: 1261
-  time: '2022-03-28T20:52:46.0000000+00:00'
-- author: Delete
-  changes:
-  - {message: Added trees and flora for mappers., type: Add}
-  id: 1262
-  time: '2022-03-28T20:53:13.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Eating can now be done by alt+clicking a food item., type: Tweak}
-  - {message: Mice can now squeak using an action., type: Tweak}
-  - {message: 'Mice can now go under doors, and they get hungry much faster. Use these
-      two pieces of information in tandem.', type: Tweak}
-  - {message: Mice are now rendered under tables and what not., type: Tweak}
-  id: 1263
-  time: '2022-03-28T20:53:21.0000000+00:00'
-- author: areit
-  changes:
-  - {message: Added a stun chemical that you can get from the uplink., type: Add}
-  id: 1264
-  time: '2022-03-28T20:53:27.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: NSS_Pillar Update 5.3 - Now with basic virology and a bunch of other
-      changes. See Github PR 7310 for details., type: Add}
-  id: 1265
-  time: '2022-03-28T23:11:33.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added new sounds related to diseases., type: Add}
-  id: 1266
-  time: '2022-03-28T23:11:45.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Nothing to see here, just moving televisions, some dressers, and a
-      fireplace to the storage room for later usage.', type: Add}
-  id: 1267
-  time: '2022-03-29T02:17:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix physics dying and rubberbanding the game., type: Fix}
-  id: 1268
-  time: '2022-03-29T08:02:18.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to extract/juice fiber from some cloth stacks., type: Fix}
-  id: 1269
-  time: '2022-03-30T02:55:14.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix the PDA UI briefly showing the uplink button to non-traitors., type: Fix}
-  id: 1270
-  time: '2022-03-30T02:56:58.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'Reptillian, or Lizard, is now enabled by default as a playable species.',
-    type: Add}
-  id: 1271
-  time: '2022-03-30T04:56:31.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Some bombs can no longer cause a large quantity of smaller explosions,
-    type: Fix}
-  id: 1272
-  time: '2022-03-30T13:29:01.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed some double-audio issues for some machines (chemistry, id card
-      console, etc). Also fixed some double pop-ups for emags.', type: Fix}
-  id: 1273
-  time: '2022-03-31T07:08:30.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Split Station map! A new medium to large map that's split in half!,
-    type: Add}
-  id: 1274
-  time: '2022-03-31T19:08:55.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Marathonstation, a remaster of Pubbystation from SS13', type: Add}
-  id: 1275
-  time: '2022-03-31T19:08:55.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now has emergency lights., type: Tweak}
-  id: 1276
-  time: '2022-04-01T02:06:09.0000000+00:00'
-- author: ElectroSr
-  changes:
-  - {message: Explosions have been entirely redesigned to be graphically and technically
-      better. They should be a bit more interesting to look at now., type: Add}
-  - {message: Nuke has an actual explosion., type: Add}
-  - {message: Meteor explosion works again., type: Fix}
-  id: 1277
-  time: '2022-04-01T02:39:26.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixes a bug that was causing some overlays (e.g. gasses) to be unshaded.,
-    type: Fix}
-  id: 1278
-  time: '2022-04-01T12:16:11.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Ghost roles window now better organized. You can follow ghost role targets
@@ -2997,3 +2629,346 @@ Entries:
   - {message: Certain station events will no longer be announced., type: Tweak}
   id: 1719
   time: '2022-06-18T03:53:02.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Salvo oxygen tanks now start full, type: Fix}
+  id: 1720
+  time: '2022-06-18T23:20:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Rat Servants are now slightly stronger and slower., type: Tweak}
+  - {message: The Rat King's Domain ability now releases a cloud of miasma rather
+      than spreading plague., type: Add}
+  id: 1721
+  time: '2022-06-18T23:21:07.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Repairing yourself now takes 3 times as long as letting someone else
+      do it., type: Tweak}
+  id: 1722
+  time: '2022-06-19T05:50:43.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Corpses now take longer to start rotting, but start rotting faster.',
+    type: Tweak}
+  - {message: Corpses that gib when rotting no longer dump organs everywhere., type: Tweak}
+  - {message: 'Rebalanced all of the mob masses to be somewhat close to real life.
+      Disarm and miasma both use these, so don''t leave any rotting cows or xeno queens
+      lying around.', type: Tweak}
+  - {message: Xenos produce a lot less miasma for their mass because... uhhh.... the
+      acid kills the bacteria or something..., type: Tweak}
+  - {message: You can now see if a body is rotting when examining it. Chefs take note.,
+    type: Add}
+  - {message: Miasma now has an effect that starts long before others warning of a
+      foul smell with no other effects., type: Add}
+  id: 1723
+  time: '2022-06-19T05:51:55.0000000+00:00'
+- author: SirDragooon
+  changes:
+  - {message: 'fixes Aloe Cream splitting, no longer turns into Ointment after splitting',
+    type: Fix}
+  id: 1724
+  time: '2022-06-19T11:13:12.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The bag for the China Lake Bundle now has 120 capacity to keep it in
+      line with the other duffel bags., type: Tweak}
+  id: 1725
+  time: '2022-06-19T12:06:44.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Spell sound effects are no longer global, type: Tweak}
+  id: 1726
+  time: '2022-06-19T21:07:01.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: SMG crates now come with the correct magazines and amount., type: Fix}
+  id: 1727
+  time: '2022-06-19T21:07:53.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: 'When stripping other players, the delay now depends on the targeted
+      slot.', type: Tweak}
+  id: 1728
+  time: '2022-06-20T00:56:00.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds obfuscation to pocket items so players can't check the strip menu
+      to see what they have., type: Add}
+  id: 1729
+  time: '2022-06-20T00:57:33.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed chair layering, type: Fix}
+  id: 1730
+  time: '2022-06-20T01:27:22.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Clearly defined speciesism is AGAINST the rules. Be nice to each other.,
+    type: Tweak}
+  - {message: Rule 8 clearly states no names of fictional or real famous people.,
+    type: Tweak}
+  id: 1731
+  time: '2022-06-20T04:52:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items rotate when thrown again., type: Fix}
+  id: 1732
+  time: '2022-06-20T16:58:37.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: OOC chat is now disabled during rounds. Death to the Ick Ock., type: Tweak}
+  id: 1733
+  time: '2022-06-20T20:59:05.0000000+00:00'
+- author: Solbusaur
+  changes:
+  - {message: New lobby art "Warden" drawn by Solbusaur, type: Add}
+  id: 1734
+  time: '2022-06-21T01:58:40.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Salvage workers should once again stay behind when the salvage grid
+      despawns., type: Fix}
+  id: 1735
+  time: '2022-06-21T01:59:36.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Damage Slowdown has been modified to feel less awful. No more slowly
+      crawling places when you're crit., type: Tweak}
+  id: 1736
+  time: '2022-06-21T02:00:14.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Mimes no longer warned about their vow when just typing, type: Fix}
+  id: 1737
+  time: '2022-06-21T02:02:55.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Puddles no longer block prying floor tiles, type: Fix}
+  id: 1738
+  time: '2022-06-21T02:03:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added visuals & toggle-interactions to the gas injector., type: Add}
+  - {message: The injector outlet pressure is now limited to 9000 kPa., type: Tweak}
+  id: 1739
+  time: '2022-06-21T02:04:55.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: You can now destroy trees!, type: Tweak}
+  id: 1740
+  time: '2022-06-21T02:06:07.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Vector, C-20R, Flaregun, Mateba, MK58, and the Atreides now have different
+      gunshot sounds.', type: Add}
+  id: 1741
+  time: '2022-06-21T05:16:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat king and his servants can now pull objects., type: Tweak}
+  - {message: Rat king 'domain' effect now generates slightly more miasma., type: Tweak}
+  id: 1742
+  time: '2022-06-21T14:00:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Slimes now have to breathe nitrogen. They still suffocate much, much
+      slower than other species.', type: Add}
+  id: 1743
+  time: '2022-06-21T16:32:31.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Bibles can no longer heal dead entities., type: Fix}
+  id: 1744
+  time: '2022-06-21T16:44:02.0000000+00:00'
+- author: Mirino97
+  changes:
+  - {message: Energy Swords are not considered knifes when turned off anymore!, type: Fix}
+  id: 1745
+  time: '2022-06-22T00:54:28.0000000+00:00'
+- author: themias
+  changes:
+  - {message: removing unbroken light bulbs now has a delay, type: Tweak}
+  id: 1746
+  time: '2022-06-22T00:55:06.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Examining a drink shows how much is left, type: Tweak}
+  id: 1747
+  time: '2022-06-22T02:02:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced the amount of alcohol contained in a booze-o-mat., type: Tweak}
+  id: 1748
+  time: '2022-06-22T02:41:42.0000000+00:00'
+- author: Ranger6012
+  changes:
+  - {message: HoP's cloak description now correctly drapes over your shoulders instead
+      of your "shoudlers", type: Fix}
+  id: 1749
+  time: '2022-06-22T15:11:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Give Nuke Ops their access to console, type: Fix}
+  id: 1750
+  time: '2022-06-22T19:27:24.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Lizards now have an animal metabolism. Have fun and be careful with
+      chocolate and caffeine!, type: Add}
+  id: 1751
+  time: '2022-06-22T23:23:02.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Slimes have a natural immunity to ultragigacancer and bleeder's bite.,
+    type: Add}
+  - {message: Slimes now take 80% less cellular damage., type: Add}
+  id: 1752
+  time: '2022-06-22T23:25:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed sulfuric acid and uranium from the chemical dispenser., type: Remove}
+  - {message: Added recipe for sulfuric acid., type: Add}
+  - {message: Uranium sheets can be ground up like plasma sheets are., type: Add}
+  id: 1753
+  time: '2022-06-22T23:26:13.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's security office temporarily has two SMGs., type: Tweak}
+  id: 1754
+  time: '2022-06-22T23:36:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rat kings/servants can now actually say 'king' again., type: Fix}
+  id: 1755
+  time: '2022-06-22T23:39:29.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Adds a popup above a person being stripped/dressed., type: Add}
+  id: 1756
+  time: '2022-06-22T23:58:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Movement now has a slight acceleration to it., type: Tweak}
+  - {message: Weightless movement has been changed. You no longer need to be near
+      a wall while on a grid and can float., type: Tweak}
+  id: 1757
+  time: '2022-06-23T02:13:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Fixes two bugs with following, one where ghosts would be invisible
+      if following something inside a container and one where ghosts would rotate
+      with the followed entity.', type: Fix}
+  id: 1758
+  time: '2022-06-23T02:36:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Extended is no longer in the game mode voting pool., type: Fix}
+  id: 1759
+  time: '2022-06-23T02:41:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Slow on damage now actually works properly., type: Fix}
+  id: 1760
+  time: '2022-06-23T02:42:55.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Animals can now eat raw meat with no ill effects., type: Tweak}
+  - {message: Humanoids can safely heat uncooked animal proteins to a safe temperature
+      even without a recipe., type: Add}
+  id: 1761
+  time: '2022-06-23T04:13:14.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Extra checks for Field Generators so Singuloose is harder, type: Tweak}
+  id: 1762
+  time: '2022-06-23T04:27:50.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Some drugs now cause a visual effect when metabolised., type: Add}
+  id: 1763
+  time: '2022-06-23T04:33:07.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Vending machines now have a chance to drop their contents when notably
+      abused or destroyed., type: Add}
+  - {message: Sentient Vending Machines can now throw their stock., type: Add}
+  id: 1764
+  time: '2022-06-23T04:52:28.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo pallets no longer y-fight., type: Fix}
+  id: 1765
+  time: '2022-06-23T06:59:49.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: 'Added Lighthouse, a fairly dimly lit station with a lot of offices
+      and dorms.', type: Add}
+  - {message: Removed fun!, type: Remove}
+  id: 1766
+  time: '2022-06-23T07:21:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Docking no longer requires power., type: Tweak}
+  id: 1767
+  time: '2022-06-23T07:22:11.0000000+00:00'
+- author: KIBORG04
+  changes:
+  - {message: Displaying of player characters in the round end statistics, type: Tweak}
+  id: 1768
+  time: '2022-06-23T09:32:06.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Headsets can now use department-specific radio channels., type: Add}
+  id: 1769
+  time: '2022-06-23T10:11:03.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Added a basic fireball spell, soon to be used.', type: Add}
+  id: 1770
+  time: '2022-06-23T10:24:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix ghost radios., type: Fix}
+  - {message: Adjusted radio colours., type: Tweak}
+  id: 1771
+  time: '2022-06-23T10:48:26.0000000+00:00'
+- author: OldDanceJacket
+  changes:
+  - {message: Added lighthouse ACTUALLY, type: Add}
+  id: 1772
+  time: '2022-06-23T11:14:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf L6 again., type: Tweak}
+  id: 1773
+  time: '2022-06-23T11:24:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Filters, mixers, pressure pumps and volume pumps now always appear
+      on when they''re enabled, not only when they''re transferring gas.', type: Tweak}
+  id: 1774
+  time: '2022-06-23T12:18:11.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Chat bubbles will no longer be offset in low-resolution high-scale modes.,
+    type: Fix}
+  id: 1775
+  time: '2022-06-23T12:23:23.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where disposals could get stuck pressurizing, type: Fix}
+  id: 1776
+  time: '2022-06-24T01:26:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
+      on fire with a single strike.', type: Add}
+  id: 1777
+  time: '2022-06-24T01:27:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Barratry has received one last set of small tweaks and additions before
+      the big rework. Coming soon:tm:', type: Add}
+  id: 1778
+  time: '2022-06-24T01:49:23.0000000+00:00'

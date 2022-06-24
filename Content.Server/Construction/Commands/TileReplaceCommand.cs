@@ -21,7 +21,7 @@ sealed class TileReplaceCommand : IConsoleCommand
     {
         var player = shell.Player as IPlayerSession;
         var entityManager = IoCManager.Resolve<IEntityManager>();
-        EntityUid gridId;
+        EntityUid? gridId;
         string tileIdA = "";
         string tileIdB = "";
 
@@ -34,7 +34,7 @@ sealed class TileReplaceCommand : IConsoleCommand
                     return;
                 }
 
-                gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridEntityId;
+                gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridUid;
                 tileIdA = args[0];
                 tileIdB = args[1];
                 break;

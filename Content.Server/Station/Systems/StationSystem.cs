@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
@@ -224,7 +225,7 @@ public sealed class StationSystem : EntitySystem
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false));
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
 
         _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
@@ -247,7 +248,7 @@ public sealed class StationSystem : EntitySystem
         RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner));
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
         _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
@@ -273,7 +274,7 @@ public sealed class StationSystem : EntitySystem
             _chatSystem.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
-        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));
+        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);
     }
 
     /// <summary>
@@ -317,13 +318,13 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if (xform.GridEntityId == EntityUid.Invalid)
+        if (xform.GridUid == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
         }
 
-        return CompOrNull<StationMemberComponent>(xform.GridEntityId)?.Station;
+        return CompOrNull<StationMemberComponent>(xform.GridUid)?.Station;
     }
 }
 

@@ -124,7 +124,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
-        RaiseLocalEvent(uid, new SolutionChangedEvent());
+        RaiseLocalEvent(uid, new SolutionChangedEvent(), true);
     }
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)

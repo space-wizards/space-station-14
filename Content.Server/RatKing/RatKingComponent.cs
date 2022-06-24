@@ -39,16 +39,9 @@ namespace Content.Server.RatKing
         public float HungerPerDomainUse = 50f;
 
         /// <summary>
-        ///     The disease prototype id that the Domain ability spreads
+        ///     How many moles of Miasma are released after one us of Domain
         /// </summary>
-        [ViewVariables, DataField("domainDiseaseId", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
-        public string DomainDiseaseId = "Plague";
-
-        /// <summary>
-        ///     The range of the Domain ability.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("domainRange")]
-        public float DomainRange = 3f;
-
+        [ViewVariables, DataField("molesMiasmaPerDomain")]
+        public float MolesMiasmaPerDomain = 100f;
     }
 };

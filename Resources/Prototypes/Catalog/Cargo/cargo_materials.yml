@@ -78,7 +78,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma
   product: CrateMaterialPlasma
-  cost: 4500
+  cost: 5000
   category: Materials
   group: market
 

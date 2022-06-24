@@ -92,7 +92,9 @@ namespace Content.Server.Bible
             {
                 return;
             }
-            if (args.Target == null || args.Target == args.User || !HasComp<MobStateComponent>(args.Target))
+            
+            if (args.Target == null || args.Target == args.User || !TryComp<MobStateComponent>(args.Target, out var mobState)
+                || mobState.IsDead())
             {
                 return;
             }
@@ -112,19 +114,19 @@ namespace Content.Server.Bible
             }
 
             // This only has a chance to fail if the target is not wearing anything on their head and is not a familiar.
-            if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var entityUid) && !HasComp<FamiliarComponent>(args.Target.Value))
+            if (!_invSystem.TryGetSlotEntity(args.Target.Value, "head", out var _) && !HasComp<FamiliarComponent>(args.Target.Value))
             {
                 if (_random.Prob(component.FailChance))
                 {
-                var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-                _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                    var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
+                    _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
 
-                var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
-                _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
+                    var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
+                    _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
 
-                SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
-                _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
-                return;
+                    SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
+                    _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
+                    return;
                 }
             }
 

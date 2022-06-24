@@ -34,13 +34,14 @@ namespace Content.Client.StationEvents
             _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
         }
 
-        protected override void Draw(in OverlayDrawArgs args)
+        protected override bool BeforeDraw(in OverlayDrawArgs args)
         {
             RadiationQuery(args.Viewport.Eye);
+            return _pulses.Count > 0;
+        }
 
-            if (_pulses.Count == 0)
-                return;
-
+        protected override void Draw(in OverlayDrawArgs args)
+        {
             if (ScreenTexture == null)
                 return;
 

@@ -33,3 +33,21 @@
     qualities:
       - Prying
   - type: TilePrying
+
+- type: entity
+  id: FireAxeFlaming
+  name: fire axe
+  parent: FireAxe
+  description: Why fight fire with an axe when you can fight with fire and axe?
+  components:
+  - type: IgniteOnMeleeHit
+    fireStacks: 2
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    state: icon
+  - type: Clothing
+    size: 20
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    quickEquip: false
+    Slots:
+    - back

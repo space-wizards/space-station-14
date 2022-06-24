@@ -84441,7 +84441,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 8497
-  type: ComputerSupplyRequest
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: 15.5,0.5
@@ -84451,11 +84451,8 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-  - outputs:
-      OrderSender: []
-    type: SignalTransmitter
 - uid: 8498
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - rot: 1.5707963267948966 rad
     pos: 15.5,1.5
@@ -107377,7 +107374,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 11627
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 24.5,2.5
     parent: 30
@@ -108154,7 +108151,7 @@ entities:
         uid: 8465
     type: SignalTransmitter
 - uid: 11718
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 26.5,-3.5
     parent: 30
@@ -108167,7 +108164,7 @@ entities:
       OrderSender: []
     type: SignalTransmitter
 - uid: 11719
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 26.5,-4.5
     parent: 30

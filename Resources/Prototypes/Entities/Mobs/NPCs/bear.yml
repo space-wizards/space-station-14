@@ -22,7 +22,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 100
+      mass: 320
       mask:
       - MobMask
       layer:
