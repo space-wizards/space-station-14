@@ -291,13 +291,13 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<int> ZombieMinPlayers =
-            CVarDef.Create("zombie.min_players", 25);
+            CVarDef.Create("zombie.min_players", 20);
 
-        public static readonly CVarDef<int> ZombieMaxInfected =
-            CVarDef.Create("zombie.max_infected", 4);
+        public static readonly CVarDef<int> ZombieMaxInitialInfected =
+            CVarDef.Create("zombie.max_initial_infected", 6);
 
         public static readonly CVarDef<int> ZombiePlayersPerInfected =
-            CVarDef.Create("zombie.players_per_infected", 7);
+            CVarDef.Create("zombie.players_per_infected", 10);
 
         /*
          * Pirates

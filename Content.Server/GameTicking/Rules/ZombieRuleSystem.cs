@@ -42,7 +42,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
 
-    private Dictionary<string, string> _initialInfected = new();
+    private Dictionary<string, string> _initialInfectedNames = new();
 
     public override string Prototype => "Zombie";
 
@@ -82,8 +82,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         else
             ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
-        ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", _initialInfected.Count)));
-        foreach (var player in _initialInfected)
+        ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", _initialInfectedNames.Count)));
+        foreach (var player in _initialInfectedNames)
         {
             ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
                 ("name", player.Key),
@@ -92,7 +92,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         ///Gets a bunch of the living players and displays them if they're under a threshold.
         ///InitialInfected is used for the threshold because it scales with the player count well.
-        if (percent > 0 && livingHumans.Count < _initialInfected.Count)
+        if (percent > 0 && livingHumans.Count < _initialInfectedNames.Count)
         {
             ev.AddLine("");
             ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
@@ -116,7 +116,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         if (!Enabled)
             return;
 
-        _initialInfected = new();
+        _initialInfectedNames = new();
 
         InfectInitialPlayers();
     }
@@ -150,10 +150,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         var percent = GetInfectedPercentage(out var num);
-
-        if (num.Count == 1) //only one left
+        if (MathHelper.CloseTo(percent, 1)) //only one left
             _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
-        if (percent >= 1) //oops, all zombies
+        else if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
 
@@ -194,7 +193,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         _action.RemoveAction(uid, action);
     }
 
-    private FixedPoint2 GetInfectedPercentage(out List<EntityUid> livingHumans)
+    private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
         var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
         var totalPlayers = new List<EntityUid>();
@@ -212,7 +211,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                     livingHumans.Add(ent.Item2.Owner);
             }
         }
-        return (FixedPoint2) livingZombies.Count / (FixedPoint2) totalPlayers.Count;
+        return livingZombies.Count / totalPlayers.Count;
     }
 
     /// <summary>
@@ -245,7 +244,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         var playersPerInfected = _cfg.GetCVar(CCVars.ZombiePlayersPerInfected);
-        var maxInfected = _cfg.GetCVar(CCVars.ZombieMaxInfected);
+        var maxInfected = _cfg.GetCVar(CCVars.ZombieMaxInitialInfected);
 
         var numInfected = Math.Max(1,
             (int) Math.Min(
@@ -298,7 +297,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
                 //gets the names now in case the players leave.
                 if (inCharacterName != null)
-                    _initialInfected.Add(inCharacterName, mind.Session.Name);
+                    _initialInfectedNames.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
                 _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),

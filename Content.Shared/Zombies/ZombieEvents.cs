@@ -3,7 +3,7 @@ using Content.Shared.Actions;
 namespace Content.Shared.Zombies;
 
 /// <summary>
-///     Event raised whenever an entity is zombified.
+///     Event that is broadcast whenever an entity is zombified.
 ///     Used by the zombie gamemode to track total infections.
 /// </summary>
 public sealed class EntityZombifiedEvent : EventArgs
