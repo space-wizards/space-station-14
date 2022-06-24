@@ -1,10 +1,8 @@
 using Content.Shared.Actions;
-using Content.Shared.Hands;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Toggleable;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
@@ -18,14 +16,15 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
+        SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
-        SubscribeLocalEvent<JetpackComponent, GotEquippedEvent>(OnJetpackEquipped);
-        SubscribeLocalEvent<JetpackComponent, GotEquippedHandEvent>(OnJetpackHandEquipped);
-        SubscribeLocalEvent<JetpackComponent, GotUnequippedEvent>(OnJetpackUnequipped);
-        SubscribeLocalEvent<JetpackComponent, GotUnequippedHandEvent>(OnJetpackHandUnequipped);
-
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, MobMovementProfileEvent>(OnJetpackUserMovement);
+    }
+
+    private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
+    {
+        SetEnabled(component, false, args.User);
     }
 
     private void OnJetpackUserMovement(EntityUid uid, JetpackUserComponent component, ref MobMovementProfileEvent args)
@@ -44,30 +43,6 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.CanMove = true;
     }
 
-    private void OnJetpackHandUnequipped(EntityUid uid, JetpackComponent component, GotUnequippedHandEvent args)
-    {
-        if (!component.Enabled) return;
-        RemComp<JetpackUserComponent>(args.User);
-    }
-
-    private void OnJetpackUnequipped(EntityUid uid, JetpackComponent component, GotUnequippedEvent args)
-    {
-        if (!component.Enabled) return;
-        RemComp<JetpackUserComponent>(args.Equipee);
-    }
-
-    private void OnJetpackHandEquipped(EntityUid uid, JetpackComponent component, GotEquippedHandEvent args)
-    {
-        if (!component.Enabled) return;
-        SetupUser(args.User, component);
-    }
-
-    private void OnJetpackEquipped(EntityUid uid, JetpackComponent component, GotEquippedEvent args)
-    {
-        if (!component.Enabled) return;
-        SetupUser(args.Equipee, component);
-    }
-
     private void SetupUser(EntityUid uid, JetpackComponent component)
     {
         var user = EnsureComp<JetpackUserComponent>(uid);
@@ -80,7 +55,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (args.Handled) return;
 
-        SetEnabled(component, !component.Enabled);
+        SetEnabled(component, !IsEnabled(uid));
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
@@ -88,12 +63,16 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.Actions.Add(component.ToggleAction);
     }
 
-    public void SetEnabled(JetpackComponent component, bool enabled)
+    private bool IsEnabled(EntityUid uid)
     {
-        if (component.Enabled == enabled ||
+        return HasComp<ActiveJetpackComponent>(uid);
+    }
+
+    public void SetEnabled(JetpackComponent component, bool enabled, EntityUid? user = null)
+    {
+        if (IsEnabled(component.Owner) == enabled ||
             enabled && !CanEnable(component)) return;
 
-        component.Enabled = enabled;
         if (enabled)
         {
             EnsureComp<ActiveJetpackComponent>(component.Owner);
@@ -103,16 +82,24 @@ public abstract class SharedJetpackSystem : EntitySystem
             RemComp<ActiveJetpackComponent>(component.Owner);
         }
 
-        if (Container.TryGetContainingContainer(component.Owner, out var container) &&
-            HasComp<InventoryComponent>(container.Owner))
+        if (user == null)
+        {
+            Container.TryGetContainingContainer(component.Owner, out var container);
+            user = container?.Owner;
+        }
+
+        // Can't activate if no one's using.
+        if (user == null && enabled) return;
+
+        if (user != null)
         {
             if (enabled)
             {
-                EnsureComp<JetpackUserComponent>(container.Owner);
+                SetupUser(user.Value, component);
             }
             else
             {
-                RemComp<JetpackUserComponent>(container.Owner);
+                RemComp<JetpackUserComponent>(user.Value);
             }
         }
 

@@ -7,9 +7,6 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class JetpackComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
-    public bool Enabled = false;
-
     [ViewVariables(VVAccess.ReadWrite), DataField("volumeUsage")]
     public float VolumeUsage = Atmospherics.BreathVolume;
 

@@ -18,7 +18,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<JetpackComponent, ComponentHandleState>(OnJetpackHandleState);
         SubscribeLocalEvent<JetpackComponent, AppearanceChangeEvent>(OnJetpackAppearance);
     }
 
@@ -53,12 +52,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
             comp.Accumulator -= comp.EffectCooldown;
             CreateParticles(comp.Owner);
         }
-    }
-
-    private void OnJetpackHandleState(EntityUid uid, JetpackComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not JetpackComponentState state) return;
-        component.Enabled = state.Enabled;
     }
 
     private void CreateParticles(EntityUid uid)

@@ -12,25 +12,9 @@ public sealed class JetpackSystem : SharedJetpackSystem
 {
     private const float UpdateCooldown = 0.5f;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<JetpackComponent, ComponentGetState>(OnJetpackGetState);
-        SubscribeLocalEvent<JetpackComponent, ComponentStartup>(OnJetpackStartup);
-    }
-
     protected override bool CanEnable(JetpackComponent component)
     {
         return TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.Pressure < component.VolumeUsage);
-    }
-
-    private void OnJetpackStartup(EntityUid uid, JetpackComponent component, ComponentStartup args)
-    {
-        if (component.Enabled)
-        {
-            component.Enabled = false;
-            SetEnabled(component, component.Enabled);
-        }
     }
 
     public override void Update(float frameTime)
@@ -60,13 +44,5 @@ public sealed class JetpackSystem : SharedJetpackSystem
         {
             SetEnabled(comp, false);
         }
-    }
-
-    private void OnJetpackGetState(EntityUid uid, JetpackComponent component, ref ComponentGetState args)
-    {
-        args.State = new JetpackComponentState()
-        {
-            Enabled = component.Enabled,
-        };
     }
 }
