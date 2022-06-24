@@ -40,3 +40,59 @@
     damage:
       types:
         Poison: 5
+
+- type: entity
+  id: ProjectilePolyboltDoor
+  name: door polybolt
+  description: Nooo, I don't wanna be door!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: brown
+  - type: PolymorphOnCollide
+    polymorph: WizardWallDoor
+    whitelist:
+      components:
+      - Airlock
+      tags:
+      - Wall
+  - type: Projectile
+    damage:
+      types:
+        Poison: 5
+
+- type: entity
+  id: ProjectileHealingBolt
+  name: healing bolt
+  description: I COMMAND YOU TO LIVE!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: white
+  - type: Projectile
+    damage:
+      groups: # good enough. Maybe make it call the rejuvenate command later.
+        Brute: -300
+        Burn: -300
+        Airloss: -200
+        Toxin: -200
+
+- type: entity
+  id: BulletInstakillMagic
+  name: magical lead cylinder
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: This looks familiar.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 300

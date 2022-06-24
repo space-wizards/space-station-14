@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: WeaponStaffBase
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/magic.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/magic.rsi
+    size: 60
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: AmmoCounter

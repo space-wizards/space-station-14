@@ -28,6 +28,16 @@
   revertOnCrit: false
   revertOnDeath: true
 
+- type: polymorph
+  id: WizardWallDoor
+  entity: WoodDoor
+  forced: true
+  inventory: None
+  transferName: false
+  transferDamage: false
+  revertOnCrit: false
+  revertOnDeath: false
+
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
   id: TestHumanMorph

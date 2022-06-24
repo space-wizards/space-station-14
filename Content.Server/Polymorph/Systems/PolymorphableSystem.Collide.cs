@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Polymorph.Components;
+using Content.Shared.Projectiles;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -29,11 +30,14 @@ public partial class PolymorphableSystem
 
     private void InitializeCollide()
     {
-        SubscribeLocalEvent<PolymorphOnCollideComponent, EndCollideEvent>(OnPolymorphCollide);
+        SubscribeLocalEvent<PolymorphOnCollideComponent, StartCollideEvent>(OnPolymorphCollide);
     }
 
-    private void OnPolymorphCollide(EntityUid uid, PolymorphOnCollideComponent component, EndCollideEvent args)
+    private void OnPolymorphCollide(EntityUid uid, PolymorphOnCollideComponent component, StartCollideEvent args)
     {
+        if (args.OurFixture.ID != SharedProjectileSystem.ProjectileFixture)
+            return;
+
         var other = args.OtherFixture.Body.Owner;
         if (!component.Whitelist.IsValid(other)
             || component.Blacklist != null && component.Blacklist.IsValid(other))

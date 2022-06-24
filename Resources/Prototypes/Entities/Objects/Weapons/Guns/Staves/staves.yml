@@ -1,0 +1,90 @@
+﻿- type: entity
+  name: staff of fireball
+  parent: WeaponStaffBase
+  id: WeaponStaffFireball
+  description: Great big balls of fire!
+  components:
+  - type: Sprite
+    layers:
+    - state: fire
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    state: fire
+  - type: Gun
+    fireRate: 0.25
+    soundGunshot:
+      path: /Audio/Magic/fireball.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileFireball
+
+- type: entity
+  name: staff of carp polymorph
+  parent: WeaponStaffBase
+  id: WeaponStaffPolymorphCarp
+  description: For when you need a carp filet quick and the clown is looking juicy.
+  components:
+  - type: Sprite
+    layers:
+    - state: poly-1
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    state: poly-1
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Magic/staff_animation.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectilePolyboltCarp
+
+- type: entity
+  name: magical staff of death
+  parent: WeaponStaffBase
+  id: WeaponStaffDeath
+  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
+  components:
+  - type: Sprite
+    layers:
+    - state: death-1
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    state: death-1
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
+  - type: BasicEntityAmmoProvider
+    proto: BulletInstakillMagic
+
+- type: entity
+  name: staff of healing
+  parent: WeaponStaffBase
+  id: WeaponStaffHealing
+  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
+  components:
+  - type: Sprite
+    layers:
+    - state: healing
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    state: healing
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/staff_healing.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileHealingBolt
+
+- type: entity
+  name: door staff
+  parent: WeaponStaffBase
+  id: WeaponStaffPolymorphDoor
+  description: For when you need a get-away route.
+  components:
+  - type: Sprite
+    layers:
+    - state: door
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    state: door
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Magic/staff_door.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectilePolyboltDoor
