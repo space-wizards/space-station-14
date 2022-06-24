@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroSr
-  changes:
-  - {message: Explosions have been entirely redesigned to be graphically and technically
-      better. They should be a bit more interesting to look at now., type: Add}
-  - {message: Nuke has an actual explosion., type: Add}
-  - {message: Meteor explosion works again., type: Fix}
-  id: 1277
-  time: '2022-04-01T02:39:26.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixes a bug that was causing some overlays (e.g. gasses) to be unshaded.,
@@ -2974,3 +2966,9 @@ Entries:
   - {message: Fixed an issue where disposals could get stuck pressurizing, type: Fix}
   id: 1776
   time: '2022-06-24T01:26:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Fire Axe, a 9 TC Traitor weapon capable of setting opponents
+      on fire with a single strike.', type: Add}
+  id: 1777
+  time: '2022-06-24T01:27:28.0000000+00:00'
