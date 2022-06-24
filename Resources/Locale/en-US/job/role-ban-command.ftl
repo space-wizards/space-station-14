@@ -8,6 +8,7 @@ cmd-roleban-hint-1 = <name or user ID>
 cmd-roleban-hint-2 = <job>
 cmd-roleban-hint-3 = <reason>
 cmd-roleban-hint-4 = [duration in minutes, leave out or 0 for permanent ban]
+
 cmd-roleban-hint-duration-1 = Permanent
 cmd-roleban-hint-duration-2 = 1 day
 cmd-roleban-hint-duration-3 = 1 week
