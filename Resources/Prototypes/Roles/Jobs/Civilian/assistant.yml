@@ -6,8 +6,6 @@
   - Civilian
   icon: "Passenger"
   supervisors: "absolutely everyone"
-  access:
-  - Maintenance
 
 - type: startingGear
   id: PassengerGear
