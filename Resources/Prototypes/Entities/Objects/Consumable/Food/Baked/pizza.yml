@@ -18,6 +18,8 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
+        - ReagentID: Cholesterol
+          Quantity: 12
   - type: SliceableFood
     count: 6
   - type: Item
@@ -45,6 +47,8 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 0.8
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Item
     size: 1
   - type: Tag
@@ -167,6 +171,8 @@
           Quantity: 6
         - ReagentId: Omnizine
           Quantity: 9
+        - ReagentId: Cholesterol
+          Quantity: 10.8
 
 
 - type: entity
@@ -189,6 +195,8 @@
           Quantity: 1
         - ReagentId: Omnizine
           Quantity: 1.5
+        - ReagentId: Cholesterol
+          Quantity: 1.8
 # Tastes like crust, tomato, cheese, meat, laziness.
 
 - type: entity
@@ -213,6 +221,8 @@
           Quantity: 5
         - ReagentId: DoctorsDelight
           Quantity: 6
+        - ReagentId: Cholesterol
+          Quantity: 12
 
 - type: entity
   name: slice of dank pizza
@@ -234,6 +244,8 @@
           Quantity: 0.8
         - ReagentId: DoctorsDelight
           Quantity: 1
+        - ReagentId: Cholesterol
+          Quantity: 2
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
@@ -354,4 +366,6 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
+        - ReagentId: Cholesterol
+          Quantity: 2
 # Tastes like stale crust, rancid cheese, mushroom.
