@@ -6821,7 +6821,7 @@ entities:
       - canCollide: False
         type: Physics
   - uid: 638
-    type: ComputerSupplyOrdering
+    type: ComputerCargoOrders
     components:
       - pos: -2.5,-4.5
         parent: 79
