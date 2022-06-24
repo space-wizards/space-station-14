@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixes a bug that was causing some overlays (e.g. gasses) to be unshaded.,
-    type: Fix}
-  id: 1278
-  time: '2022-04-01T12:16:11.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Ghost roles window now better organized. You can follow ghost role targets
@@ -2972,3 +2966,9 @@ Entries:
       on fire with a single strike.', type: Add}
   id: 1777
   time: '2022-06-24T01:27:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Barratry has received one last set of small tweaks and additions before
+      the big rework. Coming soon:tm:', type: Add}
+  id: 1778
+  time: '2022-06-24T01:49:23.0000000+00:00'
