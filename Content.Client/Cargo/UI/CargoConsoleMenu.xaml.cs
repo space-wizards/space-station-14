@@ -171,7 +171,7 @@ namespace Content.Client.Cargo.UI
         public void UpdateBankData(string name, int points)
         {
             AccountNameLabel.Text = name;
-            PointsLabel.Text = points.ToString();
+            PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", points.ToString()));
         }
     }
 }
