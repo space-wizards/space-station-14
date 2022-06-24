@@ -4,6 +4,7 @@ using Content.Server.StationRecords;
 using Content.Shared.CrewManifest;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 
 namespace Content.Server.CrewManifest;
@@ -26,6 +27,30 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
         SubscribeLocalEvent<ActiveCrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
+        SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
+    }
+
+    // As a result of this implementation, the crew manifest does not refresh when somebody
+    // joins the game, or if their title is modified. Equally, this should never be opened
+    // without ensuring that whatever parent window comes from it also closes, as otherwise
+    // this will never close on its own.
+    private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
+    {
+        var station = message.Source switch
+        {
+            CrewManifestEntitySource.Station => message.Id,
+            CrewManifestEntitySource.Entity => _stationSystem.GetOwningStation(message.Id),
+            _ => message.Id
+        };
+
+        CrewManifestEntries? entries = null;
+        if (station == null || !_cachedEntries.TryGetValue(station.Value, out entries))
+        {
+            RaiseNetworkEvent(new CrewManifestState(null, entries), Filter.SinglePlayer(args.SenderSession));
+            return;
+        }
+
+        RaiseNetworkEvent(new CrewManifestState(station, entries), Filter.SinglePlayer(args.SenderSession));
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time

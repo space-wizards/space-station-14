@@ -12,8 +12,7 @@ namespace Content.Shared.CrewManifest;
 
     It's messy, but BoundUserInterface could not answer these questions,
     mostly because I assumed that you can't convert one from one interface
-    to another (parent->child relationship aside). You also probably
-    wouldn't want to cache *all* station crew manifests.
+    to another (parent->child relationship aside).
 
     If you have any alternate solutions to this, feel free to actually
     try them out. Not even LateJoinGui has a BUI (it instead uses GameTickerSystem
@@ -21,16 +20,47 @@ namespace Content.Shared.CrewManifest;
 
 */
 public abstract class SharedCrewManifestSystem : EntitySystem
-{}
+{
+    /// <summary>
+    ///     Directly requests a station's crew manifest by ID.
+    /// </summary>
+    /// <param name="station"></param>
+    public void RequestCrewManifest(EntityUid station)
+    {
+        RaiseNetworkEvent(new RequestCrewManifestMessage(CrewManifestEntitySource.Station, station));
+    }
+}
 
+public enum CrewManifestEntitySource
+{
+    /// <summary>
+    ///     Source the crew manifest directly from a station.
+    ///     The returned state will be null if the station does
+    ///     not exist, or if the grid is not a station.
+    /// </summary>
+    Station,
+
+    /// <summary>
+    ///     Source the crew manifest by checking where this entity is.
+    ///     The returned state will be null if this entity is not on
+    ///     a station, or if the grid the entity is on is not a station.
+    /// </summary>
+    Entity
+}
+
+/// <summary>
+///     A message to send to the server when requesting a crew manifest.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class RequestCrewManifestMessage : EntityEventArgs
 {
-    public EntityUid Station { get; }
+    public CrewManifestEntitySource Source { get; }
+    public EntityUid Id { get; }
 
-    public RequestCrewManifestMessage(EntityUid station)
+    public RequestCrewManifestMessage(CrewManifestEntitySource source, EntityUid id)
     {
-        Station = station;
+        Source = source;
+        Id = id;
     }
 }
 
