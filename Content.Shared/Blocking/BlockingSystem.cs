@@ -108,6 +108,7 @@ public sealed class BlockingSystem : EntitySystem
         //In theory the user should not be null when this fires off
         if (component.User != null)
         {
+            _actionsSystem.RemoveProvidedActions(component.User.Value, uid);
             BlockingShutdownHelper(uid, component, component.User.Value);
         }
     }
