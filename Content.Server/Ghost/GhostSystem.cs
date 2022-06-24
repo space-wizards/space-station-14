@@ -270,8 +270,7 @@ namespace Content.Server.Ghost
 
         public void OnStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoStorageAttemptEvent args)
         {
-            if (TryComp<GhostComponent>(uid, out var ghostcomp))
-                args.Cancel();
+            args.Cancel();
         }
     }
 }
