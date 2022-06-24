@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Ghost roles window now better organized. You can follow ghost role targets
-      before possessing them., type: Tweak}
-  id: 1279
-  time: '2022-04-02T22:06:30.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
@@ -2972,3 +2966,9 @@ Entries:
       the big rework. Coming soon:tm:', type: Add}
   id: 1778
   time: '2022-06-24T01:49:23.0000000+00:00'
+- author: vulppine
+  changes:
+  - {message: 'Pills can now be dissolved into beakers. And, you can crack eggs into
+      bowls now! The future is now!', type: Add}
+  id: 1779
+  time: '2022-06-24T02:26:54.0000000+00:00'
