@@ -104,7 +104,7 @@ namespace Content.Server.RoleTimers
         {
             if (!IsPlayerTimeCached(player))
             {
-                Logger.ErrorS("RoleTimers", "Tried to change the player roles of an uncached player.");
+                Logger.WarningS("RoleTimers", "Tried to change the player roles of an uncached player.");
                 return;
             }
 

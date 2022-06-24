@@ -51,7 +51,7 @@ namespace Content.Server.Administration.Commands
                 }
             }
 
-            if (args.Length == 2)
+            if (args.Length >= 2)
             {
                 var rt = IoCManager.Resolve<RoleTimerManager>();
                 var time = rt.GetPlayTimeForRole(targetSessionInst.UserId, args[1]);
