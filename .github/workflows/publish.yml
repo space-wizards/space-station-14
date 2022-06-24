@@ -31,9 +31,9 @@ jobs:
     - uses: wrexbe/cache@mycache
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-wrexbe2-${{ hashFiles('**/*.csproj') }}
+        key: ${{ runner.os }}-nuget-wrexbe3-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-wrexbe2-
+          ${{ runner.os }}-nuget-wrexbe3-
 
     - name: Package client
       run: |
