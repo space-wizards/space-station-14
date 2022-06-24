@@ -41,7 +41,7 @@
   description: Why fight fire with an axe when you can fight with fire and axe?
   components:
   - type: IgniteOnMeleeHit
-    fireStacks: 2
+    fireStacks: 1
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     state: icon
