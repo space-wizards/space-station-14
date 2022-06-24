@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Seeds properly spawn from extractors and clippers again., type: Fix}
-  id: 1280
-  time: '2022-04-04T01:02:38.0000000+00:00'
 - author: Radosvik
   changes:
   - {message: Current Player Count to the Lobby, type: Add}
@@ -2972,3 +2967,14 @@ Entries:
       bowls now! The future is now!', type: Add}
   id: 1779
   time: '2022-06-24T02:26:54.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Corpses are now circled by buzzing flies when they've started to rot.,
+    type: Add}
+  - {message: 'Do you know how heavy cows are? It''s wack. They''re expensive to transport,
+      and the cow crate price has been increased.', type: Tweak}
+  - {message: Freezer crates now stop rotting., type: Fix}
+  - {message: Rejuvenation properly removes rotting., type: Fix}
+  - {message: Body parts should gib from rotting for real this time., type: Fix}
+  id: 1780
+  time: '2022-06-24T08:20:52.0000000+00:00'
