@@ -14,7 +14,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     protected override bool CanEnable(JetpackComponent component)
     {
-        return TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.Pressure < component.VolumeUsage);
+        return TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
@@ -29,14 +29,14 @@ public sealed class JetpackSystem : SharedJetpackSystem
             if (active.Accumulator < UpdateCooldown) continue;
 
             active.Accumulator -= UpdateCooldown;
+            var air = gasTank.RemoveAir(comp.MoleUsage);
 
-            if (gasTank.Air.Pressure < comp.VolumeUsage)
+            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.1f))
             {
                 toDisable.Add(comp);
                 continue;
             }
 
-            gasTank.RemoveAirVolume(comp.VolumeUsage);
             gasTank.UpdateUserInterface();
         }
 

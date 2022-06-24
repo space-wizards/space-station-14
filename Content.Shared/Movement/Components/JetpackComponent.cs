@@ -7,8 +7,8 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class JetpackComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("volumeUsage")]
-    public float VolumeUsage = Atmospherics.BreathVolume;
+    [ViewVariables(VVAccess.ReadWrite), DataField("moleUsage")]
+    public float MoleUsage = 0.048f;
 
     [ViewVariables, DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();

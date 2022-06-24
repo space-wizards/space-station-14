@@ -1,15 +1,4 @@
 Entries:
-- author: Radosvik
-  changes:
-  - {message: Current Player Count to the Lobby, type: Add}
-  - {message: Nothing, type: Remove}
-  id: 1281
-  time: '2022-04-04T05:39:43.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed the disarm action not working., type: Fix}
-  id: 1282
-  time: '2022-04-04T05:45:27.0000000+00:00'
 - author: DubiousDoggo
   changes:
   - {message: Overhauled machine linking, type: Tweak}
@@ -2978,3 +2967,14 @@ Entries:
   - {message: Body parts should gib from rotting for real this time., type: Fix}
   id: 1780
   time: '2022-06-24T08:20:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Credits & cargo points have been renamed to spacebucks., type: Tweak}
+  id: 1781
+  time: '2022-06-24T14:43:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Spacebucks now have an "S" on them rather than a "C" to be in line with
+      the new name., type: Tweak}
+  id: 1782
+  time: '2022-06-24T14:45:32.0000000+00:00'
