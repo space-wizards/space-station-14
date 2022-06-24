@@ -1,9 +1,4 @@
 Entries:
-- author: DubiousDoggo
-  changes:
-  - {message: Overhauled machine linking, type: Tweak}
-  id: 1283
-  time: '2022-04-04T06:13:03.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed some interactions with smoke, foam, and the bloodstream that
@@ -2978,3 +2973,8 @@ Entries:
       the new name., type: Tweak}
   id: 1782
   time: '2022-06-24T14:45:32.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Crates cannot eat you while buckled anymore!, type: Fix}
+  id: 1783
+  time: '2022-06-24T19:26:57.0000000+00:00'
