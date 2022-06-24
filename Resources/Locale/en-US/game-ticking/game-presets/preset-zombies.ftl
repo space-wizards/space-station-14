@@ -16,7 +16,7 @@ zombie-round-end-initial-count = {$initialCount ->
     [one] There was one initial infected:
     *[other] There were {$initialCount} initial infected:
 }
-zombie-round-end-user-was-initial = - [color=Plum]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial infected.
+zombie-round-end-user-was-initial = - [color=plum]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial infected.
 
 zombie-round-end-amount-none = [color=green]All of the zombies were eradicated![/color]
 zombie-round-end-amount-low = [color=green]Almost all of the zombies were exterminated.[/color]
