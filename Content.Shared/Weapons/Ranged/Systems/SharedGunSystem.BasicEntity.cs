@@ -43,11 +43,11 @@ public abstract partial class SharedGunSystem
 
     private void OnBasicEntityTakeAmmo(EntityUid uid, BasicEntityAmmoProviderComponent component, TakeAmmoEvent args)
     {
-        if (component.Count <= 0)
-            return;
-
         for (int i = 0; i < args.Shots; i++)
         {
+            if (component.Count <= 0)
+                return;
+
             if (component.Count != null)
             {
                 component.Count--;
