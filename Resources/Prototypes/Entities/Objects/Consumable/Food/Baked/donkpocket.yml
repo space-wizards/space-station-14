@@ -16,6 +16,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Item
     size: 1
   - type: Tag
@@ -49,6 +51,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 7
+        - ReagentId: Cholesterol
+          Quantity: 2
+          
 
 - type: entity
   name: dank-pocket
@@ -62,6 +67,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Sprite
     state: dank
 
@@ -79,6 +86,8 @@
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 4
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: spicy-pocket
@@ -102,6 +111,8 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Omnizine
+          Quantity: 2
+        - ReagentId: Cholesterol
           Quantity: 2
   - type: Sprite
     state: spicy
@@ -129,6 +140,8 @@
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: pizza-pocket
@@ -142,6 +155,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Sprite
     state: pizza
 
@@ -159,6 +174,8 @@
           Quantity: 15
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: honk-pocket
@@ -173,6 +190,8 @@
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Omnizine
+          Quantity: 2
+        - ReagentId: Cholesterol
           Quantity: 2
   - type: Sprite
     state: banana
@@ -191,6 +210,8 @@
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: berry-pocket
@@ -204,6 +225,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Sprite
     state: berry
 
@@ -223,6 +246,8 @@
           Quantity: 2
         - ReagentId: Sugar
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: gondola-pocket
@@ -236,6 +261,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Cholesterol
+          Quantity: 2
   - type: Sprite
     state: gondola
 
@@ -252,6 +279,8 @@
           Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
+        - ReagentId: Cholesterol
+          Quantity: 2
 
 - type: entity
   name: dink-pocket
@@ -264,6 +293,8 @@
       food:
         reagents:
         - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Cholesterol
           Quantity: 2
   - type: Sprite
     state: dink
