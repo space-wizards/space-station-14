@@ -43,7 +43,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBasicEntityTakeAmmo(EntityUid uid, BasicEntityAmmoProviderComponent component, TakeAmmoEvent args)
     {
-        if (component.Count < 0)
+        if (component.Count <= 0)
             return;
 
         for (int i = 0; i < args.Shots; i++)
@@ -63,14 +63,14 @@ public abstract partial class SharedGunSystem
 
     private void OnBasicEntityAmmoCount(EntityUid uid, BasicEntityAmmoProviderComponent component, ref GetAmmoCountEvent args)
     {
-        args.Capacity = component.Capacity ?? Int32.MaxValue;
-        args.Count = component.Count ?? Int32.MaxValue;
+        args.Capacity = component.Capacity ?? int.MaxValue;
+        args.Count = component.Count ?? int.MaxValue;
     }
 
     private void UpdateBasicEntityAppearance(BasicEntityAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.AmmoCount, component.Count ?? Int32.MaxValue);
-        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity ?? Int32.MaxValue);
+        appearance.SetData(AmmoVisuals.AmmoCount, component.Count ?? int.MaxValue);
+        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity ?? int.MaxValue);
     }
 }

@@ -2,7 +2,7 @@
   name: fireball staff
   parent: BaseWeaponLauncher
   id: WeaponStaffFireball
-  description: This is a gun.
+  description: Great big balls of fire!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/magic.rsi
@@ -27,7 +27,7 @@
   name: staff of polymorph
   parent: BaseWeaponLauncher
   id: WeaponStaffPolymorph
-  description: This is a gun.
+  description: For when you need a carp filet quick and the clown is looking juicy.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/magic.rsi
