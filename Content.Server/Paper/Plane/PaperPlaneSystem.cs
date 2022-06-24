@@ -60,7 +60,10 @@ namespace Content.Server.Paper.Plane
             args.Plane.CancelToken = null;
 
             if (args.Plane.PaperContainer.ContainedEntity is not { Valid: true } paper)
-                return;
+            {
+                //default to blank paper, i.e. a paper plane was spawned instead of folded
+                paper = Spawn("Paper", Transform(args.User).MapPosition);
+            }
 
             args.Plane.PaperContainer.Remove(paper);
 
