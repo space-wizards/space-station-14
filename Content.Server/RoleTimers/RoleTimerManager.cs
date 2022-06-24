@@ -52,7 +52,6 @@ namespace Content.Server.RoleTimers
         {
             var roleTimers = await _db.GetRoleTimers(player);
             var cacheObject = new CachedPlayerRoleTimers();
-            cacheObject.CallOnStart();
             foreach (var timer in roleTimers)
             {
                 cacheObject.SetCachedPlaytimeForRole(timer.Role, timer.TimeSpent);
@@ -247,10 +246,9 @@ namespace Content.Server.RoleTimers
     /// A dictionary of cached role timers, including the last time they were saved, and the time spent playing them
     /// as well as a HashSet of the roles they're currently playing.
     /// </summary>
-    public struct CachedPlayerRoleTimers
+    public class CachedPlayerRoleTimers
     {
-        // TODO: There's gotta be a better solution than this
-        public void CallOnStart()
+        public CachedPlayerRoleTimers()
         {
             CurrentRoles = new HashSet<string>();
             _roleTimers = new Dictionary<string, Tuple<DateTime, TimeSpan>>();
