@@ -1,5 +1,6 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Server.Storage.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
@@ -32,6 +33,7 @@ namespace Content.Server.Buckle.Systems
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
             SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, StorageEatAttemptEvent>(OnStorageEat);
         }
 
         private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -131,6 +133,16 @@ namespace Content.Server.Buckle.Systems
             if (!contained)
             {
                 buckle.ReAttach(strap);
+            }
+        }
+
+        public void OnStorageEat(EntityUid uid, BuckleComponent comp, StorageEatAttemptEvent args)
+        {
+            Logger.Info("Eaten");
+            if (comp.Buckled)
+            {
+                Logger.Info("Cancelling");
+                args.Cancel();
             }
         }
     }
