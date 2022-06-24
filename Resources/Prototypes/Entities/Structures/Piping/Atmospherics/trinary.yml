@@ -42,12 +42,11 @@
           rotation: -90 # fuck you!!! who cares
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasFilter
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualLayers.Enabled" ]
     - type: Appearance
-      visuals:
-        - type: GasFilterVisualizer
-          disabledState: gasFilter
-          enabledState: gasFilterOn
+    - type: GasFilterVisuals
+      disabledState: gasFilter
+      enabledState: gasFilterOn
     - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
@@ -83,14 +82,13 @@
       rotation: -90
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualLayers.Enabled" ]
   - type: Flippable
     mirrorEntity: GasFilter
   - type: Appearance
-    visuals:
-    - type: GasFilterVisualizer
-      disabledState: gasFilterF
-      enabledState: gasFilterFOn
+  - type: GasFilterVisuals
+    disabledState: gasFilterF
+    enabledState: gasFilterFOn
   - type: PipeColorVisuals
   - type: NodeContainer
     nodes:
@@ -124,12 +122,11 @@
           rotation: -90
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasMixer
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualLayers.Enabled" ]
     - type: Appearance
-      visuals:
-      - type: GasFilterVisualizer
-        disabledState: gasMixer
-        enabledState: gasMixerOn
+    - type: GasFilterVisuals
+      disabledState: gasMixer
+      enabledState: gasMixerOn
     - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
@@ -167,12 +164,11 @@
       rotation: -90
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualLayers.Enabled" ]
   - type: Appearance
-    visuals:
-    - type: GasFilterVisualizer
-      disabledState: gasMixerF
-      enabledState: gasMixerFOn
+  - type: GasFilterVisuals
+    disabledState: gasMixer
+    enabledState: gasMixerFOn
   - type: PipeColorVisuals
   - type: Flippable
     mirrorEntity: GasMixer
