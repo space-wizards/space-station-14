@@ -3,8 +3,10 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -31,7 +33,7 @@ public sealed class BlockingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlockingComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<BlockingComponent, GotEquippedHandEvent>(OnEquip);
         SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
 
         SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
@@ -42,13 +44,13 @@ public sealed class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnPickupAttempt(EntityUid uid, BlockingComponent component, GettingPickedUpAttemptEvent args)
+    private void OnEquip(EntityUid uid, BlockingComponent component, GotEquippedHandEvent args)
     {
         component.User = args.User;
 
         //To make sure that this bodytype doesn't get set as anything but the original
         if (TryComp(args.User, out PhysicsComponent? physicsComponent) && physicsComponent.BodyType != BodyType.Static
-                                                                       && !TryComp(args.User, out BlockingUserComponent? blockingUserComponent))
+                                                                          && !TryComp(args.User, out BlockingUserComponent? blockingUserComponent))
         {
             var userComp = EnsureComp<BlockingUserComponent>(args.User);
             userComp.BlockingItem = uid;

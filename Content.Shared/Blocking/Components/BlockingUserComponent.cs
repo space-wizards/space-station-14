@@ -13,9 +13,11 @@ public sealed class BlockingUserComponent : Component
     /// The entity that's being used to block
     /// </summary>
     [ViewVariables]
+    [DataField("blockingItem")]
     public EntityUid? BlockingItem;
 
     [ViewVariables]
+    [DataField("modifiers")]
     public DamageModifierSet Modifiers = default!;
 
     /// <summary>
@@ -23,6 +25,7 @@ public sealed class BlockingUserComponent : Component
     /// Used so that it can be put back to what it was after anchoring
     /// </summary>
     [ViewVariables]
+    [DataField("originalBodyType")]
     public BodyType OriginalBodyType;
 
 }
