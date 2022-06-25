@@ -11,6 +11,18 @@
 
 - type: entity
   abstract: true
+  parent: Clothing
+  id: ClothingOuterBaseLarge
+  components:
+  - type: Clothing
+    Size: 60
+    Slots:
+    - outerClothing
+  - type: Sprite
+    state: icon
+
+- type: entity
+  abstract: true
   parent: ClothingOuterBase
   id: ClothingOuterStorageBase
   components:
