@@ -30,7 +30,10 @@
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
-      sound: /Audio/Misc/delta.ogg
+      sound:
+        path: /Audio/Misc/delta.ogg
+        params:
+          volume: -8
       disableSelection: true
       color: DarkRed
     epsilon:
