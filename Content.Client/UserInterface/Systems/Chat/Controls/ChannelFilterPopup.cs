@@ -4,7 +4,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
-[Friend(typeof(FilterButton))]
 public sealed class ChannelFilterPopup : Popup
 {
     private readonly PanelContainer _filterPopupPanel;
@@ -36,11 +35,11 @@ public sealed class ChannelFilterPopup : Popup
                 }
             }
         };
-        SetupChannels(ChatUIController.ChannelAttributes);
+        SetupChannels(ChatUIController.ChannelFilterAttributes);
         AddChild(_filterPopupPanel);
     }
 
-    private void SetupChannels(ChatUIController.ChannelData[] channelAttributes)
+    private void SetupChannels(ChatUIController.ChannelFilterData[] channelAttributes)
     {
         _filterVBox.DisposeAllChildren(); //cleanup old toggles
         foreach (var channelAttribute in channelAttributes)
