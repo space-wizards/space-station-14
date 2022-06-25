@@ -40,6 +40,7 @@ namespace Content.Server.Entry
             "PressurePumpVisuals",
             "ThermoMachineVisuals",
             "VentPumpVisuals",
+            "ScrubberVisuals",
         };
     }
 }

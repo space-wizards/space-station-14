@@ -115,8 +115,7 @@
           map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
     - type: PipeColorVisuals
-      visuals:
-        - type: ScrubberVisualizer
+    - type: ScrubberVisuals
     - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
