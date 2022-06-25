@@ -480,7 +480,11 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
+            var ev = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, ev);
+            var finalStripTime = ev.Time * ev.Coeff + ev.Additive;
+
+            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
