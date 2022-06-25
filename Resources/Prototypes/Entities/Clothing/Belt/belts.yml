@@ -448,7 +448,7 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Storage
-    capacity: 45
+    capacity: 50
 
 - type: entity
   parent: ClothingBeltStorageBase
