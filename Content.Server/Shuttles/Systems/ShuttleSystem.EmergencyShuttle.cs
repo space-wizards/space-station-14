@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
@@ -17,7 +16,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -350,6 +348,8 @@ public sealed partial class ShuttleSystem
 
    private void CleanupEscape()
    {
+       _shuttleIndex = 0f;
+
        if (_centcommMap == null || !_mapManager.MapExists(_centcommMap.Value))
        {
            _centcommMap = null;
