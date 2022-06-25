@@ -38,9 +38,9 @@ jobs:
     - uses: wrexbe/cache@mycache
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-wrexbe3-${{ hashFiles('**/*.csproj') }}
+        key: ${{ runner.os }}-nuget-wrexbe4-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-wrexbe3-
+          ${{ runner.os }}-nuget-wrexbe4-
 
     - name: Install dependencies
       run: dotnet restore
