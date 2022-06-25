@@ -1,4 +1,5 @@
 ﻿using Content.Client.Resources;
+using Content.Shared.Chat;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,11 +12,15 @@ public sealed class FilterButton : ContainerButton
         private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
         private static readonly Color ColorHovered = Color.FromHex("#9699bb");
         private static readonly Color ColorPressed = Color.FromHex("#789B8C");
-
         private readonly TextureRect _textureRect;
-
+        private readonly ChannelFilterPopup _chatFilterPopup;
+        private IUserInterfaceManager _interfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+        private const int FilterDropdownOffset = 120;
         public FilterButton()
         {
+            _chatFilterPopup = _interfaceManager.CreateNamedPopup<ChannelFilterPopup>("ChatFilterPopup", (0, 0)) ??
+                               throw new Exception("Tried to add chat filter popup while one already exists");
+
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
@@ -31,8 +36,25 @@ public sealed class FilterButton : ContainerButton
                     VerticalAlignment = VAlignment.Center
                 })
             );
-
             ToggleMode = true;
+            OnToggled += OnFilterButtonToggled;
+        }
+
+        private void OnFilterButtonToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            if (args.Pressed)
+            {
+                var globalPos = GlobalPosition;
+                var (minX, minY) = _chatFilterPopup.MinSize;
+                var box = UIBox2.FromDimensions(globalPos - (FilterDropdownOffset, 0),
+                    (Math.Max(minX, _chatFilterPopup.MinWidth), minY));
+                _chatFilterPopup.Open(box);
+            }
+            else
+            {
+                _chatFilterPopup.Close();
+            }
+
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
