@@ -7,12 +7,12 @@
   - type: Item
     size: 10 #Miniature...
   - type: Sprite
-    sprite: Textures/Objects/Weapons/Guns/Battery/mini-ebow.rsi
+    sprite: Objects/Weapons/Guns/Battery/mini-ebow.rsi
     layers:
       - state: icon
       - state: bolt
   - type: Icon
-    sprite: Textures/Objects/Weapons/Guns/Battery/mini-ebow.rsi
+    sprite: Objects/Weapons/Guns/Battery/mini-ebow.rsi
     state: icon
   - type: Gun
     fireRate: 0.4
