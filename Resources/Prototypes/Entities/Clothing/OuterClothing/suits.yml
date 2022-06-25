@@ -143,6 +143,7 @@
     coefficient: 0.01
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    size: 50
   - type: Armor
     modifiers:
       coefficients:
