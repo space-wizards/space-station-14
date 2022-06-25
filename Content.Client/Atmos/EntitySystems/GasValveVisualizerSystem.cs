@@ -6,7 +6,7 @@ namespace Content.Client.Atmos.EntitySystems;
 
 public sealed class GasValveVisualizerSystem : EnabledAtmosDeviceVisualizerSystem<GasValveVisualsComponent>
 {
-    protected override object LayerMap => GasFilterVisualLayers.Enabled;
+    protected override object LayerMap => GasValveVisualLayers.Enabled;
     protected override Enum DataKey => FilterVisuals.Enabled;
 }
 
