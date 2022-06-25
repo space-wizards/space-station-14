@@ -36,7 +36,7 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: Clothing
-    size: 50
+    size: 100
   - type: Armor
     modifiers:
       coefficients:
@@ -64,6 +64,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Clothing
-    size: 30
+    size: 60
   - type: DiseaseProtection
     protection: 0.05
