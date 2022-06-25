@@ -902,6 +902,16 @@ namespace Content.Shared.CCVar
 
 
         /*
+         * Emergency
+         */
+
+        /// <summary>
+        /// How long the emergency shuttle remains docked with the station, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTime =
+            CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /*
          * VIEWPORT
          */
 
