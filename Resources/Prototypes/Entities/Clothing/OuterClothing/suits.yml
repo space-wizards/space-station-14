@@ -49,6 +49,7 @@
     lowPressureMultiplier: 1000
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+    size: 50
   - type: Armor
     modifiers:
       coefficients:
