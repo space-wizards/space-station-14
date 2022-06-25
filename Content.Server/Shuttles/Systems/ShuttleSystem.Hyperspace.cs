@@ -23,8 +23,6 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
-    [Dependency] private readonly AirlockSystem _airlock = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
 
     private MapId? _hyperSpaceMap;

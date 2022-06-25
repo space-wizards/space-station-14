@@ -8,11 +8,13 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -27,6 +29,7 @@ public sealed partial class ShuttleSystem
 
    [Dependency] private readonly IAdminLogManager _logger = default!;
    [Dependency] private readonly IAdminManager _admin = default!;
+   [Dependency] private readonly IConfigurationManager _configManager = default!;
    [Dependency] private readonly IMapLoader _loader = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
@@ -35,9 +38,11 @@ public sealed partial class ShuttleSystem
    private MapId? _centcommMap;
 
    /// <summary>
-   /// How long the emergency shuttle remains docked with the station.
+   /// Used for multiple shuttle spawn offsets.
    /// </summary>
-   private TimeSpan _dockTime = TimeSpan.FromMinutes(3);
+   private float _shuttleIndex;
+
+   private const float ShuttleSpawnBuffer = 1f;
 
    private void InitializeEscape()
    {
@@ -267,7 +272,7 @@ public sealed partial class ShuttleSystem
        }
 
        _chatSystem.DispatchGlobalStationAnnouncement($"The Emergency Shuttle has docked with the station", playDefaultSound: false);
-       _consoleAccumulator = (float) _dockTime.TotalSeconds;
+       _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
    }
 
    /// <summary>
@@ -307,7 +312,8 @@ public sealed partial class ShuttleSystem
 
    private void Setup()
    {
-       DebugTools.Assert(_centcommMap == null);
+       if (_centcommMap != null && _mapManager.MapExists(_centcommMap.Value)) return;
+
        _centcommMap = _mapManager.CreateMap();
        _mapManager.SetMapPaused(_centcommMap.Value, true);
 
@@ -325,15 +331,20 @@ public sealed partial class ShuttleSystem
    {
        if (_centcommMap == null || component.EmergencyShuttle != null) return;
 
-       // TODO: Support multiple stations dingus.
-
        // Load escape shuttle
        var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
-           // Should be far enough... right? I'm too lazy to bounds check centcomm.
-           Offset = Vector2.One * 500f,
+           // Should be far enough... right? I'm too lazy to bounds check centcomm rn.
+           Offset = new Vector2(500f + _shuttleIndex, 0f)
        });
 
+       if (shuttle == null)
+       {
+           _sawmill.Error($"Unable to spawn emergency shuttle {component.EmergencyShuttlePath} for {ToPrettyString(component.Owner)}");
+           return;
+       }
+
+       _shuttleIndex += _mapManager.GetGrid(shuttle.Value).LocalAABB.Width + ShuttleSpawnBuffer;
        component.EmergencyShuttle = shuttle;
    }
 
