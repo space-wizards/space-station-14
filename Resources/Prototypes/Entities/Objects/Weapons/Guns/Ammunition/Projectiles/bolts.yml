@@ -1,0 +1,29 @@
+- type: entity
+  name: energy crossbow bolt
+  id: BoltEnergyCrossbow
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Weapons/Guns/Projectiles/plasma.rsi
+    state: bullet
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      mask:
+      - Impassable
+      layer:
+      - MidImpassable
+  - type: Ammo
+  - type: Projectile
+    damage:
+      types:
+        Poison: 15
+  - type: StunOnCollide
+    stunAmount: 2
+    knockdownAmount: 2
+
