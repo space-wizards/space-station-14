@@ -25,6 +25,8 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         public TimeSpan RotAfter = TimeSpan.FromMinutes(5);
 
+        public bool Rotting => (DeathAccumulator > RotAfter.TotalSeconds);
+
         /// <summary>
         /// Gasses are released every second.
         /// </summary>

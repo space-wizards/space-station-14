@@ -62,7 +62,26 @@
       key: syndie_key
       screen: syndishuttle
   - type: RadarConsole
-    maxRange: 512
+    maxRange: 1536
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c94242"
+
+- type: entity
+  parent: ComputerShuttleBase
+  id: ComputerShuttleCargo
+  name: cargo shuttle console
+  description: Used to pilot the cargo shuttle.
+  components:
+  - type: Appearance
+    visuals:
+      - type: ComputerVisualizer
+        key: generic_key
+        screen: shuttle
+  - type: CargoPilotConsole
+  - type: RadarConsole
+    maxRange: 256
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -388,25 +407,24 @@
       color: "#e6e227"
 
 - type: entity
-  id: ComputerSupplyOrdering
+  id: ComputerCargoShuttle
   parent: ComputerBase
-  name: Cargo ordering computer
-  description: Used to order supplies, approve requests, and control the shuttle.
+  name: cargo shuttle computer
+  description: Used to order the shuttle.
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: tech_key
       screen: supply
-  - type: CargoConsole
-  - type: CargoOrderDatabase
+  - type: CargoShuttleConsole
   - type: ActivatableUI
-    key: enum.CargoConsoleUiKey.Key
+    key: enum.CargoConsoleUiKey.Shuttle
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.CargoConsoleUiKey.Key
-      type: CargoConsoleBoundUserInterface
+    - key: enum.CargoConsoleUiKey.Shuttle
+      type: CargoShuttleConsoleBoundUserInterface
   - type: Computer
     board: SupplyComputerCircuitboard
   - type: PointLight
@@ -417,24 +435,32 @@
     access: [["Cargo"]]
 
 - type: entity
-  id: ComputerSupplyRequest
-  parent: ComputerSupplyOrdering
+  id: ComputerCargoOrders
+  parent: ComputerBase
   name: cargo request computer
-  description: Used to request supplies from cargo.
+  description: Used to order supplies and approve requests.
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: tech_key
       screen: request
-  - type: CargoConsole
-    requestOnly: true
+  - type: CargoOrderConsole
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Orders
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Orders
+      type: CargoOrderConsoleBoundUserInterface
   - type: Computer
-    board: SupplyRequestComputerCircuitboard
+    board: SupplyComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
   parent: ComputerBase

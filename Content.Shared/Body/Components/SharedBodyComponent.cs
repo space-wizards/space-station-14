@@ -397,7 +397,7 @@ namespace Content.Shared.Body.Components
                 RemovePart(part);
 
                 if (gibParts)
-                    part.Gib();
+                    gibs.UnionWith(part.Gib());
             }
 
             return gibs;

@@ -18,9 +18,6 @@ namespace Content.Shared.Movement.Components
         [DataField("pushStrength")]
         private float _pushStrength = IMobMoverComponent.PushStrengthDefault;
 
-        [DataField("weightlessStrength")]
-        private float _weightlessStrength = IMobMoverComponent.WeightlessStrengthDefault;
-
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityCoordinates LastPosition { get; set; }
 
@@ -62,18 +59,6 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float WeightlessStrength
-        {
-            get => _weightlessStrength;
-            set
-            {
-                if (MathHelper.CloseToPercent(_weightlessStrength, value)) return;
-                _weightlessStrength = value;
-                Dirty();
-            }
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -85,7 +70,7 @@ namespace Content.Shared.Movement.Components
 
         public override ComponentState GetComponentState()
         {
-            return new PlayerMobMoverComponentState(_grabRange, _pushStrength, _weightlessStrength);
+            return new PlayerMobMoverComponentState(_grabRange, _pushStrength);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -101,13 +86,11 @@ namespace Content.Shared.Movement.Components
         {
             public float GrabRange;
             public float PushStrength;
-            public float WeightlessStrength;
 
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength)
             {
                 GrabRange = grabRange;
                 PushStrength = pushStrength;
-                WeightlessStrength = weightlessStrength;
             }
         }
     }
