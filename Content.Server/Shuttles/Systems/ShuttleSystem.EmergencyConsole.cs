@@ -45,6 +45,11 @@ public sealed partial class ShuttleSystem
     private TimeSpan _transitTime = TimeSpan.FromSeconds(5); // TimeSpan.FromMinutes(3);
 
     /// <summary>
+    /// How long after the transit is over to end the round.
+    /// </summary>
+    private TimeSpan BufferTime = TimeSpan.FromSeconds(10);
+
+    /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
     /// </summary>
     private bool _launchedShuttles;
@@ -91,7 +96,7 @@ public sealed partial class ShuttleSystem
             _chatSystem.DispatchGlobalStationAnnouncement(
                 $"The Emergency Shuttle has left the station. Estimate {_transitTime.Minutes} until the shuttle docks at Central Command.");
 
-            Timer.Spawn(_transitTime, () => _roundEnd.EndRound());
+            Timer.Spawn(_transitTime + BufferTime, () => _roundEnd.EndRound());
         }
     }
 

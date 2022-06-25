@@ -178,7 +178,7 @@ public sealed partial class ShuttleSystem
     }
 
     /// <summary>
-    /// Puts everyone unbuckled on the floor.
+    /// Puts everyone unbuckled on the floor, paralyzed.
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {

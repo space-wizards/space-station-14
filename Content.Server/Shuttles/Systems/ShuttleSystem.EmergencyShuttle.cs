@@ -113,7 +113,7 @@ public sealed partial class ShuttleSystem
                            {
                                var gridXform = xformQuery.GetComponent(gridDock.Owner);
 
-                               if (!CanDock(shuttleDock, shuttleDockXform, gridDock, gridXform, shuttleAABB, targetGridGrid, out var dockedAABB, out var matty)) break;
+                               if (!CanDock(shuttleDock, shuttleDockXform, gridDock, gridXform, shuttleAABB, targetGridGrid, out var dockedAABB, out var matty)) continue;
 
                                // Alright well the spawn is valid now to check how many we can connect
                                // Get the matrix for each shuttle dock and test it against the grid docks to see
@@ -128,8 +128,12 @@ public sealed partial class ShuttleSystem
 
                                foreach (var other in shuttleDocks)
                                {
+                                   if (other == shuttleDock) continue;
+
                                    foreach (var otherGrid in gridDocks)
                                    {
+                                       if (otherGrid == gridDock) continue;
+
                                        if (!CanDock(
                                                other,
                                                xformQuery.GetComponent(other.Owner),
@@ -165,7 +169,10 @@ public sealed partial class ShuttleSystem
                    {
                        var targetGridAngle = targetGridXform.WorldRotation.Reduced();
 
-                       validDockConfigs.OrderBy(x => x.Docks.Count).ThenBy(x => x.Angle.Reduced() - targetGridAngle);
+                       // Prioritise maximum connected ports, then by most similar angle.
+                       validDockConfigs = validDockConfigs
+                           .OrderByDescending(x => x.Docks.Count)
+                           .ThenBy(x => (Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle)).Theta).ToList();
 
                        var location = validDockConfigs.First();
                        position = location.Area;
@@ -306,7 +313,7 @@ public sealed partial class ShuttleSystem
        _mapManager.SetMapPaused(_centcommMap.Value, true);
 
        // Load Centcomm
-       var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/Salvage/stationstation.yml", new MapLoadOptions());
+       var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/Salvage/saltern.yml", new MapLoadOptions());
        _centcomm = centcomm;
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
