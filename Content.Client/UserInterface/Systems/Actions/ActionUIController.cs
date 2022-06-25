@@ -30,14 +30,14 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private ActionButtonContainer? _container;
     private ActionPage? _defaultPage;
-    private readonly DragDropHelper<Controls.ActionButton> _menuDragHelper;
+    private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
 
     private ActionsWindow? _window;
     private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
     public ActionUIController()
     {
-        _menuDragHelper = new DragDropHelper<Controls.ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
+        _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
         _dragShadow = new TextureRect
         {
             MinSize = (64, 64),
@@ -144,7 +144,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
         foreach (var action in actions)
         {
-            var actionItem = new Controls.ActionButton();
+            var actionItem = new ActionButton {Locked = true};
             actionItem.UpdateData(_entities, action);
             actionItem.ActionPressed += OnWindowActionPressed;
             actionItem.ActionUnpressed += OnWindowActionUnPressed;
@@ -220,7 +220,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         SearchAndDisplay();
     }
 
-    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, Controls.ActionButton action)
+    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, ActionButton action)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
@@ -229,14 +229,14 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         args.Handle();
     }
 
-    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, Controls.ActionButton dragged)
+    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
         args.Handle();
 
-        if (UIManager.CurrentlyHovered is Controls.ActionButton button)
+        if (UIManager.CurrentlyHovered is ActionButton button)
         {
             if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action == null)
             {
@@ -244,18 +244,18 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
                 return;
             }
 
-            button.UpdateData(_entities, _menuDragHelper.Dragged.Action);
+            button.TryReplaceWith(_entities, _menuDragHelper.Dragged.Action);
         }
 
         _menuDragHelper.EndDrag();
     }
 
-    private void OnWindowActionFocusExisted(Controls.ActionButton button)
+    private void OnWindowActionFocusExisted(ActionButton button)
     {
         _menuDragHelper.EndDrag();
     }
 
-    private void OnActionPressed(GUIBoundKeyEventArgs args, Controls.ActionButton button)
+    private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
