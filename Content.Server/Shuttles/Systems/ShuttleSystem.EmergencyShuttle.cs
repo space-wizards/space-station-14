@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -88,9 +89,10 @@ public sealed partial class ShuttleSystem
 
                if (gridDocks.Count > 0)
                {
-                   var shuttleXform = Transform(dataComponent.EmergencyShuttle.Value);
+                   var xformQuery = GetEntityQuery<TransformComponent>();
+                   var shuttleXform = xformQuery.GetComponent(dataComponent.EmergencyShuttle.Value);
                    var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
-                   var targetGridXform = Transform(targetGrid.Value);
+                   var targetGridXform = xformQuery.GetComponent(targetGrid.Value);
                    var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
                    var validDockConfigs = new List<DockingConfig>();
@@ -103,46 +105,42 @@ public sealed partial class ShuttleSystem
                    if (shuttleDocks.Count > 0)
                    {
                        // We'll try all combinations of shuttle docks and see which one is most suitable
-                       foreach (var dock in shuttleDocks)
+                       foreach (var shuttleDock in shuttleDocks)
                        {
-                           if (dock.Docked) continue;
-
-                           var shuttleDockXform = Transform(dock.Owner);
-
-                           // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-                           var stationDockPos = shuttleDockXform.LocalPosition +
-                                                shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
-
-                           var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockXform.LocalRotation);
+                           var shuttleDockXform = xformQuery.GetComponent(shuttleDock.Owner);
 
                            foreach (var gridDock in gridDocks)
                            {
-                               if (gridDock.Docked) continue;
+                               var gridXform = xformQuery.GetComponent(gridDock.Owner);
 
-                               var xform = Transform(gridDock.Owner);
-
-                               // See if the spawn for the shuttle is valid
-                               // Then we'll see what other dock spawns are valid.
-                               var xformMatrix = Matrix3.CreateTransform(xform.LocalPosition, -xform.LocalRotation);
-                               Matrix3.Multiply(in stationDockMatrix, in xformMatrix, out var matty);
-                               Box2? shuttleBounds = matty.TransformBox(shuttleAABB);
-
-                               if (!ValidSpawn(targetGridGrid, shuttleBounds.Value)) continue;
+                               if (!CanDock(shuttleDock, shuttleDockXform, gridDock, gridXform, shuttleAABB, targetGridGrid, out var dockedAABB, out var matty)) break;
 
                                // Alright well the spawn is valid now to check how many we can connect
                                // Get the matrix for each shuttle dock and test it against the grid docks to see
                                // if the connected position / direction matches.
-                               var connections = 1;
+
+                               var dockedPorts = new List<(DockingComponent DockA, DockingComponent DockB)>()
+                               {
+                                   (shuttleDock, gridDock),
+                               };
+
+                               // TODO: Check shuttle orientation as the tiebreaker.
 
                                foreach (var other in shuttleDocks)
                                {
-                                   if (dock == other || other.Docked) continue;
-                                   // TODO: GetEntityQuery<TransformComponent>
-
-                                   // TODO: Do matrix transformations to check configs
                                    foreach (var otherGrid in gridDocks)
                                    {
-                                       if (otherGrid == gridDock || otherGrid.Docked) continue;
+                                       if (!CanDock(
+                                               other,
+                                               xformQuery.GetComponent(other.Owner),
+                                               otherGrid,
+                                               xformQuery.GetComponent(otherGrid.Owner),
+                                               shuttleAABB, targetGridGrid,
+                                               out var otherDockedAABB,
+                                               out _) ||
+                                           !otherDockedAABB.Equals(dockedAABB)) continue;
+
+                                       dockedPorts.Add((other, otherGrid));
                                    }
                                }
 
@@ -150,15 +148,12 @@ public sealed partial class ShuttleSystem
                                spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
                                var spawnRotation = shuttleDockXform.LocalRotation +
                                    targetGridXform.LocalRotation +
-                                   xform.LocalRotation;
+                                   gridXform.LocalRotation;
 
                                validDockConfigs.Add(new DockingConfig()
                                {
-                                   Docks = new List<(DockingComponent DockA, DockingComponent DockB)>()
-                                   {
-                                       (dock, gridDock),
-                                   },
-                                   Area = shuttleBounds.Value,
+                                   Docks = dockedPorts,
+                                   Area = dockedAABB.Value,
                                    Coordinates = spawnPosition,
                                    Angle = spawnRotation,
                                });
@@ -168,6 +163,10 @@ public sealed partial class ShuttleSystem
 
                    if (validDockConfigs.Count > 0)
                    {
+                       var targetGridAngle = targetGridXform.WorldRotation.Reduced();
+
+                       validDockConfigs.OrderBy(x => x.Docks.Count).ThenBy(x => x.Angle.Reduced() - targetGridAngle);
+
                        var location = validDockConfigs.First();
                        position = location.Area;
                        // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
@@ -198,6 +197,44 @@ public sealed partial class ShuttleSystem
                Position = position,
            });
        }
+   }
+
+   /// <summary>
+   /// Checks if 2 docks can be connected by moving the shuttle directly onto docks.
+   /// </summary>
+   private bool CanDock(
+       DockingComponent shuttleDock,
+       TransformComponent shuttleXform,
+       DockingComponent gridDock,
+       TransformComponent gridXform,
+       Box2 shuttleAABB,
+       IMapGridComponent grid,
+       [NotNullWhen(true)] out Box2? shuttleDockedAABB,
+       out Matrix3 matty)
+   {
+       matty = Matrix3.Identity;
+       shuttleDockedAABB = null;
+
+       if (shuttleDock.Docked ||
+           gridDock.Docked ||
+           !shuttleXform.Anchored ||
+           !gridXform.Anchored)
+       {
+           return false;
+       }
+
+       // First, get the station dock's position relative to the shuttle, this is where we rotate it around
+       var stationDockPos = shuttleXform.LocalPosition +
+                            shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
+
+       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleXform.LocalRotation);
+       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, -gridXform.LocalRotation);
+       Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
+       shuttleDockedAABB = matty.TransformBox(shuttleAABB);
+
+       if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
+
+       return true;
    }
 
    private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentStartup args)
