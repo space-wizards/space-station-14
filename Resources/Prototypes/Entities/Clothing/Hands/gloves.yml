@@ -146,6 +146,7 @@
   - type: Insulated
   - type: Thieving
     stealTime: 1
+    stealthy: true
 
 - type: entity
   parent: ClothingHandsBase
@@ -183,3 +184,4 @@
       sprite: Clothing/Hands/Gloves/Color/black.rsi
     - type: Thieving
       stealTime: 1.5
+      stealthy: true

@@ -6,4 +6,8 @@ public sealed class ThievingComponent : Component
     [ViewVariables]
     [DataField("stealTime")]
     public float StealTime = 0.5f;
+
+    [ViewVariables]
+    [DataField("stealthy")]
+    public bool Stealthy;
 }
