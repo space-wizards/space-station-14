@@ -4,7 +4,7 @@
   mapPath: /Maps/centcomm.yml
   minPlayers: 10
   stations:
-    Centcomm:
+    centcomm:
       mapNameTemplate: '{0} Central Command {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
