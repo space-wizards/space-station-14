@@ -1,6 +1,7 @@
 using Content.Server.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
+using Robust.Shared.Physics.Dynamics;
 using System.Threading;
 
 namespace Content.Server.Paper.Plane
@@ -21,6 +22,8 @@ namespace Content.Server.Paper.Plane
             SubscribeLocalEvent<PaperPlaneComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerbPlane);
             SubscribeLocalEvent<PaperPlaneComponent, UnfoldPlaneEvent>(OnUnfoldPlane);
             SubscribeLocalEvent<UnfoldPlaneCancelledEvent>(OnUnfoldPlaneCancel);
+
+            SubscribeLocalEvent<PaperPlaneComponent, StartCollideEvent>(OnCollideEvent);
         }
 
         private void OnAltVerbPlane(EntityUid uid, PaperPlaneComponent plane, GetVerbsEvent<AlternativeVerb> args)
@@ -117,6 +120,13 @@ namespace Content.Server.Paper.Plane
             plane.PaperContainer.Insert(paper.Owner);
 
             _sharedHandsSystem.PickupOrDrop(args.User, plane.Owner);
+        }
+
+        //avoid bouncing
+        private void OnCollideEvent(EntityUid uid, PaperPlaneComponent plane, StartCollideEvent args)
+        {
+            if (TryComp<PhysicsComponent>(plane.Owner, out var physics))
+                physics.Momentum = Vector2.Zero;
         }
 
         private void OnUnfoldPlaneCancel(UnfoldPlaneCancelledEvent args)
