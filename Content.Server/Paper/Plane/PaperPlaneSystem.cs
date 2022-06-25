@@ -1,5 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Movement.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Dynamics;
 using System.Threading;
@@ -122,10 +123,10 @@ namespace Content.Server.Paper.Plane
             _sharedHandsSystem.PickupOrDrop(args.User, plane.Owner);
         }
 
-        //avoid bouncing
         private void OnCollideEvent(EntityUid uid, PaperPlaneComponent plane, StartCollideEvent args)
         {
-            if (TryComp<PhysicsComponent>(plane.Owner, out var physics))
+            // avoid bouncing, unless weightless
+            if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
                 physics.Momentum = Vector2.Zero;
         }
 
