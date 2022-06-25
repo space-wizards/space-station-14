@@ -6,6 +6,8 @@
     Title="Actions"
     VerticalExpand="True"
     Resizable="True"
+    MinHeight="300"
+    MinWidth="300"
 >
     <BoxContainer Orientation="Vertical">
         <BoxContainer Name="SearchContainer" Orientation="Horizontal">
