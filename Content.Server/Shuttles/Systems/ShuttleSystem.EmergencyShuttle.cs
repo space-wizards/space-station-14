@@ -33,7 +33,6 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly StationSystem _station = default!;
 
    private MapId? _centcommMap;
-   private EntityUid? _centcomm;
 
    /// <summary>
    /// How long the emergency shuttle remains docked with the station.
@@ -172,7 +171,7 @@ public sealed partial class ShuttleSystem
                        // Prioritise maximum connected ports, then by most similar angle.
                        validDockConfigs = validDockConfigs
                            .OrderByDescending(x => x.Docks.Count)
-                           .ThenBy(x => (Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle)).Theta).ToList();
+                           .ThenBy(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
 
                        var location = validDockConfigs.First();
                        position = location.Area;
@@ -312,9 +311,9 @@ public sealed partial class ShuttleSystem
        _centcommMap = _mapManager.CreateMap();
        _mapManager.SetMapPaused(_centcommMap.Value, true);
 
-       // Load Centcomm
-       var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/Salvage/saltern.yml", new MapLoadOptions());
-       _centcomm = centcomm;
+       // Load Centcomm, when we get it!
+       // var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/Salvage/saltern.yml", new MapLoadOptions());
+       // _centcomm = centcomm;
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
@@ -340,7 +339,11 @@ public sealed partial class ShuttleSystem
 
    private void CleanupEscape()
    {
-       if (_centcommMap == null) return;
+       if (_centcommMap == null || !_mapManager.MapExists(_centcommMap.Value))
+       {
+           _centcommMap = null;
+           return;
+       }
 
        _mapManager.DeleteMap(_centcommMap.Value);
    }
