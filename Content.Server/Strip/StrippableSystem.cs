@@ -430,7 +430,7 @@ namespace Content.Server.Strip
             if (Check())
             {
                 if (slotDef.StripHidden && !ev.Stealth)
-                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner, Filter.Entities(component.Owner));
                 else
                 {
                     if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var slotItem))
