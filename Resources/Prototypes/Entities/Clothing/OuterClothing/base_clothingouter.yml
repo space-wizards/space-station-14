@@ -18,6 +18,9 @@
     Size: 60
     Slots:
     - outerClothing
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
 
 - type: entity
   abstract: true
