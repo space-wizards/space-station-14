@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseWeaponBattery
+  id: EnergyCrossbowMini
+  name: miniature energy crossbow
+  description: Launches energy bolts that poison and stun their target.
+  components:
+  - type: Item
+    size: 10 #Miniature...
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Weapons/Guns/Recharge/mini-ebow.rsi
+    layers:
+      - state: icon
+      - state: bolt
+  - type: Icon
+    sprite: Nyanotrasen/Objects/Weapons/Guns/Recharge/mini-ebow.rsi
+    state: icon
+  - type: Gun
+    fireRate: 0.4
+  - type: ProjectileBatteryAmmoProvider
+    proto: BoltEnergyCrossbow
+    fireCost: 100
+  - type: Battery
+    maxCharge: 400
+    startingCharge: 400
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 100
