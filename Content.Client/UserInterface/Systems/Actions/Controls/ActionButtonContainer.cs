@@ -32,8 +32,10 @@ public class ActionButtonContainer : GridContainer
         }
     }
 
-    public void LoadActionData(params ActionType?[] actionTypes)
+    public void SetActionData(params ActionType?[] actionTypes)
     {
+        ClearActionData();
+
         for (var i = 0; i < actionTypes.Length; i++)
         {
             var action = actionTypes[i];
@@ -54,12 +56,24 @@ public class ActionButtonContainer : GridContainer
     {
         base.ChildAdded(newChild);
 
-        if (newChild is ActionButton button)
+        if (newChild is not ActionButton button)
+            return;
+
+        button.ActionPressed += ActionPressed;
+        button.ActionUnpressed += ActionUnpressed;
+        button.ActionFocusExited += ActionFocusExited;
+    }
+
+    public bool TryGetButtonIndex(ActionButton button, out int position)
+    {
+        if (button.Parent != this)
         {
-            button.ActionPressed += ActionPressed;
-            button.ActionUnpressed += ActionUnpressed;
-            button.ActionFocusExited += ActionFocusExited;
+            position = 0;
+            return false;
         }
+
+        position = button.GetPositionInParent();
+        return true;
     }
 
     ~ActionButtonContainer()

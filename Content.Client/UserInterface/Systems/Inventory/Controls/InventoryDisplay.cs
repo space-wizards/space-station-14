@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
-public sealed class InventoryDisplay :  LayoutContainer
+public sealed class InventoryDisplay : LayoutContainer
 {
     private int Columns = 0;
     private int Rows = 0;
@@ -13,13 +13,14 @@ public sealed class InventoryDisplay :  LayoutContainer
     private const int ButtonSize = 75;
     private readonly Control resizer;
 
-    private readonly Dictionary<string, (SlotControl,Vector2i)> _buttons = new();
+    private readonly Dictionary<string, (SlotControl, Vector2i)> _buttons = new();
+
     public InventoryDisplay()
     {
-        resizer = new Control()
-        {};
+        resizer = new Control();
         AddChild(resizer);
     }
+
     public SlotControl? AddButton(SlotControl newButton, Vector2i buttonOffset)
     {
         AddChild(newButton);
@@ -50,7 +51,7 @@ public sealed class InventoryDisplay :  LayoutContainer
     public void RemoveButton(string slotName)
     {
         if (!_buttons.Remove(slotName)) return;
-        //recalcuate the size of the control when a slot is removed
+        //recalculate the size of the control when a slot is removed
         Columns = 0;
         Rows = 0;
         foreach (var (_,(_,buttonOffset)) in _buttons)
@@ -58,5 +59,4 @@ public sealed class InventoryDisplay :  LayoutContainer
             UpdateSizeData(buttonOffset);
         }
     }
-
-    }
+}

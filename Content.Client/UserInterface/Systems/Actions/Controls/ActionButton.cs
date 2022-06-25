@@ -97,10 +97,15 @@ public sealed class ActionButton : Control
         ActionFocusExited?.Invoke(this);
     }
 
-    public void TryReplaceWith(IEntityManager entityManager, ActionType action)
+    public bool TryReplaceWith(IEntityManager entityManager, ActionType action)
     {
-        if (!Locked)
-            UpdateData(entityManager, action);
+        if (Locked)
+        {
+            return false;
+        }
+
+        UpdateData(entityManager, action);
+        return true;
     }
 
     public void UpdateData(IEntityManager entityManager, ActionType action)

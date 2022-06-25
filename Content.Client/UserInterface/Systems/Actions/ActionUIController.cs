@@ -4,6 +4,7 @@ using Content.Client.DragDrop;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Actions.Controls;
+using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -28,13 +29,21 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
 
+    private const int PageAmount = 9;
+    private const int ButtonAmount = 10;
+
     private ActionButtonContainer? _container;
-    private ActionPage? _defaultPage;
+    private readonly List<ActionPage> _pages = new();
+    private readonly ActionPage _defaultPage;
+    private int _currentPageIndex;
     private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
-
     private ActionsWindow? _window;
+
+    private ActionsBar ActionsBar => UIManager.GetActiveUIWidget<ActionsBar>();
     private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
+    private ActionPage CurrentPage => _pages[_currentPageIndex];
+
     public ActionUIController()
     {
         _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
@@ -46,10 +55,20 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             SetSize = (64, 64),
             MouseFilter = MouseFilterMode.Ignore
         };
+
+        for (var i = 0; i < PageAmount; i++)
+        {
+            CreatePage();
+        }
+
+        _defaultPage = _pages[0];
     }
 
     public void OnStateEntered(GameplayState state)
     {
+        ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+
         UIManager.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;
 
@@ -57,6 +76,34 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
             .Register<ActionUIController>();
+    }
+
+    private void ChangePage(int to)
+    {
+        if (to < 0)
+        {
+            to = PageAmount - 1;
+        }
+        else if (to > PageAmount - 1)
+        {
+            to = 0;
+        }
+
+        _currentPageIndex = to;
+        var page = _pages[_currentPageIndex];
+        _container?.SetActionData(page);
+
+        ActionsBar.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
+    }
+
+    private void OnLeftArrowPressed(ButtonEventArgs args)
+    {
+        ChangePage(_currentPageIndex - 1);
+    }
+
+    private void OnRightArrowPressed(ButtonEventArgs args)
+    {
+        ChangePage(_currentPageIndex + 1);
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -244,7 +291,12 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
                 return;
             }
 
-            button.TryReplaceWith(_entities, _menuDragHelper.Dragged.Action);
+            var action = _menuDragHelper.Dragged.Action;
+            button.TryReplaceWith(_entities, action);
+            if (_container != null && _container.TryGetButtonIndex(button, out var position))
+            {
+                CurrentPage[position] = action;
+            }
         }
 
         _menuDragHelper.EndDrag();
@@ -305,11 +357,6 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         _container = null;
     }
 
-    public void ClearActionBars()
-    {
-        _container = null;
-    }
-
     public override void OnSystemLoaded(IEntitySystem system)
     {
         if (system is ActionsSystem)
@@ -345,7 +392,6 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private void OnComponentUnlinked()
     {
-        _defaultPage = null;
         _container?.ClearActionData();
         //TODO: Clear button data
     }
@@ -353,45 +399,78 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     private void OnComponentLinked(ActionsComponent component)
     {
         LoadDefaultActions(component);
-        if (_defaultPage != null) _container?.LoadActionData(_defaultPage);
+        _container?.SetActionData(_defaultPage);
+    }
+
+    private void CreatePage()
+    {
+        var page = new ActionPage(ButtonAmount);
+        _pages.Add(page);
     }
 
     private void LoadDefaultActions(ActionsComponent component)
     {
-        List<ActionType> actionsToadd = new();
+        List<ActionType> actions = new();
         foreach (var actionType in component.Actions)
         {
             if (actionType.AutoPopulate)
             {
-                actionsToadd.Add(actionType);
+                actions.Add(actionType);
             }
         }
-        _defaultPage = new ActionPage(actionsToadd.ToArray());
+
+        if (actions.Count == 0)
+        {
+            return;
+        }
+
+        var loopedPageIndex = 0;
+        var loopedPage = _pages[loopedPageIndex];
+        loopedPage.Clear();
+
+        for (var i = 0; i < actions.Count; i++)
+        {
+            var mod = i % ButtonAmount;
+            if (i != 0 && mod == 0)
+            {
+                loopedPageIndex++;
+                loopedPage = _pages[loopedPageIndex];
+                loopedPage.Clear();
+            }
+
+            if (loopedPageIndex >= PageAmount - 1)
+            {
+                break;
+            }
+
+            loopedPage[mod] = actions[i];
+        }
     }
 
     //TODO: Serialize this shit
     private sealed class ActionPage
     {
-        public readonly List<ActionType?> Data;
+        private readonly ActionType?[] _data;
 
-        public ActionPage(SortedSet<ActionType> actions)
+        public ActionPage(int size)
         {
-            Data = new List<ActionType?>(actions);
+            _data = new ActionType?[size];
         }
 
-        public ActionPage(params ActionType?[] actions)
-        {
-            Data = new List<ActionType?>(actions);
-        }
         public ActionType? this[int index]
         {
-            get => Data[index];
-            set => Data[index] = value;
+            get => _data[index];
+            set => _data[index] = value;
         }
 
         public static implicit operator ActionType?[](ActionPage p)
         {
-            return p.Data.ToArray();
+            return p._data.ToArray();
+        }
+
+        public void Clear()
+        {
+            Array.Fill(_data, null);
         }
     }
 }
