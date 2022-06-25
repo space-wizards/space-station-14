@@ -1,5 +1,0 @@
-﻿<chat:ChatInputBox
-    xmlns="https://spacestation14.io"
-    xmlns:chat="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls"
-    MouseFilter="Pass">
-</chat:ChatInputBox>

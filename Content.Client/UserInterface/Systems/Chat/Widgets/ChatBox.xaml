@@ -13,15 +13,9 @@
 
         <BoxContainer Orientation="Vertical">
             <OutputPanel Name="Contents" VerticalExpand="True" />
-            <PanelContainer StyleClasses="ChatSubPanel">
-                <BoxContainer Orientation="Horizontal" SeparationOverride="4">
-                    <controls:ChannelSelectorButton Name="ChannelSelector" ToggleMode="True"
-                                                  StyleClasses="chatSelectorOptionButton" MinWidth="75" />
-                    <HistoryLineEdit Name="Input" PlaceHolder="{Loc 'hud-chatbox-info'}" HorizontalExpand="True"
-                                     StyleClasses="chatLineEdit" />
-                    <controls:FilterButton Name="FilterButton" StyleClasses="chatFilterOptionButton" />
-                </BoxContainer>
-            </PanelContainer>
+            <controls:ChatInputBox
+                Name="ChatInput"
+            />
         </BoxContainer>
     </PanelContainer>
 </widgets:ChatBox>
