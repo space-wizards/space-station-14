@@ -5,7 +5,7 @@
   noSpawn: true
   components:
   - type: Sprite
-    sprite: Nyanotrasen/Objects/Weapons/Guns/Projectiles/plasma.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/plasma.rsi
     state: bullet
   - type: Physics
   - type: Fixtures
