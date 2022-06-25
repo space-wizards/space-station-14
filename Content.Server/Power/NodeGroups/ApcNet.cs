@@ -20,8 +20,6 @@ namespace Content.Server.Power.NodeGroups
         void RemovePowerProvider(ApcPowerProviderComponent provider);
 
         void QueueNetworkReconnect();
-
-        EntityUid? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -40,8 +38,6 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables]
         private IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
             Providers.SelectMany(provider => provider.LinkedReceivers);
-
-        EntityUid? IApcNet.GridId => GridId;
 
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();

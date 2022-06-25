@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 
 namespace Content.Server.Salvage

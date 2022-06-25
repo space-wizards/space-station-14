@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking
 {
@@ -127,6 +128,7 @@ namespace Content.Shared.GameTicking
             public string PlayerOOCName;
             public string? PlayerICName;
             public string Role;
+            public EntityUid? PlayerEntityUid;
             public bool Antag;
             public bool Observer;
             public bool Connected;

@@ -84,7 +84,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 var updateEvent = new AtmosExposedUpdateEvent(transform.Coordinates, airEvent.Gas);
-                RaiseLocalEvent(exposed.Owner, ref updateEvent);
+                RaiseLocalEvent(exposed.Owner, ref updateEvent, true);
             }
 
             _exposedTimer -= ExposedUpdateDelay;

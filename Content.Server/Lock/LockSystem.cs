@@ -90,7 +90,7 @@ namespace Content.Server.Lock
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
 
-            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true), true);
 
             return true;
         }
@@ -113,7 +113,7 @@ namespace Content.Server.Lock
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }
 
-            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false), true);
         }
 
         public bool TryUnlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)

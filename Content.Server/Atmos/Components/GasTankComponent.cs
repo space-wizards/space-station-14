@@ -145,6 +145,10 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
+
+            // Couldn't toggle!
+            if (!IsConnected) return;
+
             _connectStream?.Stop();
 
             if (_connectSound != null)
@@ -158,6 +162,7 @@ namespace Content.Server.Atmos.Components
             if (!IsConnected) return;
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
+
             GetInternalsComponent(owner)?.DisconnectTank();
             _disconnectStream?.Stop();
 

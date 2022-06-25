@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -11,7 +12,7 @@ using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -51,6 +52,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -63,7 +65,7 @@ namespace Content.Server.Ghost
             foreach (var ent in ents)
             {
                 var ghostBoo = new GhostBooEvent();
-                RaiseLocalEvent(ent, ghostBoo);
+                RaiseLocalEvent(ent, ghostBoo, true);
 
                 if (ghostBoo.Handled)
                     booCounter++;
@@ -264,6 +266,11 @@ namespace Content.Server.Ghost
             players.Remove(except);
 
             return players;
+        }
+
+        public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            args.Cancel();
         }
     }
 }
