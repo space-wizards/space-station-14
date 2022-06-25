@@ -34,12 +34,14 @@
   description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
   price: 4
 
-#- type: uplinkListing
-#  id: UplinkCrossbowEnergyMini
-#  category: Weapons
-#  itemId: CrossbowEnergyMini
-#  price: 8
-
+# Combo weapon. Does 1-3 seconds of stun
+- type: uplinkListing
+  id: UplinkMiniEbow
+  category: Weapons
+  itemId: EnergyCrossbowMini
+  listingName: Miniature Energy Crossbow
+  description: A fairly quiet weapon that infinitely recharges and stuns. Good as a combo tool with other weapons.
+  price: 10
 
 - type: uplinkListing
   id: UplinkEsword
