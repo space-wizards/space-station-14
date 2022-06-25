@@ -12,6 +12,12 @@ public sealed class HyperspaceComponent : Component
     public HyperspaceState State = HyperspaceState.Starting;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public float StartupTime = 0f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float TravelTime = 0f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public float Accumulator = 0f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("targetCoordinates")]

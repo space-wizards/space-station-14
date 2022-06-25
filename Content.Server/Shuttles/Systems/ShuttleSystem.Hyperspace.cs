@@ -23,8 +23,8 @@ public sealed partial class ShuttleSystem
 
     private MapId? _hyperSpaceMap;
 
-    private const float HyperspaceStartupTime = 5.5f;
-    private const float DefaultHyperspaceTime = 30f;
+    private const float DefaultStartupTime = 5.5f;
+    private const float DefaultTravelTime = 30f;
 
     private SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
     // private SoundSpecifier _travelSound = new SoundPathSpecifier();
@@ -43,10 +43,10 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Moves a shuttle from its current position to the target one. Goes through the hyperspace map while the timer is running.
     /// </summary>
-    /// <param name="component"></param>
-    /// <param name="coordinates"></param>
-    /// <param name="timer"></param>
-    public void Hyperspace(ShuttleComponent component, EntityCoordinates coordinates, float timer = HyperspaceStartupTime)
+    public void Hyperspace(ShuttleComponent component,
+        EntityCoordinates coordinates,
+        float startupTime = DefaultStartupTime,
+        float hyperspaceTime = DefaultTravelTime)
     {
         if (HasComp<HyperspaceComponent>(component.Owner))
         {
@@ -56,7 +56,9 @@ public sealed partial class ShuttleSystem
 
         SetDocks(component, false);
         var hyperspace = AddComp<HyperspaceComponent>(component.Owner);
-        hyperspace.Accumulator = timer;
+        hyperspace.StartupTime = startupTime;
+        hyperspace.TravelTime = hyperspaceTime;
+        hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetCoordinates = coordinates;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Pvs(component.Owner, GetSoundRange(component.Owner), entityManager: EntityManager), _startupSound.Params);
@@ -71,7 +73,7 @@ public sealed partial class ShuttleSystem
             if (comp.Accumulator > 0f) continue;
 
             var xform = Transform(comp.Owner);
-            PhysicsComponent? body = null;
+            PhysicsComponent? body;
 
             switch (comp.State)
             {
@@ -86,8 +88,8 @@ public sealed partial class ShuttleSystem
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
+                    comp.Accumulator += comp.TravelTime;
 
-                    comp.Accumulator += DefaultHyperspaceTime;
                     if (TryComp(comp.Owner, out body))
                     {
                         body.LinearVelocity = new Vector2(0f, 100f);
