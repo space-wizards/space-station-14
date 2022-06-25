@@ -174,7 +174,7 @@ public sealed partial class ShuttleSystem
                        // Prioritise maximum connected ports, then by most similar angle.
                        validDockConfigs = validDockConfigs
                            .OrderByDescending(x => x.Docks.Count)
-                           .ThenBy(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
+                           .ThenByDescending(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
 
                        var location = validDockConfigs.First();
                        position = location.Area;
