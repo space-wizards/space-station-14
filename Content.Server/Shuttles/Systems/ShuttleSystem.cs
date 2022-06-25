@@ -137,17 +137,21 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
+        /// <summary>
+        /// Enables or disables a shuttle's piloting controls.
+        /// </summary>
         public void SetPilotable(ShuttleComponent component, bool value)
         {
             if (component.CanPilot == value) return;
             component.CanPilot = value;
 
-            if (!value)
+            foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
             {
-                foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
-                {
+                comp.CanPilot = value;
+
+                // I'm gonna pray if the UI is force closed and we block UI opens that BUI handles it.
+                if (!value)
                     _uiSystem.GetUiOrNull(comp.Owner, ShuttleConsoleUiKey.Key)?.CloseAll();
-                }
             }
         }
 

@@ -88,7 +88,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!component.Enabled || !TryPilot(args.User, uid))
+            if (!component.CanPilot || !TryPilot(args.User, uid))
                 args.Cancel();
         }
 
@@ -235,7 +235,7 @@ namespace Content.Server.Shuttles.Systems
             var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
-            component.Enabled = shuttle is { Enabled: true };
+            component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();

@@ -9,7 +9,7 @@ namespace Content.Server.Shuttles.Components
         /// Set by shuttlesystem if the grid should no longer be pilotable.
         /// </summary>
         [ViewVariables]
-        public bool Enabled = true;
+        public bool CanPilot = true;
 
         [ViewVariables]
         public readonly List<PilotComponent> SubscribedPilots = new();
