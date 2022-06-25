@@ -1,7 +1,7 @@
-using Content.Server.Access.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -15,7 +15,7 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly IdCardSystem _idCard = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _consoleSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private ISawmill _sawmill = default!;
@@ -134,6 +134,20 @@ namespace Content.Server.Shuttles.Systems
             if (component.Enabled)
             {
                 Enable(physicsComponent);
+            }
+        }
+
+        public void SetPilotable(ShuttleComponent component, bool value)
+        {
+            if (component.CanPilot == value) return;
+            component.CanPilot = value;
+
+            if (!value)
+            {
+                foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
+                {
+                    _uiSystem.GetUiOrNull(comp.Owner, ShuttleConsoleUiKey.Key)?.CloseAll();
+                }
             }
         }
 

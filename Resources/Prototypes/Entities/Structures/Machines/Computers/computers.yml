@@ -23,12 +23,12 @@
     - [ EmergencyShuttleLaunch ]
   - type: EmergencyShuttleConsole
   - type: ActivatableUI
-    key: enum.EmergencyShuttleConsoleUiKey.Key
+    key: enum.EmergencyConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.EmergencyShuttleConsoleUiKey.Key
-        type: EmergencyShuttleConsoleBoundUserInterface
+      - key: enum.EmergencyConsoleUiKey.Key
+        type: EmergencyConsoleBoundUserInterface
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5

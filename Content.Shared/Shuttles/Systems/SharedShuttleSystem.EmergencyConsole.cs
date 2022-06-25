@@ -8,7 +8,7 @@ public abstract partial class SharedShuttleSystem
 }
 
 [Serializable, NetSerializable]
-public enum EmergencyShuttleConsoleUiKey : byte
+public enum EmergencyConsoleUiKey : byte
 {
     Key,
 }

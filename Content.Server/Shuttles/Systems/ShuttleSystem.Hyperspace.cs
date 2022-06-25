@@ -1,6 +1,10 @@
 using Content.Server.Buckle.Components;
+using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
@@ -19,6 +23,8 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly AirlockSystem _airlock = default!;
+    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
 
     private MapId? _hyperSpaceMap;
@@ -54,7 +60,7 @@ public sealed partial class ShuttleSystem
             return;
         }
 
-        SetDocks(component, false);
+        SetDocks(component.Owner, false);
         var hyperspace = AddComp<HyperspaceComponent>(component.Owner);
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;
@@ -98,15 +104,14 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = 0f;
                     }
 
+                    SetDockBolts(comp.Owner, true);
+
                     break;
                 // Arrive.
                 case HyperspaceState.Travelling:
                     DoTheDinosaur(xform);
-
-                    if (TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
-                    {
-                        SetDocks(shuttle, true);
-                    }
+                    SetDocks(comp.Owner, true);
+                    SetDockBolts(comp.Owner, false);
 
                     if (TryComp(comp.Owner, out body))
                     {
@@ -127,13 +132,24 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    private void SetDocks(ShuttleComponent component, bool enabled)
+    private void SetDocks(EntityUid uid, bool enabled)
     {
         foreach (var (dock, xform) in EntityQuery<DockingComponent, TransformComponent>(true))
         {
-            if (xform.ParentUid != component.Owner || dock.Enabled == enabled) continue;
+            if (xform.ParentUid != uid || dock.Enabled == enabled) continue;
             _dockSystem.Undock(dock);
             dock.Enabled = enabled;
+        }
+    }
+
+    private void SetDockBolts(EntityUid uid, bool enabled)
+    {
+        foreach (var (dock, door, xform) in EntityQuery<DockingComponent, AirlockComponent, TransformComponent>(true))
+        {
+            if (xform.ParentUid != uid ||
+                dock.Enabled == enabled) continue;
+
+            door.SetBoltsWithAudio(enabled);
         }
     }
 

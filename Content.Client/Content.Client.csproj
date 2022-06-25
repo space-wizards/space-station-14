@@ -27,6 +27,9 @@
     <Compile Update="Cargo\UI\CargoConsoleMenu.xaml.cs">
       <DependentUpon>CargoConsoleMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Shuttles\UI\EmergencyConsoleWindow.xaml.cs">
+      <DependentUpon>EmergencyConsoleWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

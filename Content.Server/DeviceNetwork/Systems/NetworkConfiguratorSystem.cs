@@ -50,6 +50,9 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // Network configurator kindly go away so I can actually debug thank you.
+        return;
+
         foreach (var component in EntityManager.EntityQuery<NetworkConfiguratorComponent>())
         {
             if (component.ActiveDeviceList != null && EntityManager.EntityExists(component.ActiveDeviceList.Value) &&

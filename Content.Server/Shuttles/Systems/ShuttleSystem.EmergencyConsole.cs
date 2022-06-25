@@ -110,7 +110,7 @@ public sealed partial class ShuttleSystem
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL ALL by {args.Session:user}");
         component.AuthorizedEntities.Clear();
-        UpdateAllConsoles();
+        UpdateAllEmergencyConsoles();
     }
 
     private void OnEmergencyRepeal(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleRepealMessage args)
@@ -131,7 +131,7 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
         _chatSystem.DispatchGlobalStationAnnouncement($"Early launch authorization revoked, {remaining} authorizations needed");
         CheckForLaunch(component);
-        UpdateAllConsoles();
+        UpdateAllEmergencyConsoles();
     }
 
     private void OnEmergencyAuthorize(EntityUid uid, EmergencyShuttleConsoleComponent component, EmergencyShuttleAuthorizeMessage args)
@@ -156,7 +156,7 @@ public sealed partial class ShuttleSystem
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         CheckForLaunch(component);
-        UpdateAllConsoles();
+        UpdateAllEmergencyConsoles();
     }
 
     private void CleanupEmergencyConsole()
@@ -167,7 +167,7 @@ public sealed partial class ShuttleSystem
         EmergencyShuttleArrived = false;
     }
 
-    private void UpdateAllConsoles()
+    private void UpdateAllEmergencyConsoles()
     {
         foreach (var comp in EntityQuery<EmergencyShuttleConsoleComponent>(true))
         {
@@ -184,7 +184,7 @@ public sealed partial class ShuttleSystem
             auths.Add(auth);
         }
 
-        _uiSystem.GetUiOrNull(uid, EmergencyShuttleConsoleUiKey.Key)?.SetState(new EmergencyShuttleConsoleBoundUserInterfaceState()
+        _uiSystem.GetUiOrNull(uid, EmergencyConsoleUiKey.Key)?.SetState(new EmergencyConsoleBoundUserInterfaceState()
         {
             EarlyLaunchTime = EarlyLaunchAuthorized ? _timing.CurTime + TimeSpan.FromSeconds(_consoleAccumulator) : null,
             Authorizations = auths,
@@ -202,6 +202,6 @@ public sealed partial class ShuttleSystem
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         _chatSystem.DispatchGlobalStationAnnouncement($"The emergency shuttle will launch in {_consoleAccumulator:0} seconds", playDefaultSound: false);
-        UpdateAllConsoles();
+        UpdateAllEmergencyConsoles();
     }
 }

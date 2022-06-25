@@ -11,13 +11,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.Shuttles.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class EmergencyShuttleConsoleWindow : FancyWindow,
-    IComputerWindow<EmergencyShuttleConsoleBoundUserInterfaceState>
+public sealed partial class EmergencyConsoleWindow : FancyWindow,
+    IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
     private IGameTiming _timing;
     private TimeSpan? _earlyLaunchTime;
 
-    public EmergencyShuttleConsoleWindow()
+    public EmergencyConsoleWindow()
     {
         _timing = IoCManager.Resolve<IGameTiming>();
         RobustXamlLoader.Load(this);
@@ -54,7 +54,7 @@ public sealed partial class EmergencyShuttleConsoleWindow : FancyWindow,
         cb.SendMessage(new EmergencyShuttleAuthorizeMessage());
     }
 
-    public void UpdateState(EmergencyShuttleConsoleBoundUserInterfaceState scc)
+    public void UpdateState(EmergencyConsoleBoundUserInterfaceState scc)
     {
         // TODO: Loc and cvar for this.
         _earlyLaunchTime = scc.EarlyLaunchTime;

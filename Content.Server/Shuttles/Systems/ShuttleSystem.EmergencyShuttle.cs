@@ -95,6 +95,11 @@ public sealed partial class ShuttleSystem
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
                    var validDockConfigs = new List<DockingConfig>();
 
+                   if (TryComp<ShuttleComponent>(dataComponent.EmergencyShuttle, out var shuttle))
+                   {
+                       SetPilotable(shuttle, false);
+                   }
+
                    if (shuttleDocks.Count > 0)
                    {
                        // We'll try all combinations of shuttle docks and see which one is most suitable
@@ -184,6 +189,7 @@ public sealed partial class ShuttleSystem
            }
        }
 
+       // TODO: Move to its own method
        if (dryRun)
        {
            RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
