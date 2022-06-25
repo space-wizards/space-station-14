@@ -46,7 +46,7 @@
     walkModifier: 0.4
     sprintModifier: 0.6
   - type: Clothing
-    size: 100
+    size: 101
   - type: Armor
     modifiers:
       coefficients:
