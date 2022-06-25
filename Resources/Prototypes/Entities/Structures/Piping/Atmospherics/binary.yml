@@ -217,10 +217,8 @@
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
-      visuals:
-        - type: VentPumpVisualizer
+          map: [ "enum.VentPumpVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
+    - type: VentPumpVisuals
     - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet

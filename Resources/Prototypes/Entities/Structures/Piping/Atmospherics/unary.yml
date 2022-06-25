@@ -43,11 +43,10 @@
           state: pipeHalf
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enum.VentPumpVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
     - type: PipeColorVisuals
-      visuals:
-        - type: VentPumpVisualizer
+    - type: VentPumpVisuals
     - type: GasVentPump
     - type: Construction
       graph: GasUnary
