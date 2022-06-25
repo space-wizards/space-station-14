@@ -94,7 +94,7 @@
     color: "#c94242"
 
 - type: entity
-  parent: ComputerShuttleBase
+  parent: BaseComputerShuttle
   id: ComputerShuttleCargo
   name: cargo shuttle console
   description: Used to pilot the cargo shuttle.
@@ -452,7 +452,7 @@
 
 - type: entity
   id: ComputerCargoShuttle
-  parent: ComputerBase
+  parent: BaseComputer
   name: cargo shuttle computer
   description: Used to order the shuttle.
   components:
@@ -480,7 +480,7 @@
 
 - type: entity
   id: ComputerCargoOrders
-  parent: ComputerBase
+  parent: BaseComputer
   name: cargo request computer
   description: Used to order supplies and approve requests.
   components:
