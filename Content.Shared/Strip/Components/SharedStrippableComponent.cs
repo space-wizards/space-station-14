@@ -79,6 +79,9 @@ namespace Content.Shared.Strip.Components
         }
     }
 
+    /// <summary>
+    /// Used to modify strip times.
+    /// </summary>
     [NetSerializable, Serializable]
     public sealed class BeforeStripEvent : EntityEventArgs, IInventoryRelayEvent
     {
