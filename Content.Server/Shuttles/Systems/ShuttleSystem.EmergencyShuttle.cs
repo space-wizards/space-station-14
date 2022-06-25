@@ -95,6 +95,7 @@ public sealed partial class ShuttleSystem
                    var shuttleXform = xformQuery.GetComponent(dataComponent.EmergencyShuttle.Value);
                    var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
                    var targetGridXform = xformQuery.GetComponent(targetGrid.Value);
+                   var targetGridRotation = targetGridXform.WorldRotation.ToVec();
                    var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
                    var validDockConfigs = new List<DockingConfig>();
@@ -115,7 +116,15 @@ public sealed partial class ShuttleSystem
                            {
                                var gridXform = xformQuery.GetComponent(gridDock.Owner);
 
-                               if (!CanDock(shuttleDock, shuttleDockXform, gridDock, gridXform, shuttleAABB, targetGridGrid, out var dockedAABB, out var matty)) continue;
+                               if (!CanDock(
+                                       shuttleDock, shuttleDockXform,
+                                       gridDock, gridXform,
+                                       targetGridRotation,
+                                       shuttleAABB,
+                                       targetGridGrid,
+                                       out var dockedAABB,
+                                       out var matty,
+                                       out var targetAngle)) continue;
 
                                // Alright well the spawn is valid now to check how many we can connect
                                // Get the matrix for each shuttle dock and test it against the grid docks to see
@@ -141,10 +150,13 @@ public sealed partial class ShuttleSystem
                                                xformQuery.GetComponent(other.Owner),
                                                otherGrid,
                                                xformQuery.GetComponent(otherGrid.Owner),
+                                               targetGridRotation,
                                                shuttleAABB, targetGridGrid,
                                                out var otherDockedAABB,
-                                               out _) ||
-                                           !otherDockedAABB.Equals(dockedAABB)) continue;
+                                               out _,
+                                               out var otherTargetAngle) ||
+                                           !otherDockedAABB.Equals(dockedAABB) ||
+                                           !targetAngle.Equals(otherTargetAngle)) continue;
 
                                        dockedPorts.Add((other, otherGrid));
                                    }
@@ -153,8 +165,8 @@ public sealed partial class ShuttleSystem
                                var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(Vector2.Zero));
                                spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
                                var spawnRotation = shuttleDockXform.LocalRotation +
-                                   targetGridXform.LocalRotation +
-                                   gridXform.LocalRotation;
+                                                   gridXform.LocalRotation +
+                                                   targetGridXform.LocalRotation;
 
                                validDockConfigs.Add(new DockingConfig()
                                {
@@ -171,10 +183,11 @@ public sealed partial class ShuttleSystem
                    {
                        var targetGridAngle = targetGridXform.WorldRotation.Reduced();
 
-                       // Prioritise maximum connected ports, then by most similar angle.
+                       // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
                        validDockConfigs = validDockConfigs
-                           .OrderByDescending(x => x.Docks.Count)
-                           .ThenByDescending(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
+                           .OrderBy(x => x.Docks.Any(docks => HasComp<EmergencyDockComponent>(docks.DockB.Owner)))
+                           .ThenByDescending(x => x.Docks.Count)
+                           .ThenBy(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
 
                        var location = validDockConfigs.First();
                        position = location.Area;
@@ -216,11 +229,14 @@ public sealed partial class ShuttleSystem
        TransformComponent shuttleXform,
        DockingComponent gridDock,
        TransformComponent gridXform,
+       Vector2 targetGridRotation,
        Box2 shuttleAABB,
        IMapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
-       out Matrix3 matty)
+       out Matrix3 matty,
+       out Vector2 gridRotation)
    {
+       gridRotation = Vector2.Zero;
        matty = Matrix3.Identity;
        shuttleDockedAABB = null;
 
@@ -236,13 +252,14 @@ public sealed partial class ShuttleSystem
        var stationDockPos = shuttleXform.LocalPosition +
                             shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleXform.LocalRotation);
+       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -shuttleXform.LocalRotation);
        var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, -gridXform.LocalRotation);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
 
        if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
 
+       gridRotation = matty.Transform(targetGridRotation);
        return true;
    }
 
