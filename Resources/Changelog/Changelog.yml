@@ -1,11 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The wide attack (bound to space) now hits people and not just mobs,
-      so you can use it when you don''t think you''ll hit your target with a click.',
-    type: Fix}
-  id: 1286
-  time: '2022-04-06T19:41:47.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Split Station V2 is out now! Check out the new medbay and cosy additions
@@ -2977,3 +2970,8 @@ Entries:
   - {message: Waystation now has jetpacks!, type: Add}
   id: 1785
   time: '2022-06-25T02:59:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
+  id: 1786
+  time: '2022-06-25T05:27:14.0000000+00:00'
