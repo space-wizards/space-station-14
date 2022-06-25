@@ -1,11 +1,6 @@
 Entries:
 - author: moony
   changes:
-  - {message: Minibombs beep again., type: Tweak}
-  id: 1285
-  time: '2022-04-05T00:27:36.0000000+00:00'
-- author: moony
-  changes:
   - {message: 'The wide attack (bound to space) now hits people and not just mobs,
       so you can use it when you don''t think you''ll hit your target with a click.',
     type: Fix}
@@ -2977,3 +2972,8 @@ Entries:
   - {message: Counters can now be vaulted again., type: Fix}
   id: 1784
   time: '2022-06-24T19:34:09.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Waystation now has jetpacks!, type: Add}
+  id: 1785
+  time: '2022-06-25T02:59:26.0000000+00:00'
