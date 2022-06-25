@@ -176,6 +176,23 @@
   price: 3
 
 - type: uplinkListing
+  id: UplinkHolster
+  category: Utility
+  itemId: ClothingBeltSyndieHolster
+  listingName: Syndicate Shoulder Holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  price: 2
+
+- type: uplinkListing
+  id: UplinkEmag
+  category: Utility
+  itemId: Emag
+  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  price: 8
+
+- type: uplinkListing
   id: UplinkHypopen
   category: Utility
   itemId: Hypopen
@@ -385,6 +402,12 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Misc
+  itemId: ClothingHeadHatOutlawHat
+  price: 1
 
 - type: uplinkListing
   id: UplinkCatEars
