@@ -59,6 +59,7 @@ public sealed partial class ShuttleSystem
     private CancellationTokenSource? _roundEndCancelToken;
 
     private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
+    private static readonly Color DangerColor = Color.DarkRed;
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
@@ -189,7 +190,9 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)), playDefaultSound: false);
+            _chatSystem.DispatchGlobalStationAnnouncement(
+                Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
+                playDefaultSound: false, colorOverride: DangerColor);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         CheckForLaunch(component);
@@ -249,7 +252,10 @@ public sealed partial class ShuttleSystem
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
-        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playDefaultSound: false);
+        _chatSystem.DispatchGlobalStationAnnouncement(
+            Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
+            playDefaultSound: false,
+            colorOverride: DangerColor);
         UpdateAllEmergencyConsoles();
     }
 

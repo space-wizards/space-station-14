@@ -1,5 +1,6 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Sound;
@@ -18,6 +19,7 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
 
     private MapId? _hyperSpaceMap;
@@ -141,9 +143,9 @@ public sealed partial class ShuttleSystem
     {
         foreach (var (dock, door, xform) in EntityQuery<DockingComponent, AirlockComponent, TransformComponent>(true))
         {
-            if (xform.ParentUid != uid ||
-                dock.Enabled == enabled) continue;
+            if (xform.ParentUid != uid) continue;
 
+            _doors.TryClose(dock.Owner);
             door.SetBoltsWithAudio(enabled);
         }
     }
