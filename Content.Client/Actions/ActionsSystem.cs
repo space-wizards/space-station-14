@@ -15,12 +15,13 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
         [Dependency] private readonly TargetOutlineSystem _targetOutline = default!;
-        //public Action? EntityActionUpdate = null; //Unneeded?
-        public Action<ActionType>? OnActionAdded = null;
-        public Action<ActionType>? OnActionRemoved = null;
-        public Action<ActionsComponent>? OnLinkActions = null;
-        public Action? OnUnlinkActions = null;
-        private ActionsComponent? _playerActions = null;
+
+        public event Action<ActionType>? OnActionAdded;
+        public event Action<ActionType>? OnActionRemoved;
+        public event Action<ActionsComponent>? OnLinkActions;
+        public event Action? OnUnlinkActions;
+
+        private ActionsComponent? _playerActions;
         public ActionsComponent? PlayerActions => _playerActions;
         public override void Initialize()
         {
@@ -29,37 +30,48 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
         }
+
         private void HandleComponentState(EntityUid uid, ActionsComponent component, ref ComponentHandleState args)
         {
-            //Check if player is local
-            if (args.Current is not ActionsComponentState currentState) return;
-            List<ActionType> _addedTypes = new();
-            List<ActionType> _removedTypes = new();
+            if (args.Current is not ActionsComponentState currentState)
+                return;
+
+            List<ActionType> added = new();
+            List<ActionType> removed = new();
+
             foreach (var actionType in component.Actions)
             {
                 if (!currentState.Actions.Contains(actionType))
                 {
-                    _removedTypes.Add(actionType);
+                    removed.Add(actionType);
                 }
             }
-            foreach (var actionType in currentState.Actions)
+
+            foreach (var serverAction in currentState.Actions)
             {
-                if (!component.Actions.Contains(actionType))
+                if (!component.Actions.TryGetValue(serverAction, out var clientAction))
                 {
-                    _addedTypes.Add(actionType);
+                    added.Add(serverAction);
+                }
+                else
+                {
+                    clientAction.CopyFrom(serverAction);
                 }
             }
-            foreach (var actionType in _addedTypes)
+
+            foreach (var actionType in added)
             {
                 component.Actions.Add(actionType);
                 OnActionAdded?.Invoke(actionType);
             }
-            foreach (var actionType in _removedTypes)
+
+            foreach (var actionType in removed)
             {
                 component.Actions.Remove(actionType);
                 OnActionRemoved?.Invoke(actionType);
             }
         }
+
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
             if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
@@ -106,6 +118,5 @@ namespace Content.Client.Actions
                 EntityManager.RaisePredictiveEvent(request);
             }
         }
-
     }
 }

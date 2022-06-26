@@ -4,6 +4,7 @@ using Content.Client.DragDrop;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Actions.Controls;
+using Content.Client.UserInterface.Systems.Actions.Widgets;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -28,16 +29,24 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
 
-    private ActionButtonContainer? _container;
-    private ActionPage? _defaultPage;
-    private readonly DragDropHelper<Controls.ActionButton> _menuDragHelper;
-    private readonly TextureRect _dragShadow;
+    private const int PageAmount = 9;
+    private const int ButtonAmount = 10;
 
+    private ActionButtonContainer? _container;
+    private readonly List<ActionPage> _pages = new();
+    private readonly ActionPage _defaultPage;
+    private int _currentPageIndex;
+    private readonly DragDropHelper<ActionButton> _menuDragHelper;
+    private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
+
+    private ActionsBar ActionsBar => UIManager.GetActiveUIWidget<ActionsBar>();
     private MenuButton ActionButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().ActionButton;
+    private ActionPage CurrentPage => _pages[_currentPageIndex];
+
     public ActionUIController()
     {
-        _menuDragHelper = new DragDropHelper<Controls.ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
+        _menuDragHelper = new DragDropHelper<ActionButton>(OnMenuBeginDrag, OnMenuContinueDrag, OnMenuEndDrag);
         _dragShadow = new TextureRect
         {
             MinSize = (64, 64),
@@ -46,17 +55,101 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             SetSize = (64, 64),
             MouseFilter = MouseFilterMode.Ignore
         };
+
+        for (var i = 0; i < PageAmount; i++)
+        {
+            CreatePage();
+        }
+
+        _defaultPage = _pages[0];
     }
 
     public void OnStateEntered(GameplayState state)
     {
+        ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+
         UIManager.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Bind(ContentKeyFunctions.Hotbar0,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(9)))
+            .Bind(ContentKeyFunctions.Hotbar1,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(0)))
+            .Bind(ContentKeyFunctions.Hotbar2,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(1)))
+            .Bind(ContentKeyFunctions.Hotbar3,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(2)))
+            .Bind(ContentKeyFunctions.Hotbar4,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(3)))
+            .Bind(ContentKeyFunctions.Hotbar5,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(4)))
+            .Bind(ContentKeyFunctions.Hotbar6,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(5)))
+            .Bind(ContentKeyFunctions.Hotbar7,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(6)))
+            .Bind(ContentKeyFunctions.Hotbar8,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(7)))
+            .Bind(ContentKeyFunctions.Hotbar9,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(8)))
+            .Bind(ContentKeyFunctions.Loadout1,
+                InputCmdHandler.FromDelegate(_ => ChangePage(0)))
+            .Bind(ContentKeyFunctions.Loadout2,
+                InputCmdHandler.FromDelegate(_ => ChangePage(1)))
+            .Bind(ContentKeyFunctions.Loadout3,
+                InputCmdHandler.FromDelegate(_ => ChangePage(2)))
+            .Bind(ContentKeyFunctions.Loadout4,
+                InputCmdHandler.FromDelegate(_ => ChangePage(3)))
+            .Bind(ContentKeyFunctions.Loadout5,
+                InputCmdHandler.FromDelegate(_ => ChangePage(4)))
+            .Bind(ContentKeyFunctions.Loadout6,
+                InputCmdHandler.FromDelegate(_ => ChangePage(5)))
+            .Bind(ContentKeyFunctions.Loadout7,
+                InputCmdHandler.FromDelegate(_ => ChangePage(6)))
+            .Bind(ContentKeyFunctions.Loadout8,
+                InputCmdHandler.FromDelegate(_ => ChangePage(7)))
+            .Bind(ContentKeyFunctions.Loadout9,
+                InputCmdHandler.FromDelegate(_ => ChangePage(8)))
             .Register<ActionUIController>();
+    }
+
+    private void TriggerAction(int index)
+    {
+        if (CurrentPage[index] is not { } type)
+            return;
+
+        _actionsSystem.TriggerAction(type);
+    }
+
+    private void ChangePage(int index)
+    {
+        if (index < 0)
+        {
+            index = PageAmount - 1;
+        }
+        else if (index > PageAmount - 1)
+        {
+            index = 0;
+        }
+
+        _currentPageIndex = index;
+        var page = _pages[_currentPageIndex];
+        _container?.SetActionData(page);
+
+        ActionsBar.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
+    }
+
+    private void OnLeftArrowPressed(ButtonEventArgs args)
+    {
+        ChangePage(_currentPageIndex - 1);
+    }
+
+    private void OnRightArrowPressed(ButtonEventArgs args)
+    {
+        ChangePage(_currentPageIndex + 1);
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -144,7 +237,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
         foreach (var action in actions)
         {
-            var actionItem = new Controls.ActionButton();
+            var actionItem = new ActionButton {Locked = true};
             actionItem.UpdateData(_entities, action);
             actionItem.ActionPressed += OnWindowActionPressed;
             actionItem.ActionUnpressed += OnWindowActionUnPressed;
@@ -192,6 +285,49 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         PopulateActions(actions);
     }
 
+    private void SetAction(ActionButton button, ActionType? type)
+    {
+        int position;
+
+        if (type == null)
+        {
+            button.ClearData();
+            if (_container?.TryGetButtonIndex(button, out position) ?? false)
+            {
+                CurrentPage[position] = type;
+            }
+            return;
+        }
+
+        if (button.TryReplaceWith(_entities, type) &&
+            _container != null &&
+            _container.TryGetButtonIndex(button, out position))
+        {
+            CurrentPage[position] = type;
+        }
+    }
+
+    private void DragAction()
+    {
+        if (UIManager.CurrentlyHovered is ActionButton button)
+        {
+            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action is not { } type)
+            {
+                _menuDragHelper.EndDrag();
+                return;
+            }
+
+            SetAction(button, type);
+        }
+
+        if (_menuDragHelper.Dragged is { Parent: ActionButtonContainer } old)
+        {
+            SetAction(old, null);
+        }
+
+        _menuDragHelper.EndDrag();
+    }
+
     private void OnWindowClosed()
     {
         _window = null;
@@ -220,7 +356,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         SearchAndDisplay();
     }
 
-    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, Controls.ActionButton action)
+    private void OnWindowActionPressed(GUIBoundKeyEventArgs args, ActionButton action)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
@@ -229,44 +365,50 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         args.Handle();
     }
 
-    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, Controls.ActionButton dragged)
+    private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
     {
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
+        DragAction();
         args.Handle();
-
-        if (UIManager.CurrentlyHovered is Controls.ActionButton button)
-        {
-            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action == null)
-            {
-                _menuDragHelper.EndDrag();
-                return;
-            }
-
-            button.UpdateData(_entities, _menuDragHelper.Dragged.Action);
-        }
-
-        _menuDragHelper.EndDrag();
     }
 
-    private void OnWindowActionFocusExisted(Controls.ActionButton button)
+    private void OnWindowActionFocusExisted(ActionButton button)
     {
         _menuDragHelper.EndDrag();
     }
 
-    private void OnActionPressed(GUIBoundKeyEventArgs args, Controls.ActionButton button)
+    private void OnActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _actionsSystem.TriggerAction(button.Action);
+            _menuDragHelper.MouseDown(button);
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-            button.ClearData();
+            SetAction(button, null);
             args.Handle();
         }
+    }
+
+    private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        if (UIManager.CurrentlyHovered == button)
+        {
+            _actionsSystem.TriggerAction(button.Action);
+            _menuDragHelper.EndDrag();
+        }
+        else
+        {
+            DragAction();
+        }
+
+        args.Handle();
     }
 
     private bool OnMenuBeginDrag()
@@ -298,14 +440,10 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
         _container = container;
         _container.ActionPressed += OnActionPressed;
+        _container.ActionUnpressed += OnActionUnpressed;
     }
 
     public void ClearActionContainer()
-    {
-        _container = null;
-    }
-
-    public void ClearActionBars()
     {
         _container = null;
     }
@@ -339,59 +477,91 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private void ActionSystemShutdown()
     {
-        _actionsSystem.OnLinkActions = null;
-        _actionsSystem.OnUnlinkActions = null;
-    }
-
-    private void OnComponentUnlinked()
-    {
-        _defaultPage = null;
-        _container?.ClearActionData();
-        //TODO: Clear button data
+        _actionsSystem.OnLinkActions -= OnComponentLinked;
+        _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
     }
 
     private void OnComponentLinked(ActionsComponent component)
     {
         LoadDefaultActions(component);
-        if (_defaultPage != null) _container?.LoadActionData(_defaultPage);
+        _container?.SetActionData(_defaultPage);
+    }
+
+    private void OnComponentUnlinked()
+    {
+        _container?.ClearActionData();
+        //TODO: Clear button data
+    }
+
+    private void CreatePage()
+    {
+        var page = new ActionPage(ButtonAmount);
+        _pages.Add(page);
     }
 
     private void LoadDefaultActions(ActionsComponent component)
     {
-        List<ActionType> actionsToadd = new();
+        List<ActionType> actions = new();
         foreach (var actionType in component.Actions)
         {
             if (actionType.AutoPopulate)
             {
-                actionsToadd.Add(actionType);
+                actions.Add(actionType);
             }
         }
-        _defaultPage = new ActionPage(actionsToadd.ToArray());
+
+        if (actions.Count == 0)
+        {
+            return;
+        }
+
+        var loopedPageIndex = 0;
+        var loopedPage = _pages[loopedPageIndex];
+        loopedPage.Clear();
+
+        for (var i = 0; i < actions.Count; i++)
+        {
+            var mod = i % ButtonAmount;
+            if (i != 0 && mod == 0)
+            {
+                loopedPageIndex++;
+                loopedPage = _pages[loopedPageIndex];
+                loopedPage.Clear();
+            }
+
+            if (loopedPageIndex >= PageAmount - 1)
+            {
+                break;
+            }
+
+            loopedPage[mod] = actions[i];
+        }
     }
 
     //TODO: Serialize this shit
     private sealed class ActionPage
     {
-        public readonly List<ActionType?> Data;
+        private readonly ActionType?[] _data;
 
-        public ActionPage(SortedSet<ActionType> actions)
+        public ActionPage(int size)
         {
-            Data = new List<ActionType?>(actions);
+            _data = new ActionType?[size];
         }
 
-        public ActionPage(params ActionType?[] actions)
-        {
-            Data = new List<ActionType?>(actions);
-        }
         public ActionType? this[int index]
         {
-            get => Data[index];
-            set => Data[index] = value;
+            get => _data[index];
+            set => _data[index] = value;
         }
 
         public static implicit operator ActionType?[](ActionPage p)
         {
-            return p.Data.ToArray();
+            return p._data.ToArray();
+        }
+
+        public void Clear()
+        {
+            Array.Fill(_data, null);
         }
     }
 }
