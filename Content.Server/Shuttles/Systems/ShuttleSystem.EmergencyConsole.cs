@@ -54,6 +54,8 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private float _authorizeTime;
 
+    private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
+
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
     /// </summary>
@@ -119,8 +121,7 @@ public sealed partial class ShuttleSystem
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
-            _chatSystem.DispatchGlobalStationAnnouncement(
-                $"The Emergency Shuttle has left the station. Estimate {_transitTime} seconds until the shuttle clears the area.");
+            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-left", ("transit", $"{_transitTime:0}")));
 
             Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound());
         }
@@ -131,9 +132,9 @@ public sealed partial class ShuttleSystem
         var player = args.Session.AttachedEntity;
         if (player == null) return;
 
-        if (!_reader.FindAccessTags(player.Value).Contains("EmergencyShuttleRepealAll"))
+        if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
         {
-            _popup.PopupCursor("Access denied", Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
             return;
         }
 
@@ -160,7 +161,7 @@ public sealed partial class ShuttleSystem
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
-        _chatSystem.DispatchGlobalStationAnnouncement($"Early launch authorization revoked, {remaining} authorizations needed");
+        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", remaining)));
         CheckForLaunch(component);
         UpdateAllEmergencyConsoles();
     }
@@ -172,7 +173,7 @@ public sealed partial class ShuttleSystem
 
         if (!_reader.IsAllowed(player.Value, uid))
         {
-            _popup.PopupCursor("Access denied", Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
             return;
         }
 
@@ -183,7 +184,7 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
-            _chatSystem.DispatchGlobalStationAnnouncement($"{remaining} authorizations needed until shuttle is launched early", playDefaultSound: false);
+            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)), playDefaultSound: false);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         CheckForLaunch(component);
@@ -232,7 +233,7 @@ public sealed partial class ShuttleSystem
         _consoleAccumulator = MathF.Min(_consoleAccumulator, _authorizeTime);
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
-        _chatSystem.DispatchGlobalStationAnnouncement($"The emergency shuttle will launch in {_consoleAccumulator:0} seconds", playDefaultSound: false);
+        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playDefaultSound: false);
         UpdateAllEmergencyConsoles();
     }
 }

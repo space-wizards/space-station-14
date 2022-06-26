@@ -1,17 +1,12 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
-using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
-using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
-using Content.Shared.GameTicking;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -30,11 +25,13 @@ public sealed partial class ShuttleSystem
     private const float DefaultStartupTime = 5.5f;
     private const float DefaultTravelTime = 30f;
 
-    private SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
-    // private SoundSpecifier _travelSound = new SoundPathSpecifier();
-    private SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg");
+    // I'm too lazy to make CVars.
 
-    private TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
+    private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg");
+    // private SoundSpecifier _travelSound = new SoundPathSpecifier();
+    private readonly SoundSpecifier _arrivalSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_end.ogg");
+
+    private readonly TimeSpan _hyperspaceKnockdownTime = TimeSpan.FromSeconds(5);
 
     /// Left-side of the station we're allowed to use
     private float _index;
