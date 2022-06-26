@@ -1,12 +1,6 @@
 Entries:
 - author: TimrodDX
   changes:
-  - {message: Most of the shutters and blast doors on Delta Station are now linked
-      to buttons., type: Tweak}
-  id: 1288
-  time: '2022-04-06T23:32:46.0000000+00:00'
-- author: TimrodDX
-  changes:
   - {message: Packed Station has been updated to the latest standards., type: Tweak}
   id: 1289
   time: '2022-04-07T16:08:02.0000000+00:00'
@@ -2973,3 +2967,11 @@ Entries:
   - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
   id: 1787
   time: '2022-06-26T00:00:45.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Miasma poison damage no longer scales by amount. This is a massive reduction
+      in niche situations where an ungodly amount of miasma is on a tile., type: Tweak}
+  - {message: Most mobs' miasma generation reduced by ~30%., type: Tweak}
+  - {message: Cow miasma generation reduced by ~55%., type: Tweak}
+  id: 1788
+  time: '2022-06-26T02:04:40.0000000+00:00'
