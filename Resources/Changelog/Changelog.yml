@@ -1,14 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed a bug where the DAW/super synthesizer had wrong instruments when
-      playing a MIDI file., type: Fix}
-  - {message: 'Fixed a bug where sometimes MIDI playback would never stop, despite
-      having clearly ended.', type: Fix}
-  - {message: Fixed several bugs which caused instruments to sound different/worse
-      to other people., type: Fix}
-  id: 1291
-  time: '2022-04-08T14:22:06.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Ghost roles will ghost now instead of suicide., type: Add}
@@ -2977,3 +2967,8 @@ Entries:
       other way.), type: Tweak}
   id: 1790
   time: '2022-06-26T06:22:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukies now no longer get the Common channel., type: Tweak}
+  id: 1791
+  time: '2022-06-26T07:21:03.0000000+00:00'
