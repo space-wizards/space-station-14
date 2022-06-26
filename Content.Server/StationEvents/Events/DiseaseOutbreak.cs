@@ -1,4 +1,5 @@
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
 using Content.Server.Station.Systems;
@@ -36,6 +37,8 @@ public sealed class DiseaseOutbreak : StationEvent
 
     public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/outbreak7.ogg");
     protected override float EndAfter => 1.0f;
+
+    public override bool AnnounceEvent => false;
 
     /// <summary>
     /// Finds 2-5 random, alive entities that can host diseases
@@ -79,6 +82,8 @@ public sealed class DiseaseOutbreak : StationEvent
             stationsToNotify.Add((EntityUid) station);
         }
 
+        if (!AnnounceEvent)
+            return;
         foreach (var station in stationsToNotify)
         {
             chatSystem.DispatchStationAnnouncement(station, Loc.GetString("station-event-disease-outbreak-announcement"),

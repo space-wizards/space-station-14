@@ -1,17 +1,22 @@
 ﻿using System.Threading;
+using Content.Server.Body.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Components;
 using Content.Server.Magic.Events;
+using Content.Server.Popups;
 using Content.Server.Spawners.Components;
+using Content.Server.Weapon.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Body.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -33,6 +38,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly GunSystem _gunSystem = default!;
 
     public override void Initialize()
     {
@@ -46,8 +52,9 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
+        SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
-
+        SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -142,6 +149,20 @@ public sealed class MagicSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnProjectileSpell(ProjectileSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        var xform = Transform(ev.Performer);
+
+        foreach (var pos in GetSpawnPositions(xform, ev.Pos))
+        {
+            var ent = Spawn(ev.Prototype, pos.SnapToGrid(EntityManager, _mapManager));
+            _gunSystem.ShootProjectile(ent,ev.Target.Position - Transform(ent).MapPosition.Position, ev.Performer);
+        }
+    }
+
     private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
     {
         switch (data)
@@ -215,7 +236,7 @@ public sealed class MagicSystem : EntitySystem
 
         transform.WorldPosition = args.Target.Position;
         transform.AttachToGridOrMap();
-        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target));
+        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
     }
 
@@ -232,7 +253,7 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), AudioParams.Default.WithVolume(args.KnockVolume));
+        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
@@ -245,6 +266,30 @@ public sealed class MagicSystem : EntitySystem
         }
 
         args.Handled = true;
+    }
+
+    private void OnSmiteSpell(SmiteSpellEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        if (!TryComp<BodyComponent>(ev.Target, out var body))
+            return;
+
+        var ents = body.Gib(true);
+
+        if (!ev.DeleteNonBrainParts)
+            return;
+
+        foreach (var part in ents)
+        {
+            // just leaves a brain and clothes
+            if ((HasComp<BodyPartComponent>(part) || HasComp<MechanismComponent>(part))
+                && !HasComp<BrainComponent>(part))
+            {
+                QueueDel(part);
+            }
+        }
     }
 
     /// <summary>

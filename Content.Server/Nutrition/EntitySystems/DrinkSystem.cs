@@ -74,6 +74,35 @@ namespace Content.Server.Nutrition.EntitySystems
             var openedText =
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
             args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
+            if (!IsEmpty(uid, component))
+            {
+                if (TryComp<ExaminableSolutionComponent>(component.Owner, out var comp))
+                {
+                    //provide exact measurement for beakers
+                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
+                }
+                else
+                {
+                    //general approximation
+                    string remainingString;
+                    switch ((int)_solutionContainerSystem.PercentFull(uid))
+                    {
+                        case int perc when perc == 100:
+                            remainingString = "drink-component-on-examine-is-full";
+                            break;
+                        case int perc when perc > 66:
+                            remainingString = "drink-component-on-examine-is-mostly-full";
+                            break;
+                        case int perc when perc > 33:
+                            remainingString = HalfEmptyOrHalfFull(args);
+                            break;
+                        default:
+                            remainingString = "drink-component-on-examine-is-mostly-empty";
+                            break;
+                    }
+                    args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
+                }
+            }
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
@@ -352,6 +381,18 @@ namespace Content.Server.Nutrition.EntitySystems
             };
 
             ev.Verbs.Add(verb);
+        }
+
+        // some see half empty, and others see half full
+        private string HalfEmptyOrHalfFull(ExaminedEvent args)
+        {
+            string remainingString = "drink-component-on-examine-is-half-full";
+
+            if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
+                && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+                remainingString = "drink-component-on-examine-is-half-empty";
+
+            return remainingString;
         }
     }
 }

@@ -18,6 +18,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -399,6 +400,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 if (component.Engaged)
                 {
                     TryFlush(component);
+                    state = component.State;
                 }
             }
 
@@ -477,9 +479,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(component.Owner).GridEntityId);
-            var coords = EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates;
-            var entry = grid.GetLocal(coords)
+            var xform = Transform(component.Owner);
+            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+                return false;
+
+            var coords = xform.Coordinates;
+            var entry = grid.Grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)
@@ -490,7 +495,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
 
-            if (_atmosSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.Coordinates, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 

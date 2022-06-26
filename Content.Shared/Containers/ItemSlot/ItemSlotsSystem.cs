@@ -205,7 +205,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>

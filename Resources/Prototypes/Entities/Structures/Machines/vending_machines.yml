@@ -37,6 +37,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:EjectVendorItems
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -64,6 +65,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: Actions
   - type: SentienceTarget
     flavorKind: mechanical
 
@@ -166,6 +168,8 @@
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: CigaretteMachineAds
   - type: Speech
@@ -232,6 +236,8 @@
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -270,6 +276,8 @@
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -338,6 +346,8 @@
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -574,6 +584,8 @@
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -608,6 +620,8 @@
   components:
   - type: VendingMachine
     pack: BodaInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -815,6 +829,8 @@
   components:
   - type: VendingMachine
     pack: ChangInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: ChangAds
   - type: Speech

@@ -8,5 +8,5 @@ dragon-spawn-action-popup-message-fail-no-eggs = You don't have the stamina to c
 action-name-devour = [color=red]Devour[/color]
 action-description-devour = Attempt to break a structure with your jaws or swallow a creature.
 
-action-name-carp-birth = Summon carp
-action-description-carp-birth = Summon a carp to aid you at seizing the station!
+action-name-carp-summon = Summon carp
+action-description-carp-summon = Summon a carp to aid you at seizing the station!

@@ -18,6 +18,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio
@@ -25,15 +26,15 @@ namespace Content.Client.Audio
     [UsedImplicitly]
     public sealed class BackgroundAudioSystem : EntitySystem
     {
+        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPlayerManager _playMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
         [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
-        [Dependency] private readonly IPlayerManager _playMan = default!;
 
         private readonly AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
         private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
@@ -41,6 +42,14 @@ namespace Content.Client.Audio
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
 
+        /// <summary>
+        /// What is currently playing.
+        /// </summary>
+        private SoundCollectionPrototype? _playingCollection;
+
+        /// <summary>
+        /// What the ambience has been set to.
+        /// </summary>
         private SoundCollectionPrototype _currentCollection = default!;
         private CancellationTokenSource _timerCancelTokenSource = new();
 
@@ -87,32 +96,36 @@ namespace Content.Client.Audio
 
         private void EntParentChanged(ref EntParentChangedMessage message)
         {
-            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity) return;
-            if (!TryComp<TransformComponent>(message.Entity, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid)) return;
+            if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
+               !_timing.IsFirstTimePredicted) return;
 
-            var tileDef = (ContentTileDefinition) _tileDefMan[grid.GetTileRef(xform.Coordinates).Tile.TypeId];
+            if (!TryComp<TransformComponent>(message.Entity, out var xform)) return;
 
-            if(_currentCollection.ID == _spaceAmbience.ID)
+            // Check if we traversed to grid.
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (!tileDef.Sturdy) return;
+                if (_currentCollection == _stationAmbience) return;
                 ChangeAmbience(_stationAmbience);
-
             }
-            else // currently station
+            else
             {
-                if (tileDef.Sturdy) return;
                 ChangeAmbience(_spaceAmbience);
             }
         }
 
         private void ChangeAmbience(SoundCollectionPrototype newAmbience)
         {
-            EndAmbience();
-            _currentCollection = newAmbience;
+            if (_currentCollection == newAmbience) return;
             _timerCancelTokenSource.Cancel();
+            _currentCollection = newAmbience;
             _timerCancelTokenSource = new();
-            Timer.Spawn(1500, StartAmbience, _timerCancelTokenSource.Token);
+            Timer.Spawn(1500, () =>
+            {
+                // If we traverse a few times then don't interrupt an existing song.
+                if (_playingCollection == _currentCollection) return;
+                EndAmbience();
+                StartAmbience();
+            }, _timerCancelTokenSource.Token);
         }
 
         private void StateManagerOnStateChanged(StateChangedEventArgs args)
@@ -168,12 +181,14 @@ namespace Content.Client.Audio
         {
             EndAmbience();
             if (!CanPlayCollection(_currentCollection)) return;
+            _playingCollection = _currentCollection;
             var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
             _ambientStream = SoundSystem.Play(file, Filter.Local(), _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
         }
 
         private void EndAmbience()
         {
+            _playingCollection = null;
             _ambientStream?.Stop();
             _ambientStream = null;
         }

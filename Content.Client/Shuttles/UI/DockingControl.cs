@@ -31,6 +31,9 @@ public class DockingControl : Control
     public EntityUid? ViewedDock;
     public EntityUid? GridEntity;
 
+    public EntityCoordinates? Coordinates;
+    public Angle? Angle;
+
     /// <summary>
     /// Stored by GridID then by docks
     /// </summary>
@@ -69,11 +72,12 @@ public class DockingControl : Control
             handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
         }
 
-        if (!_entManager.TryGetComponent<TransformComponent>(ViewedDock, out var xform) ||
+        if (Coordinates == null ||
+            Angle == null ||
             !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
-        var rotation = Matrix3.CreateRotation(xform.LocalRotation);
-        var matrix = Matrix3.CreateTranslation(-xform.LocalPosition);
+        var rotation = Matrix3.CreateRotation(Angle.Value);
+        var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
 
         // Draw the fixtures around the dock before drawing it
         if (_entManager.TryGetComponent<FixturesComponent>(GridEntity, out var fixtures))
@@ -128,7 +132,7 @@ public class DockingControl : Control
             ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = gridXform.WorldMatrix.Transform(xform.LocalPosition);
+        var worldPos = gridXform.WorldMatrix.Transform(Coordinates.Value.Position);
         var gridInvMatrix = gridXform.InvWorldMatrix;
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 

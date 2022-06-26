@@ -6,7 +6,6 @@ using Content.Server.Maps;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
 using NUnit.Framework;
-using Robust.Server;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -18,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Station;
 
 [TestFixture]
 [TestOf(typeof(StationJobsSystem))]
-public sealed class StationJobsTest : ContentIntegrationTest
+public sealed class StationJobsTest
 {
     private const string Prototypes = @"
 - type: gameMap
@@ -64,13 +63,10 @@ public sealed class StationJobsTest : ContentIntegrationTest
     [Test]
     public async Task AssignJobsTest()
     {
-        var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes, Options = new ServerOptions() { LoadContentResources = false }};
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
@@ -79,7 +75,6 @@ public sealed class StationJobsTest : ContentIntegrationTest
         List<EntityUid> stations = new();
         await server.WaitPost(() =>
         {
-            mapManager.CreateNewMapEntity(MapId.Nullspace);
             for (var i = 0; i < StationCount; i++)
             {
                 stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
@@ -88,7 +83,6 @@ public sealed class StationJobsTest : ContentIntegrationTest
 
         await server.WaitAssertion(() =>
         {
-
             var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
                 .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
                 .AddPreference("TClown", JobPriority.Low)
@@ -97,10 +91,12 @@ public sealed class StationJobsTest : ContentIntegrationTest
                     new Dictionary<NetUserId, HumanoidCharacterProfile>()
                     .AddJob("TCaptain", JobPriority.High, CaptainCount)
                 );
+            Assert.That(fakePlayers, Is.Not.Empty);
 
             var start = new Stopwatch();
             start.Start();
             var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            Assert.That(assigned, Is.Not.Empty);
             var time = start.Elapsed.TotalMilliseconds;
             Logger.Info($"Took {time} ms to distribute {TotalPlayers} players.");
 
@@ -131,15 +127,14 @@ public sealed class StationJobsTest : ContentIntegrationTest
             // There must be captains present, too.
             Assert.That(assigned.Values.Select(x => x.Item1).ToList(), Does.Contain("TCaptain"));
         });
+        await pairTracker.CleanReturnAsync();
     }
 
     [Test]
     public async Task AdjustJobsTest()
     {
-        var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes, Options = new ServerOptions() { LoadContentResources = false }};
-        var server = StartServer(options);
-
-        await server.WaitIdleAsync();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+        var server = pairTracker.Pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
@@ -154,6 +149,8 @@ public sealed class StationJobsTest : ContentIntegrationTest
             mapManager.CreateNewMapEntity(MapId.Nullspace);
             station = stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo Station");
         });
+
+        await server.WaitRunTicks(1);
 
         await server.WaitAssertion(() =>
         {
@@ -182,6 +179,7 @@ public sealed class StationJobsTest : ContentIntegrationTest
                 Assert.That(stationJobs.IsJobUnlimited(station, "TChaplain"), "Could not make TChaplain unlimited.");
             });
         });
+        await pairTracker.CleanReturnAsync();
     }
 }
 

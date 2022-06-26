@@ -4,6 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -28,7 +30,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 20
+      mass: 40
       mask:
       - MobMask
       layer:

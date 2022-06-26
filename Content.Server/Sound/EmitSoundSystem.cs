@@ -46,7 +46,7 @@ namespace Content.Server.Sound
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
             if (!TryComp<TransformComponent>(eUI, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             var tile = grid.GetTileRef(xform.Coordinates);
 
