@@ -75,21 +75,67 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .Bind(ContentKeyFunctions.Hotbar0,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(9)))
+            .Bind(ContentKeyFunctions.Hotbar1,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(0)))
+            .Bind(ContentKeyFunctions.Hotbar2,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(1)))
+            .Bind(ContentKeyFunctions.Hotbar3,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(2)))
+            .Bind(ContentKeyFunctions.Hotbar4,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(3)))
+            .Bind(ContentKeyFunctions.Hotbar5,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(4)))
+            .Bind(ContentKeyFunctions.Hotbar6,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(5)))
+            .Bind(ContentKeyFunctions.Hotbar7,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(6)))
+            .Bind(ContentKeyFunctions.Hotbar8,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(7)))
+            .Bind(ContentKeyFunctions.Hotbar9,
+                InputCmdHandler.FromDelegate(_ => TriggerAction(8)))
+            .Bind(ContentKeyFunctions.Loadout1,
+                InputCmdHandler.FromDelegate(_ => ChangePage(0)))
+            .Bind(ContentKeyFunctions.Loadout2,
+                InputCmdHandler.FromDelegate(_ => ChangePage(1)))
+            .Bind(ContentKeyFunctions.Loadout3,
+                InputCmdHandler.FromDelegate(_ => ChangePage(2)))
+            .Bind(ContentKeyFunctions.Loadout4,
+                InputCmdHandler.FromDelegate(_ => ChangePage(3)))
+            .Bind(ContentKeyFunctions.Loadout5,
+                InputCmdHandler.FromDelegate(_ => ChangePage(4)))
+            .Bind(ContentKeyFunctions.Loadout6,
+                InputCmdHandler.FromDelegate(_ => ChangePage(5)))
+            .Bind(ContentKeyFunctions.Loadout7,
+                InputCmdHandler.FromDelegate(_ => ChangePage(6)))
+            .Bind(ContentKeyFunctions.Loadout8,
+                InputCmdHandler.FromDelegate(_ => ChangePage(7)))
+            .Bind(ContentKeyFunctions.Loadout9,
+                InputCmdHandler.FromDelegate(_ => ChangePage(8)))
             .Register<ActionUIController>();
     }
 
-    private void ChangePage(int to)
+    private void TriggerAction(int index)
     {
-        if (to < 0)
+        if (CurrentPage[index] is not { } type)
+            return;
+
+        _actionsSystem.TriggerAction(type);
+    }
+
+    private void ChangePage(int index)
+    {
+        if (index < 0)
         {
-            to = PageAmount - 1;
+            index = PageAmount - 1;
         }
-        else if (to > PageAmount - 1)
+        else if (index > PageAmount - 1)
         {
-            to = 0;
+            index = 0;
         }
 
-        _currentPageIndex = to;
+        _currentPageIndex = index;
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
@@ -273,7 +319,6 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
             SetAction(button, type);
         }
-
 
         if (_menuDragHelper.Dragged is { Parent: ActionButtonContainer } old)
         {
