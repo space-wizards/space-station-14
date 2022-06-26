@@ -275,24 +275,24 @@
       - DroneUsable
 
 - type: entity
-   name: syndicate EVA box
-   parent: BoxCardboard
-   id: BoxSyndicateEVA
-   description: A box containing one Syndicate approved EVA suit.
-   components:
-   - type: Item
-     size: 80
-   - type: Storage
-     capacity: 80
-     size: 10
-     whitelist:
-       components:
-       - Clothing
-   - type: StorageFill
-     contents:
-       - id: ClothingHeadHelmetSyndicate
-       - id: ClothingOuterHardsuitSyndicate
-   - type: Sprite
-     layers:
-       - state: box_of_doom
-       - state: writing
+  name: syndicate EVA box
+  parent: BoxCardboard
+  id: BoxSyndicateEVA
+  description: A box containing one Syndicate approved EVA suit.
+  components:
+  - type: Item
+    size: 80
+  - type: Storage
+    capacity: 80
+    size: 10
+    whitelist:
+      components:
+      - Clothing
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: ClothingOuterHardsuitSyndicate
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: writing
