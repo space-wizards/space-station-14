@@ -4,19 +4,17 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed class ChannelItemButton : Button
+public sealed class ChannelSelectorItemButton : Button
 {
     public readonly ChatSelectChannel Channel;
-
-    public ChannelItemButton(ChatSelectChannel channel)
+    public bool IsHidden { get; set; }
+    public ChannelSelectorItemButton(ChatUIController.ChannelSelectorData selectorData)
     {
-        Channel = channel;
+        Channel = selectorData.Selector;
         AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
-        //Text = ChatBox.ChannelSelectorName(channel);
-        Text = ChatUIController.GetChannelSelectorName(channel);
-        var prefix = ChatUIController.GetChannelSelectorPrefix(channel);
-
-        //var prefix = ChatBox.GetPrefixFromChannel(channel);
+        IsHidden = selectorData.Hidden;
+        Text = ChatUIController.GetChannelSelectorName(selectorData.Selector);
+        var prefix = ChatUIController.GetChannelSelectorPrefix(selectorData.Selector);
         if (prefix != default) Text = Loc.GetString("hud-chatbox-select-name-prefixed", ("name", Text), ("prefix", prefix));
     }
 }
