@@ -35,7 +35,6 @@ namespace Content.Server.Entry
             "AMEControllerVisuals",
             "AMEShieldingVisuals",
             "PipeColorVisuals",
-            "GasFilterVisuals",
             "GasValveVisuals",
             "PressurePumpVisuals",
             "ThermoMachineVisuals",
