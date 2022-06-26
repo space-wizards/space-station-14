@@ -70,7 +70,6 @@
   components:
   - type: Headset
     channels:
-    - Common
     - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
