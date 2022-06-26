@@ -181,7 +181,7 @@
   itemId: ClothingBeltSyndieHolster
   listingName: Syndicate Shoulder Holster
   description: A deep shoulder holster capable of holding many types of ballistics.
-  icon: /Textures/Objects/Tools/emag.rsi/icon.png
+  icon: /Textures/Clothing/Belt/syndieholster.rsi
   price: 2
 
 - type: uplinkListing
