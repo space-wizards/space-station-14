@@ -178,7 +178,7 @@
 - type: uplinkListing
   id: UplinkJetpack
   category: Utility
-  itemId: RevolverCapGun
+  itemId: JetpackBlack
   listingName: Black Jetpack
   description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
   icon: Objects/Tanks/Jetpacks/black.rsi/icon.png
