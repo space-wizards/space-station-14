@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
@@ -39,15 +40,19 @@ public sealed partial class ShuttleSystem
     private float _consoleAccumulator;
 
     /// <summary>
-    /// If an early launch is authorized how short is it.
-    /// </summary>
-    private TimeSpan _authorizeTime = TimeSpan.FromSeconds(10);
-    private TimeSpan _transitTime = TimeSpan.FromSeconds(5); // TimeSpan.FromMinutes(3);
-
-    /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>
-    private TimeSpan BufferTime = TimeSpan.FromSeconds(10);
+    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
+    /// </summary>
+    private float _transitTime;
+
+    /// <summary>
+    /// <see cref="CCVars.EmergencyShuttleAuthorizeTime"/>
+    /// </summary>
+    private float _authorizeTime;
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
@@ -56,10 +61,28 @@ public sealed partial class ShuttleSystem
 
     private void InitializeEmergencyConsole()
     {
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
+    }
+
+    private void SetAuthorizeTime(float obj)
+    {
+        _authorizeTime = obj;
+    }
+
+    private void SetTransitTime(float obj)
+    {
+        _transitTime = obj;
+    }
+
+    private void ShutdownEmergencyConsole()
+    {
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime);
     }
 
     private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
@@ -85,18 +108,21 @@ public sealed partial class ShuttleSystem
 
                     // TODO: Add support so Hyperspace will just dock it to Centcomm.
 
-                    Hyperspace(shuttle, new EntityCoordinates(_mapManager.GetMapEntityId(_centcommMap.Value), Vector2.One * 1000f), _consoleAccumulator);
+                    Hyperspace(shuttle,
+                        new EntityCoordinates(
+                            _mapManager.GetMapEntityId(_centcommMap.Value),
+                            Vector2.One * 1000f), _consoleAccumulator, _transitTime);
                 }
             }
         }
 
-        if (_consoleAccumulator <= frameTime)
+        if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
             _chatSystem.DispatchGlobalStationAnnouncement(
-                $"The Emergency Shuttle has left the station. Estimate {_transitTime.Minutes} until the shuttle docks at Central Command.");
+                $"The Emergency Shuttle has left the station. Estimate {_transitTime} seconds until the shuttle clears the area.");
 
-            Timer.Spawn(_transitTime + BufferTime, () => _roundEnd.EndRound());
+            Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound());
         }
     }
 
@@ -203,7 +229,7 @@ public sealed partial class ShuttleSystem
             return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator = MathF.Min(_consoleAccumulator, (float) _authorizeTime.TotalSeconds);
+        _consoleAccumulator = MathF.Min(_consoleAccumulator, _authorizeTime);
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         _chatSystem.DispatchGlobalStationAnnouncement($"The emergency shuttle will launch in {_consoleAccumulator:0} seconds", playDefaultSound: false);

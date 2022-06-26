@@ -170,7 +170,11 @@ public sealed partial class ShuttleSystem
     private void CleanupHyperspace()
     {
         _index = 0f;
-        if (_hyperSpaceMap == null) return;
+        if (_hyperSpaceMap == null || !_mapManager.MapExists(_hyperSpaceMap.Value))
+        {
+            _hyperSpaceMap = null;
+            return;
+        }
         _mapManager.DeleteMap(_hyperSpaceMap.Value);
         _hyperSpaceMap = null;
     }

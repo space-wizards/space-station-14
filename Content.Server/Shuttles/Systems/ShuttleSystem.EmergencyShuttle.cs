@@ -16,6 +16,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -29,6 +30,7 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly IAdminManager _admin = default!;
    [Dependency] private readonly IConfigurationManager _configManager = default!;
    [Dependency] private readonly IMapLoader _loader = default!;
+   [Dependency] private readonly IRobustRandom _random = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
@@ -49,16 +51,28 @@ public sealed partial class ShuttleSystem
        SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
    }
 
+   /// <summary>
+   /// If the client is requesting debug info on where an emergency shuttle would dock.
+   /// </summary>
    private void OnShuttleRequestPosition(EmergencyShuttleRequestPositionMessage msg, EntitySessionEventArgs args)
    {
        if (!_admin.IsAdmin((IPlayerSession) args.SenderSession)) return;
 
        var player = args.SenderSession.AttachedEntity;
 
-       if (player == null) return;
+       if (player == null ||
+           !TryComp<StationDataComponent>(_station.GetOwningStation(player.Value), out var stationData)) return;
 
-       var stationUid = _station.GetOwningStation(player.Value);
-       CallEmergencyShuttle(stationUid, true);
+       var config = GetDockingConfig(stationData);
+
+       if (config != null)
+       {
+           RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
+           {
+               StationUid = config.TargetGrid,
+               Position = config.Area,
+           });
+       }
    }
 
    /// <summary>
@@ -70,20 +84,15 @@ public sealed partial class ShuttleSystem
    }
 
    /// <summary>
-   /// Calls the emergency shuttle for the station.
+   /// Tries to find the most valid docking config for the station.
    /// </summary>
-   /// <param name="stationUid"></param>
-   /// <param name="dryRun">Should we show the debug data and not actually call it.</param>
-   public void CallEmergencyShuttle(EntityUid? stationUid, bool dryRun = false)
+   private DockingConfig? GetDockingConfig(StationDataComponent dataComponent)
    {
-       EntityUid? targetGrid = null;
-       Box2? position = null;
-
        // Find the largest grid associated with the station, then try all combinations of docks on it with
        // all of them on the shuttle and try to find the most appropriate.
-       if (TryComp<StationDataComponent>(stationUid, out var dataComponent) && dataComponent.EmergencyShuttle != null)
+       if (dataComponent.EmergencyShuttle != null)
        {
-           targetGrid = GetLargestGrid(dataComponent);
+           var targetGrid = GetLargestGrid(dataComponent);
 
            if (targetGrid != null)
            {
@@ -92,12 +101,13 @@ public sealed partial class ShuttleSystem
                if (gridDocks.Count > 0)
                {
                    var xformQuery = GetEntityQuery<TransformComponent>();
-                   var shuttleXform = xformQuery.GetComponent(dataComponent.EmergencyShuttle.Value);
                    var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
                    var targetGridXform = xformQuery.GetComponent(targetGrid.Value);
                    var targetGridRotation = targetGridXform.WorldRotation.ToVec();
+
                    var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
                    var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
+
                    var validDockConfigs = new List<DockingConfig>();
 
                    if (TryComp<ShuttleComponent>(dataComponent.EmergencyShuttle, out var shuttle))
@@ -190,34 +200,83 @@ public sealed partial class ShuttleSystem
                            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
 
                        var location = validDockConfigs.First();
-                       position = location.Area;
+                       location.TargetGrid = targetGrid.Value;
                        // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
 
-                       if (!dryRun)
-                       {
-                           // Set position
-                           shuttleXform.Coordinates = location.Coordinates;
-                           shuttleXform.WorldRotation = location.Angle;
-
-                           // Connect everything
-                           foreach (var (dockA, dockB) in location.Docks)
-                           {
-                               _dockSystem.Dock(dockA, dockB);
-                           }
-                       }
+                       return location;
                    }
                }
            }
        }
 
-       // TODO: Move to its own method
-       if (dryRun)
+       return null;
+   }
+
+   /// <summary>
+   /// Calls the emergency shuttle for the station.
+   /// </summary>
+   /// <param name="stationUid"></param>
+   /// <param name="dryRun">Should we show the debug data and not actually call it.</param>
+   public void CallEmergencyShuttle(EntityUid? stationUid)
+   {
+       if (!TryComp<StationDataComponent>(stationUid, out var stationData) ||
+           !TryComp<TransformComponent>(stationData.EmergencyShuttle, out var xform)) return;
+
+       var config = GetDockingConfig(stationData);
+
+       if (config != null)
        {
-           RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
+           // Set position
+           xform.Coordinates = config.Coordinates;
+           xform.WorldRotation = config.Angle;
+
+           // Connect everything
+           foreach (var (dockA, dockB) in config.Docks)
            {
-               StationUid = targetGrid,
-               Position = position,
-           });
+               _dockSystem.Dock(dockA, dockB);
+           }
+
+
+           _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
+           _chatSystem.DispatchStationAnnouncement(stationUid.Value, $"The Emergency Shuttle has docked with the station", playDefaultSound: false);
+           // TODO: Need filter extensions or something don't blame me.
+           SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
+       }
+       else
+       {
+           var shuttleAABB = Comp<IMapGridComponent>(stationData.EmergencyShuttle.Value).Grid.WorldAABB;
+           Box2? aabb = null;
+
+           // Spawn nearby.
+           foreach (var gridUid in stationData.Grids)
+           {
+               var grid = Comp<IMapGridComponent>(gridUid).Grid;
+               var gridAABB = grid.WorldAABB;
+               aabb = aabb?.Union(gridAABB) ?? gridAABB;
+           }
+
+           // UHH GOOD LUCK
+           if (aabb == null)
+           {
+               _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to dock with station {ToPrettyString(stationUid.Value)}");
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, $"The Emergency Shuttle is unable to find a station. Good luck.", playDefaultSound: false);
+               // TODO: Need filter extensions or something don't blame me.
+               SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+
+
+               return;
+           }
+
+           var minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height);
+           var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 10f);
+
+           xform.WorldPosition = spawnPos;
+           xform.WorldRotation = _random.NextAngle();
+
+           _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to find a valid docking port for {ToPrettyString(stationUid.Value)}");
+           _chatSystem.DispatchStationAnnouncement(stationUid.Value, $"The Emergency Shuttle is unable to find a valid docking port. It has warped in nearby.", playDefaultSound: false);
+           // TODO: Need filter extensions or something don't blame me.
+           SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
        }
    }
 
@@ -278,15 +337,14 @@ public sealed partial class ShuttleSystem
    /// </summary>
    public void CallEmergencyShuttle()
    {
-       _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle docked with stations");
-       SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
+       if (_centcommMap != null)
+         _mapManager.SetMapPaused(_centcommMap.Value, false);
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
            CallEmergencyShuttle(comp.Owner);
        }
 
-       _chatSystem.DispatchGlobalStationAnnouncement($"The Emergency Shuttle has docked with the station", playDefaultSound: false);
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
    }
 
@@ -391,8 +449,12 @@ public sealed partial class ShuttleSystem
        /// </summary>
        public Box2 Area;
 
-       public EntityCoordinates Coordinates;
+       /// <summary>
+       /// Target grid for docking.
+       /// </summary>
+       public EntityUid TargetGrid;
 
+       public EntityCoordinates Coordinates;
        public Angle Angle;
    }
 }
