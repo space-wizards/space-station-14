@@ -1,19 +1,4 @@
 Entries:
-- author: Leander
-  changes:
-  - {message: 'Nerfed stun batons, they now hold 8 charges and have to recharge more
-      often.', type: Tweak}
-  id: 1296
-  time: '2022-04-08T21:07:30.0000000+00:00'
-- author: EmoGarbage
-  changes:
-  - {message: 'Added 3 new brass instruments: the French Horn, the Euphonium, and
-      the Tuba', type: Add}
-  - {message: 'Added the Brass Instrument Ensemble Crate, a crate containing an assortment
-      of brass instruments for your band to play.', type: Add}
-  - {message: Adjusted the sprites for the Trumpet and Trombone., type: Tweak}
-  id: 1297
-  time: '2022-04-08T21:12:44.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'All computers now play a keyboard sound on use, not just R&D computers.',
@@ -2976,3 +2961,14 @@ Entries:
   - {message: Hotfix singulo pulling people through walls., type: Fix}
   id: 1795
   time: '2022-06-26T13:54:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix emergency shuttle docking on top of other grids, woops.', type: Fix}
+  id: 1796
+  time: '2022-06-26T17:48:49.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: 'Added the Syndicate Headset and the Jetpack to the uplink, for 2 TC
+      and 5 TC respectively.', type: Add}
+  id: 1797
+  time: '2022-06-26T17:49:14.0000000+00:00'
