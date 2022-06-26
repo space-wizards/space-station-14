@@ -125,7 +125,11 @@ namespace Content.Server.Paper.Plane
 
         private void OnCollideEvent(EntityUid uid, PaperPlaneComponent plane, StartCollideEvent args)
         {
-            // avoid bouncing, unless weightless
+            //ignore mobs
+            if (args.OtherFixture.Body.BodyType == Robust.Shared.Physics.BodyType.KinematicController)
+                return;
+
+            // avoid bouncing off of walls, unless weightless
             if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
                 physics.Momentum = Vector2.Zero;
         }
