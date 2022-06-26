@@ -193,9 +193,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         foreach (var uid in _stationSystem.Stations)
         {
-            var grid = Comp<IMapGridComponent>(uid).Grid;
-
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            if (TryComp<StationDataComponent>(uid, out var stationData))
+            {
+                foreach (var grid in stationData.Grids)
+                {
+                    if (TryComp<IMapGridComponent>(grid, out var gridComp))
+                        aabb = aabb?.Union(gridComp.Grid.WorldAABB) ?? gridComp.Grid.WorldAABB;
+                }
+            }
         }
 
         if (aabb != null)
