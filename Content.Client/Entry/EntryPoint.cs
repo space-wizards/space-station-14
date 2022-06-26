@@ -33,7 +33,6 @@ using Content.Shared.Wires;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
@@ -46,11 +45,9 @@ namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;

@@ -48,24 +48,24 @@ public sealed class ActionButton : Control
     public ActionButton()
     {
         MouseFilter = MouseFilterMode.Pass;
-        Button = new TextureRect()
+        Button = new TextureRect
         {
-            Name="Button",
+            Name = "Button",
             TextureScale = new Vector2(2,2)
         };
-        Icon = new TextureRect()
+        Icon = new TextureRect
         {
-            Name="Icon",
+            Name = "Icon",
             TextureScale = new Vector2(2,2)
         };
-        Label = new Label()
+        Label = new Label
         {
-            Name="Label",
+            Name= "Label",
             HorizontalAlignment = HAlignment.Left,
-            VerticalAlignment = VAlignment.Top
-
+            VerticalAlignment = VAlignment.Top,
+            Margin = new Thickness(5, 0,0, 0)
         };
-        Sprite = new SpriteView()
+        Sprite = new SpriteView
         {
             Name = "Sprite",
             OverrideDirection = Direction.South
@@ -78,15 +78,20 @@ public sealed class ActionButton : Control
         AddChild(Sprite);
         AddChild(Cooldown);
 
-        Button.Texture = Theme.ResolveTexture("SlotBackground");
         Button.Modulate = new Color(255, 255, 255, 150);
-
         Icon.Modulate = new Color(255, 255, 255, 150);
 
-        Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
+        OnThemeUpdated();
+        OnThemeUpdated();
 
         OnKeyBindDown += OnPressed;
         OnKeyBindUp += OnUnpressed;
+    }
+
+    protected override void OnThemeUpdated()
+    {
+        Button.Texture = Theme.ResolveTexture("SlotBackground");
+        Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }
 
     private void OnPressed(GUIBoundKeyEventArgs args)

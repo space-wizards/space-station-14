@@ -237,13 +237,14 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
         foreach (var action in actions)
         {
-            var actionItem = new ActionButton {Locked = true};
-            actionItem.UpdateData(_entities, action);
-            actionItem.ActionPressed += OnWindowActionPressed;
-            actionItem.ActionUnpressed += OnWindowActionUnPressed;
-            actionItem.ActionFocusExited += OnWindowActionFocusExisted;
+            var button = new ActionButton {Locked = true};
 
-            _window.ResultsGrid.AddChild(actionItem);
+            button.UpdateData(_entities, action);
+            button.ActionPressed += OnWindowActionPressed;
+            button.ActionUnpressed += OnWindowActionUnPressed;
+            button.ActionFocusExited += OnWindowActionFocusExisted;
+
+            _window.ResultsGrid.AddChild(button);
         }
     }
 
