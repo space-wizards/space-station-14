@@ -18,9 +18,6 @@ public sealed class FilterButton : ContainerButton
         private const int FilterDropdownOffset = 120;
         public FilterButton()
         {
-            _chatFilterPopup = _interfaceManager.CreateNamedPopup<ChannelFilterPopup>("ChatFilterPopup", (0, 0)) ??
-                               throw new Exception("Tried to add chat filter popup while one already exists");
-
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
@@ -38,9 +35,11 @@ public sealed class FilterButton : ContainerButton
             );
             ToggleMode = true;
             OnToggled += OnFilterButtonToggled;
+            _chatFilterPopup = _interfaceManager.CreateNamedPopup<ChannelFilterPopup>("ChatFilterPopup", (0, 0)) ??
+                               throw new Exception("Tried to add chat filter popup while one already exists");
         }
 
-        private void OnFilterButtonToggled(BaseButton.ButtonToggledEventArgs args)
+        private void OnFilterButtonToggled(ButtonToggledEventArgs args)
         {
             if (args.Pressed)
             {

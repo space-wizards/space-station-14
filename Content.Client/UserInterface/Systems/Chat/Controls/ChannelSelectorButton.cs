@@ -10,6 +10,9 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 /// </summary>
 public sealed class ChannelSelectorButton : Button
 {
+    private readonly ChannelSelectorPopup _channelSelectorPopup;
+    private IUserInterfaceManager _interfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+    private const int SelectorDropdownOffset = 38;
     public ChannelSelectorButton()
     {
         // needed so the popup is untoggled regardless of which key is pressed when hovering this button.
@@ -17,6 +20,10 @@ public sealed class ChannelSelectorButton : Button
         // the popup but keep the button toggled on
         Mode = ActionMode.Press;
         EnableAllKeybinds = true;
+        ToggleMode = true;
+        OnToggled += OnSelectorButtonToggled;
+        _channelSelectorPopup = _interfaceManager.CreateNamedPopup<ChannelSelectorPopup>("ChannelSelectorPopup", (0, 0)) ??
+                                throw new Exception("Tried to add channel selector popup while one already exists");
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -26,5 +33,21 @@ public sealed class ChannelSelectorButton : Button
             return;
 
         base.KeyBindDown(args);
+    }
+
+    private void OnSelectorButtonToggled(ButtonToggledEventArgs args)
+    {
+        if (args.Pressed)
+        {
+            var globalLeft = GlobalPosition.X;
+            var globalBot = GlobalPosition.Y + Height;
+            var box = UIBox2.FromDimensions((globalLeft, globalBot), (SizeBox.Width, SelectorDropdownOffset));
+            _channelSelectorPopup.Open(box);
+        }
+        else
+        {
+            _channelSelectorPopup.Close();
+        }
+
     }
 }
