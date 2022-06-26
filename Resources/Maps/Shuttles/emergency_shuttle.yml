@@ -3153,7 +3153,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 354
-  type: ComputerShuttle
+  type: ComputerEmergencyShuttle
   components:
   - pos: -2.5,13.5
     parent: 0
