@@ -20,7 +20,7 @@
   components:
   - type: AccessReader
     access:
-    - [ EmergencyShuttleLaunch ]
+    - [ Command ]
   - type: EmergencyShuttleConsole
   - type: ActivatableUI
     key: enum.EmergencyConsoleUiKey.Key

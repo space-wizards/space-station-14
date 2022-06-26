@@ -29,7 +29,7 @@
     <BoxContainer Name="AuthorizationsTextContainer">
         <Label Text="{Loc 'emergency-shuttle-ui-authorizations'}"/>
         <Label Name="AuthorizationCount"
-               Text="{Loc 'emergency-shuttle-ui-remaining'}"
+               Text=""
                HorizontalAlignment="Right"
                Align="Right"
                HorizontalExpand="True"/>
