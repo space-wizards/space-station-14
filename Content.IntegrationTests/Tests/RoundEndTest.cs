@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests
 
             async Task WaitForEvent()
             {
-                var timeout = Task.Delay(TimeSpan.FromSeconds(10));
+                var timeout = Task.Delay(TimeSpan.FromSeconds(60));
                 var currentCount = Thread.VolatileRead(ref eventCount);
                 while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
                 {
