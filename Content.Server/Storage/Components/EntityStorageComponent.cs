@@ -240,7 +240,7 @@ namespace Content.Server.Storage.Components
                     allowedToEat = true;
                 else
                 {
-                    var foldableEvent = new InsertIntoFoldableEntityStorageAttemptEvent();
+                    var foldableEvent = new StoreThisAttemptEvent();
                     _entMan.EventBus.RaiseLocalEvent(Owner, foldableEvent);
                     allowedToEat = !foldableEvent.Cancelled;
                 }
@@ -373,7 +373,7 @@ namespace Content.Server.Storage.Components
 
     }
 
-    public sealed class InsertIntoFoldableEntityStorageAttemptEvent : CancellableEntityEventArgs
+    public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs
     {
 
     }
