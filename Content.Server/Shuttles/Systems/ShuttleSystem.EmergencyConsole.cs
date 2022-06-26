@@ -67,8 +67,8 @@ public sealed partial class ShuttleSystem
 
     private void InitializeEmergencyConsole()
     {
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime);
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime, true);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
@@ -125,7 +125,7 @@ public sealed partial class ShuttleSystem
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-left", ("transit", $"{_transitTime:0}")));
+            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{_transitTime:0}")));
 
             _roundEndCancelToken = new CancellationTokenSource();
             Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
@@ -246,7 +246,7 @@ public sealed partial class ShuttleSystem
         if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator = MathF.Min(_consoleAccumulator, _authorizeTime);
+        _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playDefaultSound: false);
@@ -256,6 +256,7 @@ public sealed partial class ShuttleSystem
     public bool DelayEmergencyRoundEnd()
     {
         if (_roundEndCancelToken == null) return false;
+        _roundEndCancelToken = null;
         _roundEndCancelToken?.Cancel();
         return true;
     }
