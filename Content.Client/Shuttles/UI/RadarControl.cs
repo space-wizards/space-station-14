@@ -45,7 +45,7 @@ public sealed class RadarControl : Control
     /// </summary>
     private Dictionary<EntityUid, Control> _iffControls = new();
 
-    private Dictionary<EntityUid, Dictionary<EntityUid, DockingInterfaceState>> _docks = new();
+    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
@@ -88,7 +88,7 @@ public sealed class RadarControl : Control
         {
             var coordinates = state.Coordinates;
             var grid = _docks.GetOrNew(coordinates.EntityId);
-            grid.Add(state.Entity, state);
+            grid.Add(state);
         }
     }
 
@@ -288,8 +288,9 @@ public sealed class RadarControl : Control
 
         if (_docks.TryGetValue(uid, out var docks))
         {
-            foreach (var (ent, state) in docks)
+            foreach (var state in docks)
             {
+                var ent = state.Entity;
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 

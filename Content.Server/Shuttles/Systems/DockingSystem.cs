@@ -401,14 +401,10 @@ namespace Content.Server.Shuttles.Systems
             Dock(dockA, dockB);
         }
 
-        private void Undock(DockingComponent dock)
+        public void Undock(DockingComponent dock)
         {
             if (dock.DockedWith == null)
-            {
-                DebugTools.Assert(false);
-                _sawmill.Error($"Tried to undock {(dock).Owner} but not docked with anything?");
                 return;
-            }
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))
             {

@@ -14,3 +14,6 @@
   - Command
   - Captain
   - HeadOfPersonnel
+
+- type: accessLevel
+  id: EmergencyShuttleRepealAll

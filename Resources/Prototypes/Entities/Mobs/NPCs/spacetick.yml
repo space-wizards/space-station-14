@@ -4,6 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It's a space tick, watch out for its nasty bite. Centcomm reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
