@@ -185,9 +185,9 @@ public sealed partial class ShuttleSystem
 
                        // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
                        validDockConfigs = validDockConfigs
-                           .OrderBy(x => x.Docks.Any(docks => HasComp<EmergencyDockComponent>(docks.DockB.Owner)))
+                           .OrderByDescending(x => x.Docks.Any(docks => HasComp<EmergencyDockComponent>(docks.DockB.Owner)))
                            .ThenByDescending(x => x.Docks.Count)
-                           .ThenBy(x => Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta).ToList();
+                           .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
 
                        var location = validDockConfigs.First();
                        position = location.Area;
@@ -253,7 +253,7 @@ public sealed partial class ShuttleSystem
                             shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
        var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -shuttleXform.LocalRotation);
-       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, -gridXform.LocalRotation);
+       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridXform.LocalRotation);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
 
