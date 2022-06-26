@@ -1,4 +1,5 @@
-﻿using Content.Client.Cooldown;
+﻿using Content.Client.Actions.UI;
+using Content.Client.Cooldown;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -7,6 +8,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
@@ -86,6 +88,9 @@ public sealed class ActionButton : Control
 
         OnKeyBindDown += OnPressed;
         OnKeyBindUp += OnUnpressed;
+
+        TooltipDelay = 0.5f;
+        TooltipSupplier = SupplyTooltip;
     }
 
     protected override void OnThemeUpdated()
@@ -102,6 +107,17 @@ public sealed class ActionButton : Control
     private void OnUnpressed(GUIBoundKeyEventArgs args)
     {
         ActionUnpressed?.Invoke(args, this);
+    }
+
+    private Control? SupplyTooltip(Control sender)
+    {
+        if (Action == null)
+            return null;
+
+        var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.DisplayName));
+        var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(Action.Description));
+
+        return new ActionAlertTooltip(name, decr);
     }
 
     protected override void ControlFocusExited()
