@@ -12,7 +12,7 @@ namespace Content.Server.Shuttles.Commands;
 public sealed class DockEmergencyShuttleCommand : IConsoleCommand
 {
     public string Command => "dockemergencyshuttle";
-    public string Description => "Calls the emergency shuttle and docks it to the station... if it can.";
+    public string Description => Loc.GetString("emergency-shuttle-command-dock-desc");
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
