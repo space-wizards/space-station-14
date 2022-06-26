@@ -189,7 +189,7 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)), playDefaultSound: false);
+            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)), playSound: false);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         CheckForLaunch(component);
@@ -249,7 +249,7 @@ public sealed partial class ShuttleSystem
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
-        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playDefaultSound: false);
+        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playSound: false);
         UpdateAllEmergencyConsoles();
     }
 
