@@ -194,8 +194,9 @@ public sealed partial class ShuttleSystem
                 Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
                 playDefaultSound: false, colorOverride: DangerColor);
 
-        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
-        CheckForLaunch(component);
+        if (!CheckForLaunch(component))
+            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+
         UpdateAllEmergencyConsoles();
     }
 
@@ -233,20 +234,21 @@ public sealed partial class ShuttleSystem
         });
     }
 
-    private void CheckForLaunch(EmergencyShuttleConsoleComponent component)
+    private bool CheckForLaunch(EmergencyShuttleConsoleComponent component)
     {
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
-            return;
+            return false;
 
         EarlyLaunch();
+        return true;
     }
 
     /// <summary>
     /// Attempts to early launch the emergency shuttle if not already done.
     /// </summary>
-    public void EarlyLaunch()
+    public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
@@ -256,7 +258,10 @@ public sealed partial class ShuttleSystem
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
             playDefaultSound: false,
             colorOverride: DangerColor);
+
+        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         UpdateAllEmergencyConsoles();
+        return true;
     }
 
     public bool DelayEmergencyRoundEnd()
