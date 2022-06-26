@@ -24,7 +24,7 @@ public sealed class HyperspaceComponent : Component
     public EntityCoordinates TargetCoordinates;
 }
 
-public enum HyperspaceState
+public enum HyperspaceState : byte
 {
     Starting,
     Travelling,

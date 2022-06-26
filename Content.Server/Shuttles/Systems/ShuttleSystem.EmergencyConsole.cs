@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
@@ -13,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -53,6 +55,8 @@ public sealed partial class ShuttleSystem
     /// <see cref="CCVars.EmergencyShuttleAuthorizeTime"/>
     /// </summary>
     private float _authorizeTime;
+
+    private CancellationTokenSource? _roundEndCancelToken;
 
     private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
 
@@ -123,7 +127,8 @@ public sealed partial class ShuttleSystem
             _launchedShuttles = true;
             _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-left", ("transit", $"{_transitTime:0}")));
 
-            Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound());
+            _roundEndCancelToken = new CancellationTokenSource();
+            Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
         }
     }
 
@@ -193,6 +198,7 @@ public sealed partial class ShuttleSystem
 
     private void CleanupEmergencyConsole()
     {
+        _roundEndCancelToken = null;
         _launchedShuttles = false;
         _consoleAccumulator = 0f;
         EarlyLaunchAuthorized = false;
@@ -229,11 +235,28 @@ public sealed partial class ShuttleSystem
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
             return;
 
+        EarlyLaunch();
+    }
+
+    /// <summary>
+    /// Attempts to early launch the emergency shuttle if not already done.
+    /// </summary>
+    public void EarlyLaunch()
+    {
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return;
+
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = MathF.Min(_consoleAccumulator, _authorizeTime);
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playDefaultSound: false);
         UpdateAllEmergencyConsoles();
+    }
+
+    public bool DelayEmergencyRoundEnd()
+    {
+        if (_roundEndCancelToken == null) return false;
+        _roundEndCancelToken?.Cancel();
+        return true;
     }
 }

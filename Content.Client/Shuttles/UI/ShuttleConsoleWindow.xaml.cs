@@ -28,7 +28,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Stored by grid entityid then by states
     /// </summary>
-    private Dictionary<EntityUid, Dictionary<EntityUid, DockingInterfaceState>> _docks = new();
+    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
     public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
@@ -107,7 +107,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         foreach (var dock in docks)
         {
             var grid = _docks.GetOrNew(dock.Coordinates.EntityId);
-            grid.Add(dock.Entity, dock);
+            grid.Add(dock);
         }
 
         DockPorts.DisposeAllChildren();
@@ -119,7 +119,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             var index = 1;
 
-            foreach (var (ent, state) in gridDocks)
+            foreach (var state in gridDocks)
             {
                 var pressed = state.Entity == DockingScreen.ViewedDock;
 

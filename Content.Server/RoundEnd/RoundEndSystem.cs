@@ -88,7 +88,6 @@ namespace Content.Server.RoundEnd
                 }
             }
 
-
             RequestRoundEnd(duration, requester, checkCooldown);
         }
 

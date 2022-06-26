@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
@@ -32,6 +33,7 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly IMapLoader _loader = default!;
    [Dependency] private readonly IRobustRandom _random = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
+   [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
@@ -329,6 +331,10 @@ public sealed partial class ShuttleSystem
    /// </summary>
    public void CallEmergencyShuttle()
    {
+       if (EmergencyShuttleArrived) return;
+
+       EmergencyShuttleArrived = true;
+
        if (_centcommMap != null)
          _mapManager.SetMapPaused(_centcommMap.Value, false);
 
@@ -338,6 +344,7 @@ public sealed partial class ShuttleSystem
        }
 
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
+       _commsConsole.UpdateCommsConsoleInterface();
    }
 
    /// <summary>

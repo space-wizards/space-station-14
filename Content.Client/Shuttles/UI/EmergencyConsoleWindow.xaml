@@ -10,26 +10,26 @@
     <BoxContainer Name="EngineStatusContainer"
                   HorizontalAlignment="Center">
         <Label HorizontalAlignment="Center"
-               Text="ENGINES: "/>
+               Text="{Loc 'emergency-shuttle-ui-engines'}"/>
         <Label Name="EngineStatus"
                HorizontalAlignment="Center"
                FontColorOverride="#FFA500"
-               Text="Idle"/>
+               Text="{Loc 'emergency-shuttle-ui-idle'}"/>
     </BoxContainer>
     <BoxContainer Name="LaunchContainer">
-        <Label Text="Early Launch Authorization"/>
-        <Button Name="RepealAllButton" Text="Repeal All"/>
+        <Label Text="{Loc 'emergency-shuttle-ui-early-authorize'}"/>
+        <Button Name="RepealAllButton" Text="{Loc 'emergency-shuttle-ui-repeal-all'}"/>
     </BoxContainer>
     <!-- Spacer -->
     <BoxContainer Name="AuthorizeContainer">
         <Button Name="AuthorizeButton"
-                Text="AUTHORIZE"/>
-        <Button Name="RepealButton" Text="REPEAL"/>
+                Text="{Loc 'emergency-shuttle-ui-authorize'}"/>
+        <Button Name="RepealButton" Text="{Loc 'emergency-shuttle-ui-repeal'}"/>
     </BoxContainer>
     <BoxContainer Name="AuthorizationsTextContainer">
-        <Label Text="Authorizations"/>
+        <Label Text="{Loc 'emergency-shuttle-ui-authorizations'}"/>
         <Label Name="AuthorizationCount"
-               Text="Remaining: 3"
+               Text="{Loc 'emergency-shuttle-ui-remaining'}"
                HorizontalAlignment="Right"
                Align="Right"
                HorizontalExpand="True"/>

@@ -9,10 +9,10 @@ namespace Content.Server.Shuttles.Commands;
 /// Calls in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class CallEmergencyShuttleCommand : IConsoleCommand
+public sealed class DockEmergencyShuttleCommand : IConsoleCommand
 {
-    public string Command => "callemergencyshuttle";
-    public string Description => "Calls the emergency shuttle.";
+    public string Command => "dockemergencyshuttle";
+    public string Description => "Calls the emergency shuttle and docks it to the station... if it can.";
     public string Help => $"{Command}";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {

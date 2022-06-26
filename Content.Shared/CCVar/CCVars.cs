@@ -915,13 +915,13 @@ namespace Content.Shared.CCVar
         /// How long after the console is authorized for the shuttle to early launch.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleAuthorizeTime =
-            CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY | CVar.REPLICATED);
+            CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long after the console is authorized for the shuttle to early launch.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleTransitTime =
-            CVarDef.Create("shuttle.emergency_transit_time", 5f, CVar.SERVERONLY | CVar.REPLICATED);
+            CVarDef.Create("shuttle.emergency_transit_time", 120f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT

@@ -14,7 +14,7 @@ namespace Content.Client.Shuttles.UI;
 public sealed partial class EmergencyConsoleWindow : FancyWindow,
     IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
-    private IGameTiming _timing;
+    private readonly IGameTiming _timing;
     private TimeSpan? _earlyLaunchTime;
 
     public EmergencyConsoleWindow()
@@ -61,7 +61,7 @@ public sealed partial class EmergencyConsoleWindow : FancyWindow,
 
         AuthorizationsContainer.DisposeAllChildren();
         var remainingAuths = scc.AuthorizationsRequired - scc.Authorizations.Count;
-        AuthorizationCount.Text = $"Remaining: {remainingAuths}";
+        AuthorizationCount.Text = Loc.GetString("emergency-shuttle-ui-remaining", ("remaining", remainingAuths));
 
         foreach (var auth in scc.Authorizations)
         {
