@@ -1,14 +1,4 @@
 Entries:
-- author: Radosvik
-  changes:
-  - {message: Fixed spelling of "delicious" in Corgi Meat, type: Fix}
-  id: 1293
-  time: '2022-04-08T21:03:43.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Fixed various misspellings and grammatical errors, type: Fix}
-  id: 1294
-  time: '2022-04-08T21:05:54.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed an issue causing minibombs to have a large but weak explosion.
@@ -2976,3 +2966,14 @@ Entries:
     type: Tweak}
   id: 1792
   time: '2022-06-26T08:19:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's no longer possible to melee yourself., type: Tweak}
+  id: 1793
+  time: '2022-06-26T09:25:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Space mobs are now stun immune to make combat a bit more interesting.,
+    type: Tweak}
+  id: 1794
+  time: '2022-06-26T09:25:39.0000000+00:00'
