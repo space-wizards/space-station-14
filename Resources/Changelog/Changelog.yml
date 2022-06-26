@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Split Station V2 is out now! Check out the new medbay and cosy additions
-      to perma and the canteen among other things. See github pull request 7451 for
-      details., type: Add}
-  id: 1287
-  time: '2022-04-06T23:31:28.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Most of the shutters and blast doors on Delta Station are now linked
@@ -2975,3 +2968,8 @@ Entries:
   - {message: The Fire Axe now costs 10 TC and does less fire damage., type: Tweak}
   id: 1786
   time: '2022-06-25T05:27:14.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Nukies are fixed and should be able to spawn in again!, type: Fix}
+  id: 1787
+  time: '2022-06-26T00:00:45.0000000+00:00'
