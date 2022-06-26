@@ -67,7 +67,7 @@ namespace Content.Server.Shuttles.Systems
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
             CleanupEmergencyConsole();
-            CleanupEscape();
+            CleanupEmergencyShuttle();
             CleanupHyperspace();
         }
 
