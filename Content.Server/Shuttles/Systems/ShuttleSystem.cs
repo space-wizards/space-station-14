@@ -1,3 +1,4 @@
+using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -15,7 +16,6 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _consoleSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private ISawmill _sawmill = default!;

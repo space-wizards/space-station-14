@@ -264,6 +264,12 @@ public sealed partial class ShuttleSystem
            var minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height);
            var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 10f);
 
+           if (TryComp<PhysicsComponent>(stationData.EmergencyShuttle, out var shuttleBody))
+           {
+               shuttleBody.LinearVelocity = Vector2.Zero;
+               shuttleBody.AngularVelocity = 0f;
+           }
+
            xform.WorldPosition = spawnPos;
            xform.WorldRotation = _random.NextAngle();
 
@@ -420,7 +426,7 @@ public sealed partial class ShuttleSystem
        component.EmergencyShuttle = shuttle;
    }
 
-   private void CleanupEscape()
+   private void CleanupEmergencyShuttle()
    {
        _shuttleIndex = 0f;
 
