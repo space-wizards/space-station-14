@@ -453,6 +453,8 @@
       components:
         - Gun
         - MeeleeWeapon
+        - BallisticAmmoProvider
+        - CartridgeAmmo
 
 - type: entity
   parent: ClothingBeltStorageBase
