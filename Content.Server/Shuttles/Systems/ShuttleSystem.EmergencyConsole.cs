@@ -59,7 +59,7 @@ public sealed partial class ShuttleSystem
     private CancellationTokenSource? _roundEndCancelToken;
 
     private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
-    private static readonly Color DangerColor = Color.DarkRed;
+    private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
