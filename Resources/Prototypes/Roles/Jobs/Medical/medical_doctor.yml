@@ -1,8 +1,9 @@
 - type: job
   id: MedicalDoctor
   requirements:
-    - job: MedicalIntern
-      time: 1800 # 30 minutes
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   name: "medical doctor"
   startingGear: DoctorGear
   departments:

@@ -1,15 +1,11 @@
 ﻿namespace Content.Shared.Roles
 {
-    [DataDefinition]
-    public sealed class JobRequirement
+    /// <summary>
+    ///     Provides special hooks for when jobs get spawned in/equipped.
+    /// </summary>
+    [ImplicitDataDefinitionForInheritors]
+    public abstract class JobRequirement
     {
-        [DataField("job")]
-        public string Job = default!;
-
-        /// <summary>
-        /// How long (in seconds) this requirement is.
-        /// </summary>
-        [DataField("time")]
-        public TimeSpan Time;
+        
     }
 }

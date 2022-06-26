@@ -2,8 +2,9 @@
   id: Warden
   name: "warden"
   requirements:
-    - job: SecurityOfficer
-      time: 7200 # 2 hours
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 10800
   startingGear: WardenGear
   departments:
   - Security

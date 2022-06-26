@@ -4,8 +4,9 @@
   id: ChiefMedicalOfficer
   name: "chief medical officer"
   requirements:
-    - job: MedicalDoctor
-      time: 14400 # 4 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000
   weight: 10
   startingGear: CMOGear
   departments:

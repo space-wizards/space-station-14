@@ -2,8 +2,9 @@
   id: ResearchDirector
   name: "research director"
   requirements:
-    - job: Scientist
-      time: 14400 # 4 hours
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 18000
   weight: 10
   startingGear: ResearchDirectorGear
   departments:

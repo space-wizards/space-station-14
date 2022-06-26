@@ -2,9 +2,17 @@
   id: HeadOfPersonnel
   name: "head of personnel"
   requirements:
-    # HoP covers a lot of fields so I'm not sure what roles they should have to play first
-    - job: Quartermaster
-      time: 7200 # 2 hours
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 3600
+    - !type:OverallPlaytimeRequirement
+      time: 54000
   weight: 20
   startingGear: HoPGear
   departments:

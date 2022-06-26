@@ -2,8 +2,12 @@
   id: HeadOfSecurity
   name: "head of security"
   requirements:
-    - job: Warden
-      time: 14400 # 4 hours
+    - !type:RoleTimeRequirement
+      role: Warden
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000
   weight: 10
   startingGear: HoSGear
   departments:

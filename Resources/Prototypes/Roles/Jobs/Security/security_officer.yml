@@ -2,8 +2,9 @@
   id: SecurityOfficer
   name: "security officer"
   requirements:
-    - job: SecurityCadet
-      time: 1800 # 30 minutes
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1800
   startingGear: SecurityOfficerGear
   departments:
   - Security

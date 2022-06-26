@@ -1,6 +1,10 @@
 - type: job
   id: Bartender
   name: "bartender"
+  requirements:
+    - !type:RoleTimeRequirement
+      department: Service
+      time: 1800
   startingGear: BartenderGear
   departments:
   - Civilian

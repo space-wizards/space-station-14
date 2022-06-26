@@ -2,8 +2,9 @@
   id: StationEngineer
   name: "station engineer"
   requirements:
-    - job: TechnicalAssistant
-      time: 1800 # 30 minutes
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 1800
   startingGear: StationEngineerGear
   departments:
   - Engineering

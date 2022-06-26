@@ -2,8 +2,9 @@
   id: AtmosphericTechnician
   name: "atmospheric technician"
   requirements:
-    - job: StationEngineer
-      time: 1800 # 30 minutes
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600
   startingGear: AtmosphericTechnicianGear
   departments:
   - Engineering

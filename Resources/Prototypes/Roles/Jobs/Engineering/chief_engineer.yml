@@ -2,8 +2,12 @@
   id: ChiefEngineer
   name: "chief engineer"
   requirements:
-    - job: StationEngineer
-      time: 14400 # 4 hours
+    - !type:RoleTimeRequirement
+      role: AtmosphericTechnician
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 18000
   weight: 10
   startingGear: ChiefEngineerGear
   departments:

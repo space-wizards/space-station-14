@@ -2,8 +2,9 @@
   id: Chemist
   name: "chemist"
   requirements:
-    - job: MedicalIntern
-      time: 1800 # 30 minutes
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: ChemistGear
   departments:
   - Medical

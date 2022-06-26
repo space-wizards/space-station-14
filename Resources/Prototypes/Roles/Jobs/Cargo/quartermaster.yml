@@ -2,8 +2,13 @@
   id: Quartermaster
   name: "quartermaster"
   requirements:
-    - job: CargoTechnician
-      time: 14400 # 4 hours
+    requirements:
+    - !type:RoleTimeRequirement
+      role: SalvageSpecialist
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000
   weight: 10
   startingGear: QuartermasterGear
   departments:
