@@ -55,6 +55,7 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
         {
             var gridComp = Comp<IMapGridComponent>(plannedEntity);
             var plans = Comp<PlannedAreaComponent>(plannedEntity);
+            Logger.Debug($"Populating {plannedEntity}.");
             for (var i = 0; i < plans.Plans.Count; i++)
             {
                 var plan = plans.Plans[i];
@@ -63,6 +64,7 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
                     continue;
 
                 plans.Plans.RemoveAt(i);
+                i -= 1;
                 plan.Config.Populate(plannedEntity, plan.GridPosition, null, EntityManager.EntitySysManager, plan.PlanData);
             }
 
@@ -96,7 +98,7 @@ public sealed class FloorplanningPlaneSystem : WorldChunkPlaneSystem<Floorplanni
         planned.Plans.Add(new Plan(config, planData, gridPosition));
 
         var chunkData = GetChunk(gridComp.Grid.ParentMapId, chunk);
-
+        Logger.Debug("Setting up ");
         chunkData.PlannedAreas.Add(targetGrid);
         planned.OwningChunks.Add(chunk);
 
@@ -126,7 +128,7 @@ public struct FloorplanningConfig
 
 }
 
-public class FloorplanningChunk
+public sealed class FloorplanningChunk
 {
     public HashSet<EntityUid> PlannedAreas = new();
 }

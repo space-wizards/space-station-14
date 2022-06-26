@@ -1,0 +1,13 @@
+﻿- type: worldgenConfig
+  id: DefaultWorldgen
+  configData:
+    - !type:DebrisPlaneConfig
+      debrisChoices: DefaultDebrisChoices
+
+- type: weightedRandom
+  id: DefaultDebrisChoices
+  weights:
+    AsteroidDebrisLarge: 10
+    AsteroidDebrisMedium: 50
+    AsteroidDebrisSmall: 30
+

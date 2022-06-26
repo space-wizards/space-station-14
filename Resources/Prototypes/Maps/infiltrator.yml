@@ -13,3 +13,4 @@
       overflowJobs: []
       availableJobs:
         Captain: [ 1, 1 ]
+  worldgenConfig: DefaultWorldgen

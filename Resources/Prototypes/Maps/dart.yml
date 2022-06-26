@@ -17,3 +17,4 @@
         ERTSecurity: [ 1, 1 ]
         ERTMedical: [ 1, 1 ]
         ERTJanitor: [ 1, 1 ]
+  worldgenConfig: DefaultWorldgen

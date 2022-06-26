@@ -1,4 +1,7 @@
-﻿using Robust.Shared.Map;
+﻿using Content.Server.GameTicking;
+using Content.Server.Worldgen.Prototypes;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Worldgen.Systems;
 
@@ -7,10 +10,19 @@ namespace Content.Server.Worldgen.Systems;
 /// </summary>
 public sealed class WorldgenSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<PostGameMapLoad>(PostGameMapLoadEvent);
+    }
 
+    private void PostGameMapLoadEvent(PostGameMapLoad ev)
+    {
+        var config = ev.GameMap.WorldgenConfig;
+        var configs = _prototypeManager.Index<WorldgenConfigPrototype>(config);
+        RaiseLocalEvent(new MapConfigurationEvent(ev.Map, configs.ConfigData));
     }
 }
 

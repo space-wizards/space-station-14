@@ -1,6 +1,11 @@
 ﻿using Content.Server.Worldgen.Prototypes;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Worldgen.Systems.Planes;
 
@@ -8,6 +13,7 @@ public sealed class DebrisPlaneSystem : WorldChunkPlaneSystem<DebrisChunkData, D
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DebrisGeneratorSystem _debrisGeneratorSystem = default!;
 
     public override Matrix3 CoordinateTransformMatrix => Matrix3.CreateScale(ChunkSize, ChunkSize);
@@ -17,9 +23,10 @@ public sealed class DebrisPlaneSystem : WorldChunkPlaneSystem<DebrisChunkData, D
     {
         var data = new DebrisChunkData();
         var points = GeneratePoissonDiskPointsInChunk(80.0f/ChunkSize, chunk);
+        var weights = _prototypeManager.Index<WeightedRandomPrototype>(MapConfigurations[map].DebrisChoices);
         foreach (var point in points)
         {
-            data.Debris.Add(new DebrisData(null, _prototypeManager.Index<DebrisPrototype>("TestDebris"), new MapCoordinates(point, map)));
+            data.Debris.Add(new DebrisData(null, _prototypeManager.Index<DebrisPrototype>(weights.Pick(_random)), new MapCoordinates(point, map)));
         }
         return data;
     }
@@ -85,6 +92,6 @@ public sealed class DebrisData
 [DataDefinition]
 public sealed class DebrisPlaneConfig
 {
-    [DataField("debrisChoices", required: true)]
+    [DataField("debrisChoices", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
     public string DebrisChoices = default!;
 }

@@ -76,10 +76,10 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         foreach (var config in ev.Configs)
         {
-            if (config.GetType() == typeof(TConfig))
-            {
-                MapConfigurations[ev.MapId] = (TConfig)config;
-            }
+            if (config.GetType() != typeof(TConfig)) continue;
+
+            MapConfigurations[ev.MapId] = (TConfig)config;
+            return;
         }
     }
 
@@ -109,7 +109,7 @@ public abstract partial class WorldChunkPlaneSystem<TChunk, TConfig> : EntitySys
 
         _accumulator -= UpdateRate.Value;
 
-        var toDelete = new List<MapId>(LoadedChunks.Count - 1);
+        var toDelete = new List<MapId>(LoadedChunks.Count);
         foreach (var (map, _) in LoadedChunks)
         {
             if (!_mapManager.MapExists(map))

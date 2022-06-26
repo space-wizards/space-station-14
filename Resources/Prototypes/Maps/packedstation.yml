@@ -38,3 +38,4 @@
         Librarian: [ 1, 1 ]
         Lawyer: [ 1, 2 ]
         Musician: [1, 1]
+  worldgenConfig: DefaultWorldgen

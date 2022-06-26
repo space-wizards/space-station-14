@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Atlas: 
+    Atlas:
       mapNameTemplate: '{0} Atlas {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
@@ -44,3 +44,4 @@
         MedicalIntern: [ 1, 1 ]
         ServiceWorker: [ 1, 1 ]
         SecurityCadet: [ 1, 1 ]
+  worldgenConfig: DefaultWorldgen

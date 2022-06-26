@@ -29,3 +29,4 @@
         SecurityOfficer: [ 2, 4 ]
         Janitor: [ 1, 1 ]
         Musician: [1, 1]
+  worldgenConfig: DefaultWorldgen

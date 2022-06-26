@@ -11,3 +11,4 @@
         - Passenger
       availableJobs:
         Passenger: [ -1, -1 ]
+  worldgenConfig: DefaultWorldgen

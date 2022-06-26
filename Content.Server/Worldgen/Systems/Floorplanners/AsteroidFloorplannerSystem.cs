@@ -93,6 +93,7 @@ public sealed class AsteroidFloorplannerSystem : FloorplanSystem
     public override void Populate(FloorplanConfig rawConfig, EntityUid targetGrid, Vector2 centerPoint, Constraint? bounds, in object? planData)
     {
         var config = (AsteroidFloorplanConfig)rawConfig;
+        Logger.Debug("Floorplanner ran.");
 
         var grid = _mapManager.GetGrid(targetGrid);
         var xform = Transform(targetGrid);

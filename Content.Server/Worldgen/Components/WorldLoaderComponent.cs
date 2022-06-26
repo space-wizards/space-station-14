@@ -14,5 +14,5 @@ public sealed class WorldLoaderComponent : Component
     public float Range = 64.0f;
 
     [DataField("loadingFlags"), ViewVariables(VVAccess.ReadWrite)]
-    public LoadingFlags LoadingFlags = LoadingFlags.Stationary;
+    public LoadingFlags LoadingFlags = LoadingFlags.All;
 }
