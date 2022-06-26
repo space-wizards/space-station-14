@@ -87,7 +87,6 @@ namespace Content.Shared.Strip.Components
     {
         public readonly float InitialTime;
         public float Time;
-        public float Coeff = 1;
         public float Additive = 0;
         public bool Stealth;
 

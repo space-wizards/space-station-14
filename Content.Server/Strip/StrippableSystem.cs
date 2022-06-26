@@ -416,7 +416,7 @@ namespace Content.Server.Strip
 
             var ev = new BeforeStripEvent(slotDef.StripTime);
             RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time * ev.Coeff + ev.Additive;
+            var finalStripTime = ev.Time + ev.Additive;
 
             var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {
@@ -482,7 +482,7 @@ namespace Content.Server.Strip
 
             var ev = new BeforeStripEvent(component.HandStripDelay);
             RaiseLocalEvent(user, ev);
-            var finalStripTime = ev.Time * ev.Coeff + ev.Additive;
+            var finalStripTime = ev.Time + ev.Additive;
 
             var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {

@@ -9,14 +9,14 @@ public sealed class ThievingComponent : Component
     /// <summary>
     /// How much the strip time should be shortened by
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stealTime")]
     public float StealTime = 0.5f;
 
     /// <summary>
     /// Should it notify the user if they're stripping a pocket?
     /// </summary>
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stealthy")]
     public bool Stealthy;
 }
