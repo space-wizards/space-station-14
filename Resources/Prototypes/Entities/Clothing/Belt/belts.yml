@@ -448,7 +448,11 @@
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Storage
-    capacity: 50
+    capacity: 60
+    whitelist:
+      components:
+        - Gun
+        - MeeleeWeapon
 
 - type: entity
   parent: ClothingBeltStorageBase
