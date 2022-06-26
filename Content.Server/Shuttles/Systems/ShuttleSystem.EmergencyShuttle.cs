@@ -232,7 +232,7 @@ public sealed partial class ShuttleSystem
            }
 
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked"), playDefaultSound: false);
+           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}")), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
        }
@@ -339,6 +339,7 @@ public sealed partial class ShuttleSystem
    {
        if (EmergencyShuttleArrived) return;
 
+       _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        EmergencyShuttleArrived = true;
 
        if (_centcommMap != null)
@@ -349,7 +350,6 @@ public sealed partial class ShuttleSystem
            CallEmergencyShuttle(comp.Owner);
        }
 
-       _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        _commsConsole.UpdateCommsConsoleInterface();
    }
 
