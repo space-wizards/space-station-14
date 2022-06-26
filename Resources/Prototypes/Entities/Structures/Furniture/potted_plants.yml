@@ -18,9 +18,6 @@
       mass: 25
       mask:
       - Impassable
-      layer:
-      - MidImpassable
-      - LowImpassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"
@@ -264,7 +261,3 @@
   components:
   - type: Sprite
     state: plant-29
-
-
-
-
