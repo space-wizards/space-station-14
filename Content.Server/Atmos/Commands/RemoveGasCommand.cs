@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -18,15 +18,13 @@ namespace Content.Server.Atmos.Commands
             if (args.Length < 5) return;
             if(!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
-               || !int.TryParse(args[2], out var id)
+               || !EntityUid.TryParse(args[2], out var id)
                || !float.TryParse(args[3], out var amount)
                || !bool.TryParse(args[4], out var ratio)) return;
 
-            var gridId = new GridId(id);
-
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = atmosphereSystem.GetTileMixture(gridId, indices, true);
+            var tile = atmosphereSystem.GetTileMixture(id, indices, true);
 
             if (tile == null)
             {

@@ -5,6 +5,8 @@ using Content.Shared.IoC;
 using Content.Shared.Localizations;
 using Content.Shared.Maps;
 using Content.Shared.Markings;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -33,35 +35,22 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             _initTileDefinitions();
-            CheckReactions();
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
-        }
 
-        private void CheckReactions()
-        {
-            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
-            {
-                foreach (var reactant in reaction.Reactants.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(reactant))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown reactant {reagent}.",
-                            reaction.ID, reactant);
-                    }
-                }
+            var configMan = IoCManager.Resolve<IConfigurationManager>();
+#if FULL_RELEASE
+            configMan.OverrideDefault(CVars.NetInterpRatio, 2);
+#else
+            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
 
-                foreach (var product in reaction.Products.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(product))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown product {product}.",
-                            reaction.ID, product);
-                    }
-                }
-            }
+            // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
+            // just leaving this disabled.
+            // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
+#endif
+
         }
 
         private void _initTileDefinitions()

@@ -77,7 +77,7 @@ namespace Content.Server.Medical.CrewMonitoring
             // should work well enough?
             if (TryComp(uid, out IMoverComponent? mover))
                 worldRot = mover.LastGridAngle;
-            else if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            else if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 worldRot = grid.WorldRotation;
 
             // update all sensors info

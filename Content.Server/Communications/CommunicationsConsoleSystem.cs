@@ -2,8 +2,10 @@ using System.Globalization;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -14,13 +16,14 @@ namespace Content.Server.Communications
 {
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
-        [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+        [Dependency] private readonly ShuttleSystem _shuttle = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         private const int MaxMessageLength = 256;
 
@@ -28,7 +31,7 @@ namespace Content.Server.Communications
         {
             // All events that refresh the BUI
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateBoundUserInterface(comp));
+            SubscribeLocalEvent<CommunicationsConsoleComponent, ComponentInit>((_, comp, _) => UpdateCommsConsoleInterface(comp));
             SubscribeLocalEvent<RoundEndSystemChangedEvent>(_ => OnGenericBroadcastEvent());
             SubscribeLocalEvent<AlertLevelDelayFinishedEvent>(_ => OnGenericBroadcastEvent());
 
@@ -47,7 +50,7 @@ namespace Content.Server.Communications
                 if (comp.AlreadyRefreshed) continue;
                 if (comp.AnnouncementCooldownRemaining <= 0f)
                 {
-                    UpdateBoundUserInterface(comp);
+                    UpdateCommsConsoleInterface(comp);
                     comp.AlreadyRefreshed = true;
                     continue;
                 }
@@ -64,7 +67,7 @@ namespace Content.Server.Communications
         {
             foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
-                UpdateBoundUserInterface(comp);
+                UpdateCommsConsoleInterface(comp);
             }
         }
 
@@ -74,17 +77,32 @@ namespace Content.Server.Communications
         /// <param name="args">Alert level changed event arguments</param>
         private void OnAlertLevelChanged(AlertLevelChangedEvent args)
         {
-            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
+            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>(true))
             {
                 var entStation = _stationSystem.GetOwningStation(comp.Owner);
                 if (args.Station == entStation)
                 {
-                    UpdateBoundUserInterface(comp);
+                    UpdateCommsConsoleInterface(comp);
                 }
             }
         }
 
-        private void UpdateBoundUserInterface(CommunicationsConsoleComponent comp)
+        /// <summary>
+        /// Updates the UI for all comms consoles.
+        /// </summary>
+        public void UpdateCommsConsoleInterface()
+        {
+            foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
+            {
+                UpdateCommsConsoleInterface(comp);
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI for a particular comms console.
+        /// </summary>
+        /// <param name="comp"></param>
+        public void UpdateCommsConsoleInterface(CommunicationsConsoleComponent comp)
         {
             var uid = comp.Owner;
 
@@ -143,6 +161,8 @@ namespace Content.Server.Communications
 
         private bool CanCall(CommunicationsConsoleComponent comp)
         {
+            if (_shuttle.EmergencyShuttleArrived) return false;
+
             return comp.CanCallShuttle && _roundEndSystem.CanCall();
         }
 
@@ -188,7 +208,7 @@ namespace Content.Server.Communications
 
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
             comp.AlreadyRefreshed = false;
-            UpdateBoundUserInterface(comp);
+            UpdateCommsConsoleInterface(comp);
 
             // allow admemes with vv
             Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
@@ -205,7 +225,7 @@ namespace Content.Server.Communications
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            if (!comp.CanCallShuttle) return;
+            if (!CanCall(comp)) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
@@ -217,7 +237,7 @@ namespace Content.Server.Communications
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            if (!comp.CanCallShuttle) return;
+            if (!CanCall(comp)) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {

@@ -171,3 +171,16 @@
     - !type:StealCondition
       prototype: WeaponAntiqueLaser
 
+- type: objective
+  id: CaptainJetpackStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: JetpackCaptainFilled

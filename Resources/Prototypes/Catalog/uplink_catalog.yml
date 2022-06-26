@@ -1,27 +1,27 @@
 # Guns
 
 - type: uplinkListing
-  id: UplinkPistolClarissa
+  id: UplinkPistolViper
   category: Weapons
-  itemId: WeaponPistolClarissa
-  listingName: Clarissa
+  itemId: WeaponPistolViper
+  listingName: Viper
   description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
 
 - type: uplinkListing
-  id: UplinkRevolverPredator
+  id: UplinkRevolverPython
   category: Weapons
-  itemId: WeaponRevolverPredator
-  listingName: Predator
+  itemId: WeaponRevolverPython
+  listingName: Python
   description: A loud and deadly revolver. Uses .40 Magnum.
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
 - type: uplinkListing
-  id: UplinkPistolMandella
+  id: UplinkPistolCobra
   category: Weapons
-  itemId: WeaponPistolMandella
-  listingName: Mandella
+  itemId: WeaponPistolCobra
+  listingName: Cobra
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
 
@@ -63,6 +63,14 @@
   listingName: Energy Dagger
   description: A small energy blade conveniently disguised in the form of a pen.
   price: 2
+
+- type: uplinkListing
+  id: UplinkFireAxeFlaming
+  category: Weapons
+  itemId: FireAxeFlaming
+  listingName: Fire Axe
+  description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+  price: 10
 
 # Explosives
 
@@ -185,11 +193,11 @@
   icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
-  id: UplinkBojevicBundle
+  id: UplinkBulldogBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
   price: 25
-  icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
+  icon: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle

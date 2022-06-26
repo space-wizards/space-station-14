@@ -41,7 +41,7 @@ public sealed class StickySystem : EntitySystem
 
     private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
     {
-        if (component.StuckTo == null || !component.CanUnstick || !args.CanInteract)
+        if (component.StuckTo == null || !component.CanUnstick || !args.CanInteract || args.Hands == null)
             return;
 
         // we can't use args.CanAccess, because it stuck in another container
@@ -175,7 +175,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = target;
-        RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityStuckEvent(target, user), true);
     }
 
     public void UnstickFromEntity(EntityUid uid, EntityUid user, StickyComponent? component = null)
@@ -210,7 +210,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = null;
-        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
 
     private sealed class StickSuccessfulEvent : EntityEventArgs

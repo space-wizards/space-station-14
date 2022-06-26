@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Construction
 {
     [TestFixture]
-    public sealed class ConstructionPrototypeTest : ContentIntegrationTest
+    public sealed class ConstructionPrototypeTest
     {
         // discount linter for construction graphs
         // TODO: Create serialization validators for these?
@@ -14,9 +14,8 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartIsValid()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -27,14 +26,14 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 Assert.That(graph.Nodes.ContainsKey(start), $"Found no startNode \"{start}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestTargetIsValid()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -45,14 +44,14 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestStartReachesValidTarget()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -68,6 +67,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 Assert.That(protoMan.TryIndex(next.Entity, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({next.Entity})");
                 Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
             }
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

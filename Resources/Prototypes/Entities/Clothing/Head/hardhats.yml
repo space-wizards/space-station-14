@@ -36,7 +36,7 @@
       - state: on-equipped-HELMET
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

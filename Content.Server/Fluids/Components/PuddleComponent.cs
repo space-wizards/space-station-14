@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(PuddleSystem))]
+    [Access(typeof(PuddleSystem))]
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";

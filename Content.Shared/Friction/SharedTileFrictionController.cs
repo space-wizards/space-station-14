@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
@@ -161,7 +162,7 @@ namespace Content.Shared.Friction
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid))
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return 0.0f;
 
             if (!coords.IsValid(EntityManager)) return 0.0f;

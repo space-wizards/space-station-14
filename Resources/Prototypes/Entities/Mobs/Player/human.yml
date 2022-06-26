@@ -10,7 +10,7 @@
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/hug.ogg
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
@@ -65,7 +65,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTLeader
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Leader
     description: Lead a team of specialists to resolve the stations issues.
   - type: Loadout
@@ -74,7 +74,7 @@
     nameSet: NamesFirstMilitaryLeader
   - type: RandomHumanoidAppearance
     randomizeName: false
-    
+
 - type: entity
   name: ERT leader
   suffix: EVA
@@ -87,11 +87,11 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTLeaderEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
   - type: Loadout
     prototype: ERTLeaderGearEVA
 
-# ERT Engineer    
+# ERT Engineer
 - type: entity
   name: ERT engineer
   parent: MobHumanERTLeader
@@ -103,14 +103,14 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTEngineer
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Engineer
     description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTEngineerGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT engineer
   suffix: EVA
@@ -123,13 +123,13 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTEngineerEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Engineer
     description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTEngineerGearEVA
-    
-# ERT Security    
+
+# ERT Security
 - type: entity
   name: ERT security
   parent: MobHumanERTLeader
@@ -141,14 +141,14 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTSecurity
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Security
     description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTSecurityGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT security
   suffix: EVA
@@ -161,13 +161,13 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTSecurityEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Security
     description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTSecurityGearEVA
-    
-# ERT Medical   
+
+# ERT Medical
 - type: entity
   name: ERT medic
   parent: MobHumanERTLeader
@@ -179,14 +179,14 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTMedical
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Medic
     description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTMedicalGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT medic
   suffix: EVA
@@ -199,13 +199,13 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTMedicalEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Medic
     description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTMedicalGearEVA
-    
-# ERT Janitor  
+
+# ERT Janitor
 - type: entity
   name: ERT janitor
   parent: MobHumanERTLeader
@@ -217,14 +217,14 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTJanitor
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Janitor
     description: Assist with custodial efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTJanitorGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT janitor
   suffix: EVA
@@ -237,7 +237,7 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanERTJanitorEVA
     deleteOnSpawn: true
-    makeSentient: false
+    makeSentient: true
     name: ERT Janitor
     description: Assist with custodial efforts to resolve the stations issues.
   - type: Loadout

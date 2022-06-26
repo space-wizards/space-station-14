@@ -1,10 +1,10 @@
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
-    [NetworkedComponent, Friend(typeof(MovementSpeedModifierSystem))]
+    [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
     public sealed class MovementSpeedModifierComponent : Component
     {
         public const float DefaultBaseWalkSpeed = 3.0f;

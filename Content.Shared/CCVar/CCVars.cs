@@ -124,7 +124,7 @@ namespace Content.Shared.CCVar
         ///     Controls the default game preset.
         /// </summary>
         public static readonly CVarDef<string>
-            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "traitor", CVar.ARCHIVE);
+            GameLobbyDefaultPreset = CVarDef.Create("game.defaultpreset", "secret", CVar.ARCHIVE);
 
         /// <summary>
         ///     Controls if the game can force a different preset if the current preset's criteria are not met.
@@ -380,6 +380,54 @@ namespace Content.Shared.CCVar
          * Physics
          */
 
+        /*
+         * WARNING: These are liable to get changed to datafields whenever movement refactor occurs and may no longer be valid.
+         * You were warned!
+         */
+
+        /// <summary>
+        /// Minimum speed a mob has to be moving before applying movement friction.
+        /// </summary>
+        public static readonly CVarDef<float> MinimumFrictionSpeed =
+            CVarDef.Create("physics.minimum_friction_speed", 0.005f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving.
+        /// </summary>
+        public static readonly CVarDef<float> MobAcceleration =
+            CVarDef.Create("physics.mob_acceleration", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        public static readonly CVarDef<float> MobFriction =
+            CVarDef.Create("physics.mob_friction", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving and weightless.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessAcceleration =
+            CVarDef.Create("physics.mob_weightless_acceleration", 1f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and providing inputs.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessFriction =
+            CVarDef.Create("physics.mob_weightless_friction", 1f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The negative velocity applied for friction when weightless and not providing inputs.
+        /// This is essentially how much their speed decreases per second.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessFrictionNoInput =
+            CVarDef.Create("physics.mob_weightless_friction_no_input", 0.2f, CVar.ARCHIVE | CVar.REPLICATED);
+
+        /// <summary>
+        /// The movement speed modifier applied to a mob's total input velocity when weightless.
+        /// </summary>
+        public static readonly CVarDef<float> MobWeightlessModifier =
+            CVarDef.Create("physics.mob_weightless_modifier", 0.7f, CVar.ARCHIVE | CVar.REPLICATED);
+
         /// <summary>
         /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
         /// </summary>
@@ -387,10 +435,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED);
 
         public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tile_friction", 40.0f);
+            CVarDef.Create("physics.tile_friction", 40.0f, CVar.ARCHIVE | CVar.REPLICATED);
 
         public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stop_speed", 0.1f);
+            CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// Whether mobs can push objects like lockers.
@@ -728,6 +776,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> DisablingOOCDisablesRelay = CVarDef.Create("ooc.disabling_ooc_disables_relay", true, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether or not OOC chat should be enabled during a round.
+        /// </summary>
+        public static readonly CVarDef<bool> OocEnableDuringRound =
+            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED |CVar.SERVER);
+
         /*
          * LOOC
          */
@@ -846,6 +900,28 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> ShuttleIdleAngularDamping =
             CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
+
+        /*
+         * Emergency
+         */
+
+        /// <summary>
+        /// How long the emergency shuttle remains docked with the station, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTime =
+            CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long after the console is authorized for the shuttle to early launch.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleAuthorizeTime =
+            CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long after the console is authorized for the shuttle to early launch.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleTransitTime =
+            CVarDef.Create("shuttle.emergency_transit_time", 120f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT
@@ -991,5 +1067,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> UpdateRestartDelay =
             CVarDef.Create("update.restart_delay", 20f, CVar.SERVERONLY);
+
+        /*
+         * Ghost
+         */
+
+        /// <summary>
+        /// The time you must spend reading the rules, before the "Request" button is enabled
+        /// </summary>
+        public static readonly CVarDef<float> GhostRoleTime =
+            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED);
     }
 }

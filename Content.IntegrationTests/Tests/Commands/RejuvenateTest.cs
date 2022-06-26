@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
     [TestOf(typeof(RejuvenateCommand))]
-    public sealed class RejuvenateTest : ContentIntegrationTest
+    public sealed class RejuvenateTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -33,8 +33,8 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             await server.WaitAssertion(() =>
             {
@@ -78,6 +78,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 Assert.That(damageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

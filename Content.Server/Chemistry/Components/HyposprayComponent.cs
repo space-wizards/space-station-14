@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.Components
                 meleeSys.SendLunge(angle, user);
             }
 
-            SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
+            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(user), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(TransferAmount, targetSolution.AvailableVolume);

@@ -96,8 +96,8 @@
   components:
   - type: Tag
     tags:
-      - Wall
       - RCDDeconstructWhitelist
+      - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon

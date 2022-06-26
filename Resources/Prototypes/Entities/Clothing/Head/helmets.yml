@@ -128,7 +128,7 @@
   - type: Tag
     tags:
     - HidesHair
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSpaceNinja
@@ -143,7 +143,7 @@
   - type: Tag
     tags:
     - HidesHair
-    
+
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
@@ -207,7 +207,7 @@
   - type: IngestionBlocker
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor

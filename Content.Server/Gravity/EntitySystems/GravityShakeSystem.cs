@@ -18,7 +18,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
 
-        private Dictionary<GridId, uint> _gridsToShake = new();
+        private Dictionary<EntityUid, uint> _gridsToShake = new();
 
         private const float GravityKick = 100.0f;
         private const uint ShakeTimes = 10;
@@ -44,21 +44,19 @@ namespace Content.Server.Gravity.EntitySystems
             }
         }
 
-        public void ShakeGrid(GridId gridId, GravityComponent comp)
+        public void ShakeGrid(EntityUid gridId, GravityComponent comp)
         {
             _gridsToShake[gridId] = ShakeTimes;
 
-            SoundSystem.Play(
-                Filter.BroadcastGrid(gridId),
-                comp.GravityShakeSound.GetSound(),
-                AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(comp.GravityShakeSound.GetSound(),
+                Filter.BroadcastGrid(gridId), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()
         {
             // I have to copy this because C# doesn't allow changing collections while they're
             // getting enumerated.
-            var gridsToShake = new Dictionary<GridId, uint>(_gridsToShake);
+            var gridsToShake = new Dictionary<EntityUid, uint>(_gridsToShake);
             foreach (var gridId in _gridsToShake.Keys)
             {
                 if (_gridsToShake[gridId] == 0)
@@ -73,12 +71,12 @@ namespace Content.Server.Gravity.EntitySystems
             _gridsToShake = gridsToShake;
         }
 
-        private void ShakeGrid(GridId gridId)
+        private void ShakeGrid(EntityUid gridId)
         {
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity is not {Valid: true} attached
-                    || EntityManager.GetComponent<TransformComponent>(attached).GridID != gridId
+                    || EntityManager.GetComponent<TransformComponent>(attached).GridUid != gridId
                     || !EntityManager.HasComponent<CameraRecoilComponent>(attached))
                 {
                     continue;
