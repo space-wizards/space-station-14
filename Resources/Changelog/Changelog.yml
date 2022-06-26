@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Holoparasites no longer kill their hosts when suiciding., type: Add}
-  id: 1290
-  time: '2022-04-08T04:37:40.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed a bug where the DAW/super synthesizer had wrong instruments when
@@ -2975,3 +2970,10 @@ Entries:
   - {message: Evac shuttle has been added for round ends now., type: Add}
   id: 1789
   time: '2022-06-26T05:20:45.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The quartermaster is now a head (The only difference is they can now
+      enter the bridge. that's it. The game already considered them a head in every
+      other way.), type: Tweak}
+  id: 1790
+  time: '2022-06-26T06:22:16.0000000+00:00'
