@@ -19,6 +19,7 @@ namespace Content.Server.Foldable
 
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
             SubscribeLocalEvent<FoldableComponent, GetVerbsEvent<AlternativeVerb>>(AddFoldVerb);
+            SubscribeLocalEvent<FoldableComponent, InsertIntoFoldableEntityStorageAttemptEvent>(OnInsertIntoFoldable);
 
         }
 
@@ -85,6 +86,12 @@ namespace Content.Server.Foldable
             // You can't buckle an entity to a folded object
             if (TryComp(component.Owner, out StrapComponent? strap))
                 strap.Enabled = !component.IsFolded;
+        }
+
+        public void OnInsertIntoFoldable(EntityUid uid, FoldableComponent comp, InsertIntoFoldableEntityStorageAttemptEvent args)
+        {
+            if (comp.IsFolded)
+                args.Cancel();
         }
 
         #region Verb
