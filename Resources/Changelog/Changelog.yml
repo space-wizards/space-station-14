@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Ghost roles will ghost now instead of suicide., type: Add}
-  id: 1292
-  time: '2022-04-08T19:47:06.0000000+00:00'
 - author: Radosvik
   changes:
   - {message: Fixed spelling of "delicious" in Corgi Meat, type: Fix}
@@ -2972,3 +2967,12 @@ Entries:
   - {message: Nukies now no longer get the Common channel., type: Tweak}
   id: 1791
   time: '2022-06-26T07:21:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Adjusted the shuttle authorization colours to be more alarming., type: Tweak}
+  - {message: Fix the emergency shuttle notif not going off on early launch by admins.,
+    type: Fix}
+  - {message: Shuttle doors will now also try to close when going to hyperspace.,
+    type: Tweak}
+  id: 1792
+  time: '2022-06-26T08:19:27.0000000+00:00'
