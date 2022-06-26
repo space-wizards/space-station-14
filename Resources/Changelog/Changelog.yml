@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed an issue causing minibombs to have a large but weak explosion.
-      They are now the opposite., type: Fix}
-  id: 1295
-  time: '2022-04-08T21:07:02.0000000+00:00'
 - author: Leander
   changes:
   - {message: 'Nerfed stun batons, they now hold 8 charges and have to recharge more
@@ -2977,3 +2971,8 @@ Entries:
     type: Tweak}
   id: 1794
   time: '2022-06-26T09:25:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Hotfix singulo pulling people through walls., type: Fix}
+  id: 1795
+  time: '2022-06-26T13:54:19.0000000+00:00'
