@@ -261,6 +261,28 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         }
     }
 
+    private void DragAction()
+    {
+        if (UIManager.CurrentlyHovered is ActionButton button)
+        {
+            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action is not { } type)
+            {
+                _menuDragHelper.EndDrag();
+                return;
+            }
+
+            SetAction(button, type);
+        }
+
+
+        if (_menuDragHelper.Dragged is { Parent: ActionButtonContainer } old)
+        {
+            SetAction(old, null);
+        }
+
+        _menuDragHelper.EndDrag();
+    }
+
     private void OnWindowClosed()
     {
         _window = null;
@@ -303,21 +325,8 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
+        DragAction();
         args.Handle();
-
-        if (UIManager.CurrentlyHovered is ActionButton button)
-        {
-            if (!_menuDragHelper.IsDragging || _menuDragHelper.Dragged?.Action == null)
-            {
-                _menuDragHelper.EndDrag();
-                return;
-            }
-
-            var type = _menuDragHelper.Dragged.Action;
-            SetAction(button, type);
-        }
-
-        _menuDragHelper.EndDrag();
     }
 
     private void OnWindowActionFocusExisted(ActionButton button)
@@ -329,7 +338,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _actionsSystem.TriggerAction(button.Action);
+            _menuDragHelper.MouseDown(button);
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
@@ -337,6 +346,24 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
             SetAction(button, null);
             args.Handle();
         }
+    }
+
+    private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        if (UIManager.CurrentlyHovered == button)
+        {
+            _actionsSystem.TriggerAction(button.Action);
+            _menuDragHelper.EndDrag();
+        }
+        else
+        {
+            DragAction();
+        }
+
+        args.Handle();
     }
 
     private bool OnMenuBeginDrag()
@@ -368,6 +395,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
         _container = container;
         _container.ActionPressed += OnActionPressed;
+        _container.ActionUnpressed += OnActionUnpressed;
     }
 
     public void ClearActionContainer()
