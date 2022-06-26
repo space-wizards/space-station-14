@@ -70,7 +70,7 @@
   itemId: FireAxeFlaming
   listingName: Fire Axe
   description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
-  price: 9
+  price: 10
 
 # Explosives
 
@@ -174,6 +174,25 @@
   description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
   icon: Objects/Misc/id_cards.rsi/default.png
   price: 3
+
+- type: uplinkListing
+  id: UplinkJetpack
+  category: Utility
+  itemId: JetpackBlack
+  listingName: Black Jetpack
+  description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
+  icon: Objects/Tanks/Jetpacks/black.rsi/icon.png
+  price: 5
+
+#TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
+- type: uplinkListing
+  id: UplinkHeadset
+  category: Utility
+  itemId: ClothingHeadsetAltSyndicate
+  listingName: Syndicate Overear-Headset
+  description: A headset that allows you to listen in on departmental channels, or contact other traitors.
+  icon: Clothing/Ears/Headsets/syndicate.rsi/icon_alt.png
+  price: 2
 
 - type: uplinkListing
   id: UplinkHypopen

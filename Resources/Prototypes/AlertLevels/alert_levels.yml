@@ -5,6 +5,7 @@
     green:
       announcement: alert-level-green-announcement
       color: Green
+      shuttleTime: 1200
     blue:
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -13,10 +14,12 @@
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Violet
+      shuttleTime: 1200
     yellow:
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
+      shuttleTime: 1200
     red:
       announcement: alert-level-red-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -33,9 +36,11 @@
       sound: /Audio/Misc/delta.ogg
       disableSelection: true
       color: DarkRed
+      shuttleTime: 1200
     epsilon:
       announcement: alert-level-epsilon-announcement
       selectable: false
       sound: /Audio/Misc/epsilon.ogg
       disableSelection: true
       color: DarkViolet
+      shuttleTime: 1200

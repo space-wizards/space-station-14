@@ -7,6 +7,8 @@
   components:
   - type: CombatMode
     canDisarm: true
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -340,6 +342,8 @@
     attributes:
       proper: true
       gender: male
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
