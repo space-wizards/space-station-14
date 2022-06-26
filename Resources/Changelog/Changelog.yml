@@ -1,9 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Packed Station has been updated to the latest standards., type: Tweak}
-  id: 1289
-  time: '2022-04-07T16:08:02.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Holoparasites no longer kill their hosts when suiciding., type: Add}
@@ -2975,3 +2970,8 @@ Entries:
   - {message: Cow miasma generation reduced by ~55%., type: Tweak}
   id: 1788
   time: '2022-06-26T02:04:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Evac shuttle has been added for round ends now., type: Add}
+  id: 1789
+  time: '2022-06-26T05:20:45.0000000+00:00'
