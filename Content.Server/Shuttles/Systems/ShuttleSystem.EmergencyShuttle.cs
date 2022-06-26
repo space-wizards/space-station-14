@@ -235,6 +235,9 @@ public sealed partial class ShuttleSystem
            _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}")), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
+
+           // Bolt all the airlocks so they don't stuff around with them.
+           SetDockBolts(stationData.EmergencyShuttle.Value, true);
        }
        else
        {
