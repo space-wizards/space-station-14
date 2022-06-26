@@ -1,16 +1,13 @@
-﻿using System;
-using Robust.Client.Graphics;
+﻿using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Cooldown
 {
-
     public sealed class CooldownGraphic : Control
     {
-
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         private readonly ShaderInstance _shader;
@@ -50,6 +47,16 @@ namespace Content.Client.Cooldown
             handle.DrawRect(PixelSizeBox, color);
         }
 
-    }
+        public void FromTime(TimeSpan start, TimeSpan end)
+        {
+            var duration = end - start;
+            var curTime = _gameTiming.CurTime;
+            var length = duration.TotalSeconds;
+            var progress = (curTime - start).TotalSeconds / length;
+            var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
 
+            Progress = MathHelper.Clamp((float) ratio, -1, 1);
+            Visible = ratio > -1f;
+        }
+    }
 }

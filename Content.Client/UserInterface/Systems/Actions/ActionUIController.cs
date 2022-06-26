@@ -239,6 +239,28 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         PopulateActions(actions);
     }
 
+    private void SetAction(ActionButton button, ActionType? type)
+    {
+        int position;
+
+        if (type == null)
+        {
+            button.ClearData();
+            if (_container?.TryGetButtonIndex(button, out position) ?? false)
+            {
+                CurrentPage[position] = type;
+            }
+            return;
+        }
+
+        if (button.TryReplaceWith(_entities, type) &&
+            _container != null &&
+            _container.TryGetButtonIndex(button, out position))
+        {
+            CurrentPage[position] = type;
+        }
+    }
+
     private void OnWindowClosed()
     {
         _window = null;
@@ -291,12 +313,8 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
                 return;
             }
 
-            var action = _menuDragHelper.Dragged.Action;
-            button.TryReplaceWith(_entities, action);
-            if (_container != null && _container.TryGetButtonIndex(button, out var position))
-            {
-                CurrentPage[position] = action;
-            }
+            var type = _menuDragHelper.Dragged.Action;
+            SetAction(button, type);
         }
 
         _menuDragHelper.EndDrag();
@@ -316,7 +334,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         }
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-            button.ClearData();
+            SetAction(button, null);
             args.Handle();
         }
     }
@@ -386,20 +404,20 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
 
     private void ActionSystemShutdown()
     {
-        _actionsSystem.OnLinkActions = null;
-        _actionsSystem.OnUnlinkActions = null;
-    }
-
-    private void OnComponentUnlinked()
-    {
-        _container?.ClearActionData();
-        //TODO: Clear button data
+        _actionsSystem.OnLinkActions -= OnComponentLinked;
+        _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
     }
 
     private void OnComponentLinked(ActionsComponent component)
     {
         LoadDefaultActions(component);
         _container?.SetActionData(_defaultPage);
+    }
+
+    private void OnComponentUnlinked()
+    {
+        _container?.ClearActionData();
+        //TODO: Clear button data
     }
 
     private void CreatePage()

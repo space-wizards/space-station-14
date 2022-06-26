@@ -1,10 +1,12 @@
-﻿using Content.Shared.Actions.ActionTypes;
+﻿using Content.Client.Cooldown;
+using Content.Shared.Actions.ActionTypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Input;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Actions.Controls;
 
@@ -23,10 +25,13 @@ public sealed class ActionButton : Control
     }
 
     private BoundKeyFunction? _keybind;
+
     public readonly TextureRect Button;
     public readonly TextureRect Icon;
     public readonly Label Label;
     public readonly SpriteView Sprite;
+    public readonly CooldownGraphic Cooldown;
+
     public Texture? IconTexture
     {
         get => Icon.Texture;
@@ -65,11 +70,13 @@ public sealed class ActionButton : Control
             Name = "Sprite",
             OverrideDirection = Direction.South
         };
+        Cooldown = new CooldownGraphic {Visible = false};
 
         AddChild(Button);
         AddChild(Icon);
         AddChild(Label);
         AddChild(Sprite);
+        AddChild(Cooldown);
 
         Button.Texture = Theme.ResolveTexture("SlotBackground");
         Button.Modulate = new Color(255, 255, 255, 150);
@@ -131,5 +138,17 @@ public sealed class ActionButton : Control
         Action = null;
         IconTexture = null;
         Sprite.Sprite = null;
+        Cooldown.Visible = false;
+        Cooldown.Progress = 1;
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (Action?.Cooldown != null)
+        {
+            Cooldown.FromTime(Action.Cooldown.Value.Start, Action.Cooldown.Value.End);
+        }
     }
 }

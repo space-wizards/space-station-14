@@ -1,11 +1,8 @@
-﻿using System;
-using Content.Client.Actions.UI;
+﻿using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Alerts.UI
@@ -93,14 +90,7 @@ namespace Content.Client.Alerts.UI
                 return;
             }
 
-            var duration = Cooldown.Value.End - Cooldown.Value.Start;
-            var curTime = _gameTiming.CurTime;
-            var length = duration.TotalSeconds;
-            var progress = (curTime - Cooldown.Value.Start).TotalSeconds / length;
-            var ratio = (progress <= 1 ? (1 - progress) : (curTime - Cooldown.Value.End).TotalSeconds * -5);
-
-            _cooldownGraphic.Progress = MathHelper.Clamp((float) ratio, -1, 1);
-            _cooldownGraphic.Visible = ratio > -1f;
+            _cooldownGraphic.FromTime(Cooldown.Value.Start, Cooldown.Value.End);
         }
     }
 }
