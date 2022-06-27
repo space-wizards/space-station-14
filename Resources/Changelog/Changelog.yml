@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed handcuffed players being able to freely move around despite being
-      pulled., type: Fix}
-  id: 1314
-  time: '2022-04-13T07:11:56.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Added a couple extra contraband posters., type: Add}
@@ -2960,3 +2954,9 @@ Entries:
   - {message: Water Tanks and Fuel Tanks from cargo now come unpackaged., type: Tweak}
   id: 1813
   time: '2022-06-27T14:44:03.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Handcuff times have been bumped back up by 2 seconds for stun / non-stunned
+      times., type: Tweak}
+  id: 1814
+  time: '2022-06-27T16:28:04.0000000+00:00'
