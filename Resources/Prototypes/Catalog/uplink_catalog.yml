@@ -232,12 +232,13 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
-- type: uplinkListing
-  id: UplinkZombieBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelZombieBundle
-  price: 50
-  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+# Add this back in once war ops/separate nukie inventories are added.
+#- type: uplinkListing
+#  id: UplinkZombieBundle
+#  category: Bundles
+#  itemId: ClothingBackpackDuffelZombieBundle
+#  price: 50
+#  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
 
 - type: uplinkListing
   id: UplinkSurplusBundle
