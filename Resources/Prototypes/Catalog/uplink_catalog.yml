@@ -159,6 +159,15 @@
   price: 14
 
 - type: uplinkListing
+  id: UplinkHolster
+  category: Utility
+  itemId: ClothingBeltSyndieHolster
+  listingName: Syndicate Shoulder Holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  icon: /Textures/Clothing/Belt/syndieholster.rsi/icon.png
+  price: 2
+
+- type: uplinkListing
   id: UplinkEmag
   category: Utility
   itemId: Emag
@@ -405,6 +414,12 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Misc
+  itemId: ClothingHeadHatOutlawHat
+  price: 1
 
 - type: uplinkListing
   id: UplinkCatEars
