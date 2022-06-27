@@ -1,10 +1,4 @@
 Entries:
-- author: Fishfish458
-  changes:
-  - {message: Added bureaucracy! Some VIP's now get a stamp either in their backpack
-      or lockers to stamp papers., type: Add}
-  id: 1302
-  time: '2022-04-08T23:37:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Added directional arrows to crew monitors., type: Add}
@@ -2968,3 +2962,8 @@ Entries:
   - {message: Fixed a server crash when slicing some raw meats., type: Fix}
   id: 1801
   time: '2022-06-27T04:00:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
+  id: 1802
+  time: '2022-06-27T04:05:12.0000000+00:00'
