@@ -401,7 +401,7 @@ public sealed partial class ShuttleSystem
        }
        else
        {
-           _sawmill.Info("No centcomm map found.");
+           _sawmill.Info("No centcomm map found, skipping setup.");
        }
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
