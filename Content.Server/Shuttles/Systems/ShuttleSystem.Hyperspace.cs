@@ -95,7 +95,7 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 100f);
+                        body.LinearVelocity = new Vector2(0f, 20f);
                         body.AngularVelocity = 0f;
                         body.LinearDamping = 0f;
                         body.AngularDamping = 0f;
