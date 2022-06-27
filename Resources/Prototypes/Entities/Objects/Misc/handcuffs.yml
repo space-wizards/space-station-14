@@ -7,10 +7,6 @@
   - type: Item
     size: 3
   - type: Handcuff
-    cuffTime: 3.0
-    uncuffTime: 3.0
-    stunBonus: 2.0
-    breakoutTime: 20.0
     cuffedRSI: Objects/Misc/handcuffs.rsi
     iconState: body-overlay
   - type: Sprite
@@ -29,10 +25,9 @@
   - type: Item
     size: 5
   - type: Handcuff
-    cuffTime: 3.5
-    uncuffTime: 3.5
-    stunBonus: 2.0
-    breakoutTime: 15.0
+    cuffTime: 5
+    uncuffTime: 5
+    breakoutTime: 15
     cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
     color: red
@@ -67,11 +62,11 @@
   - type: Item
     size: 2
   - type: Handcuff
-    cuffTime: 3.5
-    uncuffTime: 3.5
+    cuffTime: 5.5
+    uncuffTime: 5.5
     stunBonus: 2.0
-    breakoutTime: 17.5 #halfway between improvised cablecuffs and metal ones
-    cuffedRSI: Objects/Misc/cablecuffs.rsi #cablecuffs will look fine
+    breakoutTime: 20  # halfway between improvised cablecuffs and metal ones
+    cuffedRSI: Objects/Misc/cablecuffs.rsi  # cablecuffs will look fine
     bodyIconState: body-overlay
     breakOnRemove: true
     brokenIconState: cuff-broken
