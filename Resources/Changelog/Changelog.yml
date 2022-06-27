@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fix bug where sometimes instruments would have the incorrect MIDI program
-      for the first few notes., type: Fix}
-  id: 1306
-  time: '2022-04-09T13:33:33.125973+00:00'
 - author: Emisse
   changes:
   - {message: Spationaut suit for salvage specialists. A lightweight competitor to
@@ -2967,3 +2961,9 @@ Entries:
   - {message: Cigars can now be picked up by trash bags, type: Tweak}
   id: 1805
   time: '2022-06-27T04:19:18.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Jetpacks will now turn off properly when the tank runs out of air!,
+    type: Fix}
+  id: 1806
+  time: '2022-06-27T04:36:20.0000000+00:00'
