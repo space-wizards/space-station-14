@@ -16,7 +16,6 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         [Dependency] private readonly IRobustRandom _random = default!;
-        /// Feel free to weak this if there are perf concerns
 
         /// System Variables
 
@@ -24,6 +23,7 @@ namespace Content.Server.Atmos.Miasma
 
         /// <summary>
         /// How often the rotting ticks.
+        /// Feel free to weak this if there are perf concerns.
         /// </summary>
         private float _rotUpdateRate = 5f;
 
