@@ -1,12 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fix instruments having their MIDI program reset after the song loops.,
-    type: Fix}
-  id: 1305
-  time: '2022-04-09T11:24:34.099018+00:00'
-- author: Zumorica
-  changes:
   - {message: Fix bug where sometimes instruments would have the incorrect MIDI program
       for the first few notes., type: Fix}
   id: 1306
@@ -2966,3 +2960,10 @@ Entries:
   - {message: Add missing mining & robotics headsets channels, type: Fix}
   id: 1804
   time: '2022-06-27T04:14:48.0000000+00:00'
+- author: ProfanedBane
+  changes:
+  - {message: 'The contents of trash bags can now be dumped into disposals with alt
+      click, you can then flush by alt clicking again', type: Add}
+  - {message: Cigars can now be picked up by trash bags, type: Tweak}
+  id: 1805
+  time: '2022-06-27T04:19:18.0000000+00:00'
