@@ -900,6 +900,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> ShuttleIdleAngularDamping =
             CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether cargo shuttles are enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> CargoShuttles =
+            CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
 
         /*
          * Emergency
@@ -922,6 +927,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleTransitTime =
             CVarDef.Create("shuttle.emergency_transit_time", 120f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether the emergency shuttle is enabled or should the round just end.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyShuttleEnabled =
+            CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
 
         /*
          * VIEWPORT
