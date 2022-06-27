@@ -141,11 +141,14 @@
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualLayers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
-    - type: GasValveVisuals
-      disabledState: pumpManualValve
-      enabledState: pumpManualValveOn
+    - type: GenericVisualizer
+      visuals:
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: pumpManualValveOn }
+            False: { state: pumpManualValve }
     - type: PipeColorVisuals
     - type: GasValve
     - type: NodeContainer
@@ -217,8 +220,15 @@
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentPumpVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
-    - type: VentPumpVisuals
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.VentPumpVisuals.State:
+          enabled:
+            Off: { state: vent_off }
+            In: { state: vent_in }
+            Out: { state: vent_out }
+            Welded: { state: vent_welded }
     - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet
