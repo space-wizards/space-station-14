@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Syndicate Grenade Penguins no longer attack Syndicate members. Party
-      loyalty, baby.', type: Fix}
-  id: 1308
-  time: '2022-04-10T20:57:45.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: You can once again scream for help while security abuses you (can scream
@@ -2964,3 +2958,8 @@ Entries:
   - {message: Body bags will now accept bodies again!, type: Fix}
   id: 1807
   time: '2022-06-27T05:37:30.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Proper evac support for lighthouse!, type: Add}
+  id: 1808
+  time: '2022-06-27T05:39:00.0000000+00:00'
