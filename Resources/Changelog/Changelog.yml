@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that would prevent drones and mice from moving under doors
-      after having been stunned., type: Fix}
-  id: 1318
-  time: '2022-04-14T02:31:07.0000000+00:00'
 - author: Rane
   changes:
   - {message: All welder steps in wall deconstruction now take 5 times as long., type: Tweak}
@@ -2959,3 +2953,8 @@ Entries:
   - {message: Lawyers now have security headsets., type: Fix}
   id: 1817
   time: '2022-06-27T16:43:16.0000000+00:00'
+- author: KIBORG04
+  changes:
+  - {message: Puddle slippery again!, type: Tweak}
+  id: 1818
+  time: '2022-06-27T17:30:06.0000000+00:00'
