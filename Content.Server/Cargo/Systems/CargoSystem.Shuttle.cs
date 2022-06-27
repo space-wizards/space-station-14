@@ -62,10 +62,10 @@ public sealed partial class CargoSystem
     {
 #if !FULL_RELEASE
         _configManager.OverrideDefault(CCVars.CargoShuttles, false);
+#endif
         _enabled = _configManager.GetCVar(CCVars.CargoShuttles);
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
-#endif
 
         SubscribeLocalEvent<CargoShuttleComponent, MoveEvent>(OnCargoShuttleMove);
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
@@ -83,9 +83,7 @@ public sealed partial class CargoSystem
 
     private void ShutdownShuttle()
     {
-#if !FULL_RELEASE
-    _configManager.UnsubValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
-#endif
+        _configManager.UnsubValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
     }
 
     private void SetCargoShuttleEnabled(bool value)
