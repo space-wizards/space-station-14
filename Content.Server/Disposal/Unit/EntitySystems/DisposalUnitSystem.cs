@@ -96,26 +96,28 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 args.Verbs.Add(flushVerb);
 
                 // Verb to eject the contents
-                AlternativeVerb ejectVerb = new();
-                ejectVerb.Act = () => TryEjectContents(component);
-                ejectVerb.Category = VerbCategory.Eject;
-                ejectVerb.Text = Loc.GetString("disposal-eject-verb-contents");
+                AlternativeVerb ejectVerb = new()
+                {
+                    Act = () => TryEjectContents(component),
+                    Category = VerbCategory.Eject,
+                    Text = Loc.GetString("disposal-eject-verb-contents")
+                };
                 args.Verbs.Add(ejectVerb);
             }
 
             // Behavior if using a trash bag & other dumpable containers
             if (args.Using != null
-                && HasComp<DumpableComponent>(args.Using.Value)
                 && TryComp<DumpableComponent>(args.Using.Value, out var dumpable)
                 && TryComp<ServerStorageComponent>(args.Using.Value, out var storage)
-                && storage.StoredEntities != null
-                && storage.StoredEntities.Count > 0)
+                && storage.StoredEntities is { Count: > 0 })
             {
                 // Verb to dump held container into disposal unit
-                AlternativeVerb dumpVerb = new();
-                dumpVerb.Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage);
-                dumpVerb.Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target));
-                dumpVerb.Priority = 2;
+                AlternativeVerb dumpVerb = new()
+                {
+                    Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage),
+                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
+                    Priority = 2
+                };
                 args.Verbs.Add(dumpVerb);
             }
 
