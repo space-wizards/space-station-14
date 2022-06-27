@@ -36,11 +36,14 @@
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualLayers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Appearance
-  - type: PressurePumpVisuals
-    disabledState: pumpPressure
-    enabledState: pumpPressureOn
+  - type: GenericVisualizer
+    visuals:
+      enum.PumpVisuals.Enabled:
+        enabled:
+          True: { state: pumpPressureOn }
+          False: { state: pumpPressure }
   - type: PipeColorVisuals
   - type: GasPressurePump
   - type: UserInterface
@@ -73,11 +76,14 @@
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualLayers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
-    - type: PressurePumpVisuals
-      disabledState: pumpVolume
-      enabledState: pumpVolumeOn
+    - type: GenericVisualizer
+      visuals:
+        enum.PumpVisuals.Enabled:
+          enabled:
+            True: { state: pumpVolumeOn }
+            False: { state: pumpVolume }
     - type: PipeColorVisuals
     - type: GasVolumePump
     - type: UserInterface
