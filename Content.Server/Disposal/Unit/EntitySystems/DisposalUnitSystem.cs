@@ -37,7 +37,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -106,7 +105,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Behavior if using a trash bag & other dumpable containers
             if (args.Using != null
-                && EntityManager.HasComponent<DumpableComponent>(args.Using.Value)
+                && HasComp<DumpableComponent>(args.Using.Value)
                 && TryComp<DumpableComponent>(args.Using.Value, out var dumpable)
                 && TryComp<ServerStorageComponent>(args.Using.Value, out var storage)
                 && storage.StoredEntities != null
@@ -114,7 +113,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 // Verb to dump held container into disposal unit
                 AlternativeVerb dumpVerb = new();
-                dumpVerb.Act = () => _entMan.EntitySysManager.GetEntitySystem<DumpableSystem>().StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage);
+                dumpVerb.Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage);
                 dumpVerb.Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target));
                 dumpVerb.Priority = 2;
                 args.Verbs.Add(dumpVerb);
