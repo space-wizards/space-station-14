@@ -46,11 +46,39 @@ public sealed partial class ShuttleSystem
 
    private const float ShuttleSpawnBuffer = 1f;
 
+   private bool _emergencyShuttleEnabled;
+
    private void InitializeEscape()
    {
+#if !FULL_RELEASE
+       _configManager.OverrideDefault(CCVars.EmergencyShuttleEnabled, false);
+#endif
+       _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
+       // Don't immediately invoke as roundstart will just handle it.
+       _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
        SubscribeLocalEvent<StationDataComponent, ComponentStartup>(OnStationStartup);
        SubscribeNetworkEvent<EmergencyShuttleRequestPositionMessage>(OnShuttleRequestPosition);
+   }
+
+   private void SetEmergencyShuttleEnabled(bool value)
+   {
+       if (_emergencyShuttleEnabled == value) return;
+       _emergencyShuttleEnabled = value;
+
+       if (value)
+       {
+           SetupEmergencyShuttle();
+       }
+       else
+       {
+           CleanupEmergencyShuttle();
+       }
+   }
+
+   private void ShutdownEscape()
+   {
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
    }
 
    /// <summary>
@@ -104,7 +132,9 @@ public sealed partial class ShuttleSystem
        var xformQuery = GetEntityQuery<TransformComponent>();
        var targetGridGrid = Comp<IMapGridComponent>(targetGrid.Value);
        var targetGridXform = xformQuery.GetComponent(targetGrid.Value);
-       var targetGridRotation = targetGridXform.WorldRotation.ToVec();
+       var targetGridMatrix = targetGridXform.WorldMatrix;
+       var targetGridAngle = targetGridXform.WorldRotation.Reduced();
+       var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(dataComponent.EmergencyShuttle.Value);
        var shuttleAABB = Comp<IMapGridComponent>(dataComponent.EmergencyShuttle.Value).Grid.LocalAABB;
@@ -136,6 +166,19 @@ public sealed partial class ShuttleSystem
                            out var dockedAABB,
                            out var matty,
                            out var targetAngle)) continue;
+
+                   // Can't just use the AABB as we want to get bounds as tight as possible.
+                   var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(Vector2.Zero));
+                   spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
+
+                   var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetGridAngle, spawnPosition.Position);
+
+                   // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
+                   if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
+                           dockedBounds).Any(o => o.GridEntityId != targetGrid))
+                   {
+                       break;
+                   }
 
                    // Alright well the spawn is valid now to check how many we can connect
                    // Get the matrix for each shuttle dock and test it against the grid docks to see
@@ -173,8 +216,6 @@ public sealed partial class ShuttleSystem
                        }
                    }
 
-                   var spawnPosition = new EntityCoordinates(targetGrid.Value, matty.Transform(Vector2.Zero));
-                   spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, spawnPosition.ToMapPos(EntityManager));
                    var spawnRotation = shuttleDockXform.LocalRotation +
                                        gridXform.LocalRotation +
                                        targetGridXform.LocalRotation;
@@ -191,8 +232,6 @@ public sealed partial class ShuttleSystem
        }
 
        if (validDockConfigs.Count <= 0) return null;
-
-       var targetGridAngle = targetGridXform.WorldRotation.Reduced();
 
        // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
        validDockConfigs = validDockConfigs
@@ -332,7 +371,7 @@ public sealed partial class ShuttleSystem
 
    private void OnRoundStart(RoundStartingEvent ev)
    {
-       Setup();
+       SetupEmergencyShuttle();
    }
 
    /// <summary>
@@ -341,6 +380,12 @@ public sealed partial class ShuttleSystem
    public void CallEmergencyShuttle()
    {
        if (EmergencyShuttleArrived) return;
+
+       if (!_emergencyShuttleEnabled)
+       {
+           _roundEnd.EndRound();
+           return;
+       }
 
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        EmergencyShuttleArrived = true;
@@ -391,9 +436,9 @@ public sealed partial class ShuttleSystem
        return result;
    }
 
-   private void Setup()
+   private void SetupEmergencyShuttle()
    {
-       if (_centcommMap != null && _mapManager.MapExists(_centcommMap.Value)) return;
+       if (!_emergencyShuttleEnabled || _centcommMap != null && _mapManager.MapExists(_centcommMap.Value)) return;
 
        _centcommMap = _mapManager.CreateMap();
        _mapManager.SetMapPaused(_centcommMap.Value, true);
@@ -410,7 +455,7 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (_centcommMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled || _centcommMap == null || component.EmergencyShuttle != null) return;
 
        // Load escape shuttle
        var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
@@ -431,6 +476,12 @@ public sealed partial class ShuttleSystem
 
    private void CleanupEmergencyShuttle()
    {
+       // If we get cleaned up mid roundend just end it.
+       if (_launchedShuttles)
+       {
+           _roundEnd.EndRound();
+       }
+
        _shuttleIndex = 0f;
 
        if (_centcommMap == null || !_mapManager.MapExists(_centcommMap.Value))

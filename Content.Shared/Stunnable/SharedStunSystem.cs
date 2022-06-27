@@ -108,6 +108,8 @@ namespace Content.Shared.Stunnable
 
         private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
         {
+            component.SprintSpeedModifier = 1f;
+            component.WalkSpeedModifier = 1f;
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 

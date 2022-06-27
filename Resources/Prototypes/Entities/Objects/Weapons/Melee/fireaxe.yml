@@ -24,7 +24,7 @@
         Blunt: -2 # negative reductions = increases
         Slash: -8
   - type: Clothing
-    size: 20
+    size: 150
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
     Slots:
