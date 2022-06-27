@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: All welder steps in wall deconstruction now take 5 times as long., type: Tweak}
-  id: 1319
-  time: '2022-04-14T07:41:30.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Added new lobby art, type: Add}
@@ -2958,3 +2953,9 @@ Entries:
   - {message: Puddle slippery again!, type: Tweak}
   id: 1818
   time: '2022-06-27T17:30:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed plants with no current uses from botany vendors and crates.,
+    type: Remove}
+  id: 1819
+  time: '2022-06-27T18:12:03.0000000+00:00'
