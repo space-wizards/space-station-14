@@ -21,7 +21,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
         base.Initialize();
 
         InitializeInteractions();
-        InitializeRelay();
     }
 
     public override void Shutdown()
