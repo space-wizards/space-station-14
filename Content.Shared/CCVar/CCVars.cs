@@ -1,5 +1,6 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.CCVar
 {
@@ -933,6 +934,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> EmergencyShuttleEnabled =
             CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The map to load for centcomm for the emergency shuttle to dock to.
+        /// </summary>
+        public static readonly CVarDef<string> CentcommMap =
+            CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
 
         /*
          * VIEWPORT
