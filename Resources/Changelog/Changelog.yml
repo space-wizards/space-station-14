@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added  janitor cart to codebase. Not mapped yet., type: Add}
-  - {message: Wet floor sign and mop doesn't fit in pockets now., type: Tweak}
-  id: 1310
-  time: '2022-04-11T23:21:15.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: Removed the sound from Salvage's Announcements., type: Tweak}
@@ -2961,3 +2955,9 @@ Entries:
   - {message: "You now can\u2019t stack crafted atmos devices on one tile.", type: Fix}
   id: 1809
   time: '2022-06-27T05:42:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Whenever a baton successfully stuns it now applies a 4 second attack
+      cooldown., type: Tweak}
+  id: 1810
+  time: '2022-06-27T07:51:39.0000000+00:00'
