@@ -1,11 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: You can once again scream for help while security abuses you (can scream
-      while stunned & handcuffed). Also allows holoparasites to be released while
-      stunned or cuffed., type: Fix}
-  id: 1309
-  time: '2022-04-11T13:59:11.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added  janitor cart to codebase. Not mapped yet., type: Add}
@@ -2963,3 +2956,8 @@ Entries:
   - {message: Proper evac support for lighthouse!, type: Add}
   id: 1808
   time: '2022-06-27T05:39:00.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: "You now can\u2019t stack crafted atmos devices on one tile.", type: Fix}
+  id: 1809
+  time: '2022-06-27T05:42:27.0000000+00:00'
