@@ -74,7 +74,10 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || args.Target == null || args.Target == owner)
+            if (curTime < comp.CooldownEnd ||
+                args.Target == null ||
+                args.Target == owner ||
+                args.User == args.Target)
                 return;
 
             var location = Transform(args.User).Coordinates;
