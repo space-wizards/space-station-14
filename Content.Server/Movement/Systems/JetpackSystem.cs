@@ -28,7 +28,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
             active.Accumulator -= UpdateCooldown;
             var air = gasTank.RemoveAir(comp.MoleUsage);
 
-            if (air == null || MathHelper.CloseTo(gasTank.Air.TotalMoles, comp.MoleUsage, 0.1f))
+            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.001f))
             {
                 toDisable.Add(comp);
                 continue;
