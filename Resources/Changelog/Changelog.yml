@@ -1,10 +1,4 @@
 Entries:
-- author: ProfanedBane
-  changes:
-  - {message: Modified object physics so you can drag things round corners more easily,
-    type: Tweak}
-  id: 1316
-  time: '2022-04-14T02:28:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Mob pulling now 20% less jank., type: Fix}
@@ -2960,3 +2954,8 @@ Entries:
   - {message: Now smg crate comes with correct magazines for Wt550., type: Fix}
   id: 1815
   time: '2022-06-27T16:34:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Crates now go through plastic flaps., type: Fix}
+  id: 1816
+  time: '2022-06-27T16:36:39.0000000+00:00'
