@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Added new lobby art, type: Add}
-  id: 1320
-  time: '2022-04-14T17:10:31.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Added round Id to the lobby and the round end summary window., type: Add}
@@ -2959,3 +2954,9 @@ Entries:
     type: Remove}
   id: 1819
   time: '2022-06-27T18:12:03.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Delta level alarm's volume has been decreased substantially to avoid
+      causing tinnitus!, type: Tweak}
+  id: 1820
+  time: '2022-06-27T20:45:01.0000000+00:00'
