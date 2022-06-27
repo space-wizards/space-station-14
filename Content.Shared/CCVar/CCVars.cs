@@ -928,6 +928,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> EmergencyShuttleTransitTime =
             CVarDef.Create("shuttle.emergency_transit_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether the emergency shuttle is enabled or should the round just end.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyShuttleEnabled =
+            CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+
         /*
          * VIEWPORT
          */
