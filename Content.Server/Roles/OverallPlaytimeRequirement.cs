@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
+using Robust.Shared.Network;
 
-namespace Content.Shared.Roles
+namespace Content.Server.Roles
 {
     /// <summary>
     ///     Provides special hooks for when jobs get spawned in/equipped.
@@ -13,5 +14,10 @@ namespace Content.Shared.Roles
         /// </summary>
         [DataField("time")]
         public TimeSpan Time;
+
+        public override bool RequirementFulfilled(NetUserId id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

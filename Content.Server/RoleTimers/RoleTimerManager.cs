@@ -2,7 +2,6 @@
 using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -197,17 +196,12 @@ namespace Content.Server.RoleTimers
             var disallowedRoles = new HashSet<string>();
             if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return disallowedRoles; // Return an empty hashset if role timers are disabled
             var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>();
-            Dictionary<string, HashSet<string>>? departments;
             foreach (var job in jobs)
             {
-                if (job.Requirements == null) continue;
-                foreach (var requirement in job.Requirements)
+                if(job.Requirements == null) continue;
+                foreach (var requirement in job.Requirements!)
                 {
-                    var playtime = GetPlayTimeForRole(id, requirement.Job)!.Value;
-                    if (requirement.Time >= playtime)
-                    {
-                        disallowedRoles.Add(job.ID);
-                    }
+                    requirement.
                 }
             }
             return disallowedRoles;

@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Roles
+﻿using Robust.Shared.Network;
+
+namespace Content.Server.Roles
 {
     /// <summary>
     ///     Provides special hooks for when jobs get spawned in/equipped.
@@ -6,6 +8,6 @@
     [ImplicitDataDefinitionForInheritors]
     public abstract class JobRequirement
     {
-        
+        public abstract bool RequirementFulfilled(NetUserId id);
     }
 }
