@@ -36,7 +36,6 @@ namespace Content.Server.Entry
             "AMEShieldingVisuals",
             "PipeColorVisuals",
             "PressurePumpVisuals",
-            "ThermoMachineVisuals",
             "ScrubberVisuals",
         };
     }

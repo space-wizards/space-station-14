@@ -218,12 +218,15 @@
     - type: Sprite
       layers:
         - state: freezer_off
-          map: [ "enum.ThermoMachineVisualLayers.Enabled" ]
+          map: [ "enabled" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-    - type: ThermoMachineVisuals
-      disabledState: freezer_off
-      enabledState: freezer_on
+    - type: GenericVisualizer
+      visuals:
+        enum.ThermoMachineVisuals.Enabled:
+          enabled:
+            True: { state: freezer_on }
+            False: { state: freezer_off }
     - type: GasThermoMachine
       mode: Freezer
     - type: Machine
@@ -244,12 +247,15 @@
     - type: Sprite
       layers:
         - state: heater_off
-          map: [ "enum.ThermoMachineVisualLayers.Enabled" ]
+          map: [ "enabled" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
-    - type: ThermoMachineVisuals
-      disabledState: heater_off
-      enabledState: heater_on
+    - type: GenericVisualizer
+      visuals:
+        enum.ThermoMachineVisuals.Enabled:
+          enabled:
+            True: { state: heater_on }
+            False: { state: heater_off }
     - type: GasThermoMachine
       mode: Heater
     - type: Machine
