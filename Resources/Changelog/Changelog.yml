@@ -1,10 +1,4 @@
 Entries:
-- author: emisse
-  changes:
-  - {message: Cybersun pen has been discovered to work as an excellent screwdriver.,
-    type: Add}
-  id: 1304
-  time: '2022-04-09T06:59:46.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fix instruments having their MIDI program reset after the song loops.,
@@ -2967,3 +2961,8 @@ Entries:
   - {message: Removed starvation and thirst damage., type: Remove}
   id: 1803
   time: '2022-06-27T04:08:09.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Add missing mining & robotics headsets channels, type: Fix}
+  id: 1804
+  time: '2022-06-27T04:14:48.0000000+00:00'
