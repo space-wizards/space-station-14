@@ -17,5 +17,10 @@ namespace Content.Shared.Eye.Blinding
         /// This is not "enabled/disabled".
         /// </description>
         public bool LightSetup = false;
+
+        /// <description>
+        /// Gives an extra frame of blindness to reenable light manager during
+        /// </description>
+        public bool GraceFrame = false;
     }
 }

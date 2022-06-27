@@ -38,7 +38,18 @@ namespace Content.Client.Eye.Blinding
                 return false;
 
             _blindableComponent = blindComp;
-            return (blindComp.Sources > 0);
+
+            var blind = _blindableComponent.Sources > 0;
+
+            if (!blind && _blindableComponent.LightSetup) // Turn FOV back on if we can see again
+            {
+                _lightManager.Enabled = true;
+                _blindableComponent.LightSetup = false;
+                _blindableComponent.GraceFrame = true;
+                return true;
+            }
+
+            return blind;
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -46,14 +57,14 @@ namespace Content.Client.Eye.Blinding
             if (ScreenTexture == null)
                 return;
 
-            if (_blindableComponent.LightSetup) // Do we need to reset this?
+            if (!_blindableComponent.GraceFrame)
             {
-                _lightManager.Enabled = true;
-                _blindableComponent.LightSetup = false;
+                _blindableComponent.LightSetup = true; // Ok we touched the lights
+                _lightManager.Enabled = false;
+            } else
+            {
+                _blindableComponent.GraceFrame = false;
             }
-
-            _blindableComponent.LightSetup = true; // Ok we touched the lights
-            _lightManager.Enabled = false;
 
             _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
