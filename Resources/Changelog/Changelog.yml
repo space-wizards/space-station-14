@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Mob pulling now 20% less jank., type: Fix}
-  id: 1317
-  time: '2022-04-14T02:29:56.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that would prevent drones and mice from moving under doors
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Crates now go through plastic flaps., type: Fix}
   id: 1816
   time: '2022-06-27T16:36:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lawyers now have security headsets., type: Fix}
+  id: 1817
+  time: '2022-06-27T16:43:16.0000000+00:00'
