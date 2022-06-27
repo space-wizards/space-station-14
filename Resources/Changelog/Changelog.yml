@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Removed the sound from Salvage's Announcements., type: Tweak}
-  id: 1311
-  time: '2022-04-11T23:21:24.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixed SMES and Substation construction., type: Fix}
@@ -2961,3 +2956,8 @@ Entries:
       cooldown., type: Tweak}
   id: 1810
   time: '2022-06-27T07:51:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Traitors can now once again get the "Stay Alive" objective., type: Add}
+  id: 1811
+  time: '2022-06-27T11:37:42.0000000+00:00'
