@@ -124,13 +124,16 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!TryComp<SpriteComponent>(comp.Owner, out var sprite) ||
-                !TryComp<SharedItemComponent>(comp.Owner, out var item)) return;
+            // TODO stunbaton visualizer
+            if (TryComp<SpriteComponent>(comp.Owner, out var sprite) &&
+                TryComp<SharedItemComponent>(comp.Owner, out var item))
+            {
+                item.EquippedPrefix = "off";
+                sprite.LayerSetState(0, "stunbaton_off");
+            }
 
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            item.EquippedPrefix = "off";
-            // TODO stunbaton visualizer
-            sprite.LayerSetState(0, "stunbaton_off");
+
             comp.Activated = false;
             if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay) && comp.OldDelay != null)
             {
@@ -144,11 +147,14 @@ namespace Content.Server.Stunnable
             if (comp.Activated)
                 return;
 
-            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
-                return;
+            if (EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) &&
+                EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+            {
+                item.EquippedPrefix = "on";
+                sprite.LayerSetState(0, "stunbaton_on");
+            }
 
-            var playerFilter = Filter.Pvs(comp.Owner);
+            var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -158,8 +164,6 @@ namespace Content.Server.Stunnable
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
 
-            item.EquippedPrefix = "on";
-            sprite.LayerSetState(0, "stunbaton_on");
             comp.Activated = true;
             if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay))
             {
