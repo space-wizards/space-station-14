@@ -97,7 +97,7 @@ namespace Content.Server.Foldable
 
         private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !CanToggleFold(uid, component))
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || !CanToggleFold(uid, component))
                 return;
 
             AlternativeVerb verb = new()

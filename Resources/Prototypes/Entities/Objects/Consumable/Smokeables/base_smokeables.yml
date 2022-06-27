@@ -25,6 +25,9 @@
   - type: Smokable
     exposeTemperature: 1173.15
   - type: Cigar
+  - type: Tag
+    tags:
+    - Trash
   - type: InjectableSolution
     solution: smokable
   - type: SolutionContainerManager
