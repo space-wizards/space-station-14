@@ -10,7 +10,7 @@ namespace Content.Server.Clothing.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMagbootsComponent))]
-    public sealed class MagbootsComponent : SharedMagbootsComponent, IActivate
+    public sealed class MagbootsComponent : SharedMagbootsComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -37,11 +37,6 @@ namespace Content.Server.Clothing.Components
                 OnChanged();
                 Dirty();
             }
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            On = !On;
         }
 
         public override ComponentState GetComponentState()

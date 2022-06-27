@@ -3,6 +3,7 @@ using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Clothing
 {
@@ -16,6 +17,16 @@ namespace Content.Server.Clothing
 
             SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
             SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
+            SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
+        }
+
+        private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            component.On = !component.On;
         }
 
         public void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
