@@ -12,6 +12,8 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -108,8 +110,6 @@
   - type: Internals
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
@@ -159,23 +159,26 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:
         Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

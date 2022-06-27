@@ -53,7 +53,7 @@
           sprite: Objects/Tanks/Jetpacks/blue.rsi
           state: icon-on
         name: action-name-jetpack-toggle
-        description: action-decription-jetpack-toggle
+        description: action-description-jetpack-toggle
         itemIconStyle: NoItem
         event: !type:ToggleJetpackEvent
     - type: Appearance

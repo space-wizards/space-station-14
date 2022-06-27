@@ -137,6 +137,8 @@
       types:
         Poison: 2
         Piercing: 1
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -394,6 +396,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cow_moo.ogg
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0015
 
 
 - type: entity
@@ -650,6 +654,8 @@
     damage:
       types:
         Blunt: 10
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1128,6 +1134,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1294,6 +1302,8 @@
     - type: AiFactionTag
       factions:
         - Xeno
+    - type: PlayerInputMover
+    - type: PlayerMobMover
     - type: UtilityAI
       behaviorSets:
         - Idle

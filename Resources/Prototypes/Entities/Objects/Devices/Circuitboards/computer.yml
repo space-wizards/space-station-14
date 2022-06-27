@@ -230,4 +230,4 @@
   description: A computer printed circuit board for a cloning console
   components:
     - type: ComputerBoard
-      prototype: computerCloningConsole
+      prototype: ComputerCloningConsole

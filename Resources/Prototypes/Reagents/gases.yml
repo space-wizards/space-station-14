@@ -188,7 +188,6 @@
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
-        scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
