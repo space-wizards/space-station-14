@@ -119,10 +119,18 @@
           state: pipeHalf
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
     - type: PipeColorVisuals
-    - type: ScrubberVisuals
+    - type: GenericVisualizer
+      visuals:
+        enum.ScrubberVisuals.State:
+          enabled:
+            Off: { state: scrub_off }
+            Scrub: { state: scrub_on }
+            Siphon: { state: scrub_purge }
+            WideScrub: { state: scrub_wide }
+            Welded: { state: scrub_welded }
     - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
