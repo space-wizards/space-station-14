@@ -142,7 +142,7 @@ public sealed class BlockingSystem : EntitySystem
         {
             var fixture = new Fixture(physicsComponent, shape)
             {
-                ID = component.BlockFixtureID,
+                ID = BlockingComponent.BlockFixtureID,
                 Hard = true,
                 CollisionLayer = (int) CollisionGroup.WallLayer
             };
@@ -189,7 +189,7 @@ public sealed class BlockingSystem : EntitySystem
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
-            _fixtureSystem.DestroyFixture(physicsComponent, component.BlockFixtureID);
+            _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
             _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));

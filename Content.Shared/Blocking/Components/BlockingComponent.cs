@@ -25,7 +25,7 @@ public sealed class BlockingComponent : Component
     /// <summary>
     /// The ID for the fixture that's dynamically created when blocking
     /// </summary>
-    public string BlockFixtureID = "blocking-active";
+    public const string BlockFixtureID = "blocking-active";
 
     /// <summary>
     /// The shape of the blocking fixture that will be dynamically spawned
