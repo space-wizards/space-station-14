@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Added directional arrows to crew monitors., type: Add}
-  id: 1303
-  time: '2022-04-09T01:50:59.0000000+00:00'
 - author: emisse
   changes:
   - {message: Cybersun pen has been discovered to work as an excellent screwdriver.,
@@ -2967,3 +2962,8 @@ Entries:
   - {message: The Syndicate Zombie Bundle has been removed from the Uplink., type: Remove}
   id: 1802
   time: '2022-06-27T04:05:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Removed starvation and thirst damage., type: Remove}
+  id: 1803
+  time: '2022-06-27T04:08:09.0000000+00:00'
