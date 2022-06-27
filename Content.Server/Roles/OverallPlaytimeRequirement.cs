@@ -1,11 +1,9 @@
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 
 namespace Content.Server.Roles
 {
-    /// <summary>
-    ///     Provides special hooks for when jobs get spawned in/equipped.
-    /// </summary>
     [UsedImplicitly]
     public sealed class OverallPlaytimeRequirement : JobRequirement
     {
@@ -15,9 +13,9 @@ namespace Content.Server.Roles
         [DataField("time")]
         public TimeSpan Time;
 
-        public override bool RequirementFulfilled(NetUserId id)
+        public override Tuple<bool, string?> GetRequirementStatus(NetUserId id)
         {
-            throw new NotImplementedException();
+            return new Tuple<bool, string?>(true, "not coded yet");
         }
     }
 }

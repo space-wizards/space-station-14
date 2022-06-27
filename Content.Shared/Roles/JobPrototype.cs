@@ -26,7 +26,7 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [DataField("requirements")]
+        [DataField("requirements", serverOnly: true)]
         public HashSet<JobRequirement>? Requirements;
 
         [DataField("joinNotifyCrew")]

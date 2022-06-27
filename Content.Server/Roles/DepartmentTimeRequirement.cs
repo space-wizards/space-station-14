@@ -6,9 +6,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles
 {
-    /// <summary>
-    ///     Provides special hooks for when jobs get spawned in/equipped.
-    /// </summary>
     [UsedImplicitly]
     public sealed class DepartmentTimeRequirement : JobRequirement
     {
@@ -21,7 +18,7 @@ namespace Content.Server.Roles
         [DataField("time")]
         public TimeSpan Time;
 
-        public override bool RequirementFulfilled(NetUserId id)
+        public override Tuple<bool, string?> GetRequirementStatus(NetUserId id)
         {
             var mgr = IoCManager.Resolve<RoleTimerManager>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<JobPrototype>();
@@ -47,7 +44,12 @@ namespace Content.Server.Roles
                 playtime += time.Value;
             }
 
-            return playtime >= Time;
+            return new Tuple<bool, string?>(playtime >= Time,
+                Loc.GetString("job-requirement-time-remaining",
+                    // TODO: Improve the readability of the time value (30 minutes instead of 0.5 hours and such)
+                    ("duration", Time.Subtract(playtime).TotalHours),
+                    ("units", "hours"),
+                    ("requirement", Department)));
         }
     }
 }

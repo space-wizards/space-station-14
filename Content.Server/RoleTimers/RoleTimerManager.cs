@@ -201,7 +201,11 @@ namespace Content.Server.RoleTimers
                 if(job.Requirements == null) continue;
                 foreach (var requirement in job.Requirements!)
                 {
-                    requirement.
+                    var status = requirement.GetRequirementStatus(id);
+                    if (!status.Item1)
+                    {
+                        disallowedRoles.Add(job.ID);
+                    }
                 }
             }
             return disallowedRoles;
@@ -259,6 +263,7 @@ namespace Content.Server.RoleTimers
         }
 
         public HashSet<string> CurrentRoles;
+
         // The reasoning for having a DateTime here is that we don't need to update it, and
         // can instead just figure out how much time has passed since they first joined and now,
         // and use that to get the TimeSpan to add onto the saved playtime

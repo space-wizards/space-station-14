@@ -1,12 +1,10 @@
 using Content.Server.RoleTimers;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 
 namespace Content.Server.Roles
 {
-    /// <summary>
-    ///     Provides special hooks for when jobs get spawned in/equipped.
-    /// </summary>
     [UsedImplicitly]
     public sealed class RoleTimeRequirement : JobRequirement
     {
@@ -19,11 +17,16 @@ namespace Content.Server.Roles
         [DataField("time")]
         public TimeSpan Time;
 
-        public override bool RequirementFulfilled(NetUserId id)
+        public override Tuple<bool, string?> GetRequirementStatus(NetUserId id)
         {
             var mgr = IoCManager.Resolve<RoleTimerManager>();
-            var playtime = mgr.GetPlayTimeForRole(id, Role);
-            return playtime >= Time;
+            var playtime = mgr.GetPlayTimeForRole(id, Role) ?? TimeSpan.Zero;
+            return new Tuple<bool, string?>(playtime >= Time,
+                Loc.GetString("job-requirement-time-remaining",
+                    // TODO: Improve the readability of the time value (30 minutes instead of 0.5 hours and such)
+                    ("duration", Time.Subtract(playtime).TotalHours),
+                    ("units", "hours"),
+                    ("requirement", Role)));
         }
     }
 }
