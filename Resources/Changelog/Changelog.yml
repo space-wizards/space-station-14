@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added round Id to the lobby and the round end summary window., type: Add}
-  id: 1321
-  time: '2022-04-14T18:40:26.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Added suit storage!, type: Add}
@@ -2960,3 +2955,9 @@ Entries:
       causing tinnitus!, type: Tweak}
   id: 1820
   time: '2022-06-27T20:45:01.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: Added the Syndicate Shoulder Holster and the Outlaw's Hat to the Uplink.,
+    type: Add}
+  id: 1821
+  time: '2022-06-27T23:25:22.0000000+00:00'
