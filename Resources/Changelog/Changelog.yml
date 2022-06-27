@@ -1,24 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'All computers now play a keyboard sound on use, not just R&D computers.',
-    type: Tweak}
-  id: 1298
-  time: '2022-04-08T21:17:05.0000000+00:00'
-- author: Fishfish458
-  changes:
-  - {message: Added a basic Syndie EVA suit to uplink and hardsuit is now bundled
-      by default., type: Add}
-  - {message: Syndicate found a bunch of old surplus Mosins which have been added
-      to the uplink., type: Add}
-  id: 1299
-  time: '2022-04-08T21:19:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: '5 new salvage maps have been added. Suffer at my hand, salvage players.',
-    type: Add}
-  id: 1300
-  time: '2022-04-08T22:07:42.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: A new medium salvage you won't be able to bear has been added., type: Add}
@@ -2972,3 +2952,19 @@ Entries:
       and 5 TC respectively.', type: Add}
   id: 1797
   time: '2022-06-26T17:49:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Accents no longer affect radio channel prefixes, type: Fix}
+  id: 1798
+  time: '2022-06-27T03:56:38.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station now supports the cargo and escape shuttles., type: Tweak}
+  id: 1799
+  time: '2022-06-27T03:57:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The dollar sign in all of the cargo UI is now in the correct position
+      in front of the amount., type: Fix}
+  id: 1800
+  time: '2022-06-27T03:58:06.0000000+00:00'
