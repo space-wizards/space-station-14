@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -123,7 +124,16 @@ namespace Content.Shared.MobState.EntitySystems
 
         public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
-            component.UpdateState(args.Damageable.TotalDamage);
+            // TODO: Hack for now
+            var totalDamage = FixedPoint2.Zero;
+
+            foreach (var (key, damage) in args.Damageable.Damage.DamageDict)
+            {
+                if (key == StaminaSystem.StaminaDamageType) continue;
+                totalDamage += damage;
+            }
+
+            component.UpdateState(totalDamage);
         }
 
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)

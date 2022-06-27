@@ -68,6 +68,7 @@
       types:
         Bloodloss:
           -0.25
+  - type: Stamina
   - type: StatusEffects
     allowed:
     - Stun
