@@ -222,7 +222,7 @@ namespace Content.Server.Storage.Components
                 return false;
 
             // checks
-
+            // TODO: Make the others sub to it.
             var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
             var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
             var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
@@ -240,9 +240,9 @@ namespace Content.Server.Storage.Components
                     allowedToEat = true;
                 else
                 {
-                    var foldableEvent = new StoreThisAttemptEvent();
-                    _entMan.EventBus.RaiseLocalEvent(Owner, foldableEvent);
-                    allowedToEat = !foldableEvent.Cancelled;
+                    var storeEv = new StoreThisAttemptEvent();
+                    _entMan.EventBus.RaiseLocalEvent(Owner, storeEv);
+                    allowedToEat = !storeEv.Cancelled;
                 }
             }
 
