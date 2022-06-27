@@ -901,7 +901,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
         /// <summary>
-        /// Whether cargo shuttles are enabled. Does nothing in release.
+        /// Whether cargo shuttles are enabled.
         /// </summary>
         public static readonly CVarDef<bool> CargoShuttles =
             CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
