@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's disposals should no longer trap you in the Supermatter
-      room., type: Tweak}
-  id: 1313
-  time: '2022-04-12T03:00:51.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed handcuffed players being able to freely move around despite being
@@ -2961,3 +2955,8 @@ Entries:
   - {message: Central Command's brand new control station has been completed !, type: Add}
   id: 1812
   time: '2022-06-27T13:11:39.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Water Tanks and Fuel Tanks from cargo now come unpackaged., type: Tweak}
+  id: 1813
+  time: '2022-06-27T14:44:03.0000000+00:00'
