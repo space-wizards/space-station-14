@@ -1,5 +1,6 @@
 using Content.Server.Mind.Components;
 using Content.Shared.GameTicking;
+using Robust.Shared.Network;
 
 namespace Content.Server.Mind
 {
@@ -14,6 +15,12 @@ namespace Content.Server.Mind
     {
         [ViewVariables]
         public readonly HashSet<Mind> AllMinds = new();
+
+        /// <summary>
+        /// The original mind some given user had.
+        /// </summary>
+        [ViewVariables]
+        public readonly Dictionary<NetUserId, Mind> OriginalMind = new();
 
         public override void Initialize()
         {
@@ -31,8 +38,12 @@ namespace Content.Server.Mind
         void OnMindAdded(EntityUid uid, MindComponent mc, MindAddedMessage args)
         {
             var mind = mc.Mind;
-            if (mind != null)
-                AllMinds.Add(mind);
+            if (mind == null) return;
+
+            AllMinds.Add(mind);
+
+            if (mind.Session != null)
+                OriginalMind.TryAdd(mind.Session.UserId, mind);
         }
     }
 }

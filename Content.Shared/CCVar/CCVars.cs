@@ -206,6 +206,40 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
+        /*
+         * Automated round restart
+         */
+
+        /// <summary>
+        /// Whether or not the round should automatically restart at all.
+        /// </summary>
+        public static readonly CVarDef<bool> GameAutoRestartEnabled =
+            CVarDef.Create("game.auto_restart.enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The minimum players for auto-restart to do anything. Below this, the restart vote is enabled.
+        /// </summary>
+        public static readonly CVarDef<int> GameAutoRestartMinPlayers =
+            CVarDef.Create("game.auto_restart.min_players", 5, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not the round should automatically call shuttle if all communications consoles are offline.
+        /// </summary>
+        public static readonly CVarDef<bool> GameAutoRestartCallOnCommsDown =
+            CVarDef.Create("game.auto_restart.call_on_comms_down", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not the round should automatically call shuttle if the given percent of players are dead.
+        /// </summary>
+        public static readonly CVarDef<float> GameAutoRestartCallOnPercentDead =
+            CVarDef.Create("game.auto_restart.call_on_percent_dead", 0.80f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not the round should automatically restart if the given percent of players are dead.
+        /// </summary>
+        public static readonly CVarDef<float> GameAutoRestartRestartOnPercentDead =
+            CVarDef.Create("game.auto_restart.restart_on_percent_dead", 0.95f, CVar.SERVERONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.

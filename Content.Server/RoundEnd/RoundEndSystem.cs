@@ -1,12 +1,15 @@
 using System.Threading;
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
+using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
+using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
@@ -19,7 +22,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
 
@@ -31,10 +34,31 @@ namespace Content.Server.RoundEnd
         private CancellationTokenSource? _cooldownTokenSource = null;
         public TimeSpan? ExpectedCountdownEnd { get; set; } = null;
 
+        public bool TypicalRecallBlocked { get; private set; } = true;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
+            _consoleHost.RegisterCommand("blockshuttlerecall", "Blocks or unblocks the ability to recall the shuttle", "blockshuttlerecall <bool>", BlockShuttleRecallCommand);
+        }
+
+        [AdminCommand(AdminFlags.Round)]
+        private void BlockShuttleRecallCommand(IConsoleShell shell, string argstr, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                return;
+            }
+
+            if (!bool.TryParse(args[0], out var recallBlock))
+            {
+                shell.WriteError(Loc.GetString("shell-invalid-bool"));
+                return;
+            }
+
+            TypicalRecallBlocked = recallBlock;
         }
 
         private void Reset()
@@ -65,7 +89,7 @@ namespace Content.Server.RoundEnd
             RequestRoundEnd(DefaultCountdownDuration, requester, checkCooldown);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, bool recallBlocked = false)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
 
@@ -73,6 +97,8 @@ namespace Content.Server.RoundEnd
 
             if (_countdownTokenSource != null) return;
             _countdownTokenSource = new();
+
+            TypicalRecallBlocked = recallBlocked;
 
             if (requester != null)
             {
@@ -120,6 +146,7 @@ namespace Content.Server.RoundEnd
             ExpectedCountdownEnd = null;
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
+            TypicalRecallBlocked = false;
         }
 
         public void EndRound()

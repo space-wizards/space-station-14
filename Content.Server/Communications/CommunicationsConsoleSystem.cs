@@ -225,6 +225,13 @@ namespace Content.Server.Communications
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                 return;
             }
+
+            if (_roundEndSystem.TypicalRecallBlocked)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("comms-console-cannot-recall"), uid, Filter.Entities(mob));
+                return;
+            }
+
             _roundEndSystem.CancelRoundEndCountdown(uid);
         }
     }

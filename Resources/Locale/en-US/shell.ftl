@@ -23,6 +23,7 @@ shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
 shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
+shell-invalid-bool = Invalid boolean.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
