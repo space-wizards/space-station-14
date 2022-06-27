@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed SMES and Substation construction., type: Fix}
-  id: 1312
-  time: '2022-04-11T23:21:47.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station's disposals should no longer trap you in the Supermatter
@@ -2961,3 +2956,8 @@ Entries:
   - {message: Traitors can now once again get the "Stay Alive" objective., type: Add}
   id: 1811
   time: '2022-06-27T11:37:42.0000000+00:00'
+- author: Schiene
+  changes:
+  - {message: Central Command's brand new control station has been completed !, type: Add}
+  id: 1812
+  time: '2022-06-27T13:11:39.0000000+00:00'
