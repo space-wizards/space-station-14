@@ -71,7 +71,7 @@
       maxLength: 100
 
 - type: disease
-  id: Bird Flew
+  id: BirdFlew
   name: bird flew
   cureResist: 0.08
   effects:
