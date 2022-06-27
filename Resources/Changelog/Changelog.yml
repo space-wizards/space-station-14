@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Added a couple extra contraband posters., type: Add}
-  id: 1315
-  time: '2022-04-13T13:38:34.0000000+00:00'
 - author: ProfanedBane
   changes:
   - {message: Modified object physics so you can drag things round corners more easily,
@@ -2960,3 +2955,8 @@ Entries:
       times., type: Tweak}
   id: 1814
   time: '2022-06-27T16:28:04.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Now smg crate comes with correct magazines for Wt550., type: Fix}
+  id: 1815
+  time: '2022-06-27T16:34:24.0000000+00:00'
