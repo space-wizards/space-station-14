@@ -60,6 +60,8 @@
       mass: 15
       layer:
       - WallLayer
+  - type: Occluder
+    enabled: false
   - type: Door
     openSound:
       path: /Audio/Misc/zip.ogg
