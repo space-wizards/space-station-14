@@ -1,12 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Spationaut suit for salvage specialists. A lightweight competitor to
-      the bulky salvagers suit., type: Add}
-  - {message: Round 2 of hardsuit stat rebalancing. Aim to make them more useful but
-      not as oppressive as they once were., type: Add}
-  id: 1307
-  time: '2022-04-10T20:57:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Syndicate Grenade Penguins no longer attack Syndicate members. Party
@@ -2967,3 +2959,8 @@ Entries:
     type: Fix}
   id: 1806
   time: '2022-06-27T04:36:20.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Body bags will now accept bodies again!, type: Fix}
+  id: 1807
+  time: '2022-06-27T05:37:30.0000000+00:00'
