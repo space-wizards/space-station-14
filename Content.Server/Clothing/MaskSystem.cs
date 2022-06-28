@@ -3,6 +3,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Server.Actions;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Clothing.Components;
@@ -17,6 +18,7 @@ namespace Content.Server.Clothing
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly ActionsSystem _actionSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -38,7 +40,7 @@ namespace Content.Server.Clothing
                 return;
 
             mask.IsToggled ^= true;
-            EntitySystem.Get<SharedActionsSystem>().SetToggled(mask.ToggleAction!, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleAction!, mask.IsToggled);
 
             if (mask.IsToggled)
                 _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, Filter.Entities(args.Performer));
