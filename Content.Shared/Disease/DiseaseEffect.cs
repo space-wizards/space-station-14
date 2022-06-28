@@ -15,7 +15,7 @@ namespace Content.Shared.Disease
         ///     What stages this effect triggers on
         /// </summary>
         [DataField("stages")]
-        public readonly List<int> Stages = new() { 0 };
+        public readonly int[] Stages = { 0 };
         /// <summary>
         /// What effect the disease will have.
         /// </summary>
