@@ -97,7 +97,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             // Client last ran tick 15 meaning it's ahead of the last server tick it processed (12)
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(16)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(12)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(12)));
 
             // *** I am using block scopes to visually distinguish these sections of the test to make it more readable.
 
@@ -173,7 +173,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Assert timing is still correct, should be but it's a good reference for the rest of the test.
             Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(18)));
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(20)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(16)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(16)));
 
             {
                 // Send event to server to change flag again, this time to disable it..
@@ -244,7 +244,7 @@ namespace Content.IntegrationTests.Tests.Networking
             // Assert timing is still correct.
             Assert.That(sGameTiming.CurTick, Is.EqualTo(new GameTick(22)));
             Assert.That(cGameTiming.CurTick, Is.EqualTo(new GameTick(24)));
-            Assert.That(cGameStateManager.CurServerTick, Is.EqualTo(new GameTick(20)));
+            Assert.That(cGameTiming.LastProcessedTick, Is.EqualTo(new GameTick(20)));
 
             {
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
