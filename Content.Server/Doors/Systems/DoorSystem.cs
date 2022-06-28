@@ -199,7 +199,6 @@ public sealed class DoorSystem : SharedDoorSystem
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 
-        SoundSystem.Play("/Audio/Machines/airlock_creaking.ogg", Filter.Pvs(target, entityManager: EntityManager), AudioParams.Default.WithVolume(-3f));
         return true; // we might not actually succeeded, but a do-after has started
     }
 

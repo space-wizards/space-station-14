@@ -135,6 +135,8 @@
   - type: Tool
     qualities:
       - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: TilePrying
 
 - type: entity
