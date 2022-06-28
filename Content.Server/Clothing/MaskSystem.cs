@@ -57,7 +57,7 @@ namespace Content.Server.Clothing
                 return;
 
             mask.IsToggled = false;
-            EntitySystem.Get<SharedActionsSystem>().SetToggled(mask.ToggleAction!, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleAction!, mask.IsToggled);
 
             ToggleMaskComponents(uid, mask, args.Equipee, true);
         }
