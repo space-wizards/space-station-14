@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: ComputerFrame
-  id: ComputerBase
+  id: BaseComputer
   name: computer
   placement:
     mode: SnapgridCenter

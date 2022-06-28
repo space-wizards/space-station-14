@@ -22764,7 +22764,7 @@ entities:
       51,31: 0
       52,29: 0
       52,30: 0
-      52,31: 0
+      52,31: 11
       53,28: 0
       53,29: 0
       53,30: 0
@@ -22784,7 +22784,7 @@ entities:
       54,28: 0
       54,29: 0
       54,30: 0
-      54,31: 0
+      54,31: 11
       55,16: 0
       55,17: 0
       55,18: 0
@@ -23791,8 +23791,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.196135
-      - 79.73784
+      - 21.714317
+      - 81.687195
       - 0
       - 0
       - 0
@@ -23802,8 +23802,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.382627
-      - 80.43941
+      - 21.751781
+      - 81.82813
       - 0
       - 0
       - 0
@@ -23813,8 +23813,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.643051
-      - 81.4191
+      - 21.795242
+      - 81.99162
       - 0
       - 0
       - 0
@@ -23824,8 +23824,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.779423
-      - 81.93211
+      - 21.81747
+      - 82.07524
       - 0
       - 0
       - 0
@@ -25419,10 +25419,10 @@ entities:
     parent: 60
     type: Transform
 - uid: 227
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
   - rot: 3.141592653589793 rad
-    pos: 44.5,31.5
+    pos: 52.5,31.5
     parent: 60
     type: Transform
   - fixtures:
@@ -25953,38 +25953,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 297
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlass
   components:
-  - rot: 3.141592653589793 rad
-    pos: 46.5,31.5
+  - pos: 52.5,27.5
     parent: 60
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 298
   type: WallReinforced
   components:
@@ -35233,8 +35206,6 @@ entities:
   components:
   - parent: 7982
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -53085,7 +53056,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -1110.84
+  - SecondsUntilStateChange: -1148.7399
     state: Opening
     type: Door
 - uid: 3729
@@ -53496,6 +53467,8 @@ entities:
   - pos: 5.6068063,-37.38705
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3785
   type: ClothingHeadHelmetEVA
   components:
@@ -53553,6 +53526,8 @@ entities:
   - pos: 5.6068063,-38.496426
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3793
   type: PoweredSmallLight
   components:
@@ -66586,9 +66561,9 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 5477
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlass
   components:
-  - pos: 54.5,27.5
+  - pos: 46.5,27.5
     parent: 60
     type: Transform
 - uid: 5478
@@ -76185,11 +76160,38 @@ entities:
     parent: 60
     type: Transform
 - uid: 6693
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 54.5,30.5
+  - rot: 3.141592653589793 rad
+    pos: 46.5,31.5
     parent: 60
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 6694
   type: Catwalk
   components:
@@ -76197,11 +76199,38 @@ entities:
     parent: 60
     type: Transform
 - uid: 6695
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 52.5,30.5
+  - rot: 3.141592653589793 rad
+    pos: 54.5,31.5
     parent: 60
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 6696
   type: Catwalk
   components:
@@ -77882,9 +77911,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 6921
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlass
   components:
-  - pos: 44.5,30.5
+  - pos: 54.5,27.5
     parent: 60
     type: Transform
 - uid: 6922
@@ -78396,12 +78425,16 @@ entities:
   - pos: 5.4349313,-38.4183
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6995
   type: DoubleEmergencyOxygenTankFilled
   components:
   - pos: 5.3724313,-37.340176
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6996
   type: SignDirectionalEng
   components:
@@ -78894,11 +78927,38 @@ entities:
     - machine_board
     type: Construction
 - uid: 7062
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 46.5,30.5
+  - rot: 3.141592653589793 rad
+    pos: 44.5,31.5
     parent: 60
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 7063
   type: WallReinforced
   components:
@@ -110852,42 +110912,9 @@ entities:
         uid: 12607
     type: SignalReceiver
 - uid: 11758
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlass
   components:
-  - rot: 3.141592653589793 rad
-    pos: 52.5,31.5
-    parent: 60
-    type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
-- uid: 11759
-  type: AirlockExternalGlassLocked
-  components:
-  - pos: 52.5,27.5
+  - pos: 44.5,27.5
     parent: 60
     type: Transform
 - uid: 11760
@@ -112238,12 +112265,6 @@ entities:
   type: Grille
   components:
   - pos: 47.5,28.5
-    parent: 60
-    type: Transform
-- uid: 11978
-  type: AirlockExternalGlassLocked
-  components:
-  - pos: 44.5,27.5
     parent: 60
     type: Transform
 - uid: 11979
@@ -116413,39 +116434,6 @@ entities:
   - pos: 25.5,27.5
     parent: 60
     type: Transform
-- uid: 12645
-  type: AirlockExternalGlassShuttleLocked
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 54.5,31.5
-    parent: 60
-    type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 12646
   type: WallReinforced
   components:
@@ -116518,12 +116506,6 @@ entities:
   type: Grille
   components:
   - pos: 47.5,27.5
-    parent: 60
-    type: Transform
-- uid: 12658
-  type: AirlockExternalGlassLocked
-  components:
-  - pos: 46.5,27.5
     parent: 60
     type: Transform
 - uid: 12659
