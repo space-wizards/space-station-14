@@ -148,9 +148,12 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region pulling
-        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptEvent args)
+        private void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptEvent args)
         {
             if (args.Puller.Owner != uid)
+                return;
+
+            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
             // Cancel pull if all hands full.
@@ -161,6 +164,9 @@ namespace Content.Server.Hands.Systems
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
+                return;
+
+            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
             if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
