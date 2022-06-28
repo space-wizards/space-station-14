@@ -49,6 +49,7 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ResearchClient
   - type: ResearchPointSource
     pointspersecond: 100
     active: true

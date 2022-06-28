@@ -3,7 +3,7 @@
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
                            SetSize="600 600"
                            MinSize="600 600">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                    StyleClasses="LabelKeyText" />
@@ -14,7 +14,7 @@
             <Label Text="{Loc 'cargo-console-menu-points-label'}"
                    StyleClasses="LabelKeyText" />
             <Label Name="PointsLabel"
-                   Text="0" />
+                   Text="$0" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"

@@ -1,11 +1,11 @@
 - type: job
   id: SecurityOfficer
-  name: "security officer"
+  name: job-name-security
   startingGear: SecurityOfficerGear
   departments:
   - Security
   icon: "SecurityOfficer"
-  supervisors: "the head of security"
+  supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security

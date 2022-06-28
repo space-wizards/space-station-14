@@ -12,7 +12,6 @@ namespace Content.Shared.Singularity
         [Dependency] private readonly FixtureSystem _fixtures = default!;
 
         public const string DeleteFixture = "DeleteCircle";
-        public const string CollideFixture = "ColliderCircle";
 
         private float GetFalloff(int level)
         {
@@ -116,10 +115,17 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle deleteCircle} && _fixtures.GetFixtureOrNull(physics, CollideFixture) is {Shape: PhysShapeCircle collideCircle})
+            if (physics != null)
             {
-                deleteCircle.Radius = value - 0.5f;
-                collideCircle.Radius = value;
+                var fixture = _fixtures.GetFixtureOrNull(physics, DeleteFixture);
+
+                if (fixture != null)
+                {
+                    var circle = (PhysShapeCircle) fixture.Shape;
+                    circle.Radius = value - 0.5f;
+
+                    fixture.Hard = value <= 4;
+                }
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))

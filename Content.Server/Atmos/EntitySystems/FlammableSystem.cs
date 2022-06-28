@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -46,6 +47,20 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFireEvent);
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
+            SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
+        }
+
+        private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
+        {
+            foreach (var entity in args.HitEntities)
+            {
+                if (!TryComp<FlammableComponent>(entity, out var flammable))
+                    continue;
+
+                flammable.FireStacks += component.FireStacks;
+                Ignite(entity, flammable);
+            }
+            
         }
 
         private void IgniteOnCollide(EntityUid uid, IgniteOnCollideComponent component, StartCollideEvent args)
