@@ -70,6 +70,7 @@
     state: smear-0
     netsync: false
   - type: Puddle
+    slipThreshold: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -89,6 +90,7 @@
     state: splatter-0
     netsync: false
   - type: Puddle
+    slipThreshold: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -141,6 +143,7 @@
     state: vomit-0
     netsync: false
   - type: Puddle
+    slipThreshold: 5
   - type: SolutionContainerManager
     solutions:
       puddle:

@@ -19,6 +19,15 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
         _window?.OpenCentered();
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+        {
+            _window?.Dispose();
+        }
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);

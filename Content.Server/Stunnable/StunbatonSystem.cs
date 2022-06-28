@@ -4,6 +4,7 @@ using Content.Server.Power.Events;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -13,18 +14,23 @@ using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Stunnable
 {
     public sealed class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly MeleeWeaponSystem _melee = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -39,18 +45,20 @@ namespace Content.Server.Stunnable
 
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
         {
-            if (!comp.Activated || !args.HitEntities.Any() || args.Handled)
+            if (!comp.Activated || !args.HitEntities.Any() || args.Handled || _useDelay.ActiveDelay(uid))
                 return;
 
             if (!TryComp<BatteryComponent>(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            foreach (EntityUid entity in args.HitEntities)
+            foreach (var entity in args.HitEntities)
             {
                 StunEntity(entity, comp);
                 SendPowerPulse(entity, args.User, uid);
             }
 
+            _melee.SetAttackCooldown(uid, _timing.CurTime + comp.ActiveDelay);
+            _useDelay.BeginDelay(uid);
             // No combat should occur if we successfully stunned.
             args.Handled = true;
         }
@@ -97,25 +105,10 @@ namespace Content.Server.Stunnable
         {
             if (!EntityManager.TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
 
-            // TODO: Make slowdown inflicted customizable.
-
             SoundSystem.Play(comp.StunSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            if (!EntityManager.HasComponent<SlowedDownComponent>(entity))
-            {
-                if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
-                else
-                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
-            }
-            else
-            {
-                if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
-                else
-                    _stunSystem.TrySlowdown(entity, TimeSpan.FromSeconds(comp.SlowdownTime), true,  0.5f, 0.5f, status);
-            }
+            _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
 
-            var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
+            var slowdownTime = TimeSpan.FromSeconds(comp.ParalyzeTime);
             _jitterSystem.DoJitter(entity, slowdownTime, true, status:status);
             _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
@@ -129,32 +122,39 @@ namespace Content.Server.Stunnable
         private void TurnOff(StunbatonComponent comp)
         {
             if (!comp.Activated)
-            {
                 return;
+
+            // TODO stunbaton visualizer
+            if (TryComp<SpriteComponent>(comp.Owner, out var sprite) &&
+                TryComp<SharedItemComponent>(comp.Owner, out var item))
+            {
+                item.EquippedPrefix = "off";
+                sprite.LayerSetState(0, "stunbaton_off");
             }
 
-            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item)) return;
-
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            item.EquippedPrefix = "off";
-            // TODO stunbaton visualizer
-            sprite.LayerSetState(0, "stunbaton_off");
+
             comp.Activated = false;
+            if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay) && comp.OldDelay != null)
+            {
+                useDelay.Delay = comp.OldDelay.Value;
+                comp.OldDelay = null;
+            }
         }
 
         private void TurnOn(StunbatonComponent comp, EntityUid user)
         {
             if (comp.Activated)
-            {
                 return;
+
+            if (EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) &&
+                EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+            {
+                item.EquippedPrefix = "on";
+                sprite.LayerSetState(0, "stunbaton_on");
             }
 
-            if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) ||
-                !EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
-                return;
-
-            var playerFilter = Filter.Pvs(comp.Owner);
+            var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || battery.CurrentCharge < comp.EnergyPerUse)
             {
                 SoundSystem.Play(comp.TurnOnFailSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -164,9 +164,12 @@ namespace Content.Server.Stunnable
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
 
-            item.EquippedPrefix = "on";
-            sprite.LayerSetState(0, "stunbaton_on");
             comp.Activated = true;
+            if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay))
+            {
+                comp.OldDelay = useDelay.Delay;
+                useDelay.Delay = comp.ActiveDelay;
+            }
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)
