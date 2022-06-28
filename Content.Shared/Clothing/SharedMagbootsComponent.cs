@@ -11,7 +11,8 @@ public abstract class SharedMagbootsComponent : Component
     [DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();
 
-    public abstract bool On { get; set; }
+    [ViewVariables]
+    public bool On;
 
     [Serializable, NetSerializable]
     public sealed class MagbootsComponentState : ComponentState

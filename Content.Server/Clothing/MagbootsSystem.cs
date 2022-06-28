@@ -8,6 +8,8 @@ using Content.Shared.Item;
 using Content.Shared.Toggleable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using static Content.Shared.Clothing.SharedMagbootsComponent;
 
 namespace Content.Server.Clothing;
 
@@ -24,6 +26,7 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
+        SubscribeLocalEvent<MagbootsComponent, ComponentGetState>(OnGetState);
     }
 
     private void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
@@ -83,5 +86,10 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         {
             UpdateMagbootEffects(args.Equipee, uid, true, component);
         }
+    }
+
+    private void OnGetState(EntityUid uid, MagbootsComponent component, ref ComponentGetState args)
+    {
+        args.State = new MagbootsComponentState(component.On);
     }
 }

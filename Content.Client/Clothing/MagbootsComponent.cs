@@ -6,5 +6,5 @@ namespace Content.Client.Clothing;
 [ComponentReference(typeof(SharedMagbootsComponent))]
 public sealed class MagbootsComponent : SharedMagbootsComponent
 {
-    public override bool On { get; set; }
+
 }

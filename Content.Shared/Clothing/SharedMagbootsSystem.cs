@@ -55,7 +55,6 @@ public abstract class SharedMagbootsSystem : EntitySystem
             return;
 
         component.On = !component.On;
-
         args.Handled = true;
     }
 }
