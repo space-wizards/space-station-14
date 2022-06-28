@@ -109,10 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_overlay.ContainsKey(ev.GridId))
-            {
-                _overlay.Remove(ev.GridId);
-            }
+            _overlay.Remove(ev.EntityUid);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

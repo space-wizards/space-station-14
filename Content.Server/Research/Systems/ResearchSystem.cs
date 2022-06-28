@@ -1,12 +1,18 @@
 using Content.Server.Research.Components;
+using Content.Shared.Research.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research
 {
     [UsedImplicitly]
-    public sealed class ResearchSystem : EntitySystem
+    public sealed partial class ResearchSystem : EntitySystem
     {
-        private const float ResearchConsoleUIUpdateTime = 30f;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
+        private const int ResearchConsoleUIUpdateTime = 5;
 
         private float _timer = ResearchConsoleUIUpdateTime;
         private readonly List<ResearchServerComponent> _servers = new();
@@ -15,6 +21,10 @@ namespace Content.Server.Research
         public override void Initialize()
         {
             base.Initialize();
+            InitializeClient();
+            InitializeConsole();
+            InitializeServer();
+            InitializeTechnology();
         }
 
         public bool RegisterServer(ResearchServerComponent server)
@@ -67,19 +77,20 @@ namespace Content.Server.Research
         {
             _timer += frameTime;
 
-            foreach (var server in _servers)
+            while (_timer > ResearchConsoleUIUpdateTime)
             {
-                server.Update(frameTime);
-            }
-
-            if (_timer >= ResearchConsoleUIUpdateTime)
-            {
-                foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
+                foreach (var server in _servers)
                 {
-                    console.UpdateUserInterface();
+                    UpdateServer(server, ResearchConsoleUIUpdateTime);
                 }
 
-                _timer = 0f;
+                foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
+                {
+                    if (!_uiSystem.IsUiOpen(console.Owner, ResearchConsoleUiKey.Key)) continue;
+                    UpdateConsoleInterface(console);
+                }
+
+                _timer -= ResearchConsoleUIUpdateTime;
             }
         }
     }

@@ -54,7 +54,7 @@ namespace Content.Server.GameTicking
             InitializeLobbyMusic();
             InitializeLobbyBackground();
             InitializeGamePreset();
-            DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == Loc.GetString(FallbackOverflowJobName),
+            DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
 

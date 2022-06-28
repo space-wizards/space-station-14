@@ -1,11 +1,11 @@
 - type: job
   id: Passenger
-  name: "passenger"
+  name: job-name-passenger
   startingGear: PassengerGear
   departments:
   - Civilian
   icon: "Passenger"
-  supervisors: "absolutely everyone"
+  supervisors: job-supervisors-everyone
   access:
   - Maintenance
 
