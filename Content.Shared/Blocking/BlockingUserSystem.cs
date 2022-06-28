@@ -18,18 +18,15 @@ public sealed class BlockingUserSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamgageChanged);
+        SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
     }
 
-    private void OnDamgageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
     {
-        var items = _handsSystem.EnumerateHeld(uid);
-
-        foreach (var item in items)
+        if (component.BlockingItem != null)
         {
-            if (HasComp<BlockingComponent>(item))
-                RaiseLocalEvent(item, args);
+            RaiseLocalEvent(component.BlockingItem.Value, args);
         }
     }
 
