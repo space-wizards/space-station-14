@@ -52,7 +52,8 @@ namespace Content.Shared.Paper
         public enum PaperStatus : byte
         {
             Blank,
-            Written
+            Written,
+            Plane
         }
     }
 }

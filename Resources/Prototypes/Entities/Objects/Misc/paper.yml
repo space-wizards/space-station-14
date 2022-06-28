@@ -9,11 +9,15 @@
     netsync: false
     layers:
     - state: paper
+      map: ["enum.PaperVisualLayers.Paper"]
     - state: paper_words
       map: ["enum.PaperVisualLayers.Writing"]
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+    - state: paper_plane
+      map: ["enum.PaperVisualLayers.Plane"]
       visible: false
   - type: Paper
   - type: ActivatableUI
@@ -448,22 +452,3 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: stamp-ce
-
-- type: entity
-  name: paper plane
-  parent: BaseItem
-  id: PaperPlane
-  description: 'A piece of paper folded into a plane.'
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: "paper_plane"
-    netsync: false
-  - type: PaperPlane
-  - type: TileFrictionModifier
-    modifier: 0.01 #wheeeee
-  - type: Tag
-    tags:
-    - NoSpinOnThrow
-    - Trash
-  

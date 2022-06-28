@@ -11,19 +11,25 @@ public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(PaperVisuals.Status , out PaperStatus writingStatus))
+        if (args.Component.TryGetData(PaperVisuals.Status, out PaperStatus writingStatus))
+        {
             args.Sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
+            args.Sprite.LayerSetVisible(PaperVisualLayers.Paper, writingStatus != PaperStatus.Plane);
+            args.Sprite.LayerSetVisible(PaperVisualLayers.Plane, writingStatus == PaperStatus.Plane);
+        }
 
         if (args.Component.TryGetData(PaperVisuals.Stamp, out string stampState))
         {
             args.Sprite.LayerSetState(PaperVisualLayers.Stamp, stampState);
-            args.Sprite.LayerSetVisible(PaperVisualLayers.Stamp, true);
+            args.Sprite.LayerSetVisible(PaperVisualLayers.Stamp, writingStatus != PaperStatus.Plane);
         }
     }
 }
 
 public enum PaperVisualLayers
 {
+    Paper,
     Stamp,
-    Writing
+    Writing,
+    Plane
 }

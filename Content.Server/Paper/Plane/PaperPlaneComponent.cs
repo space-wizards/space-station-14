@@ -1,4 +1,4 @@
-using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 using System.Threading;
 
 namespace Content.Server.Paper.Plane
@@ -6,18 +6,12 @@ namespace Content.Server.Paper.Plane
     [RegisterComponent]
     public sealed class PaperPlaneComponent : Component
     {
-        // stores the paper inside to retain writing/stamps/etc.
-        public ContainerSlot PaperContainer = default!;
-
         public float FoldDelay = 1.0f;
 
+        public float FrictionRatio = 0.01f;
+
+        public string[] Tags = { "NoSpinOnThrow", "Trash" };
+
         public CancellationTokenSource? CancelToken = null;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            PaperContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-paperContainer");
-        }
     }
 }

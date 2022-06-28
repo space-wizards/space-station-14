@@ -1,16 +1,22 @@
 using Content.Server.DoAfter;
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.UserInterface;
+using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Utility;
 using System.Threading;
+using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper.Plane
 {
     public sealed class PaperPlaneSystem : EntitySystem
     {
-        [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
         [Dependency] private DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -25,6 +31,7 @@ namespace Content.Server.Paper.Plane
             SubscribeLocalEvent<UnfoldPlaneCancelledEvent>(OnUnfoldPlaneCancel);
 
             SubscribeLocalEvent<PaperPlaneComponent, StartCollideEvent>(OnCollideEvent);
+            SubscribeLocalEvent<PaperPlaneComponent, ActivatableUIOpenAttemptEvent>(OnPaperUIOpenEvent);
         }
 
         private void OnAltVerbPlane(EntityUid uid, PaperPlaneComponent plane, GetVerbsEvent<AlternativeVerb> args)
@@ -63,26 +70,27 @@ namespace Content.Server.Paper.Plane
         {
             args.Plane.CancelToken = null;
 
-            if (args.Plane.PaperContainer.ContainedEntity is not { Valid: true } paper)
+            if (TryComp<AppearanceComponent>(uid, out var appearance) &&
+                TryComp<PaperComponent>(uid, out var paper))
             {
-                //default to blank paper, i.e. a paper plane was spawned instead of folded
-                paper = Spawn("Paper", Transform(args.User).MapPosition);
+                PaperStatus status = paper.Content != "" ? PaperStatus.Written : PaperStatus.Blank;
+                    appearance.SetData(PaperVisuals.Status, status);
             }
 
-            args.Plane.PaperContainer.Remove(paper);
+            if (TryComp(plane.Owner, out TileFrictionModifierComponent? frictionModifier))
+                frictionModifier.Modifier /= plane.FrictionRatio;
 
-            //drop the plane if holding, so the paper can go into the same hand
-            if (_sharedHandsSystem.IsHolding(args.User, args.Plane.Owner, out var hand))
-                _sharedHandsSystem.TryDrop(args.User, hand);
+            _tagSystem.RemoveTags(plane.Owner, plane.Tags);
 
-            _sharedHandsSystem.PickupOrDrop(args.User, paper);
-
-            EntityManager.QueueDeleteEntity(args.Plane.Owner);
+            _entityManager.RemoveComponent<PaperPlaneComponent>(plane.Owner);
         }
 
         private void OnAltVerbPaper(EntityUid uid, PaperComponent paper, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (HasComp<PaperPlaneComponent>(paper.Owner))
                 return;
 
             AlternativeVerb verb = new()
@@ -116,11 +124,15 @@ namespace Content.Server.Paper.Plane
         {
             args.Paper.CancelToken = null;
 
-            var ent = Spawn("PaperPlane", Transform(args.User).MapPosition);
-            PaperPlaneComponent plane = Comp<PaperPlaneComponent>(ent);
-            plane.PaperContainer.Insert(paper.Owner);
+            var plane = _entityManager.AddComponent<PaperPlaneComponent>(paper.Owner);
 
-            _sharedHandsSystem.PickupOrDrop(args.User, plane.Owner);
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                appearance.SetData(PaperVisuals.Status, PaperStatus.Plane);
+
+            if (TryComp(paper.Owner, out TileFrictionModifierComponent? frictionModifier))
+                frictionModifier.Modifier *= plane.FrictionRatio;
+
+            _tagSystem.AddTags(paper.Owner, plane.Tags);
         }
 
         private void OnCollideEvent(EntityUid uid, PaperPlaneComponent plane, StartCollideEvent args)
@@ -132,6 +144,12 @@ namespace Content.Server.Paper.Plane
             // avoid bouncing off of walls, unless weightless
             if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
                 physics.Momentum = Vector2.Zero;
+        }
+
+        private void OnPaperUIOpenEvent(EntityUid uid, PaperPlaneComponent plane, ActivatableUIOpenAttemptEvent args)
+        {
+            //don't open paper UI when folded. User must unfold first
+            args.Cancel();
         }
 
         private void OnUnfoldPlaneCancel(UnfoldPlaneCancelledEvent args)

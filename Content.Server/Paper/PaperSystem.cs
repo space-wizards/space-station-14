@@ -8,6 +8,7 @@ using Content.Server.Popups;
 using Robust.Shared.Player;
 
 using static Content.Shared.Paper.SharedPaperComponent;
+using Content.Server.Paper.Plane;
 
 namespace Content.Server.Paper
 {
@@ -51,6 +52,13 @@ namespace Content.Server.Paper
 
         private void OnExamined(EntityUid uid, PaperComponent paperComp, ExaminedEvent args)
         {
+            if(HasComp<PaperPlaneComponent>(paperComp.Owner))
+            {
+                if(paperComp.Content == "") args.Message.PushNewline(); //needed for formatting
+                args.Message.AddMarkup(Loc.GetString("paper-component-examine-detail-is-plane", ("paper", uid)));
+                return; //can't see details when folded
+            }
+
             if (!args.IsInDetailsRange)
                 return;
 
@@ -74,6 +82,12 @@ namespace Content.Server.Paper
 
         private void OnInteractUsing(EntityUid uid, PaperComponent paperComp, InteractUsingEvent args)
         {
+            if (HasComp<PaperPlaneComponent>(paperComp.Owner))
+            {
+                args.Handled = true;
+                return;
+            }
+
             if (_tagSystem.HasTag(args.Used, "Write"))
             {
                 if (!TryComp<ActorComponent>(args.User, out var actor))
