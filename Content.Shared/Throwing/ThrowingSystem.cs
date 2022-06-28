@@ -64,7 +64,7 @@ public sealed class ThrowingSystem : EntitySystem
                 xformQuery ??= GetEntityQuery<TransformComponent>();
                 transform = xformQuery.Value.GetComponent(uid);
             }
-            transform.LocalRotation = direction.ToWorldAngle() - Math.PI;
+            transform.WorldRotation = direction.ToWorldAngle() - Math.PI;
         }
 
         if (user != null)
