@@ -1,9 +1,4 @@
 Entries:
-- author: Radosvik
-  changes:
-  - {message: Lobby Info Box now refreshes when needed., type: Tweak}
-  id: 1326
-  time: '2022-04-15T18:55:38.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added Agent ID cards to the uplink, a traitor item that allows you
@@ -2960,3 +2955,8 @@ Entries:
   - {message: Xenos can now pry doors., type: Add}
   id: 1825
   time: '2022-06-28T10:50:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Research console should work again I guess., type: Fix}
+  id: 1826
+  time: '2022-06-28T12:54:08.0000000+00:00'
