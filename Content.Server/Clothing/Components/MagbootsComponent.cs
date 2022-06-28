@@ -1,46 +1,16 @@
 using Content.Shared.Clothing;
-using Content.Shared.Interaction;
-using Content.Shared.Inventory;
-using Content.Shared.Item;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 
-namespace Content.Server.Clothing.Components
+namespace Content.Server.Clothing.Components;
+
+[RegisterComponent]
+[ComponentReference(typeof(SharedMagbootsComponent))]
+public sealed class MagbootsComponent : SharedMagbootsComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedMagbootsComponent))]
-    public sealed class MagbootsComponent : SharedMagbootsComponent
+    [ViewVariables]
+    public override bool On { get; set; }
+
+    public override ComponentState GetComponentState()
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
-        private bool _on;
-
-        [ViewVariables]
-        public override bool On
-        {
-            get => _on;
-            set
-            {
-                _on = value;
-
-                if (Owner.TryGetContainer(out var container) && EntitySystem.Get<InventorySystem>()
-                        .TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == Owner)
-                {
-                    EntitySystem.Get<MagbootsSystem>().UpdateMagbootEffects(container.Owner, Owner, true, this);
-                }
-
-                if (_entMan.TryGetComponent<SharedItemComponent>(Owner, out var item))
-                    item.EquippedPrefix = On ? "on" : null;
-                if(_entMan.TryGetComponent<SpriteComponent>(Owner, out var sprite))
-                    sprite.LayerSetState(0, On ? "icon-on" : "icon");
-                OnChanged();
-                Dirty();
-            }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new MagbootsComponentState(On);
-        }
+        return new MagbootsComponentState(On);
     }
 }

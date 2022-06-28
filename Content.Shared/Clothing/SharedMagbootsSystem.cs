@@ -7,6 +7,9 @@ namespace Content.Shared.Clothing;
 
 public abstract class SharedMagbootsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
+    [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -14,7 +17,13 @@ public abstract class SharedMagbootsSystem : EntitySystem
         SubscribeLocalEvent<SharedMagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
         SubscribeLocalEvent<SharedMagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<SharedMagbootsComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<SharedMagbootsComponent, ToggleActionEvent>(OnToggleAction);
+        SubscribeLocalEvent<SharedMagbootsComponent, ToggleActionEvent>(OnToggleAction); 
+    }
+
+    protected void OnChanged(SharedMagbootsComponent component)
+    {
+        _sharedActions.SetToggled(component.ToggleAction, component.On);
+        _clothingSpeedModifier.SetClothingSpeedModifierEnabled(component.Owner, component.On);
     }
 
     private void AddToggleVerb(EntityUid uid, SharedMagbootsComponent component, GetVerbsEvent<ActivationVerb> args)

@@ -2,68 +2,86 @@ using Content.Server.Atmos.Components;
 using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.Toggleable;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 
-namespace Content.Server.Clothing
+namespace Content.Server.Clothing;
+
+public sealed class MagbootsSystem : SharedMagbootsSystem
 {
-    public sealed class MagbootsSystem : SharedMagbootsSystem
+    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
+    }
+
+    private void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        state = state && component.On;
+
+        if (TryComp(parent, out MovedByPressureComponent? movedByPressure))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
-            SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
-            SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
+            movedByPressure.Enabled = !state;
         }
 
-        private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
+        if (state)
         {
-            if (args.Handled)
-                return;
-
-            args.Handled = true;
-            component.On = !component.On;
+            _alertsSystem.ShowAlert(parent, AlertType.Magboots);
         }
-
-        public void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
+        else
         {
-            if (!Resolve(uid, ref component))
-                return;
-            state = state && component.On;
-
-            if (TryComp(parent, out MovedByPressureComponent? movedByPressure))
-            {
-                movedByPressure.Enabled = !state;
-            }
-
-            if (state)
-            {
-                _alertsSystem.ShowAlert(parent, AlertType.Magboots);
-            }
-            else
-            {
-                _alertsSystem.ClearAlert(parent, AlertType.Magboots);
-            }
+            _alertsSystem.ClearAlert(parent, AlertType.Magboots);
         }
+    }
 
-        private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+    private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        component.On = !component.On;
+
+        if (_sharedContainer.TryGetContainingContainer(uid, out var container) &&
+            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
+            UpdateMagbootEffects(container.Owner, component.Owner, true, component);
+
+        if (TryComp<SharedItemComponent>(component.Owner, out var item))
+            item.EquippedPrefix = component.On ? "on" : null;
+
+        if (TryComp<SpriteComponent>(component.Owner, out var sprite))
+            sprite.LayerSetState(0, component.On ? "icon-on" : "icon");
+
+        OnChanged(component);
+        Dirty(component);
+    }
+
+    private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
+    {
+        if (args.Slot == "shoes")
         {
-            if (args.Slot == "shoes")
-            {
-                UpdateMagbootEffects(args.Equipee, uid, false, component);
-            }
+            UpdateMagbootEffects(args.Equipee, uid, false, component);
         }
+    }
 
-        private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, MagbootsComponent component, GotEquippedEvent args)
+    {
+        if (args.Slot == "shoes")
         {
-            if (args.Slot == "shoes")
-            {
-                UpdateMagbootEffects(args.Equipee, uid, true, component);
-            }
+            UpdateMagbootEffects(args.Equipee, uid, true, component);
         }
     }
 }
