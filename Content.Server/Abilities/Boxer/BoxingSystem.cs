@@ -8,6 +8,7 @@ using Content.Server.Clothing.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Abilities.Boxer
 {
@@ -15,12 +16,14 @@ namespace Content.Server.Abilities.Boxer
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<BoxerComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<BoxingComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<BoxerComponent, MeleeHitEvent>(ApplyBoxerModifiers);
+            SubscribeLocalEvent<BoxingGlovesComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<BoxingGlovesComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BoxingGlovesComponent, GotUnequippedEvent>(OnUnequipped);
         }
@@ -30,18 +33,17 @@ namespace Content.Server.Abilities.Boxer
             var meleeComp = EnsureComp<MeleeWeaponComponent>(uid);
             meleeComp.Range *= boxer.RangeBonus;
         }
-        private void OnMeleeHit(EntityUid uid, BoxingComponent component, MeleeHitEvent args)
+        private void OnMeleeHit(EntityUid uid, BoxingGlovesComponent component, MeleeHitEvent args)
         {
-            float boxModifier = 1f;
-            if (!TryComp<BoxerComponent>(uid, out var boxer))
-                boxModifier *= 0.3f;
+            _containerSystem.TryGetContainingContainer(uid, out var equipee);
+            TryComp<BoxerComponent>(equipee?.Owner, out var boxer);
 
             if (boxer != null)
             {
-                Box(args.HitEntities, boxer.ParalyzeTime, boxer.ParalyzeChanceNoSlowdown, boxer.SlowdownTime, boxer.ParalyzeChanceWithSlowdown, boxModifier);
+                Box(args.HitEntities, boxer.ParalyzeTime, boxer.ParalyzeChanceNoSlowdown, boxer.SlowdownTime, boxer.ParalyzeChanceWithSlowdown);
                 return;
             }
-            Box(args.HitEntities, modifier: boxModifier);
+            Box(args.HitEntities, modifier: 0.3f);
         }
 
         private void ApplyBoxerModifiers(EntityUid uid, BoxerComponent component, MeleeHitEvent args)
@@ -83,7 +85,7 @@ namespace Content.Server.Abilities.Boxer
                     continue;
 
                 if (HasComp<KnockedDownComponent>(entity))
-                    return;
+                    continue;
 
                 if (!HasComp<SlowedDownComponent>(entity))
                 {

@@ -9,7 +9,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: BoxingGloves
-  - type: UnarmedWeapon
+  - type: MeleeWeapon
     damage:
       types:
         Blunt: 1
