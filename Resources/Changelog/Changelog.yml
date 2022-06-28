@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Attention agents! Syndicate has added new C-4 sticky bombs into your
-      uplinks. You can use it to breach walls, airlocks or sabotage equipment.', type: Add}
-  id: 1324
-  time: '2022-04-14T22:00:50.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Split Station V2.1! Fixed power issues, swapped bar and chapel around
@@ -2962,3 +2956,8 @@ Entries:
   - {message: Inflatable doors are now transparent., type: Fix}
   id: 1823
   time: '2022-06-28T00:15:47.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Proper Evac support for Split!, type: Add}
+  id: 1824
+  time: '2022-06-28T01:20:33.0000000+00:00'
