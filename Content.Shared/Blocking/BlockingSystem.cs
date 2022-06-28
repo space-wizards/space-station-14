@@ -111,12 +111,24 @@ public sealed class BlockingSystem : EntitySystem
 
         var xform = Transform(user);
 
-        component.IsBlocking = true;
-
         var shieldName = Name(item);
 
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", Name(user)), ("shield", shieldName));
+
+        if (component.BlockingToggleAction != null)
+        {
+            _transformSystem.AnchorEntity(xform);
+            if (!xform.Anchored)
+            {
+                var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
+                _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+                return false;
+            }
+            _actionsSystem.SetToggled(component.BlockingToggleAction, true);
+            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
+        }
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
@@ -130,13 +142,7 @@ public sealed class BlockingSystem : EntitySystem
             _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
         }
 
-        if (component.BlockingToggleAction != null)
-        {
-            _actionsSystem.SetToggled(component.BlockingToggleAction, true);
-            _transformSystem.AnchorEntity(xform);
-            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
-            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
-        }
+        component.IsBlocking = true;
 
         return true;
     }
@@ -152,8 +158,6 @@ public sealed class BlockingSystem : EntitySystem
     {
         if (!component.IsBlocking) return false;
 
-        component.IsBlocking = false;
-
         var xform = Transform(user);
 
         var shieldName = Name(item);
@@ -167,13 +171,15 @@ public sealed class BlockingSystem : EntitySystem
         if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
+            _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
             _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
             _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
         }
+
+        component.IsBlocking = false;
 
         return true;
     }
