@@ -1,7 +1,10 @@
 ent-ComputerAlert = alerts computer
     .desc = Used to access the station's automated alert system.
     .suffix = { "" }
-ent-ComputerShuttleBase = shuttle console
+ent-ComputerEmergencyShuttle = emergency shuttle console
+    .desc = Handles authorization to early launch the shuttle.
+    .suffix = { "" }
+ent-BaseComputerShuttle = shuttle console
     .desc = Used to pilot a shuttle.
     .suffix = { "" }
 ent-ComputerShuttle = shuttle console

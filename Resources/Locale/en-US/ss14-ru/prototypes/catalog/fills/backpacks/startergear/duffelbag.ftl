@@ -31,3 +31,6 @@ ent-ClothingBackpackDuffelChaplainFilled = { ent-ClothingBackpackDuffel }
 ent-ClothingBackpackDuffelMusicianFilled = { ent-ClothingBackpackDuffel }
     .desc = { ent-ClothingBackpackDuffel.desc }
     .suffix = { "" }
+ent-ClothingBackpackDuffelDetectiveFilled = { ent-ClothingBackpackDuffel }
+    .desc = { ent-ClothingBackpackDuffel.desc }
+    .suffix = { "" }

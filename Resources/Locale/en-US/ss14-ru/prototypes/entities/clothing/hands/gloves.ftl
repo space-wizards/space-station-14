@@ -40,3 +40,6 @@ ent-ClothingHandsGlovesCombat = combat gloves
 ent-ClothingHandsGlovesFingerless = fingerless gloves
     .desc = Plain black gloves without fingertips for the hard working.
     .suffix = { "" }
+ent-ThievingGloves = black gloves
+    .desc = Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+    .suffix = { "" }
