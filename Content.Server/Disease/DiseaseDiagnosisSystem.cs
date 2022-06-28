@@ -75,7 +75,7 @@ namespace Content.Server.Disease
             {
                 diseaseMachine.Accumulator += frameTime;
 
-                while (diseaseMachine.Accumulator < diseaseMachine.Delay)
+                while (diseaseMachine.Accumulator >= diseaseMachine.Delay)
                 {
                     diseaseMachine.Accumulator -= diseaseMachine.Delay;
                     var ev = new DiseaseMachineFinishedEvent(diseaseMachine);
