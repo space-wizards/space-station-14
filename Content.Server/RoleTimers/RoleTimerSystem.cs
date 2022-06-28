@@ -38,6 +38,7 @@ public sealed class RoleTimerSystem : EntitySystem
 
     public void OnPlayerDetached(PlayerDetachedEvent ev)
     {
+        // This doesn't fire if the player doesn't leave their body. I guess it's fine?
         _roleTimers.PlayerRolesChanged(ev.Player.UserId, null, new HashSet<string>());
     }
 }
