@@ -1,9 +1,4 @@
 Entries:
-- author: Alainx277
-  changes:
-  - {message: Fixed cans transferring contents when closed., type: Fix}
-  id: 1328
-  time: '2022-04-15T21:17:48.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Durathread now has a crafting recipe. Have a good time impersonating
@@ -2959,3 +2954,11 @@ Entries:
       laser rifles., type: Tweak}
   id: 1827
   time: '2022-06-28T13:21:46.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Research disks have been ported from Nyanotrasen MRP. They're in salvage
+      and maintenance loot tables., type: Add}
+  - {message: 'The first time a unique disease is scanned at a disease diagnoser,
+      it prints a 5000 point research disk.', type: Add}
+  id: 1828
+  time: '2022-06-28T14:41:09.0000000+00:00'
