@@ -34,12 +34,7 @@ namespace Content.Server.Clothing
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
         {
-            if (mask.ToggleAction == null)
-                return;
-
-            // return if we equipped, or failed to equip due to something else in mask slot
-            if (_inventorySystem.TryEquip(args.Performer, mask.Owner, "mask") ||
-                (_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) && !mask.Owner.Equals(existing)))
+            if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !mask.Owner.Equals(existing))
                 return;
 
             mask.IsToggled ^= true;
@@ -70,7 +65,7 @@ namespace Content.Server.Clothing
             //toggle visuals
             if (TryComp<SharedItemComponent>(mask.Owner, out var item))
             {
-                //TODO: sprites for 'pulled down' defaults to invisible due to no sprite with this prefix
+                //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
                 item.EquippedPrefix = mask.IsToggled ? "toggled" : null;
                 Dirty(item);
             }
@@ -84,19 +79,19 @@ namespace Content.Server.Clothing
                 diseaseProtection.IsActive = !mask.IsToggled;
 
             //toggle breath tool connection (skip during equip since that is handled in LungSystem)
-            if (!isEquip && TryComp<BreathToolComponent>(uid, out var breathTool))
-            {
-                if (mask.IsToggled)
-                    breathTool.DisconnectInternals();
-                else
-                {
-                    breathTool.IsFunctional = true;
+            if (isEquip || !TryComp<BreathToolComponent>(uid, out var breathTool))
+                return;
 
-                    if (TryComp(wearer, out InternalsComponent? internals))
-                    {
-                        breathTool.ConnectedInternalsEntity = wearer;
-                        internals.ConnectBreathTool(uid);
-                    }
+            if (mask.IsToggled)
+                breathTool.DisconnectInternals();
+            else
+            {
+                breathTool.IsFunctional = true;
+
+                if (TryComp(wearer, out InternalsComponent? internals))
+                {
+                    breathTool.ConnectedInternalsEntity = wearer;
+                    internals.ConnectBreathTool(uid);
                 }
             }
         }
