@@ -15,7 +15,7 @@
   id: ClothingOuterBaseLarge
   components:
   - type: Clothing
-    Size: 60
+    Size: 80
     Slots:
     - outerClothing
   - type: ClothingSpeedModifier
@@ -77,6 +77,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Clothing
-    size: 60
+    size: 80
   - type: DiseaseProtection
     protection: 0.05
