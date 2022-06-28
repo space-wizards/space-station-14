@@ -70,7 +70,7 @@
   itemId: FireAxeFlaming
   listingName: Fire Axe
   description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
-  price: 9
+  price: 10
 
 # Explosives
 
@@ -159,6 +159,15 @@
   price: 14
 
 - type: uplinkListing
+  id: UplinkHolster
+  category: Utility
+  itemId: ClothingBeltSyndieHolster
+  listingName: Syndicate Shoulder Holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  icon: /Textures/Clothing/Belt/syndieholster.rsi/icon.png
+  price: 2
+
+- type: uplinkListing
   id: UplinkEmag
   category: Utility
   itemId: Emag
@@ -174,6 +183,25 @@
   description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
   icon: Objects/Misc/id_cards.rsi/default.png
   price: 3
+
+- type: uplinkListing
+  id: UplinkJetpack
+  category: Utility
+  itemId: JetpackBlack
+  listingName: Black Jetpack
+  description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
+  icon: Objects/Tanks/Jetpacks/black.rsi/icon.png
+  price: 5
+
+#TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
+- type: uplinkListing
+  id: UplinkHeadset
+  category: Utility
+  itemId: ClothingHeadsetAltSyndicate
+  listingName: Syndicate Overear-Headset
+  description: A headset that allows you to listen in on departmental channels, or contact other traitors.
+  icon: Clothing/Ears/Headsets/syndicate.rsi/icon_alt.png
+  price: 2
 
 - type: uplinkListing
   id: UplinkHypopen
@@ -213,12 +241,13 @@
   price: 40
   icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
-- type: uplinkListing
-  id: UplinkZombieBundle
-  category: Bundles
-  itemId: ClothingBackpackDuffelZombieBundle
-  price: 50
-  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+# Add this back in once war ops/separate nukie inventories are added.
+#- type: uplinkListing
+#  id: UplinkZombieBundle
+#  category: Bundles
+#  itemId: ClothingBackpackDuffelZombieBundle
+#  price: 50
+#  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
 
 - type: uplinkListing
   id: UplinkSurplusBundle
@@ -285,6 +314,14 @@
   listingName: no-slip shoes
   description: These protect you from slips while looking like normal sneakers.
   price: 2
+
+- type: uplinkListing
+  id: UplinkgClothingThievingGloves
+  category: Armor
+  itemId: ThievingGloves
+  listingName: Thieving Gloves
+  description: Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
+  price: 4
 
 - type: uplinkListing
   id: UplinkClothingOuterVestWeb
@@ -385,6 +422,12 @@
   category: Misc
   itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
   price: 4
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Misc
+  itemId: ClothingHeadHatOutlawHat
+  price: 1
 
 - type: uplinkListing
   id: UplinkCatEars

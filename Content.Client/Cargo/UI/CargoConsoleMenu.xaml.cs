@@ -82,7 +82,7 @@ namespace Content.Client.Cargo.UI
                     {
                         Product = prototype,
                         ProductName = { Text = prototype.Name },
-                        PointCost = { Text = prototype.PointCost.ToString() },
+                        PointCost = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.PointCost.ToString())) },
                         Icon = { Texture = _spriteSystem.Frame0(prototype.Icon) },
                     };
                     button.MainButton.OnPressed += args =>
@@ -171,7 +171,7 @@ namespace Content.Client.Cargo.UI
         public void UpdateBankData(string name, int points)
         {
             AccountNameLabel.Text = name;
-            PointsLabel.Text = points.ToString();
+            PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", points.ToString()));
         }
     }
 }

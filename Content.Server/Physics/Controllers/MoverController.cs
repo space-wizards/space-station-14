@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -77,9 +78,10 @@ namespace Content.Server.Physics.Controllers
                 _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridUid;
-                // This tries to see if the grid is a shuttle
+                // This tries to see if the grid is a shuttle and if the console should work.
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
-                    !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) continue;
+                    !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent) ||
+                    !shuttleComponent.Enabled) continue;
 
                 if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
                 {

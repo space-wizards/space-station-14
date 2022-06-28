@@ -7,6 +7,8 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
@@ -18,8 +20,10 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -37,6 +41,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -64,7 +69,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Verbs
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
-            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddFlushEjectVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
             SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
             // Units
@@ -74,25 +79,48 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
         }
 
-        private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
+        private void AddDisposalAltVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || component.Container.ContainedEntities.Count == 0)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            // Verbs to flush the unit
-            AlternativeVerb flushVerb = new();
-            flushVerb.Act = () => Engage(component);
-            flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-            flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-            flushVerb.Priority = 1;
-            args.Verbs.Add(flushVerb);
+            // Behavior for if the disposals bin has items in it
+            if (component.Container.ContainedEntities.Count > 0)
+            {
+                // Verbs to flush the unit
+                AlternativeVerb flushVerb = new();
+                flushVerb.Act = () => Engage(component);
+                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                flushVerb.Priority = 1;
+                args.Verbs.Add(flushVerb);
 
-            // Verb to eject the contents
-            AlternativeVerb ejectVerb = new();
-            ejectVerb.Act = () => TryEjectContents(component);
-            ejectVerb.Category = VerbCategory.Eject;
-            ejectVerb.Text = Loc.GetString("disposal-eject-verb-contents");
-            args.Verbs.Add(ejectVerb);
+                // Verb to eject the contents
+                AlternativeVerb ejectVerb = new()
+                {
+                    Act = () => TryEjectContents(component),
+                    Category = VerbCategory.Eject,
+                    Text = Loc.GetString("disposal-eject-verb-contents")
+                };
+                args.Verbs.Add(ejectVerb);
+            }
+
+            // Behavior if using a trash bag & other dumpable containers
+            if (args.Using != null
+                && TryComp<DumpableComponent>(args.Using.Value, out var dumpable)
+                && TryComp<ServerStorageComponent>(args.Using.Value, out var storage)
+                && storage.StoredEntities is { Count: > 0 })
+            {
+                // Verb to dump held container into disposal unit
+                AlternativeVerb dumpVerb = new()
+                {
+                    Act = () => _dumpableSystem.StartDoAfter(args.Using.Value, args.Target, args.User, dumpable, storage),
+                    Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
+                    Priority = 2
+                };
+                args.Verbs.Add(dumpVerb);
+            }
+
         }
 
         private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<Verb> args)
