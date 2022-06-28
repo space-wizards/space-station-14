@@ -8,8 +8,6 @@ namespace Content.Server.Paper.Plane
     {
         public float FoldDelay = 1.0f;
 
-        public float FrictionRatio = 0.01f;
-
         public string[] Tags = { "NoSpinOnThrow", "Trash" };
 
         public CancellationTokenSource? CancelToken = null;
