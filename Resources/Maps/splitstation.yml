@@ -200,11 +200,11 @@ grids:
   - ind: -4,-6
     tiles: NwAAADcAAAA3AAAANwAAABQAAAIUAAAAFAAAABQAAAEUAAAAFAAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAUAAABFAAAABQAAAEUAAABFAAAARQAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAFAAAABQAAAEUAAAAFAAAABQAAAIUAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAAjcAAAAzAAAAMwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAAjEAAAExAAACMQAAATEAAAI3AAAAMQAAAjEAAAA3AAAAMwAAADcAAAAzAAAAMwAAADcAAAA3AAAAMQAAAjEAAAExAAAAMQAAATEAAAMxAAAANwAAADEAAAIxAAADNwAAADMAAAAzAAAAMwAAADMAAAA3AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAxAAACMQAAAzcAAAA3AAAANwAAADMAAAAzAAAANwAAADcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAxAAABMQAAATEAAAExAAACMQAAADEAAAAzAAAAMwAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMQAAADEAAAExAAAAMQAAADEAAAExAAACMwAAADMAAAA3AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAxAAAAMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAATEAAAExAAACMQAAADEAAAI3AAAAMQAAADEAAAA3AAAANwAAADcAAAAxAAACMQAAATcAAAA3AAAAMQAAAjEAAAExAAABMQAAAzEAAAExAAADNwAAADEAAAMxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAADcAAAAxAAADMQAAAgAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAjEAAAEAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAExAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
   - ind: 0,-9
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANgAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAM3AAAAAAAAAAAAAAAAAAAAAAAAADcAAAAxAAABNwAAADcAAAA2AAAAAAAAAAAAAAAAAAAANgAAADcAAAAxAAACNwAAADYAAAAAAAAAAAAAADYAAAA3AAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAE3AAAAMQAAAjEAAAIxAAAAMQAAAzEAAAIxAAACMQAAAjEAAAM3AAAAMQAAATEAAAExAAADMQAAADEAAAMxAAACNwAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA2AAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAKwAAADcAAAArAAAAAAAAAAAAAAAAAAAAKwAAADcAAAArAAAANwAAACsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsAAAA3AAAAKwAAADYAAAAAAAAANgAAACsAAAA3AAAAKwAAADcAAAArAAAANgAAAAAAAAAAAAAANgAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAjEAAAIxAAAAMQAAAzEAAAIxAAACMQAAAjEAAAM3AAAAMQAAATEAAAExAAADMQAAADEAAAMxAAACNwAAAA==
   - ind: 1,-9
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -1,-9
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAANgAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAxAAABNwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAATcAAAA3AAAANwAAADcAAAAAAAAAAAAAADYAAAA3AAAAMQAAAzcAAAA2AAAAAAAAAAAAAAA2AAAANwAAADEAAAIyAAAAMQAAATEAAAM3AAAAAAAAAAAAAAA3AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAAjIAAAAxAAADNwAAAAAAAAAAAAAANwAAADEAAAMxAAACMQAAAzEAAAExAAAAMQAAAzEAAAMxAAADMQAAAg==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAKwAAADcAAAAyAAAAMQAAATEAAAM3AAAAAAAAAAAAAAA3AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAjIAAAAxAAADNwAAAAAAAAAAAAAANwAAADEAAAMxAAACMQAAAzEAAAExAAAAMQAAAzEAAAMxAAADMQAAAg==
   - ind: -3,-4
     tiles: NwAAADcAAAA3AAAANwAAAC0AAAAtAAAALQAAADcAAAA1AAADNQAAATUAAAA1AAACNQAAAzUAAAA1AAAANQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADUAAAI1AAACNQAAAzUAAAA1AAACNQAAAzUAAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA1AAADNQAAAzUAAAA1AAAANQAAATUAAAI1AAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANQAAATUAAAE1AAACNQAAAzUAAAE1AAADNQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: -2,-4
@@ -6080,11 +6080,11 @@ entities:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: 9,-99
-        1578:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 1,-125
+        2024:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 6,-127
         1580:
           cleanable: True
           color: '#FFFFFFFF'
@@ -6361,26 +6361,26 @@ entities:
           color: '#FFFF0060'
           id: cyka
           coordinates: 23,-115
-        1818:
-          angle: 4.71238898038469 rad
+        2032:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: 1,-128
-        1819:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: 1,-127
-        1820:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
+          id: BotLeft
           coordinates: 1,-126
-        1821:
-          angle: 4.71238898038469 rad
+        2031:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: 1,-125
+          id: BotLeft
+          coordinates: 1,-127
+        2026:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 1,-128
+        2023:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 6,-128
         1878:
           cleanable: True
           color: '#FFFFFFFF'
@@ -6621,6 +6621,51 @@ entities:
           color: '#FFFFFFFF'
           id: Damaged
           coordinates: 22,-116
+        2033:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 1,-125
+        2034:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 1,-124
+        2035:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 6,-126
+        2036:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 6,-125
+        2037:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 6,-124
+        2040:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: WarningLineGreyscale
+          coordinates: 2,-128
+        2041:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: WarningLineGreyscale
+          coordinates: 2,-127
+        2042:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: WarningLineGreyscale
+          coordinates: 2,-126
+        2043:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: WarningLineGreyscale
+          coordinates: 2,-125
       1,-1:
         445:
           color: '#D381C996'
@@ -7592,11 +7637,6 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -6,-123
-        1576:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -6,-126
         1577:
           cleanable: True
           color: '#FFFFFFFF'
@@ -7607,11 +7647,11 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -1,-128
-        1598:
+        2052:
           cleanable: True
           color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -7,-126
+          id: DirtMedium
+          coordinates: -1,-122
         1600:
           cleanable: True
           color: '#FFFFFFFF'
@@ -7766,18 +7806,21 @@ entities:
           color: '#FFFFFFFF'
           id: BotRight
           coordinates: -16,-126
-        1795:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: -8,-128
-        1796:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: -8,-127
-        1797:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: -8,-126
+        2046:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -7,-126
+        2047:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: -8,-124
+        2048:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -7,-128
         1799:
           color: '#9FED5896'
           id: BotRight
@@ -7818,26 +7861,16 @@ entities:
           color: '#9FED5896'
           id: WarningLineGreyscale
           coordinates: -3,-125
-        1823:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
+        2051:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
           coordinates: -6,-128
-        1824:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: -6,-127
-        1825:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: -6,-126
-        1826:
-          angle: 4.71238898038469 rad
-          color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: -6,-125
+        2049:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -8,-128
         1873:
           cleanable: True
           color: '#FFFFFFFF'
@@ -9295,11 +9328,11 @@ entities:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 11,-129
-        1593:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 14,-132
+        2054:
+          angle: 1.5707963267948966 rad
+          color: '#9FED5896'
+          id: BotLeft
+          coordinates: 9,-129
         1594:
           cleanable: True
           color: '#FFFFFFFF'
@@ -9318,22 +9351,16 @@ entities:
           color: '#9FED5896'
           id: BotRight
           coordinates: 6,-129
-        1804:
+        2053:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: BotRight
-          coordinates: 5,-129
-        1805:
+          id: BotLeft
+          coordinates: 10,-129
+        2039:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: BotRight
-          coordinates: 4,-129
-        1806:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: 14,-129
-        1807:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: 13,-129
+          id: WarningLineGreyscale
+          coordinates: 2,-129
         1808:
           color: '#9FED5896'
           id: BotRight
@@ -9342,40 +9369,32 @@ entities:
           color: '#9FED5896'
           id: BotRight
           coordinates: 11,-129
-        1817:
-          angle: 4.71238898038469 rad
+        2025:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: WarningLineGreyscale
+          id: BotLeft
           coordinates: 1,-129
       -1,-5:
-        1596:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: -7,-129
         1597:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -9,-129
-        1794:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: -8,-129
-        1798:
-          color: '#9FED5896'
-          id: BotRight
-          coordinates: -1,-129
+        2050:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtHeavy
+          coordinates: -7,-129
         1816:
           angle: 1.5707963267948966 rad
           color: '#9FED5896'
           id: WarningLineGreyscale
           coordinates: -3,-129
-        1822:
-          angle: 4.71238898038469 rad
+        2030:
+          angle: 1.5707963267948966 rad
           color: '#9FED5896'
-          id: WarningLineGreyscale
-          coordinates: -6,-129
+          id: BotLeft
+          coordinates: -1,-129
       -2,-5:
         1677:
           cleanable: True
@@ -21329,7 +21348,7 @@ entities:
       6,-131: 0
       6,-130: 0
       6,-129: 0
-      7,-133: 0
+      7,-133: 6
       7,-132: 0
       7,-131: 0
       7,-130: 0
@@ -21383,9 +21402,9 @@ entities:
       14,-130: 0
       14,-129: 0
       15,-136: 0
-      15,-133: 0
-      15,-132: 0
-      15,-131: 0
+      15,-133: 6
+      15,-132: 12
+      15,-131: 13
       15,-130: 0
       15,-129: 0
       16,-136: 0
@@ -21488,20 +21507,20 @@ entities:
       -10,-131: 0
       -10,-130: 0
       -10,-129: 0
-      -9,-133: 0
-      -9,-132: 0
-      -9,-131: 0
+      -9,-133: 8
+      -9,-132: 14
+      -9,-131: 15
       -9,-130: 0
       -9,-129: 0
-      -8,-133: 0
+      -8,-133: 7
       -8,-132: 0
       -8,-131: 0
       -8,-130: 0
       -8,-129: 0
-      -7,-133: 0
-      -7,-132: 0
-      -7,-131: 0
-      -7,-130: 0
+      -7,-133: 6
+      -7,-132: 12
+      -7,-131: 13
+      -7,-130: 16
       -7,-129: 0
       -6,-133: 0
       -6,-132: 0
@@ -21540,7 +21559,7 @@ entities:
       -2,-131: 0
       -2,-130: 0
       -2,-129: 0
-      -1,-133: 0
+      -1,-133: 6
       -1,-132: 0
       -1,-131: 0
       -1,-130: 0
@@ -22028,9 +22047,9 @@ entities:
       -47,-75: 0
       -47,-74: 0
       -47,-73: 0
-      -47,-72: 12
-      -47,-71: 12
-      -47,-70: 12
+      -47,-72: 17
+      -47,-71: 17
+      -47,-70: 17
       -47,-69: 0
       -47,-68: 0
       -47,-66: 0
@@ -22058,9 +22077,9 @@ entities:
       -45,-75: 0
       -45,-74: 0
       -45,-73: 0
-      -45,-72: 13
-      -45,-71: 13
-      -45,-70: 13
+      -45,-72: 18
+      -45,-71: 18
+      -45,-70: 18
       -45,-69: 0
       -45,-68: 0
       -45,-66: 0
@@ -22901,8 +22920,8 @@ entities:
       3,-66: 0
       4,-66: 0
       5,-66: 0
-      22,-66: 0
-      22,-65: 14
+      22,-66: 19
+      22,-65: 20
       35,-44: 0
       35,-43: 0
       36,-44: 0
@@ -22942,8 +22961,8 @@ entities:
       -65,-80: 0
       20,-59: 0
       21,-59: 0
-      22,-64: 15
-      22,-63: 16
+      22,-64: 19
+      22,-63: 21
       22,-62: 0
       22,-61: 0
       22,-60: 0
@@ -23274,9 +23293,9 @@ entities:
       8,-64: 0
       9,-64: 0
       10,-64: 0
-      16,-64: 17
-      17,-64: 18
-      18,-64: 19
+      16,-64: 22
+      17,-64: 23
+      18,-64: 24
       19,-64: 1
       -48,10: 0
       -48,11: 0
@@ -23366,7 +23385,7 @@ entities:
       17,-52: 0
       18,-52: 0
       19,-52: 0
-      20,-63: 14
+      20,-63: 20
       20,-62: 0
       20,-61: 0
       20,-60: 0
@@ -24027,11 +24046,11 @@ entities:
       -68,-94: 0
       -68,-93: 0
       -68,-92: 0
-      -68,-91: 20
-      -68,-90: 21
-      -68,-89: 22
-      -68,-88: 23
-      -68,-87: 24
+      -68,-91: 25
+      -68,-90: 26
+      -68,-89: 27
+      -68,-88: 28
+      -68,-87: 29
       -68,-86: 0
       -68,-85: 0
       -68,-84: 0
@@ -24574,10 +24593,10 @@ entities:
       16,-65: 0
       17,-66: 7
       17,-65: 6
-      19,-66: 25
-      19,-65: 26
-      20,-66: 0
-      20,-65: 27
+      19,-66: 30
+      19,-65: 31
+      20,-66: 32
+      20,-65: 33
       21,-66: 0
       21,-65: 3
       32,-104: 0
@@ -24590,7 +24609,7 @@ entities:
       36,-103: 0
       20,-64: 0
       21,-64: 0
-      21,-63: 28
+      21,-63: 34
       37,-104: 0
       37,-103: 0
       37,-102: 0
@@ -24653,8 +24672,8 @@ entities:
       42,-114: 0
       42,-113: 0
       43,-113: 0
-      23,-66: 0
-      23,-65: 29
+      23,-66: 35
+      23,-65: 36
       24,-66: 0
       24,-65: 0
       44,-110: 0
@@ -24674,7 +24693,7 @@ entities:
       47,-107: 0
       47,-106: 0
       23,-64: 0
-      23,-63: 30
+      23,-63: 37
       24,-64: 0
       24,-63: 0
       40,1: 0
@@ -27367,6 +27386,61 @@ entities:
       - 0
       - 0
     - volume: 2500
+      temperature: 274.9969
+      moles:
+      - 20.460823
+      - 76.97167
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 288.61172
+      moles:
+      - 21.483864
+      - 80.82026
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 269.32404
+      moles:
+      - 20.034557
+      - 75.368095
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 287.1935
+      moles:
+      - 21.377298
+      - 80.419365
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 292.01544
+      moles:
+      - 21.739624
+      - 81.7824
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
       temperature: 293.15
       moles:
       - 0
@@ -27382,17 +27456,6 @@ entities:
       moles:
       - 6666.982
       - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 291.73178
-      moles:
-      - 21.718313
-      - 81.702225
       - 0
       - 0
       - 0
@@ -27404,6 +27467,17 @@ entities:
       moles:
       - 21.798237
       - 82.0029
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 291.73178
+      moles:
+      - 21.718313
+      - 81.702225
       - 0
       - 0
       - 0
@@ -27455,10 +27529,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 192.61086
+      temperature: 192.60985
       moles:
-      - 14.270206
-      - 53.683163
+      - 14.270131
+      - 53.682877
       - 0
       - 0
       - 0
@@ -27466,10 +27540,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 181.44347
+      temperature: 181.4394
       moles:
-      - 13.431069
-      - 50.52641
+      - 13.430765
+      - 50.52526
       - 0
       - 0
       - 0
@@ -27477,10 +27551,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 237.30753
+      temperature: 237.29672
       moles:
-      - 17.628784
-      - 66.31782
+      - 17.627974
+      - 66.31476
       - 0
       - 0
       - 0
@@ -27488,10 +27562,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 181.46486
+      temperature: 181.44344
       moles:
-      - 13.432678
-      - 50.532463
+      - 13.431068
+      - 50.526405
       - 0
       - 0
       - 0
@@ -27499,10 +27573,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 192.64433
+      temperature: 192.61623
       moles:
-      - 14.272722
-      - 53.692627
+      - 14.270609
+      - 53.684677
       - 0
       - 0
       - 0
@@ -27510,10 +27584,10 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 220.53749
+      temperature: 264.5021
       moles:
-      - 16.36866
-      - 61.57734
+      - 14.21601
+      - 53.47928
       - 0
       - 0
       - 0
@@ -27525,6 +27599,17 @@ entities:
       moles:
       - 15.004604
       - 56.445892
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 269.324
+      moles:
+      - 20.034557
+      - 75.368095
       - 0
       - 0
       - 0
@@ -27547,6 +27632,17 @@ entities:
       moles:
       - 16.342018
       - 61.477116
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 292.97272
+      moles:
+      - 21.811558
+      - 82.05301
       - 0
       - 0
       - 0
@@ -114509,17 +114605,19 @@ entities:
     parent: 69
     type: Transform
 - uid: 12437
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: 10.5,-129.5
+  - pos: 14.5,-129.5
     parent: 69
     type: Transform
 - uid: 12438
-  type: ReinforcedWindow
+  type: ClothingMaskGasCentcom
   components:
-  - pos: 9.5,-129.5
+  - pos: 13.536492,-128.47473
     parent: 69
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 12439
   type: WallReinforced
   components:
@@ -114575,39 +114673,91 @@ entities:
     parent: 69
     type: Transform
 - uid: 12448
-  type: ReinforcedWindow
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 15.5,-131.5
+  - pos: -0.5,-132.5
     parent: 69
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 12449
-  type: ReinforcedWindow
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 15.5,-130.5
+  - pos: 9.5,-132.5
     parent: 69
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 12450
-  type: WallReinforced
+  type: Catwalk
   components:
-  - pos: 13.5,-132.5
+  - pos: 1.5,-131.5
     parent: 69
     type: Transform
 - uid: 12451
-  type: WallReinforced
+  type: AirlockExternalGlass
   components:
-  - pos: 15.5,-132.5
+  - pos: 9.5,-129.5
     parent: 69
     type: Transform
 - uid: 12452
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: 13.5,-130.5
+  - pos: -0.5,-130.5
     parent: 69
     type: Transform
 - uid: 12453
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: 13.5,-131.5
+  - pos: 1.5,-132.5
     parent: 69
     type: Transform
 - uid: 12454
@@ -114659,11 +114809,19 @@ entities:
     parent: 69
     type: Transform
 - uid: 12462
-  type: ReinforcedWindow
+  type: Poweredlight
   components:
-  - pos: -6.5,-130.5
+  - rot: 3.141592653589793 rad
+    pos: 10.5,-128.5
     parent: 69
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 12463
   type: WallReinforced
   components:
@@ -114673,7 +114831,7 @@ entities:
 - uid: 12464
   type: WallReinforced
   components:
-  - pos: -8.5,-132.5
+  - pos: -7.5,-129.5
     parent: 69
     type: Transform
 - uid: 12465
@@ -114725,21 +114883,23 @@ entities:
     parent: 69
     type: Transform
 - uid: 12473
-  type: WallReinforced
+  type: Chair
   components:
-  - pos: -6.5,-129.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,-126.5
     parent: 69
     type: Transform
 - uid: 12474
-  type: ReinforcedWindow
+  type: Chair
   components:
-  - pos: -8.5,-130.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,-124.5
     parent: 69
     type: Transform
 - uid: 12475
-  type: ReinforcedWindow
+  type: Grille
   components:
-  - pos: -8.5,-131.5
+  - pos: 2.5,-131.5
     parent: 69
     type: Transform
 - uid: 12476
@@ -114749,15 +114909,16 @@ entities:
     parent: 69
     type: Transform
 - uid: 12477
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: 1.5,-129.5
+  - pos: 2.5,-132.5
     parent: 69
     type: Transform
 - uid: 12478
-  type: ReinforcedWindow
+  type: Chair
   components:
-  - pos: 2.5,-129.5
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-125.5
     parent: 69
     type: Transform
 - uid: 12479
@@ -114779,39 +114940,42 @@ entities:
     parent: 69
     type: Transform
 - uid: 12482
-  type: ReinforcedWindow
+  type: Chair
   components:
-  - pos: -6.5,-131.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,-127.5
     parent: 69
     type: Transform
 - uid: 12483
-  type: WallReinforced
+  type: Chair
   components:
-  - pos: -6.5,-132.5
+  - rot: -1.5707963267948966 rad
+    pos: 4.5,-125.5
     parent: 69
     type: Transform
 - uid: 12484
-  type: Grille
+  type: EmergencyLight
   components:
-  - pos: -8.5,-130.5
+  - pos: 14.5,-130.5
     parent: 69
     type: Transform
 - uid: 12485
-  type: Grille
+  type: Chair
   components:
-  - pos: -8.5,-131.5
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-124.5
     parent: 69
     type: Transform
 - uid: 12486
   type: Grille
   components:
-  - pos: -6.5,-130.5
+  - pos: 10.5,-131.5
     parent: 69
     type: Transform
 - uid: 12487
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: -6.5,-131.5
+  - pos: 2.5,-129.5
     parent: 69
     type: Transform
 - uid: 12488
@@ -114863,15 +115027,15 @@ entities:
     parent: 69
     type: Transform
 - uid: 12496
-  type: Grille
+  type: Table
   components:
-  - pos: 1.5,-129.5
+  - pos: 13.5,-128.5
     parent: 69
     type: Transform
 - uid: 12497
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: 2.5,-129.5
+  - pos: 10.5,-129.5
     parent: 69
     type: Transform
 - uid: 12498
@@ -114923,15 +115087,15 @@ entities:
     parent: 69
     type: Transform
 - uid: 12506
-  type: Grille
+  type: Catwalk
   components:
-  - pos: 9.5,-129.5
+  - pos: -0.5,-129.5
     parent: 69
     type: Transform
 - uid: 12507
-  type: Grille
+  type: Catwalk
   components:
-  - pos: 10.5,-129.5
+  - pos: -0.5,-132.5
     parent: 69
     type: Transform
 - uid: 12508
@@ -114947,15 +115111,23 @@ entities:
     parent: 69
     type: Transform
 - uid: 12510
-  type: Grille
+  type: PoweredlightLED
   components:
-  - pos: 13.5,-130.5
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-132.5
     parent: 69
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 12511
-  type: Grille
+  type: ReinforcedWindow
   components:
-  - pos: 13.5,-131.5
+  - pos: 2.5,-131.5
     parent: 69
     type: Transform
 - uid: 12512
@@ -115013,85 +115185,54 @@ entities:
     parent: 69
     type: Transform
 - uid: 12521
-  type: AirlockExternalGlass
+  type: Grille
   components:
-  - pos: -7.5,-129.5
+  - pos: 10.5,-130.5
     parent: 69
     type: Transform
 - uid: 12522
-  type: AirlockExternalGlass
+  type: Bola
   components:
-  - pos: -0.5,-129.5
+  - pos: 14.473992,-128.39662
     parent: 69
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 12523
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlass
   components:
-  - pos: 7.5,-129.5
+  - pos: 1.5,-129.5
     parent: 69
     type: Transform
 - uid: 12524
-  type: AirlockExternalGlassLocked
+  type: ReinforcedWindow
   components:
-  - pos: 14.5,-129.5
+  - pos: 10.5,-131.5
     parent: 69
     type: Transform
 - uid: 12525
-  type: AirlockExternalGlassShuttleLocked
+  type: ReinforcedWindow
   components:
-  - pos: 14.5,-132.5
+  - pos: 2.5,-130.5
     parent: 69
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      layer:
-      - Impassable
-      - HighImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 12526
-  type: AirlockExternalGlassShuttleLocked
+  type: Poweredlight
   components:
-  - pos: 7.5,-132.5
+  - pos: 14.5,-126.5
     parent: 69
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      layer:
-      - Impassable
-      - HighImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 12527
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: -0.5,-132.5
+  - pos: 1.5,-132.5
     parent: 69
     type: Transform
   - fixtures:
@@ -115103,9 +115244,15 @@ entities:
         - -0.49,-0.49
       mask:
       - Impassable
-      layer:
-      - Impassable
+      - MidImpassable
       - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
       - Opaque
       mass: 100
     - shape: !type:PhysShapeCircle
@@ -115115,31 +115262,19 @@ entities:
       id: docking
     type: Fixtures
 - uid: 12528
-  type: AirlockExternalGlassShuttleLocked
+  type: Poweredlight
   components:
-  - pos: -7.5,-132.5
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-128.5
     parent: 69
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      layer:
-      - Impassable
-      - HighImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 12529
   type: WallReinforced
   components:
@@ -115149,13 +115284,13 @@ entities:
 - uid: 12530
   type: Grille
   components:
-  - pos: 15.5,-130.5
+  - pos: -6.5,-129.5
     parent: 69
     type: Transform
 - uid: 12531
-  type: Grille
+  type: Table
   components:
-  - pos: 15.5,-131.5
+  - pos: 14.5,-128.5
     parent: 69
     type: Transform
 - uid: 12532
@@ -115358,59 +115493,60 @@ entities:
     parent: 69
     type: Transform
 - uid: 12563
-  type: Chair
+  type: Grille
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-127.5
+  - pos: 2.5,-130.5
     parent: 69
     type: Transform
 - uid: 12564
-  type: Chair
+  type: ReinforcedWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-126.5
+  - pos: 10.5,-130.5
     parent: 69
     type: Transform
 - uid: 12565
-  type: Chair
+  type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-125.5
+  - pos: 10.5,-132.5
     parent: 69
     type: Transform
 - uid: 12566
-  type: Chair
+  type: Catwalk
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,-124.5
+  - pos: 1.5,-130.5
     parent: 69
     type: Transform
 - uid: 12567
-  type: Chair
+  type: EmergencyLight
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 3.5,-124.5
+  - pos: -8.5,-130.5
     parent: 69
     type: Transform
 - uid: 12568
-  type: Chair
+  type: ReinforcedWindow
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 3.5,-125.5
+  - pos: -6.5,-129.5
     parent: 69
     type: Transform
 - uid: 12569
-  type: Chair
+  type: PoweredlightLED
   components:
   - rot: 1.5707963267948966 rad
-    pos: 3.5,-126.5
+    pos: 3.5,-132.5
     parent: 69
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 12570
   type: Chair
   components:
   - rot: 1.5707963267948966 rad
-    pos: 3.5,-127.5
+    pos: 5.5,-127.5
     parent: 69
     type: Transform
 - uid: 12571
@@ -120593,19 +120729,12 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13301
-  type: Poweredlight
+  type: Chair
   components:
-  - rot: 3.141592653589793 rad
-    pos: 0.5,-128.5
+  - rot: 1.5707963267948966 rad
+    pos: 5.5,-126.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13302
   type: Poweredlight
   components:
@@ -120621,33 +120750,17 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13303
-  type: Poweredlight
+  type: AirlockExternalGlass
   components:
-  - rot: 3.141592653589793 rad
-    pos: -6.5,-128.5
+  - pos: -0.5,-129.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13304
-  type: Poweredlight
+  type: Catwalk
   components:
-  - rot: 3.141592653589793 rad
-    pos: 13.5,-128.5
+  - pos: -0.5,-131.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13305
   type: Poweredlight
   components:
@@ -120690,19 +120803,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13308
-  type: PoweredlightLED
+  type: AirlockExternalGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -5.5,-132.5
+  - pos: 7.5,-129.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13309
   type: PoweredlightLED
   components:
@@ -120718,19 +120823,37 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13310
-  type: PoweredlightLED
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 1.5,-132.5
+  - pos: 7.5,-132.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 13311
   type: PoweredlightLED
   components:
@@ -120746,65 +120869,35 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 13312
-  type: PoweredlightLED
+  type: ClothingHeadHatCorpsoftFlipped
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 9.5,-132.5
+  - pos: 14.036632,-128.3341
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 13313
-  type: PoweredlightLED
+  type: Catwalk
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-132.5
+  - pos: 1.5,-129.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13314
-  type: PoweredlightLED
+  type: Catwalk
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 16.5,-132.5
+  - pos: 7.5,-132.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13315
-  type: PoweredlightLED
+  type: Catwalk
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -9.5,-132.5
+  - pos: 7.5,-131.5
     parent: 69
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13316
-  type: EmergencyLight
+  type: Catwalk
   components:
-  - pos: -9.5,-130.5
+  - pos: 7.5,-130.5
     parent: 69
     type: Transform
 - uid: 13317
@@ -157756,21 +157849,21 @@ entities:
     parent: 69
     type: Transform
 - uid: 18194
-  type: CableApcExtension
+  type: Catwalk
   components:
-  - pos: -7.5,-129.5
+  - pos: 7.5,-129.5
     parent: 69
     type: Transform
 - uid: 18195
-  type: CableApcExtension
+  type: Catwalk
   components:
-  - pos: -7.5,-130.5
+  - pos: 9.5,-132.5
     parent: 69
     type: Transform
 - uid: 18196
-  type: CableApcExtension
+  type: Catwalk
   components:
-  - pos: -7.5,-131.5
+  - pos: 9.5,-131.5
     parent: 69
     type: Transform
 - uid: 18197
@@ -158038,35 +158131,50 @@ entities:
     parent: 69
     type: Transform
 - uid: 18241
-  type: CableApcExtension
+  type: Catwalk
   components:
-  - pos: 13.5,-130.5
+  - pos: 9.5,-130.5
     parent: 69
     type: Transform
 - uid: 18242
-  type: CableApcExtension
+  type: Catwalk
   components:
-  - pos: 13.5,-131.5
+  - pos: 9.5,-129.5
     parent: 69
     type: Transform
 - uid: 18243
-  type: CableApcExtension
+  type: FirelockEdge
   components:
-  - pos: 14.5,-131.5
+  - rot: 3.141592653589793 rad
+    pos: 20.5,-65.5
     parent: 69
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 18244
-  type: CableApcExtension
+  type: FirelockEdge
   components:
-  - pos: 15.5,-131.5
+  - rot: 3.141592653589793 rad
+    pos: 19.5,-65.5
     parent: 69
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 18245
-  type: CableApcExtension
+  type: FirelockEdge
   components:
-  - pos: 15.5,-130.5
+  - rot: 3.141592653589793 rad
+    pos: 22.5,-65.5
     parent: 69
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 18246
   type: CableApcExtension
   components:
@@ -199865,4 +199973,15 @@ entities:
   - pos: -61.5,-73.5
     parent: 69
     type: Transform
+- uid: 23818
+  type: FirelockEdge
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 23.5,-65.5
+    parent: 69
+    type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 ...
