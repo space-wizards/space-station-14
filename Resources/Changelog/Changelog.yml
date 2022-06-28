@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added Agent ID cards to the uplink, a traitor item that allows you
-      to copy accesses from other cards and change the name and job title to whatever
-      you want.', type: Add}
-  id: 1327
-  time: '2022-04-15T21:15:25.0000000+00:00'
 - author: Alainx277
   changes:
   - {message: Fixed cans transferring contents when closed., type: Fix}
@@ -2960,3 +2953,9 @@ Entries:
   - {message: Research console should work again I guess., type: Fix}
   id: 1826
   time: '2022-06-28T12:54:08.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Changed salvage locker loadout and probability. Now chance of makeshift
+      laser rifles., type: Tweak}
+  id: 1827
+  time: '2022-06-28T13:21:46.0000000+00:00'
