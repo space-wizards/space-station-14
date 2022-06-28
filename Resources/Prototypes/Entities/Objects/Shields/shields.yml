@@ -31,5 +31,15 @@
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 5
+                  max: 5
+                SheetGlass:
+                  min: 5
+                  max: 5
 
 #TODO: Add more shields from the texture files
