@@ -316,6 +316,14 @@
   price: 2
 
 - type: uplinkListing
+  id: UplinkgClothingThievingGloves
+  category: Armor
+  itemId: ThievingGloves
+  listingName: Thieving Gloves
+  description: Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
+  price: 4
+
+- type: uplinkListing
   id: UplinkClothingOuterVestWeb
   category: Armor
   itemId: ClothingOuterVestWeb

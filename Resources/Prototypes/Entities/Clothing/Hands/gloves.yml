@@ -144,6 +144,9 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
     HeatResistance: 1400
   - type: Insulated
+  - type: Thieving
+    stealTime: 1
+    stealthy: true
 
 - type: entity
   parent: ClothingHandsBase
@@ -169,3 +172,16 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/fingerless.rsi
 
+- type: entity
+  parent: ClothingHandsBase
+  id: ThievingGloves
+  name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
+  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Thieving
+      stealTime: 1.5
+      stealthy: true
