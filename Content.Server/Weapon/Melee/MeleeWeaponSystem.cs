@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Clothing.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -11,7 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
-using Content.Shared.Inventory.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Content.Shared.Physics;
