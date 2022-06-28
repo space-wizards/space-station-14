@@ -5,6 +5,7 @@ using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -39,6 +40,7 @@ namespace Content.Server.Disease
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
@@ -126,6 +128,25 @@ namespace Content.Server.Disease
         ///
         /// Event Handlers
         ///
+
+        /// <summary>
+        /// Fill in the natural immunities of this entity.
+        /// </summary>
+        private void OnInit(EntityUid uid, DiseaseCarrierComponent component, ComponentInit args)
+        {
+            if (component.NaturalImmunities == null || component.NaturalImmunities.Count == 0)
+                return;
+
+            foreach (var immunity in component.NaturalImmunities)
+            {
+                if (_prototypeManager.TryIndex<DiseasePrototype>(immunity, out var disease))
+                    component.PastDiseases.Add(disease);
+                else
+                {
+                    Logger.Error("Failed to index disease prototype + " + immunity + " for " + uid);
+                }
+            }
+        }
 
         /// <summary>
         /// Used when something is trying to cure ANY disease on the target,

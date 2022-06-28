@@ -8,6 +8,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.75
     baseSprintSpeed : 3.75
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -64,6 +66,7 @@
       Dead:
         Base: dead
   - type: Puller
+    needsHands: false
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: Rat King
@@ -111,11 +114,6 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      50: 0.9
-      75: 0.8
-      100: 0.7
   - type: MobPrice
     price: 2500 # rat wealth
 
@@ -129,6 +127,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -185,6 +185,7 @@
       Dead:
         Base: splat-3
   - type: Puller
+    needsHands: false
   - type: DiseaseCarrier
     carrierDiseases:
     - VentCough

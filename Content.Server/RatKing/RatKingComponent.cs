@@ -42,6 +42,6 @@ namespace Content.Server.RatKing
         ///     How many moles of Miasma are released after one us of Domain
         /// </summary>
         [ViewVariables, DataField("molesMiasmaPerDomain")]
-        public float MolesMiasmaPerDomain = 75f;
+        public float MolesMiasmaPerDomain = 100f;
     }
 };

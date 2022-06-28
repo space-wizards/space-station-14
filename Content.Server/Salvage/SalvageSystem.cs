@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 
 namespace Content.Server.Salvage
@@ -25,7 +26,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
@@ -204,7 +204,9 @@ namespace Content.Server.Salvage
                     Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
-            EntityManager.QueueDeleteEntity(salvage);
+
+            // Deletion has to happen before grid traversal re-parents players.
+            EntityManager.DeleteEntity(salvage);
         }
 
         private void TryGetSalvagePlacementLocation(SalvageMagnetComponent component, out MapCoordinates coords, out Angle angle)

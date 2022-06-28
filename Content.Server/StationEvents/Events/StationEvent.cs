@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -210,6 +211,12 @@ namespace Content.Server.StationEvents.Events
             entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
             targetStation = robustRandom.Pick(stationSystem.Stations);
             var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
             if (possibleTargets.Count == 0)

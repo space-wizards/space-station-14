@@ -12,23 +12,31 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RoundEndTest : ContentIntegrationTest, IEntityEventSubscriber
+    public sealed class RoundEndTest : IEntityEventSubscriber
     {
         [Test]
         public async Task Test()
         {
-            var eventCount = 0;
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
+            {
+                NoClient = true,
+            });
+            var server = pairTracker.Pair.Server;
 
-            var (_, server) = await StartConnectedServerClientPair();
+            var config = server.ResolveDependency<IConfigurationManager>();
+            var sysManager = server.ResolveDependency<IEntitySystemManager>();
+            var ticker = sysManager.GetEntitySystem<GameTicker>();
+            var roundEndSystem = sysManager.GetEntitySystem<RoundEndSystem>();
+
+            var eventCount = 0;
 
             await server.WaitAssertion(() =>
             {
-                var ticker = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>();
                 ticker.RestartRound();
-                var config = IoCManager.Resolve<IConfigurationManager>();
                 config.SetCVar(CCVars.GameLobbyEnabled, true);
+                config.SetCVar(CCVars.EmergencyShuttleTransitTime, 1f);
+                config.SetCVar(CCVars.EmergencyShuttleDockTime, 1f);
 
-                var roundEndSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoundEndSystem>();
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromMilliseconds(250);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMilliseconds(500);
                 roundEndSystem.DefaultRestartRoundDuration = TimeSpan.FromMilliseconds(250);
@@ -40,7 +48,7 @@ namespace Content.IntegrationTests.Tests
                 bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ => {
                     Interlocked.Increment(ref eventCount);
                 });
-                var roundEndSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoundEndSystem>();
+
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was called, but countdown time was not set");
@@ -54,8 +62,6 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var roundEndSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoundEndSystem>();
-
                 Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "We were waiting for the cooldown, but the round also ended");
                 // Recall the shuttle, which should trigger the cooldown again
@@ -68,7 +74,6 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var roundEndSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoundEndSystem>();
                 Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
@@ -78,7 +83,6 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                var roundEndSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoundEndSystem>();
                 Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "The countdown ended, but we just wanted the cooldown to end");
             });
@@ -95,7 +99,6 @@ namespace Content.IntegrationTests.Tests
             {
                 return server.WaitAssertion(() =>
                 {
-                    var ticker = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>();
                     Assert.That(ticker.RunLevel, Is.EqualTo(level));
                 });
             }
@@ -106,10 +109,12 @@ namespace Content.IntegrationTests.Tests
                 var currentCount = Thread.VolatileRead(ref eventCount);
                 while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
                 {
-                    await server.WaitRunTicks(1);
+                    await PoolManager.RunTicksSync(pairTracker.Pair, 5);
                 }
                 if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

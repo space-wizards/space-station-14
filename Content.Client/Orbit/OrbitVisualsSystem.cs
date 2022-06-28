@@ -30,6 +30,12 @@ public sealed class OrbitVisualsSystem : EntitySystem
 
         component.OrbitLength = _robustRandom.NextFloat(0.5f * component.OrbitLength, 1.5f * component.OrbitLength);
 
+        if (TryComp<SpriteComponent>(uid, out var sprite))
+        {
+            sprite.EnableDirectionOverride = true;
+            sprite.DirectionOverride = Direction.South;
+        }
+
         var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
         if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
             return;
@@ -44,8 +50,10 @@ public sealed class OrbitVisualsSystem : EntitySystem
 
     private void OnComponentRemove(EntityUid uid, OrbitVisualsComponent component, ComponentRemove args)
     {
-        if (!TryComp<ISpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
+
+        sprite.EnableDirectionOverride = false;
 
         var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
         if (animationPlayer.HasRunningAnimation(_orbitAnimationKey))
