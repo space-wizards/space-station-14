@@ -10,7 +10,7 @@
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/hug.ogg
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
@@ -74,7 +74,7 @@
     nameSet: NamesFirstMilitaryLeader
   - type: RandomHumanoidAppearance
     randomizeName: false
-    
+
 - type: entity
   name: ERT leader
   suffix: EVA
@@ -91,7 +91,7 @@
   - type: Loadout
     prototype: ERTLeaderGearEVA
 
-# ERT Engineer    
+# ERT Engineer
 - type: entity
   name: ERT engineer
   parent: MobHumanERTLeader
@@ -110,7 +110,7 @@
     prototype: ERTEngineerGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT engineer
   suffix: EVA
@@ -128,8 +128,8 @@
     description: Assist with engineering efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTEngineerGearEVA
-    
-# ERT Security    
+
+# ERT Security
 - type: entity
   name: ERT security
   parent: MobHumanERTLeader
@@ -148,7 +148,7 @@
     prototype: ERTSecurityGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT security
   suffix: EVA
@@ -166,8 +166,8 @@
     description: Assist with security efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTSecurityGearEVA
-    
-# ERT Medical   
+
+# ERT Medical
 - type: entity
   name: ERT medic
   parent: MobHumanERTLeader
@@ -186,7 +186,7 @@
     prototype: ERTMedicalGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT medic
   suffix: EVA
@@ -204,8 +204,8 @@
     description: Assist with medical efforts to resolve the stations issues.
   - type: Loadout
     prototype: ERTMedicalGearEVA
-    
-# ERT Janitor  
+
+# ERT Janitor
 - type: entity
   name: ERT janitor
   parent: MobHumanERTLeader
@@ -224,7 +224,7 @@
     prototype: ERTJanitorGear
   - type: RandomMetadata
     nameSet: NamesFirstMilitary
-    
+
 - type: entity
   name: ERT janitor
   suffix: EVA

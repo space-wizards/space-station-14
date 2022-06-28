@@ -17,6 +17,10 @@
         conditions:
         - !type:OrganType
           type: Animal
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Rat
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -135,6 +139,10 @@
         conditions:
         - !type:OrganType
           type: Vox
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Slime
       # Converts Nitrogen into CO2
       - !type:ModifyLungGas
         conditions:
@@ -144,3 +152,74 @@
           CarbonDioxide: 1.0
           Nitrogen: -1.0
 
+- type: reagent
+  id: Miasma
+  name: reagent-name-miasma
+  desc: reagent-desc-miasma
+  physicalDesc: reagent-physical-desc-gaseous
+  color: "#56941E"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        diseases:
+          - VentCough
+          - AMIV
+          - SpaceCold
+          - SpaceFlu
+          - Bird Flew
+          - VanAusdallsRobovirus
+          - BleedersBite
+          - Plague
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+      - !type:ChemVomit
+        probability: 0.12
+        conditions:
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 0.8
+      - !type:PopupMessage
+        type: Local
+        messages: [ "miasma-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 0.25
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Rat
+        - !type:ReagentThreshold
+          reagent: Miasma
+          min: 1
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Blunt: -4
+            Slash: -3
+            Piercing: -3

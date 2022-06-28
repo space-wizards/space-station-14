@@ -57,5 +57,10 @@ public sealed class AlertLevelDetail
     /// The color that this alert level will show in-game in chat.
     /// </summary>
     [DataField("color")] public Color Color { get; } = Color.White;
+
+    /// <summary>
+    /// How long it takes for the shuttle to arrive when called.
+    /// </summary>
+    [DataField("shuttleTime")] public TimeSpan ShuttleTime { get; } = TimeSpan.FromMinutes(5);
 }
 

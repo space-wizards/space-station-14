@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -108,6 +109,11 @@ namespace Content.Server.StationEvents.Events
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
+        ///     Whether or not the event is announced when it is run
+        /// </summary>
+        public virtual bool AnnounceEvent { get; } = true;
+
+        /// <summary>
         ///     Has the startup time elapsed?
         /// </summary>
         protected bool Started { get; set; } = false;
@@ -139,13 +145,13 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
-            if (StartAnnouncement != null)
+            if (AnnounceEvent && StartAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (StartAudio != null)
+            if (AnnounceEvent && StartAudio != null)
             {
                 SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
@@ -162,13 +168,13 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
-            if (EndAnnouncement != null)
+            if (AnnounceEvent && EndAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (EndAudio != null)
+            if (AnnounceEvent && EndAudio != null)
             {
                 SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
@@ -205,6 +211,12 @@ namespace Content.Server.StationEvents.Events
             entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
             targetStation = robustRandom.Pick(stationSystem.Stations);
             var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
             if (possibleTargets.Count == 0)

@@ -49,6 +49,9 @@ namespace Content.Server.Polymorph.Systems
             if (!TryComp<PolymorphedEntityComponent>(uid, out var component))
                 return;
 
+            if (Deleted(component.Parent))
+                return;
+
             var proto = component.Prototype;
 
             var uidXform = Transform(uid);

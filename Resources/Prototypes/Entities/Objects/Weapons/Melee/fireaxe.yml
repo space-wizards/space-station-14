@@ -24,7 +24,7 @@
         Blunt: -2 # negative reductions = increases
         Slash: -8
   - type: Clothing
-    size: 20
+    size: 150
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
     Slots:
@@ -33,3 +33,21 @@
     qualities:
       - Prying
   - type: TilePrying
+
+- type: entity
+  id: FireAxeFlaming
+  name: fire axe
+  parent: FireAxe
+  description: Why fight fire with an axe when you can fight with fire and axe?
+  components:
+  - type: IgniteOnMeleeHit
+    fireStacks: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    state: icon
+  - type: Clothing
+    size: 20
+    sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
+    quickEquip: false
+    Slots:
+    - back

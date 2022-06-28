@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
@@ -77,7 +78,14 @@ namespace Content.Shared.Friction
                 if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f)) continue;
 
                 DebugTools.Assert(!Deleted(body.Owner));
-                var surfaceFriction = GetTileFriction(body, xformQuery.GetComponent(body.Owner));
+
+                if (!xformQuery.TryGetComponent(body.Owner, out var xform))
+                {
+                    Logger.ErrorS("physics", $"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
+                    continue;
+                }
+
+                var surfaceFriction = GetTileFriction(body, xform);
                 var bodyModifier = 1f;
 
                 if (frictionQuery.TryGetComponent(body.Owner, out var frictionComp))
@@ -161,7 +169,7 @@ namespace Content.Shared.Friction
 
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
             if (body.Owner.IsWeightless(body, coords, _mapManager) ||
-                !_mapManager.TryGetGrid(xform.GridEntityId, out var grid))
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return 0.0f;
 
             if (!coords.IsValid(EntityManager)) return 0.0f;

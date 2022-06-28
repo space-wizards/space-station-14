@@ -23,7 +23,16 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
 
     protected override void UpdateState(RadarConsoleComponent component)
     {
-        var radarState = new RadarConsoleBoundInterfaceState(component.MaxRange, component.Owner, new List<DockingInterfaceState>());
+        var xform = Transform(component.Owner);
+
+        var onGrid = xform.ParentUid == xform.GridUid;
+
+        var radarState = new RadarConsoleBoundInterfaceState(
+            component.MaxRange,
+            onGrid ? xform.Coordinates : null,
+            onGrid ? xform.LocalRotation : null,
+            new List<DockingInterfaceState>());
+
         _uiSystem.GetUiOrNull(component.Owner, RadarConsoleUiKey.Key)?.SetState(radarState);
     }
 }

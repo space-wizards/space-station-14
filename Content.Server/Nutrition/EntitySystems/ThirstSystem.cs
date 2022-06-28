@@ -1,6 +1,5 @@
 using Content.Server.Nutrition.Components;
 using JetBrains.Annotations;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Random;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
@@ -8,6 +7,7 @@ using Content.Shared.Alert;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Damage;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -135,23 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
-                        if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                            _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has stopped taking dehydration damage");
-                        else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                           _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has started taking dehydration damage");
-
                         component.CurrentThirstThreshold = calculatedThirstThreshold;
                         UpdateEffects(component);
-                    }
-                    if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                    {
-                        if (!EntityManager.TryGetComponent(component.Owner, out MobStateComponent? mobState))
-                            return;
-
-                        if (!mobState.IsDead())
-                        {
-                            _damage.TryChangeDamage(component.Owner, component.Damage, true);
-                        }
                     }
                 }
                 _accumulatedFrameTime -= 1;

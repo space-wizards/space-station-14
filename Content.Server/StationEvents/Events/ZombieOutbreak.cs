@@ -1,6 +1,7 @@
 using Content.Server.Chat;
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
@@ -19,11 +20,10 @@ namespace Content.Server.StationEvents.Events
         public override string Name => "ZombieOutbreak";
         public override int EarliestStart => 50;
         public override float Weight => WeightLow / 2;
-
         public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");
         protected override float EndAfter => 1.0f;
-
         public override int? MaxOccurrences => 1;
+        public override bool AnnounceEvent => false;
 
         /// <summary>
         /// Finds 1-3 random, dead entities accross the station
@@ -42,28 +42,31 @@ namespace Content.Server.StationEvents.Events
             _random.Shuffle(deadList);
 
             var toInfect = _random.Next(1, 3);
-            
+
             var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
-            
+
             // Now we give it to people in the list of dead entities earlier.
             var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
             var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
             var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
-            
+
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
-                    
+
                 zombifysys.ZombifyEntity(target.Owner);
 
                 var station = stationSystem.GetOwningStation(target.Owner);
                 if(station == null) continue;
                 stationsToNotify.Add((EntityUid) station);
             }
+
+            if (!AnnounceEvent)
+                return;
             foreach (var station in stationsToNotify)
             {
-                chatSystem.DispatchStationAnnouncement((EntityUid) station, Loc.GetString("station-event-zombie-outbreak-announcement"),
+                chatSystem.DispatchStationAnnouncement(station, Loc.GetString("station-event-zombie-outbreak-announcement"),
                     playDefaultSound: false, colorOverride: Color.DarkMagenta);
             }
         }

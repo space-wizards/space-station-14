@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
@@ -16,7 +17,7 @@ public sealed partial class AtmosphereSystem
         // Fix Grid Atmos command.
         _consoleHost.RegisterCommand("fixgridatmos",
             "Makes every tile on a grid have a roundstart gas mix.",
-            "fixgridatmos <grid Ids>", FixGridAtmosCommand);
+            "fixgridatmos <grid Ids>", FixGridAtmosCommand, FixGridAtmosCommandCompletions);
     }
 
     private void ShutdownCommands()
@@ -57,13 +58,11 @@ public sealed partial class AtmosphereSystem
        mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
        mixtures[5].Temperature = 5000f;
 
-       var entMan = IoCManager.Resolve<IEntityManager>();
-
-       foreach (var gid in args)
+       foreach (var arg in args)
        {
-           if(EntityUid.TryParse(gid, out var euid))
+           if(!EntityUid.TryParse(arg, out var euid))
            {
-               shell.WriteError($"Failed to parse euid '{gid}'.");
+               shell.WriteError($"Failed to parse euid '{arg}'.");
                return;
            }
 
@@ -101,5 +100,20 @@ public sealed partial class AtmosphereSystem
                InvalidateTile(gridAtmosphere, indices);
            }
        }
+    }
+
+    private CompletionResult FixGridAtmosCommandCompletions(IConsoleShell shell, string[] args)
+    {
+        MapId? playerMap = null;
+        if (shell.Player is { AttachedEntity: { } playerEnt })
+            playerMap = Transform(playerEnt).MapID;
+
+        var options = _mapManager.GetAllGrids()
+            .OrderByDescending(e => playerMap != null && e.ParentMapId == playerMap)
+            .ThenBy(e => (int) e.ParentMapId)
+            .ThenBy(e => (int) e.GridEntityId)
+            .Select(e => new CompletionOption(e.GridEntityId.ToString(), $"{MetaData(e.GridEntityId).EntityName} - Map {e.ParentMapId}"));
+
+        return CompletionResult.FromOptions(options);
     }
 }
