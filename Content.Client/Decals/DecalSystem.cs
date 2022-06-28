@@ -40,14 +40,14 @@ namespace Content.Client.Decals
 
         private void OnGridRemoval(GridRemovalEvent ev)
         {
-            DecalRenderIndex.Remove(ev.GridId);
-            DecalZIndexIndex.Remove(ev.GridId);
+            DecalRenderIndex.Remove(ev.EntityUid);
+            DecalZIndexIndex.Remove(ev.EntityUid);
         }
 
         private void OnGridInitialize(GridInitializeEvent ev)
         {
-            DecalRenderIndex[ev.GridId] = new();
-            DecalZIndexIndex[ev.GridId] = new();
+            DecalRenderIndex[ev.EntityUid] = new();
+            DecalZIndexIndex[ev.EntityUid] = new();
         }
 
         public override void Shutdown()
