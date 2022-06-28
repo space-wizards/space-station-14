@@ -56,6 +56,7 @@
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
       - id: WeaponAntiqueLaser
+      - id: JetpackCaptainFilled
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -105,6 +106,7 @@
         prob: 0.15
       - id: DoorRemoteEngineering
       - id: RubberStampCE
+      - id: JetpackVoidFilled
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -188,3 +190,4 @@
       - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
+      - id: JetpackSecurityFilled

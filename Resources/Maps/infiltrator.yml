@@ -4415,8 +4415,10 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 524
-  type: OxygenCanister
+  type: VendingMachineTankDispenserEVA
   components:
+  - name: tank dispenser
+    type: MetaData
   - pos: 2.5,-24.5
     parent: 73
     type: Transform
@@ -4687,6 +4689,8 @@ entities:
   components:
   - parent: 696
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 560
   type: Gyroscope
   components:
@@ -4700,6 +4704,8 @@ entities:
   components:
   - parent: 697
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 562
   type: Gyroscope
   components:
@@ -4759,11 +4765,9 @@ entities:
 - uid: 569
   type: YellowOxygenTankFilled
   components:
-  - pos: 2.5362625,-17.573189
+  - pos: 2.501164,-17.480259
     parent: 73
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 570
   type: YellowOxygenTankFilled
   components:
@@ -5667,6 +5671,18 @@ entities:
     type: Transform
   - locked: False
     type: Lock
+  - containers:
+      entity_storage: !type:Container
+        ents:
+        - 876
+        - 751
+        - 701
+        - 702
+        - 703
+        - 711
+        - 714
+        - 720
+    type: ContainerContainer
 - uid: 693
   type: TableWood
   components:
@@ -5696,12 +5712,14 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 724
-        - 752
-        - 704
-        - 713
-        - 727
+        - 809
+        - 808
         - 559
+        - 752
+        - 727
+        - 724
+        - 713
+        - 704
     type: ContainerContainer
 - uid: 697
   type: LockerSyndicatePersonal
@@ -5714,12 +5732,14 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 841
-        - 718
-        - 705
-        - 731
+        - 860
+        - 859
         - 561
+        - 841
+        - 731
+        - 718
         - 708
+        - 705
     type: ContainerContainer
 - uid: 698
   type: LockerSyndicatePersonal
@@ -5734,10 +5754,12 @@ entities:
         ents:
         - 845
         - 842
+        - 875
+        - 874
+        - 732
         - 721
         - 707
         - 706
-        - 732
     type: ContainerContainer
 - uid: 699
   type: AMEShielding
@@ -6585,6 +6607,20 @@ entities:
     type: ApcPowerReceiver
   - radius: 2.5
     type: PointLight
+- uid: 808
+  type: JetpackBlackFilled
+  components:
+  - parent: 696
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 809
+  type: JetpackBlackFilled
+  components:
+  - parent: 696
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 810
   type: CableApcExtension
   components:
@@ -6960,6 +6996,20 @@ entities:
   - pos: -4.5,-22.5
     parent: 73
     type: Transform
+- uid: 859
+  type: JetpackBlackFilled
+  components:
+  - parent: 697
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 860
+  type: JetpackBlackFilled
+  components:
+  - parent: 697
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 861
   type: SpawnPointNukies
   components:
@@ -7049,4 +7099,65 @@ entities:
   - containers:
       Nuke: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 874
+  type: JetpackBlackFilled
+  components:
+  - parent: 698
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 875
+  type: JetpackBlackFilled
+  components:
+  - parent: 698
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 876
+  type: JetpackBlackFilled
+  components:
+  - parent: 692
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 877
+  type: NitrogenCanister
+  components:
+  - pos: 5.5,-15.5
+    parent: 73
+    type: Transform
+- uid: 878
+  type: NitrogenCanister
+  components:
+  - pos: -6.5,-15.5
+    parent: 73
+    type: Transform
+- uid: 879
+  type: NitrogenTankFilled
+  components:
+  - pos: -3.2701688,-15.432608
+    parent: 73
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 880
+  type: NitrogenTankFilled
+  components:
+  - pos: -3.2310624,-17.464586
+    parent: 73
+    type: Transform
+- uid: 881
+  type: NitrogenTankFilled
+  components:
+  - pos: 2.7298312,-15.401358
+    parent: 73
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 882
+  type: NitrogenTankFilled
+  components:
+  - pos: 2.673039,-17.402134
+    parent: 73
+    type: Transform
 ...

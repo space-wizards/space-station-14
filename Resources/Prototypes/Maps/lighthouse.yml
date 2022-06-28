@@ -3,7 +3,7 @@
   mapName: 'lighthouse'
   mapPath: /Maps/lighthouse.yml
   minPlayers: 35
-  maxPlayers: 60
+  maxPlayers: 70
   stations:
     lighthouse:
       mapNameTemplate: '{0} Lighthouse {1}'
@@ -17,7 +17,7 @@
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 2 ]
         Botanist: [ 2, 2 ]
-        Chef: [ 1, 2 ]
+        Chef: [ 2, 3 ]
         Clown: [ 1, 1 ]
         Janitor: [ 1, 2 ]
         Mime: [ 1, 1 ]
@@ -26,7 +26,7 @@
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 3, 5 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 2, 4 ]
+        MedicalDoctor: [ 3, 5 ]
         Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 3, 4 ]
@@ -38,9 +38,9 @@
         Lawyer: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 2, 3 ]
-        Musician: [1, 1]
+        Musician: [1, 2]
         AtmosphericTechnician: [ 1, 2 ]
-        TechnicalAssistant: [ 1, 2 ]
-        MedicalIntern: [ 1, 2 ]
-        ServiceWorker: [ 1, 2 ]
-        SecurityCadet: [ 1, 2 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]

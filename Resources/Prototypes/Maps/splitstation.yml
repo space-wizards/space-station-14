@@ -27,7 +27,7 @@
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 6, 8 ]
-        AtmosphericTechnician: [ 1, 2 ]
+        AtmosphericTechnician: [ 2, 3 ]
         TechnicalAssistant: [ 2, 2 ]
         ChiefMedicalOfficer: [ 1, 1 ]
         MedicalDoctor: [ 3, 8 ]
