@@ -191,7 +191,6 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
-  - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.1

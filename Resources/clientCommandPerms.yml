@@ -16,6 +16,7 @@
     - nodevisfilter
     - showspread
     - showambient
+    - showemergencyshuttle
 
 - Flags: MAPPING
   Commands:

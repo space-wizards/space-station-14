@@ -124,7 +124,7 @@
   name: sawn-off shotgun
   parent: BaseWeaponShotgun
   id: WeaponShotgunSawn
-  description: Omar's coming!
+  description: Groovy!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi

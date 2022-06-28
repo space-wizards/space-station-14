@@ -12,8 +12,9 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
     public ShuttleConsoleBoundInterfaceState(
         ShuttleMode mode,
         float maxRange,
-        EntityUid? entity,
-        List<DockingInterfaceState> docks) : base(maxRange, entity, docks)
+        EntityCoordinates? coordinates,
+        Angle? angle,
+        List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
     {
         Mode = mode;
     }

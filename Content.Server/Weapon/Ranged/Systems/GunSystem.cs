@@ -154,7 +154,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }, false);
     }
 
-    private void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
         physics.BodyStatus = BodyStatus.InAir;
