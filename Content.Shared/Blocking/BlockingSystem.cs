@@ -39,8 +39,6 @@ public sealed class BlockingSystem : EntitySystem
         SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
 
-        SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
-
         SubscribeLocalEvent<BlockingComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -88,21 +86,6 @@ public sealed class BlockingSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
-    {
-        if (TryComp(component.BlockingItem, out BlockingComponent? blockingComponent))
-        {
-            if (_proto.TryIndex(blockingComponent.PassiveBlockDamageModifer, out DamageModifierSetPrototype? passiveblockModifier) && !blockingComponent.IsBlocking)
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, passiveblockModifier);
-
-            if (_proto.TryIndex(blockingComponent.ActiveBlockDamageModifier, out DamageModifierSetPrototype? activeBlockModifier) && blockingComponent.IsBlocking)
-            {
-                args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, activeBlockModifier);
-                SoundSystem.Play(blockingComponent.BlockSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.2f));
-            }
-        }
-    }
-
     private void OnShutdown(EntityUid uid, BlockingComponent component, ComponentShutdown args)
     {
         //In theory the user should not be null when this fires off
@@ -135,7 +118,7 @@ public sealed class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", Name(user)), ("shield", shieldName));
 
-        if (TryComp(user, out PhysicsComponent? physicsComponent))
+        if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             var fixture = new Fixture(physicsComponent, component.Shape)
             {
@@ -181,8 +164,8 @@ public sealed class BlockingSystem : EntitySystem
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
         //and set the users bodytype back to their original type
-        if (component.BlockingToggleAction != null && TryComp(user, out BlockingUserComponent? blockingUserComponent)
-                                                     && TryComp(user, out PhysicsComponent? physicsComponent))
+        if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
+                                                     && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _transformSystem.Unanchor(xform);
