@@ -74,7 +74,10 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || args.Target == null)
+            if (curTime < comp.CooldownEnd ||
+                args.Target == null ||
+                args.Target == owner ||
+                args.User == args.Target)
                 return;
 
             var location = Transform(args.User).Coordinates;
@@ -92,7 +95,7 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
                     var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
@@ -117,13 +120,27 @@ namespace Content.Server.Weapon.Melee
             }
 
             comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
+            SetAttackCooldown(owner, comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
 
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+        }
+
+        /// <summary>
+        /// Set the melee weapon cooldown's end to the specified value. Will use the maximum of the existing cooldown or the new one.
+        /// </summary>
+        public void SetAttackCooldown(EntityUid uid, TimeSpan endTime, MeleeWeaponComponent? component = null)
+        {
+            // Some other system may want to artificially inflate melee weapon CD.
+            if (!Resolve(uid, ref component) || component.CooldownEnd > endTime) return;
+
+            component.CooldownEnd = endTime;
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd));
         }
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
         {
+            if (string.IsNullOrEmpty(comp.Arc)) return;
+
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
@@ -174,7 +191,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 

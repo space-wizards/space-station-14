@@ -4,6 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It looks friendly. Why don't you give it a hug?
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -22,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 100
+      mass: 320
       mask:
       - MobMask
       layer:

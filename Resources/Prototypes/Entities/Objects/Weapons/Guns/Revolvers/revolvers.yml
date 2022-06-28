@@ -77,6 +77,9 @@
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RevolverAmmoProvider
     capacity: 7
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
   name: Predator

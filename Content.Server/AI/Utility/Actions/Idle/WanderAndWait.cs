@@ -51,10 +51,12 @@ namespace Content.Server.AI.Utility.Actions.Idle
             };
         }
 
-        private EntityCoordinates FindRandomGrid(IRobustRandom robustRandom)
+        private EntityCoordinates FindRandomGrid(IRobustRandom robustRandom, IEntityManager? entMan = null)
         {
+            IoCManager.Resolve(ref entMan);
+
             // Very inefficient (should weight each region by its node count) but better than the old system
-            var reachableSystem = EntitySystem.Get<AiReachableSystem>();
+            var reachableSystem = entMan.EntitySysManager.GetEntitySystem<AiReachableSystem>();
             var reachableArgs = ReachableArgs.GetArgs(Owner);
             var entityRegion = reachableSystem.GetRegion(Owner);
             var reachableRegions = reachableSystem.GetReachableRegions(reachableArgs, entityRegion);
@@ -76,9 +78,11 @@ namespace Content.Server.AI.Utility.Actions.Idle
             }
 
             var targetNode = robustRandom.Pick(reachableNodes);
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).GridEntityId);
-            var targetGrid = grid.GridTileToLocal(targetNode.TileRef.GridIndices);
+
+            if (!entMan.TryGetComponent(entMan.GetComponent<TransformComponent>(Owner).GridUid, out IMapGridComponent? grid))
+                return default;
+
+            var targetGrid = grid.Grid.GridTileToLocal(targetNode.TileRef.GridIndices);
 
             return targetGrid;
         }

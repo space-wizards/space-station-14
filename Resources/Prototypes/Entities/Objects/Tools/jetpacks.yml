@@ -1,0 +1,235 @@
+- type: entity
+  id: JetpackEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/atmospherics.rsi
+      state: freon_old
+  - type: EffectVisuals
+  - type: AnimationPlayer
+
+- type: entity
+  parent: GasTankBase
+  abstract: true
+  id: BaseJetpack
+  name: Jetpack
+  description: It's a jetpack.
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      size: 100
+    - type: UserInterface
+      interfaces:
+        - key: enum.SharedGasTankUiKey.Key
+          type: GasTankBoundUserInterface
+    - type: Clothing
+      sprite: Objects/Tanks/Jetpacks/blue.rsi
+      QuickEquip: false
+      size: 100
+      Slots:
+        - Back
+    - type: GasTank
+      outputPressure: 21.27825
+      air:
+        volume: 70
+        temperature: 293.15
+    - type: Jetpack
+      toggleAction:
+        icon:
+          sprite: Objects/Tanks/Jetpacks/blue.rsi
+          state: icon
+        iconOn:
+          sprite: Objects/Tanks/Jetpacks/blue.rsi
+          state: icon-on
+        name: action-name-jetpack-toggle
+        description: action-description-jetpack-toggle
+        itemIconStyle: NoItem
+        event: !type:ToggleJetpackEvent
+    - type: Appearance
+
+#Empty blue
+- type: entity
+  id: JetpackBlue
+  parent: BaseJetpack
+  name: jetpack
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    Slots:
+      - Back
+
+# Filled blue
+- type: entity
+  id: JetpackBlueFilled
+  parent: JetpackBlue
+  name: jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 22.6293856
+
+#Empty black
+- type: entity
+  id: JetpackBlack
+  parent: BaseJetpack
+  name: jetpack
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/black.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/black.rsi
+    Slots:
+      - Back
+
+# Filled black
+- type: entity
+  id: JetpackBlackFilled
+  parent: JetpackBlack
+  name: jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 22.6293856
+
+#Empty captain
+- type: entity
+  id: JetpackCaptain
+  parent: BaseJetpack
+  name: captain's jetpack
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/captain.rsi
+  - type: Clothing
+    size: 30
+    sprite: Objects/Tanks/Jetpacks/captain.rsi
+    Slots:
+      - Back
+
+# Filled captain
+- type: entity
+  id: JetpackCaptainFilled
+  parent: JetpackCaptain
+  name: captain's jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 22.6293856
+
+#Empty mini
+- type: entity
+  id: JetpackMini
+  parent: BaseJetpack
+  name: mini jetpack
+  suffix: Empty
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/Jetpacks/mini.rsi
+    - type: Clothing
+      size: 50
+      sprite: Objects/Tanks/Jetpacks/mini.rsi
+      Slots:
+        - Back
+
+# Filled mini
+- type: entity
+  id: JetpackMiniFilled
+  parent: JetpackMini
+  name: mini jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      temperature: 293.15
+      volume: 2
+      moles:
+      - 0.323460326
+
+#Empty security
+- type: entity
+  id: JetpackSecurity
+  parent: BaseJetpack
+  name: security jetpack
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/security.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/security.rsi
+    Slots:
+      - Back
+
+#Filled security
+- type: entity
+  id: JetpackSecurityFilled
+  parent: JetpackSecurity
+  name: security jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 22.6293856
+
+#Empty void
+- type: entity
+  id: JetpackVoid
+  parent: BaseJetpack
+  name: void jetpack
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/void.rsi
+    Slots:
+      - Back
+
+# Filled void
+- type: entity
+  id: JetpackVoidFilled
+  parent: JetpackVoid
+  name: void jetpack
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.27825
+    air:
+      volume: 70
+      temperature: 293.15
+      moles:
+        - 22.6293856

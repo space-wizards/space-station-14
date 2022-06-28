@@ -5,6 +5,7 @@ using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -44,8 +45,11 @@ namespace Content.Server.Dragon
         /// NOTE: original intended design was to increase this proportionally with damage thresholds, but those proved quite difficult to get consistently. right now it devours the structure at a fixed timer.
         /// </remarks>
         /// </summary>
+        [DataField("structureDevourTime")]
+        public float StructureDevourTime = 10f;
+
         [DataField("devourTime")]
-        public float DevourTime = 15f;
+        public float DevourTime = 2f;
 
         [DataField("spawnCount")] public int SpawnsLeft = 2;
 
@@ -77,6 +81,20 @@ namespace Content.Server.Dragon
             };
 
         public CancellationTokenSource? CancelToken;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("devourWhitelist")]
+        public EntityWhitelist? DevourWhitelist = new()
+        {
+            Components = new string[]
+            {
+                "Door",
+                "MobState",
+            },
+            Tags = new List<string>()
+            {
+                "Wall",
+            }
+        };
 
         /// <summary>
         /// Where the entities go when dragon devours them, empties when the dragon is butchered.

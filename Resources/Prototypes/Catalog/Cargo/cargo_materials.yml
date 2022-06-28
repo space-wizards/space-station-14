@@ -1,23 +1,23 @@
 - type: cargoProduct
-  name: "water tank crate"
-  id: MaterialCrateWaterTank
+  name: "water tank"
+  id: MaterialWaterTank
   description: "A tank of fresh water for when the station has ran out."
   icon:
     sprite: Structures/Storage/tanks.rsi
     state: watertank
-  product: CrateMaterialWaterTank
+  product: WaterTankFull
   cost: 2000
   category: Materials
   group: market
-  
+
 - type: cargoProduct
-  name: "fuel tank crate"
-  id: MaterialCrateFuelTank
+  name: "fuel tank"
+  id: MaterialFuelTank
   description: "A tank of welder fuel for when the station has ran out."
   icon:
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
-  product: CrateMaterialFuelTank
+  product: WeldingFuelTankFull
   cost: 2000
   category: Materials
   group: market
@@ -78,7 +78,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
   product: CrateMaterialPlasma
-  cost: 4500
+  cost: 5000
   category: Materials
   group: market
 

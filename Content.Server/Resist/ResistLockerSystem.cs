@@ -5,6 +5,7 @@ using Content.Server.Lock;
 using Robust.Shared.Player;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
+using Content.Shared.Movement.Events;
 
 namespace Content.Server.Resist;
 

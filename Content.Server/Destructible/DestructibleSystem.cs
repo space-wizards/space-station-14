@@ -43,7 +43,7 @@ namespace Content.Server.Destructible
             {
                 if (threshold.Reached(args.Damageable, this))
                 {
-                    RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold));
+                    RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
                     threshold.Execute(uid, this, EntityManager);
                 }

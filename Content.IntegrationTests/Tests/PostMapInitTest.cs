@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Maps;
@@ -12,7 +14,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class PostMapInitTest : ContentIntegrationTest
+    public sealed class PostMapInitTest
     {
         public const bool SkipTestMaps = true;
         public const string TestMapsPath = "/Maps/Test/";
@@ -20,9 +22,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task NoSavedPostMapInitTest()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
             var mapFolder = new ResourcePath("/Maps");
@@ -57,56 +58,80 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.False(postMapInit, $"Map {map.Filename} was saved postmapinit");
             }
+            await pairTracker.CleanReturnAsync();
         }
 
-        [Test]
-        public async Task MapsLoadableTest()
+        private static string[] GetMapNames()
         {
-            var server = StartServer();
+           Task<string[]> task = null;
+            using (ExecutionContext.SuppressFlow())
+            {
+                task = Task.Run(static async () =>
+                {
+                    await Task.Yield();
+                    await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{Disconnected = true});
+                    var server = pairTracker.Pair.Server;
+                    var resourceManager = server.ResolveDependency<IResourceManager>();
+                    var mapFolder = new ResourcePath("/Maps");
+                    var maps = resourceManager
+                        .ContentFindFiles(mapFolder)
+                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith("."))
+                        .ToArray();
+                    var mapNames = new List<string>();
+                    foreach (var map in maps)
+                    {
+                        var rootedPath = map.ToRootedPath();
 
-            await server.WaitIdleAsync();
+                        // ReSharper disable once RedundantLogicalConditionalExpressionOperand
+                        if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath))
+                        {
+                            continue;
+                        }
+                        mapNames.Add(rootedPath.ToString());
+                    }
+
+                    await pairTracker.CleanReturnAsync();
+                    return mapNames.ToArray();
+                });
+                Task.WaitAll(task);
+            }
+
+            return task.GetAwaiter().GetResult();
+        }
+
+        [Test, TestCaseSource("GetMapNames")]
+        public async Task MapsLoadableTest(string mapName)
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            var resourceManager = server.ResolveDependency<IResourceManager>();
-            var mapFolder = new ResourcePath("/Maps");
-            var maps = resourceManager
-                .ContentFindFiles(mapFolder)
-                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith("."))
-                .ToArray();
 
-            foreach (var map in maps)
+            await server.WaitPost(() =>
             {
-                var rootedPath = map.ToRootedPath();
-
-                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath))
+                var mapId = mapManager.CreateMap();
+                try
                 {
-                    continue;
+                    mapLoader.LoadMap(mapId, mapName);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to load map {mapName}", ex);
                 }
 
-                server.Post(() =>
+                try
                 {
-                    var mapId = mapManager.CreateMap();
-                    try
-                    {
-                        mapLoader.LoadMap(mapId, rootedPath.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to load map {rootedPath}", ex);
-                    }
-                    try
-                    {
-                        mapManager.DeleteMap(mapId);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Failed to delete map {rootedPath}", ex);
-                    }
-                });
-                await server.WaitIdleAsync();
-            }
+                    mapManager.DeleteMap(mapId);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to delete map {mapName}", ex);
+                }
+            });
+            await server.WaitRunTicks(1);
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

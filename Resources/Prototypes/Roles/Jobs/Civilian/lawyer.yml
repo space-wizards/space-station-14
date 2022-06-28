@@ -18,6 +18,6 @@
     back: ClothingBackpackBriefcaseFilled
     shoes: ClothingShoesColorBlack
     id: LawyerPDA
-    ears: ClothingHeadsetService
+    ears: ClothingHeadsetSecurity
     # TODO add copy of space law
 

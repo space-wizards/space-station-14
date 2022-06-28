@@ -34,6 +34,8 @@
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
   - type: Gun
     fireRate: 15
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/minigun.ogg
   - type: BallisticAmmoProvider
     proto: CartridgeMinigun
     capacity: 1000

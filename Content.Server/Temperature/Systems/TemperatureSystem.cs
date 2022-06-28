@@ -69,7 +69,7 @@ namespace Content.Server.Temperature.Systems
                 float lastTemp = temperature.CurrentTemperature;
                 float delta = temperature.CurrentTemperature - temp;
                 temperature.CurrentTemperature = temp;
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
+                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Content.Server.Temperature.Systems
                 temperature.CurrentTemperature += heatAmount / temperature.HeatCapacity;
                 float delta = temperature.CurrentTemperature - lastTemp;
 
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
+                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
             }
         }
 

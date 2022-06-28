@@ -24,7 +24,8 @@ namespace Content.Client.Computer
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent>(entity, out var sprite)) return;
+
             sprite.LayerSetState(Layers.Screen, ScreenState);
 
             if (!string.IsNullOrEmpty(KeyboardState))
@@ -38,7 +39,7 @@ namespace Content.Client.Computer
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent>(component.Owner, out var sprite)) return;
 
             if (!component.TryGetData(ComputerVisuals.Powered, out bool powered))
             {

@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -5,6 +6,7 @@ using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
+using Content.Shared.Light;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -13,12 +15,14 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -84,7 +88,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryPilot(args.User, uid))
+            if (!component.CanPilot || !TryPilot(args.User, uid))
                 args.Cancel();
         }
 
@@ -136,15 +140,29 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         private void OnModeRequest(EntityUid uid, ShuttleConsoleComponent component, ShuttleModeRequestMessage args)
         {
+            var consoleUid = uid;
+
+            if (TryComp<CargoPilotConsoleComponent>(uid, out var cargoPilot) && cargoPilot.Entity != null)
+            {
+                consoleUid = cargoPilot.Entity.Value;
+            }
+
             if (args.Session.AttachedEntity is not { } player ||
                 !TryComp<PilotComponent>(player, out var pilot) ||
-                !TryComp<TransformComponent>(player, out var xform) ||
-                pilot.Console is not ShuttleConsoleComponent console) return;
+                !TryComp<ShuttleConsoleComponent>(consoleUid, out var console) ||
+                !TryComp<TransformComponent>(consoleUid, out var consoleXform)) return;
 
-            if (!console.SubscribedPilots.Contains(pilot) ||
-                !TryComp<ShuttleComponent>(xform.GridEntityId, out var shuttle)) return;
+            // Can't check console pilots as it may be remotely piloted!
+            if (!component.SubscribedPilots.Contains(pilot) ||
+                !TryComp<ShuttleComponent>(consoleXform.GridUid, out var shuttle)) return;
 
             SetShuttleMode(args.Mode, console, shuttle);
+            UpdateState(component);
+
+            if (uid != consoleUid)
+            {
+                UpdateState(console);
+            }
         }
 
         /// <summary>
@@ -159,7 +177,6 @@ namespace Content.Server.Shuttles.Systems
                 !consoleXform.Anchored ||
                 consoleXform.GridID != Transform(shuttleComponent.Owner).GridID)
             {
-                UpdateState(consoleComponent);
                 return;
             }
 
@@ -174,8 +191,6 @@ namespace Content.Server.Shuttles.Systems
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            UpdateState(consoleComponent);
         }
 
         /// <summary>
@@ -205,10 +220,22 @@ namespace Content.Server.Shuttles.Systems
 
         private void UpdateState(ShuttleConsoleComponent component, List<DockingInterfaceState>? docks = null)
         {
-            TryComp<RadarConsoleComponent>(component.Owner, out var radar);
+            EntityUid? entity = component.Owner;
+
+            var getShuttleEv = new ConsoleShuttleEvent
+            {
+                Console = entity,
+            };
+
+            RaiseLocalEvent(entity.Value, ref getShuttleEv, false);
+            entity = getShuttleEv.Console;
+
+            TryComp<TransformComponent>(entity, out var consoleXform);
+            TryComp<RadarConsoleComponent>(entity, out var radar);
             var range = radar?.MaxRange ?? 0f;
 
-            TryComp<ShuttleComponent>(Transform(component.Owner).GridUid, out var shuttle);
+            TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
+            component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();
@@ -217,7 +244,8 @@ namespace Content.Server.Shuttles.Systems
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
                     range,
-                    component.Owner,
+                    consoleXform?.Coordinates,
+                    consoleXform?.LocalRotation,
                     docks));
         }
 

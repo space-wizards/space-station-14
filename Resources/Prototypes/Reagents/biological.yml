@@ -31,10 +31,10 @@
 
 - type: reagent
   id: Ichor
-  name: Ichor
+  name: reagent-name-ichor
   group: Biological
-  desc: An extremely potent regenerative chemical, perfected by space fauna evolution. Produced in the dragon's digestive system, it is seen as an exotic commodity due to the gargantuan effort of hunting for it.
-  physicalDesc: roaring
+  desc: reagent-desc-ichor
+  physicalDesc: reagent-physical-desc-roaring
   color: "#f4692e"
   metabolisms:
     Drink:

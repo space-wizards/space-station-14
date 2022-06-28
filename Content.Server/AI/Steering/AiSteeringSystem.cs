@@ -8,8 +8,10 @@ using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Steering
@@ -17,6 +19,7 @@ namespace Content.Server.AI.Steering
     public sealed class AiSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
@@ -120,9 +123,9 @@ namespace Content.Server.AI.Steering
         /// <exception cref="InvalidOperationException"></exception>
         public void Unregister(EntityUid entity)
         {
-            if (EntityManager.TryGetComponent(entity, out AiControllerComponent? controller))
+            if (EntityManager.TryGetComponent(entity, out SharedPlayerInputMoverComponent? controller))
             {
-                controller.VelocityDir = Vector2.Zero;
+                controller.CurTickSprintMovement = Vector2.Zero;
             }
 
             if (_pathfindingRequests.TryGetValue(entity, out var request))
@@ -228,6 +231,13 @@ namespace Content.Server.AI.Steering
             _listIndex = (_listIndex + 1) % _agentLists.Count;
         }
 
+        private void SetDirection(SharedPlayerInputMoverComponent component, Vector2 value)
+        {
+            component.CurTickSprintMovement = value;
+            component._lastInputTick = _timing.CurTick;
+            component._lastInputSubTick = ushort.MaxValue;
+        }
+
         /// <summary>
         /// Go through each steerer and combine their vectors
         /// </summary>
@@ -240,9 +250,10 @@ namespace Content.Server.AI.Steering
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (Deleted(entity) ||
-                !EntityManager.TryGetComponent(entity, out AiControllerComponent? controller) ||
+                !EntityManager.TryGetComponent(entity, out SharedPlayerInputMoverComponent? controller) ||
                 !controller.CanMove ||
-                !EntityManager.GetComponent<TransformComponent>(entity).GridEntityId.IsValid())
+                !TryComp(entity, out TransformComponent? xform) ||
+                xform.GridUid == null)
             {
                 return SteeringStatus.NoPath;
             }
@@ -251,26 +262,26 @@ namespace Content.Server.AI.Steering
 
             if (entitySteering != null && (!EntityManager.EntityExists(entitySteering.Target) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entitySteering.Target).EntityLifeStage) >= EntityLifeStage.Deleted)
             {
-                controller.VelocityDir = Vector2.Zero;
+                controller.CurTickSprintMovement = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
 
-            if (_mapManager.IsGridPaused(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId))
+            if (_mapManager.IsGridPaused(xform.GridUid.Value))
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 return SteeringStatus.Pending;
             }
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (EntityManager.GetComponent<TransformComponent>(entity).GridEntityId != steeringRequest.TargetGrid.GetGridEntityId(EntityManager))
+            if (xform.GridUid != steeringRequest.TargetGrid.GetGridUid(EntityManager))
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 return SteeringStatus.NoPath;
             }
 
             // Check if we have arrived
-            var targetDistance = (EntityManager.GetComponent<TransformComponent>(entity).MapPosition.Position - steeringRequest.TargetMap.Position).Length;
+            var targetDistance = (xform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
             steeringRequest.TimeUntilInteractionCheck -= frameTime;
 
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
@@ -279,7 +290,7 @@ namespace Content.Server.AI.Steering
                     _interactionSystem.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
                 {
                     // TODO: Need cruder LOS checks for ranged weaps
-                    controller.VelocityDir = Vector2.Zero;
+                    SetDirection(controller, Vector2.Zero);
                     return SteeringStatus.Arrived;
                 }
 
@@ -290,7 +301,7 @@ namespace Content.Server.AI.Steering
             // If we're really close don't swiggity swoogity back and forth and just wait for the interaction check maybe?
             if (steeringRequest.TimeUntilInteractionCheck > 0.0f && targetDistance <= 0.1f)
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 return SteeringStatus.Moving;
             }
 
@@ -304,7 +315,7 @@ namespace Content.Server.AI.Steering
                         break;
                     // Currently nothing should be cancelling these except external factors
                     case TaskCanceledException _:
-                        controller.VelocityDir = Vector2.Zero;
+                        SetDirection(controller, Vector2.Zero);
                         return SteeringStatus.NoPath;
                     default:
                         throw pathRequest.Job.Exception;
@@ -313,7 +324,7 @@ namespace Content.Server.AI.Steering
                 var path = _pathfindingRequests[entity].Job.Result;
                 if (path == null || path.Count == 0)
                 {
-                    controller.VelocityDir = Vector2.Zero;
+                    SetDirection(controller, Vector2.Zero);
                     return SteeringStatus.NoPath;
                 }
 
@@ -334,7 +345,7 @@ namespace Content.Server.AI.Steering
             // If the route's empty we could be close and may not need a re-path so we won't check if it is
             if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity) && targetDistance > 1.5f)
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 RequestPath(entity, steeringRequest);
                 return SteeringStatus.Pending;
             }
@@ -364,14 +375,14 @@ namespace Content.Server.AI.Steering
             var nextGrid = NextGrid(entity, steeringRequest);
             if (!nextGrid.HasValue)
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 return SteeringStatus.NoPath;
             }
 
             // Validate that we can even get to the next grid (could probably just check if we can use nextTile if we're not near the target grid)
             if (!_pathfindingSystem.CanTraverse(entity, nextGrid.Value))
             {
-                controller.VelocityDir = Vector2.Zero;
+                SetDirection(controller, Vector2.Zero);
                 return SteeringStatus.NoPath;
             }
 
@@ -391,7 +402,7 @@ namespace Content.Server.AI.Steering
 
             // Move towards it
             DebugTools.Assert(movementVector != new Vector2(float.NaN, float.NaN));
-            controller.VelocityDir = movementVector.Normalized;
+            SetDirection(controller, movementVector.Normalized);
             return SteeringStatus.Moving;
         }
 
@@ -407,9 +418,13 @@ namespace Content.Server.AI.Steering
                 return;
             }
 
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+
             var cancelToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
-            var startTile = gridManager.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var gridManager = _mapManager.GetGrid(xform.GridUid.Value);
+            var startTile = gridManager.GetTileRef(xform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
             if (EntityManager.TryGetComponent(entity, out IPhysBody? physics))
@@ -439,7 +454,10 @@ namespace Content.Server.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+            var entityTile = _mapManager.GetGrid(xform.GridUid.Value).GetTileRef(xform.Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -508,7 +526,12 @@ namespace Content.Server.AI.Steering
         {
             if (_paths[entity].Count == 0) return;
             var nextTile = dequeue ? _paths[entity].Dequeue() : _paths[entity].Peek();
-            var nextGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId).GridTileToLocal(nextTile.GridIndices);
+
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return;
+
+            var nextGrid = _mapManager.GetGrid(xform.GridUid.Value).GridTileToLocal(nextTile.GridIndices);
             _nextGrid[entity] = nextGrid;
         }
 
@@ -630,8 +653,13 @@ namespace Content.Server.AI.Steering
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
-            var entityGridCoords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridEntityId);
+
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
+            if (xform.GridUid == null)
+                return default;
+
+            var entityGridCoords = xform.Coordinates;
+            var grid = _mapManager.GetGrid(xform.GridUid.Value);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
             var nextTile = grid.GetTileRef(entityGridCoords.Offset(direction));
