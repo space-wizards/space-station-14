@@ -1,5 +1,7 @@
-﻿using Content.Shared.Actions.ActionTypes;
+﻿using System.ComponentModel.DataAnnotations;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Blocking;
@@ -31,8 +33,8 @@ public sealed class BlockingComponent : Component
     /// The shape of the blocking fixture that will be dynamically spawned
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("blockRadius")]
-    public float BlockRadius = 0.5f;
+    [DataField("shape")]
+    public IPhysShape Shape = new PhysShapeCircle {Radius = 0.5F};
 
     /// <summary>
     /// The damage modifer to use while passively blocking

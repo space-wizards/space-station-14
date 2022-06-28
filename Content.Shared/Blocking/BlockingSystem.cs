@@ -135,12 +135,9 @@ public sealed class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", Name(user)), ("shield", shieldName));
 
-        var shape = new PhysShapeCircle();
-        shape.Radius = component.BlockRadius;
-
         if (TryComp(user, out PhysicsComponent? physicsComponent))
         {
-            var fixture = new Fixture(physicsComponent, shape)
+            var fixture = new Fixture(physicsComponent, component.Shape)
             {
                 ID = BlockingComponent.BlockFixtureID,
                 Hard = true,
