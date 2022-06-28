@@ -1,8 +1,8 @@
 using Content.Server.DoAfter;
 using Content.Server.UserInterface;
-using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Dynamics;
@@ -32,6 +32,7 @@ namespace Content.Server.Paper.Plane
 
             SubscribeLocalEvent<PaperPlaneComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<PaperPlaneComponent, ActivatableUIOpenAttemptEvent>(OnPaperUIOpenEvent);
+            SubscribeLocalEvent<PaperPlaneComponent, LandEvent>(OnLand);
         }
 
         private void OnAltVerbPlane(EntityUid uid, PaperPlaneComponent plane, GetVerbsEvent<AlternativeVerb> args)
@@ -76,9 +77,6 @@ namespace Content.Server.Paper.Plane
                 PaperStatus status = paper.Content != "" ? PaperStatus.Written : PaperStatus.Blank;
                     appearance.SetData(PaperVisuals.Status, status);
             }
-
-            if (TryComp(plane.Owner, out TileFrictionModifierComponent? frictionModifier))
-                frictionModifier.Modifier /= plane.FrictionRatio;
 
             _tagSystem.RemoveTags(plane.Owner, plane.Tags);
 
@@ -129,9 +127,6 @@ namespace Content.Server.Paper.Plane
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Plane);
 
-            if (TryComp(paper.Owner, out TileFrictionModifierComponent? frictionModifier))
-                frictionModifier.Modifier *= plane.FrictionRatio;
-
             _tagSystem.AddTags(paper.Owner, plane.Tags);
         }
 
@@ -144,6 +139,16 @@ namespace Content.Server.Paper.Plane
             // avoid bouncing off of walls, unless weightless
             if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
                 physics.Momentum = Vector2.Zero;
+        }
+
+        public void OnLand(EntityUid uid, PaperPlaneComponent plane, LandEvent args)
+        {
+            //keep on floatin' baby
+            if (TryComp<PhysicsComponent>(uid, out var physics))
+            {
+                physics.BodyStatus = BodyStatus.InAir;
+                physics.LinearVelocity *= 1.1f;
+            }
         }
 
         private void OnPaperUIOpenEvent(EntityUid uid, PaperPlaneComponent plane, ActivatableUIOpenAttemptEvent args)
