@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Durathread now has a crafting recipe. Have a good time impersonating
-      department heads., type: Add}
-  id: 1329
-  time: '2022-04-15T21:20:14.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Entities that are powered by APCs can now be designed so that they can
@@ -2962,3 +2956,8 @@ Entries:
       it prints a 5000 point research disk.', type: Add}
   id: 1828
   time: '2022-06-28T14:41:09.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Sterile masks can't be used with oxygen tanks anymore, type: Fix}
+  id: 1829
+  time: '2022-06-28T21:45:36.0000000+00:00'
