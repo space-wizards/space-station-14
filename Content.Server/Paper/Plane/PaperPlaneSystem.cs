@@ -145,10 +145,7 @@ namespace Content.Server.Paper.Plane
         {
             //keep on floatin' baby
             if (TryComp<PhysicsComponent>(uid, out var physics))
-            {
                 physics.BodyStatus = BodyStatus.InAir;
-                physics.LinearVelocity *= 1.1f;
-            }
         }
 
         private void OnPaperUIOpenEvent(EntityUid uid, PaperPlaneComponent plane, ActivatableUIOpenAttemptEvent args)
