@@ -1,5 +1,3 @@
-using Content.Server.Stunnable;
-using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
