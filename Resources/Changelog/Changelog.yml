@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Split Station V2.1! Fixed power issues, swapped bar and chapel around
-      and other minor fixes. Look out for the next big update.', type: Add}
-  id: 1325
-  time: '2022-04-15T18:43:39.0000000+00:00'
 - author: Radosvik
   changes:
   - {message: Lobby Info Box now refreshes when needed., type: Tweak}
@@ -2961,3 +2955,8 @@ Entries:
   - {message: Proper Evac support for Split!, type: Add}
   id: 1824
   time: '2022-06-28T01:20:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Xenos can now pry doors., type: Add}
+  id: 1825
+  time: '2022-06-28T10:50:58.0000000+00:00'
