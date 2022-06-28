@@ -19,19 +19,10 @@
           radius: 0.5
       restitution: 0.9
       mass: 99999
-      hard: false
       mask:
       - AllMask
       layer:
       - AllMask
-    - id: ColliderCircle
-      shape:
-        !type:PhysShapeCircle
-        radius: 0.5
-      restitution: 0.9
-      mass: 99999
-      mask:
-      - FullTileMask
   - type: Singularity
     radsPerLevel: 1 # determines RadiationPulse's radiation per second.
   - type: SingularityDistortion
@@ -45,10 +36,6 @@
     state: singularity_1
     shader: unshaded
     netsync: false
-  - type: Icon
-    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    state: singularity_1
-    drawdepth: Items
   - type: PointLight
     enabled: true
     radius: 10

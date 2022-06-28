@@ -410,11 +410,15 @@ namespace Content.Server.Strip
 
             if (!_inventorySystem.TryGetSlot(component.Owner, slot, out var slotDef))
             {
-                Logger.Error($"{ToPrettyString(user)} attempted to place an item in a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
+                Logger.Error($"{ToPrettyString(user)} attempted to take an item from a non-existent inventory slot ({slot}) on {ToPrettyString(component.Owner)}");
                 return;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
+            var ev = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, ev);
+            var finalStripTime = ev.Time + ev.Additive;
+
+            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -425,7 +429,7 @@ namespace Content.Server.Strip
 
             if (Check())
             {
-                if (slotDef.StripHidden)
+                if (slotDef.StripHidden && !ev.Stealth)
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner, Filter.Entities(component.Owner));
                 else
                 {
@@ -476,7 +480,11 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
+            var ev = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, ev);
+            var finalStripTime = ev.Time + ev.Additive;
+
+            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,

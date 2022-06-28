@@ -1,3 +1,4 @@
+using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -322,6 +323,16 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
 
+            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
+            {
+                airlockA.SetBoltsWithAudio(true);
+            }
+
+            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+            {
+                airlockB.SetBoltsWithAudio(true);
+            }
+
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
                 doorA.ChangeAirtight = false;
@@ -405,6 +416,16 @@ namespace Content.Server.Shuttles.Systems
         {
             if (dock.DockedWith == null)
                 return;
+
+            if (TryComp<AirlockComponent>(dock.Owner, out var airlockA))
+            {
+                airlockA.SetBoltsWithAudio(false);
+            }
+
+            if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
+            {
+                airlockB.SetBoltsWithAudio(false);
+            }
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))
             {

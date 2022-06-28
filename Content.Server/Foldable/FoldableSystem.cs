@@ -19,7 +19,8 @@ namespace Content.Server.Foldable
 
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
             SubscribeLocalEvent<FoldableComponent, GetVerbsEvent<AlternativeVerb>>(AddFoldVerb);
-            SubscribeLocalEvent<FoldableComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
+            SubscribeLocalEvent<FoldableComponent, StoreThisAttemptEvent>(OnStoreThisAttempt);
+
         }
 
         private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
@@ -87,9 +88,9 @@ namespace Content.Server.Foldable
                 strap.Enabled = !component.IsFolded;
         }
 
-        public void OnEntityStorageInsertAttempt(EntityUid uid, FoldableComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreThisAttemptEvent args)
         {
-            if (!comp.IsFolded)
+            if (comp.IsFolded)
                 args.Cancel();
         }
 
@@ -97,7 +98,7 @@ namespace Content.Server.Foldable
 
         private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !CanToggleFold(uid, component))
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || !CanToggleFold(uid, component))
                 return;
 
             AlternativeVerb verb = new()

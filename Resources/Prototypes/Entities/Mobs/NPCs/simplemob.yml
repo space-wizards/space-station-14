@@ -167,13 +167,7 @@
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:

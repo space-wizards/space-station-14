@@ -8,8 +8,10 @@ using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -274,14 +276,16 @@ namespace Content.Server.Lathe
 
                 case LatheServerSelectionMessage _:
                     if (!TryComp(uid, out ResearchClientComponent? researchClient)) return;
-                    researchClient.OpenUserInterface(message.Session);
+                    IoCManager.Resolve<IEntitySystemManager>()
+                        .GetEntitySystem<UserInterfaceSystem>()
+                        .TryOpen(uid, ResearchClientUiKey.Key, message.Session);
                     break;
 
                 case LatheServerSyncMessage _:
                     if (!TryComp(uid, out TechnologyDatabaseComponent? database)
                     || !TryComp(uid, out ProtolatheDatabaseComponent? protoDatabase)) return;
 
-                    if (database.SyncWithServer())
+                    if (IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ResearchSystem>().SyncWithServer(database))
                         protoDatabase.Sync();
 
                     break;
