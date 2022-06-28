@@ -4,9 +4,11 @@ namespace Content.Server.Instruments;
 public sealed class SwappableInstrumentComponent : Component
 {
     /// <summary>
-    /// string  = the name of the style, used for display
-    /// byte    = the corresponding program number for the instrument
+    /// Used to store the different instruments that can be swapped between.
+    /// string = display name of the instrument
+    /// byte 1 = instrument midi program
+    /// byte 2 = instrument midi bank
     /// </summary>
     [DataField("instrumentList", required: true)]
-    public Dictionary<string, byte> InstrumentList = new();
+    public Dictionary<string, (byte, byte)> InstrumentList = new();
 }
