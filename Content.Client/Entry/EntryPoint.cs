@@ -70,7 +70,7 @@ namespace Content.Client.Entry
             factory.DoAutoRegistrations();
             factory.IgnoreMissingComponents();
 
-            factory.RegisterClass<SharedResearchConsoleComponent>();
+            // Do not add to these, they are legacy.
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
@@ -78,6 +78,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
+            // Do not add to the above, they are legacy
 
             prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
