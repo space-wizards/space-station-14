@@ -108,6 +108,33 @@
     fireCost: 62.5
 
 - type: entity
+  name: modified laser gun
+  parent: BaseWeaponBattery
+  id: WeaponModdedLaserCarbine
+  description: A laser gun that's equipped with some expensive modifications that allows it to recharge slowly. 
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/moddedlasergun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    sprite: Objects/Weapons/Guns/Battery/moddedlasergun.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 28
+
+- type: entity
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
