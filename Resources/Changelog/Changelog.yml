@@ -1,13 +1,6 @@
 Entries:
 - author: Mirino97
   changes:
-  - {message: 'Due to the recent number of jailbreaks, Nanotrasen has added iron caps
-      to Reinforced Window''s screws. You will now need to melt them to deconstruct
-      the window.', type: Tweak}
-  id: 1332
-  time: '2022-04-15T21:41:20.0000000+00:00'
-- author: Mirino97
-  changes:
   - {message: Added roles to Player's names in the Ghost Warp menu!, type: Add}
   id: 1333
   time: '2022-04-15T21:41:27.0000000+00:00'
@@ -2961,3 +2954,9 @@ Entries:
     type: Tweak}
   id: 1831
   time: '2022-06-29T09:41:29.0000000+00:00'
+- author: TekuNut
+  changes:
+  - {message: Cigarettes and cigars now need to be in the mouth to apply effects,
+    type: Fix}
+  id: 1832
+  time: '2022-06-29T11:36:32.0000000+00:00'
