@@ -138,7 +138,10 @@ namespace Content.Server.Paper.Plane
 
             // avoid bouncing off of walls, unless weightless
             if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
+            {
                 physics.Momentum = Vector2.Zero;
+                physics.BodyStatus = BodyStatus.OnGround;
+            }
         }
 
         public void OnLand(EntityUid uid, PaperPlaneComponent plane, LandEvent args)
