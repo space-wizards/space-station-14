@@ -13,6 +13,7 @@ public sealed class BlockingUserSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly BlockingSystem _blockingSystem = default!;
 
     public override void Initialize()
     {
@@ -20,6 +21,19 @@ public sealed class BlockingUserSystem : EntitySystem
 
         SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
+
+        SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+    }
+
+    private void OnAnchorChanged(EntityUid uid, BlockingUserComponent component, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            return;
+
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
+        {
+            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        }
     }
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)

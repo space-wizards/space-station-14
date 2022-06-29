@@ -105,7 +105,7 @@ public sealed class BlockingSystem : EntitySystem
     /// <param name="component"> The <see cref="BlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
-    private bool StartBlocking(EntityUid item, BlockingComponent component, EntityUid user)
+    public bool StartBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
         if (component.IsBlocking) return false;
 
@@ -154,7 +154,7 @@ public sealed class BlockingSystem : EntitySystem
     /// <param name="component"> The <see cref="BlockingComponent"/></param>
     /// <param name="user"> The entity who's using the item to block</param>
     /// <returns></returns>
-    private bool StopBlocking(EntityUid item, BlockingComponent component, EntityUid user)
+    public bool StopBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
         if (!component.IsBlocking) return false;
 
