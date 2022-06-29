@@ -21,7 +21,7 @@
 
 - type: radioChannel
   id: Engineering
-  name: chat-radio-engineer
+  name: chat-radio-engineering
   keycode: 'e'
   frequency: 1357
   color: "#f37746"
