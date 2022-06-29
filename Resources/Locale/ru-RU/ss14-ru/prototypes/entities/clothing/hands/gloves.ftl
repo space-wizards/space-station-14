@@ -40,3 +40,6 @@ ent-ClothingHandsGlovesCombat = боевые перчатки
 ent-ClothingHandsGlovesFingerless = беспалые перчатки
     .desc = Простые черные перчатки с обрезанными пальцами для тяжелой работы.
     .suffix = { "" }
+ent-ThievingGloves = black gloves
+    .desc = Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+    .suffix = { "" }

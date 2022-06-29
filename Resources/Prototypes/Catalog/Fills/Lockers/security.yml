@@ -53,6 +53,8 @@
       - id: ClothingOuterVestDetective
       - id: ClothingOuterCoatDetective
       - id: FlashlightSeclite
+      - id: ForensicScanner
+      - id: BoxForensicPad
       - id: WeaponRevolverInspector
 
 - type: entity

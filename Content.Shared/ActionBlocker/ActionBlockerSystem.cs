@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -74,6 +75,9 @@ namespace Content.Shared.ActionBlocker
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
             RaiseLocalEvent(target.Value, targetEv, true);
 
+            if (!targetEv.Cancelled)
+                InteractWithItem(user, target.Value);
+
             return !targetEv.Cancelled;
         }
 
@@ -127,6 +131,10 @@ namespace Content.Shared.ActionBlocker
 
             var itemEv = new GettingPickedUpAttemptEvent(user, item);
             RaiseLocalEvent(item, itemEv, false);
+
+            if (!itemEv.Cancelled)
+                InteractWithItem(user, item);
+
             return !itemEv.Cancelled;
 
         }
@@ -169,6 +177,12 @@ namespace Content.Shared.ActionBlocker
             RaiseLocalEvent(uid, ev, true);
 
             return !ev.Cancelled;
+        }
+
+        private void InteractWithItem(EntityUid user, EntityUid item)
+        {
+            var itemEvent = new UserInteractedWithItemEvent(user, item);
+            RaiseLocalEvent(user, itemEvent);
         }
     }
 }

@@ -25,6 +25,7 @@
   - dumpentities
   - getcomponentregistration
   - fuck
+  - ">"
 
 - Flags: VAREDIT
   Commands:

@@ -6,6 +6,7 @@ cargo-console-menu-account-name-none-text = Нет
 cargo-console-menu-shuttle-name-label = Название шаттла:{ " " }
 cargo-console-menu-shuttle-name-none-text = Нет
 cargo-console-menu-points-label = Очки:{ " " }
+cargo-console-menu-points-amount = ${ $amount }
 cargo-console-menu-shuttle-status-label = Статус шаттла:{ " " }
 cargo-console-menu-shuttle-status-away-text = Отбыл
 cargo-console-menu-order-capacity-label = Объём заказов:{ " " }
