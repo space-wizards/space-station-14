@@ -1,11 +1,11 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Damage.Components;
+namespace Content.Server.Damage.Components;
 
 /// <summary>
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class StaminaComponent : Component
 {
     /// <summary>

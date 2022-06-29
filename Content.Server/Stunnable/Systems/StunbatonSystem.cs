@@ -25,12 +25,9 @@ namespace Content.Server.Stunnable
 {
     public sealed class StunbatonSystem : EntitySystem
     {
-        [Dependency] private readonly MeleeWeaponSystem _melee = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -43,9 +40,22 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var comp in EntityQuery<ActiveStunBatonComponent>())
+            {
+                comp.Accumulator -= frameTime;
+
+                if (comp.Accumulator > 0f) continue;
+                RemComp<ActiveStunBatonComponent>(comp.Owner);
+            }
+        }
+
         private void OnMeleeHit(EntityUid uid, StunbatonComponent comp, MeleeHitEvent args)
         {
-            if (!comp.Activated || !args.HitEntities.Any() || args.Handled || _useDelay.ActiveDelay(uid))
+            if (!comp.Activated || !args.HitEntities.Any() || args.Handled ||
+                HasComp<ActiveStunBatonComponent>(uid))
                 return;
 
             if (!TryComp<BatteryComponent>(uid, out var battery) || !battery.TryUseCharge(comp.EnergyPerUse))
@@ -57,8 +67,8 @@ namespace Content.Server.Stunnable
                 SendPowerPulse(entity, args.User, uid);
             }
 
-            _melee.SetAttackCooldown(uid, _timing.CurTime + comp.ActiveDelay);
-            _useDelay.BeginDelay(uid);
+            var active = AddComp<ActiveStunBatonComponent>(uid);
+            active.Accumulator = (float) comp.ActiveDelay.TotalSeconds;
             // No combat should occur if we successfully stunned.
             args.Handled = true;
         }
@@ -135,11 +145,6 @@ namespace Content.Server.Stunnable
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             comp.Activated = false;
-            if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay) && comp.OldDelay != null)
-            {
-                useDelay.Delay = comp.OldDelay.Value;
-                comp.OldDelay = null;
-            }
         }
 
         private void TurnOn(StunbatonComponent comp, EntityUid user)
@@ -165,11 +170,6 @@ namespace Content.Server.Stunnable
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             comp.Activated = true;
-            if (TryComp<UseDelayComponent>(comp.Owner, out var useDelay))
-            {
-                comp.OldDelay = useDelay.Delay;
-                useDelay.Delay = comp.ActiveDelay;
-            }
         }
 
         private void SendPowerPulse(EntityUid target, EntityUid? user, EntityUid used)

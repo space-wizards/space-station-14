@@ -106,9 +106,8 @@
         Blunt: 3
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StunOnCollide
-    stunAmount: 2
-    knockdownAmount: 2
+  - type: StaminaDamageOnCollide
+    damage: 15
 
 # Energy projectiles
 - type: entity
@@ -245,9 +244,8 @@
         Blunt: 1
     soundHit:
       path: /Audio/Effects/gen_hit.ogg
-  - type: StunOnCollide
-    stunAmount: 8
-    knockdownAmount: 8
+  - type: StaminaDamageOnCollide
+    damage: 80
 
 - type: entity
   id: BulletGrenadeBlast

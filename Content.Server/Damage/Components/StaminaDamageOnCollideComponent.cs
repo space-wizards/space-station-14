@@ -1,12 +1,12 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Damage.Components;
+namespace Content.Server.Damage.Components;
 
 /// <summary>
 /// Applies stamina damage when colliding with an entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class StaminaDamageOnCollide : Component
+[RegisterComponent]
+public sealed class StaminaDamageOnCollideComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public float Damage = 55f;

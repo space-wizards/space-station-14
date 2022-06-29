@@ -124,16 +124,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
-            // TODO: Hack for now
-            var totalDamage = FixedPoint2.Zero;
-
-            foreach (var (key, damage) in args.Damageable.Damage.DamageDict)
-            {
-                if (key == StaminaSystem.StaminaDamageType) continue;
-                totalDamage += damage;
-            }
-
-            component.UpdateState(totalDamage);
+            component.UpdateState(args.Damageable.TotalDamage);
         }
 
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)

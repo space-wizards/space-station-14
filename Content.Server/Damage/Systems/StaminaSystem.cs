@@ -1,65 +1,71 @@
-using Content.Shared.Damage.Components;
-using Content.Shared.FixedPoint;
-using Content.Shared.MobState.Components;
+using Content.Server.Damage.Components;
+using Content.Server.Weapon.Melee;
 using Content.Shared.Stunnable;
-using Robust.Shared.GameStates;
+using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Damage;
+namespace Content.Server.Damage.Systems;
 
 public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-
-    public const string StaminaDamageType = "Stamina";
 
     /// <summary>
     /// How long after receiving stamina damage before it is allowed to decay.
     /// </summary>
-    private const float DecayCooldown = 5f;
+    private const float DecayCooldown = 3f;
 
     private const float UpdateCooldown = 2f;
     private float _accumulator = 0f;
 
+    private const string CollideFixture = "projectile";
+
     /// <summary>
     /// How much stamina damage is applied above cap.
     /// </summary>
-    private const float CritExcess = 30f;
+    private const float CritExcess = 18f;
+
+    private List<EntityUid> _dirtyEntities = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<StaminaDamageOnCollide, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
     }
 
-    private void OnGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
+    private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
-        args.State = new StaminaComponentState()
+        if (component.Damage <= 0f) return;
+
+        var stamQuery = GetEntityQuery<StaminaComponent>();
+        var toHit = new ValueList<StaminaComponent>();
+
+        // Split stamina damage between all eligible targets.
+        foreach (var ent in args.HitEntities)
         {
-            Damage = component.StaminaDamage,
-        };
+            if (!stamQuery.TryGetComponent(ent, out var stam)) continue;
+            toHit.Add(stam);
+        }
+
+        foreach (var comp in toHit)
+        {
+            TakeStaminaDamage(comp.Owner, component.Damage / toHit.Count, comp);
+        }
     }
 
-    private void OnHandleState(EntityUid uid, StaminaComponent component, ref ComponentHandleState args)
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, StartCollideEvent args)
     {
-        if (args.Current is not StaminaComponentState state) return;
-        TakeStaminaDamage(uid, state.Damage - component.StaminaDamage, component);
-    }
+        if (!args.OurFixture.ID.Equals(CollideFixture)) return;
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollide component, StartCollideEvent args)
-    {
         TakeStaminaDamage(args.OtherFixture.Body.Owner, component.Damage);
     }
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false)) return;
+        if (!Resolve(uid, ref component, false) || component.Critical) return;
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
@@ -70,14 +76,8 @@ public sealed class StaminaSystem : EntitySystem
             component.StaminaDecayAccumulator = DecayCooldown;
         }
 
-        if (component.StaminaDamage > 0f)
-        {
-            EnsureComp<ActiveStaminaComponent>(uid);
-        }
-        else
-        {
-            RemComp<ActiveStaminaComponent>(uid);
-        }
+        // Can't do it here as resetting prediction gets cooked.
+        _dirtyEntities.Add(uid);
 
         if (!component.Critical)
         {
@@ -93,8 +93,6 @@ public sealed class StaminaSystem : EntitySystem
                 ExitStamCrit(uid, component);
             }
         }
-
-        Dirty(component);
     }
 
     /// <summary>
@@ -104,7 +102,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <returns></returns>
     private TimeSpan GetStamCritTime(StaminaComponent component)
     {
-        var damageableSeconds = MathF.Min(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay);
+        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay);
         return TimeSpan.FromSeconds(damageableSeconds);
     }
 
@@ -118,9 +116,16 @@ public sealed class StaminaSystem : EntitySystem
 
         if (_accumulator > 0f) return;
 
-        _accumulator += UpdateCooldown;
-
         var stamQuery = GetEntityQuery<StaminaComponent>();
+
+        foreach (var uid in _dirtyEntities)
+        {
+            if (!stamQuery.TryGetComponent(uid, out var comp) || comp.StaminaDamage <= 0f) continue;
+            EnsureComp<ActiveStaminaComponent>(uid);
+        }
+
+        _dirtyEntities.Clear();
+        _accumulator += UpdateCooldown;
 
         foreach (var active in EntityQuery<ActiveStaminaComponent>())
         {
@@ -171,12 +176,5 @@ public sealed class StaminaSystem : EntitySystem
 
         component.Critical = false;
         component.StaminaDamage = 0f;
-        RemComp<ActiveStaminaComponent>(uid);
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class StaminaComponentState : ComponentState
-    {
-        public float Damage;
     }
 }

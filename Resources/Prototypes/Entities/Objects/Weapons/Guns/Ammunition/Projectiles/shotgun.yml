@@ -25,9 +25,8 @@
     damage:
       types:
         Blunt: 10
-  - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 3
+  - type: StaminaDamageOnCollide
+    damage: 55
 
 - type: entity
   id: PelletShotgun

@@ -9,19 +9,14 @@ namespace Content.Server.Stunnable.Components
         public bool Activated = false;
 
         /// <summary>
-        /// What the <see cref="UseDelayComponent"/> is when the stun baton is active.
+        /// What the stun cooldown is when the stun baton is active.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("activeCooldown")]
         public TimeSpan ActiveDelay = TimeSpan.FromSeconds(4);
 
-        /// <summary>
-        /// Store what the <see cref="UseDelayComponent"/> was before being activated.
-        /// </summary>
-        public TimeSpan? OldDelay;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("paralyzeTime")]
-        public float ParalyzeTime { get; set; } = 5f;
+        public float ParalyzeTime { get; set; } = 1.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]

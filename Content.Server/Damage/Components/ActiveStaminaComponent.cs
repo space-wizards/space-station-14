@@ -1,11 +1,9 @@
-using Robust.Shared.GameStates;
-
-namespace Content.Shared.Damage.Components;
+namespace Content.Server.Damage.Components;
 
 /// <summary>
 /// Tracks whether an entity has ANY stamina damage for update purposes only.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class ActiveStaminaComponent : Component
 {
 
