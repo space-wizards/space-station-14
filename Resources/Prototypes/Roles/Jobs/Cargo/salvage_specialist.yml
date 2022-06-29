@@ -1,15 +1,15 @@
 - type: job
   id: SalvageSpecialist
+  name: job-name-salvagespec
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 3600
-  name: "salvage specialist"
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   departments:
   - Cargo
-  supervisors: "the quartermaster and head of personnel"
+  supervisors: job-supervisors-hop-qm
   access:
   - Cargo
   - Salvage

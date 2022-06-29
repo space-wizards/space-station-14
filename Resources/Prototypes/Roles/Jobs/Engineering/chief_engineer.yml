@@ -1,6 +1,6 @@
 - type: job
   id: ChiefEngineer
-  name: "chief engineer"
+  name: job-name-ce
   requirements:
     - !type:RoleTimeRequirement
       role: AtmosphericTechnician
@@ -15,7 +15,7 @@
   - Engineering
   icon: "ChiefEngineer"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Maintenance
@@ -33,7 +33,7 @@
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorBrown
     id: CEPDA
-    ears: ClothingHeadsetEngineering
+    ears: ClothingHeadsetCE
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelEngineeringFilled

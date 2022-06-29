@@ -26,6 +26,9 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
+
         [DataField("requirements", serverOnly: true)]
         public HashSet<JobRequirement>? Requirements;
 

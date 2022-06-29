@@ -13331,16 +13331,16 @@ entities:
       -23,-21: 0
       -23,-20: 0
       -23,-19: 0
-      -45,0: 0
+      -45,0: 5
       -45,1: 0
-      -45,2: 0
+      -45,2: 5
       -45,3: 0
       -45,4: 0
       -45,6: 0
       -45,7: 0
-      -45,8: 0
+      -45,8: 5
       -45,9: 0
-      -45,10: 0
+      -45,10: 5
       -45,11: 0
       -45,12: 0
       -45,13: 0
@@ -13574,6 +13574,17 @@ entities:
       - 0
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 220.53749
+      moles:
+      - 16.36866
+      - 61.57734
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -16468,11 +16479,38 @@ entities:
   - radius: 2.5
     type: PointLight
 - uid: 889
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: -40.5,0.5
+  - rot: -1.5707963267948966 rad
+    pos: -44.5,2.5
     parent: 852
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 890
   type: CableMV
   components:
@@ -17334,38 +17372,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1012
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlass
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -44.5,8.5
+  - pos: -40.5,2.5
     parent: 852
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 1013
   type: ReinforcedWindow
   components:
@@ -21066,10 +21077,10 @@ entities:
     parent: 852
     type: Transform
 - uid: 1458
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
   - rot: -1.5707963267948966 rad
-    pos: -44.5,0.5
+    pos: -44.5,8.5
     parent: 852
     type: Transform
   - fixtures:
@@ -21099,38 +21110,11 @@ entities:
       id: docking
     type: Fixtures
 - uid: 1459
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlass
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -44.5,10.5
+  - pos: -40.5,0.5
     parent: 852
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
 - uid: 1460
   type: Grille
   components:
@@ -22089,11 +22073,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 1590
-  type: AirlockExternalGlassLocked
+  type: JetpackBlueFilled
   components:
-  - pos: 21.5,22.5
+  - pos: 29.435102,-4.3374166
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1591
   type: CableApcExtension
   components:
@@ -23263,15 +23249,38 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1771
-  type: ComputerCargoOrders
+  type: AirlockExternalGlassShuttleLocked
   components:
-  - pos: 27.5,10.5
+  - rot: 3.141592653589793 rad
+    pos: 21.5,22.5
     parent: 852
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 1772
   type: LockerQuarterMasterFilled
   components:
@@ -32617,13 +32626,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 3115
-  type: CargoTelepad
+  type: ComputerCargoShuttle
   components:
-  - pos: 20.5,10.5
+  - pos: 27.5,10.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 3116
   type: GasVentPump
   components:
@@ -39360,9 +39371,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4009
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlass
   components:
-  - pos: -40.5,10.5
+  - pos: -40.5,8.5
     parent: 852
     type: Transform
 - uid: 4010
@@ -56342,13 +56353,15 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 6174
-  type: FireExtinguisher
+  type: ComputerShuttleCargo
   components:
-  - pos: 6.3112955,9.74388
+  - pos: 22.5,13.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 6175
   type: CableMV
   components:
@@ -56944,16 +56957,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 6251
-  type: ComputerCargoOrders
+  type: JetpackMini
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 21.5,10.5
+  - pos: 6.5050597,9.5957365
     parent: 852
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 6252
   type: TableReinforced
   components:
@@ -59180,13 +59190,16 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 6567
-  type: FireExtinguisher
+  type: ComputerCargoShuttle
   components:
-  - pos: 6.6081705,9.71263
+  - rot: -1.5707963267948966 rad
+    pos: 22.5,9.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 6568
   type: SurveillanceCameraSecurity
   components:
@@ -77622,9 +77635,9 @@ entities:
     id: Medbay Lobby
     type: SurveillanceCamera
 - uid: 9162
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlass
   components:
-  - pos: -40.5,8.5
+  - pos: -40.5,10.5
     parent: 852
     type: Transform
 - uid: 9163
@@ -79263,10 +79276,10 @@ entities:
     parent: 852
     type: Transform
 - uid: 9391
-  type: AirlockExternalGlassShuttleLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
   - rot: -1.5707963267948966 rad
-    pos: -44.5,2.5
+    pos: -44.5,10.5
     parent: 852
     type: Transform
   - fixtures:
@@ -79296,11 +79309,38 @@ entities:
       id: docking
     type: Fixtures
 - uid: 9392
-  type: AirlockExternalGlassLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: -40.5,2.5
+  - rot: -1.5707963267948966 rad
+    pos: -44.5,0.5
     parent: 852
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 9393
   type: WindowReinforcedDirectional
   components:
@@ -79857,4 +79897,12 @@ entities:
   - pos: -38.5,-6.5
     parent: 852
     type: Transform
+- uid: 9480
+  type: JetpackMini
+  components:
+  - pos: 6.5050597,9.9238615
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...

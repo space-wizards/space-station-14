@@ -1,6 +1,6 @@
 - type: job
   id: Bartender
-  name: "bartender"
+  name: job-name-bartender
   requirements:
     - !type:RoleTimeRequirement
       department: Service
@@ -9,7 +9,7 @@
   departments:
   - Civilian
   icon: "Bartender"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance

@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from https://github.com/goonstation/goonstation at commit b951a2c12d967af1295a3e6d33a861e7e1f21299.",
+  "copyright": "Modified by EmoGarbage404 and taken from https://github.com/goonstation/goonstation at commit b951a2c12d967af1295a3e6d33a861e7e1f21299.",
   "states": [
     {
       "name": "cash"

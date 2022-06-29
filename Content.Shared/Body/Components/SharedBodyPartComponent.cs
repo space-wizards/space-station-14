@@ -287,12 +287,17 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Gibs the body part.
         /// </summary>
-        public virtual void Gib()
+        public virtual HashSet<EntityUid> Gib()
         {
+            var gibs = new HashSet<EntityUid>();
+
             foreach (var mechanism in _mechanisms)
             {
+                gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
             }
+
+            return gibs;
         }
     }
 

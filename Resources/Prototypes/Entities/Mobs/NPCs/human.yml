@@ -4,6 +4,8 @@
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Clothing
@@ -22,6 +24,8 @@
   id: MobSpirate
   description: Yarr!
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Clothing

@@ -6,17 +6,13 @@
   - type: StorageFill
     contents:
 # Should be moved to a suit storage unit when/if they are added.
-      - id: ClothingOuterHardsuitSalvage
+      - id: ClothingOuterHardsuitSpatio
       - id: YellowOxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
-      - id: OreBag
 # Currently do not function as 'true' mesons, so they're useless for salvagers.
 #      - id: ClothingEyesGlassesMeson
       - id: ClothingBeltUtilityFilled
-      - id: FlashlightSeclite
+        prob: 0.8
       - id: SurvivalKnife
-      - id: ClothingOuterHardsuitSpatio
-
-

@@ -1,6 +1,6 @@
 - type: job
   id: Captain
-  name: "captain"
+  name: job-name-captain
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
@@ -20,7 +20,7 @@
   icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true
-  supervisors: "Nanotrasen officials"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess

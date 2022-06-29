@@ -2008,4 +2008,28 @@ entities:
   - pos: -4.5,-3.5
     parent: 0
     type: Transform
+- uid: 164
+  type: PlasticFlapsAirtightClear
+  components:
+  - pos: -5.5,0.5
+    parent: 0
+    type: Transform
+- uid: 165
+  type: PlasticFlapsAirtightClear
+  components:
+  - pos: -5.5,4.5
+    parent: 0
+    type: Transform
+- uid: 166
+  type: PlasticFlapsAirtightClear
+  components:
+  - pos: 0.5,4.5
+    parent: 0
+    type: Transform
+- uid: 167
+  type: PlasticFlapsAirtightClear
+  components:
+  - pos: 0.5,0.5
+    parent: 0
+    type: Transform
 ...

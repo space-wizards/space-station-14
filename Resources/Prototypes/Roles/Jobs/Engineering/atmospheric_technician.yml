@@ -1,6 +1,6 @@
 - type: job
   id: AtmosphericTechnician
-  name: "atmospheric technician"
+  name: job-name-atmostech
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
@@ -9,7 +9,7 @@
   departments:
   - Engineering
   icon: "AtmosphericTechnician"
-  supervisors: "the chief engineer"
+  supervisors: job-supervisors-ce
   canBeAntag: false
   access:
   - Maintenance

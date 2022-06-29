@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfPersonnel
-  name: "head of personnel"
+  name: job-name-hop
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
@@ -20,7 +20,7 @@
   - Civilian
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Command
