@@ -13,8 +13,8 @@ namespace Content.Server.Morgue.Components
     [RegisterComponent]
     [ComponentReference(typeof(MorgueEntityStorageComponent))]
     [ComponentReference(typeof(EntityStorageComponent))]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IStorageComponent))]
+    //[ComponentReference(typeof(IActivate))]
+
 #pragma warning disable 618
     public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent
 #pragma warning restore 618
@@ -31,7 +31,7 @@ namespace Content.Server.Morgue.Components
         private int _burnMilis = 5000;
 
         private CancellationTokenSource? _cremateCancelToken;
-
+        /*
         public override bool CanOpen(EntityUid user, bool silent = false)
         {
             if (Cooking)
@@ -88,11 +88,11 @@ namespace Content.Server.Morgue.Components
                     Contents.Insert(ash);
                 }
 
-                TryOpenStorage(Owner);
+                //TryOpenStorage(Owner);
 
                 SoundSystem.Play(_cremateFinishSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             }, _cremateCancelToken.Token);
-        }
+        }*/
     }
 }

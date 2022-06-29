@@ -9,8 +9,7 @@ using System.Linq;
 namespace Content.Server.Storage.Components
 {
     [ComponentReference(typeof(EntityStorageComponent))]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IStorageComponent))]
+    //[ComponentReference(typeof(IActivate))]
     [RegisterComponent]
     public sealed class CursedEntityStorageComponent : EntityStorageComponent
     {
@@ -19,7 +18,7 @@ namespace Content.Server.Storage.Components
 
         [DataField("cursedSound")] private SoundSpecifier _cursedSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
         [DataField("cursedLockerSound")] private SoundSpecifier _cursedLockerSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
-
+        /*
         protected override void CloseStorage()
         {
             base.CloseStorage();
@@ -49,6 +48,6 @@ namespace Content.Server.Storage.Components
 
             SoundSystem.Play(_cursedSound.GetSound(), Filter.Pvs(Owner), Owner, AudioHelpers.WithVariation(0.125f));
             SoundSystem.Play(_cursedLockerSound.GetSound(), Filter.Pvs(lockerEnt), lockerEnt, AudioHelpers.WithVariation(0.125f));
-        }
+        }*/
     }
 }

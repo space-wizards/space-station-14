@@ -22,7 +22,7 @@ namespace Content.Server.Morgue
         [Dependency] private readonly StandingStateSystem _stando = default!;
 
         private float _accumulatedFrameTime;
-
+        /*
         public override void Initialize()
         {
             base.Initialize();
@@ -32,7 +32,7 @@ namespace Content.Server.Morgue
             SubscribeLocalEvent<CrematoriumEntityStorageComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<MorgueEntityStorageComponent, ExaminedEvent>(OnMorgueExamined);
         }
-
+        
         private void OnSuicide(EntityUid uid, CrematoriumEntityStorageComponent component, SuicideEvent args)
         {
             if (args.Handled) return;
@@ -139,6 +139,6 @@ namespace Content.Server.Morgue
                 }
                 _accumulatedFrameTime -= 10;
             }
-        }
+        }*/
     }
 }

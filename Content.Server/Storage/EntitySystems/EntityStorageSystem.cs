@@ -90,9 +90,13 @@ public sealed class EntityStorageSystem : EntitySystem
             return;
 
         if (component.Open)
+        {
             TryCloseStorage(target);
+        }
         else
+        {
             TryOpenStorage(user, target);
+        }
     }
 
     public void EmptyContents(EntityUid uid, EntityStorageComponent? component = null)
@@ -147,11 +151,11 @@ public sealed class EntityStorageSystem : EntitySystem
             count++;
             if (count >= component.StorageCapacityMax)
                 break;
-
-            ModifyComponents(entity);
-            SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
-            component.LastInternalOpenAttempt = default;
         }
+
+        ModifyComponents(uid, component);
+        SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
+        component.LastInternalOpenAttempt = default;
     }
 
     public bool Insert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
@@ -199,7 +203,9 @@ public sealed class EntityStorageSystem : EntitySystem
     public bool TryCloseStorage(EntityUid target)
     {
         if (!CanClose(target))
+        {
             return false;
+        }
 
         CloseStorage(target);
         return true;
@@ -303,7 +309,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.IsCollidableWhenOpen && TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.Fixtures.Count > 0)
+        if (!component.IsCollidableWhenOpen && TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.Fixtures.Count > 0)
         {
             // currently only works for single-fixture entities. If they have more than one fixture, then
             // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the

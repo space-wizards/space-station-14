@@ -40,6 +40,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
@@ -93,7 +94,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
-            component.TryOpenStorage(args.Entity);
+            _entityStorage.TryOpenStorage(args.Entity, component.Owner);
         }
 
 
@@ -102,7 +103,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!component.CanOpen(args.User, silent: true))
+            if (_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
                 return;
 
             InteractionVerb verb = new();
@@ -116,7 +117,7 @@ namespace Content.Server.Storage.EntitySystems
                 verb.Text = Loc.GetString("verb-common-open");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
-            verb.Act = () => component.ToggleOpen(args.User);
+            verb.Act = () => _entityStorage.ToggleOpen(args.User, args.Target, component);
             args.Verbs.Add(verb);
         }
 

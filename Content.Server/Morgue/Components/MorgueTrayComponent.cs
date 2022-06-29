@@ -1,14 +1,13 @@
-﻿using Content.Shared.Interaction;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public sealed class MorgueTrayComponent : Component, IActivate
+    public sealed class MorgueTrayComponent : Component
     {
         [ViewVariables]
         public EntityUid Morgue { get; set; }
-
+        /*
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
@@ -17,6 +16,6 @@ namespace Content.Server.Morgue.Components
             {
                 comp.Activate(new ActivateEventArgs(eventArgs.User, Morgue));
             }
-        }
+        }*/
     }
 }

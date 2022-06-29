@@ -32,7 +32,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-
+            /*
             if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
             {
                 storage.Insert(entityUid);
@@ -40,7 +40,7 @@ namespace Content.Server.Administration.Commands
             else
             {
                 shell.WriteError("Could not insert into non-storage.");
-            }
+            }*/
         }
     }
 }

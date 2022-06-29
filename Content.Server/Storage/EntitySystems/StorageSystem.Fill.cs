@@ -7,6 +7,7 @@ public sealed partial class StorageSystem
 {
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
+        /*
         if (component.Contents.Count == 0) return;
         // ServerStorageComponent needs to rejoin IStorageComponent when other storage components are ECS'd
         TryComp<IStorageComponent>(uid, out var storage);
@@ -17,6 +18,8 @@ public sealed partial class StorageSystem
             return;
         }
 
+        if (!EntityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var entityStorage)) return;
+
         var coordinates = Transform(uid).Coordinates;
 
         var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, _random);
@@ -25,7 +28,7 @@ public sealed partial class StorageSystem
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
-            if (storage != null && storage.Insert(ent))
+            if (storage != null && entityStorage.Insert(ent, uid))
                continue;
 
             if (serverStorageComp != null && Insert(uid, ent, serverStorageComp))
@@ -33,6 +36,6 @@ public sealed partial class StorageSystem
 
             Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
             EntityManager.DeleteEntity(ent);
-        }
+        }*/
     }
 }

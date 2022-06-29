@@ -61,12 +61,12 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 return Outcome.Failed;
             }
-
+            /*
             if (storageComponent.Open)
             {
                 var activateArgs = new ActivateEventArgs(_owner, _target);
                 storageComponent.Activate(activateArgs);
-            }
+            }*/
 
             return Outcome.Success;
         }

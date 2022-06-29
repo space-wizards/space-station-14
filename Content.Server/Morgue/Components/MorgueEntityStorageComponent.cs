@@ -19,8 +19,7 @@ namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(EntityStorageComponent))]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IStorageComponent))]
+    //[ComponentReference(typeof(IActivate))]
     [Virtual]
     public class MorgueEntityStorageComponent : EntityStorageComponent
     {
@@ -44,7 +43,7 @@ namespace Content.Server.Morgue.Components
 
         [DataField("occupantHasSoulAlarmSound")]
         private SoundSpecifier _occupantHasSoulAlarmSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-
+        /*
         protected override void Initialize()
         {
             base.Initialize();
@@ -168,6 +167,6 @@ namespace Content.Server.Morgue.Components
             {
                 SoundSystem.Play(_occupantHasSoulAlarmSound.GetSound(), Filter.Pvs(Owner), Owner);
             }
-        }
+        }*/
     }
 }

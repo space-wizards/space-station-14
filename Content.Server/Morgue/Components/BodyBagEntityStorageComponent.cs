@@ -7,15 +7,15 @@ namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(EntityStorageComponent))]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IStorageComponent))]
+    //[ComponentReference(typeof(IActivate))]
     public sealed class BodyBagEntityStorageComponent : EntityStorageComponent
     {
         //This needs to be changed once EntityStorageComponent is made ECS
+        /*
         protected override bool AddToContents(EntityUid entity)
         {
             if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
             return base.AddToContents(entity);
-        }
+        }*/
     }
 }
