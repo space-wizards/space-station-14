@@ -44,7 +44,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>
-    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(3);
+    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
@@ -59,6 +59,7 @@ public sealed partial class ShuttleSystem
     private CancellationTokenSource? _roundEndCancelToken;
 
     private const string EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
+    private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at Centcomm?
@@ -112,12 +113,19 @@ public sealed partial class ShuttleSystem
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    // TODO: Add support so Hyperspace will just dock it to Centcomm.
-
-                    Hyperspace(shuttle,
-                        new EntityCoordinates(
-                            _mapManager.GetMapEntityId(_centcommMap.Value),
-                            Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    if (Deleted(_centcomm))
+                    {
+                        // TODO: Need to get non-overlapping positions.
+                        Hyperspace(shuttle,
+                            new EntityCoordinates(
+                                _mapManager.GetMapEntityId(_centcommMap.Value),
+                                Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    }
+                    else
+                    {
+                        Hyperspace(shuttle,
+                            _centcomm.Value, _consoleAccumulator, _transitTime);
+                    }
                 }
             }
         }
@@ -189,10 +197,13 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)), playSound: false);
+            _chatSystem.DispatchGlobalStationAnnouncement(
+                Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
+                playSound: false, colorOverride: DangerColor);
 
-        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
-        CheckForLaunch(component);
+        if (!CheckForLaunch(component))
+            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+
         UpdateAllEmergencyConsoles();
     }
 
@@ -230,27 +241,34 @@ public sealed partial class ShuttleSystem
         });
     }
 
-    private void CheckForLaunch(EmergencyShuttleConsoleComponent component)
+    private bool CheckForLaunch(EmergencyShuttleConsoleComponent component)
     {
         if (component.AuthorizedEntities.Count < component.AuthorizationsRequired || EarlyLaunchAuthorized)
-            return;
+            return false;
 
         EarlyLaunch();
+        return true;
     }
 
     /// <summary>
     /// Attempts to early launch the emergency shuttle if not already done.
     /// </summary>
-    public void EarlyLaunch()
+    public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
-        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")), playSound: false);
+        _chatSystem.DispatchGlobalStationAnnouncement(
+            Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
+            playSound: false,
+            colorOverride: DangerColor);
+
+        SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
         UpdateAllEmergencyConsoles();
+        return true;
     }
 
     public bool DelayEmergencyRoundEnd()

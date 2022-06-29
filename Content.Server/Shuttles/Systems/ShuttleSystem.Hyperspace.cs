@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Sound;
@@ -18,6 +20,7 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
 
     private MapId? _hyperSpaceMap;
@@ -49,20 +52,49 @@ public sealed partial class ShuttleSystem
         float startupTime = DefaultStartupTime,
         float hyperspaceTime = DefaultTravelTime)
     {
-        if (HasComp<HyperspaceComponent>(component.Owner))
-        {
-            _sawmill.Warning($"Tried queuing {ToPrettyString(component.Owner)} which already has HyperspaceComponent?");
-            return;
-        }
+        if (!TrySetupHyperspace(component.Owner, out var hyperspace))
+           return;
 
-        SetDocks(component.Owner, false);
-        var hyperspace = AddComp<HyperspaceComponent>(component.Owner);
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetCoordinates = coordinates;
+    }
+
+    /// <summary>
+    /// Moves a shuttle from its current position to docked on the target one. Goes through the hyperspace map while the timer is running.
+    /// </summary>
+    public void Hyperspace(ShuttleComponent component,
+        EntityUid target,
+        float startupTime = DefaultStartupTime,
+        float hyperspaceTime = DefaultTravelTime)
+    {
+        if (!TrySetupHyperspace(component.Owner, out var hyperspace))
+            return;
+
+        hyperspace.StartupTime = startupTime;
+        hyperspace.TravelTime = hyperspaceTime;
+        hyperspace.Accumulator = hyperspace.StartupTime;
+        hyperspace.TargetUid = target;
+    }
+
+    private bool TrySetupHyperspace(EntityUid uid, [NotNullWhen(true)] out HyperspaceComponent? component)
+    {
+        component = null;
+
+        if (HasComp<HyperspaceComponent>(uid))
+        {
+            _sawmill.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
+            return false;
+        }
+
+        // TODO: Maybe move this to docking instead?
+        SetDocks(uid, false);
+
+        component = AddComp<HyperspaceComponent>(uid);
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Pvs(component.Owner, GetSoundRange(component.Owner), entityManager: EntityManager), _startupSound.Params);
+        return true;
     }
 
     private void UpdateHyperspace(float frameTime)
@@ -93,7 +125,7 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 100f);
+                        body.LinearVelocity = new Vector2(0f, 20f);
                         body.AngularVelocity = 0f;
                         body.LinearDamping = 0f;
                         body.AngularDamping = 0f;
@@ -105,8 +137,8 @@ public sealed partial class ShuttleSystem
                 // Arrive.
                 case HyperspaceState.Travelling:
                     DoTheDinosaur(xform);
-                    SetDocks(comp.Owner, true);
                     SetDockBolts(comp.Owner, false);
+                    SetDocks(comp.Owner, true);
 
                     if (TryComp(comp.Owner, out body))
                     {
@@ -116,7 +148,15 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = ShuttleIdleAngularDamping;
                     }
 
-                    xform.Coordinates = comp.TargetCoordinates;
+                    if (comp.TargetUid != null && TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
+                    {
+                        TryHyperspaceDock(shuttle, comp.TargetUid.Value);
+                    }
+                    else
+                    {
+                        xform.Coordinates = comp.TargetCoordinates;
+                    }
+
                     SoundSystem.Play(_arrivalSound.GetSound(),
                         Filter.Pvs(comp.Owner, GetSoundRange(comp.Owner), entityManager: EntityManager));
                     RemComp<HyperspaceComponent>(comp.Owner);
@@ -139,11 +179,11 @@ public sealed partial class ShuttleSystem
 
     private void SetDockBolts(EntityUid uid, bool enabled)
     {
-        foreach (var (dock, door, xform) in EntityQuery<DockingComponent, AirlockComponent, TransformComponent>(true))
+        foreach (var (_, door, xform) in EntityQuery<DockingComponent, AirlockComponent, TransformComponent>(true))
         {
-            if (xform.ParentUid != uid ||
-                dock.Enabled == enabled) continue;
+            if (xform.ParentUid != uid) continue;
 
+            _doors.TryClose(door.Owner);
             door.SetBoltsWithAudio(enabled);
         }
     }
@@ -206,5 +246,53 @@ public sealed partial class ShuttleSystem
 
             toKnock.Add(child.Value);
         }
+    }
+
+    private bool TryHyperspaceDock(ShuttleComponent component, EntityUid targetUid)
+    {
+        if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
+            !TryComp<TransformComponent>(targetUid, out var targetXform)) return false;
+
+        var config = GetDockingConfig(component, targetUid);
+
+        if (config != null)
+        {
+           // Set position
+           xform.Coordinates = config.Coordinates;
+           xform.WorldRotation = config.Angle;
+
+           // Connect everything
+           foreach (var (dockA, dockB) in config.Docks)
+           {
+               _dockSystem.Dock(dockA, dockB);
+           }
+
+           return true;
+        }
+
+        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.WorldAABB;
+        Box2? aabb = null;
+
+        // Spawn nearby.
+        foreach (var grid in _mapManager.GetAllMapGrids(targetXform.MapID))
+        {
+            var gridAABB = grid.WorldAABB;
+            aabb = aabb?.Union(gridAABB) ?? gridAABB;
+        }
+
+        aabb ??= new Box2();
+
+        var minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height);
+        var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 10f);
+
+        if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
+        {
+            shuttleBody.LinearVelocity = Vector2.Zero;
+            shuttleBody.AngularVelocity = 0f;
+        }
+
+        xform.WorldPosition = spawnPos;
+        xform.WorldRotation = _random.NextAngle();
+        return false;
     }
 }

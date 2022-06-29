@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfSecurity
-  name: "head of security"
+  name: job-name-hos
   weight: 10
   startingGear: HoSGear
   departments:
@@ -8,7 +8,7 @@
   - Security
   icon: "HeadOfSecurity"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - HeadOfSecurity

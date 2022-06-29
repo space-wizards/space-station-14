@@ -88,9 +88,9 @@
         amount: 1
       - id: SugarcaneSeeds
         amount: 1
-      - id: LemonSeeds
-        amount: 1
-      - id: OatSeeds
-        amount: 1
+#     - id: LemonSeeds No recipes, limejuice in reagent dispenser
+#       amount: 1
+#     - id: OatSeeds No recipes, nothing uses oatmilk
+#       amount: 1
       - id: OnionSeeds
         amount: 1

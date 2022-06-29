@@ -190,8 +190,14 @@ namespace Content.Server.Salvage
                 return;
             }
 
+            if (salvageTransform.GridUid == null)
+            {
+                Logger.ErrorS("salvage", "Salvage entity has no associated grid?");
+                return;
+            }
+
             var parentTransform = salvageTransform.Parent!;
-            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridID, EntityManager).Recipients)
+            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridUid.Value, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
                 {
@@ -277,18 +283,17 @@ namespace Content.Server.Salvage
                 Offset = spl.Position
             };
 
-            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
-            if (gridId == null)
+            var (_, salvageEntityId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (salvageEntityId == null)
             {
                 Report(component.Owner, "salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
-            var gridcomp = EntityManager.EnsureComponent<SalvageGridComponent>(salvageEntityId);
+            var gridcomp = EntityManager.EnsureComponent<SalvageGridComponent>(salvageEntityId.Value);
             gridcomp.SpawnerMagnet = component;
 
-            var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
+            var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId.Value);
             pulledTransform.WorldRotation = spAngle;
 
             Report(component.Owner, "salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));

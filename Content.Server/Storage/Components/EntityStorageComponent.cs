@@ -216,14 +216,13 @@ namespace Content.Server.Storage.Components
             // 4. items can always be eaten unless a previous law prevents it
             // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
             // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
-
             var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
             _entMan.EventBus.RaiseLocalEvent(entity, attemptEvent);
             if (attemptEvent.Cancelled)
                 return false;
 
             // checks
-
+            // TODO: Make the others sub to it.
             var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
             var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
             var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
@@ -239,9 +238,14 @@ namespace Content.Server.Storage.Components
             {
                 if (!storageIsItem)
                     allowedToEat = true;
+                else
+                {
+                    var storeEv = new StoreThisAttemptEvent();
+                    _entMan.EventBus.RaiseLocalEvent(Owner, storeEv);
+                    allowedToEat = !storeEv.Cancelled;
+                }
             }
 
-            _entMan.EventBus.RaiseLocalEvent(entity, allowedToEat);
             return allowedToEat;
         }
 
@@ -365,6 +369,11 @@ namespace Content.Server.Storage.Components
     }
 
     public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs
     {
 
     }

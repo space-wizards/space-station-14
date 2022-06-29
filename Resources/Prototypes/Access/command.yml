@@ -16,7 +16,4 @@
   - HeadOfPersonnel
 
 - type: accessLevel
-  id: EmergencyShuttleLaunch
-
-- type: accessLevel
   id: EmergencyShuttleRepealAll

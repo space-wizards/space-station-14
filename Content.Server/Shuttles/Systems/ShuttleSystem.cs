@@ -81,6 +81,7 @@ namespace Content.Server.Shuttles.Systems
         public override void Shutdown()
         {
             base.Shutdown();
+            ShutdownEscape();
             ShutdownEmergencyConsole();
             _configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
             _configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
