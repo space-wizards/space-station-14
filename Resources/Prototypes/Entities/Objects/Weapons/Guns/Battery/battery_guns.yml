@@ -110,7 +110,7 @@
 - type: entity
   name: syndicate laser gun
   parent: BaseWeaponBattery
-  id: WeaponSyndieLaserCarbine
+  id: WeaponSyndieLaserGun
   description: A laser gun that's equipped with some expensive modifications that allows it to recharge slowly. 
   components:
   - type: Sprite
