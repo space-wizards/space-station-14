@@ -7,10 +7,18 @@
   components:
   - type: CombatMode
     canDisarm: true
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
+  - type: Tool
+    speed: 0.3
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -340,6 +348,8 @@
     attributes:
       proper: true
       gender: male
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

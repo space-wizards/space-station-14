@@ -224,12 +224,15 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
-        message = TransformSpeech(source, message);
 
-        (message, var channel) = GetRadioPrefix(source, message);
+        var (message, channel) = GetRadioPrefix(source, originalMessage);
+
+        message = TransformSpeech(source, message);
+        if (message.Length == 0)
+            return;
 
         if (channel != null)
             _listener.PingListeners(source, message, channel);
@@ -241,14 +244,21 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
+
+        if (originalMessage == message)
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
 
-        message = TransformSpeech(source, message);
+        var message = TransformSpeech(source, originalMessage);
+        if (message.Length == 0)
+            return;
+
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         var transformSource = Transform(source);
@@ -284,7 +294,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
+
+        if (originalMessage == message)
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
     private void SendEntityEmote(EntityUid source, string action, bool hideChat)

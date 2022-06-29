@@ -8,6 +8,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.75
     baseSprintSpeed : 3.75
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -125,6 +127,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

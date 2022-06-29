@@ -1,9 +1,7 @@
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using static Content.Shared.Research.Components.SharedResearchConsoleComponent;
 
 namespace Content.Client.Research.UI
 {
