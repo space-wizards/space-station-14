@@ -30,17 +30,20 @@ namespace Content.Server.Clothing
 
         private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
         {
-            if (component.ToggleAction != null)
+            if (component.ToggleAction != null && !args.InHands)
                 args.Actions.Add(component.ToggleAction);
         }
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
         {
+            if (mask.ToggleAction == null)
+                return;
+
             if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !mask.Owner.Equals(existing))
                 return;
 
             mask.IsToggled ^= true;
-            _actionSystem.SetToggled(mask.ToggleAction!, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
 
             if (mask.IsToggled)
                 _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, Filter.Entities(args.Performer));
@@ -53,11 +56,11 @@ namespace Content.Server.Clothing
         // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
         private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
         {
-            if (mask.ToggleAction?.Event?.GetType() != typeof(ToggleMaskEvent))
+            if (mask.ToggleAction == null)
                 return;
 
             mask.IsToggled = false;
-            _actionSystem.SetToggled(mask.ToggleAction!, mask.IsToggled);
+            _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
 
             ToggleMaskComponents(uid, mask, args.Equipee, true);
         }
@@ -85,7 +88,9 @@ namespace Content.Server.Clothing
                 return;
 
             if (mask.IsToggled)
+            {
                 breathTool.DisconnectInternals();
+            }
             else
             {
                 breathTool.IsFunctional = true;
