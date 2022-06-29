@@ -73,11 +73,11 @@
   price: 10
 
 - type: uplinkListing
-  id: UplinkModdedLaserCarbine
+  id: UplinkSyndieLaserCarbine
   category: Weapons
-  itemId: WeaponModdedLaserCarbine
-  listingName: Modified Laser Gun
-  description:  A laser gun equipped with several state-of-the-art modifications that allows it to recharge itself slowly. 
+  itemId: WeaponSyndieLaserCarbine
+  listingName: Syndicate Laser Gun
+  description:  A stolen laser gun equipped with several state-of-the-art modifications that allows it to recharge itself slowly. 
   price: 12
   surplus: false
 
