@@ -116,17 +116,17 @@ namespace Content.Server.RoundEnd
             if (countdownTime.TotalSeconds < 60)
             {
                 time = countdownTime.Seconds;
-                units = "seconds";
+                units = "eta-units-seconds";
             }
             else
             {
                time = countdownTime.Minutes;
-               units = "minutes";
+               units = "eta-units-minutes";
             }
 
             _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
                 ("time", time),
-                ("units", units)),
+                ("units", Loc.GetString(units))),
                 Loc.GetString("Station"),
                 false,
                 Color.Gold);
