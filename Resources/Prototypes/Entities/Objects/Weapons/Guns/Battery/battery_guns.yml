@@ -108,9 +108,9 @@
     fireCost: 62.5
 
 - type: entity
-  name: modified laser gun
+  name: syndicate laser gun
   parent: BaseWeaponBattery
-  id: WeaponModdedLaserCarbine
+  id: WeaponSyndieLaserCarbine
   description: A laser gun that's equipped with some expensive modifications that allows it to recharge slowly. 
   components:
   - type: Sprite
@@ -129,10 +129,10 @@
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 62.5
+    fireCost: 71.4285714286 
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 28
+    autoRechargeRate: 30
 
 - type: entity
   name: pulse pistol
