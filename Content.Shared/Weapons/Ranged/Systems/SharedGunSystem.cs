@@ -88,6 +88,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)
     {
+        if (_tagSystem.HasTag(args.User, "GunsDisabled"))
+            return;
+
         args.Cancelled = true;
     }
 
