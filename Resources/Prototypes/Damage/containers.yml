@@ -6,8 +6,6 @@
     - Toxin
     - Airloss
     - Genetic
-  supportedTypes:
-    - Stamina
 
 - type: damageContainer
   id: Inorganic
