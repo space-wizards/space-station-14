@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Entities that are powered by APCs can now be designed so that they can
-      electrocute you. Shocking!, type: Tweak}
-  id: 1330
-  time: '2022-04-15T21:21:11.0000000+00:00'
 - author: moony
   changes:
   - {message: 'Salvage should no longer freak out when you''re around 0, 0', type: Fix}
@@ -2961,3 +2955,8 @@ Entries:
   - {message: Sterile masks can't be used with oxygen tanks anymore, type: Fix}
   id: 1829
   time: '2022-06-28T21:45:36.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Waystation now has docking airlocks., type: Tweak}
+  id: 1830
+  time: '2022-06-29T03:26:15.0000000+00:00'
