@@ -54,6 +54,10 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, EntityStorageComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
         ToggleOpen(args.User, uid, component);
     }
 

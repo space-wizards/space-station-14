@@ -11,12 +11,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Morgue.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(MorgueEntityStorageComponent))]
     [ComponentReference(typeof(EntityStorageComponent))]
-    //[ComponentReference(typeof(IActivate))]
 
 #pragma warning disable 618
-    public sealed class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent
+    public sealed class CrematoriumEntityStorageComponent : Component
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entities = default!;

@@ -20,8 +20,6 @@ namespace Content.Server.Morgue
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StandingStateSystem _stando = default!;
-
-        private float _accumulatedFrameTime;
         /*
         public override void Initialize()
         {
@@ -100,44 +98,6 @@ namespace Content.Server.Morgue
                 {
                     args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
                 }
-            }
-        }
-
-        private void OnMorgueExamined(EntityUid uid, MorgueEntityStorageComponent component, ExaminedEvent args)
-        {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
-
-            if (args.IsInDetailsRange)
-            {
-                if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-                {
-                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
-                }
-                else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
-                {
-                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-                }
-                else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-                {
-                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
-                }
-            }
-        }
-        public override void Update(float frameTime)
-        {
-            _accumulatedFrameTime += frameTime;
-
-            if (_accumulatedFrameTime >= 10)
-            {
-                foreach (var morgue in EntityManager.EntityQuery<MorgueEntityStorageComponent>())
-                {
-                    morgue.Update();
-                }
-                _accumulatedFrameTime -= 10;
             }
         }*/
     }

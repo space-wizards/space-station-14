@@ -89,8 +89,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
                 return;
 
-            if (_gameTiming.CurTime <
-                component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+            if (_gameTiming.CurTime < component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
                 return;
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
