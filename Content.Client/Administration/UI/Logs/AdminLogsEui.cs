@@ -46,6 +46,7 @@ public sealed class AdminLogsEui : BaseEui
     {
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
+            LogsControl.Search,
             LogsControl.SelectedTypes.ToHashSet(),
             null,
             null,

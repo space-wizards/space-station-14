@@ -108,6 +108,7 @@ public sealed class AdminLogsEui : BaseEui
                 {
                     CancellationToken = _logSendCancellation.Token,
                     Round = request.RoundId,
+                    Search = request.Search,
                     Types = request.Types,
                     Impacts = request.Impacts,
                     Before = request.Before,
