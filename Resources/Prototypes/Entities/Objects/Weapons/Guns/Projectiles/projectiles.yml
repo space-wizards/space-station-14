@@ -141,11 +141,12 @@
       - Impassable
       - BulletImpassable
   - type: Ammo
+  - type: StaminaDamageOnCollide
+    damage: 55
   - type: Projectile
     damage:
       types:
         Heat: 5
-        Stamina: 55
     soundHit:
       path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     soundForce: true

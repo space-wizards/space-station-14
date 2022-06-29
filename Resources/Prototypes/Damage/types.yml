@@ -37,10 +37,6 @@
 - type: damageType
   id: Slash
 
-# Represents stun resistance where upon reaching critical levels of stamina damage the mob enters stamcrit.
-- type: damageType
-  id: Stamina
-
 # Damage represent structures internal integrity.
 # Exclusive for structures such as walls, airlocks and others.
 - type: damageType

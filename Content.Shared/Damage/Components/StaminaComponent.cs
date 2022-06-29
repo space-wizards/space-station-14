@@ -1,4 +1,3 @@
-using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Damage.Components;
@@ -16,28 +15,26 @@ public sealed class StaminaComponent : Component
     public bool Critical;
 
     /// <summary>
-    /// How much damage reduces per second.
+    /// How much stamina reduces per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("decay")]
-    public DamageSpecifier Decay = new()
-    {
-        DamageDict = new Dictionary<string, FixedPoint2>()
-        {
-            {
-                StaminaSystem.StaminaDamageType, FixedPoint2.New(-3)
-            }
-        }
-    };
+    public float Decay = 3f;
 
     /// <summary>
-    /// How much stamina damage we're allowed to have above our critical threshold.
+    /// How much stamina damage this entity has taken.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("staminaDamage")]
+    public float StaminaDamage;
+
+    /// <summary>
+    /// How much stamina damage is required to entire stam crit.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("excess")]
-    public FixedPoint2 CritExcess = FixedPoint2.New(20f);
+    public float CritThreshold = 100f;
 
     /// <summary>
     /// Next time we're allowed to decrease stamina damage. Refreshes whenever the stam damage is changed.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("decayAccumulator")]
-    public float StaminaDecayAccumulator = 0f;
+    public float StaminaDecayAccumulator;
 }

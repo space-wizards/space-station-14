@@ -2,6 +2,9 @@ using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Content.Shared.Stunnable;
+using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage;
@@ -19,14 +22,79 @@ public sealed class StaminaSystem : EntitySystem
     /// </summary>
     private const float DecayCooldown = 5f;
 
-    private const float UpdateCooldown = 1f;
+    private const float UpdateCooldown = 2f;
     private float _accumulator = 0f;
+
+    /// <summary>
+    /// How much stamina damage is applied above cap.
+    /// </summary>
+    private const float CritExcess = 30f;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StaminaComponent, DamageChangedEvent>(OnStaminaDamage);
-        SubscribeLocalEvent<StaminaComponent, DamageModifyEvent>(OnStaminaModify);
+        SubscribeLocalEvent<StaminaComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<StaminaComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<StaminaDamageOnCollide, StartCollideEvent>(OnCollide);
+    }
+
+    private void OnGetState(EntityUid uid, StaminaComponent component, ref ComponentGetState args)
+    {
+        args.State = new StaminaComponentState()
+        {
+            Damage = component.StaminaDamage,
+        };
+    }
+
+    private void OnHandleState(EntityUid uid, StaminaComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not StaminaComponentState state) return;
+        TakeStaminaDamage(uid, state.Damage - component.StaminaDamage, component);
+    }
+
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollide component, StartCollideEvent args)
+    {
+        TakeStaminaDamage(args.OtherFixture.Body.Owner, component.Damage);
+    }
+
+    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false)) return;
+
+        var oldDamage = component.StaminaDamage;
+        component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+
+        // Reset the decay cooldown upon taking damage.
+        if (oldDamage < component.StaminaDamage)
+        {
+            component.StaminaDecayAccumulator = DecayCooldown;
+        }
+
+        if (component.StaminaDamage > 0f)
+        {
+            EnsureComp<ActiveStaminaComponent>(uid);
+        }
+        else
+        {
+            RemComp<ActiveStaminaComponent>(uid);
+        }
+
+        if (!component.Critical)
+        {
+            if (component.StaminaDamage >= component.CritThreshold)
+            {
+                EnterStamCrit(uid, component);
+            }
+        }
+        else
+        {
+            if (component.StaminaDamage < component.CritThreshold)
+            {
+                ExitStamCrit(uid, component);
+            }
+        }
+
+        Dirty(component);
     }
 
     /// <summary>
@@ -36,24 +104,8 @@ public sealed class StaminaSystem : EntitySystem
     /// <returns></returns>
     private TimeSpan GetStamCritTime(StaminaComponent component)
     {
-        var damageableSeconds = 0f;
-
-        if (TryComp<MobStateComponent>(component.Owner, out var mobState) &&
-            TryComp<DamageableComponent>(component.Owner, out var damageable))
-        {
-            var crit = mobState.GetEarliestCriticalState(FixedPoint2.Zero);
-            damageableSeconds = -MathF.Min(0f, (damageable.Damage.DamageDict[StaminaDamageType].Float() - crit?.threshold.Float() ?? 0f) / component.Decay.DamageDict[StaminaDamageType].Float());
-        }
-
+        var damageableSeconds = MathF.Min(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay);
         return TimeSpan.FromSeconds(damageableSeconds);
-    }
-
-    private void OnStaminaModify(EntityUid uid, StaminaComponent component, DamageModifyEvent args)
-    {
-        if (!component.Critical || !args.Damage.DamageDict.ContainsKey(StaminaDamageType)) return;
-
-        // If they're in stamcrit then it will decay and leave it eventually; no perma stun for you.
-        args.Damage.DamageDict[StaminaDamageType] = FixedPoint2.Zero;
     }
 
     public override void Update(float frameTime)
@@ -73,7 +125,8 @@ public sealed class StaminaSystem : EntitySystem
         foreach (var active in EntityQuery<ActiveStaminaComponent>())
         {
             // Just in case we have active but not stamina we'll check and account for it.
-            if (!stamQuery.TryGetComponent(active.Owner, out var comp))
+            if (!stamQuery.TryGetComponent(active.Owner, out var comp) ||
+                comp.StaminaDamage <= 0f)
             {
                 RemComp<ActiveStaminaComponent>(active.Owner);
                 continue;
@@ -91,47 +144,7 @@ public sealed class StaminaSystem : EntitySystem
             }
 
             comp.StaminaDecayAccumulator = 0f;
-            _damageable.TryChangeDamage(comp.Owner, comp.Decay, true, false);
-        }
-    }
-
-    private void OnStaminaDamage(EntityUid uid, StaminaComponent component, DamageChangedEvent args)
-    {
-        if (args.DamageDelta == null ||
-            !args.DamageDelta.DamageDict.ContainsKey(StaminaDamageType) ||
-            !TryComp<MobStateComponent>(uid, out var mobState)) return;
-
-        var crit = mobState.GetEarliestCriticalState(FixedPoint2.Zero);
-        var totalStam = FixedPoint2.Zero;
-
-        var belowStamThreshold = crit == null ||
-                                 !args.Damageable.Damage.DamageDict.TryGetValue(StaminaDamageType, out totalStam) ||
-                                 totalStam < crit.Value.threshold;
-
-        component.StaminaDecayAccumulator = MathF.Max(component.StaminaDecayAccumulator, DecayCooldown);
-
-        // If damage increased check if we need to enter stamcrit.
-        if (args.DamageIncreased)
-        {
-            // We apply stam crit if the amount of stam damage they have exceeds their critical threshold.
-            if (belowStamThreshold) return;
-
-            EnterStamCrit(uid, component);
-        }
-        else if (component.Critical && belowStamThreshold)
-        {
-            ExitStamCrit(uid, component);
-            RemComp<ActiveStaminaComponent>(uid);
-            return;
-        }
-
-        if (totalStam > FixedPoint2.Zero)
-        {
-            EnsureComp<ActiveStaminaComponent>(uid);
-        }
-        else
-        {
-            RemComp<ActiveStaminaComponent>(uid);
+            TakeStaminaDamage(comp.Owner, -comp.Decay * UpdateCooldown, comp);
         }
     }
 
@@ -141,27 +154,13 @@ public sealed class StaminaSystem : EntitySystem
             component.Critical) return;
 
         component.Critical = true;
-
-        // Set their stamina to their damage cap (if they have one).
-        if (TryComp<DamageableComponent>(uid, out var damageable) &&
-            TryComp<MobStateComponent>(uid, out var mobState))
-        {
-            var excess = component.CritExcess;
-            var crit = mobState.GetEarliestCriticalState(FixedPoint2.Zero);
-            var stamDamageCap = (crit?.threshold ?? FixedPoint2.Zero) + excess;
-
-            var currentDamage = damageable.Damage;
-
-            if (crit != null)
-            {
-                currentDamage.DamageDict[StaminaDamageType] = stamDamageCap;
-                _damageable.SetDamage(damageable, currentDamage);
-            }
-        }
-
+        var stamDamageCap = component.CritThreshold + CritExcess;
+        component.StaminaDamage = stamDamageCap;
         component.StaminaDecayAccumulator = 0f;
+
         var stunTime = GetStamCritTime(component);
         _stunSystem.TryParalyze(uid, stunTime, true);
+
         component.StaminaDecayAccumulator = (float) stunTime.TotalSeconds;
     }
 
@@ -171,16 +170,13 @@ public sealed class StaminaSystem : EntitySystem
             !component.Critical) return;
 
         component.Critical = false;
-
-        if (TryComp<DamageableComponent>(uid, out var damageable))
-        {
-            var existingDamage = damageable.Damage;
-            existingDamage.DamageDict[StaminaDamageType] = FixedPoint2.Zero;
-
-            // if they just enter stam crit add a buffer so they can't immediately leave it.
-            _damageable.SetDamage(damageable, existingDamage);
-        }
-
+        component.StaminaDamage = 0f;
         RemComp<ActiveStaminaComponent>(uid);
+    }
+
+    [Serializable, NetSerializable]
+    protected sealed class StaminaComponentState : ComponentState
+    {
+        public float Damage;
     }
 }
