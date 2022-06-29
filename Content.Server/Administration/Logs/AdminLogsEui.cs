@@ -162,7 +162,7 @@ public sealed class AdminLogsEui : BaseEui
             _filter.LastLogId = logs[largestId].Id;
         }
 
-        var message = new NewLogs(logs, replace);
+        var message = new NewLogs(logs, replace, logs.Count >= _filter.Limit);
 
         SendMessage(message);
 
