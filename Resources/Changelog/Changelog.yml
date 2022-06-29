@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'Salvage should no longer freak out when you''re around 0, 0', type: Fix}
-  id: 1331
-  time: '2022-04-15T21:35:58.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: 'Due to the recent number of jailbreaks, Nanotrasen has added iron caps
@@ -2960,3 +2955,9 @@ Entries:
   - {message: Waystation now has docking airlocks., type: Tweak}
   id: 1830
   time: '2022-06-29T03:26:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cuff time reduced by 1.5 seconds for both stunned and non-stunned targets.,
+    type: Tweak}
+  id: 1831
+  time: '2022-06-29T09:41:29.0000000+00:00'
