@@ -13,6 +13,6 @@ namespace Content.Shared.Roles
         /// </summary>
         /// <param name="id">The player's network id</param>
         /// <returns>A tuple of requirement status and a user facing string to state what they need to do to fulfill the requirement</returns>
-        public abstract Tuple<bool, string?> GetRequirementStatus(NetUserId id);
+        public abstract ValueTuple<bool, string?> GetRequirementStatus(NetUserId id);
     }
 }

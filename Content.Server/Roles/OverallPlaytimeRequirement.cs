@@ -13,9 +13,9 @@ namespace Content.Server.Roles
         [DataField("time")]
         public TimeSpan Time;
 
-        public override Tuple<bool, string?> GetRequirementStatus(NetUserId id)
+        public override ValueTuple<bool, string?> GetRequirementStatus(NetUserId id)
         {
-            return new Tuple<bool, string?>(true, "not coded yet");
+            return new ValueTuple<bool, string?>(true, "not coded yet");
         }
     }
 }

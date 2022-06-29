@@ -18,7 +18,7 @@ namespace Content.Server.Roles
         [DataField("time")]
         public TimeSpan Time;
 
-        public override Tuple<bool, string?> GetRequirementStatus(NetUserId id)
+        public override ValueTuple<bool, string?> GetRequirementStatus(NetUserId id)
         {
             var mgr = IoCManager.Resolve<RoleTimerManager>();
             var prototypes = IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<JobPrototype>();
@@ -44,7 +44,7 @@ namespace Content.Server.Roles
                 playtime += time.Value;
             }
 
-            return new Tuple<bool, string?>(playtime >= Time,
+            return new ValueTuple<bool, string?>(playtime >= Time,
                 Loc.GetString("job-requirement-time-remaining",
                     // TODO: Improve the readability of the time value (30 minutes instead of 0.5 hours and such)
                     ("duration", Time.Subtract(playtime).TotalHours),

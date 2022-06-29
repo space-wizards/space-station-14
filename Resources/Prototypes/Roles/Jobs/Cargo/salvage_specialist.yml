@@ -1,7 +1,6 @@
 - type: job
   id: SalvageSpecialist
   requirements:
-    requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 3600

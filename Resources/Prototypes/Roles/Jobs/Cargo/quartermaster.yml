@@ -2,7 +2,6 @@
   id: Quartermaster
   name: "quartermaster"
   requirements:
-    requirements:
     - !type:RoleTimeRequirement
       role: SalvageSpecialist
       time: 3600
