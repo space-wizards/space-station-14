@@ -45,6 +45,7 @@ public static class AdminLogsEuiMsg
     {
         public LogsRequest(
             int? roundId,
+            string? search,
             HashSet<LogType>? types,
             HashSet<LogImpact>? impacts,
             DateTime? before,
@@ -55,6 +56,7 @@ public static class AdminLogsEuiMsg
             DateOrder dateOrder)
         {
             RoundId = roundId;
+            Search = search;
             Types = types;
             Impacts = impacts;
             Before = before;
@@ -66,6 +68,7 @@ public static class AdminLogsEuiMsg
         }
 
         public int? RoundId { get; set; }
+        public string? Search { get; set; }
         public HashSet<LogType>? Types { get; set; }
         public HashSet<LogImpact>? Impacts { get; set; }
         public DateTime? Before { get; set; }
