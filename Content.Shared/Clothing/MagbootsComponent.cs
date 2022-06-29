@@ -1,12 +1,11 @@
-using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing;
 
-[NetworkedComponent()]
-public abstract class SharedMagbootsComponent : Component
+[RegisterComponent, NetworkedComponent()]
+public sealed class MagbootsComponent : Component
 {
     [DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();

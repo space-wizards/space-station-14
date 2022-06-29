@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
@@ -9,7 +8,7 @@ using Content.Shared.Toggleable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using static Content.Shared.Clothing.SharedMagbootsComponent;
+using static Content.Shared.Clothing.MagbootsComponent;
 
 namespace Content.Server.Clothing;
 

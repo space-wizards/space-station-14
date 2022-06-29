@@ -14,19 +14,19 @@ public abstract class SharedMagbootsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedMagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
-        SubscribeLocalEvent<SharedMagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
-        SubscribeLocalEvent<SharedMagbootsComponent, GetItemActionsEvent>(OnGetActions);
-        SubscribeLocalEvent<SharedMagbootsComponent, ToggleActionEvent>(OnToggleAction); 
+        SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
+        SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
+        SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
+        //SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction); 
     }
 
-    protected void OnChanged(SharedMagbootsComponent component)
+    protected void OnChanged(MagbootsComponent component)
     {
         _sharedActions.SetToggled(component.ToggleAction, component.On);
         _clothingSpeedModifier.SetClothingSpeedModifierEnabled(component.Owner, component.On);
     }
 
-    private void AddToggleVerb(EntityUid uid, SharedMagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -38,18 +38,18 @@ public abstract class SharedMagbootsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnSlipAttempt(EntityUid uid, SharedMagbootsComponent component, SlipAttemptEvent args)
+    private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, SlipAttemptEvent args)
     {
         if (component.On)
             args.Cancel();
     }
 
-    private void OnGetActions(EntityUid uid, SharedMagbootsComponent component, GetItemActionsEvent args)
+    private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)
     {
         args.Actions.Add(component.ToggleAction);
     }
 
-    private void OnToggleAction(EntityUid uid, SharedMagbootsComponent component, ToggleActionEvent args)
+    private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
     {
         if (args.Handled)
             return;

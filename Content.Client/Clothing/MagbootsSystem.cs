@@ -1,6 +1,6 @@
 using Content.Shared.Clothing;
 using Robust.Shared.GameStates;
-using static Content.Shared.Clothing.SharedMagbootsComponent;
+using static Content.Shared.Clothing.MagbootsComponent;
 
 namespace Content.Client.Clothing;
 
