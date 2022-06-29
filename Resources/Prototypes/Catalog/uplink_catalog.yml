@@ -75,7 +75,7 @@
 - type: uplinkListing
   id: UplinkSyndieLaserCarbine
   category: Weapons
-  itemId: WeaponSyndieLaserCarbine
+  itemId: WeaponSyndieLaserGun
   listingName: Syndicate Laser Gun
   description:  A stolen laser gun equipped with several state-of-the-art modifications that allows it to recharge itself slowly. 
   price: 12
