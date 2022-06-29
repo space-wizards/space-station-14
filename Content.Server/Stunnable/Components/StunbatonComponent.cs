@@ -1,3 +1,4 @@
+using Content.Server.Stunnable.Systems;
 using Content.Shared.Sound;
 using Content.Shared.Timing;
 

@@ -1,4 +1,5 @@
 using Content.Server.Damage.Components;
+using Content.Server.Damage.Events;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Stunnable;
 using Robust.Shared.Collections;
@@ -27,7 +28,7 @@ public sealed class StaminaSystem : EntitySystem
     /// </summary>
     private const float CritExcess = 18f;
 
-    private List<EntityUid> _dirtyEntities = new();
+    private readonly List<EntityUid> _dirtyEntities = new();
 
     public override void Initialize()
     {
@@ -39,6 +40,11 @@ public sealed class StaminaSystem : EntitySystem
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
         if (component.Damage <= 0f) return;
+
+        var ev = new StaminaDamageOnHitAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled) return;
 
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var toHit = new ValueList<StaminaComponent>();

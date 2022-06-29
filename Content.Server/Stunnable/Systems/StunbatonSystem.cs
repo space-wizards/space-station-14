@@ -1,10 +1,11 @@
 using System.Linq;
+using Content.Server.Damage.Components;
+using Content.Server.Damage.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.Events;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
-using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -12,16 +13,13 @@ using Content.Shared.Item;
 using Content.Shared.Jittering;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
-using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
-using Content.Shared.Timing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
-namespace Content.Server.Stunnable
+namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
@@ -38,6 +36,13 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
+        }
+
+        private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
+        {
+            if (!component.Activated)
+                args.Cancelled = true;
         }
 
         public override void Update(float frameTime)
