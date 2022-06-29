@@ -51,6 +51,8 @@ public sealed partial class AdminLogsControl : Control
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => LogSearch.Text;
+    private int ShownLogs { get; set; }
+    private int TotalLogs { get; set; }
 
     public HashSet<LogType> SelectedTypes { get; } = new();
 
@@ -200,6 +202,8 @@ public sealed partial class AdminLogsControl : Control
 
     private void UpdateLogs()
     {
+        ShownLogs = 0;
+
         foreach (var child in LogsContainer.Children)
         {
             if (child is not AdminLogLabel log)
@@ -208,7 +212,13 @@ public sealed partial class AdminLogsControl : Control
             }
 
             child.Visible = ShouldShowLog(log);
+            if (child.Visible)
+            {
+                ShownLogs++;
+            }
         }
+
+        UpdateCount();
     }
 
     private bool ShouldShowType(AdminLogTypeButton button)
@@ -399,15 +409,39 @@ public sealed partial class AdminLogsControl : Control
             var label = new AdminLogLabel(ref log, separator);
             label.Visible = ShouldShowLog(label);
 
+            TotalLogs++;
+            if (label.Visible)
+            {
+                ShownLogs++;
+            }
+
             LogsContainer.AddChild(label);
             LogsContainer.AddChild(separator);
         }
+
+        UpdateCount();
     }
 
     public void SetLogs(List<SharedAdminLog> logs)
     {
         LogsContainer.RemoveAllChildren();
+        UpdateCount(0, 0);
         AddLogs(logs);
+    }
+
+    private void UpdateCount(int? shown = null, int? total = null)
+    {
+        if (shown != null)
+        {
+            ShownLogs = shown.Value;
+        }
+
+        if (total != null)
+        {
+            TotalLogs = total.Value;
+        }
+
+        Count.Text = Loc.GetString("admin-logs-count", ("showing", ShownLogs), ("total", TotalLogs));
     }
 
     protected override void Dispose(bool disposing)
