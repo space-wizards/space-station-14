@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

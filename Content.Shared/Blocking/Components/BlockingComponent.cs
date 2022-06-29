@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Content.Shared.Actions.ActionTypes;
+﻿using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Sound;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
