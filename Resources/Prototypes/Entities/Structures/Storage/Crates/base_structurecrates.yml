@@ -27,7 +27,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask #this is so they can go under plastic flaps
       layer:
       - MachineLayer
   - type: EntityStorage
@@ -90,7 +90,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask
       layer:
       - MachineLayer
   - type: EntityStorage

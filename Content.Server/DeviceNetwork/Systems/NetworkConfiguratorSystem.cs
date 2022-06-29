@@ -74,7 +74,7 @@ public sealed class NetworkConfiguratorSystem : EntitySystem
 
     private void TryAddNetworkDevice(EntityUid? targetUid, EntityUid userUid, NetworkConfiguratorComponent configurator, DeviceNetworkComponent? device = null)
     {
-        if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device))
+        if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device, false))
             return;
 
         if (string.IsNullOrEmpty(device.Address))

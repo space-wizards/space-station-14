@@ -27,20 +27,29 @@
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false
-      sound: /Audio/Misc/siren.ogg
+      sound:
+        path: /Audio/Misc/siren.ogg
+        params:
+          volume: -2
       disableSelection: true
       color: PaleVioletRed
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
-      sound: /Audio/Misc/delta.ogg
+      sound:
+        path: /Audio/Misc/delta.ogg
+        params:
+          volume: -5
       disableSelection: true
       color: DarkRed
       shuttleTime: 1200
     epsilon:
       announcement: alert-level-epsilon-announcement
       selectable: false
-      sound: /Audio/Misc/epsilon.ogg
+      sound:
+        path: /Audio/Misc/epsilon.ogg
+        params:
+          volume: -2
       disableSelection: true
       color: DarkViolet
       shuttleTime: 1200

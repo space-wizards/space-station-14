@@ -11,6 +11,8 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.Tag;
+using Content.Shared.Tools.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Doors.Systems;
 

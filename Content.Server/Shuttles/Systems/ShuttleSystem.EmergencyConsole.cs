@@ -44,7 +44,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>
-    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(3);
+    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
@@ -113,12 +113,19 @@ public sealed partial class ShuttleSystem
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    // TODO: Add support so Hyperspace will just dock it to Centcomm.
-
-                    Hyperspace(shuttle,
-                        new EntityCoordinates(
-                            _mapManager.GetMapEntityId(_centcommMap.Value),
-                            Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    if (Deleted(_centcomm))
+                    {
+                        // TODO: Need to get non-overlapping positions.
+                        Hyperspace(shuttle,
+                            new EntityCoordinates(
+                                _mapManager.GetMapEntityId(_centcommMap.Value),
+                                Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    }
+                    else
+                    {
+                        Hyperspace(shuttle,
+                            _centcomm.Value, _consoleAccumulator, _transitTime);
+                    }
                 }
             }
         }

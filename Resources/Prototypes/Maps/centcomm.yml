@@ -1,0 +1,16 @@
+- type: gameMap
+  id: centcomm
+  mapName: 'Central Command'
+  mapPath: /Maps/centcomm.yml
+  minPlayers: 10
+  votable: false
+  stations:
+    centcomm:
+      mapNameTemplate: '{0} Central Command {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'TG'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        Passenger: [ 0, 1 ]
