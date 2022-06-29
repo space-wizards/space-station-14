@@ -265,7 +265,7 @@ public sealed class EntityStorageSystem : EntitySystem
         return component.Contents.CanInsert(toAdd, EntityManager) && Insert(toAdd, container, component);
     }
 
-    private bool CanFit(EntityUid toInsert, EntityUid container)
+    public bool CanFit(EntityUid toInsert, EntityUid container)
     {
         // conditions are complicated because of pizzabox-related issues, so follow this guide
         // 0. Accomplish your goals at all costs.
@@ -308,7 +308,7 @@ public sealed class EntityStorageSystem : EntitySystem
         return allowedToEat;
     }
 
-    private void ModifyComponents(EntityUid uid, EntityStorageComponent? component = null)
+    public void ModifyComponents(EntityUid uid, EntityStorageComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;

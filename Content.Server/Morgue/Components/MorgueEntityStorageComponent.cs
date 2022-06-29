@@ -40,31 +40,10 @@ namespace Content.Server.Morgue.Components
         [ViewVariables]
         public float AccumulatedFrameTime = 0f;
 
+        [ViewVariables]
         public float BeepTime = 10f;
 
         [DataField("occupantHasSoulAlarmSound")]
         public SoundSpecifier OccupantHasSoulAlarmSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-        /*
-
-        protected override bool AddToContents(EntityUid entity)
-        {
-            if (_entMan.HasComponent<SharedBodyComponent>(entity) && !EntitySystem.Get<StandingStateSystem>().IsDown(entity))
-                return false;
-            return base.AddToContents(entity);
-        }
-
-        protected override IEnumerable<EntityUid> DetermineCollidingEntities()
-        {
-            if (_tray == null)
-            {
-                yield break;
-            }
-
-            var entityLookup = EntitySystem.Get<EntityLookupSystem>();
-            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray.Value, flags: LookupFlags.None))
-            {
-                yield return entity;
-            }
-        }*/
     }
 }

@@ -56,6 +56,7 @@
   id: MorgueTray
   name: morgue tray
   description: If you lay down to have a rest on this, you'll soon have a problem.
+  noSpawn: true
   components:
   - type: Physics
     bodyType: Static

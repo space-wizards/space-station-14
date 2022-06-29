@@ -19,6 +19,8 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Shared.Interaction;
+using System.Linq;
+using Robust.Shared.Physics;
 
 namespace Content.Server.Morgue;
 
@@ -26,6 +28,7 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StandingStateSystem _stando = default!;
@@ -38,6 +41,8 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
         SubscribeLocalEvent<MorgueEntityStorageComponent, ComponentInit>(OnInit);
 
         SubscribeLocalEvent<MorgueEntityStorageComponent, ActivateInWorldEvent>(OnActivate,
+            before: new[] { typeof(EntityStorageSystem) });
+        SubscribeLocalEvent<MorgueTrayComponent, ActivateInWorldEvent>(OnTrayActivate,
             before: new[] { typeof(EntityStorageSystem) });
         SubscribeLocalEvent<MorgueEntityStorageComponent, ExaminedEvent>(OnExamine);
     }
@@ -75,6 +80,14 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
 
     }
 
+    private void OnTrayActivate(EntityUid uid, MorgueTrayComponent component, ActivateInWorldEvent args)
+    {
+        if (!TryComp<MorgueEntityStorageComponent>(component.Morgue, out var morgue))
+            return;
+
+        OnActivate(component.Morgue, morgue, args);
+    }
+
     private void OnExamine(EntityUid uid, MorgueEntityStorageComponent component, ExaminedEvent args)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
@@ -93,9 +106,9 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
             args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
     }
 
-    public void OpenMorgue(EntityUid uid, MorgueEntityStorageComponent? component = null)
+    public void OpenMorgue(EntityUid uid, MorgueEntityStorageComponent? component = null, EntityStorageComponent? storage = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, ref storage))
             return;
 
         if (TryComp<AppearanceComponent>(uid, out var app))
@@ -110,22 +123,72 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
         var trayXform = Transform(component.Tray);
         trayXform.Coordinates = new EntityCoordinates(uid, 0, -1);
         trayXform.WorldRotation = Transform(uid).WorldRotation;
-        _entityStorage.OpenStorage(uid);
+
+        storage.Open = true;
+        var containedArr = storage.Contents.ContainedEntities.ToArray();
+        foreach (var contained in containedArr)
+        {
+            if (storage.Contents.Remove(contained))
+            {
+                Transform(contained).WorldPosition = Transform(component.Tray).WorldPosition;
+                if (TryComp(contained, out IPhysBody? physics))
+                    physics.CanCollide = true;
+            }
+        }
+        _entityStorage.ModifyComponents(uid, storage);
+        SoundSystem.Play(storage.OpenSound.GetSound(), Filter.Pvs(uid), uid);
     }
 
-    public void CloseMorgue(EntityUid uid, MorgueEntityStorageComponent? component = null)
+    public void CloseMorgue(EntityUid uid, MorgueEntityStorageComponent? component = null, EntityStorageComponent? storage = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, ref storage))
             return;
 
-        _entityStorage.CloseStorage(uid);
+        storage.Open = false;
+
+        var count = 0;
+        foreach (var ent in DetermineCollidingEntity(component.Tray))
+        {
+            if (_container.IsEntityInContainer(ent))
+                continue;
+
+            if (!_entityStorage.CanFit(ent, uid))
+                continue;
+
+            if (!AddToContents(ent, uid, storage))
+                continue;
+
+            count++;
+            if (count >= storage.StorageCapacityMax)
+                break;
+        }
+
+        _entityStorage.ModifyComponents(uid, storage);
+        SoundSystem.Play(storage.CloseSound.GetSound(), Filter.Pvs(uid), uid);
+        storage.LastInternalOpenAttempt = default;
 
         if (TryComp<AppearanceComponent>(uid, out var app))
             app.SetData(MorgueVisuals.Open, false);
 
-        CheckContents(uid, component);
+        CheckContents(uid, component, storage);
 
         component.TrayContainer.Insert(component.Tray, EntityManager);
+    }
+
+    private IEnumerable<EntityUid> DetermineCollidingEntity(EntityUid tray)
+    {
+        foreach (var entity in _lookup.GetEntitiesIntersecting(tray, flags: LookupFlags.None))
+        {
+            yield return entity;
+        }
+    }
+
+    private bool AddToContents(EntityUid entity, EntityUid container, EntityStorageComponent component)
+    {
+        if (HasComp<SharedBodyComponent>(entity) && !_stando.IsDown(entity))
+            return false;
+        
+        return _entityStorage.AddToContents(entity, container, component);
     }
 
     private void CheckContents(EntityUid uid, MorgueEntityStorageComponent? morgue = null, EntityStorageComponent? storage = null)
@@ -157,7 +220,7 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!_interactionSystem.InRangeUnobstructed(user,
+        if (!_interactionSystem.InRangeUnobstructed(uid,
                 Transform(uid).Coordinates.Offset(Transform(uid).LocalRotation.GetCardinalDir().ToIntVec()),
                 collisionMask: component.TrayCanOpenMask
             ))
