@@ -9,4 +9,4 @@
             - tool: Sawing
               doAfter: 2
     - node: shotgunsawn
-      entity: WeaponShotgunSawnEmpty
+      entity: WeaponShotgunSawn

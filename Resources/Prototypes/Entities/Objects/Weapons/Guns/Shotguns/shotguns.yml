@@ -126,8 +126,7 @@
 - type: entity
   name: sawn-off shotgun
   parent: BaseWeaponShotgun
-  id: WeaponShotgunSawnEmpty
-  suffix: Empty
+  id: WeaponShotgunSawn
   description: Groovy!
   components:
   - type: Sprite
@@ -139,16 +138,6 @@
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
-    proto:
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
-
-- type: entity
-  name: sawn-off shotgun
-  parent: WeaponShotgunSawnEmpty
-  id: WeaponShotgunSawn
-  suffix:
-  components:
-  - type: BallisticAmmoProvider
-    proto: ShellShotgun
