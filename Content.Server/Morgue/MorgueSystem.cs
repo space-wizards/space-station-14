@@ -141,9 +141,6 @@ public sealed class MorgueSystem : EntitySystem
     /// </summary>
     private void OnStorageBeforeClose(EntityUid uid, MorgueTrayComponent component, StorageBeforeCloseEvent args)
     {
-        if (!HasComp<MorgueTrayComponent>(uid))
-            return;
-
         foreach (var ent in args.Contents)
         {
             if (HasComp<SharedBodyComponent>(ent) && !_standing.IsDown(ent))

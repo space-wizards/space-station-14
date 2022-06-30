@@ -5,8 +5,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
-[Virtual]
-public class EntityStorageComponent : Component
+public sealed class EntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
