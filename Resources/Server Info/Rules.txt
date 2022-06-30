@@ -45,7 +45,7 @@
 [color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible.
     - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned, unless they are a confirmed antagonist. Security should make their best effort to keep criminals alive and in custody
 
-[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Antagonists or repeat offenders may be permabrigged, and only [color=#ff0000]in the very worst cases approved by the Captain[/color], execution.
+[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Antagonists or repeat offenders may be permabrigged, and only [color=#ff0000]in the very worst cases approved by the Captain[/color], executed.
     - As there is no official space law for this server, security generally act to maintain order and safety on station and protect Nanotrasen assets.
 
 ESCALATION RULES
