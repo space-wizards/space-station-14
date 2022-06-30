@@ -1,13 +1,7 @@
 using Content.Server.Morgue.Components;
 using Content.Shared.Morgue;
 using Content.Shared.Examine;
-using Content.Shared.Database;
-using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
-using Content.Server.Players;
-using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Standing;
 using Robust.Shared.Player;
@@ -24,10 +18,9 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Morgue;
 
-public sealed class MorugeEntityStorageSystem : EntitySystem
+public sealed class MorgueEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -77,7 +70,6 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
         {
             OpenMorgue(uid, component);
         }
-
     }
 
     private void OnTrayActivate(EntityUid uid, MorgueTrayComponent component, ActivateInWorldEvent args)
@@ -215,7 +207,7 @@ public sealed class MorugeEntityStorageSystem : EntitySystem
         }
     }
 
-    private bool CanOpen(EntityUid user, EntityUid uid, MorgueEntityStorageComponent? component = null, bool silent = false)
+    public bool CanOpen(EntityUid user, EntityUid uid, MorgueEntityStorageComponent? component = null, bool silent = false)
     {
         if (!Resolve(uid, ref component))
             return false;

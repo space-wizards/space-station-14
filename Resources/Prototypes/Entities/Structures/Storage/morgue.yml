@@ -29,6 +29,7 @@
       - WallLayer
   - type: EntityStorage
     IsCollidableWhenOpen: true
+    showContents: false
     Capacity: 1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
@@ -106,15 +107,17 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: CrematoriumEntityStorage
+  - type: EntityStorage
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: MorgueEntityStorage
     trayPrototype: CrematoriumTray
     doSoulBeep: false
+  - type: CrematoriumEntityStorage
   - type: Appearance
     visuals:
     - type: CrematoriumVisualizer
@@ -129,6 +132,7 @@
   id: CrematoriumTray
   name: crematorium tray
   parent: MorgueTray
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
