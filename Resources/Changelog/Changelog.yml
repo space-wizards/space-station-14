@@ -1,9 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: Welding masks actually protect your eyes now!, type: Tweak}
-  id: 1335
-  time: '2022-04-15T22:51:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Beds now heal slowly when you lie in them. Medical beds, if you can
@@ -2960,3 +2955,9 @@ Entries:
       items., type: Tweak}
   id: 1834
   time: '2022-06-30T18:41:27.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Splitstation QoL update. See Github for the massive log of changes.,
+    type: Tweak}
+  id: 1835
+  time: '2022-06-30T18:45:38.0000000+00:00'
