@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Added roles to Player's names in the Ghost Warp menu!, type: Add}
-  id: 1333
-  time: '2022-04-15T21:41:27.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The way pressure protection is calculated has been changed. You now
@@ -2960,3 +2955,8 @@ Entries:
     type: Fix}
   id: 1832
   time: '2022-06-29T11:36:32.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now pull down your mask for easy mouth access, type: Tweak}
+  id: 1833
+  time: '2022-06-30T07:44:54.0000000+00:00'
