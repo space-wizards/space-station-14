@@ -8,10 +8,8 @@ using System.Linq;
 
 namespace Content.Server.Storage.Components
 {
-    [ComponentReference(typeof(EntityStorageComponent))]
-    //[ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public sealed class CursedEntityStorageComponent : EntityStorageComponent
+    public sealed class CursedEntityStorageComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
