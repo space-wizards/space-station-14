@@ -1,9 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 
 namespace Content.Server.Singularity.Components
 {

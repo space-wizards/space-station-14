@@ -1,6 +1,2 @@
-namespace Content.Shared.Singularity.Components
-{
-    public abstract class SharedContainmentFieldGeneratorComponent : Component
-    {
-    }
-}
+namespace Content.Shared.Singularity.Components;
+public abstract class SharedContainmentFieldGeneratorComponent : Component { }

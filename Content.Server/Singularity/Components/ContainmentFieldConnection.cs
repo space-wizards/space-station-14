@@ -1,5 +1,4 @@
 using System.Threading;
-using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Timer = Robust.Shared.Timing.Timer;

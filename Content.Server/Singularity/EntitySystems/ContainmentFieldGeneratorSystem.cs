@@ -13,252 +13,247 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
 
-namespace Content.Server.Singularity.EntitySystems
+namespace Content.Server.Singularity.EntitySystems;
+public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
-    public sealed class ContainmentFieldGeneratorSystem : EntitySystem
+    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly TagSystem _tags = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
+        SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
+        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+    }
+    private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryComp(component.Owner, out TransformComponent? transformComp) && transformComp.Anchored)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
-            SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
-            SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-            SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
-        }
-
-        private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            if (TryComp(component.Owner, out TransformComponent? transformComp) && transformComp.Anchored)
-            {
-                if (!component.Enabled)
-                    TurnOn(component);
-                else if (component.Enabled && component.IsConnected)
-                {
-                    _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
-                    return;
-                }
-                else
-                    TurnOff(component);
-            }
-
-            args.Handled = true;
-        }
-
-        private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component, UnanchorAttemptEvent args)
-        {
-            if (component.Enabled)
+            if (!component.Enabled)
+                TurnOn(component);
+            else if (component.Enabled && component.IsConnected)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
-                args.Cancel();
+                return;
             }
+            else
+                TurnOff(component);
         }
 
-        private void TurnOn(ContainmentFieldGeneratorComponent component)
+        args.Handled = true;
+    }
+
+    private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component, UnanchorAttemptEvent args)
+    {
+        if (component.Enabled)
         {
-            component.Enabled = true;
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+               args.Cancel();
         }
+    }
 
-        private void TurnOff(ContainmentFieldGeneratorComponent component)
-        {
-            component.Enabled = false;
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
-        }
+    private void TurnOn(ContainmentFieldGeneratorComponent component)
+    {
+        component.Enabled = true;
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+    }
 
-        private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
+    private void TurnOff(ContainmentFieldGeneratorComponent component)
+    {
+        component.Enabled = false;
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
+    }
+
+    private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
+    {
+        component.Connection1?.Item2.Dispose();
+        component.Connection2?.Item2.Dispose();
+    }
+
+    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
         {
             component.Connection1?.Item2.Dispose();
             component.Connection2?.Item2.Dispose();
         }
+    }
 
-        private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
+    {
+        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
         {
-            if (!args.Anchored)
+            singularityGeneratorComponent.Power += component.State switch
             {
-                component.Connection1?.Item2.Dispose();
-                component.Connection2?.Item2.Dispose();
-            }
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 2,
+                ParticleAcceleratorPowerState.Level2 => 4,
+                ParticleAcceleratorPowerState.Level3 => 8,
+                _ => 0
+            };
+
+            EntityManager.QueueDeleteEntity(uid);
         }
+    }
 
-        private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    {
+        if (_tags.HasTag(args.OtherFixture.Body.Owner, "EmitterBolt"))
         {
-            if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
-            {
-                singularityGeneratorComponent.Power += component.State switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 2,
-                    ParticleAcceleratorPowerState.Level2 => 4,
-                    ParticleAcceleratorPowerState.Level3 => 8,
-                    _ => 0
-                };
-
-                EntityManager.QueueDeleteEntity(uid);
-            }
+            ReceivePower(6, component);
         }
+    }
 
-        private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
+    {
+        if (component.Parent == null)
         {
-            if (_tags.HasTag(args.OtherFixture.Body.Owner, "EmitterBolt"))
-            {
-                ReceivePower(6, component);
-            }
+            EntityManager.QueueDeleteEntity(uid);
+            return;
         }
+    }
 
-        private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
+    public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
+    {
+        var totalPower = power + component.PowerBuffer;
+        var powerPerConnection = totalPower / 2;
+        var newBuffer = totalPower % 2;
+        TryPowerConnection(ref component.Connection1, ref newBuffer, powerPerConnection, component);
+        TryPowerConnection(ref component.Connection2, ref newBuffer, powerPerConnection, component);
+
+        component.PowerBuffer = newBuffer;
+    }
+
+    public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
+    {
+        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
         {
-            if (component.Parent == null)
-            {
-                EntityManager.QueueDeleteEntity(uid);
-                return;
-            }
+            bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);
+            pointLightComponent.Enabled = hasAnyConnection;
         }
+    }
 
-        public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
+    public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
+    {
+        if (component.Connection1?.Item2 == connection)
         {
-            var totalPower = power + component.PowerBuffer;
-            var powerPerConnection = totalPower / 2;
-            var newBuffer = totalPower % 2;
-            TryPowerConnection(ref component.Connection1, ref newBuffer, powerPerConnection, component);
-            TryPowerConnection(ref component.Connection2, ref newBuffer, powerPerConnection, component);
-
-            component.PowerBuffer = newBuffer;
+            component.Connection1 = null;
+            component.IsConnected = false;
+            UpdateConnectionLights(component);
         }
-
-        public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
+        else if (component.Connection2?.Item2 == connection)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
-            {
-                bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);
-                pointLightComponent.Enabled = hasAnyConnection;
-            }
+            component.Connection2 = null;
+            component.IsConnected = false;
+            UpdateConnectionLights(component);
         }
-
-        public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
+        else if (connection != null)
         {
-            if (component.Connection1?.Item2 == connection)
-            {
-                component.Connection1 = null;
-                component.IsConnected = false;
-                UpdateConnectionLights(component);
-            }
-            else if (component.Connection2?.Item2 == connection)
-            {
-                component.Connection2 = null;
-                component.IsConnected = false;
-                UpdateConnectionLights(component);
-            }
-            else if (connection != null)
-            {
-                Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
-            }
+            Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
         }
+    }
 
-        private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
+    private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
+    {
+        if (propertyFieldTuple != null) return false;
+        if (!component.Enabled) return false; //don't gen a field unless it's on
+        if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
+
+        foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
         {
-            if (propertyFieldTuple != null) return false;
-            if (!component.Enabled) return false; //don't gen a field unless it's on
-            if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
+            if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
 
-            foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
+            var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
+            var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
+            var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, ray, 4.5f, component.Owner, false);
+
+            var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
+            if (!rayCastResults.Any()) continue;
+
+            RayCastResults? closestResult = null;
+            var smallestDist = 4.5f;
+            foreach (var res in rayCastResults)
             {
-                if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
+                if (res.Distance > smallestDist) continue;
 
-                var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
-                var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-                var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, ray, 4.5f, component.Owner, false);
-
-                var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
-                if (!rayCastResults.Any()) continue;
-
-                RayCastResults? closestResult = null;
-                var smallestDist = 4.5f;
-                foreach (var res in rayCastResults)
-                {
-                    if (res.Distance > smallestDist) continue;
-
-                    smallestDist = res.Distance;
-                    closestResult = res;
-                }
-                if (closestResult == null) continue;
-                var ent = closestResult.Value.HitEntity;
-                if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
-                    fieldGeneratorComponent.Owner == component.Owner ||
-                    !HasFreeConnections(fieldGeneratorComponent) ||
-                    IsConnectedWith(component, fieldGeneratorComponent) ||
-                    !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
-                    collidableComponent.BodyType != BodyType.Static)
-                {
-                    continue;
-                }
-
-                var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent);
-                propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
-                if (fieldGeneratorComponent.Connection1 == null)
-                {
-                    fieldGeneratorComponent.Connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
-                }
-                else if (fieldGeneratorComponent.Connection2 == null)
-                {
-                    fieldGeneratorComponent.Connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
-                }
-                else
-                {
-                    Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
-                }
-
-                component.IsConnected = true;
-                UpdateConnectionLights(component);
-                return true;
+                smallestDist = res.Distance;
+                closestResult = res;
+            }
+            if (closestResult == null) continue;
+            var ent = closestResult.Value.HitEntity;
+            if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
+                fieldGeneratorComponent.Owner == component.Owner ||
+                !HasFreeConnections(fieldGeneratorComponent) ||
+                IsConnectedWith(component, fieldGeneratorComponent) ||
+                !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
+                collidableComponent.BodyType != BodyType.Static)
+            {
+                continue;
             }
 
-            return false;
+            var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent);
+            propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
+            if (fieldGeneratorComponent.Connection1 == null)
+            {
+                fieldGeneratorComponent.Connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+            }
+            else if (fieldGeneratorComponent.Connection2 == null)
+            {
+                fieldGeneratorComponent.Connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+            }
+            else
+            {
+                Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
+            }
+
+            component.IsConnected = true;
+            UpdateConnectionLights(component);
+            return true;
         }
 
-        private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp, ContainmentFieldGeneratorComponent otherComp)
-        {
-            return otherComp == comp || comp.Connection1?.Item2.Generator1 == otherComp || comp.Connection1?.Item2.Generator2 == otherComp ||
-                   comp.Connection2?.Item2.Generator1 == otherComp || comp.Connection2?.Item2.Generator2 == otherComp;
-        }
+        return false;
+    }
 
-        public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, ref int powerBuffer, int powerPerConnection, ContainmentFieldGeneratorComponent component)
+    private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp, ContainmentFieldGeneratorComponent otherComp)
+    {
+        return otherComp == comp || comp.Connection1?.Item2.Generator1 == otherComp || comp.Connection1?.Item2.Generator2 == otherComp ||
+               comp.Connection2?.Item2.Generator1 == otherComp || comp.Connection2?.Item2.Generator2 == otherComp;
+    }
+
+    public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, ref int powerBuffer, int powerPerConnection, ContainmentFieldGeneratorComponent component)
+    {
+        if (connectionProperty != null)
         {
-            if (connectionProperty != null)
+               connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
+        }
+        else
+        {
+            if (TryGenerateFieldConnection(ref connectionProperty, component))
             {
                 connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
             }
             else
             {
-                if (TryGenerateFieldConnection(ref connectionProperty, component))
-                {
-                    connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
-                }
-                else
-                {
-                    powerBuffer += powerPerConnection;
-                }
+                powerBuffer += powerPerConnection;
             }
         }
+    }
 
-        public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component) => component.Connection1?.Item2?.CanRepel(toRepel) == true ||
+    public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component) => component.Connection1?.Item2?.CanRepel(toRepel) == true ||
                                                                      component.Connection2?.Item2?.CanRepel(toRepel) == true;
 
-        public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
-        {
-            return component.Connection1 == null || component.Connection2 == null;
-        }
-
-
+    public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
+    {
+        return component.Connection1 == null || component.Connection2 == null;
     }
 }
