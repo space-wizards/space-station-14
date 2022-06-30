@@ -84,10 +84,8 @@
     state: plushie_lamp
   - type: PointLight
     netsync: false
-    enabled: false
     radius: 1.5
     energy: 2
-  - type: ToggleableLightVisuals
 
 - type: entity
   parent: BasePlushie
