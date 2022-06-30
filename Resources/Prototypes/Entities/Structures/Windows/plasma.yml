@@ -54,6 +54,7 @@
     - Window
   components:
   - type: Sprite
+    drawdepth: WallTops
     netsync: false
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
