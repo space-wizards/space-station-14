@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class BreakerFlip : StationEvent
+public sealed class BreakerFlip : StationEventSystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -20,9 +20,9 @@ public sealed class BreakerFlip : StationEvent
     public override int? MaxOccurrences => 5;
     public override int MinimumPlayers => 15;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
 
         var apcSys = EntitySystem.Get<ApcSystem>();
         var allApcs = _entityManager.EntityQuery<ApcComponent>().ToList();

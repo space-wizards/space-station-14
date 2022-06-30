@@ -3,7 +3,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class KudzuGrowth : StationEvent
+public sealed class KudzuGrowth : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -35,9 +35,9 @@ public sealed class KudzuGrowth : StationEvent
 
     private EntityCoordinates _targetCoords;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
 
         // Pick a place to plant the kudzu.
         if (TryFindRandomTile(out _targetTile, out _, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))

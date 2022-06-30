@@ -14,7 +14,7 @@ namespace Content.Server.StationEvents.Events;
 /// Infects a couple people
 /// with a random disease that isn't super deadly
 /// </summary>
-public sealed class DiseaseOutbreak : StationEvent
+public sealed class DiseaseOutbreak : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -45,9 +45,9 @@ public sealed class DiseaseOutbreak : StationEvent
     /// and gives them a randomly selected disease.
     /// They all get the same disease.
     /// </summary>
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
         HashSet<EntityUid> stationsToNotify = new();
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())

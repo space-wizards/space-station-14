@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class MouseMigration : StationEvent
+public sealed class MouseMigration : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -31,9 +31,9 @@ public sealed class MouseMigration : StationEvent
 
     protected override float EndAfter => 60;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
         
         var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
         _random.Shuffle(spawnLocations);

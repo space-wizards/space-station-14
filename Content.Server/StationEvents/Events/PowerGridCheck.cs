@@ -11,7 +11,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
-    public sealed class PowerGridCheck : StationEvent
+    public sealed class PowerGridCheck : StationEventSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -44,7 +44,7 @@ namespace Content.Server.StationEvents.Events
             EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
         }
 
-        public override void Startup()
+        public override void Start()
         {
             foreach (var component in _entityManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
@@ -56,7 +56,7 @@ namespace Content.Server.StationEvents.Events
 
             _numberPerSecond = Math.Max(1, (int)(_powered.Count / SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
 
-            base.Startup();
+            base.Start();
         }
 
         public override void Update(float frameTime)

@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
-    public sealed class MeteorSwarm : StationEvent
+    public sealed class MeteorSwarm : StationEventSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -45,9 +45,9 @@ namespace Content.Server.StationEvents.Events
         private const float MaxAngularVelocity = 0.25f;
         private const float MinAngularVelocity = -0.25f;
 
-        public override void Startup()
+        public override void Start()
         {
-            base.Startup();
+            base.Start();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             _waveCounter = robustRandom.Next(MinimumWaves, MaximumWaves);
         }

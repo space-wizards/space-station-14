@@ -9,7 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class RandomSentience : StationEvent
+public sealed class RandomSentience : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -20,9 +20,9 @@ public sealed class RandomSentience : StationEvent
 
     protected override float EndAfter => 1.0f;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
         HashSet<EntityUid> stationsToNotify = new();
 
         var targetList = _entityManager.EntityQuery<SentienceTargetComponent>().ToList();

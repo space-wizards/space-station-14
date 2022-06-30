@@ -3,7 +3,7 @@
 namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
-    public sealed class FalseAlarm : StationEvent
+    public sealed class FalseAlarm : StationEventSystem
     {
         public override string Name => "FalseAlarm";
         public override float Weight => WeightHigh;
@@ -12,7 +12,7 @@ namespace Content.Server.StationEvents.Events
 
         public override void Announce()
         {
-            var stationEventSystem = EntitySystem.Get<StationEventSystem>();
+            var stationEventSystem = EntitySystem.Get<StationEventSchedulerSystem>();
             var randomEvent = stationEventSystem.PickRandomEvent();
 
             if (randomEvent != null)

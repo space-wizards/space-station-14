@@ -19,7 +19,7 @@ namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
     // Somewhat based off of TG's implementation of events
-    public sealed class StationEventSystem : EntitySystem
+    public sealed class StationEventSchedulerSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
@@ -30,10 +30,10 @@ namespace Content.Server.StationEvents
 
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        public StationEvent? CurrentEvent { get; private set; }
-        public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
+        public StationEventSystem? CurrentEvent { get; private set; }
+        public IReadOnlyCollection<StationEventSystem> StationEvents => _stationEvents;
 
-        private readonly List<StationEvent> _stationEvents = new();
+        private readonly List<StationEventSystem> _stationEvents = new();
 
         private const float MinimumTimeUntilFirstEvent = 300;
 
@@ -110,7 +110,7 @@ namespace Content.Server.StationEvents
 
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
-            CurrentEvent.Startup();
+            CurrentEvent.Start();
 
             return Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Name));
         }
@@ -118,7 +118,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// Randomly picks a valid event.
         /// </summary>
-        public StationEvent? PickRandomEvent()
+        public StationEventSystem? PickRandomEvent()
         {
             var availableEvents = AvailableEvents(true);
             return FindEvent(availableEvents);
@@ -153,11 +153,11 @@ namespace Content.Server.StationEvents
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
-            foreach (var type in reflectionManager.GetAllChildren(typeof(StationEvent)))
+            foreach (var type in reflectionManager.GetAllChildren(typeof(StationEventSystem)))
             {
                 if (type.IsAbstract) continue;
 
-                var stationEvent = (StationEvent) typeFactory.CreateInstance(type);
+                var stationEvent = (StationEventSystem) typeFactory.CreateInstance(type);
                 IoCManager.InjectDependencies(stationEvent);
                 _stationEvents.Add(stationEvent);
             }
@@ -257,7 +257,7 @@ namespace Content.Server.StationEvents
         /// Pick a random event from the available events at this time, also considering their weightings.
         /// </summary>
         /// <returns></returns>
-        private StationEvent? FindEvent(List<StationEvent> availableEvents)
+        private StationEventSystem? FindEvent(List<StationEventSystem> availableEvents)
         {
             if (availableEvents.Count == 0)
             {
@@ -291,7 +291,7 @@ namespace Content.Server.StationEvents
         /// </summary>
         /// <param name="ignoreEarliestStart"></param>
         /// <returns></returns>
-        private List<StationEvent> AvailableEvents(bool ignoreEarliestStart = false)
+        private List<StationEventSystem> AvailableEvents(bool ignoreEarliestStart = false)
         {
             TimeSpan currentTime;
             var playerCount = _playerManager.PlayerCount;
@@ -306,7 +306,7 @@ namespace Content.Server.StationEvents
                 currentTime = TimeSpan.Zero;
             }
 
-            var result = new List<StationEvent>();
+            var result = new List<StationEventSystem>();
 
             foreach (var stationEvent in _stationEvents)
             {
@@ -319,7 +319,7 @@ namespace Content.Server.StationEvents
             return result;
         }
 
-        private bool CanRun(StationEvent stationEvent, int playerCount, TimeSpan currentTime)
+        private bool CanRun(StationEventSystem stationEvent, int playerCount, TimeSpan currentTime)
         {
             if (stationEvent.MaxOccurrences.HasValue && stationEvent.Occurrences >= stationEvent.MaxOccurrences.Value)
             {

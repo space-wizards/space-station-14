@@ -5,7 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class VentCritters : StationEvent
+public sealed class VentCritters : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -34,9 +34,9 @@ public sealed class VentCritters : StationEvent
 
     public override bool AnnounceEvent => false;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
         var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
         var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         _random.Shuffle(spawnLocations);

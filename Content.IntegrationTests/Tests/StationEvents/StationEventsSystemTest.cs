@@ -20,14 +20,14 @@ namespace Content.IntegrationTests.Tests.StationEvents
             await server.WaitAssertion(() =>
             {
                 // Idle each event
-                var stationEventsSystem = EntitySystem.Get<StationEventSystem>();
+                var stationEventsSystem = EntitySystem.Get<StationEventSchedulerSystem>();
                 var dummyFrameTime = (float) IoCManager.Resolve<IGameTiming>().TickPeriod.TotalSeconds;
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {
                     stationEvent.Announce();
                     stationEvent.Update(dummyFrameTime);
-                    stationEvent.Startup();
+                    stationEvent.Start();
                     stationEvent.Update(dummyFrameTime);
                     stationEvent.Running = false;
                     stationEvent.Shutdown();

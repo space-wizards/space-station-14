@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
-    internal sealed class GasLeak : StationEvent
+    internal sealed class GasLeak : StationEventSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -82,9 +82,9 @@ namespace Content.Server.StationEvents.Events
 
         private const float SparkChance = 0.05f;
 
-        public override void Startup()
+        public override void Start()
         {
-            base.Startup();
+            base.Start();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
             if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))

@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class BureaucraticError : StationEvent
+public sealed class BureaucraticError : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     public override string StartAnnouncement =>
@@ -21,9 +21,9 @@ public sealed class BureaucraticError : StationEvent
 
     protected override float EndAfter => 1f;
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
         var stationSystem = EntitySystem.Get<StationSystem>();
         var stationJobsSystem = EntitySystem.Get<StationJobsSystem>();
         if (stationSystem.Stations.Count == 0) return; // No stations

@@ -12,7 +12,7 @@ namespace Content.Server.StationEvents.Events
     /// <summary>
     /// Revives several dead entities as zombies
     /// </summary>
-    public sealed class ZombieOutbreak : StationEvent
+    public sealed class ZombieOutbreak : StationEventSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -29,9 +29,9 @@ namespace Content.Server.StationEvents.Events
         /// Finds 1-3 random, dead entities accross the station
         /// and turns them into zombies.
         /// </summary>
-        public override void Startup()
+        public override void Start()
         {
-            base.Startup();
+            base.Start();
             HashSet<EntityUid> stationsToNotify = new();
             List<MobStateComponent> deadList = new();
             foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())

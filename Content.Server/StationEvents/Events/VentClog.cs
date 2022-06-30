@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class VentClog : StationEvent
+public sealed class VentClog : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -41,9 +41,9 @@ public sealed class VentClog : StationEvent
         "Nutriment", "Sugar", "SpaceLube", "Ethanol", "Mercury", "Ephedrine", "WeldingFuel", "VentCrud"
     };
 
-    public override void Startup()
+    public override void Start()
     {
-        base.Startup();
+        base.Start();
 
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = _prototypeManager.EnumeratePrototypes<ReagentPrototype>()

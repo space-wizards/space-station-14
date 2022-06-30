@@ -61,7 +61,7 @@ namespace Content.Server.StationEvents
 
         private void Run(IConsoleShell shell, IPlayerSession? player, string eventName)
         {
-            var stationSystem = EntitySystem.Get<StationEventSystem>();
+            var stationSystem = EntitySystem.Get<StationEventSchedulerSystem>();
 
             var resultText = eventName == "random"
                 ? stationSystem.RunRandomEvent()
@@ -72,7 +72,7 @@ namespace Content.Server.StationEvents
 
         private void Running(IConsoleShell shell, IPlayerSession? player)
         {
-            var eventName = EntitySystem.Get<StationEventSystem>().CurrentEvent?.Name;
+            var eventName = EntitySystem.Get<StationEventSchedulerSystem>().CurrentEvent?.Name;
             if (!string.IsNullOrEmpty(eventName))
             {
                 shell.WriteLine(eventName);
@@ -85,7 +85,7 @@ namespace Content.Server.StationEvents
 
         private void List(IConsoleShell shell, IPlayerSession? player)
         {
-            var events = EntitySystem.Get<StationEventSystem>();
+            var events = EntitySystem.Get<StationEventSchedulerSystem>();
             var sb = new StringBuilder();
 
             sb.AppendLine(Loc.GetString("cmd-events-list-random"));
@@ -100,7 +100,7 @@ namespace Content.Server.StationEvents
 
         private void Pause(IConsoleShell shell, IPlayerSession? player)
         {
-            var stationEventSystem = EntitySystem.Get<StationEventSystem>();
+            var stationEventSystem = EntitySystem.Get<StationEventSchedulerSystem>();
 
             if (!stationEventSystem.Enabled)
             {
@@ -115,7 +115,7 @@ namespace Content.Server.StationEvents
 
         private void Resume(IConsoleShell shell, IPlayerSession? player)
         {
-            var stationEventSystem = EntitySystem.Get<StationEventSystem>();
+            var stationEventSystem = EntitySystem.Get<StationEventSchedulerSystem>();
 
             if (stationEventSystem.Enabled)
             {
@@ -130,7 +130,7 @@ namespace Content.Server.StationEvents
 
         private void Stop(IConsoleShell shell, IPlayerSession? player)
         {
-            var resultText = EntitySystem.Get<StationEventSystem>().StopEvent();
+            var resultText = EntitySystem.Get<StationEventSchedulerSystem>().StopEvent();
             shell.WriteLine(resultText);
         }
 
@@ -158,7 +158,7 @@ namespace Content.Server.StationEvents
 
             if (command == "run")
             {
-                var system = EntitySystem.Get<StationEventSystem>();
+                var system = EntitySystem.Get<StationEventSchedulerSystem>();
                 var options = new[] { "random" }.Concat(
                     system.StationEvents.Select(e => e.Name).OrderBy(e => e));
 
