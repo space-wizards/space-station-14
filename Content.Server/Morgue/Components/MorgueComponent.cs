@@ -1,26 +1,16 @@
-using Content.Server.Storage.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Directions;
-using Content.Shared.Interaction;
-using Content.Shared.Morgue;
 using Content.Shared.Physics;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Standing;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Morgue.Components;
 
 [RegisterComponent]
-[Virtual]
-public class MorgueEntityStorageComponent : Component
+public sealed class MorgueComponent : Component
 {
+    public bool Open = false;
+
     public readonly CollisionGroup TrayCanOpenMask = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     [ViewVariables(VVAccess.ReadWrite)]

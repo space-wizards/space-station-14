@@ -140,8 +140,11 @@ public sealed class EntityStorageSystem : EntitySystem
 
         component.Open = false;
 
+        var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(uid, component.EnteringRange, LookupFlags.Approximate));
+        RaiseLocalEvent(uid, ev, true);
+        
         var count = 0;
-        foreach (var entity in _lookup.GetEntitiesInRange(uid, component.EnteringRange, LookupFlags.Approximate))
+        foreach (var entity in ev.Contents)
         {
             if (_container.IsEntityInContainer(entity))
                 continue;

@@ -25,8 +25,8 @@ public sealed class CrematoriumeEntityStorageSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _stando = default!;
-    [Dependency] private readonly MorgueEntityStorageSystem _morgue = default!;
-
+    [Dependency] private readonly MorgueSystem _morgue = default!;
+    /*
     public override void Initialize()
     {
         base.Initialize();
@@ -44,7 +44,7 @@ public sealed class CrematoriumeEntityStorageSystem : EntitySystem
             return;
         args.Handled = true;
 
-        if (!TryComp<EntityStorageComponent>(uid, out var storage) || !TryComp<MorgueEntityStorageComponent>(uid, out var morgue))
+        if (!TryComp<EntityStorageComponent>(uid, out var storage) || !TryComp<MorgueComponent>(uid, out var morgue))
             return;
 
         if (storage.Open)
@@ -181,5 +181,5 @@ public sealed class CrematoriumeEntityStorageSystem : EntitySystem
         }
 
         Cremate(uid, component);
-    }
+    }*/
 }

@@ -50,7 +50,7 @@ namespace Content.IntegrationTests.Tests
                 var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
                 var ent = IoCManager.Resolve<IEntityManager>();
-                var entStorage = IoCManager.Resolve<EntityStorageSystem>();
+                var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests
                 var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
                 var ent = IoCManager.Resolve<IEntityManager>();
-                var entStorage = IoCManager.Resolve<EntityStorageSystem>();
+                var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
@@ -122,7 +122,7 @@ namespace Content.IntegrationTests.Tests
                 var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
                 var ent = IoCManager.Resolve<IEntityManager>();
-                var entStorage = IoCManager.Resolve<EntityStorageSystem>();
+                var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);

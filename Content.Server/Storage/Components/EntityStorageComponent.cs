@@ -65,3 +65,16 @@ public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEvent
 public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
+
+public sealed class StorageBeforeCloseEvent : EventArgs
+{
+    public EntityUid Container;
+
+    public HashSet<EntityUid> Contents;
+
+    public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
+    {
+        Container = container;
+        Contents = contents;
+    }
+}

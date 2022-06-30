@@ -27,15 +27,7 @@
       - MachineMask
       layer:
       - WallLayer
-  - type: EntityStorage
-    IsCollidableWhenOpen: true
-    showContents: false
-    Capacity: 1
-    closeSound:
-      path: /Audio/Items/deconstruct.ogg
-    openSound:
-      path: /Audio/Items/deconstruct.ogg
-  - type: MorgueEntityStorage
+  - type: Morgue
     trayPrototype: MorgueTray
   - type: ContainerContainer
     containers:
@@ -75,6 +67,14 @@
     state: morgue_tray
   - type: Clickable
   - type: InteractionOutline
+  - type: EntityStorage
+    IsCollidableWhenOpen: true
+    showContents: false
+    Capacity: 1
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
   - type: MorgueTray
   - type: AntiRottingContainer
 
@@ -107,16 +107,16 @@
       - MachineMask
       layer:
       - MachineLayer
-  - type: EntityStorage
-    IsCollidableWhenOpen: true
-    Capacity: 1
-    closeSound:
-      path: /Audio/Items/deconstruct.ogg
-    openSound:
-      path: /Audio/Items/deconstruct.ogg
-  - type: MorgueEntityStorage
-    trayPrototype: CrematoriumTray
-    doSoulBeep: false
+  #- type: EntityStorage
+  #  IsCollidableWhenOpen: true
+  #  Capacity: 1
+  #  closeSound:
+  #    path: /Audio/Items/deconstruct.ogg
+  #  openSound:
+  #    path: /Audio/Items/deconstruct.ogg
+  #- type: MorgueEntityStorage
+  #  trayPrototype: CrematoriumTray
+  #  doSoulBeep: false
   - type: CrematoriumEntityStorage
   - type: Appearance
     visuals:

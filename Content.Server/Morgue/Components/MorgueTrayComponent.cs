@@ -4,5 +4,5 @@ namespace Content.Server.Morgue.Components;
 public sealed class MorgueTrayComponent : Component
 {
     [ViewVariables]
-    public EntityUid Morgue { get; set; }
+    public EntityUid Morgue;
 }
