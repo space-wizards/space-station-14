@@ -94,6 +94,9 @@
     fireRate: 8
   - type: BallisticAmmoProvider
     capacity: 2
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgundoublebarreled
 
 - type: entity
   name: Enforcer
@@ -137,4 +140,4 @@
     capacity: 2
   - type: Construction
     graph: ShotgunSawn
-    node: shotgunSawn
+    node: shotgunsawn

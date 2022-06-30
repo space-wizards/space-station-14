@@ -1,18 +1,12 @@
 - type: constructionGraph
   id: ShotgunSawn
-  start: start
+  start: shotgundoublebarreled
   graph:
-    - node: start
+    - node: shotgundoublebarreled
       edges:
         - to: shotgunsawn
           steps:
-            - prototype: WeaponShotgunDoubleBarreled
-              name: double-barreled shotgun
-              icon:
-                sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-                state: icon
-              doAfter: 1
             - tool: Sawing
               doAfter: 2
-    - node: shotgunSawn
+    - node: shotgunsawn
       entity: WeaponShotgunSawn
