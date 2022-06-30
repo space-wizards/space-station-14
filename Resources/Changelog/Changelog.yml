@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: The way pressure protection is calculated has been changed. You now
-      need both a suit and a helmet., type: Tweak}
-  id: 1334
-  time: '2022-04-15T22:41:48.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Welding masks actually protect your eyes now!, type: Tweak}
@@ -2960,3 +2954,9 @@ Entries:
   - {message: You can now pull down your mask for easy mouth access, type: Tweak}
   id: 1833
   time: '2022-06-30T07:44:54.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: The Pointless tab within the uplink now holds your I-Want-To-Waste-TC
+      items., type: Tweak}
+  id: 1834
+  time: '2022-06-30T18:41:27.0000000+00:00'
