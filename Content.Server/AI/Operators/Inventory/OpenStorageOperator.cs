@@ -41,7 +41,6 @@ namespace Content.Server.AI.Operators.Inventory
 
             if (!storageComponent.Open)
             {
-                var activateArgs = new ActivateEventArgs(_owner, _target);
                 IoCManager.Resolve<EntityStorageSystem>().ToggleOpen(_owner, _target, storageComponent);
             }
 

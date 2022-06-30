@@ -9,13 +9,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Body.Components;
 using Robust.Server.Containers;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Content.Shared.Interaction;
-using System.Linq;
-using Robust.Shared.Physics;
 using Content.Shared.Verbs;
 using Content.Shared.Database;
 using System.Threading;
@@ -27,12 +22,9 @@ namespace Content.Server.Morgue;
 public sealed class CrematoriumeEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StandingStateSystem _stando = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly MorgueEntityStorageSystem _morgue = default!;
 
     public override void Initialize()
