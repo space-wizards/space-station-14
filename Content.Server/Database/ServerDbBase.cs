@@ -359,7 +359,7 @@ namespace Content.Server.Database
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
         #endregion
 
-        #region Role Timers
+        #region Playtime
         public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
         {
             await using var db = await GetDb();
@@ -420,6 +420,38 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
             return newTimer;
         }
+
+        public async Task<TimeSpan> GetOverallPlayTime(Guid id)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+
+            return player.OverallPlaytime;
+        }
+
+        public async Task SetOverallPlayTime(Guid id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+            player.OverallPlaytime = time;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            player.OverallPlaytime.Add(time);
+
+            await db.DbContext.SaveChangesAsync();
+            return player.OverallPlaytime;
+        }
+
         #endregion
 
         #region Player Records

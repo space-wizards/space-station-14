@@ -9,6 +9,13 @@ namespace Content.Server.Database.Migrations.Sqlite
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<TimeSpan>(
+                name: "overall_playtime",
+                table: "player",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: new TimeSpan(0, 0, 0, 0, 0));
+
             migrationBuilder.CreateTable(
                 name: "role_timers",
                 columns: table => new
@@ -35,6 +42,10 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.DropTable(
                 name: "role_timers");
+
+            migrationBuilder.DropColumn(
+                name: "overall_playtime",
+                table: "player");
         }
     }
 }

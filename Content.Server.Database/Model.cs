@@ -286,6 +286,7 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
+        public TimeSpan OverallPlaytime { get; set; }
 
         public DateTime? LastReadRules { get; set; }
 

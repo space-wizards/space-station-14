@@ -19,7 +19,7 @@ namespace Content.Server.Database.Migrations.Postgres
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -485,6 +485,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("last_seen_user_name");
+
+                    b.Property<TimeSpan>("OverallPlaytime")
+                        .HasColumnType("interval")
+                        .HasColumnName("overall_playtime");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")

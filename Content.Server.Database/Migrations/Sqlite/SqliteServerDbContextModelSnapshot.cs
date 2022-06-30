@@ -16,7 +16,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -450,6 +450,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("last_seen_user_name");
+
+                    b.Property<TimeSpan>("OverallPlaytime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("overall_playtime");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")

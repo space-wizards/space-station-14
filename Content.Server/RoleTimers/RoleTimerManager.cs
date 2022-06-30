@@ -18,7 +18,7 @@ namespace Content.Server.RoleTimers
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
 
-        private const int StateCheckTime = 90;
+        private const float StateCheckTime = 90;
         private Dictionary<NetUserId, CachedPlayerRoleTimers> _cachedPlayerData = new();
 
         public void Initialize()
@@ -48,10 +48,12 @@ namespace Content.Server.RoleTimers
         private async Task CachePlayerRoles(NetUserId player)
         {
             var roleTimers = await _db.GetRoleTimers(player);
+            var playtime = await _db.GetOverallPlayTime(player);
             var cacheObject = new CachedPlayerRoleTimers();
             foreach (var timer in roleTimers)
             {
                 cacheObject.SetCachedPlaytimeForRole(timer.Role, timer.TimeSpent);
+                cacheObject.SetOverallPlaytime(playtime);
             }
 
             _cachedPlayerData[player] = cacheObject;
@@ -91,6 +93,9 @@ namespace Content.Server.RoleTimers
                 var additionalPlaytime = DateTime.UtcNow.Subtract(pdata.GetLastSavedTime(role)!.Value);
                 await _db.AddRoleTime(timer.Id, additionalPlaytime);
             }
+
+            var playtime = pdata.GetOverallPlaytime();
+            await _db.SetOverallPlayTime(player, playtime);
         }
 
         /// <summary>
@@ -181,6 +186,12 @@ namespace Content.Server.RoleTimers
             _cachedPlayerData[id].SetCachedPlaytimeForRole(role, additionalTime);
         }
 
+        private async Task<TimeSpan> AddTimeToOverallPlaytime(NetUserId id, TimeSpan time)
+        {
+            var playtime = await _db.GetOverallPlayTime(id);
+            return await _db.AddOverallPlayTime(id, time);
+        }
+
         /// <summary>
         /// Gets a hashset of roles the player doesn't fulfill the requirements for.
         /// </summary>
@@ -260,14 +271,28 @@ namespace Content.Server.RoleTimers
         {
             CurrentRoles = new HashSet<string>();
             _roleTimers = new Dictionary<string, Tuple<DateTime, TimeSpan>>();
+            _overallPlaytime = new ValueTuple<DateTime, TimeSpan>();
         }
 
+        public bool ParticipatingInRound;
         public HashSet<string> CurrentRoles;
 
         // The reasoning for having a DateTime here is that we don't need to update it, and
         // can instead just figure out how much time has passed since they first joined and now,
         // and use that to get the TimeSpan to add onto the saved playtime
         private Dictionary<string, Tuple<DateTime, TimeSpan>> _roleTimers;
+        private ValueTuple<DateTime, TimeSpan> _overallPlaytime;
+
+        public TimeSpan GetOverallPlaytime()
+        {
+            return _overallPlaytime.Item2;
+        }
+
+        public void SetOverallPlaytime(TimeSpan time)
+        {
+            _overallPlaytime.Item1 = DateTime.UtcNow;
+            _overallPlaytime.Item2 = time;
+        }
 
         public TimeSpan? GetPlaytimeForRole(string role)
         {

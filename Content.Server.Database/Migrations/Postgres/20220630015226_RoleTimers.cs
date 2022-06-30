@@ -10,6 +10,13 @@ namespace Content.Server.Database.Migrations.Postgres
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<TimeSpan>(
+                name: "overall_playtime",
+                table: "player",
+                type: "interval",
+                nullable: false,
+                defaultValue: new TimeSpan(0, 0, 0, 0, 0));
+
             migrationBuilder.CreateTable(
                 name: "role_timers",
                 columns: table => new
@@ -36,6 +43,10 @@ namespace Content.Server.Database.Migrations.Postgres
         {
             migrationBuilder.DropTable(
                 name: "role_timers");
+
+            migrationBuilder.DropColumn(
+                name: "overall_playtime",
+                table: "player");
         }
     }
 }

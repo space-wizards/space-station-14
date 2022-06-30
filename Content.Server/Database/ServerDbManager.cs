@@ -114,7 +114,7 @@ namespace Content.Server.Database
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);
         #endregion
 
-        #region Role Timers
+        #region Playtime
 
         /// <summary>
         /// Get a role timer by player ID and role.
@@ -139,6 +139,12 @@ namespace Content.Server.Database
         Task<RoleTimer?> SetRoleTime(int id, TimeSpan time);
 
         Task<RoleTimer?> AddRoleTime(int id, TimeSpan time);
+
+        Task<TimeSpan> GetOverallPlayTime(Guid player);
+
+        Task SetOverallPlayTime(Guid player, TimeSpan time);
+
+        Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time);
 
         #endregion
 
@@ -368,7 +374,7 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Role Timers
+        #region Playtime
 
         public Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
         {
@@ -389,6 +395,22 @@ namespace Content.Server.Database
         {
             return _db.AddRoleTime(id, time);
         }
+
+        public Task<TimeSpan> GetOverallPlayTime(Guid player)
+        {
+            return _db.GetOverallPlayTime(player);
+        }
+
+        public Task SetOverallPlayTime(Guid player, TimeSpan time)
+        {
+            return _db.SetOverallPlayTime(player, time);
+        }
+
+        public Task<TimeSpan> AddOverallPlayTime(Guid player, TimeSpan time)
+        {
+            return _db.AddOverallPlayTime(player, time);
+        }
+
         #endregion
 
         public Task UpdatePlayerRecordAsync(
