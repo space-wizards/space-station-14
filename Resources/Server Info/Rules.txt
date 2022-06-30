@@ -16,15 +16,15 @@
     - What is considered a reasonable reason to escalate conflict is listed below under ESCALATION RULES and is at the discretion of admins.
     - Declaring a revolution or going on strike is an antagonist only activity. "Cargonia" and other departmental revolutions are prohibited unless admin permission is obtained.
 
-[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color].
+[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color]. This includes any direct or implied sexual acts as well as explicit mentions of sexual behavior.
 
 [color=#a4885c]6.[/color] Harassment of other players for OOC/meta reasons is [color=#ff0000]not allowed[/color].
 	- Annoying somebody in a round for IC/RP reasons is fine. Doing it consistently across multiple rounds for OOC reasons (“I don’t like this 		  player” AKA metagrudging) to the point where it becomes seriously problematic for the other player(s) is [color=#ff0000]not[/color].
 
 [color=#a4885c]7.[/color] Hate speech, slurs and bigotry are not allowed.
-	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, orientation or the like is not tolerated.
+	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, sexual orientation or the like is not tolerated.
 	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
-    - Species-ism is also NOT ALLOWED. Not even for roleplay or because it's your "character".
+    - Species-ism (IC or OOC bigotry against other in-game species) is also NOT ALLOWED. Not even for roleplay or because it's your "character".
 
 [color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are.
     - Character names should be something that a member of that species would reasonably have.
@@ -39,19 +39,18 @@
 [color=#a4885c]11.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
 	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
     - This is a roleplaying game, thus IC conflicts must only be resolved with IC (Local) chat, utilizing voice chat, calling across the room, OOC, or other out-of-game communication methods to coordinate in-game actions is forbidden and will result in a [color=#ff0000]appeal-only permanent ban[/color] in most cases.
-    - Using emotes to bypass IC chat restrictions (accents, unconsciousness, death) is not allowed.
+    - Using emotes or LOOC to bypass IC chat restrictions (accents, unconsciousness, death) is not allowed.
 	- Preemptive spacing or destruction of high-risk items also falls under this rule.
 
-RULES FOR SECURITY
 [color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible.
-    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
+    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned, unless they are a confirmed antagonist. Security should make their best effort to keep criminals alive and in custody
 
-[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Certain extreme exceptions like bombers, saboteurs or assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
-    - You should treat traitors the same as any other prisoners with regards to sentencing. If they have contraband or commit crimes, that can be dealt with, but you shouldn't be executing or permabrigging people just for being a traitor.
+[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Antagonists or repeat offenders may be permabrigged, and only [color=#ff0000]in the very worst cases approved by the Captain[/color], execution.
+    - As there is no official space law for this server, security generally act to maintain order and safety on station and protect Nanotrasen assets.
 
 ESCALATION RULES
 
-Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense.
+Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense. Stun weaponry in the hands of someone with intent to kill are considered to be of the same severity as lethal weapons for the purposes of self-defense.
 
 Minor conflicts and scuffles are allowed, given that the wronged party has reasonable justification. If you are wronged, you are expected to handle the conflict non-lethally whenever possible, escalating in severity as the conflict continues.
 As the defending party the rate of escalation increases with you, up to and including violence, while the instigator is always able to respond in kind.
