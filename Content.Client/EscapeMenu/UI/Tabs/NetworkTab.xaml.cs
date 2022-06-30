@@ -45,7 +45,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            _cfg.SetCVar(CVars.NetInterpRatio, (int) NetInterpRatioSlider.Value);
+            _cfg.SetCVar(CVars.NetBufferSize, (int) NetInterpRatioSlider.Value);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -57,13 +57,13 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
         private void Reset()
         {
-            NetInterpRatioSlider.Value = _cfg.GetCVar(CVars.NetInterpRatio);
+            NetInterpRatioSlider.Value = _cfg.GetCVar(CVars.NetBufferSize);
             UpdateChanges();
         }
 
         private void UpdateChanges()
         {
-            var isEverythingSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetInterpRatio);
+            var isEverythingSame = NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetBufferSize);
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             NetInterpRatioLabel.Text = NetInterpRatioSlider.Value.ToString();
