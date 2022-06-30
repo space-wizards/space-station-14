@@ -2,7 +2,7 @@
   id: SplitStation
   mapName: 'Split Station'
   mapPath: /Maps/splitstation.yml
-  minPlayers: 40
+  minPlayers: 50
   stations:
     Split:
       mapNameTemplate: '{0} Split Station {1}'
