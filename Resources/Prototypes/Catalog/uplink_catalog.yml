@@ -368,12 +368,6 @@
   price: 4
 
 - type: uplinkListing
-  id: UplinkBalloon
-  category: Misc
-  itemId: BalloonSyn
-  price: 20
-
-- type: uplinkListing
   id: UplinkDecoyDisk
   category: Misc
   itemId: NukeDiskFake
@@ -412,33 +406,6 @@
 #  price: 4
 
 - type: uplinkListing
-  id: UplinkCostumeClown
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeClown
-  price: 4
-
-- type: uplinkListing
-  id: UplinkCostumePyjama
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
-  price: 4
-
-- type: uplinkListing
-  id: UplinkOutlawHat
-  category: Misc
-  itemId: ClothingHeadHatOutlawHat
-  price: 1
-
-- type: uplinkListing
-  id: UplinkCatEars
-  category: Misc
-  itemId: ClothingHeadHatCatEars
-  listingName: Cat Ears
-  description: UwU.
-  price: 21
-
-
-- type: uplinkListing
   id: UplinkGigacancerScanner
   category: Misc
   itemId: HandheldHealthAnalyzerGigacancer
@@ -454,12 +421,6 @@
   price: 5
 
 - type: uplinkListing
-  id: UplinkSyndicateStamp
-  category: Misc
-  itemId: RubberStampSyndicate
-  price: 2
-
-- type: uplinkListing
   id: UplinkSyndicateSegwayCrate
   category: Misc
   itemId: CrateFunSyndicateSegway
@@ -467,3 +428,43 @@
   description: Be an enemy of the corporation, in style!
   price: 5
   surplus: false
+
+ # Pointless
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Pointless
+  itemId: RubberStampSyndicate
+  price: 2
+
+- type: uplinkListing
+  id: UplinkCatEars
+  category: Pointless
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 21
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Pointless
+  itemId: ClothingHeadHatOutlawHat
+  price: 1
+
+- type: uplinkListing
+  id: UplinkCostumePyjama
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
+  price: 4
+
+- type: uplinkListing
+  id: UplinkCostumeClown
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeClown
+  price: 4
+
+- type: uplinkListing
+  id: UplinkBalloon
+  category: Pointless
+  itemId: BalloonSyn
+  price: 20
