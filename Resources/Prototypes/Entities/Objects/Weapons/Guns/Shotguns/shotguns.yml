@@ -135,3 +135,6 @@
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2
+  - type: Construction
+    graph: ShotgunSawn
+    node: shotgunSawn

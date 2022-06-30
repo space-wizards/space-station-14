@@ -46,3 +46,10 @@
   toolName: tool-quality-slicing-tool-name
   spawn: KitchenKnife
   icon: Objects/Weapons/Melee/kitchen_knife.rsi/icon.png
+
+- type: tool
+  id: Sawing
+  name: tool-quality-sawing-name
+  toolName: tool-quality-sawing-tool-name
+  spawn: Saw
+  icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png

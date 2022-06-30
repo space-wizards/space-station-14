@@ -31,3 +31,13 @@
   icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
   objectType: Item
 
+- type: construction
+  name: sawn-off shotgun
+  id: ShotgunSawn
+  graph: ShotgunSawn
+  startNode: start
+  targetNode: shotgunSawn
+  category: Weapons
+  icon: Objects/Weapons/Guns/Shotguns/sawn.rsi/icon.png
+  description: Unload it, otherwise it might blow up in your face.
+  objectType: Item

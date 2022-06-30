@@ -5,8 +5,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterArmorBulletproof
-      - id: WeaponShotgunSawn
+      - id: ClothingOuterVestKevlar
+      - id: WeaponShotgunDoubleBarreled
       - id: DrinkShaker
       - id: ClothingEyesGlassesBeer
       - id: DrinkBottleBeer
