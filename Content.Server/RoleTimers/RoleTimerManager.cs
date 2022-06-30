@@ -28,14 +28,15 @@ namespace Content.Server.RoleTimers
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
+            var id = args.Session.UserId;
             switch (args.NewStatus)
             {
                 case SessionStatus.Connected:
-                    await CachePlayerRoles(args.Session.UserId);
+                    await CachePlayerRoles(id);
                     break;
                 case SessionStatus.Disconnected:
                 {
-                    ClearPlayerFromCache(args.Session.UserId);
+                    ClearPlayerFromCache(id);
                     break;
                 }
             }
@@ -274,7 +275,6 @@ namespace Content.Server.RoleTimers
             _overallPlaytime = new ValueTuple<DateTime, TimeSpan>();
         }
 
-        public bool ParticipatingInRound;
         public HashSet<string> CurrentRoles;
 
         // The reasoning for having a DateTime here is that we don't need to update it, and
