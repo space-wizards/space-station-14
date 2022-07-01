@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was called, but countdown time was not set");
-                Assert.That(roundEndSystem.CanCall(), Is.False, "Started the shuttle, but didn't have to wait cooldown to press cancel button");
+                Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Started the shuttle, but didn't have to wait cooldown to press cancel button");
                 // Check that we can't recall the shuttle yet
                 roundEndSystem.CancelRoundEndCountdown();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was cancelled, even though the button was on cooldown");
@@ -62,19 +62,19 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
+                Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "We were waiting for the cooldown, but the round also ended");
                 // Recall the shuttle, which should trigger the cooldown again
                 roundEndSystem.CancelRoundEndCountdown();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Null, "Recalled shuttle, but countdown has not ended");
-                Assert.That(roundEndSystem.CanCall(), Is.False, "Recalled shuttle, but cooldown has not been enabled");
+                Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Recalled shuttle, but cooldown has not been enabled");
             });
 
             await WaitForEvent(); // Wait for Cooldown
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
+                Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
             });
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(roundEndSystem.CanCall(), Is.True, "We waited a while, but the cooldown is not expired");
+                Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "The countdown ended, but we just wanted the cooldown to end");
             });
 

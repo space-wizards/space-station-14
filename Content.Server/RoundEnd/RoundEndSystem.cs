@@ -42,7 +42,10 @@ namespace Content.Server.RoundEnd
 
         private CancellationTokenSource? _countdownTokenSource = null;
         private CancellationTokenSource? _cooldownTokenSource = null;
+        public TimeSpan? LastCountdownStart { get; set; } = null;
         public TimeSpan? ExpectedCountdownEnd { get; set; } = null;
+        public TimeSpan? ExpectedShuttleLength => ExpectedCountdownEnd - LastCountdownStart;
+        public TimeSpan? ShuttleTimeLeft => ExpectedCountdownEnd - _gameTiming.CurTime;
 
         public override void Initialize()
         {
@@ -64,11 +67,12 @@ namespace Content.Server.RoundEnd
                 _cooldownTokenSource = null;
             }
 
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
-        public bool CanCall()
+        public bool CanCallOrRecall()
         {
             return _cooldownTokenSource == null;
         }
@@ -133,6 +137,7 @@ namespace Content.Server.RoundEnd
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
+            LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
             Timer.Spawn(countdownTime, _shuttle.CallEmergencyShuttle, _countdownTokenSource.Token);
 
@@ -163,6 +168,7 @@ namespace Content.Server.RoundEnd
 
             SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
 
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
@@ -171,6 +177,7 @@ namespace Content.Server.RoundEnd
         public void EndRound()
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
+            LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
             _gameTicker.EndRound();
