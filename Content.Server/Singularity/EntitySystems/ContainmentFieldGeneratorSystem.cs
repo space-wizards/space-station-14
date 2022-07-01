@@ -173,6 +173,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         {
             if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
 
+            var ev = new ContainmentFieldConnectEvent(component, component);
+            RaiseLocalEvent(ev);
+
             var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
             var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
             var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, ray, 4.5f, component.Owner, false);

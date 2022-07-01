@@ -53,11 +53,12 @@
       layer:
       - GlassLayer
   - type: Transform
-    anchored: true
+    anchored: true #maybe nuke this
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
     netsync: false
+    noRot: true
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
