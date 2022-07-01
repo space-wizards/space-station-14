@@ -323,7 +323,7 @@ namespace Content.Server.Voting.Managers
                 return false;
 
             // No, seriously, stop spamming the restart vote!
-            if (voteType == StandardVoteType.Restart && _adminMgr.ActiveAdmins.Count() != 0)
+            if (voteType == StandardVoteType.Restart && _cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                 return false;
 
             return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
