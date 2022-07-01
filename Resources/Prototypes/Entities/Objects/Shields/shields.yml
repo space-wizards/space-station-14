@@ -79,6 +79,22 @@
       passiveBlockModifier: PassiveRiotBulletShieldBlock
       activeBlockModifier: ActiveRiotBulletShieldBlock
 
+#Craftable shields
+
+- type: entity
+  name: wooden buckler
+  parent: BaseShield
+  id: WoodenBuckler
+  description: A small round wooden makeshift shield.
+  components:
+    - type: Sprite
+      state: buckler-icon
+    - type: Item
+      HeldPrefix: buckler
+    - type: Blocking
+      passiveBlockModifier: PassiveBucklerBlock
+      activeBlockModifier: ActiveBucklerBlock
+
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
@@ -108,5 +124,3 @@
     - type: Blocking
       passiveBlockModifier: PassiveMirrorShieldBlock
       activeBlockModifier: ActiveMirrorShieldBlock
-
-#TODO: Add more shields from the texture files

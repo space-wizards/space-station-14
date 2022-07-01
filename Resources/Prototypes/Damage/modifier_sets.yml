@@ -204,6 +204,27 @@
     Blunt: 1.5
     Piercing: 1.5
 
+#It's made from wood, so it should probably take more heat/laser damage
+- type: damageModifierSet
+  id: PassiveBucklerBlock
+  coefficients:
+    Blunt: 0.95
+    Slash: 0.95
+    Piercing: 0.95
+    Heat: 2
+
+- type: damageModifierSet
+  id: ActiveBucklerBlock
+  coefficients:
+    Blunt: 0.85
+    Slash: 0.85
+    Piercing: 0.85
+    Heat: 2
+  flatReductions:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+
 #Clockwork generally takes more laser/heat damage
 - type: damageModifierSet
   id: PassiveClockworkShieldBlock
