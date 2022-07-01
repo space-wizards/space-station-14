@@ -5,8 +5,13 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Item
+  - type: Clothing
     size: 50
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    quickEquip: false
+    Slots:
+    - Back
+    - suitStorage
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
@@ -29,8 +34,12 @@
   parent: BaseWeaponBattery
   abstract: true
   components:
-  - type: Item
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     size: 10
+    quickEquip: false
+    Slots:
+    - Belt
 
 - type: entity
   name: retro laser gun
@@ -46,8 +55,6 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
     fireCost: 62.5
@@ -71,7 +78,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
@@ -97,7 +104,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -121,7 +128,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -150,7 +157,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -181,7 +188,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
   - type: Gun
     fireRate: 1.5
@@ -208,7 +215,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: Gun
     fireRate: 1.5
@@ -232,7 +239,7 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: Gun
     soundGunshot:
@@ -248,7 +255,7 @@
 
 - type: entity
   name: taser
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
@@ -263,12 +270,6 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    size: 10
-    quickEquip: false
-    Slots:
-    - Belt
     HeldPrefix: taser4
   - type: Gun
     soundGunshot:
@@ -299,7 +300,7 @@
     - state: mag-unshaded-4
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
   - type: Gun
     soundGunshot:
