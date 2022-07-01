@@ -410,9 +410,7 @@ namespace Content.Server.GameTicking
                 }
                 catch (Exception e)
                 {
-                    _sawmill.Error($"Caught exception while trying to delete entity {ToPrettyString(entity)}, this might corrupt the game state...");
-                    _runtimeLog.LogException(e, nameof(GameTicker));
-                    continue;
+                    throw e;
                 }
 #endif
             }
