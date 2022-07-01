@@ -7,8 +7,12 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Item
+  - type: Clothing
     size: 60
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    quickEquip: false
+    Slots:
+    - Back
 
 - type: entity
   name: china lake
@@ -21,7 +25,7 @@
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Gun
     fireRate: 1
@@ -53,8 +57,6 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -86,7 +88,7 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Gun
     fireRate: 6

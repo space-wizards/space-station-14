@@ -8,8 +8,12 @@
   - type: Sprite
     netsync: false
     state: icon
-  - type: Item
+  - type: Clothing
     size: 10
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    quickEquip: false
+    Slots:
+    - suitStorage
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -42,8 +46,6 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RevolverAmmoProvider
     capacity: 5
   - type: MagazineVisuals
@@ -60,7 +62,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RevolverAmmoProvider
     capacity: 6
@@ -73,7 +75,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RevolverAmmoProvider
     capacity: 7
@@ -89,7 +91,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
 
 - type: entity
@@ -100,7 +102,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Gun
     fireRate: 1

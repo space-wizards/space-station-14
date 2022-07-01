@@ -12,8 +12,12 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     size: 10
+    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
+    quickEquip: false
+    Slots:
+    - suitStorage
   - type: Gun
     fireRate: 6
     selectedMode: SemiAuto
@@ -58,8 +62,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -95,7 +97,7 @@
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -115,7 +117,7 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
     fireRate: 4
@@ -157,7 +159,7 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
