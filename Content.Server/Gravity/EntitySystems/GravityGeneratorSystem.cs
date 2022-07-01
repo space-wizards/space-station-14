@@ -29,6 +29,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
         {
+            // TODO consider stations with more than one generator.
             if (component.GravityActive && TryComp(args.OldParent, out GravityComponent? gravity))
                 _gravitySystem.DisableGravity(gravity);
 
