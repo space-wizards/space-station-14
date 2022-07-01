@@ -136,6 +136,14 @@
     access: [["Medical"]]
 
 - type: entity
+  parent: AirlockVirology
+  id: AirlockVirologyLocked
+  suffix: Virology, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
   parent: AirlockChemistry
   id: AirlockChemistryLocked
   suffix: Chemistry, Locked
@@ -155,6 +163,22 @@
   parent: AirlockScience
   id: AirlockMedicalScienceLocked
   suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: AirlockResearch
+  id: AirlockResearchLocked
+  suffix: Research, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: AirlockResearch
+  id: AirlockMedicalResearchLocked
+  suffix: Medical/Research, Locked
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
@@ -361,6 +385,14 @@
     access: [["Medical"]]
 
 - type: entity
+  parent: AirlockVirologyGlass
+  id: AirlockVirologyGlassLocked
+  suffix: Virology, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
   parent: AirlockScienceGlass
   id: AirlockScienceGlassLocked
   suffix: Science, Locked
@@ -372,6 +404,22 @@
   parent: AirlockScienceGlass
   id: AirlockMedicalScienceGlassLocked
   suffix: Medical/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Medical"]]
+
+- type: entity
+  parent: AirlockResearchGlass
+  id: AirlockResearchGlassLocked
+  suffix: Research, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  parent: AirlockResearchGlass
+  id: AirlockMedicalResearchGlassLocked
+  suffix: Medical/Research, Locked
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]
@@ -468,6 +516,14 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintLocked
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [["Maintenance"]]
+
+- type: entity
+  parent: AirlockMaintGlass
+  id: AirlockMaintGlassLocked
   suffix: Locked
   components:
   - type: AccessReader
