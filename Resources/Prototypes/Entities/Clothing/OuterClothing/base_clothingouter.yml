@@ -16,9 +16,6 @@
   components:
   - type: Storage
     capacity: 10
-    blacklist:
-      components:
-        - Gun
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
