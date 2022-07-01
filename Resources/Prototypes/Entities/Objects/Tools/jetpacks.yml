@@ -160,6 +160,7 @@
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       Slots:
         - Back
+        - suitStorage
 
 # Filled mini
 - type: entity
