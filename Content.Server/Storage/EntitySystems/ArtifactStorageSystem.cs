@@ -1,25 +1,23 @@
 using Content.Server.Storage.Components;
-using Content.Shared.Storage.Components;
-using Content.Shared.Storage.EntitySystems;
-using JetBrains.Annotations;
-using Robust.Shared.Containers;
+using Content.Server.Xenoarchaeology.XenoArtifacts;
 
-namespace Content.Server.Storage.EntitySystems
+namespace Content.Server.Storage.EntitySystems;
+
+public sealed class ArtifactStorageSystem : EntitySystem
 {
-    public sealed class ArtifactStorageSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<ArtifactStorageComponent, StorageBeforeCloseEvent>(OnBeforeClose);
-        }
+        SubscribeLocalEvent<ArtifactStorageComponent, StorageBeforeCloseEvent>(OnBeforeClose);
+    }
 
-        private void OnBeforeClose(EntityUid uid, ArtifactStorageComponent component, StorageBeforeCloseEvent args)
+    private void OnBeforeClose(EntityUid uid, ArtifactStorageComponent component, StorageBeforeCloseEvent args)
+    {
+        foreach (var ent in args.Contents)
         {
-            //FIX LATER
-            //COMPLICATED
-            // :-(
+            if (HasComp<ArtifactComponent>(ent))
+                args.ContentsWhitelist.Add(ent);
         }
     }
 }

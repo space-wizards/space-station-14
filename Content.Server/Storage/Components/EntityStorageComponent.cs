@@ -71,6 +71,8 @@ public sealed class StorageBeforeCloseEvent : EventArgs
 
     public HashSet<EntityUid> Contents;
 
+    public HashSet<EntityUid> ContentsWhitelist = new();
+
     public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
     {
         Container = container;

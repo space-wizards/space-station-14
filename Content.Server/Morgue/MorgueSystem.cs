@@ -38,6 +38,7 @@ public sealed partial class MorgueSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MorgueComponent, ComponentInit>(OnInit);
+
         SubscribeLocalEvent<MorgueComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<MorgueComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
         SubscribeLocalEvent<MorgueComponent, SuicideEvent>(OnSuicide);
@@ -51,7 +52,7 @@ public sealed partial class MorgueSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Initializes the tray container and make sure the tray is there.
+    ///     Initializes the tray container
     /// </summary>
     private void OnInit(EntityUid uid, MorgueComponent component, ComponentInit args)
     {
@@ -60,11 +61,6 @@ public sealed partial class MorgueSystem : EntitySystem
 
         component.TrayContainer = _container.EnsureContainer<ContainerSlot>(uid, "morgue_tray");
         component.TrayContainer.ShowContents = false;
-
-        component.Tray = Spawn(component.TrayPrototypeId, Transform(uid).Coordinates);
-        EnsureComp<MorgueTrayComponent>(component.Tray).Morgue = uid;
-
-        component.TrayContainer.Insert(component.Tray);
     }
 
     /// <summary>
@@ -75,6 +71,15 @@ public sealed partial class MorgueSystem : EntitySystem
         if (args.Handled)
             return;
         args.Handled = true;
+
+        //gotta spawn it here due to test weirdness
+        if (component.Tray == new EntityUid())
+        {
+            component.Tray = Spawn(component.TrayPrototypeId, Transform(uid).Coordinates);
+            EnsureComp<MorgueTrayComponent>(component.Tray).Morgue = uid;
+
+            component.TrayContainer.Insert(component.Tray);
+        }
 
         if (component.Open)
         {

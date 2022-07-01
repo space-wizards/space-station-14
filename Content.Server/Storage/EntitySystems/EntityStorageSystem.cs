@@ -149,9 +149,10 @@ public sealed class EntityStorageSystem : EntitySystem
             if (_container.IsEntityInContainer(entity))
                 continue;
 
-            if (!CanFit(entity, uid))
-                continue;
-
+            if (!ev.ContentsWhitelist.Contains(entity))
+                if (!CanFit(entity, uid))
+                    continue;
+            
             if (!AddToContents(entity, uid, component))
                 continue;
 
@@ -171,7 +172,10 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
 
         if (component.Open)
+        {
             Transform(toInsert).WorldPosition = Transform(container).WorldPosition;
+            return true;
+        }
 
         return component.Contents.Insert(toInsert, EntityManager);
     }

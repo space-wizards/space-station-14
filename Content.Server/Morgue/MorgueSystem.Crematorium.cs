@@ -89,7 +89,10 @@ public sealed partial class MorgueSystem : EntitySystem
 
     public void TryCremate(EntityUid uid, MorgueComponent component, EntityStorageComponent? storage = null)
     {
-        if (!component.IsCrematorium || component.Cooking || component.Open)
+        if (!Resolve(component.Tray, ref storage))
+            return;
+
+        if (!component.IsCrematorium || component.Cooking || component.Open || storage.Contents.ContainedEntities.Count < 1)
             return;
 
         SoundSystem.Play(component.CremateStartSound.GetSound(), Filter.Pvs(uid), uid);
