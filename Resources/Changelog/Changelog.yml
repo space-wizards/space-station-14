@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Giant spiders, space ticks, space bears, and space carp can now be
-      inhabited as ghost roles by default. Have fun!', type: Add}
-  id: 1339
-  time: '2022-04-16T00:39:47.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Gas tile overlays should no longer appear unshaded., type: Tweak}
   id: 1340
   time: '2022-04-16T00:51:05.0000000+00:00'
@@ -2955,3 +2949,10 @@ Entries:
       minutes., type: Tweak}
   id: 1838
   time: '2022-07-01T20:33:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Basic shuttle call time reduced from 20 minutes to 10 minutes., type: Tweak}
+  - {message: The shuttle can no longer be recalled after half of the time has elapsed.,
+    type: Tweak}
+  id: 1839
+  time: '2022-07-01T20:40:36.0000000+00:00'
