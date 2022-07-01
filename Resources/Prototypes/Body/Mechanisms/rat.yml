@@ -6,3 +6,10 @@
   - type: Metabolizer
     metabolizerTypes: [ Rat ]
 
+- type: entity
+  id: OrganRatStomach
+  parent: OrganAnimalStomach
+  suffix: "rat"
+  components:
+  - type: Stomach
+    maxVolume: 50 # they're hungry
