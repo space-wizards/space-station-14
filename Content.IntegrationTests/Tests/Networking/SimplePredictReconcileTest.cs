@@ -8,6 +8,8 @@ using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -35,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DisableInterpolate = true, DummyTicker = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, DummyTicker = true});
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -47,6 +49,9 @@ namespace Content.IntegrationTests.Tests.Networking
             var sGameTiming = server.ResolveDependency<IGameTiming>();
             var cGameTiming = client.ResolveDependency<IGameTiming>();
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
+            var cfg = client.ResolveDependency<IConfigurationManager>();
+            var log = cfg.GetCVar(CVars.NetLogging);
+            cfg.SetCVar(CVars.NetLogging, true);
 
             EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
@@ -72,14 +77,11 @@ namespace Content.IntegrationTests.Tests.Networking
             // Run some ticks so that
             await PoolManager.RunTicksSync(pairTracker.Pair, 3);
 
-            // Due to technical things with the game state processor it has an extra state in the buffer here.
-            // This burns through it real quick, but I'm not sure it should be there?
-            // Under normal operation (read: not integration test) this gets corrected for via tick time adjustment,
-            // so it's probably not an issue?
-            await client.WaitRunTicks(1);
+            // Check client buffer is full
+            Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(cGameStateManager.TargetBufferSize));
 
-            // 2 is target buffer size.
-            Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(2));
+            // This isn't required anymore, but the old test for "technical things", and I cbf shifting all the tick times.
+            await client.WaitRunTicks(1);
 
             await client.WaitPost(() =>
             {
@@ -359,6 +361,8 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
+            
+            cfg.SetCVar(CVars.NetLogging, true);
             await pairTracker.CleanReturnAsync();
         }
 
