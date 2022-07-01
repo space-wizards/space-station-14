@@ -94,6 +94,56 @@
     - type: Blocking
       passiveBlockModifier: PassiveBucklerBlock
       activeBlockModifier: ActiveBucklerBlock
+    - type: Construction
+      graph: woodenBuckler
+      node: woodenBuckler
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 30 #Weaker shield
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWoodPlank:
+                  min: 5
+                  max: 5
+
+- type: entity
+  name: makeshift shield
+  parent: BaseShield
+  id: MakeshiftShield
+  description: A rundown looking shield, not good for much.
+  components:
+    - type: Sprite
+      state: makeshift-icon
+    - type: Item
+      HeldPrefix: metal
+    - type: Blocking
+      passiveBlockModifier: PassiveMakeshiftBlock
+      activeBlockModifier: ActiveMakeshiftBlock
+    - type: Construction
+      graph: makeshiftShield
+      node: makeshiftShield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20 #Very weak shield
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel:
+                  min: 1
+                  max: 2
 
 #Magic/Cult Shields (give these to wizard for now)
 
@@ -110,6 +160,7 @@
     - type: Blocking
       passiveBlockModifier: PassiveClockworkShieldBlock
       activeBlockModifier: ActiveClockworkShieldBlock
+      #Have it break into brass when clock cult is in
 
 - type: entity
   name: Mirror Shield
@@ -124,3 +175,20 @@
     - type: Blocking
       passiveBlockModifier: PassiveMirrorShieldBlock
       activeBlockModifier: ActiveMirrorShieldBlock
+      blockSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/glass_step.ogg
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 40
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/glass_break1.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetGlass:
+                  min: 5
+                  max: 5
