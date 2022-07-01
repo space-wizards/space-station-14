@@ -38,8 +38,9 @@
     - type: Icon
       sprite: Structures/Storage/Crates/artifact.rsi
       state: artifact_container_icon
-    - type: ArtifactStorage
+    - type: EntityStorage
       Capacity: 1
+    - type: ArtifactStorage 
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface

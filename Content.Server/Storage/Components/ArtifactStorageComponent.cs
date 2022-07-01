@@ -1,5 +1,3 @@
-using Content.Server.Xenoarchaeology.XenoArtifacts;
-
 namespace Content.Server.Storage.Components;
 
 [RegisterComponent]

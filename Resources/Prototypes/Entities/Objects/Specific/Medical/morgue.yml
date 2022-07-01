@@ -37,13 +37,14 @@
       mass: 5
       mask:
       - Impassable
-  - type: BodyBagEntityStorage
+  - type: EntityStorage
     Capacity: 1
     IsCollidableWhenOpen: true
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: BodyBag
   - type: Foldable
   - type: PaperLabel
     labelSlot:

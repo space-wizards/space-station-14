@@ -13,16 +13,20 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
+using Content.Server.GameTicking;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Morgue;
 
 /// <summary>
-///     This is the system for morgues but is also used by extension
-///     for this such as crematoriums. Anything with a slab that you stick
-///     bodies into would work pretty well.
+///     This is the system for morgues but is also used for 
+///     crematoriums. Anything with a slab that you stick
+///     bodies into would work as well.
 /// </summary>
-public sealed class MorgueSystem : EntitySystem
+public sealed partial class MorgueSystem : EntitySystem
 {
+    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -35,6 +39,8 @@ public sealed class MorgueSystem : EntitySystem
 
         SubscribeLocalEvent<MorgueComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<MorgueComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<MorgueComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
+        SubscribeLocalEvent<MorgueComponent, SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<MorgueTrayComponent, StorageBeforeCloseEvent>(OnStorageBeforeClose);
 
         //These are used to intercept and override the entityStorage opening functionality.
@@ -76,6 +82,9 @@ public sealed class MorgueSystem : EntitySystem
         }
         else if (CanOpenSlab(uid, component))
         {
+            if (component.IsCrematorium && component.Cooking)
+                return;
+
             OpenMorgue(uid, component);
         }
     }
@@ -159,14 +168,27 @@ public sealed class MorgueSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
-        else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-        else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
+        if (component.IsCrematorium)
+        {
+            if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
+
+            if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+            else
+                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+        }
         else
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
+        {
+            if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
+            else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
+                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
+            else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
+            else
+                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
+        }
     }
 
     /// <summary>

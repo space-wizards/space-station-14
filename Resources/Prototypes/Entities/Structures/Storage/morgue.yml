@@ -107,17 +107,10 @@
       - MachineMask
       layer:
       - MachineLayer
-  #- type: EntityStorage
-  #  IsCollidableWhenOpen: true
-  #  Capacity: 1
-  #  closeSound:
-  #    path: /Audio/Items/deconstruct.ogg
-  #  openSound:
-  #    path: /Audio/Items/deconstruct.ogg
-  #- type: MorgueEntityStorage
-  #  trayPrototype: CrematoriumTray
-  #  doSoulBeep: false
-  - type: CrematoriumEntityStorage
+  - type: Morgue
+    isCrematorium: true
+    trayPrototype: CrematoriumTray
+    doSoulBeep: false
   - type: Appearance
     visuals:
     - type: CrematoriumVisualizer
