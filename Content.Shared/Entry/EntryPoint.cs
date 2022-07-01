@@ -40,7 +40,7 @@ namespace Content.Shared.Entry
 
             var configMan = IoCManager.Resolve<IConfigurationManager>();
 #if FULL_RELEASE
-            configMan.OverrideDefault(CVars.NetInterpRatio, 2);
+            configMan.OverrideDefault(CVars.NetBufferSize, 2);
 #else
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
