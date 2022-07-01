@@ -42,14 +42,14 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         var lockerEnt = _random.Pick(lockers);
 
         var locker = EntityManager.GetComponent<EntityStorageComponent>(lockerEnt);
+        var lockerContainer = locker.Contents;
 
         foreach (var entity in storage.Contents.ContainedEntities.ToArray())
         {
-            //storage.Contents.ForceRemove(entity);
-             var foo = _entityStorage.Insert(entity, lockerEnt, locker);
+            storage.Contents.Remove(entity);
+            var foo = _entityStorage.AddToContents(entity, lockerEnt, locker);
             Logger.Debug(foo.ToString());
         }
-        
         SoundSystem.Play(component.CursedSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f, _random));
     }
 }

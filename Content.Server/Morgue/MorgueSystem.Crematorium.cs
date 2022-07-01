@@ -13,9 +13,7 @@ using Content.Server.Players;
 namespace Content.Server.Morgue;
 
 /// <summary>
-///     This is the system for morgues but is also used for 
-///     crematoriums. Anything with a slab that you stick
-///     bodies into would work as well.
+///    This is all the crematorium specific logic
 /// </summary>
 public sealed partial class MorgueSystem : EntitySystem
 {
@@ -117,12 +115,10 @@ public sealed partial class MorgueSystem : EntitySystem
             }
         }
 
-        _popup.PopupEntity(
-            Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)),
-            victim,
-            Filter.PvsExcept(victim));
+        _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)),
+            victim, Filter.PvsExcept(victim));
 
-        if (_entityStorage.CanInsert(victim, component.Tray))
+        if (_entityStorage.CanInsert(component.Tray))
         {
             CloseMorgue(uid, component);
             _entityStorage.Insert(victim, component.Tray);

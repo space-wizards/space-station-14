@@ -85,7 +85,8 @@ public sealed class EntityStorageSystem : EntitySystem
     private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
-        EmptyContents(uid, component);
+        if (!component.DeleteContentsOnDestruction)
+            EmptyContents(uid, component);
     }
 
     public void ToggleOpen(EntityUid user, EntityUid target, EntityStorageComponent? component = null)
@@ -188,7 +189,7 @@ public sealed class EntityStorageSystem : EntitySystem
         return component.Contents.Remove(toRemove, EntityManager);
     }
 
-    public bool CanInsert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
+    public bool CanInsert(EntityUid container, EntityStorageComponent? component = null)
     {
         if (!Resolve(container, ref component))
             return false;
@@ -199,7 +200,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Contents.ContainedEntities.Count >= component.StorageCapacityMax)
             return false;
 
-        return component.Contents.CanInsert(toInsert, EntityManager);
+        return true;
     }
 
     public bool TryOpenStorage(EntityUid user, EntityUid target)
@@ -269,7 +270,7 @@ public sealed class EntityStorageSystem : EntitySystem
             if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
                 return false;
 
-        return component.Contents.CanInsert(toAdd, EntityManager) && Insert(toAdd, container, component);
+        return Insert(toAdd, container, component);
     }
 
     public bool CanFit(EntityUid toInsert, EntityUid container)
@@ -280,8 +281,10 @@ public sealed class EntityStorageSystem : EntitySystem
         // 2. maximum item count can block anything
         // 3. ghosts can NEVER be eaten
         // 4. items can always be eaten unless a previous law prevents it
-        // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
-        // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
+        // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous
+        // law prevents it
+        // 6. if this is an item, then mobs must only be eaten if some other component prevents
+        // pick-up interactions while a mob is inside (e.g. foldable)
         var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
         RaiseLocalEvent(toInsert, attemptEvent);
         if (attemptEvent.Cancelled)

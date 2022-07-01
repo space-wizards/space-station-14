@@ -44,6 +44,9 @@ public sealed class EntityStorageComponent : Component
     [DataField("occludesLight")]
     public bool OccludesLight = true;
 
+    [DataField("deleteContentsOnDestruction")]
+    public bool DeleteContentsOnDestruction = false;
+
     [DataField("open")]
     public bool Open;
 
