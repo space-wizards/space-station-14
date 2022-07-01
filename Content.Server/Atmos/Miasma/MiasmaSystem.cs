@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.Miasma
@@ -83,6 +84,8 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnTempChange(EntityUid uid, RottingComponent component, OnTemperatureChangeEvent args)
         {
+            if (HasComp<BodyPreservedComponent>(uid))
+                return;
             bool decompose = (args.CurrentTemperature > 274f);
             ToggleDecomposition(uid, decompose);
         }
@@ -122,12 +125,20 @@ namespace Content.Server.Atmos.Miasma
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
+                var source = EnsureComp<BodyPreservedComponent>(args.Entity);
+                ModifyPreservationSource(args.Entity, true, source);
                 ToggleDecomposition(args.Entity, false, perishable);
+            }
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
+                var source = EnsureComp<BodyPreservedComponent>(args.Entity);
+                ModifyPreservationSource(args.Entity, false, source);
                 ToggleDecomposition(args.Entity, true, perishable);
+            }
         }
 
 
@@ -154,21 +165,40 @@ namespace Content.Server.Atmos.Miasma
             if (decompose == perishable.Progressing) // Saved a few cycles
                 return;
 
-            if (!HasComp<RottingComponent>(uid))
-                return;
+            perishable.Progressing = decompose;
 
             if (!perishable.Rotting)
                 return;
 
             if (decompose)
             {
-                perishable.Progressing = true;
                 EnsureComp<FliesComponent>(uid);
                 return;
             }
 
-            perishable.Progressing = false;
             RemComp<FliesComponent>(uid);
+        }
+
+        /// <summary>
+        /// Add or remove a preservation source.
+        /// Remove is just "add = false"
+        /// If we have 0 we remove the whole component.
+        /// </summary>
+        public void ModifyPreservationSource(EntityUid uid, bool add, BodyPreservedComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            if (add)
+            {
+                component.PreservationSources++;
+                return;
+            }
+
+            component.PreservationSources--;
+
+            if (component.PreservationSources == 0)
+                RemCompDeferred(uid, component);
         }
     }
 }
