@@ -95,7 +95,7 @@
       passiveBlockModifier: PassiveBucklerBlock
       activeBlockModifier: ActiveBucklerBlock
     - type: Construction
-      graph: woodenBuckler
+      graph: WoodenBuckler
       node: woodenBuckler
     - type: Destructible
       thresholds:
@@ -127,7 +127,7 @@
       passiveBlockModifier: PassiveMakeshiftBlock
       activeBlockModifier: ActiveMakeshiftBlock
     - type: Construction
-      graph: makeshiftShield
+      graph: MakeshiftShield
       node: makeshiftShield
     - type: Destructible
       thresholds:
