@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Gas tile overlays should no longer appear unshaded., type: Tweak}
-  id: 1340
-  time: '2022-04-16T00:51:05.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed energy sword blade colors not being properly applied to player
@@ -2956,3 +2951,11 @@ Entries:
     type: Tweak}
   id: 1839
   time: '2022-07-01T20:40:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Stomach capacity has been reduced significantly in most cases (besides
+      the rat king and his servants). Humans can eat about 4 bites before needing
+      to wait a little bit, and mice can eat about 2 bites.', type: Tweak}
+  - {message: 'Pills can now only hold 20 units of reagent, down from 50.', type: Tweak}
+  id: 1840
+  time: '2022-07-01T20:42:29.0000000+00:00'
