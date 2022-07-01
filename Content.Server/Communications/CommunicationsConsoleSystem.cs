@@ -55,6 +55,7 @@ namespace Content.Server.Communications
         {
             foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
+                // TODO refresh the UI in a less horrible way
                 if (comp.AnnouncementCooldownRemaining >= 0f)
                 {
                     comp.AnnouncementCooldownRemaining -= frameTime;
