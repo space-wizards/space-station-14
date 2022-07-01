@@ -10,8 +10,12 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-  - type: Item
-    size: 30
+  - type: Clothing
+    size: 50
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+    quickEquip: false
+    Slots:
+    - Back
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
@@ -36,8 +40,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 
 - type: entity
   name: Hristov
@@ -47,7 +49,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: Item
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: BallisticAmmoProvider
     whitelist:
@@ -64,7 +66,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/musket.rsi
-  - type: Item
+  - type: Clothing
     icon: Objects/Weapons/Guns/Snipers/musket.rsi
   - type: Gun
     selectedMode: SemiAuto
@@ -85,7 +87,7 @@
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-    - type: Item
+    - type: Clothing
       icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: BallisticAmmoProvider
       whitelist:
