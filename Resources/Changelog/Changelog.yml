@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Adds colorable sliders and a RGB/HSV color picker based on colorable
-      sliders., type: Add}
-  id: 1337
-  time: '2022-04-15T22:55:56.0000000+00:00'
 - author: CrzyPotato
   changes:
   - {message: 'Added more animal sounds for pettable animals! Some of these animals
@@ -2957,3 +2951,9 @@ Entries:
       at any time.', type: Tweak}
   id: 1836
   time: '2022-07-01T00:13:49.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The restart vote can no longer be called when admins are online., type: Tweak}
+  - {message: The restart vote now defaults to needing 85% agreement., type: Tweak}
+  id: 1837
+  time: '2022-07-01T07:52:20.0000000+00:00'
