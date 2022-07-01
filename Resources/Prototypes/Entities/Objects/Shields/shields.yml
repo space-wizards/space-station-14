@@ -1,8 +1,9 @@
 ﻿- type: entity
-  name: riot shield
+  name: base shield
   parent: BaseItem
-  id: RiotShield
-  description: A large tower shield. Good for controlling crowds.
+  id: BaseShield
+  description: A shield!
+  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/shields.rsi
@@ -41,5 +42,71 @@
                 SheetGlass:
                   min: 5
                   max: 5
+
+#Security Shields
+
+- type: entity
+  name: riot shield
+  parent: BaseShield
+  id: RiotShield
+  description: A large tower shield. Good for controlling crowds.
+
+- type: entity
+  name: riot laser shield
+  parent: BaseShield
+  id: RiotLaserShield
+  description: A riot shield built for withstanding lasers, but not much else.
+  components:
+    - type: Sprite
+      state: riot_laser-icon
+    - type: Item
+      HeldPrefix: riot_laser
+    - type: Blocking
+      passiveBlockModifier: PassiveRiotLaserShieldBlock
+      activeBlockModifier: ActiveRiotLaserShieldBlock
+
+- type: entity
+  name: riot bullet shield
+  parent: BaseShield
+  id: RiotBulletShield
+  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  components:
+    - type: Sprite
+      state: riot_bullet-icon
+    - type: Item
+      HeldPrefix: riot_bullet
+    - type: Blocking
+      passiveBlockModifier: PassiveRiotBulletShieldBlock
+      activeBlockModifier: ActiveRiotBulletShieldBlock
+
+#Magic/Cult Shields (give these to wizard for now)
+
+- type: entity
+  name: Clockwork Shield
+  parent: BaseShield
+  id: ClockworkShield
+  description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
+  components:
+    - type: Sprite
+      state: ratvarian-icon
+    - type: Item
+      HeldPrefix: ratvarian
+    - type: Blocking
+      passiveBlockModifier: PassiveClockworkShieldBlock
+      activeBlockModifier: ActiveClockworkShieldBlock
+
+- type: entity
+  name: Mirror Shield
+  parent: BaseShield
+  id: MirrorShield
+  description: Eerily glows red... you hear the geometer whispering
+  components:
+    - type: Sprite
+      state: mirror-icon
+    - type: Item
+      HeldPrefix: mirror
+    - type: Blocking
+      passiveBlockModifier: PassiveMirrorShieldBlock
+      activeBlockModifier: ActiveMirrorShieldBlock
 
 #TODO: Add more shields from the texture files

@@ -176,3 +176,70 @@
     Slash: 1
     Piercing: 1
     Heat: 1
+
+- type: damageModifierSet
+  id: PassiveRiotLaserShieldBlock
+  coefficients:
+    Heat: 0.8
+
+- type: damageModifierSet
+  id: ActiveRiotLaserShieldBlock
+  coefficients:
+    Heat: 0.7
+  flatReductions:
+    Heat: 2
+
+- type: damageModifierSet
+  id: PassiveRiotBulletShieldBlock
+  coefficients:
+    Blunt: 0.8
+    Piercing: 0.8
+
+- type: damageModifierSet
+  id: ActiveRiotBulletShieldBlock
+  coefficients:
+    Blunt: 0.7
+    Piercing: 0.7
+  flatReductions:
+    Blunt: 1.5
+    Piercing: 1.5
+
+#Clockwork generally takes more laser/heat damage
+- type: damageModifierSet
+  id: PassiveClockworkShieldBlock
+  coefficients:
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Heat: 1.5
+
+- type: damageModifierSet
+  id: ActiveClockworkShieldBlock
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.7
+    Piercing: 0.7
+    Heat: 1.5
+  flatReductions:
+    Blunt: 1
+    Slash: 1
+    Piercing: 1
+
+#Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+- type: damageModifierSet
+  id: PassiveMirrorShieldBlock
+  coefficients:
+    Blunt: 1.2
+    Slash: 1.2
+    Piercing: 1.2
+    Heat: .7
+
+- type: damageModifierSet
+  id: ActiveMirrorShieldBlock
+  coefficients:
+    Blunt: 1.2
+    Slash: 1.2
+    Piercing: 1.2
+    Heat: .6
+  flatReductions:
+    Heat: 1
