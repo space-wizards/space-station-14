@@ -18,6 +18,7 @@
     quickEquip: false
     Slots:
     - suitStorage
+    - Belt
   - type: Gun
     fireRate: 6
     selectedMode: SemiAuto
