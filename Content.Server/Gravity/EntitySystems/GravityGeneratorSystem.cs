@@ -21,9 +21,18 @@ namespace Content.Server.Gravity.EntitySystems
 
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInitialized);
             SubscribeLocalEvent<GravityGeneratorComponent, ComponentShutdown>(OnComponentShutdown);
+            SubscribeLocalEvent<GravityGeneratorComponent, EntParentChangedMessage>(OnParentChanged); // Or just anchor changed?
             SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
                 OnSwitchGenerator);
+        }
+
+        private void OnParentChanged(EntityUid uid, GravityGeneratorComponent component, ref EntParentChangedMessage args)
+        {
+            if (component.GravityActive && TryComp(args.OldParent, out GravityComponent? gravity))
+                _gravitySystem.DisableGravity(gravity);
+
+            UpdateGravityActive(component, false);
         }
 
         private void OnComponentShutdown(EntityUid uid, GravityGeneratorComponent component, ComponentShutdown args)
