@@ -1,16 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Beds now heal slowly when you lie in them. Medical beds, if you can
-      find them, heal at twice the speed of other beds.', type: Add}
-  - {message: Stasis beds have finally come out of stasis., type: Add}
-  - {message: Medical Machinery technology is now cheaper., type: Tweak}
-  - {message: Cloning Pod and Medical Scanner removed from Medical Machinery., type: Tweak}
-  - {message: 'New Technology: Advanced Life Support Systems. 20000 points, requires
-      Medical Machinery and Advanced Surgery. Unlocks machine boards for the Cloning
-      Pod, Medical Scanner, and Stasis Bed.', type: Add}
-  id: 1336
-  time: '2022-04-15T22:53:52.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Adds colorable sliders and a RGB/HSV color picker based on colorable
@@ -2961,3 +2949,11 @@ Entries:
     type: Tweak}
   id: 1835
   time: '2022-06-30T18:45:38.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The rules have been tweaked slightly to clarify some points in most
+      rules. Most notably are the Security Rules, which have been rewritten to clarify
+      that antagonists do not have to be cloned, and that antagonists may be permabrigged
+      at any time.', type: Tweak}
+  id: 1836
+  time: '2022-07-01T00:13:49.0000000+00:00'
