@@ -1,23 +1,32 @@
+using System.Drawing;
+using Content.Server.AlertLevel;
+using Content.Server.Audio;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
+using Color = System.Drawing.Color;
 
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
     public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
+        [Dependency] private readonly AmbientSoundSystem _ambient = default!;
+
         private readonly HashSet<EmergencyLightComponent> _activeLights = new();
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<EmergencyLightEvent>(HandleEmergencyLightMessage);
+            SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
             SubscribeLocalEvent<EmergencyLightComponent, ComponentGetState>(GetCompState);
             SubscribeLocalEvent<EmergencyLightComponent, PointLightToggleEvent>(HandleLightToggle);
             SubscribeLocalEvent<EmergencyLightComponent, ExaminedEvent>(OnEmergencyExamine);
@@ -63,6 +72,36 @@ namespace Content.Server.Light.EntitySystems
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnAlertLevelChanged(AlertLevelChangedEvent ev)
+        {
+            if (!TryComp<AlertLevelComponent>(ev.Station, out var alert))
+                return;
+
+            if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
+                return;
+
+            foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
+            {
+                if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
+                    continue;
+
+                pointLight.Color = details.EmergencyLightColor;
+                appearance.SetData(EmergencyLightVisuals.Color, details.EmergencyLightColor);
+
+                if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
+                {
+                    light.ForciblyEnabled = true;
+                    TurnOn(light);
+                }
+                else if (light.ForciblyEnabled)
+                {
+                    // Previously forcibly enabled, and we went down an alert level.
+                    light.ForciblyEnabled = false;
+                    UpdateState(light);
+                }
             }
         }
 
@@ -122,7 +161,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
             }
 
-            if (receiver.Powered)
+            if (receiver.Powered && !component.ForciblyEnabled)
             {
                 receiver.Load = (int) Math.Abs(component.Wattage);
                 TurnOff(component);
@@ -144,6 +183,8 @@ namespace Content.Server.Light.EntitySystems
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(EmergencyLightVisuals.On, false);
+
+            _ambient.SetAmbience(component.Owner, false);
         }
 
         private void TurnOn(EmergencyLightComponent component)
@@ -154,7 +195,12 @@ namespace Content.Server.Light.EntitySystems
             }
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
+            {
                 appearance.SetData(EmergencyLightVisuals.On, true);
+            }
+
+            _ambient.SetAmbience(component.Owner, true);
         }
     }
 }
+
