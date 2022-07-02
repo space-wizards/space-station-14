@@ -36,8 +36,8 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
         private const float FootstepVariation = 0f;
-        private const float FootstepVolume = 6f;
-        private const float FootstepWalkingVolumeModifier = 0.2f;
+        private const float FootstepVolume = 3f;
+        private const float FootstepWalkingAddedVolumeMultiplier = 0f;
 
         /// <summary>
         /// <see cref="CCVars.MinimumFrictionSpeed"/>
@@ -278,7 +278,7 @@ namespace Content.Shared.Movement.Systems
 
                 if (!weightless && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
-                    var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingVolumeModifier;
+                    var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
                     SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
                         mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume * soundModifier));
