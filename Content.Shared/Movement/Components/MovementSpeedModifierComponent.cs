@@ -16,6 +16,9 @@ namespace Content.Shared.Movement.Components
         [ViewVariables]
         public float SprintSpeedModifier = 1.0f;
 
+        [ViewVariables]
+        public float JetpackSpeedModifier = 1.0f;
+
         [ViewVariables(VVAccess.ReadWrite)]
         private float _baseWalkSpeedVV
         {

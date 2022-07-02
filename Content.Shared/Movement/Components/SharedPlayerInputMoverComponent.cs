@@ -43,18 +43,6 @@ namespace Content.Shared.Movement.Components
         [ViewVariables]
         public Angle LastGridAngle { get; set; } = new(0);
 
-        public float CurrentWalkSpeed =>
-            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-                out var movementSpeedModifierComponent)
-                ? movementSpeedModifierComponent.CurrentWalkSpeed
-                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-
-        public float CurrentSprintSpeed =>
-            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-                out var movementSpeedModifierComponent)
-                ? movementSpeedModifierComponent.CurrentSprintSpeed
-                : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
         [ViewVariables(VVAccess.ReadWrite)]
