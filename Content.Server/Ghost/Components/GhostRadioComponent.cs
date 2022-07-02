@@ -44,7 +44,7 @@ namespace Content.Server.Ghost.Components
                 Channel = ChatChannel.Radio,
                 Message = message,
                 //Square brackets are added here to avoid issues with escaping
-                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.Name}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(speaker).EntityName))
+                MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(speaker).EntityName))
             };
 
             _netManager.ServerSendMessage(msg, playerChannel);

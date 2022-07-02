@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -209,12 +209,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
         }
 
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var (_, gridUid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = center + MathF.Max(minRadius, minRadius) + 1000f,
         });
 
-        if (!gridId.HasValue)
+        if (!gridUid.HasValue)
         {
             Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
             foreach (var session in operatives)
@@ -224,7 +224,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        var gridUid = _mapManager.GetGridEuid(gridId.Value);
         // TODO: Loot table or something
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
@@ -244,7 +243,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid.Value).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 

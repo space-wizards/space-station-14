@@ -7,7 +7,6 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    enabled: false
     volume: -9
     range: 3
     sound:

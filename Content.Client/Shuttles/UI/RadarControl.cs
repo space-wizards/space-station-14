@@ -187,7 +187,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - RadarRange, mapPosition.Position + RadarRange)))
         {
-            if (grid.Index == ourGridId) continue;
+            if (grid.GridEntityId == ourGridId) continue;
 
             var gridBody = bodyQuery.GetComponent(grid.GridEntityId);
             if (gridBody.Mass < 10f)

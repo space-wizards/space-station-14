@@ -113803,8 +113803,7 @@ entities:
     parent: 100
     type: Transform
   - containers:
-      stash: !type:ContainerSlot
-        ent: null
+      stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 12499
   type: ClothingMaskGasCentcom
