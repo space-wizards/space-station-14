@@ -33,7 +33,8 @@ namespace Content.Client.Atmos.EntitySystems
         private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
 
-        public const int GasOverlayZIndex = 1;
+        // This equals DrawDepth.Overdoors
+        public const int GasOverlayZIndex = 6;
 
         public override void Initialize()
         {
