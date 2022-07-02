@@ -36,7 +36,7 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
         private const float FootstepVariation = 0f;
-        private const float FootstepVolume = 1f;
+        private const float FootstepVolume = 6f;
 
         /// <summary>
         /// <see cref="CCVars.MinimumFrictionSpeed"/>
