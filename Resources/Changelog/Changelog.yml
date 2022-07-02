@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed botany seeds created using the seed extractor not inheriting traits.,
-    type: Fix}
-  id: 1343
-  time: '2022-04-16T05:32:35.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: 'Nanotrasen has spent billions of credits in morale research, and the
@@ -2954,3 +2948,9 @@ Entries:
   - {message: Detective added, type: Add}
   id: 1842
   time: '2022-07-02T03:10:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Certain instruments now have different styles that you can select,
+      changing the way that they sound.', type: Add}
+  id: 1843
+  time: '2022-07-02T08:08:57.0000000+00:00'
