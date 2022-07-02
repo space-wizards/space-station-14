@@ -1,10 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: 'Nanotrasen has spent billions of credits in morale research, and the
-      newest morale-increasing technology is here: Hugging!', type: Add}
-  id: 1344
-  time: '2022-04-16T18:16:20.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Added admin notes., type: Add}
@@ -2954,3 +2948,11 @@ Entries:
       changing the way that they sound.', type: Add}
   id: 1843
   time: '2022-07-02T08:08:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Footstep sounds should have much more variation and feel more appropriate
+      for a station., type: Tweak}
+  - {message: Walking now reduces footstep volume (and weightlessness removes them),
+    type: Tweak}
+  id: 1844
+  time: '2022-07-02T09:54:39.0000000+00:00'
