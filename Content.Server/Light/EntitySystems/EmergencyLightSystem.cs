@@ -11,7 +11,7 @@ using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
-using Color = System.Drawing.Color;
+using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -19,6 +19,7 @@ namespace Content.Server.Light.EntitySystems
     public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         private readonly HashSet<EmergencyLightComponent> _activeLights = new();
 
@@ -44,6 +45,24 @@ namespace Content.Server.Light.EntitySystems
                 Loc.GetString("emergency-light-component-on-examine",
                     ("batteryStateText",
                         Loc.GetString(component.BatteryStateText[component.State]))));
+
+            // Show alert level on the light itself.
+            if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
+                return;
+
+            if (alerts.AlertLevels == null)
+                return;
+
+            var name = alerts.CurrentLevel;
+
+            var color = Color.White;
+            if (alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))
+                color = details.Color;
+
+            args.PushMarkup(
+                Loc.GetString("emergency-light-component-on-examine-alert",
+                    ("color", color.ToHex()),
+                    ("level", name)));
         }
 
         private void HandleLightToggle(EntityUid uid, EmergencyLightComponent component, PointLightToggleEvent args)
