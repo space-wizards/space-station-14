@@ -1,6 +1,6 @@
 - type: job
   id: Detective
-  name: detective
+  name: job-name-detective
   startingGear: DetectiveGear
   departments:
   - Security
