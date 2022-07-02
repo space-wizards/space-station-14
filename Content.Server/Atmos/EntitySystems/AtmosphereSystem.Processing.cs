@@ -106,7 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     // Tile used to be space, but isn't anymore.
-                    if (tile.Space)
+                    if (tile.Space || (tile.Air?.Immutable ?? false))
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
