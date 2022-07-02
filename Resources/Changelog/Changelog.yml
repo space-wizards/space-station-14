@@ -1,11 +1,4 @@
 Entries:
-- author: Soupstraw
-  changes:
-  - {message: Added airlock painter tool, type: Add}
-  - {message: Changed some of the doors so they have a PaintableAirlock component,
-    type: Tweak}
-  id: 1342
-  time: '2022-04-16T05:31:12.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed botany seeds created using the seed extractor not inheriting traits.,
@@ -2956,3 +2949,8 @@ Entries:
   - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
   id: 1841
   time: '2022-07-02T00:54:04.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Detective added, type: Add}
+  id: 1842
+  time: '2022-07-02T03:10:51.0000000+00:00'
