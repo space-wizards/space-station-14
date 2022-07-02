@@ -1,50 +1,4 @@
 Entries:
-- author: CrzyPotato
-  changes:
-  - {message: 'Added more animal sounds for pettable animals! Some of these animals
-      include sloths, foxes, lizards, cows, goats, and more.', type: Add}
-  - {message: fixed issue with gibbed head being able to change direction via clicking,
-    type: Add}
-  id: 1338
-  time: '2022-04-15T22:56:05.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Giant spiders, space ticks, space bears, and space carp can now be
-      inhabited as ghost roles by default. Have fun!', type: Add}
-  id: 1339
-  time: '2022-04-16T00:39:47.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Gas tile overlays should no longer appear unshaded., type: Tweak}
-  id: 1340
-  time: '2022-04-16T00:51:05.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed energy sword blade colors not being properly applied to player
-      sprites., type: Fix}
-  - {message: The light emitted by hacked energy swords now update along with the
-      blade color., type: Tweak}
-  id: 1341
-  time: '2022-04-16T05:11:48.0000000+00:00'
-- author: Soupstraw
-  changes:
-  - {message: Added airlock painter tool, type: Add}
-  - {message: Changed some of the doors so they have a PaintableAirlock component,
-    type: Tweak}
-  id: 1342
-  time: '2022-04-16T05:31:12.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed botany seeds created using the seed extractor not inheriting traits.,
-    type: Fix}
-  id: 1343
-  time: '2022-04-16T05:32:35.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: 'Nanotrasen has spent billions of credits in morale research, and the
-      newest morale-increasing technology is here: Hugging!', type: Add}
-  id: 1344
-  time: '2022-04-16T18:16:20.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Added admin notes., type: Add}
@@ -2957,3 +2911,48 @@ Entries:
   - {message: The restart vote now defaults to needing 85% agreement., type: Tweak}
   id: 1837
   time: '2022-07-01T07:52:20.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Cargo Shuttle cooldown has been increased from 45 seconds to 2.5
+      minutes., type: Tweak}
+  id: 1838
+  time: '2022-07-01T20:33:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Basic shuttle call time reduced from 20 minutes to 10 minutes., type: Tweak}
+  - {message: The shuttle can no longer be recalled after half of the time has elapsed.,
+    type: Tweak}
+  id: 1839
+  time: '2022-07-01T20:40:36.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Stomach capacity has been reduced significantly in most cases (besides
+      the rat king and his servants). Humans can eat about 4 bites before needing
+      to wait a little bit, and mice can eat about 2 bites.', type: Tweak}
+  - {message: 'Pills can now only hold 20 units of reagent, down from 50.', type: Tweak}
+  id: 1840
+  time: '2022-07-01T20:42:29.0000000+00:00'
+- author: Solbusaur
+  changes:
+  - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
+  id: 1841
+  time: '2022-07-02T00:54:04.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Detective added, type: Add}
+  id: 1842
+  time: '2022-07-02T03:10:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Certain instruments now have different styles that you can select,
+      changing the way that they sound.', type: Add}
+  id: 1843
+  time: '2022-07-02T08:08:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Footstep sounds should have much more variation and feel more appropriate
+      for a station., type: Tweak}
+  - {message: Walking now reduces footstep volume (and weightlessness removes them),
+    type: Tweak}
+  id: 1844
+  time: '2022-07-02T09:54:39.0000000+00:00'
