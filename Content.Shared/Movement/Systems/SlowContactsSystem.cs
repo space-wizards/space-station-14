@@ -40,6 +40,7 @@ public sealed class SlowContactsSystem : EntitySystem
         }
 
         args.ModifySpeed(walkSpeed, sprintSpeed);
+        args.ModifyJetpackSpeed(sprintSpeed);
     }
 
     private void OnEntityExit(EntityUid uid, SlowContactsComponent component, EndCollideEvent args)

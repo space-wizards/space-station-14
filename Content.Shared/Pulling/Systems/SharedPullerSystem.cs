@@ -68,6 +68,7 @@ namespace Content.Shared.Pulling.Systems
         private void OnRefreshMovespeed(EntityUid uid, SharedPullerComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
+            args.ModifyJetpackSpeed(component.SprintSpeedModifier);
         }
 
         private void RefreshMovementSpeed(SharedPullerComponent component)

@@ -116,6 +116,7 @@ namespace Content.Shared.Stunnable
         private void OnRefreshMovespeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
+            args.ModifyJetpackSpeed(component.SprintSpeedModifier);
         }
 
         // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
