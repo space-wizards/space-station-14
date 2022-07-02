@@ -1,15 +1,21 @@
 using System.Globalization;
+using System.Linq;
 using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Communications;
+using Content.Shared.Examine;
+using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Server.Communications
@@ -17,6 +23,7 @@ namespace Content.Server.Communications
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
@@ -24,8 +31,10 @@ namespace Content.Server.Communications
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private const int MaxMessageLength = 256;
+        private const float UIUpdateInterval = 5.0f;
 
         public override void Initialize()
         {
@@ -46,15 +55,21 @@ namespace Content.Server.Communications
         {
             foreach (var comp in EntityQuery<CommunicationsConsoleComponent>())
             {
-                // TODO: Find a less ass way of refreshing the UI
-                if (comp.AlreadyRefreshed) continue;
-                if (comp.AnnouncementCooldownRemaining <= 0f)
+                // TODO refresh the UI in a less horrible way
+                if (comp.AnnouncementCooldownRemaining >= 0f)
                 {
-                    UpdateCommsConsoleInterface(comp);
-                    comp.AlreadyRefreshed = true;
-                    continue;
+                    comp.AnnouncementCooldownRemaining -= frameTime;
                 }
-                comp.AnnouncementCooldownRemaining -= frameTime;
+
+                comp.UIUpdateAccumulator += frameTime;
+
+                if (comp.UIUpdateAccumulator < UIUpdateInterval)
+                    continue;
+
+                comp.UIUpdateAccumulator -= UIUpdateInterval;
+
+                if (comp.UserInterface is {} ui && ui.SubscribedSessions.Count > 0)
+                    UpdateCommsConsoleInterface(comp);
             }
 
             base.Update(frameTime);
@@ -136,7 +151,7 @@ namespace Content.Server.Communications
             comp.UserInterface?.SetState(
                 new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
-                    CanCall(comp),
+                    CanCallOrRecall(comp),
                     levels,
                     currentLevel,
                     currentDelay,
@@ -152,6 +167,10 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
+            // This shouldn't technically be possible because of BUI but don't trust client.
+            if (!_interaction.InRangeUnobstructed(console, user))
+                return false;
+
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
             {
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
@@ -159,11 +178,25 @@ namespace Content.Server.Communications
             return true;
         }
 
-        private bool CanCall(CommunicationsConsoleComponent comp)
+        private bool CanCallOrRecall(CommunicationsConsoleComponent comp)
         {
-            if (_shuttle.EmergencyShuttleArrived) return false;
+            // Defer to what the round end system thinks we should be able to do.
+            if (_shuttle.EmergencyShuttleArrived || !_roundEndSystem.CanCallOrRecall())
+                return false;
 
-            return comp.CanCallShuttle && _roundEndSystem.CanCall();
+            // Calling shuttle checks
+            if (_roundEndSystem.ExpectedCountdownEnd is null)
+                return comp.CanCallShuttle;
+
+            // Recalling shuttle checks
+            var recallThreshold = _cfg.GetCVar(CCVars.EmergencyRecallTurningPoint);
+
+            // shouldn't really be happening if we got here
+            if (_roundEndSystem.ShuttleTimeLeft is not { } left
+                || _roundEndSystem.ExpectedShuttleLength is not { } expected)
+                return false;
+
+            return !(left.TotalSeconds / expected.TotalSeconds < recallThreshold);
         }
 
         private void OnSelectAlertLevelMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleSelectAlertLevelMessage message)
@@ -207,7 +240,6 @@ namespace Content.Server.Communications
             }
 
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
-            comp.AlreadyRefreshed = false;
             UpdateCommsConsoleInterface(comp);
 
             // allow admemes with vv
@@ -225,7 +257,7 @@ namespace Content.Server.Communications
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
         {
-            if (!CanCall(comp)) return;
+            if (!CanCallOrRecall(comp)) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
@@ -237,13 +269,14 @@ namespace Content.Server.Communications
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
         {
-            if (!CanCall(comp)) return;
+            if (!CanCallOrRecall(comp)) return;
             if (message.Session.AttachedEntity is not {Valid: true} mob) return;
             if (!CanUse(mob, uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comms-console-permission-denied"), uid, Filter.Entities(mob));
                 return;
             }
+
             _roundEndSystem.CancelRoundEndCountdown(uid);
         }
     }

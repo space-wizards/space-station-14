@@ -1,6 +1,3 @@
-ent-BaseComputer = computer
-    .desc = { ent-ComputerFrame.desc }
-    .suffix = { "" }
-ent-ComputerBase = компьютер
+ent-BaseComputer = компьютер
     .desc = { ent-ComputerFrame.desc }
     .suffix = { "" }
