@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.GameStates;
+using Robust.Client.Timing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -47,7 +48,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var cEntityManager = client.ResolveDependency<IEntityManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-            var cGameTiming = client.ResolveDependency<IGameTiming>();
+            var cGameTiming = client.ResolveDependency<IClientGameTiming>();
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
             var cfg = client.ResolveDependency<IConfigurationManager>();
             var log = cfg.GetCVar(CVars.NetLogging);
