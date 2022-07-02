@@ -6,6 +6,15 @@
   description: A miserable pile of secrets.
   noSpawn: true
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MeatBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MeatLaserImpact
   - type: Tag
     tags:
     - CanPilot
@@ -29,7 +38,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.7 #per second, scales with pressure and other constants.
+        Blunt: 0.15 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -37,13 +46,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   # Organs
   - type: InjectableSolution
     solution: chemicals
@@ -71,8 +74,12 @@
     - KnockedDown
     - SlowedDown
     - Stutter
+    - SeeingRainbows
     - Electrocution
+    - Drunk
+    - SlurredSpeech
     - PressureImmunity
+    - Muted
   - type: DiseaseCarrier
   # Other
   - type: Inventory
@@ -181,7 +188,6 @@
       Arms:
         points: 2
         required: false
-
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -209,10 +215,10 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold : 1 #per second, scales with temperature & other constants
+        Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 1 #per second, scales with temperature & other constants
+        Heat: 0.1 #per second, scales with temperature & other constants
   - type: HumanoidAppearance
   - type: Body
     template: HumanoidTemplate
@@ -243,10 +249,8 @@
       - !type:GibBehavior { }
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.8
-      60: 0.6
-      80: 0.4
-      90: 0.2
+      60: 0.7
+      80: 0.5
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -280,7 +284,7 @@
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     hitSound:
       collection: Punch
     range: 0.8
@@ -314,6 +318,11 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: Fingerprint
+  - type: MobPrice
+    price: 1500 # Kidnapping a living person and selling them for cred is a good move.
+    deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
+  - type: Perishable
 
 - type: entity
   save: false

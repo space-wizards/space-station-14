@@ -7,8 +7,11 @@ using Content.Shared.Interaction;
 using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Research;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
@@ -135,7 +138,7 @@ namespace Content.Server.Lathe
             // Play a sound when inserting, if any
             if (component.InsertingSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.InsertingSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.InsertingSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
             }
 
             // We need the prototype to get the color
@@ -171,7 +174,7 @@ namespace Content.Server.Lathe
                 return;
             }
 
-            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var receiver) && !receiver.Powered)
+            if (!this.IsPowered(component.Owner, EntityManager))
             {
                 FinishProducing(recipe, component, false);
                 return;
@@ -190,7 +193,7 @@ namespace Content.Server.Lathe
             component.UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
             if (component.ProducingSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.ProducingSound.GetSound(), component.Owner);
+                SoundSystem.Play(component.ProducingSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
             }
             UpdateRunningAppearance(component.Owner, true);
             ProducingAddQueue.Enqueue(component.Owner);
@@ -247,7 +250,7 @@ namespace Content.Server.Lathe
         /// </summary>
         private void UserInterfaceOnOnReceiveMessage(EntityUid uid, LatheComponent component, ServerBoundUserInterfaceMessage message)
         {
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver) && !receiver.Powered)
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             switch (message.Message)
@@ -273,14 +276,16 @@ namespace Content.Server.Lathe
 
                 case LatheServerSelectionMessage _:
                     if (!TryComp(uid, out ResearchClientComponent? researchClient)) return;
-                    researchClient.OpenUserInterface(message.Session);
+                    IoCManager.Resolve<IEntitySystemManager>()
+                        .GetEntitySystem<UserInterfaceSystem>()
+                        .TryOpen(uid, ResearchClientUiKey.Key, message.Session);
                     break;
 
                 case LatheServerSyncMessage _:
                     if (!TryComp(uid, out TechnologyDatabaseComponent? database)
                     || !TryComp(uid, out ProtolatheDatabaseComponent? protoDatabase)) return;
 
-                    if (database.SyncWithServer())
+                    if (IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ResearchSystem>().SyncWithServer(database))
                         protoDatabase.Sync();
 
                     break;

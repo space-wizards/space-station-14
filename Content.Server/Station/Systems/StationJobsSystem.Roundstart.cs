@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -51,6 +52,8 @@ public sealed partial class StationJobsSystem
     public Dictionary<NetUserId, (string, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
+
+        InitializeRoundStart();
 
         if (profiles.Count == 0)
             return new Dictionary<NetUserId, (string, EntityUid)>();
@@ -301,6 +304,24 @@ public sealed partial class StationJobsSystem
                 assignedJobs.Add(player, (overflows[0], givenStations[0]));
                 break;
             }
+        }
+    }
+
+    public void CalcExtendedAccess(Dictionary<EntityUid, int> jobsCount)
+    {
+        // Calculate whether stations need to be on extended access or not.
+        foreach (var (station, count) in jobsCount)
+        {
+            var jobs = Comp<StationJobsComponent>(station);
+            var data = Comp<StationDataComponent>(station);
+
+            var thresh = data.StationConfig?.ExtendedAccessThreshold ?? -1;
+
+            jobs.ExtendedAccess = count <= thresh;
+
+            Logger.DebugS(
+                "station", "Station {Station} on extended access: {ExtendedAccess}",
+                Name(station), jobs.ExtendedAccess);
         }
     }
 

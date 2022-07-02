@@ -112,7 +112,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = true;
 
-            SoundSystem.Play(Filter.Pvs(uid), welder.WelderOnSounds.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(welder.WelderOnSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
 
             if (transform.GridUid is {} gridUid)
             {
@@ -150,7 +150,7 @@ namespace Content.Server.Tools
             if (light != null)
                 light.Enabled = false;
 
-            SoundSystem.Play(Filter.Pvs(uid), welder.WelderOffSounds.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(welder.WelderOffSounds.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
 
             welder.Dirty();
 
@@ -221,7 +221,7 @@ namespace Content.Server.Tools
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);
                     _solutionContainerSystem.TryAddSolution(uid, welderSolution, drained);
-                    SoundSystem.Play(Filter.Pvs(uid), welder.WelderRefill.GetSound(), uid);
+                    SoundSystem.Play(welder.WelderRefill.GetSound(), Filter.Pvs(uid), uid);
                     target.PopupMessage(args.User, Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
                 else

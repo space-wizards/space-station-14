@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
@@ -122,7 +123,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             _itemSlotsSystem.RemoveItemSlot(uid, component.BeakerSlot);
         }
-        
+
         private void OnUIMessageReceived(EntityUid uid, ReagentGrinderComponent component,
             ServerBoundUserInterfaceMessage message)
         {
@@ -134,16 +135,14 @@ namespace Content.Server.Kitchen.EntitySystems
             switch (message.Message)
             {
                 case SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage msg:
-                    if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) ||
-                        !receiver.Powered) break;
+                    if (!this.IsPowered(component.Owner, EntityManager)) break;
                     ClickSound(component);
                     DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Grind);
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage msg:
-                    if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver2) ||
-                        !receiver2.Powered) break;
+                    if (!this.IsPowered(component.Owner, EntityManager)) break;
                     ClickSound(component);
                     DoWork(component, attached,
                         SharedReagentGrinderComponent.GrinderProgram.Juice);
@@ -206,7 +205,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     (
                         comp.Busy,
                         comp.BeakerSlot.HasItem,
-                        EntityManager.TryGetComponent(comp.Owner, out ApcPowerReceiverComponent? receiver) && receiver.Powered,
+                        this.IsPowered(comp.Owner, EntityManager),
                         canJuice,
                         canGrind,
                         comp.Chamber.ContainedEntities.Select(item => item).ToArray(),
@@ -224,7 +223,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SharedReagentGrinderComponent.GrinderProgram program)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
-            if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver) || !receiver.Powered ||
+            if (!this.IsPowered(component.Owner, EntityManager) ||
                 component.Busy || component.Chamber.ContainedEntities.Count <= 0 ||
                 component.BeakerSlot.Item is not EntityUid beakerEntity ||
                 component.BeakerSolution == null)
@@ -239,7 +238,7 @@ namespace Content.Server.Kitchen.EntitySystems
             switch (program)
             {
                 case SharedReagentGrinderComponent.GrinderProgram.Grind:
-                    SoundSystem.Play(Filter.Pvs(component.Owner), component.GrindSound.GetSound(), component.Owner, AudioParams.Default);
+                    SoundSystem.Play(component.GrindSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
                     // Get each item inside the chamber and get the reagents it contains.
                     // Transfer those reagents to the beaker, given we have one in.
                     component.Owner.SpawnTimer(component.WorkTime, () =>
@@ -266,7 +265,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     break;
 
                 case SharedReagentGrinderComponent.GrinderProgram.Juice:
-                    SoundSystem.Play(Filter.Pvs(component.Owner), component.JuiceSound.GetSound(), component.Owner, AudioParams.Default);
+                    SoundSystem.Play(component.JuiceSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default);
                     component.Owner.SpawnTimer(component.WorkTime, () =>
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
@@ -280,7 +279,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (EntityManager.HasComponent<StackComponent>(item))
                             {
-                                RaiseLocalEvent(item, juiceEvent);
+                                RaiseLocalEvent(item, juiceEvent, true);
                             }
 
                             if (component.BeakerSolution.CurrentVolume + juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar > component.BeakerSolution.MaxVolume)
@@ -300,7 +299,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void ClickSound(ReagentGrinderComponent component)
         {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.ClickSound.GetSound(), component.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(component.ClickSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

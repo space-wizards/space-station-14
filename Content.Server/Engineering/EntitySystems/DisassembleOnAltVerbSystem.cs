@@ -18,7 +18,7 @@ namespace Content.Server.Engineering.EntitySystems
         }
         private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanInteract || !args.CanAccess)
+            if (!args.CanInteract || !args.CanAccess || args.Hands == null)
                 return;
 
             AlternativeVerb verb = new()

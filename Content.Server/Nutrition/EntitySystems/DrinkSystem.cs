@@ -37,7 +37,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
@@ -74,6 +74,35 @@ namespace Content.Server.Nutrition.EntitySystems
             var openedText =
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
             args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
+            if (!IsEmpty(uid, component))
+            {
+                if (TryComp<ExaminableSolutionComponent>(component.Owner, out var comp))
+                {
+                    //provide exact measurement for beakers
+                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
+                }
+                else
+                {
+                    //general approximation
+                    string remainingString;
+                    switch ((int)_solutionContainerSystem.PercentFull(uid))
+                    {
+                        case int perc when perc == 100:
+                            remainingString = "drink-component-on-examine-is-full";
+                            break;
+                        case int perc when perc > 66:
+                            remainingString = "drink-component-on-examine-is-mostly-full";
+                            break;
+                        case int perc when perc > 33:
+                            remainingString = HalfEmptyOrHalfFull(args);
+                            break;
+                        default:
+                            remainingString = "drink-component-on-examine-is-mostly-empty";
+                            break;
+                    }
+                    args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
+                }
+            }
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
@@ -110,7 +139,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!component.Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                SoundSystem.Play(Filter.Pvs(args.User), component.OpenSounds.GetSound(), args.User, AudioParams.Default);
+                SoundSystem.Play(component.OpenSounds.GetSound(), Filter.Pvs(args.User), args.User, AudioParams.Default);
 
                 SetOpen(uid, true, component);
                 return;
@@ -132,7 +161,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
                 _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
 
-                SoundSystem.Play(Filter.Pvs(uid), component.BurstSound.GetSound(), uid, AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(component.BurstSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4));
             }
         }
 
@@ -227,7 +256,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, Filter.Entities(target));
 
                 // logging
-                _logSystem.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
 
             drink.CancelToken = new CancellationTokenSource();
@@ -314,7 +343,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.Pvs(args.User));
             }
 
-            SoundSystem.Play(Filter.Pvs(uid), args.Drink.UseSound.GetSound(), uid, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
 
             drained.DoEntityReaction(uid, ReactionMethod.Ingestion);
             _stomachSystem.TryTransferSolution(firstStomach.Value.Comp.Owner, drained, firstStomach.Value.Comp);
@@ -352,6 +381,18 @@ namespace Content.Server.Nutrition.EntitySystems
             };
 
             ev.Verbs.Add(verb);
+        }
+
+        // some see half empty, and others see half full
+        private string HalfEmptyOrHalfFull(ExaminedEvent args)
+        {
+            string remainingString = "drink-component-on-examine-is-half-full";
+
+            if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
+                && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+                remainingString = "drink-component-on-examine-is-half-empty";
+
+            return remainingString;
         }
     }
 }

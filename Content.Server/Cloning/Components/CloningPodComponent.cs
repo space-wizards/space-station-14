@@ -7,10 +7,14 @@ using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Species;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cloning.Components
@@ -18,14 +22,11 @@ namespace Content.Server.Cloning.Components
     [RegisterComponent]
     public sealed class CloningPodComponent : SharedCloningPodComponent
     {
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         [Dependency] private readonly EuiManager _euiManager = null!;
-
-        [ViewVariables]
-        public bool Powered => !_entities.TryGetComponent(Owner, out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -38,6 +39,9 @@ namespace Content.Server.Cloning.Components
         [ViewVariables] public float CloningTime = 30f;
         // Used to prevent as many duplicate UI messages as possible
         [ViewVariables] public bool UiKnownPowerState = false;
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundCloneStart")]
+        public SoundSpecifier? CloneStartSound = new SoundPathSpecifier("/Audio/Machines/genetics.ogg");
 
         [ViewVariables]
         public CloningPodStatus Status;
@@ -135,12 +139,18 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
+                    // Cloning confirmed now.
+
                     var speciesProto = _prototype.Index<SpeciesPrototype>(dna.Profile.Species).Prototype;
                     var mob = _entities.SpawnEntity(speciesProto, _entities.GetComponent<TransformComponent>(Owner).MapPosition);
 
-
                     EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob, dna.Profile);
                     _entities.GetComponent<MetaDataComponent>(mob).EntityName = dna.Profile.Name;
+
+                    // TODO: Ideally client knows about this and plays it on its own
+                    // Send them a sound to know it happened
+                    if (CloneStartSound != null)
+                        SoundSystem.Play(CloneStartSound.GetSound(), Filter.SinglePlayer(client));
 
                     var cloneMindReturn = _entities.AddComponent<BeingClonedComponent>(mob);
                     cloneMindReturn.Mind = mind;

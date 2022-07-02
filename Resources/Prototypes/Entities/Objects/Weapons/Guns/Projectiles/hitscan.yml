@@ -1,64 +1,104 @@
+# Used to animate the hitscan effects because effectsystem doesn't support it
 - type: entity
-  name: red laser
+  id: HitscanEffect
+  noSpawn: true
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+  - type: EffectVisuals
+  - type: AnimationPlayer
+
+- type: hitscan
   id: RedLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 15
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+  damage:
+    types:
+      Heat: 14
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
 
-- type: entity
-  name: red medium laser
+- type: hitscan
   id: RedMediumLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 20
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+  damage:
+    types:
+      Heat: 17
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
 
-- type: entity
-  name: pulse
-  id: Pulse
-  noSpawn: true
-  components:
-  - type: Hitscan
-    damage:
-      types:
-        Heat: 25
-    spriteName: Objects/Weapons/Guns/Projectiles/pulse.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
+- type: hitscan
+  id: OmniLaser
+  damage:
+    types:
+      Heat: 21
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_omni
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_omni
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_omni
 
-- type: entity
-  name: red heavy laser
-  id: RedHeavyLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
-    damage:
-      types:
-        Heat: 45
-
-- type: entity
-  name: x-ray laser
+- type: hitscan
   id: XrayLaser
-  noSpawn: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/xray.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
-    damage:
-      types:
-        Heat: 60
+  damage:
+    types:
+      Heat: 10
+      Radiation: 10
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_xray
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: xray
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_xray
+
+- type: hitscan
+  id: RedHeavyLaser
+  damage:
+    types:
+      Heat: 28
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_beam_heavy
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_heavy
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_beam_heavy
+
+- type: hitscan
+  id: Pulse
+  damage:
+    types:
+      Heat: 35
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_blue
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_blue
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_blue

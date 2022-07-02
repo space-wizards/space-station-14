@@ -1,3 +1,5 @@
+# TODO probably needs a base grenade
+
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
@@ -32,6 +34,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
+      - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -71,6 +74,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
+      - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -108,6 +112,7 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
+      - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -115,6 +120,7 @@
     - type: TimerTriggerVisualizer
       countdown_sound:
         path: /Audio/Effects/minibombcountdown.ogg
+
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
@@ -144,6 +150,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
@@ -175,6 +182,7 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance

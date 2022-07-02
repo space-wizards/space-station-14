@@ -10,7 +10,7 @@
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/hug.ogg
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
   - type: Mind
     showExamineInfo: true
@@ -21,10 +21,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 1.5
+        Asphyxiation: 1.0
     damageRecovery:
       types:
-        Asphyxiation: -1.5
+        Asphyxiation: -1.0
   - type: Alerts
   - type: Actions
   - type: Eye
@@ -49,6 +49,196 @@
     makeSentient: false
     name: centcom official
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
-  - type: UtilityAI
-    startingGear: CentcomGear
+  - type: Loadout
+    prototype: CentcomGear
   - type: RandomHumanoidAppearance
+
+# ERT Leader
+- type: entity
+  name: ERT leader
+  parent: MobHuman
+  id: MobHumanERTLeader
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertleader
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTLeader
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Leader
+    description: Lead a team of specialists to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTLeaderGear
+  - type: RandomMetadata
+    nameSet: NamesFirstMilitaryLeader
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+
+- type: entity
+  name: ERT leader
+  suffix: EVA
+  parent: MobHumanERTLeader
+  id: MobHumanERTLeaderEVA
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertleadereva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTLeaderEVA
+    deleteOnSpawn: true
+    makeSentient: true
+  - type: Loadout
+    prototype: ERTLeaderGearEVA
+
+# ERT Engineer
+- type: entity
+  name: ERT engineer
+  parent: MobHumanERTLeader
+  id: MobHumanERTEngineer
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertengineer
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTEngineer
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Engineer
+    description: Assist with engineering efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTEngineerGear
+  - type: RandomMetadata
+    nameSet: NamesFirstMilitary
+
+- type: entity
+  name: ERT engineer
+  suffix: EVA
+  parent: MobHumanERTEngineer
+  id: MobHumanERTEngineerEVA
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertengineereva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTEngineerEVA
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Engineer
+    description: Assist with engineering efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTEngineerGearEVA
+
+# ERT Security
+- type: entity
+  name: ERT security
+  parent: MobHumanERTLeader
+  id: MobHumanERTSecurity
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertsecurity
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTSecurity
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Security
+    description: Assist with security efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTSecurityGear
+  - type: RandomMetadata
+    nameSet: NamesFirstMilitary
+
+- type: entity
+  name: ERT security
+  suffix: EVA
+  parent: MobHumanERTEngineer
+  id: MobHumanERTSecurityEVA
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertsecurityeva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTSecurityEVA
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Security
+    description: Assist with security efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTSecurityGearEVA
+
+# ERT Medical
+- type: entity
+  name: ERT medic
+  parent: MobHumanERTLeader
+  id: MobHumanERTMedical
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertmedical
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTMedical
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Medic
+    description: Assist with medical efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTMedicalGear
+  - type: RandomMetadata
+    nameSet: NamesFirstMilitary
+
+- type: entity
+  name: ERT medic
+  suffix: EVA
+  parent: MobHumanERTMedical
+  id: MobHumanERTMedicalEVA
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertmedicaleva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTMedicalEVA
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Medic
+    description: Assist with medical efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTMedicalGearEVA
+
+# ERT Janitor
+- type: entity
+  name: ERT janitor
+  parent: MobHumanERTLeader
+  id: MobHumanERTJanitor
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertjanitor
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTJanitor
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Janitor
+    description: Assist with custodial efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTJanitorGear
+  - type: RandomMetadata
+    nameSet: NamesFirstMilitary
+
+- type: entity
+  name: ERT janitor
+  suffix: EVA
+  parent: MobHumanERTJanitor
+  id: MobHumanERTJanitorEVA
+  components:
+  - type: Icon
+    sprite: Markers/jobs.rsi
+    state: ertjanitoreva
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanERTJanitorEVA
+    deleteOnSpawn: true
+    makeSentient: true
+    name: ERT Janitor
+    description: Assist with custodial efforts to resolve the stations issues.
+  - type: Loadout
+    prototype: ERTJanitorGearEVA

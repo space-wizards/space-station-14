@@ -22,21 +22,21 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: Saw
+      - id: SawAdvanced
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: Scalpel
+      - id: ScalpelAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bojevic bundle
-  description: "Lean and mean: Contains the popular Bojevic Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
-      - id: ShotgunBojevic
+      - id: WeaponShotgunBulldog
       - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
@@ -49,21 +49,21 @@
   components:
   - type: StorageFill
     contents:
-      - id: SmgC20r
-      - id: MagazinePistolSmg
+      - id: WeaponSubMachineGunC20r
+      - id: MagazinePistolSubMachineGun
         amount: 2
 #     - id: SMGSuppressor
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledRevolver
-  name: Predator bundle
-  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders."
+  name: Python bundle
+  description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
   - type: StorageFill
     contents:
-      - id: RevolverPredator
-      - id: SLMagnum
+      - id: WeaponRevolverPython
+      - id: SpeedLoaderMagnum
         amount: 2
 
 - type: entity
@@ -74,8 +74,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: LMGL6
-      - id: MagazineLRifleBox
+      - id: WeaponLightMachineGunL6
+      - id: MagazineLightRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -85,26 +85,24 @@
   components:
   - type: StorageFill
     contents:
-      - id: LauncherChinaLake
+      - id: WeaponLauncherChinaLake
       - id: GrenadeBlast
         amount: 3
       - id: GrenadeFlash
         amount: 3
       - id: GrenadeFrag
         amount: 3
-  - type: Storage
-    capacity: 200
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledCarbine
-  name: Z8 Bulldog bundle
+  name: M-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
   components:
   - type: StorageFill
     contents:
-      - id: RifleCarbine
-      - id: MagazineSRifle
+      - id: WeaponRifleM90GrenadeLauncher
+      - id: MagazineRifle
         amount: 2
       - id: GrenadeBlast
         amount: 2
@@ -199,7 +197,7 @@
   - type: StorageFill
     contents:
       - id: SyringeCorpium
-      - id: FlareGun
+      - id: WeaponFlareGun
       - id: BoxShotgunFlare
       - id: PillRomerol
         amount: 3
@@ -213,5 +211,25 @@
     contents:
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
-      - id: PistolClarissa
+      - id: WeaponPistolViper
       - id: BaseUplinkRadio40TC
+
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedical
+  id: ClothingBackpackDuffelSyndicateOperativeMedic
+  name: operative medic duffelbag
+  description: A large duffel bag for holding extra medical supplies.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Hemostat
+      - id: SawAdvanced
+      - id: Drill
+      - id: Cautery
+      - id: Retractor
+      - id: ScalpelAdvanced
+      - id: BaseUplinkRadio40TC
+      - id: BoxSurvivalSyndicate
+      - id: SurvivalKnife
+      - id: WeaponPistolViper

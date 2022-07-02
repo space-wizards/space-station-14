@@ -1,6 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
@@ -24,6 +27,11 @@ namespace Content.Server.StationEvents.Events
         ///     If the event has started and is currently running.
         /// </summary>
         public bool Running { get; set; }
+
+        /// <summary>
+        ///     The time when this event last ran.
+        /// </summary>
+        public TimeSpan LastRun { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         ///     Human-readable name for the event.
@@ -63,6 +71,11 @@ namespace Content.Server.StationEvents.Events
         public virtual int EarliestStart { get; } = 5;
 
         /// <summary>
+        ///     In minutes, the amount of time before the same event can occur again
+        /// </summary>
+        public virtual int ReoccurrenceDelay { get; } = 30;
+
+        /// <summary>
         ///     When in the lifetime to call Start().
         /// </summary>
         protected virtual float StartAfter { get; } = 0.0f;
@@ -96,6 +109,11 @@ namespace Content.Server.StationEvents.Events
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
+        ///     Whether or not the event is announced when it is run
+        /// </summary>
+        public virtual bool AnnounceEvent { get; } = true;
+
+        /// <summary>
         ///     Has the startup time elapsed?
         /// </summary>
         protected bool Started { get; set; } = false;
@@ -112,8 +130,9 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
+            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
@@ -123,18 +142,18 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Announce()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
-            if (StartAnnouncement != null)
+            if (AnnounceEvent && StartAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (StartAudio != null)
+            if (AnnounceEvent && StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
+                SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Announced = true;
@@ -146,18 +165,18 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Shutdown()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
-            if (EndAnnouncement != null)
+            if (AnnounceEvent && EndAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (EndAudio != null)
+            if (AnnounceEvent && EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
+                SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Started = false;
@@ -192,6 +211,12 @@ namespace Content.Server.StationEvents.Events
             entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
             targetStation = robustRandom.Pick(stationSystem.Stations);
             var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
             if (possibleTargets.Count == 0)

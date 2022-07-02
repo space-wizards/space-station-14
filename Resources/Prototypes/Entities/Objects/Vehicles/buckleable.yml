@@ -63,6 +63,8 @@
           tags:
           - VehicleKey
         insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+  - type: StaticPrice
+    price: 750 # Grand Theft Auto.
 
 - type: entity
   id: VehiclePussyWagon
@@ -286,8 +288,6 @@
       noRot: true
     - type: Access
       tags:
-        - Security
-        - Brig
         - Maintenance
         - Service
     - type: Strap

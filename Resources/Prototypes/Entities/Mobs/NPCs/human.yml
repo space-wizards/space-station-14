@@ -4,13 +4,16 @@
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Clothing
     - Hunger
     - Thirst
     - Idle
-    startingGear: PassengerGear
+  - type: Loadout
+    prototype: PassengerGear
   - type: AiFactionTag
     factions:
     - NanoTrasen
@@ -21,6 +24,8 @@
   id: MobSpirate
   description: Yarr!
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Clothing

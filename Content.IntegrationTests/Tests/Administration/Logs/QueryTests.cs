@@ -14,26 +14,18 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class QueryTests : ContentIntegrationTest
+public sealed class QueryTests
 {
     [Test]
     public async Task QuerySingleLog()
     {
-        var serverOptions = new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            }
-        };
-        var (client, server) = await StartConnectedServerClientPair(serverOptions: serverOptions);
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await using var pairTracker = await PoolManager.GetServerClient();
+        var server = pairTracker.Pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
         var sPlayers = server.ResolveDependency<IPlayerManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var date = DateTime.UtcNow;
@@ -57,7 +49,7 @@ public sealed class QueryTests : ContentIntegrationTest
             AnyPlayers = new[] {player.UserId.UserId}
         };
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             foreach (var _ in await sAdminLogSystem.All(filter))
             {
@@ -66,5 +58,7 @@ public sealed class QueryTests : ContentIntegrationTest
 
             return false;
         });
+
+        await pairTracker.CleanReturnAsync();
     }
 }

@@ -1,20 +1,24 @@
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.VendingMachines;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 using Content.Shared.Throwing;
+using Content.Shared.VendingMachines;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
-namespace Content.Server.VendingMachines.Systems
+namespace Content.Server.VendingMachines
 {
     public sealed class VendingMachineSystem : EntitySystem
     {
@@ -23,6 +27,7 @@ namespace Content.Server.VendingMachines.Systems
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _action = default!;
 
         public override void Initialize()
         {
@@ -33,6 +38,9 @@ namespace Content.Server.VendingMachines.Systems
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
             SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamage);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
         }
 
         private void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
@@ -44,12 +52,18 @@ namespace Content.Server.VendingMachines.Systems
                 TryUpdateVisualState(uid, null, component);
             }
 
+            if (component.Action != null)
+            {
+                var action = new InstantAction(_prototypeManager.Index<InstantActionPrototype>(component.Action));
+                _action.AddAction(uid, action, uid);
+            }
+
             InitializeFromPrototype(uid, component);
         }
 
         private void OnInventoryRequestMessage(EntityUid uid, VendingMachineComponent component, InventorySyncRequestMessage args)
         {
-            if (!IsPowered(uid, component))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             var inventory = new List<VendingMachineInventoryEntry>(component.Inventory);
@@ -62,7 +76,7 @@ namespace Content.Server.VendingMachines.Systems
 
         private void OnInventoryEjectMessage(EntityUid uid, VendingMachineComponent component, VendingMachineEjectMessage args)
         {
-            if (!IsPowered(uid, component))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             if (args.Session.AttachedEntity is not { Valid: true } entity || Deleted(entity))
@@ -90,17 +104,23 @@ namespace Content.Server.VendingMachines.Systems
             component.Emagged = true;
             args.Handled = true;
         }
-
-        public bool IsPowered(EntityUid uid, VendingMachineComponent? vendComponent = null)
+        
+        private void OnDamage(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
         {
-            if (!Resolve(uid, ref vendComponent))
-                return false;
+            if (component.DispenseOnHitChance == null || args.DamageDelta == null)
+                return;
 
-            if (!TryComp<ApcPowerReceiverComponent>(vendComponent.Owner, out var receiver))
-            {
-                return false;
-            }
-            return receiver.Powered;
+            if (args.DamageDelta.Total >= component.DispenseOnHitThreshold && _random.Prob(component.DispenseOnHitChance.Value))
+                EjectRandom(uid, true, component);
+        }
+
+        private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            EjectRandom(uid, true, component);
         }
 
         public void InitializeFromPrototype(EntityUid uid, VendingMachineComponent? vendComponent = null)
@@ -169,7 +189,7 @@ namespace Content.Server.VendingMachines.Systems
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundDeny.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundDeny.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             // Play the Deny animation
             TryUpdateVisualState(uid, VendingMachineVisualState.Deny, vendComponent);
             //TODO: This duration should be a distinct value specific to the deny animation
@@ -186,7 +206,7 @@ namespace Content.Server.VendingMachines.Systems
 
             if (TryComp<AccessReaderComponent?>(vendComponent.Owner, out var accessReader))
             {
-                if (!_accessReader.IsAllowed(accessReader, sender.Value) && !vendComponent.Emagged)
+                if (!_accessReader.IsAllowed(sender.Value, accessReader) && !vendComponent.Emagged)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
                     Deny(uid, vendComponent);
@@ -201,7 +221,7 @@ namespace Content.Server.VendingMachines.Systems
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            if (vendComponent.Ejecting || vendComponent.Broken || !IsPowered(uid, vendComponent))
+            if (vendComponent.Ejecting || vendComponent.Broken || !this.IsPowered(uid, EntityManager))
             {
                 return;
             }
@@ -251,7 +271,7 @@ namespace Content.Server.VendingMachines.Systems
                     _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
                 }
             });
-            SoundSystem.Play(Filter.Pvs(vendComponent.Owner), vendComponent.SoundVend.GetSound(), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(vendComponent.SoundVend.GetSound(), Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
@@ -276,7 +296,7 @@ namespace Content.Server.VendingMachines.Systems
             {
                 finalState = VendingMachineVisualState.Eject;
             }
-            else if (!IsPowered(uid, vendComponent))
+            else if (!this.IsPowered(uid, EntityManager))
             {
                 finalState = VendingMachineVisualState.Off;
             }

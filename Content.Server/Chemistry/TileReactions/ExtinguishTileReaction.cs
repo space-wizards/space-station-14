@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -19,15 +19,9 @@ namespace Content.Server.Chemistry.TileReactions
             if (reactVolume <= FixedPoint2.Zero || tile.Tile.IsEmpty)
                 return FixedPoint2.Zero;
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            var atmosphereSystem = entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var transform = entities.GetComponent<TransformComponent>(tile.GridUid);
-
-            if (transform.MapUid is not { } mapUid)
-                return FixedPoint2.Zero;
-
-            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, mapUid, tile.GridIndices, true);
+            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, tile.GridIndices, true);
 
             if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))
                 return FixedPoint2.Zero;
@@ -36,7 +30,7 @@ namespace Content.Server.Chemistry.TileReactions
                 MathF.Max(MathF.Min(environment.Temperature - (_coolingTemperature * 1000f),
                         environment.Temperature / _coolingTemperature), Atmospherics.TCMB);
 
-            atmosphereSystem.ReactTile(tile.GridUid, tile.GridIndices);
+            atmosphereSystem.React(tile.GridUid, tile.GridIndices);
             atmosphereSystem.HotspotExtinguish(tile.GridUid, tile.GridIndices);
 
             return FixedPoint2.Zero;

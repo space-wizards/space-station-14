@@ -4,6 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -17,13 +19,18 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/space.rsi
+  - type: CombatMode
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 20
+      mass: 40
       mask:
       - MobMask
       layer:
@@ -35,17 +42,19 @@
       100: !type:DeadMobState {}
   - type: MovementIgnoreGravity
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      crit: crit
-      dead: dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: crit
+      Dead:
+        Base: dead
   - type: Butcherable
-    # TODO: CrapMeat or FishMeat # - 2022-02-17 LMAO crap meat
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatFish
       amount: 2
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -55,17 +64,6 @@
       types:
         Piercing: 5
         Slash: 10
-  - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: space carp
-    description: |
-      If you're a salvage spawn, defend the loot inside!
-      Otherwise, wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
   - type: TypingIndicator
@@ -84,8 +82,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: alive
       sprite: Mobs/Aliens/Carps/magic.rsi
-  - type: GhostTakeoverAvailable
-    name: magicarp
   - type: TypingIndicator
     proto: guardian
 
@@ -93,7 +89,7 @@
   name: holocarp
   parent: MobCarp
   id: MobCarpHolo
-  description: Carp made out of holographic energies.
+  description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -112,8 +108,6 @@
       - MobMask
       layer:
       - Opaque
-  - type: GhostTakeoverAvailable
-    name: holocarp
   - type: TypingIndicator
     proto: robot
 
@@ -127,4 +121,15 @@
     description: |
       Defend the loot inside the salvage wreck!
   - type: SalvageMobRestrictions
+
+- type: entity
+  name: space carp
+  id: MobCarpDragon
+  suffix: DragonBrood
+  parent: MobCarp
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Sentient Carp
+    description: Help the dragon flood the station with carps!
 

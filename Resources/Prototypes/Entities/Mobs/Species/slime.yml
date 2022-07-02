@@ -5,148 +5,160 @@
   description: A miserable pile of slime.
   abstract: true
   components:
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: full
-    - type: Sprite
-      netsync: false
-      drawdepth: Mobs
-      layers:
-        - map: [ "enum.HumanoidVisualLayers.Chest" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: torso_m
-        - map: [ "enum.HumanoidVisualLayers.Head" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: head_m
-        - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-          color: "#008800"
-          sprite: Mobs/Customization/eyes.rsi
-          state: eyes
-        - map: [ "enum.HumanoidVisualLayers.RArm" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: r_arm
-        - map: [ "enum.HumanoidVisualLayers.LArm" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: l_arm
-        - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: r_leg
-        - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: l_leg
-        - shader: StencilClear
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: l_leg
-        - shader: StencilMask
-          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
-          sprite: Mobs/Customization/masking_helpers.rsi
-          state: female_full
-          visible: false
-        - map: [ "jumpsuit" ]
-          shader: StencilDraw
-        - map: [ "enum.HumanoidVisualLayers.LHand" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: l_hand
-        - map: [ "enum.HumanoidVisualLayers.RHand" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: r_hand
-        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: l_foot
-        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-          color: "#b8b8b8"
-          sprite: Mobs/Species/Slime/parts.rsi
-          state: r_foot
-        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-          color: "#ffffff"
-          sprite: Objects/Misc/handcuffs.rsi
-          state: body-overlay-2
-          visible: false
-        - map: [ "id" ]
-        - map: [ "gloves" ]
-        - map: [ "shoes" ]
-        - map: [ "ears" ]
-        - map: [ "outerClothing" ]
-        - map: [ "eyes" ]
-        - map: [ "belt" ]
-        - map: [ "neck" ]
-        - map: [ "back" ]
-        - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-          state: shaved
-          sprite: Mobs/Customization/human_facial_hair.rsi
-        - map: [ "enum.HumanoidVisualLayers.Hair" ]
-          state: bald
-          sprite: Mobs/Customization/human_hair.rsi
-        - map: [ "mask" ]
-        - map: [ "head" ]
-        - map: [ "pocket1" ]
-        - map: [ "pocket2" ]
-    - type: Markings
-      layerPoints:
-       Legs:
-        points: 2
-        required: false
-       Arms:
-        points: 4
-        required: false
-    - type: Body
-      template: HumanoidTemplate
-      preset: SlimePreset
-    - type: HumanoidAppearance
-      hairMatchesSkin: true
-      hairAlpha: 0.5
-    - type: Damageable
-      damageContainer: Biological
-      damageModifierSet: Slime
-    - type: Bloodstream
-      bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
-      bloodlossDamage:
-        types:
-          Bloodloss:
-            1
-      bloodlossHealDamage:
-        types:
-          Bloodloss:
-            -0.25
-    - type: Barotrauma
-      damage:
-        types:
-          Blunt: 1.4 #per second, scales with pressure and other constants. Twice as much as humans.
-    - type: Reactive
-      groups:
-        Flammable: [ Touch ]
-        Extinguish: [ Touch ]
-      reactions:
-      - reagents: [ Water, SpaceCleaner ]
-        methods: [ Touch ]
-        effects:
-        - !type:WashCreamPieReaction
-      - reagents: [ Water ]
-        methods: [ Touch ]
-        effects:
-        - !type:HealthChange
-          scaled: true
-          damage:
-            types:
-              Heat: 2
-        - !type:PopupMessage
-          type: Local
-          messages: [ "slime-hurt-by-water-popup" ]
-          probability: 0.25
-    - type: Butcherable
-      butcheringType: Spike
-      spawned:
-      - id: FoodMeatSlime
-        amount: 5
+  - type: Icon
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: full
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    layers:
+      - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: torso_m
+      - map: [ "enum.HumanoidVisualLayers.Head" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        color: "#008800"
+        sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+      - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: r_arm
+      - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: l_arm
+      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: r_leg
+      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: l_leg
+      - shader: StencilClear
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: l_leg
+      - shader: StencilMask
+        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+      - map: [ "jumpsuit" ]
+        shader: StencilDraw
+      - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: l_hand
+      - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: r_hand
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: l_foot
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        color: "#b8b8b8"
+        sprite: Mobs/Species/Slime/parts.rsi
+        state: r_foot
+      - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
+      - map: [ "id" ]
+      - map: [ "gloves" ]
+      - map: [ "shoes" ]
+      - map: [ "ears" ]
+      - map: [ "outerClothing" ]
+      - map: [ "eyes" ]
+      - map: [ "belt" ]
+      - map: [ "neck" ]
+      - map: [ "back" ]
+      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+        state: shaved
+        sprite: Mobs/Customization/human_facial_hair.rsi
+      - map: [ "enum.HumanoidVisualLayers.Hair" ]
+        state: bald
+        sprite: Mobs/Customization/human_hair.rsi
+      - map: [ "mask" ]
+      - map: [ "head" ]
+      - map: [ "pocket1" ]
+      - map: [ "pocket2" ]
+  - type: Markings
+    layerPoints:
+     Legs:
+      points: 2
+      required: false
+     Arms:
+      points: 4
+      required: false
+  - type: Body
+    template: HumanoidTemplate
+    preset: SlimePreset
+  - type: HumanoidAppearance
+    hairMatchesSkin: true
+    hairAlpha: 0.5
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Slime
+  - type: Bloodstream
+    bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.3 #per second, scales with pressure and other constants. Twice as much as humans.
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaled: true
+        damage:
+          types:
+            Heat: 2
+      - !type:PopupMessage
+        type: Local
+        messages: [ "slime-hurt-by-water-popup" ]
+        probability: 0.25
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatSlime
+      amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    maxSaturation: 15
+  - type: DiseaseCarrier
+    naturalImmunities:
+    - Ultragigacancer
+    - BleedersBite
 
 - type: entity
   save: false

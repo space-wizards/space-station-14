@@ -28,7 +28,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [Dependency] private readonly AdminLogSystem _adminLog = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public StationEvent? CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -66,29 +66,13 @@ namespace Content.Server.StationEvents
         private bool _enabled = true;
 
         /// <summary>
-        /// Admins can get a list of all events available to run, regardless of whether their requirements have been met
-        /// </summary>
-        /// <returns></returns>
-        public string GetEventNames()
-        {
-            StringBuilder result = new StringBuilder();
-
-            foreach (var stationEvent in _stationEvents)
-            {
-                result.Append(stationEvent.Name + "\n");
-            }
-
-            return result.ToString();
-        }
-
-        /// <summary>
         /// Admins can forcibly run events by passing in the Name
         /// </summary>
         /// <param name="name">The exact string for Name, without localization</param>
         /// <returns></returns>
         public string RunEvent(string name)
         {
-            _adminLog.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
+            _adminLogger.Add(LogType.EventRan, LogImpact.High, $"Event run: {name}");
 
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command
@@ -352,6 +336,12 @@ namespace Content.Server.StationEvents
                 return false;
             }
 
+            if (stationEvent.LastRun != TimeSpan.Zero && currentTime.TotalMinutes <
+                stationEvent.ReoccurrenceDelay + stationEvent.LastRun.TotalMinutes)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -372,6 +362,7 @@ namespace Content.Server.StationEvents
             foreach (var stationEvent in _stationEvents)
             {
                 stationEvent.Occurrences = 0;
+                stationEvent.LastRun = TimeSpan.Zero;
             }
 
             _timeUntilNextEvent = MinimumTimeUntilFirstEvent;

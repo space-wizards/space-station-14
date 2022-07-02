@@ -8,9 +8,6 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_mags.dmi",
     "states": [
         {
-            "name": "icon"
-        },
-        {
             "name": "base"
         },
         {

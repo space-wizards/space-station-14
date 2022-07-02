@@ -1,16 +1,13 @@
-using Content.Server.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Database;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedHungerComponent))]
     public sealed class HungerComponent : SharedHungerComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -68,10 +65,6 @@ namespace Content.Server.Nutrition.Components
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
         };
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
 
         public void HungerThresholdEffect(bool force = false)
         {
@@ -172,21 +165,6 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
-            // --> Current Hunger is below dead threshold
-
-            if (!_entMan.TryGetComponent(Owner, out MobStateComponent? mobState))
-                return;
-
-            if (!mobState.IsDead())
-            {
-                // --> But they are not dead yet.
-                _accumulatedFrameTime += frametime;
-                if (_accumulatedFrameTime >= 1)
-                {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
-                    _accumulatedFrameTime -= (int) _accumulatedFrameTime;
-                }
-            }
         }
 
         private void UpdateCurrentThreshold()
@@ -195,11 +173,6 @@ namespace Content.Server.Nutrition.Components
             // _trySound(calculatedThreshold);
             if (calculatedHungerThreshold != _currentHungerThreshold)
             {
-                if (_currentHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has stopped starving");
-                else if (calculatedHungerThreshold == HungerThreshold.Dead)
-                    EntitySystem.Get<AdminLogSystem>().Add(LogType.Hunger, $"{_entMan.ToPrettyString(Owner):entity} has started starving");
-
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
                 Dirty();

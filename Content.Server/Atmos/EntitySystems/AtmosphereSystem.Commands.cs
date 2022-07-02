@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
@@ -16,7 +17,7 @@ public sealed partial class AtmosphereSystem
         // Fix Grid Atmos command.
         _consoleHost.RegisterCommand("fixgridatmos",
             "Makes every tile on a grid have a roundstart gas mix.",
-            "fixgridatmos <grid Ids>", FixGridAtmosCommand);
+            "fixgridatmos <grid Ids>", FixGridAtmosCommand, FixGridAtmosCommandCompletions);
     }
 
     private void ShutdownCommands()
@@ -57,26 +58,23 @@ public sealed partial class AtmosphereSystem
        mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
        mixtures[5].Temperature = 5000f;
 
-       foreach (var gid in args)
+       foreach (var arg in args)
        {
-           // I like offering detailed error messages, that's why I don't use one of the extension methods.
-           if (!int.TryParse(gid, out var i) || i <= 0)
+           if(!EntityUid.TryParse(arg, out var euid))
            {
-               shell.WriteError($"Invalid grid ID \"{gid}\".");
-               continue;
+               shell.WriteError($"Failed to parse euid '{arg}'.");
+               return;
            }
 
-           var gridId = new GridId(i);
-
-           if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
+           if (!TryComp(euid, out IMapGridComponent? gridComp))
            {
-               shell.WriteError($"Grid \"{i}\" doesn't exist.");
-               continue;
+               shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+               return;
            }
 
-           if (!TryComp(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
+           if (!TryComp(euid, out GridAtmosphereComponent? gridAtmosphere))
            {
-               shell.WriteError($"Grid \"{i}\" has no atmosphere component, try addatmos.");
+               shell.WriteError($"Grid \"{euid}\" has no atmosphere component, try addatmos.");
                continue;
            }
 
@@ -88,7 +86,7 @@ public sealed partial class AtmosphereSystem
 
                tile.Clear();
                var mixtureId = 0;
-               foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
+               foreach (var entUid in gridComp.Grid.GetAnchoredEntities(indices))
                {
                    if (!TryComp(entUid, out AtmosFixMarkerComponent? afm))
                        continue;
@@ -102,5 +100,20 @@ public sealed partial class AtmosphereSystem
                gridAtmosphere.InvalidatedCoords.Add(indices);
            }
        }
+    }
+
+    private CompletionResult FixGridAtmosCommandCompletions(IConsoleShell shell, string[] args)
+    {
+        MapId? playerMap = null;
+        if (shell.Player is { AttachedEntity: { } playerEnt })
+            playerMap = Transform(playerEnt).MapID;
+
+        var options = _mapManager.GetAllGrids()
+            .OrderByDescending(e => playerMap != null && e.ParentMapId == playerMap)
+            .ThenBy(e => (int) e.ParentMapId)
+            .ThenBy(e => (int) e.GridEntityId)
+            .Select(e => new CompletionOption(e.GridEntityId.ToString(), $"{MetaData(e.GridEntityId).EntityName} - Map {e.ParentMapId}"));
+
+        return CompletionResult.FromOptions(options);
     }
 }

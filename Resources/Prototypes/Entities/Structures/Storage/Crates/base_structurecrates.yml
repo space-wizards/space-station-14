@@ -5,6 +5,7 @@
   name: crate
   description: A large container for items.
   components:
+  - type: ResistLocker
   - type: Transform
     noRot: true
   - type: Sprite
@@ -26,7 +27,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask #this is so they can go under plastic flaps
       layer:
       - MachineLayer
   - type: EntityStorage
@@ -56,7 +57,10 @@
       whitelist:
         components:
         - Paper
-
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
 
 - type: entity
   id: CrateBaseSecure
@@ -86,7 +90,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask
       layer:
       - MachineLayer
   - type: EntityStorage

@@ -344,7 +344,7 @@ namespace Content.Client.Preferences.UI
 
             var firstCategory = true;
 
-            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
+            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.LocalizedName))
             {
                 if(!job.SetPreference) { continue; }
 
@@ -555,6 +555,7 @@ namespace Content.Client.Preferences.UI
 
                     var color = Color.FromHsv(new Vector4(hue / 360, sat / 100, val / 100, 1.0f));
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -567,6 +568,8 @@ namespace Content.Client.Preferences.UI
                     }
 
                     var color = new Color(_rgbSkinColorSelector.Color.R, _rgbSkinColorSelector.Color.G, _rgbSkinColorSelector.Color.B);
+
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -584,6 +587,7 @@ namespace Content.Client.Preferences.UI
                     newColor.Y = .1f;
                     color = Color.FromHsv(newColor);
 
+                    CMarkings.CurrentSkinColor = color;
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
@@ -834,7 +838,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
         }
 
         private void UpdateSpecies()
@@ -945,7 +949,7 @@ namespace Content.Client.Preferences.UI
             UpdateAntagPreferences();
             UpdateMarkings();
 
-            _needUpdatePreview = true;
+            NeedsDummyRebuild = true;
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -1029,7 +1033,7 @@ namespace Content.Client.Preferences.UI
                     Children =
                     {
                         icon,
-                        new Label {Text = job.Name, MinSize = (175, 0)},
+                        new Label {Text = job.LocalizedName, MinSize = (175, 0)},
                         _optionButton
                     }
                 });

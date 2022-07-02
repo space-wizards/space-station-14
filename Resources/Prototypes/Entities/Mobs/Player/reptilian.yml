@@ -10,7 +10,7 @@
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
-      interactSuccessSound: /Audio/Effects/hug.ogg
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
       messagePerceivedByOthers: hugging-success-generic-others
     - type: Mind
       showExamineInfo: true
@@ -32,8 +32,8 @@
     - type: Respirator
       damage:
        types:
-        Asphyxiation: 1.5
+        Asphyxiation: 1.0
       damageRecovery:
         types:
-          Asphyxiation: -1.5
+          Asphyxiation: -1.0
 #Weh

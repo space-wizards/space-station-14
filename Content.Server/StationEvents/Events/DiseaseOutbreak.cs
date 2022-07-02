@@ -1,6 +1,8 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
+using Content.Server.Station.Systems;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
@@ -17,7 +19,6 @@ public sealed class DiseaseOutbreak : StationEvent
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
 
     /// <summary>
     /// Disease prototypes I decided were not too deadly for a random event
@@ -27,13 +28,18 @@ public sealed class DiseaseOutbreak : StationEvent
         "SpaceCold",
         "VanAusdallsRobovirus",
         "VentCough",
-        "AMIV"
+        "AMIV",
+        "SpaceFlu",
+        "BirdFlew"
     };
     public override string Name => "DiseaseOutbreak";
     public override float Weight => WeightNormal;
 
     public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/outbreak7.ogg");
     protected override float EndAfter => 1.0f;
+
+    public override bool AnnounceEvent => false;
+
     /// <summary>
     /// Finds 2-5 random, alive entities that can host diseases
     /// and gives them a randomly selected disease.
@@ -42,6 +48,7 @@ public sealed class DiseaseOutbreak : StationEvent
     public override void Startup()
     {
         base.Startup();
+        HashSet<EntityUid> stationsToNotify = new();
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
@@ -59,15 +66,28 @@ public sealed class DiseaseOutbreak : StationEvent
             return;
 
         var diseaseSystem = EntitySystem.Get<DiseaseSystem>();
-        /// Now we give it to people in the list of living disease carriers earlier
+        var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
+        var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
+        var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
+        // Now we give it to people in the list of living disease carriers earlier
         foreach (var target in aliveList)
         {
             if (toInfect-- == 0)
                 break;
 
             diseaseSystem.TryAddDisease(target.Owner, disease, target);
+
+            var station = stationSystem.GetOwningStation(target.Owner);
+            if(station == null) continue;
+            stationsToNotify.Add((EntityUid) station);
         }
-        _chatManager.DispatchStationAnnouncement(Loc.GetString("station-event-disease-outbreak-announcement"),
-            playDefaultSound: false, colorOverride: Color.YellowGreen);
+
+        if (!AnnounceEvent)
+            return;
+        foreach (var station in stationsToNotify)
+        {
+            chatSystem.DispatchStationAnnouncement(station, Loc.GetString("station-event-disease-outbreak-announcement"),
+                playDefaultSound: false, colorOverride: Color.YellowGreen);
+        }
     }
 }

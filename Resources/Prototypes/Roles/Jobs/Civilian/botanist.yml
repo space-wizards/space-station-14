@@ -1,15 +1,18 @@
 - type: job
   id: Botanist
-  name: "botanist"
+  name: job-name-botanist
   startingGear: BotanistGear
   departments:
   - Civilian
   icon: "Botanist"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance
   - Hydroponics
+  extendedAccess:
+  - Kitchen
+  - Bar
 
 - type: startingGear
   id: BotanistGear

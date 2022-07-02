@@ -105,11 +105,10 @@
       stomach:
         maxVol: 100
   - type: Stomach
-    maxVolume: 100
-    digestionDelay: 20
+    maxVolume: 10
   - type: Metabolizer
     maxReagents: 3
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Food
     - id: Drink
@@ -125,7 +124,7 @@
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 1
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Alcohol
       rateModifier: 0.1
@@ -141,7 +140,7 @@
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 2
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     groups:
     - id: Medicine
     - id: Poison
@@ -158,5 +157,5 @@
     compatibility: Biological
   - type: Metabolizer
     maxReagents: 5
-    metabolizerTypes: [Human, Animal]
+    metabolizerTypes: [Animal]
     removeEmpty: true

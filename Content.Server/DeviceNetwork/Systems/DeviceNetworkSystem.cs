@@ -21,20 +21,13 @@ namespace Content.Server.DeviceNetwork.Systems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-        private readonly DeviceNet[] _networks = new DeviceNet[4]; // Number of ConnectionType enum values
+        private readonly Dictionary<int, DeviceNet> _networks = new(4);
         private readonly Queue<DeviceNetworkPacketEvent> _packets = new();
 
         public override void Initialize()
         {
-            base.Initialize();
-
             SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
-
-            InitNetwork(ConnectionType.Private);
-            InitNetwork(ConnectionType.Wired);
-            InitNetwork(ConnectionType.Wireless);
-            InitNetwork(ConnectionType.Apc);
         }
 
         public override void Update(float frameTime)
@@ -58,7 +51,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == null)
+            if (device.Address == string.Empty)
                 return;
 
             frequency ??= device.TransmitFrequency;
@@ -66,10 +59,6 @@ namespace Content.Server.DeviceNetwork.Systems
             if (frequency != null)
                 _packets.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
         }
-
-        private void InitNetwork(ConnectionType connectionType) =>
-            _networks[(int) connectionType] = new(connectionType, _random);
-
         /// <summary>
         /// Automatically attempt to connect some devices when a map starts.
         /// </summary>
@@ -93,8 +82,14 @@ namespace Content.Server.DeviceNetwork.Systems
                 ConnectDevice(uid, device);
         }
 
-        private DeviceNet GetNetwork(ConnectionType connectionType) =>
-            _networks[(int) connectionType];
+        private DeviceNet GetNetwork(int netId)
+        {
+            if (_networks.TryGetValue(netId, out var deviceNet))
+                return deviceNet;
+            var newDeviceNet = new DeviceNet(netId, _random);
+            _networks[netId] = newDeviceNet;
+            return newDeviceNet;
+        }
 
         /// <summary>
         /// Automatically disconnect when an entity with a DeviceNetworkComponent shuts down.
@@ -191,7 +186,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         ///     Try to find a device on a network using its address.
         /// </summary>
-        private bool TryGetDevice(ConnectionType netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device) =>
+        private bool TryGetDevice(int netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device) =>
             GetNetwork(netId).Devices.TryGetValue(address, out device);
 
         private void SendPacket(DeviceNetworkPacketEvent packet)
@@ -199,7 +194,8 @@ namespace Content.Server.DeviceNetwork.Systems
             var network = GetNetwork(packet.NetId);
             if (packet.Address == null)
             {
-                if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices))
+                // Broadcast to all listening devices
+                if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
                 {
                     var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(devices.Count);
                     devices.CopyTo(deviceCopy);
@@ -234,6 +230,30 @@ namespace Content.Server.DeviceNetwork.Systems
                 SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
                 ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
             }
+        }
+
+        /// <summary>
+        /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
+        /// The recipients is set to the modified recipient list.
+        /// </summary>
+        /// <returns>false if the broadcast was canceled</returns>
+        private bool CheckRecipientsList(DeviceNetworkPacketEvent packet, ref HashSet<DeviceNetworkComponent> recipients)
+        {
+            if (!_networks.ContainsKey(packet.NetId) || !_networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
+                return false;
+
+            var sender = _networks[packet.NetId].Devices[packet.SenderAddress];
+            if (!sender.SendBroadcastAttemptEvent)
+                return true;
+
+            var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
+            RaiseLocalEvent(packet.Sender, beforeBroadcastAttemptEvent, true);
+
+            if (beforeBroadcastAttemptEvent.Cancelled || beforeBroadcastAttemptEvent.ModifiedRecipients == null)
+                return false;
+
+            recipients = beforeBroadcastAttemptEvent.ModifiedRecipients;
+            return true;
         }
 
         private void SendToConnections(ReadOnlySpan<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
@@ -284,14 +304,28 @@ namespace Content.Server.DeviceNetwork.Systems
     }
 
     /// <summary>
+    /// Sent to the sending entity before broadcasting network packets to recipients
+    /// </summary>
+    public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly IReadOnlySet<DeviceNetworkComponent> Recipients;
+        public HashSet<DeviceNetworkComponent>? ModifiedRecipients;
+
+        public BeforeBroadcastAttemptEvent(IReadOnlySet<DeviceNetworkComponent> recipients)
+        {
+            Recipients = recipients;
+        }
+    }
+
+    /// <summary>
     /// Event raised when a device network packet gets sent.
     /// </summary>
     public sealed class DeviceNetworkPacketEvent : EntityEventArgs
     {
         /// <summary>
-        /// The type of network that this packet is being sent on.
+        /// The id of the network that this packet is being sent on.
         /// </summary>
-        public ConnectionType NetId;
+        public int NetId;
 
         /// <summary>
         /// The frequency the packet is sent on.
@@ -318,7 +352,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         public readonly NetworkPayload Data;
 
-        public DeviceNetworkPacketEvent(ConnectionType netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
+        public DeviceNetworkPacketEvent(int netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
         {
             NetId = netId;
             Address = address;

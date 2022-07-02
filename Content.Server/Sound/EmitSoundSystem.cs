@@ -40,12 +40,13 @@ namespace Content.Server.Sound
         private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
         {
             TryEmitSound(component);
+            args.Handled = true;
         }
 
         private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
         {
             if (!TryComp<TransformComponent>(eUI, out var xform) ||
-                !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+                !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             var tile = grid.GetTileRef(xform.Coordinates);
 
@@ -85,7 +86,7 @@ namespace Content.Server.Sound
         private void TryEmitSound(BaseEmitSoundComponent component)
         {
             var audioParams = component.AudioParams.WithPitchScale((float) _random.NextGaussian(1, component.PitchVariation));
-            SoundSystem.Play(Filter.Pvs(component.Owner, entityManager: EntityManager), component.Sound.GetSound(), component.Owner, audioParams);
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, audioParams);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Content.Server.Body.Systems
     public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
-        [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
@@ -154,7 +154,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles == 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
             if (respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
@@ -167,7 +167,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles >= 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 

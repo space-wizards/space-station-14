@@ -4,6 +4,7 @@ using Content.Server.Medical.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CharacterAppearance.Components;
@@ -13,6 +14,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -57,7 +59,7 @@ namespace Content.Server.Medical
 
         private void OnActivated(EntityUid uid, MedicalScannerComponent scannerComponent, ActivateInWorldEvent args)
         {
-            if (!IsPowered(scannerComponent))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             UpdateUserInterface(uid, scannerComponent);
@@ -164,10 +166,8 @@ namespace Content.Server.Medical
 
         private void UpdateUserInterface(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
-            if (!IsPowered(scannerComponent))
-            {
+            if (!this.IsPowered(uid, EntityManager))
                 return;
-            }
 
             var newState = GetUserInterfaceState(uid, scannerComponent);
             scannerComponent.UserInterface?.SetState(newState);
@@ -175,7 +175,7 @@ namespace Content.Server.Medical
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
-            if (IsPowered(scannerComponent))
+            if (this.IsPowered(scannerComponent.Owner, EntityManager))
             {
                 var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)
@@ -189,15 +189,6 @@ namespace Content.Server.Medical
                 return GetStatusFromDamageState(state);
             }
             return MedicalScannerStatus.Off;
-        }
-
-        public bool IsPowered(MedicalScannerComponent scannerComponent)
-        {
-            if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var receiver))
-            {
-                return receiver.Powered;
-            }
-            return false;
         }
 
         public bool IsOccupied(MedicalScannerComponent scannerComponent)

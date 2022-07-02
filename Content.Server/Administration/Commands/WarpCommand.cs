@@ -38,12 +38,7 @@ namespace Content.Server.Administration.Commands
             var location = args[0];
             if (location == "?")
             {
-                var locations = string.Join(", ",
-                    entMan.EntityQuery<WarpPointComponent>(true)
-                        .Select(p => p.Location)
-                        .Where(p => p != null)
-                        .OrderBy(p => p)
-                        .Distinct());
+                var locations = string.Join(", ", GetWarpPointNames(entMan));
 
                 shell.WriteLine(locations);
             }
@@ -57,7 +52,7 @@ namespace Content.Server.Administration.Commands
 
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var currentMap = entMan.GetComponent<TransformComponent>(playerEntity).MapID;
-                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
+                var currentGrid = entMan.GetComponent<TransformComponent>(playerEntity).GridUid;
 
                 var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
@@ -67,8 +62,8 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridId(entMan);
-                        var bGrid = b.GetGridId(entMan);
+                        var aGrid = a.GetGridUid(entMan);
+                        var bGrid = b.GetGridUid(entMan);
 
                         if (aGrid == bGrid)
                         {
@@ -85,8 +80,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = mapManager.GetGrid(aGrid).ParentMapId;
-                        var mapB = mapManager.GetGrid(bGrid).ParentMapId;
+                        var mapA = a.GetMapId(entMan);
+                        var mapB = a.GetMapId(entMan);
 
                         if (mapA == mapB)
                         {
@@ -107,7 +102,8 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                if (found.GetGridId(entMan) != GridId.Invalid)
+                var entityUid = found.GetGridUid(entMan);
+                if (entityUid != EntityUid.Invalid)
                 {
                     entMan.GetComponent<TransformComponent>(playerEntity).Coordinates = found;
                     if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
@@ -120,6 +116,28 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine("That location does not exist!");
                 }
             }
+        }
+
+        private static IEnumerable<string> GetWarpPointNames(IEntityManager entMan)
+        {
+            return entMan.EntityQuery<WarpPointComponent>(true)
+                .Select(p => p.Location)
+                .Where(p => p != null)
+                .OrderBy(p => p)
+                .Distinct()!;
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var ent = IoCManager.Resolve<IEntityManager>();
+                var options = new[] { "?" }.Concat(GetWarpPointNames(ent));
+
+                return CompletionResult.FromHintOptions(options, "<warp point | ?>");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

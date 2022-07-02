@@ -1,9 +1,7 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -22,40 +20,29 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var id))
-            {
-                shell.WriteLine($"{args[0]} is not a valid integer.");
-                return;
-            }
-
-            var gridId = new GridId(id);
-
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
-            {
-                shell.WriteLine($"{gridId} is not a valid grid id.");
-                return;
-            }
-
             var entMan = IoCManager.Resolve<IEntityManager>();
 
-            if (!entMan.EntityExists(gridComp.GridEntityId))
+            if (EntityUid.TryParse(args[0], out var euid))
             {
-                shell.WriteLine("Failed to get grid entity.");
+                shell.WriteError($"Failed to parse euid '{args[0]}'.");
                 return;
             }
 
-            var atmosphere = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-
-            if (!atmosphere.HasAtmosphere(gridComp.GridEntityId))
+            if (!entMan.HasComponent<IMapGridComponent>(euid))
             {
-                entMan.AddComponent<GridAtmosphereComponent>(gridComp.GridEntityId);
+                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+                return;
             }
 
-            atmosphere.SetSimulatedGrid(gridComp.GridEntityId, false);
+            if (entMan.HasComponent<IAtmosphereComponent>(euid))
+            {
+                shell.WriteLine("Grid already has an atmosphere.");
+                return;
+            }
 
-            shell.WriteLine($"Added unsimulated atmosphere to grid {id}.");
+            entMan.AddComponent<UnsimulatedGridAtmosphereComponent>(euid);
+
+            shell.WriteLine($"Added unsimulated atmosphere to grid {euid}.");
         }
     }
 

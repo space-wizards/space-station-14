@@ -9,7 +9,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -71,3 +70,8 @@
     locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]
+  - type: Construction
+    graph: Machine
+    node: machine
+  - type: Machine
+    board: EmitterCircuitboard
