@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed energy sword blade colors not being properly applied to player
-      sprites., type: Fix}
-  - {message: The light emitted by hacked energy swords now update along with the
-      blade color., type: Tweak}
-  id: 1341
-  time: '2022-04-16T05:11:48.0000000+00:00'
 - author: Soupstraw
   changes:
   - {message: Added airlock painter tool, type: Add}
@@ -2959,3 +2951,8 @@ Entries:
   - {message: 'Pills can now only hold 20 units of reagent, down from 50.', type: Tweak}
   id: 1840
   time: '2022-07-01T20:42:29.0000000+00:00'
+- author: Solbusaur
+  changes:
+  - {message: Added new "Pharmacy" lobby art by Solbusaur, type: Add}
+  id: 1841
+  time: '2022-07-02T00:54:04.0000000+00:00'
