@@ -15,6 +15,8 @@ using Content.Shared.Maps;
 using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
+using Robust.Server.GameStates;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Exceptions;
@@ -213,52 +215,61 @@ public static class PoolManager
 
     private static async Task<PairTracker> GetServerClientPair(PoolSettings poolSettings, string testMethodName)
     {
-        var poolRetrieveTimeWatch = new Stopwatch();
-        poolRetrieveTimeWatch.Start();
-        await TestContext.Out.WriteLineAsync("Getting server/client");
-        Pair pair;
-        if (poolSettings.MustBeNew)
+        Pair pair = null;
+        try
         {
-            await TestContext.Out.WriteLineAsync($"Creating, because must be new pair");
-            pair = await CreateServerClientPair(poolSettings);
-        }
-        else
-        {
-            pair = GrabOptimalPair(poolSettings);
-            if (pair != null)
+            var poolRetrieveTimeWatch = new Stopwatch();
+            poolRetrieveTimeWatch.Start();
+            await TestContext.Out.WriteLineAsync("Getting server/client");
+            if (poolSettings.MustBeNew)
             {
-                var canSkip = pair.Settings.CanFastRecycle(poolSettings);
-
-                if (!canSkip)
-                {
-                    await TestContext.Out.WriteLineAsync($"Cleaning existing pair");
-                    await CleanPooledPair(poolSettings, pair);
-                }
-                else
-                {
-                    await TestContext.Out.WriteLineAsync($"Skip cleanup pair");
-                }
+                await TestContext.Out.WriteLineAsync($"Creating, because must be new pair");
+                pair = await CreateServerClientPair(poolSettings);
             }
             else
             {
-                await TestContext.Out.WriteLineAsync($"Creating, because pool empty");
-                pair = await CreateServerClientPair(poolSettings);
+                pair = GrabOptimalPair(poolSettings);
+                if (pair != null)
+                {
+                    var canSkip = pair.Settings.CanFastRecycle(poolSettings);
+
+                    if (!canSkip)
+                    {
+                        await TestContext.Out.WriteLineAsync($"Cleaning existing pair");
+                        await CleanPooledPair(poolSettings, pair);
+                    }
+                    else
+                    {
+                        await TestContext.Out.WriteLineAsync($"Skip cleanup pair");
+                    }
+                }
+                else
+                {
+                    await TestContext.Out.WriteLineAsync($"Creating, because pool empty");
+                    pair = await CreateServerClientPair(poolSettings);
+                }
+            }
+
+            var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
+            await TestContext.Out.WriteLineAsync(
+                $"Got server/client (id:{pair.PairId},uses:{pair.TestHistory.Count}) in {poolRetrieveTime.TotalMilliseconds} ms");
+            pair.Settings = poolSettings;
+            pair.TestHistory.Add(testMethodName);
+            var usageWatch = new Stopwatch();
+            usageWatch.Start();
+            return new PairTracker()
+            {
+                Pair = pair,
+                UsageWatch = usageWatch
+            };
+        }
+        finally
+        {
+            if (pair != null)
+            {
+                TestContext.Out.WriteLine($"Test History|\n{string.Join('\n', pair.TestHistory)}\n|Test History End");
             }
         }
-
-        var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
-        await TestContext.Out.WriteLineAsync($"Got server/client (id:{pair.PairId},uses:{pair.TestHistory.Count}) in {poolRetrieveTime.TotalMilliseconds} ms");
-        pair.Settings = poolSettings;
-
-        TestContext.Out.WriteLine($"Test History|\n{string.Join('\n', pair.TestHistory)}\n|Test History End");
-        pair.TestHistory.Add(testMethodName);
-        var usageWatch = new Stopwatch();
-        usageWatch.Start();
-        return new PairTracker()
-        {
-            Pair = pair,
-            UsageWatch = usageWatch
-        };
     }
 
     private static Pair GrabOptimalPair(PoolSettings poolSettings)
@@ -314,15 +325,17 @@ public static class PoolManager
             {
                 cNetMgr.ClientConnect(null!, 0, null!);
             });
-            await ReallyBeIdle(pair,11);
         }
+        await ReallyBeIdle(pair,11);
+
         await TestContext.Out.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
 
         await pair.Client.WaitPost(() =>
         {
             cNetMgr.ClientDisconnect("Test pooling cleanup disconnect");
         });
-        await ReallyBeIdle(pair, 5);
+
+        await ReallyBeIdle(pair, 10);
 
         if (!string.IsNullOrWhiteSpace(pair.Settings.ExtraPrototypes))
         {
@@ -413,10 +426,7 @@ public static class PoolManager
         var server = pairTracker.Pair.Server;
         var settings = pairTracker.Pair.Settings;
         if (settings.NoServer) throw new Exception("Cannot setup test map without server");
-        var mapData = new TestMapData
-        {
-
-        };
+        var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
