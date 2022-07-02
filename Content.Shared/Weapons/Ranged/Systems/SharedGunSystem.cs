@@ -12,6 +12,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -42,6 +43,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
+    [Dependency] protected readonly TagSystem _tagSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -86,6 +88,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)
     {
+        if (_tagSystem.HasTag(args.User, "GunsDisabled"))
+            return;
+
         args.Cancelled = true;
     }
 
@@ -180,6 +185,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         var toCoordinates = gun.ShootCoordinates;
 
         if (toCoordinates == null) return;
+
+        if (_tagSystem.HasTag(user, "GunsDisabled"))
+        {
+            Popup(Loc.GetString("gun-disabled"), user, user);
+            return;
+        }
 
         var curTime = Timing.CurTime;
 
