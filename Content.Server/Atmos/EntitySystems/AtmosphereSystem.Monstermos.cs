@@ -10,8 +10,6 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
         private readonly TileAtmosphere?[] _equalizeTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
@@ -484,7 +482,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)
-                _adminLogger.Add(LogType.ExplosiveDepressurization, LogImpact.High,
+                _adminLog.Add(LogType.ExplosiveDepressurization, LogImpact.High,
                     $"Explosive depressurization removed {totalMolesRemoved} moles from {tileCount} tiles starting from position {tile.GridIndices:position} on grid ID {tile.GridIndex:grid}");
 
             Array.Clear(_depressurizeTiles, 0, Atmospherics.MonstermosHardTileLimit);

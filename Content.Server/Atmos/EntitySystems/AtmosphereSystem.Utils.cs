@@ -9,9 +9,9 @@ namespace Content.Server.Atmos.EntitySystems;
 public partial class AtmosphereSystem
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void InvalidateVisuals(GridId grid, Vector2i tile)
+    public void InvalidateVisuals(EntityUid gridUid, Vector2i tile)
     {
-        _gasTileOverlaySystem.Invalidate(grid, tile);
+        _gasTileOverlaySystem.Invalidate(gridUid, tile);
     }
 
     public bool NeedsVacuumFixing(IMapGrid mapGrid, Vector2i indices)

@@ -55,7 +55,7 @@ public sealed partial class AtmosphereSystem
             {
                 try
                 {
-                    gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.GridIndex, indices,
+                    gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.Owner, indices,
                             gridAtmosphere.UniqueMixes![mix].Clone()));
                 }
                 catch (ArgumentOutOfRangeException)
@@ -529,7 +529,7 @@ public sealed partial class AtmosphereSystem
         foreach (var tile in mapGrid.GetAllTiles())
         {
             if (!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
-                gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices,
+                gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridUid, tile.GridIndices,
                     new GasMixture(volume) {Temperature = Atmospherics.T20C});
 
             gridAtmosphere.InvalidatedCoords.Add(tile.GridIndices);
@@ -542,7 +542,7 @@ public sealed partial class AtmosphereSystem
         {
             var ev = new UpdateAdjacentMethodEvent(uid, position);
             GridUpdateAdjacent(uid, gridAtmosphere, ref ev);
-            InvalidateVisuals(mapGrid.Index, position);
+            InvalidateVisuals(mapGrid.GridEntityId, position);
         }
     }
 }
