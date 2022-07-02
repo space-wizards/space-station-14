@@ -23,8 +23,6 @@
         mass: 15
         mask:
         - MachineMask
-        layer:
-        - MachineLayer
     - type: Destructible
       thresholds:
       - trigger:

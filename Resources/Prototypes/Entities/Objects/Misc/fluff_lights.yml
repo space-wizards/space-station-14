@@ -96,8 +96,6 @@
       mass: 20
       mask:
       - MachineMask
-      layer:
-      - MachineLayer
   - type: PointLight
     enabled: false
     radius: 8
