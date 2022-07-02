@@ -6,3 +6,4 @@ command-whitelistremove-help = whitelistremove <username>
 command-kicknonwhitelisted-description = Кикнуть с сервера всех пользователь не из вайтлиста.
 command-kicknonwhitelisted-help = kicknonwhitelisted
 soft-player-cap-full = Сервер заполнен!
+panic-bunker-account-denied = This server is in Panic mode and you were rejected. Contact the server administrator for help.
