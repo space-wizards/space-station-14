@@ -1,15 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: The bible's Summon Familiar now appears in the action bar in addition
-      to being an alternative verb., type: Tweak}
-  - {message: Familiars can now open public and chapel doors by walking into them.,
-    type: Tweak}
-  - {message: Familiars now accurately show when they are dead when examined., type: Fix}
-  id: 1352
-  time: '2022-04-17T21:43:00.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Fixed security techfab visuals, type: Fix}
   id: 1353
   time: '2022-04-17T21:55:23.0000000+00:00'
@@ -2945,3 +2936,10 @@ Entries:
     type: Tweak}
   id: 1851
   time: '2022-07-03T02:37:44.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Morgues and body bags should behave much more reliably for stopping
+      rotting., type: Fix}
+  - {message: You can preserve bodies so they never rot., type: Fix}
+  id: 1852
+  time: '2022-07-03T02:46:24.0000000+00:00'
