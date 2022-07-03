@@ -286,6 +286,8 @@
   parent: BaseWeaponBattery
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  # Use Disabler
+  suffix: Obsolete
   components:
   - type: Tag
     tags:
@@ -310,10 +312,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaser
-    fireCost: 50
-  - type: Battery
-    maxCharge: 100
-    startingCharge: 100
+    fireCost: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5
