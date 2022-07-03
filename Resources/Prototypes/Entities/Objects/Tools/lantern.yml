@@ -42,3 +42,11 @@
       radius: 5
       energy: 10
       color: "#FFC458"
+    - type: Flash
+        - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 0 
+      range: 1
+      arcWidth: 10
+      arc: default
