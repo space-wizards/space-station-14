@@ -19,7 +19,7 @@ namespace Content.Client.Storage.UI
 
         private readonly Label _information;
         public readonly ContainerButton StorageContainerButton;
-        public readonly EntityListDisplay EntityList;
+        public readonly ListContainer EntityList;
         private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
         private readonly StyleBoxFlat _unHoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
@@ -61,7 +61,7 @@ namespace Content.Client.Storage.UI
 
             vBox.AddChild(_information);
 
-            EntityList = new EntityListDisplay
+            EntityList = new ListContainer
             {
                 Name = "EntityListContainer",
             };

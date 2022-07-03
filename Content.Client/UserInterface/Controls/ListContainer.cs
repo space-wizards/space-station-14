@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class EntityListDisplay : Control
+public sealed class ListContainer : Control
 {
     public const string StylePropertySeparation = "separation";
 
@@ -42,7 +42,7 @@ public sealed class EntityListDisplay : Control
         }
     }
 
-    public EntityListDisplay()
+    public ListContainer()
     {
         HorizontalExpand = true;
         VerticalExpand = true;
