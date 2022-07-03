@@ -159,7 +159,7 @@ public sealed class StationSystem : EntitySystem
     #endregion Event handlers
 
     /// <summary>
-    /// Retrieves a filter for everything in a particular station or nearby its member grids.
+    /// Retrieves a filter for everything in a particular station or near its member grids.
     /// </summary>
     public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
     {
@@ -171,8 +171,9 @@ public sealed class StationSystem : EntitySystem
 
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!_mapManager.TryGetGrid(gridUid, out var grid)) continue;
-            var xform = xformQuery.GetComponent(gridUid);
+            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+                !xformQuery.TryGetComponent(gridUid, out var xform)) continue;
+
             var mapId = xform.MapID;
             var position = _transform.GetWorldPosition(xform, xformQuery);
             var bound = grid.LocalAABB.Enlarged(range).Translated(position);
