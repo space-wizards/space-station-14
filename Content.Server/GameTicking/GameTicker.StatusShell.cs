@@ -1,5 +1,7 @@
 using System.Text.Json.Nodes;
+using Content.Shared.CCVar;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.GameTicking
 {
@@ -16,6 +18,11 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private DateTime _roundStartDateTime;
 
+        /// <summary>
+        ///     For access to CVars in status responses.
+        /// </summary>
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+
         private void InitializeStatusShell()
         {
             IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
@@ -28,6 +35,7 @@ namespace Content.Server.GameTicking
             {
                 jObject["name"] = _baseServer.ServerName;
                 jObject["players"] = _playerManager.PlayerCount;
+                jObject["soft_max_players"] = _cfg.GetCVar(CCVars.SoftMaxPlayers);
                 jObject["run_level"] = (int) _runLevel;
                 if (_runLevel >= GameRunLevel.InRound)
                 {
