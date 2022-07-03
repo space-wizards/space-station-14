@@ -49,7 +49,7 @@
       arcWidth: 10
       arc: default
     - type: Item
-      size: 2
+      size: 5
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
 

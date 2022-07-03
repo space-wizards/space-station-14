@@ -29,7 +29,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <summary>
     /// How much stamina damage is applied above cap.
     /// </summary>
-    private const float CritExcess = 18f;
+    private const float CritExcess = 21f;
 
     private readonly List<EntityUid> _dirtyEntities = new();
 
@@ -137,7 +137,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <returns></returns>
     private TimeSpan GetStamCritTime(StaminaComponent component)
     {
-        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay);
+        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay) + 2;
         return TimeSpan.FromSeconds(damageableSeconds);
     }
 

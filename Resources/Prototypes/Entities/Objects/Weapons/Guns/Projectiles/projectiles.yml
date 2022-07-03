@@ -58,21 +58,6 @@
       - BulletImpassable
 
 - type: entity
-  id: BaseBulletFlash
-  name: base bullet flash
-  parent: BaseBulletTrigger
-  noSpawn: true
-  components:
-  - type: Projectile
-    soundHit:
-      path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: FlashOnTrigger
-    range: 1
-  - type: EmitSoundOnTrigger
-    sound:
-      path: "/Audio/Effects/flash_bang.ogg"
-
-- type: entity
   id: BaseBulletHighVelocity
   name: base bullet high-velocity
   parent: BaseBullet
