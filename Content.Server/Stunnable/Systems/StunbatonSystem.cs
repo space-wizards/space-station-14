@@ -23,6 +23,7 @@ namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
@@ -68,7 +69,11 @@ namespace Content.Server.Stunnable.Systems
 
             foreach (var entity in args.HitEntities)
             {
-                StunEntity(entity, comp);
+                if (StunEntity(entity, comp))
+                {
+                    // Tell people that the stun actually applied if they're spam hitting (so it's not confused with stamcrit).
+                    _popup.PopupEntity(Loc.GetString("comp-stunbaton-stun"), entity, Filter.Pvs(entity, entityManager: EntityManager));
+                }
                 SendPowerPulse(entity, args.User, uid);
             }
 
@@ -116,9 +121,9 @@ namespace Content.Server.Stunnable.Systems
                     ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
         }
 
-        private void StunEntity(EntityUid entity, StunbatonComponent comp)
+        private bool StunEntity(EntityUid entity, StunbatonComponent comp)
         {
-            if (!EntityManager.TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return;
+            if (!EntityManager.TryGetComponent(entity, out StatusEffectsComponent? status) || !comp.Activated) return false;
 
             SoundSystem.Play(comp.StunSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             _stunSystem.TryParalyze(entity, TimeSpan.FromSeconds(comp.ParalyzeTime), true, status);
@@ -128,10 +133,11 @@ namespace Content.Server.Stunnable.Systems
             _stutteringSystem.DoStutter(entity, slowdownTime, true, status);
 
             if (!TryComp<BatteryComponent>(comp.Owner, out var battery) || !(battery.CurrentCharge < comp.EnergyPerUse))
-                return;
+                return true;
 
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
+            return true;
         }
 
         private void TurnOff(StunbatonComponent comp)
