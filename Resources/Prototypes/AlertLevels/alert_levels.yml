@@ -5,24 +5,24 @@
     green:
       announcement: alert-level-green-announcement
       color: Green
-      shuttleTime: 1200
+      shuttleTime: 600
     blue:
       announcement: alert-level-blue-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Misc/bluealert.ogg
       color: DodgerBlue
     violet:
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Violet
-      shuttleTime: 1200
+      shuttleTime: 600
     yellow:
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
-      shuttleTime: 1200
+      shuttleTime: 400
     red:
       announcement: alert-level-red-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Misc/redalert.ogg
       color: Red
     gamma:
       announcement: alert-level-gamma-announcement

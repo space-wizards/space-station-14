@@ -207,6 +207,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Whether or not panic bunker is currently enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerEnabled =
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
+        /// </summary>
+        public static readonly CVarDef<int> PanicBunkerMinAccountAge =
+            CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -839,8 +851,14 @@ namespace Content.Shared.CCVar
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.85f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether or not to restrict the restart vote when there's online admins.
+        /// </summary>
+        public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
+            CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
+        
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
         /// </summary>
@@ -934,6 +952,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> EmergencyShuttleEnabled =
             CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The percentage of time passed from the initial call to when the shuttle can no longer be recalled.
+        ///     ex. a call time of 10min and turning point of 0.5 means the shuttle cannot be recalled after 5 minutes.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyRecallTurningPoint =
+            CVarDef.Create("shuttle.recall_turning_point", 0.5f, CVar.SERVERONLY);
 
         /// <summary>
         /// The map to load for centcomm for the emergency shuttle to dock to.

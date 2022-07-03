@@ -773,7 +773,7 @@ sealed class Explosion
 
         foreach (var (grid, list) in _tileUpdateDict)
         {
-            if (list.Count > 0)
+            if (list.Count > 0 && _entMan.EntityExists(grid.GridEntityId))
             {
                 grid.SetTiles(list);
             }
