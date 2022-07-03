@@ -1,6 +1,8 @@
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Events;
 using Content.Server.Weapon.Melee;
+using Content.Shared.Alert;
+using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
@@ -11,6 +13,7 @@ namespace Content.Server.Damage.Systems;
 public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     /// <summary>
@@ -35,6 +38,18 @@ public sealed class StaminaSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
+        SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
+    }
+
+    private void OnShutdown(EntityUid uid, StaminaComponent component, ComponentShutdown args)
+    {
+        SetStaminaAlert(uid);
+    }
+
+    private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
+    {
+        SetStaminaAlert(uid, component);
     }
 
     private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
@@ -69,6 +84,18 @@ public sealed class StaminaSystem : EntitySystem
         TakeStaminaDamage(args.OtherFixture.Body.Owner, component.Damage);
     }
 
+    private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false) || component.Deleted)
+        {
+            _alerts.ClearAlert(uid, AlertType.Stamina);
+            return;
+        }
+
+        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
+        _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
+    }
+
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component, false) || component.Critical) return;
@@ -81,6 +108,8 @@ public sealed class StaminaSystem : EntitySystem
         {
             component.StaminaDecayAccumulator = DecayCooldown;
         }
+
+        SetStaminaAlert(uid, component);
 
         // Can't do it here as resetting prediction gets cooked.
         _dirtyEntities.Add(uid);
@@ -126,6 +155,7 @@ public sealed class StaminaSystem : EntitySystem
 
         foreach (var uid in _dirtyEntities)
         {
+            // Don't need to RemComp as they will get handled below.
             if (!stamQuery.TryGetComponent(uid, out var comp) || comp.StaminaDamage <= 0f) continue;
             EnsureComp<ActiveStaminaComponent>(uid);
         }
@@ -182,5 +212,6 @@ public sealed class StaminaSystem : EntitySystem
 
         component.Critical = false;
         component.StaminaDamage = 0f;
+        SetStaminaAlert(uid, component);
     }
 }
