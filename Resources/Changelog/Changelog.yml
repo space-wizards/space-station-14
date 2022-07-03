@@ -1,18 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Space bears are no longer valid ghost roles., type: Remove}
-  - {message: Modified the rules slightly for salvage mob ghost roles., type: Tweak}
-  - {message: 'Space carps/ticks/etc can no longer disarm, and they''re worse at pulling
-      things.', type: Tweak}
-  - {message: 'Carp, ticks, spiders, and bears now have replacement accents.', type: Tweak}
-  id: 1347
-  time: '2022-04-16T23:08:52.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can no longer heal people out of death., type: Tweak}
-  id: 1348
-  time: '2022-04-17T06:29:31.0000000+00:00'
 - author: Rane
   changes:
   - {message: Chaplains can now summon a familiar from their bible., type: Add}
@@ -2952,3 +2938,15 @@ Entries:
   - {message: Fixed vomit puddle mopping behavior, type: Fix}
   id: 1846
   time: '2022-07-03T02:13:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Incidents of sickness from miasma will give all entities the same disease.,
+    type: Tweak}
+  - {message: Moldy food now contains mold., type: Add}
+  id: 1847
+  time: '2022-07-03T02:25:31.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Disarms now deselect after a usage., type: Tweak}
+  id: 1848
+  time: '2022-07-03T02:26:49.0000000+00:00'
