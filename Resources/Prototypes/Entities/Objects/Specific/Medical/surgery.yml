@@ -154,7 +154,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 1.5
+    speed: 1.0
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -176,7 +176,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 2.0
+    speed: 0.5
 
 - type: entity
   name: circular saw
@@ -197,7 +197,7 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 1.0
+    speed: 1.5
 
 - type: entity
   name: advanced circular saw
@@ -218,4 +218,4 @@
   - type: Tool
     qualities:
       - Sawing
-    speed: 0.5
+    speed: 2.0
