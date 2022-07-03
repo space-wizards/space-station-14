@@ -34,7 +34,7 @@
   components:
   - type: HealthAnalyzer
     fake: true
-    disease: TongueTwister
+    disease: OwOnavirus
 
 - type: entity
   parent: HandheldHealthAnalyzer
