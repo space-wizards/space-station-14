@@ -5,6 +5,9 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: Insulated
+  - type: DiseaseProtection
+    protection: 1
   - type: CombatMode
     canDisarm: true
   - type: PlayerInputMover
