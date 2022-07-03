@@ -1,13 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Chaplains can now summon a familiar from their bible., type: Add}
-  - {message: Evil chaplains can now emag the Pietyvend for some goodies., type: Add}
-  - {message: You can now draw blood from most mobs., type: Fix}
-  id: 1349
-  time: '2022-04-17T07:16:03.0000000+00:00'
-- author: Rane
-  changes:
   - {message: The lathe visualizer now works., type: Fix}
   - {message: Lathes now correctly let you produce something when you have the exact
       amount of materials required., type: Fix}
@@ -2950,3 +2943,8 @@ Entries:
   - {message: Disarms now deselect after a usage., type: Tweak}
   id: 1848
   time: '2022-07-03T02:26:49.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
+  id: 1849
+  time: '2022-07-03T02:32:09.0000000+00:00'
