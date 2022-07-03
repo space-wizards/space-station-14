@@ -269,7 +269,6 @@
       quickEquip: false
       Slots:
         - Belt
-      HeldPrefix: taser4
     - type: Gun
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/taser.ogg
@@ -278,7 +277,7 @@
       fireCost: 100
     - type: MagazineVisuals
       magState: mag
-      steps: 2
+      steps: 5
       zeroVisible: true
     - type: Appearance
 
