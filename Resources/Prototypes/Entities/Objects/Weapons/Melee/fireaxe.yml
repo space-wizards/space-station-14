@@ -17,12 +17,14 @@
         # axes are kinda like sharp hammers, you know?
         Blunt: 4
         Slash: 10
+        Structural: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     modifiers:
       flatReductions:
         Blunt: -2 # negative reductions = increases
         Slash: -8
+        Structural: -45
   - type: Clothing
     size: 150
     sprite: Objects/Weapons/Melee/fireaxe.rsi

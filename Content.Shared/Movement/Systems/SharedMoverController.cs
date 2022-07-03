@@ -36,7 +36,8 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
         private const float FootstepVariation = 0f;
-        private const float FootstepVolume = 1f;
+        private const float FootstepVolume = 3f;
+        private const float FootstepWalkingAddedVolumeMultiplier = 0f;
 
         /// <summary>
         /// <see cref="CCVars.MinimumFrictionSpeed"/>
@@ -275,11 +276,12 @@ namespace Content.Shared.Movement.Systems
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
 
-                if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                if (!weightless && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
+                    var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
                     SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
-                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume * soundModifier));
                 }
             }
 
