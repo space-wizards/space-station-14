@@ -24,7 +24,7 @@
   - type: Instrument
     program: 13
   - type: Sprite
-    sprite: Structures/Furniture/instruments.rsi
+    sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: xylophone
   - type: Tag
     tags:
@@ -69,6 +69,22 @@
   - type: Tag
     tags:
     - KeyedInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: KalimbaInstrument
+  name: kalimba
+  description: The power of a piano right at your thumbs.
+  components:
+  - type: Instrument
+    program: 108
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/kalimba.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - KeyedInstrument
+
 
 - type: entity
   parent: BaseHandheldInstrument

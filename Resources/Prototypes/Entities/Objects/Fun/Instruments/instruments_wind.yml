@@ -84,3 +84,22 @@
   - type: Tag
     tags:
     - WoodwindInstrument
+
+#if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
+- type: entity
+  parent: BaseHandheldInstrument
+  id: OcarinaInstrument
+  name: ocarina
+  description: Good for playing lullabies.
+  components:
+  - type: Instrument
+    program: 79
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/ocarina.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Fun/Instruments/ocarina.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument

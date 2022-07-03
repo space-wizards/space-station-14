@@ -40,6 +40,36 @@
        path: /Audio/Items/ring.ogg
   - type: Instrument
     program: 124
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: HelicopterInstrument
+  name: toy helicopter
+  description: Ch-ka-ch-ka-ch-ka-ch-ka-ch-ka-ch-ka...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: helicopter
+  - type: Instrument
+    program: 125
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: CannedApplauseInstrument
+  name: canned applause
+  description: Seems like someone already used it all up...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: cannedapplause
+  - type: Instrument
+    program: 126
+  - type: Item
+    size: 5
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -53,7 +83,7 @@
     sprite: Objects/Fun/Instruments/gunpet.rsi
     state: icon
   - type: Item
-    size: 24
+    size: 15
     sprite: Objects/Fun/Instruments/gunpet.rsi
   - type: Tag
     tags:
@@ -75,7 +105,7 @@
     tags:
     - BrassInstrument #Go figure.
   - type: Clothing
-    size: 24
+    size: 15
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     Slots: [Belt]
     quickEquip: false
