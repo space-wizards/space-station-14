@@ -18,18 +18,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly ContainmentFieldConnectionSystem _fieldConnectionSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
-        SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
-        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
+
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+
+        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
+
+        SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
     }
     private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
     {
@@ -108,9 +112,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
     {
-        if (_tags.HasTag(args.OtherFixture.Body.Owner, "EmitterBolt"))
+        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
-            ReceivePower(6, component);
+            ReceivePower(component.Power, component);
         }
     }
 
@@ -125,13 +129,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
     {
-        var totalPower = power + component.PowerBuffer;
-        var powerPerConnection = totalPower / 2;
-        var newBuffer = totalPower % 2;
-        TryPowerConnection(ref component.Connection1, ref newBuffer, powerPerConnection, component);
-        TryPowerConnection(ref component.Connection2, ref newBuffer, powerPerConnection, component);
+        component.PowerBuffer += power;
+        var powerSpread = power / 2;
 
-        component.PowerBuffer = newBuffer;
+        if (component.PowerBuffer >= component.Power)
+        {
+            TryPowerConnection(ref component.Connection1, powerSpread, component);
+            TryPowerConnection(ref component.Connection2, powerSpread, component);
+        }
     }
 
     public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
@@ -159,7 +164,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
         else if (connection != null)
         {
-            Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
+            Logger.Error("RemoveConnection called on Containment Field Generator with a connection that can't be found in its connections.");
         }
     }
 
@@ -171,10 +176,15 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
         {
-            if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
+            if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue; //this would be the key
 
-            var ev = new ContainmentFieldConnectEvent(component, component);
-            RaiseLocalEvent(ev);
+            foreach (var (dir, fieldComponent) in component.Connections)
+            {
+                if (dir == direction)
+                {
+                    continue;
+                }
+            }
 
             var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
             var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
@@ -204,19 +214,28 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 continue;
             }
 
-            var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent);
+            //var ev = new ContainmentFieldConnectEvent(component.Owner, fieldGeneratorComponent.Owner);
+            //RaiseLocalEvent(, ev);
+
+
+            //This should be a different method, probably containing the event
+            var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent); //make event or method
             propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
             if (fieldGeneratorComponent.Connection1 == null)
             {
                 fieldGeneratorComponent.Connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                if (!fieldGeneratorComponent.IsConnected)
+                    fieldGeneratorComponent.IsConnected = true;
             }
             else if (fieldGeneratorComponent.Connection2 == null)
             {
                 fieldGeneratorComponent.Connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                if (!fieldGeneratorComponent.IsConnected)
+                    fieldGeneratorComponent.IsConnected = true;
             }
             else
             {
-                Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
+                Logger.Error("When trying to connect two Containment Field Generators, the second one already had two connection but the check didn't catch it");
             }
 
             component.IsConnected = true;
@@ -233,7 +252,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                comp.Connection2?.Item2.Generator1 == otherComp || comp.Connection2?.Item2.Generator2 == otherComp;
     }
 
-    public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, ref int powerBuffer, int powerPerConnection, ContainmentFieldGeneratorComponent component)
+    public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, int powerPerConnection, ContainmentFieldGeneratorComponent component)
     {
         if (connectionProperty != null)
         {
@@ -244,10 +263,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             if (TryGenerateFieldConnection(ref connectionProperty, component))
             {
                 connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
-            }
-            else
-            {
-                powerBuffer += powerPerConnection;
             }
         }
     }

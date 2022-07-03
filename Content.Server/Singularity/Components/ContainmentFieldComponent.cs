@@ -14,28 +14,37 @@ public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
     public int MaxDistance;
 
     /// <summary>
-    /// Store a direction + field?
-    /// Also maybe better put on the generator.
+    /// The fields connected to one another
     /// </summary>
-    public readonly Dictionary<Direction, ContainmentFieldComponent> Fields = new();
+    [ViewVariables]
+    public List<EntityUid> Fields = new();
+
+    /// <summary>
+    /// What fields should this spawn?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("createdField")]
+    public string CreatedField = "ContainmentField";
 
     /// <summary>
     /// The first generator this field is connected to
     /// </summary>
-    public ContainmentFieldGeneratorComponent? Gen1;
+    [ViewVariables]
+    public EntityUid? Generator1;
 
     /// <summary>
     /// The second field this generator is connected to
     /// </summary>
-    public ContainmentFieldGeneratorComponent? Gen2;
+    [ViewVariables]
+    public EntityUid? Generator2;
 }
 
 public sealed class ContainmentFieldConnectEvent : EntityEventArgs
 {
-    public ContainmentFieldGeneratorComponent Generator1;
-    public ContainmentFieldGeneratorComponent Generator2;
+    public EntityUid Generator1;
+    public EntityUid Generator2;
 
-    public ContainmentFieldConnectEvent(ContainmentFieldGeneratorComponent generator1, ContainmentFieldGeneratorComponent generator2)
+    public ContainmentFieldConnectEvent(EntityUid generator1, EntityUid generator2)
     {
         Generator1 = generator1;
         Generator2 = generator2;
