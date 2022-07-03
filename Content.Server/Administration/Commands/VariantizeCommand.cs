@@ -26,7 +26,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         var entMan = IoCManager.Resolve<IEntityManager>();
         var random = IoCManager.Resolve<IRobustRandom>();
 
-        if (EntityUid.TryParse(args[0], out var euid))
+        if (!EntityUid.TryParse(args[0], out var euid))
         {
             shell.WriteError($"Failed to parse euid '{args[0]}'.");
             return;
