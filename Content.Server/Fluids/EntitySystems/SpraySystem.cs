@@ -57,14 +57,12 @@ public sealed class SpraySystem : EntitySystem
             return;
         }
 
-        var playerPos = Transform(args.User).Coordinates;
+        var playerMapPos = Transform(args.User).MapPosition;
+        var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
-        if (args.ClickLocation.GetGridUid(EntityManager) != playerPos.GetGridUid(EntityManager))
-            return;
-
-        var direction = (args.ClickLocation.Position - playerPos.Position).Normalized;
-        var threeQuarters = direction * 0.75f;
-        var quarter = direction * 0.25f;
+        var mapDirection = (clickMapPos.Position - playerMapPos.Position).Normalized;
+        var threeQuarters = mapDirection * 0.75f;
+        var quarter = mapDirection * 0.25f;
 
         var amount = Math.Max(Math.Min((solution.CurrentVolume / component.TransferAmount).Int(), component.VaporAmount), 1);
 
@@ -72,19 +70,19 @@ public sealed class SpraySystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            var rotation = new Angle(direction.ToAngle() + Angle.FromDegrees(spread * i) -
+            var rotation = new Angle(mapDirection.ToAngle() + Angle.FromDegrees(spread * i) -
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
 
-            var (_, diffPos) = args.ClickLocation - playerPos;
+            var diffPos = clickMapPos.Position - playerMapPos.Position;
             var diffNorm = diffPos.Normalized;
             var diffLength = diffPos.Length;
 
-            var target = Transform(args.User).Coordinates
+            var target = playerMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
-            if (target.TryDistance(EntityManager, playerPos, out var distance) && distance > component.SprayDistance)
-                target = Transform(args.User).Coordinates
-                    .Offset(diffNorm * component.SprayDistance);
+            var distance = target.Position.Length;
+            if (distance > component.SprayDistance)
+                target = playerMapPos.Offset(diffNorm * component.SprayDistance);
 
             var newSolution = _solutionContainerSystem.SplitSolution(uid, solution, component.TransferAmount);
 
@@ -92,7 +90,7 @@ public sealed class SpraySystem : EntitySystem
                 break;
 
             var vapor = Spawn(component.SprayedPrototype,
-                playerPos.Offset(distance < 1 ? quarter : threeQuarters));
+                playerMapPos.Offset(distance < 1 ? quarter : threeQuarters));
             Transform(vapor).LocalRotation = rotation;
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
@@ -107,7 +105,8 @@ public sealed class SpraySystem : EntitySystem
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = Transform(vapor).WorldRotation.ToVec();
-            _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime);
+            var targetPlayerLocal = EntityCoordinates.FromMap(args.User, target, EntityManager);
+            _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, targetPlayerLocal, component.SprayAliveTime);
 
             if (component.Impulse > 0f && TryComp(args.User, out PhysicsComponent? body))
                 body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
