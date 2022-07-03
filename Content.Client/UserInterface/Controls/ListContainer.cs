@@ -11,7 +11,7 @@ public sealed class ListContainer : Control
     public const string StylePropertySeparation = "separation";
 
     public int? SeparationOverride { get; set; }
-    public Action<EntityUid, EntityContainerButton>? GenerateItem;
+    public Action<EntityUid, ListContainerButton>? GenerateItem;
     public Action<BaseButton.ButtonEventArgs, EntityUid>? ItemPressed;
 
     private const int DefaultSeparation = 3;
@@ -62,7 +62,7 @@ public sealed class ListContainer : Control
     {
         if (_count == 0 && entities.Count > 0)
         {
-            EntityContainerButton control = new(entities[0]);
+            ListContainerButton control = new(entities[0]);
             GenerateItem?.Invoke(entities[0], control);
             control.Measure(Vector2.Infinity);
             _itemHeight = control.DesiredSize.Y;
@@ -76,7 +76,7 @@ public sealed class ListContainer : Control
 
     private void OnItemPressed(BaseButton.ButtonEventArgs args)
     {
-        if (args.Button is not EntityContainerButton button)
+        if (args.Button is not ListContainerButton button)
             return;
         ItemPressed?.Invoke(args, button.EntityUid);
     }
@@ -99,20 +99,20 @@ public sealed class ListContainer : Control
         #region Scroll
         var cHeight = _totalHeight;
         var vBarSize = _vScrollBar.DesiredSize.X;
-        var (sWidth, sHeight) = finalSize;
+        var (finalWidth, finalHeight) = finalSize;
 
         try
         {
             // Suppress events to avoid weird recursion.
             _suppressScrollValueChanged = true;
 
-            if (sHeight < cHeight)
-                sWidth -= vBarSize;
+            if (finalHeight < cHeight)
+                finalWidth -= vBarSize;
 
-            if (sHeight < cHeight)
+            if (finalHeight < cHeight)
             {
                 _vScrollBar.Visible = true;
-                _vScrollBar.Page = sHeight;
+                _vScrollBar.Page = finalHeight;
                 _vScrollBar.MaxValue = cHeight;
             }
             else
@@ -197,7 +197,7 @@ public sealed class ListContainer : Control
                 {
                     var entity = _entityUids[i];
 
-                    var button = new EntityContainerButton(entity);
+                    var button = new ListContainerButton(entity);
                     button.OnPressed += OnItemPressed;
 
                     GenerateItem?.Invoke(entity, button);
@@ -211,7 +211,7 @@ public sealed class ListContainer : Control
 
         #region Layout Children
         // Use pixel position
-        var pixelWidth = (int)(sWidth * UIScale);
+        var pixelWidth = (int)(finalWidth * UIScale);
 
         var offset = (int) -((scroll.Y - _topIndex * (_itemHeight + separation)) * UIScale);
         var first = true;
@@ -275,11 +275,11 @@ public sealed class ListContainer : Control
     }
 }
 
-public sealed class EntityContainerButton : ContainerButton
+public sealed class ListContainerButton : ContainerButton
 {
     public EntityUid EntityUid;
 
-    public EntityContainerButton(EntityUid entityUid)
+    public ListContainerButton(EntityUid entityUid)
     {
         EntityUid = entityUid;
         AddStyleClass(StyleNano.StyleClassStorageButton);
