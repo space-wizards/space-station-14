@@ -1,3 +1,4 @@
+using Content.Server.Damage.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Damage.Components;
@@ -19,6 +20,12 @@ public sealed class StaminaComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("decay")]
     public float Decay = 3f;
+
+    /// <summary>
+    /// How much time after receiving damage until stamina starts decreasing.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
+    public float DecayCooldown = 3f;
 
     /// <summary>
     /// How much stamina damage this entity has taken.

@@ -17218,14 +17218,6 @@ entities:
   - pos: 38.5,-0.5
     parent: 852
     type: Transform
-- uid: 988
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.606142,18.735546
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 989
   type: CarpetBlue
   components:
@@ -41406,14 +41398,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 4255
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.590517,18.485546
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4256
   type: SurveillanceCameraCommand
   components:
@@ -47919,30 +47903,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 5143
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.590517,18.594921
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 5144
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.590517,18.548046
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 5145
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.590517,18.423046
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5146
   type: MagazineRifle
   components:
@@ -47971,26 +47931,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 5149
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.590517,18.344921
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5150
   type: ShellShotgunIncendiary
   components:
   - pos: -11.793642,18.485546
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 5151
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.606142,18.673046
     parent: 852
     type: Transform
   - canCollide: False

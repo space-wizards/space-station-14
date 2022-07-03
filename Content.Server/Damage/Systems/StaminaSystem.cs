@@ -19,20 +19,15 @@ public sealed class StaminaSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
-    /// <summary>
-    /// How long after receiving stamina damage before it is allowed to decay.
-    /// </summary>
-    private const float DecayCooldown = 3f;
-
     private const float UpdateCooldown = 2f;
     private float _accumulator;
 
     private const string CollideFixture = "projectile";
 
     /// <summary>
-    /// How much stamina damage is applied above cap.
+    /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
-    private const float CritExcess = 18f;
+    private const float StamCritBufferTime = 2f;
 
     private readonly List<EntityUid> _dirtyEntities = new();
 
@@ -109,7 +104,7 @@ public sealed class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            component.StaminaDecayAccumulator = DecayCooldown;
+            component.StaminaDecayAccumulator = component.DecayCooldown;
         }
 
         var slowdownThreshold = component.CritThreshold / 2f;
@@ -149,7 +144,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <returns></returns>
     private TimeSpan GetStamCritTime(StaminaComponent component)
     {
-        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay - 2);
+        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay - StamCritBufferTime);
         return TimeSpan.FromSeconds(damageableSeconds);
     }
 
@@ -201,16 +196,21 @@ public sealed class StaminaSystem : EntitySystem
         }
     }
 
+    private float GetCritExcess(StaminaComponent component)
+    {
+        return (6f + StamCritBufferTime) * component.Decay;
+    }
+
     private void EnterStamCrit(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component) ||
             component.Critical) return;
 
         // To make the difference between a stun and a stamcrit clear
-        _popup.PopupEntity("Has entered stamcrit", uid, Filter.Pvs(uid, entityManager: EntityManager));
+        // TODO: Mask?
 
         component.Critical = true;
-        var stamDamageCap = component.CritThreshold + CritExcess;
+        var stamDamageCap = component.CritThreshold + GetCritExcess(component);
         component.StaminaDamage = stamDamageCap;
         component.StaminaDecayAccumulator = 0f;
 
