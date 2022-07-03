@@ -22,14 +22,14 @@ public sealed class StaminaSystem : EntitySystem
     private const float DecayCooldown = 3f;
 
     private const float UpdateCooldown = 2f;
-    private float _accumulator = 0f;
+    private float _accumulator;
 
     private const string CollideFixture = "projectile";
 
     /// <summary>
     /// How much stamina damage is applied above cap.
     /// </summary>
-    private const float CritExcess = 21f;
+    private const float CritExcess = 15f;
 
     private readonly List<EntityUid> _dirtyEntities = new();
 
@@ -107,6 +107,15 @@ public sealed class StaminaSystem : EntitySystem
         if (oldDamage < component.StaminaDamage)
         {
             component.StaminaDecayAccumulator = DecayCooldown;
+        }
+
+        var slowdownThreshold = component.CritThreshold / 2f;
+
+        // If we go above n% then apply slowdown
+        if (oldDamage < slowdownThreshold &&
+            component.StaminaDamage > slowdownThreshold)
+        {
+            _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(3), true, 0.8f, 0.8f);
         }
 
         SetStaminaAlert(uid, component);
