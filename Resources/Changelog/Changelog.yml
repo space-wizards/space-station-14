@@ -1,16 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The lathe visualizer now works., type: Fix}
-  - {message: Lathes now correctly let you produce something when you have the exact
-      amount of materials required., type: Fix}
-  - {message: Some lathes now have sounds that play., type: Add}
-  - {message: Lathes with inserting animations will dynamically color them based on
-      the color of the material., type: Add}
-  - {message: 'Increased most lathe production times between 4x and 10x. So, from
-      half a second to 2 seconds in most cases.', type: Tweak}
-  id: 1350
-  time: '2022-04-17T07:34:14.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Made lobby art look less choppy if you aren't playing on exactly 1080p
@@ -2948,3 +2936,12 @@ Entries:
   - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
   id: 1849
   time: '2022-07-03T02:32:09.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Detective Support, type: Add}
+  - {message: Arrivals Dock(secondary evac), type: Add}
+  - {message: QoL, type: Add}
+  - {message: Capital L, type: Add}
+  - {message: skub, type: Add}
+  id: 1850
+  time: '2022-07-03T02:34:51.0000000+00:00'
