@@ -113,17 +113,49 @@
     program: 58
   - type: Sprite
     state: tuba
+  - type: Transform
+    anchored: false
 
 - type: entity
-  name: harp
-  parent: BasePlaceableInstrumentRotatable
   id: HarpInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: harp
   description: Plucking at the strings cuts your fingers, but at least the music is pretty.
   components:
   - type: Instrument
     program: 46
   - type: Sprite
     state: harp
+  - type: Transform
+    anchored: false
+
+- type: entity
+  id: ContrabassInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: contrabass
+  description: Perfect for laying down a nice jazzy beat.
+  components:
+  - type: Instrument
+    program: 43
+  - type: Sprite
+    state: contrabass
+  - type: Transform
+    anchored: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.30
+      mass: 50
+      mask:
+      - Impassable
+      - HighImpassable
+      - MidImpassable
+      layer:
+      - Opaque
+      - HighImpassable
+      - MidImpassable
+      - BulletImpassable
 
 - type: entity
   parent: BasePlaceableInstrument
