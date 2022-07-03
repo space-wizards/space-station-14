@@ -30,6 +30,7 @@ namespace Content.Server.Ghost.Components
             "Security",
             "Service",
             "Supply",
+            "Syndicate"
         };
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
