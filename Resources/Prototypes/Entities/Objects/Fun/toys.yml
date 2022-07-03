@@ -504,7 +504,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
-    state: base
+    HeldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
