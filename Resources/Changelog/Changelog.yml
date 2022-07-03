@@ -1,13 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed a broken message when someone else removes a plant., type: Fix}
-  - {message: Stasis beds now behave like other machines when it comes to unanchoring
-      them and powering them., type: Fix}
-  - {message: 'Beds now additionally require cloth, medical beds now additionally
-      require durathread.', type: Tweak}
-  id: 1346
-  time: '2022-04-16T23:04:16.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Space bears are no longer valid ghost roles., type: Remove}
@@ -2956,3 +2947,8 @@ Entries:
   - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
   id: 1845
   time: '2022-07-03T02:10:20.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed vomit puddle mopping behavior, type: Fix}
+  id: 1846
+  time: '2022-07-03T02:13:12.0000000+00:00'
