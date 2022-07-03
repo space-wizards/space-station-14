@@ -1,11 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed most hardsuit helmets not having working lights., type: Fix}
-  id: 1355
-  time: '2022-04-18T06:56:37.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed lamps and lanterns not having working lights., type: Fix}
   id: 1356
   time: '2022-04-18T13:23:21.0000000+00:00'
@@ -2944,3 +2939,9 @@ Entries:
       they get a language.', type: Tweak}
   id: 1854
   time: '2022-07-03T02:56:33.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Blue alert now has its own alarm., type: Add}
+  - {message: Red alert alarm sounds more alarming., type: Add}
+  id: 1855
+  time: '2022-07-03T03:52:40.0000000+00:00'
