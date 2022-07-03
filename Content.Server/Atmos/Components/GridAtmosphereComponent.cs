@@ -22,7 +22,7 @@ namespace Content.Server.Atmos.Components
         public float Timer { get; set; } = 0f;
 
         [ViewVariables]
-        public int UpdateCounter { get; set; } = 0;
+        public int UpdateCounter { get; set; } = 1; // DO NOT SET TO ZERO BY DEFAULT! It will break roundstart atmos...
 
         [DataField("uniqueMixes")]
         public List<GasMixture>? UniqueMixes;

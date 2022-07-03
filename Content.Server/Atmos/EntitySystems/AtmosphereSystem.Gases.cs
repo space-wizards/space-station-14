@@ -249,12 +249,6 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        public enum GasCompareResult
-        {
-            NoExchange = -2,
-            TemperatureExchange = -1,
-        }
-
         /// <summary>
         ///     Compares two gas mixtures to see if they are within acceptable ranges for group processing to be enabled.
         /// </summary>
@@ -320,6 +314,12 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return reaction;
+        }
+
+        public enum GasCompareResult
+        {
+            NoExchange = -2,
+            TemperatureExchange = -1,
         }
     }
 }
