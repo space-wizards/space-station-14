@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Client.Stylesheets;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,16 +8,26 @@ namespace Content.Client.UserInterface.Controls;
 public sealed class ListContainer : Control
 {
     public const string StylePropertySeparation = "separation";
+    public const string StyleClassListContainerButton = "list-container-button";
 
     public int? SeparationOverride { get; set; }
-    public Action<EntityUid, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs, EntityUid>? ItemPressed;
+
+    public bool Group
+    {
+        get => _buttonGroup != null;
+        set => _buttonGroup = value ? new ButtonGroup() : null;
+    }
+    public bool Toggle { get; set; }
+    public Action<IControlData, ListContainerButton>? GenerateItem;
+    public Action<BaseButton.ButtonEventArgs, IControlData>? ItemPressed;
+    public IReadOnlyList<IControlData> Data => _data ?? new List<IControlData>();
 
     private const int DefaultSeparation = 3;
 
     private readonly VScrollBar _vScrollBar;
+    private readonly Dictionary<IControlData, ListContainerButton> _buttons = new();
 
-    private List<EntityUid>? _entityUids;
+    private List<IControlData>? _data;
     private int _count = 0;
     private float _itemHeight = 0;
     private float _totalHeight = 0;
@@ -26,6 +35,7 @@ public sealed class ListContainer : Control
     private int _bottomIndex = 0;
     private bool _updateChildren = false;
     private bool _suppressScrollValueChanged;
+    private ButtonGroup? _buttonGroup;
 
     public int ScrollSpeedY { get; set; } = 50;
 
@@ -58,27 +68,40 @@ public sealed class ListContainer : Control
         _vScrollBar.OnValueChanged += ScrollValueChanged;
     }
 
-    public void PopulateList(List<EntityUid> entities)
+    public void PopulateList(IReadOnlyList<IControlData> data)
     {
-        if (_count == 0 && entities.Count > 0)
+        if (_itemHeight == 0 || _count == 0 && data.Count > 0)
         {
-            ListContainerButton control = new(entities[0]);
-            GenerateItem?.Invoke(entities[0], control);
+            ListContainerButton control = new(data[0]);
+            GenerateItem?.Invoke(data[0], control);
             control.Measure(Vector2.Infinity);
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }
-        _count = entities.Count;
-        _entityUids = entities;
+        _count = data.Count;
+        _data = data.ToList();
         _updateChildren = true;
         InvalidateArrange();
     }
+
+    public void UpdateList()
+    {
+        _updateChildren = true;
+        InvalidateArrange();
+    }
+
+    #region Selection
+    /*
+     * Need to implement selecting the first item in code.
+     * Need to implement updating one entry without having to repopulate
+     */
+    #endregion
 
     private void OnItemPressed(BaseButton.ButtonEventArgs args)
     {
         if (args.Button is not ListContainerButton button)
             return;
-        ItemPressed?.Invoke(args, button.EntityUid);
+        ItemPressed?.Invoke(args, button.Data);
     }
 
     [Pure]
@@ -174,7 +197,7 @@ public sealed class ListContainer : Control
             _updateChildren = true;
 
         var oldBottomIndex = _bottomIndex;
-        _bottomIndex = (int) Math.Ceiling((scroll.Y + Height) / (_itemHeight + separation));
+        _bottomIndex = (int) Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + separation));
         _bottomIndex = Math.Min(_bottomIndex, _count);
         if (_bottomIndex != oldBottomIndex)
             _updateChildren = true;
@@ -184,6 +207,7 @@ public sealed class ListContainer : Control
         {
             _updateChildren = false;
 
+            var buttons = new Dictionary<IControlData, ListContainerButton>(_buttons);
             foreach (var child in Children.ToArray())
             {
                 if (child == _vScrollBar)
@@ -191,18 +215,33 @@ public sealed class ListContainer : Control
                 RemoveChild(child);
             }
 
-            if (_entityUids != null)
+            if (_data != null)
             {
                 for (var i = _topIndex; i < _bottomIndex; i++)
                 {
-                    var entity = _entityUids[i];
+                    var data = _data[i];
 
-                    var button = new ListContainerButton(entity);
-                    button.OnPressed += OnItemPressed;
+                    if (_buttons.TryGetValue(data, out var button))
+                        buttons.Remove(data);
+                    else
+                    {
+                        button = new ListContainerButton(data);
+                        button.OnPressed += OnItemPressed;
+                        button.ToggleMode = Toggle;
+                        button.Group = _buttonGroup;
 
-                    GenerateItem?.Invoke(entity, button);
+                        GenerateItem?.Invoke(data, button);
+                        _buttons.Add(data, button);
+                    }
                     AddChild(button);
+                    button.Measure(finalSize);
                 }
+            }
+
+            foreach (var (data, button) in buttons)
+            {
+                _buttons.Remove(data);
+                button.Dispose();
             }
 
             _vScrollBar.SetPositionLast();
@@ -250,9 +289,12 @@ public sealed class ListContainer : Control
             childSize = Vector2.ComponentMax(childSize, child.DesiredSize);
         }
 
-        _totalHeight = childSize.Y * _count + ActualSeparation * (_count - 1);
+        if (_itemHeight == 0 && childSize.Y != 0)
+            _itemHeight = childSize.Y;
 
-        return new Vector2(childSize.X, 0f);
+        _totalHeight = _itemHeight * _count + ActualSeparation * (_count - 1);
+
+        return new Vector2(childSize.X, 0);
     }
 
     private void ScrollValueChanged(Robust.Client.UserInterface.Controls.Range _)
@@ -277,11 +319,31 @@ public sealed class ListContainer : Control
 
 public sealed class ListContainerButton : ContainerButton
 {
-    public EntityUid EntityUid;
+    public readonly IControlData Data;
+    // public PanelContainer Background;
 
-    public ListContainerButton(EntityUid entityUid)
+    public ListContainerButton(IControlData data)
     {
-        EntityUid = entityUid;
-        AddStyleClass(StyleNano.StyleClassStorageButton);
+        Data = data;
+        // AddChild(Background = new PanelContainer
+        // {
+        //     HorizontalExpand = true,
+        //     VerticalExpand = true,
+        //     PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(55, 55, 68)}
+        // });
     }
 }
+
+#region Data
+public interface IControlData { }
+
+public sealed class EntityListData : IControlData
+{
+    public EntityUid Uid;
+
+    public EntityListData(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}
+#endregion

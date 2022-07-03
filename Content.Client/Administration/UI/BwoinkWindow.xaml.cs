@@ -1,5 +1,4 @@
 #nullable enable
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
@@ -47,13 +46,29 @@ namespace Content.Client.Administration.UI
                     Title = $"{sel.CharacterName} / {sel.Username}";
                 }
 
-                foreach (var li in ChannelSelector.PlayerItemList)
-                    li.Text = FormatTabTitle(li);
+                ChannelSelector.PlayerListContainer.UpdateList();
             };
 
-            ChannelSelector.DecoratePlayer += (PlayerInfo pl, ItemList.Item li) =>
+            ChannelSelector.OverrideText += (info, text) =>
             {
-                li.Text = FormatTabTitle(li, pl);
+                var sb = new StringBuilder();
+                sb.Append(info.Connected ? '●' : '○');
+                sb.Append(' ');
+                if (_bwoinkSystem.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
+                {
+                    if (panel.Unread < 11)
+                        sb.Append(new Rune('➀' + (panel.Unread-1)));
+                    else
+                        sb.Append(new Rune(0x2639)); // ☹
+                    sb.Append(' ');
+                }
+
+                if (info.Antag)
+                    sb.Append(new Rune(0x1F5E1)); // 🗡
+
+                sb.AppendFormat("\"{0}\"", text);
+
+                return sb.ToString();
             };
 
             ChannelSelector.Comparison = (a, b) =>
@@ -120,18 +135,16 @@ namespace Content.Client.Administration.UI
 
         public void OnBwoink(NetUserId channel)
         {
-            ChannelSelector.RefreshDecorators();
-            ChannelSelector.Sort();
+            ChannelSelector.PopulateList();
         }
 
         public void SelectChannel(NetUserId channel)
         {
-            var pi = ChannelSelector
-                .PlayerItemList
-                .FirstOrDefault(i => ((PlayerInfo) i.Metadata!).SessionId == channel);
-
-            if (pi is not null)
-                pi.Selected = true;
+            // TODO ShadowCommander implement selecting item in ListContainer
+            // if (!ChannelSelector.PlayerListContainer.Buttons.TryFirstOrDefault(
+            //     i => i.Data is PlayerListData {Info: var info} && info.SessionId == channel, out var pi))
+            //     return;
+            // ChannelSelector.PlayerListContainer.Select(pi);
         }
 
         private void FixButtons()
