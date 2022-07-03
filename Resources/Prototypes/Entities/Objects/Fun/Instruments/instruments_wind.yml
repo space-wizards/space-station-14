@@ -1,0 +1,86 @@
+﻿- type: entity
+  parent: BaseHandheldInstrument
+  id: SaxophoneInstrument
+  name: saxophone
+  description: An instrument. You could probably grind this into raw jazz.
+  components:
+  - type: Instrument
+    program: 66
+  - type: SwappableInstrument
+    instrumentList:
+      "Soprano": {64: 0}
+      "Alto": {65: 0}
+      "Tenor": {66: 0}
+      "Baritone": {67: 0} 
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/saxophone.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/saxophone.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+  - type: Extractable
+    grindableSolutionName: sax
+  - type: SolutionContainerManager
+    solutions:
+      sax:
+        reagents:
+          - ReagentId: Saxoite
+            Quantity: 10
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: AccordionInstrument
+  name: accordion
+  components:
+  - type: Instrument
+    program: 21
+  - type: SwappableInstrument
+    instrumentList:
+      "Standard": {21: 0}
+      "Tango": {23: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/accordion.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/accordion.rsi
+  - type: Tag
+    tags:
+    - KeyedInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: HarmonicaInstrument
+  name: harmonica
+  components:
+  - type: Instrument
+    program: 22
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/harmonica.rsi
+    state: icon
+  - type: Item
+    size: 10
+    sprite: Objects/Fun/Instruments/harmonica.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: RecorderInstrument
+  name: recorder
+  components:
+  - type: Instrument
+    program: 74
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/recorder.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/recorder.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument

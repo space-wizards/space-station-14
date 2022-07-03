@@ -1,63 +1,4 @@
 ﻿- type: entity
-  name: baseinstrument
-  id: BasePlaceableInstrument
-  parent: BaseStructureDynamic
-  abstract: true
-  components:
-  - type: Instrument
-  - type: ActivatableUI
-    allowSpectator: false # otherwise they can play client-side music
-    inHandsOnly: false
-    singleUser: true
-    requireHands: true
-    verbText: verb-instrument-openui
-    key: enum.InstrumentUiKey.Key
-  - type: InteractionOutline
-  - type: Sprite
-    sprite: Structures/Furniture/instruments.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: UserInterface
-    interfaces:
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.45
-      mass: 50
-      mask:
-      - Impassable
-      - HighImpassable
-      - MidImpassable
-      layer:
-      - Opaque
-      - HighImpassable
-      - MidImpassable
-      - BulletImpassable
-  - type: Transform
-    anchored: true
-
-- type: entity
-  parent: BasePlaceableInstrument
-  id: BasePlaceableInstrumentRotatable
-  name: baseinstrumentrotatable
-  abstract: true
-  components:
-  - type: Rotatable
-    rotateWhileAnchored: true
-
-- type: entity
   name: piano
   parent: BasePlaceableInstrumentRotatable
   id: PianoInstrument
@@ -113,8 +54,6 @@
     program: 58
   - type: Sprite
     state: tuba
-  - type: Transform
-    anchored: false
 
 - type: entity
   id: HarpInstrument
@@ -126,8 +65,6 @@
     program: 46
   - type: Sprite
     state: harp
-  - type: Transform
-    anchored: false
 
 - type: entity
   id: ContrabassInstrument
@@ -139,8 +76,6 @@
     program: 43
   - type: Sprite
     state: contrabass
-  - type: Transform
-    anchored: false
   - type: Fixtures
     fixtures:
     - shape:
