@@ -71,6 +71,13 @@
     spawned:
     - id: FoodMeatDragon
       amount: 2
+  - type: InteractionPopup
+    successChance: 0.25 # It's no goose, but you better smell like carp.
+    interactSuccessString: petting-success-dragon
+    interactFailureString: petting-failure-dragon
+    interactFailureSound:
+      path: /Audio/Animals/space_dragon_roar.ogg
+    soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
   - type: MeleeWeapon
     hitSound:
       path: /Audio/Effects/bite.ogg
