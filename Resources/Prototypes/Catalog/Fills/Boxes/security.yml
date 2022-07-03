@@ -191,17 +191,6 @@
           amount: 6
 
 - type: entity
-  name: box of .20 rifle (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazineRifleFlash
-  description: A box full of .20 rifle (flash) magazines.
-  components:
-    - type: StorageFill
-      contents:
-        - id: MagazineRifleFlash
-          amount: 6
-
-- type: entity
   name: box of .20 rifle (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazineRifleHighVelocity

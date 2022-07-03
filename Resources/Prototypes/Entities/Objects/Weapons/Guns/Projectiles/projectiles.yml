@@ -251,7 +251,7 @@
 - type: entity
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BaseBulletFlash
+  parent: BaseBulletTrigger
   noSpawn: true
   components:
   - type: Sprite
