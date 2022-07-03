@@ -12,26 +12,14 @@ namespace Content.Server.Ghost.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
-    public sealed class GhostRadioComponent : Component, IRadio
+    public sealed class IntrinsicRadioComponent : Component, IRadio
     {
         // TODO: This class is yuck
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-        private HashSet<string> _channels = new()
-        {
-            "Common",
-            "Command",
-            "CentCom",
-            "Engineering",
-            "Medical",
-            "Science",
-            "Security",
-            "Service",
-            "Supply",
-            "Syndicate"
-        };
+        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>), required: true)]
+        private HashSet<string> _channels = new();
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
         {
