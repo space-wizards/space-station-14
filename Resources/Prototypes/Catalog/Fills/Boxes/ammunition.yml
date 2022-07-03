@@ -290,17 +290,6 @@
         amount: 3
 
 - type: entity
-  name: box of SMG .35 auto (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazinePistolSubMachineGunFlash
-  description: A box full of SMG .35 auto (flash) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolSubMachineGunFlash
-        amount: 3
-
-- type: entity
   name: box of SMG .35 auto (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazinePistolSubMachineGunHighVelocity

@@ -92458,18 +92458,6 @@ entities:
       ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 9852
-  type: BoxShotgunFlash
-  components:
-  - pos: -50.401936,33.396786
-    parent: 130
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9853
   type: WeaponShotgunKammerer
   components:
