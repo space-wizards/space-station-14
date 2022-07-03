@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed lamps and lanterns not having working lights., type: Fix}
-  id: 1356
-  time: '2022-04-18T13:23:21.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: You should be less likely to be phased through walls., type: Fix}
@@ -2945,3 +2940,8 @@ Entries:
   - {message: Red alert alarm sounds more alarming., type: Add}
   id: 1855
   time: '2022-07-03T03:52:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: PAI can now only hear Common radio., type: Tweak}
+  id: 1856
+  time: '2022-07-03T08:36:40.0000000+00:00'
