@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Fixed security techfab visuals, type: Fix}
-  id: 1353
-  time: '2022-04-17T21:55:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed docking airlocks not having proper collision., type: Fix}
@@ -2943,3 +2938,8 @@ Entries:
   - {message: You can preserve bodies so they never rot., type: Fix}
   id: 1852
   time: '2022-07-03T02:46:24.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Xenos are now Insulated and Immune to diseases!, type: Tweak}
+  id: 1853
+  time: '2022-07-03T02:49:35.0000000+00:00'
