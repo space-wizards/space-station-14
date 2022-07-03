@@ -1,6 +1,5 @@
 using Content.Shared.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.Network;
 
 namespace Content.Server.Roles
 {
@@ -12,10 +11,5 @@ namespace Content.Server.Roles
         /// </summary>
         [DataField("time")]
         public TimeSpan Time;
-
-        public override ValueTuple<bool, string?> GetRequirementStatus(NetUserId id)
-        {
-            return new ValueTuple<bool, string?>(true, "not coded yet");
-        }
     }
 }
