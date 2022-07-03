@@ -85,6 +85,24 @@
     tags:
     - WoodwindInstrument
 
+- type: entity
+  parent: BaseHandheldInstrument
+  id: PanFluteInstrument
+  name: pan flute
+  description: Perfect for luring ancient mythical beings to dance with you.
+  components:
+  - type: Instrument
+    program: 75
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/panflute.rsi
+    state: icon
+  - type: Item
+    size: 15
+    sprite: Objects/Fun/Instruments/panflute.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+
 #if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
 - type: entity
   parent: BaseHandheldInstrument
