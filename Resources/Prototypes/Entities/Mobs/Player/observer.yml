@@ -29,7 +29,7 @@
   - type: Examiner
     DoRangeCheck: false
   - type: Ghost
-  - type: InherentRadio
+  - type: IntrinsicRadio
     channels:
     - Common
     - Command

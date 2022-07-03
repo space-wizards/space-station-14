@@ -33,7 +33,7 @@
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
   - type: Examiner
-  - type: InherentRadio
+  - type: IntrinsicRadio
     channels:
     - Common
   - type: DoAfter

@@ -12,7 +12,7 @@ namespace Content.Server.Ghost.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
-    public sealed class InherentRadioComponent : Component, IRadio
+    public sealed class IntrinsicRadioComponent : Component, IRadio
     {
         // TODO: This class is yuck
         [Dependency] private readonly IServerNetManager _netManager = default!;

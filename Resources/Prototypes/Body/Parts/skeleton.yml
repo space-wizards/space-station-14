@@ -61,7 +61,7 @@
       attributes:
         proper: true
     - type: Examiner
-    - type: InherentRadio
+    - type: IntrinsicRadio
       channels:
       - Common
     - type: DoAfter
