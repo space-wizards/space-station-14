@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Afk;
 using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -24,6 +25,7 @@ namespace Content.Server.RoleTimers;
 /// </summary>
 public sealed class RoleTimerSystem : EntitySystem
 {
+    [Dependency] private readonly IAfkManager _afk = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -31,19 +33,23 @@ public sealed class RoleTimerSystem : EntitySystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly RoleTimerManager _roleTimers = default!;
 
-    // Autosave regularly just in case of job changes or whatever; it's much easier and more generous.
-    private const float AutosaveDelay = 300;
-    private float _autoSaveAccumulator = AutosaveDelay;
+    /// <summary>
+    /// Autosave regularly in case of server crash.
+    /// </summary>
+    private const float AutosaveDelay = 900;
+
+    private float _autoSaveAccumulator = 0f;
 
     /// <summary>
     /// If someone just joined track the last time we set their times so the autosave doesn't round up.
     /// </summary>
-    private Dictionary<IPlayerSession, TimeSpan> _lastSetTime = new();
+    private readonly Dictionary<IPlayerSession, TimeSpan> _lastSetTime = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
+        // TODO: This is gonna have ordering bugs with RoleTimerManager so sort that out mate.
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -54,6 +60,7 @@ public sealed class RoleTimerSystem : EntitySystem
     {
         base.Shutdown();
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+        FullSave();
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
@@ -74,21 +81,35 @@ public sealed class RoleTimerSystem : EntitySystem
     private void OnRoundEnd(RoundRestartCleanupEvent ev)
     {
         _autoSaveAccumulator = AutosaveDelay;
+        FullSave();
     }
 
     public override void Update(float frameTime)
     {
         if (_ticker.RunLevel != GameRunLevel.InRound) return;
 
-        _autoSaveAccumulator -= frameTime;
+        _autoSaveAccumulator += frameTime;
 
-        if (_autoSaveAccumulator > 0f) return;
+        if (_autoSaveAccumulator < AutosaveDelay) return;
 
-        _autoSaveAccumulator += AutosaveDelay;
-        AutoSave();
+        _autoSaveAccumulator -= AutosaveDelay;
+        FullSave();
     }
 
-    private void AutoSave()
+    // TODO: AFK Events
+    // TODO: Mind role events?
+
+    private void OnAfk(IPlayerSession pSession)
+    {
+        Save(pSession, _timing.CurTime);
+    }
+
+    private void OnUnafk(IPlayerSession pSession)
+    {
+        _lastSetTime[pSession] = _timing.CurTime;
+    }
+
+    private void FullSave()
     {
         var currentTime = _timing.CurTime;
 
@@ -97,6 +118,7 @@ public sealed class RoleTimerSystem : EntitySystem
         foreach (var player in Filter.GetAllPlayers())
         {
             var pSession = (IPlayerSession) player;
+            if (_afk.IsAfk(pSession)) continue;
             Save(pSession, currentTime);
         }
     }
@@ -107,7 +129,7 @@ public sealed class RoleTimerSystem : EntitySystem
         {
             lastSave = currentTime;
         }
-        
+
         var addedTime = currentTime - lastSave;
 
         var roles = GetRoles(pSession);

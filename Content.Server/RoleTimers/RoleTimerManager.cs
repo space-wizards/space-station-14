@@ -14,6 +14,11 @@ namespace Content.Server.RoleTimers
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+        /*
+         * All of the reads below just read directly from PlayerRoleTimers without touching the DB.
+         * The writes update the timer then write the value back to the db.
+         */
+
         // Shouldn't need concurrentdictionary as we're only modifying the value internally.
         private readonly Dictionary<NetUserId, PlayerRoleTimers> _cachedPlayerData = new();
 
