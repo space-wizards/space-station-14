@@ -220,3 +220,24 @@
       min: 420 ## Reachable with a flamer
     - !type:DiseaseReagentCure
       reagent: Theobromine
+
+- type: disease
+  id: TongueTwister
+  name: Tongue Twister
+  cureResist: 0.1
+  effects:
+    - !type:DiseaseGenericStatusEffect
+      key: Stutter
+      component: ScrambledAccent
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughSound:
+        collection: Sneezes
+    - !type:DiseaseSnough
+      probability: 0.02
+      snoughMessage: disease-think
+  cures:
+    - !type:DiseaseBedrestCure
+      maxLength: 30
+    - !type:DiseaseJustWaitCure
+      maxLength: 400
