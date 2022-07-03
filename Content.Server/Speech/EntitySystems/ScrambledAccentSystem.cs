@@ -25,25 +25,24 @@ namespace Content.Server.Speech.EntitySystems
         {
             var words = message.ToLower().Split();
 
-            if (words.Length == 1)
+            if (words.Length < 2)
             {
                 // If they try to weasel out of it by saying one word at a time we give them this.
                 return message.Replace(message, _random.Pick(Words));
             }
 
-
+            //Scramble the words
             var scrambled = words.OrderBy(x => _random.Next()).ToArray();
-
 
             var msg = String.Join(" ", scrambled);
 
             //First letter should be capital
             msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
 
+            //Capitalize lone i's
+            msg = Regex.Replace(msg, @"(?<=\ )i(?=[\ \.\?]|$)", "I");
             return msg;
         }
-
-
 
         private void OnAccent(EntityUid uid, ScrambledAccentComponent component, AccentGetEvent args)
         {
