@@ -52,13 +52,6 @@ namespace Content.Server.Paper
 
         private void OnExamined(EntityUid uid, PaperComponent paperComp, ExaminedEvent args)
         {
-            if(HasComp<PaperPlaneComponent>(paperComp.Owner))
-            {
-                if(paperComp.Content == "") args.Message.PushNewline(); //needed for formatting
-                args.Message.AddMarkup(Loc.GetString("paper-component-examine-detail-is-plane", ("paper", uid)));
-                return; //can't see details when folded
-            }
-
             if (!args.IsInDetailsRange)
                 return;
 
@@ -77,6 +70,12 @@ namespace Content.Server.Paper
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
                 );
+            }
+
+            if (HasComp<PaperPlaneComponent>(paperComp.Owner))
+            {
+                args.Message.PushNewline(); //needed for formatting
+                args.Message.AddMarkup(Loc.GetString("paper-component-examine-detail-is-plane", ("paper", uid)));
             }
         }
 

@@ -24,11 +24,11 @@ namespace Content.Server.Paper.Plane
 
             SubscribeLocalEvent<PaperComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerbPaper);
             SubscribeLocalEvent<PaperComponent, FoldPlaneEvent>(OnFoldPlaneEvent);
-            SubscribeLocalEvent<FoldPlanceCancelledEvent>(OnFoldPlaneCancel);
+            SubscribeLocalEvent<PaperComponent, FoldPlaneCancelledEvent>(OnFoldPlaneCancel);
 
             SubscribeLocalEvent<PaperPlaneComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerbPlane);
             SubscribeLocalEvent<PaperPlaneComponent, UnfoldPlaneEvent>(OnUnfoldPlane);
-            SubscribeLocalEvent<UnfoldPlaneCancelledEvent>(OnUnfoldPlaneCancel);
+            SubscribeLocalEvent<PaperPlaneComponent, UnfoldPlaneCancelledEvent>(OnUnfoldPlaneCancel);
 
             SubscribeLocalEvent<PaperPlaneComponent, StartCollideEvent>(OnCollideEvent);
             SubscribeLocalEvent<PaperPlaneComponent, ActivatableUIOpenAttemptEvent>(OnPaperUIOpenEvent);
@@ -113,7 +113,7 @@ namespace Content.Server.Paper.Plane
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 TargetFinishedEvent = new FoldPlaneEvent(paper, args.User),
-                TargetCancelledEvent = new FoldPlanceCancelledEvent(paper),
+                TargetCancelledEvent = new FoldPlaneCancelledEvent(paper),
                 NeedHand = true,
             });
         }
@@ -157,12 +157,12 @@ namespace Content.Server.Paper.Plane
             args.Cancel();
         }
 
-        private void OnUnfoldPlaneCancel(UnfoldPlaneCancelledEvent args)
+        private void OnUnfoldPlaneCancel(EntityUid uid, PaperPlaneComponent paper, UnfoldPlaneCancelledEvent args)
         {
             args.Plane.CancelToken = null;
         }
 
-        private void OnFoldPlaneCancel(FoldPlanceCancelledEvent args)
+        private void OnFoldPlaneCancel(EntityUid uid, PaperComponent paper, FoldPlaneCancelledEvent args)
         {
             args.Paper.CancelToken = null;
         }
@@ -201,11 +201,11 @@ namespace Content.Server.Paper.Plane
             }
         }
 
-        public sealed class FoldPlanceCancelledEvent : EntityEventArgs
+        public sealed class FoldPlaneCancelledEvent : EntityEventArgs
         {
             public readonly PaperComponent Paper;
 
-            public FoldPlanceCancelledEvent(PaperComponent paper)
+            public FoldPlaneCancelledEvent(PaperComponent paper)
             {
                 Paper = paper;
             }
