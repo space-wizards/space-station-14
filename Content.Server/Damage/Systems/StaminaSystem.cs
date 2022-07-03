@@ -1,11 +1,13 @@
 using Content.Server.Damage.Components;
 using Content.Server.Damage.Events;
+using Content.Server.Popups;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Damage.Systems;
@@ -14,6 +16,7 @@ public sealed class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     /// <summary>
@@ -29,7 +32,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <summary>
     /// How much stamina damage is applied above cap.
     /// </summary>
-    private const float CritExcess = 15f;
+    private const float CritExcess = 18f;
 
     private readonly List<EntityUid> _dirtyEntities = new();
 
@@ -146,7 +149,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <returns></returns>
     private TimeSpan GetStamCritTime(StaminaComponent component)
     {
-        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay) + 2;
+        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay - 2);
         return TimeSpan.FromSeconds(damageableSeconds);
     }
 
@@ -202,6 +205,9 @@ public sealed class StaminaSystem : EntitySystem
     {
         if (!Resolve(uid, ref component) ||
             component.Critical) return;
+
+        // To make the difference between a stun and a stamcrit clear
+        _popup.PopupEntity("Has entered stamcrit", uid, Filter.Pvs(uid, entityManager: EntityManager));
 
         component.Critical = true;
         var stamDamageCap = component.CritThreshold + CritExcess;
