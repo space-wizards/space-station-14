@@ -19,29 +19,26 @@ namespace Content.Server.Administration.Commands
             {
                 shell.WriteLine("Name a player to get the role timer information from");
                 return;
-            };
-
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-
-            var target = args[0];
-            IPlayerSession targetSessionInst;
-            if (playerManager.TryGetSessionByUsername(target, out var targetSession))
-            {
-                targetSessionInst = targetSession;
             }
-            else
+
+            // TODO: Loc
+
+            if (shell.Player == null)
             {
-                shell.WriteLine("Not a valid player");
+                // TODO: Error that it can't run on server.
                 return;
             }
 
+            var pSession = (IPlayerSession) shell.Player;
+            var roles = IoCManager.Resolve<RoleTimerManager>();
+
             if (args.Length == 1)
             {
-                var rt = IoCManager.Resolve<RoleTimerManager>();
-                var timers = rt.GetCachedRoleTimersForPlayer(targetSessionInst.UserId);
-                if (timers == null)
+                var timers = roles.GetRolePlaytimes(pSession).Result;
+
+                if (timers.Count == 0)
                 {
-                    shell.WriteLine("Couldn't get any information from cache (player info may not be cached yet)");
+                    shell.WriteLine("Found no role timers");
                     return;
                 }
 
@@ -53,16 +50,15 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length >= 2)
             {
-                var rt = IoCManager.Resolve<RoleTimerManager>();
-                var time = rt.GetPlayTimeForRole(targetSessionInst.UserId, args[1]);
-                if (time != null)
+                if (args[1] == "Overall")
                 {
-                    shell.WriteLine($"Playtime: {time}");
+                    var timer = roles.GetOverallPlaytime(pSession).Result;
+                    shell.WriteLine($"Overall playtime is {timer}");
+                    return;
                 }
-                else
-                {
-                    shell.WriteLine("Couldn't find that role in the cache, id may be misspelled or user isn't cached yet.");
-                }
+
+                var time = roles.GetPlayTimeForRole(pSession, args[1]).Result;
+                shell.WriteLine($"Playtime for {args[1]} is: {time}");
             }
         }
     }

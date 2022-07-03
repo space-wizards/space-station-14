@@ -15,6 +15,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.RoleTimers;
 
@@ -128,9 +129,9 @@ public sealed class RoleTimerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Does the player meet the role timer requirements for a particular role?
+    /// Does the player meet the job requirements for a particular role?
     /// </summary>
-    public bool IsAllowed(IPlayerSession pSession, string role, [NotNullWhen(false)] out string? reason)
+    public bool IsAllowed(IPlayerSession pSession, string role, TimeSpan overallPlaytime, Dictionary<string, TimeSpan> rolePlaytimes, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
 
@@ -139,21 +140,15 @@ public sealed class RoleTimerSystem : EntitySystem
             job.Requirements == null ||
             job.Requirements.Count == 0) return true;
 
-        TimeSpan? overallPlaytime;
-        Dictionary<string, TimeSpan>? rolePlaytimes;
-
         foreach (var requirement in job.Requirements)
         {
             switch (requirement)
             {
                 case DepartmentTimeRequirement deptRequirement:
-                    rolePlaytimes = _roleTimers.GetRolePlaytimes(pSession).Result;
                     break;
                 case OverallPlaytimeRequirement overallRequirement:
-                    overallPlaytime = _roleTimers.GetOverallPlaytime(pSession).Result;
                     break;
                 case RoleTimeRequirement roleRequirement:
-                    rolePlaytimes = _roleTimers.GetRolePlaytimes(pSession).Result;
                     break;
             }
 
@@ -162,6 +157,42 @@ public sealed class RoleTimerSystem : EntitySystem
         }
 
         return true;
+    }
+
+    public void SetAllowedJobs(NetUserId netUserId, ref List<string> jobs)
+    {
+        if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return;
+
+        TimeSpan? overallPlaytime = null;
+        Dictionary<string, TimeSpan>? rolePlaytimes = null;
+
+        for (var i = 0; i < jobs.Count; i++)
+        {
+            var job = jobs[i];
+
+            if (!_protoManager.TryIndex<JobPrototype>(job, out var jobber) ||
+                jobber.Requirements == null ||
+                jobber.Requirements.Count == 0) continue;
+
+            foreach (var requirement in jobber.Requirements)
+            {
+                switch (requirement)
+                {
+                    case DepartmentTimeRequirement deptRequirement:
+                        rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                        break;
+                    case OverallPlaytimeRequirement overallRequirement:
+                        overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
+                        break;
+                    case RoleTimeRequirement roleRequirement:
+                        rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                        break;
+                }
+
+                jobs.RemoveSwap(i);
+                i--;
+            }
+        }
     }
 
     private List<string> GetRoles(IPlayerSession session)

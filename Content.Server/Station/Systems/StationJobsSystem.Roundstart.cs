@@ -16,7 +16,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
-    [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
+    [Dependency] private readonly RoleTimerSystem _roleTimers = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -341,12 +341,15 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _roleBanManager.GetJobBans(player);
-            var roleGates = _roleTimerManager.GetDisallowedRoles(player);
+            var profileJobs = profile.JobPriorities.Keys.ToList();
+            _roleTimers.SetAllowedJobs(player, profileJobs);
 
             List<string>? availableJobs = null;
 
-            foreach (var (jobId, priority) in profile.JobPriorities)
+            foreach (var jobId in profileJobs)
             {
+                var priority = profile.JobPriorities[jobId];
+
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
 
@@ -359,11 +362,7 @@ public sealed partial class StationJobsSystem
                 if (!(roleBans == null || !roleBans.Contains(jobId)))
                     continue;
 
-                if (!(roleGates == null || !roleGates.Contains(jobId)))
-                    continue;
-
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);
-
                 availableJobs.Add(jobId);
             }
 

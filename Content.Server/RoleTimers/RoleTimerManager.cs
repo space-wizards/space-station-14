@@ -89,9 +89,9 @@ namespace Content.Server.RoleTimers
             return await timer.GetRoleTimers();
         }
 
-        public async Task<TimeSpan> GetPlayTimeForRole(NetUserId id, string role)
+        public async Task<TimeSpan> GetPlayTimeForRole(IPlayerSession pSession, string role)
         {
-            if (!_cachedPlayerData.TryGetValue(id, out var timers))
+            if (!_cachedPlayerData.TryGetValue(pSession.UserId, out var timers))
             {
                 return TimeSpan.Zero;
             }
