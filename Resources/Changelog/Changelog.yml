@@ -1,11 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed docking airlocks not having proper collision., type: Fix}
-  id: 1354
-  time: '2022-04-18T03:25:19.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed most hardsuit helmets not having working lights., type: Fix}
   id: 1355
   time: '2022-04-18T06:56:37.0000000+00:00'
@@ -2943,3 +2938,9 @@ Entries:
   - {message: Xenos are now Insulated and Immune to diseases!, type: Tweak}
   id: 1853
   time: '2022-07-03T02:49:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Exos no longer have an accent, they can talk like a normal person until
+      they get a language.', type: Tweak}
+  id: 1854
+  time: '2022-07-03T02:56:33.0000000+00:00'
