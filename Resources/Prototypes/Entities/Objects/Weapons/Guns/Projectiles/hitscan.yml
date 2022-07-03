@@ -43,10 +43,8 @@
     state: impact_laser
 
 - type: hitscan
-  id: OmniLaser
-  damage:
-    types:
-      Heat: 21
+  id: DisablerLaser
+  staminaDamage: 30
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_omni

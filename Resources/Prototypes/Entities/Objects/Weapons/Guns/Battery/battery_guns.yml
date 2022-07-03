@@ -247,6 +247,42 @@
   - type: Appearance
 
 - type: entity
+  name: disabler
+  parent: BaseWeaponBattery
+  id: WeaponDisabler
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+    - type: Tag
+      tags:
+        - Taser
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+      size: 10
+      quickEquip: false
+      Slots:
+        - Belt
+      HeldPrefix: taser4
+    - type: Gun
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+    - type: HitscanBatteryAmmoProvider
+      proto: DisablerLaser
+      fireCost: 100
+    - type: MagazineVisuals
+      magState: mag
+      steps: 2
+      zeroVisible: true
+    - type: Appearance
+
+- type: entity
   name: taser
   parent: BaseWeaponBattery
   id: WeaponTaser

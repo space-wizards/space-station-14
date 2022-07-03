@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-unshaded-1"
+        },
+        {
+            "name": "mag-unshaded-0",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        }
+    ]
+}
