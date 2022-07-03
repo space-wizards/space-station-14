@@ -33,7 +33,9 @@
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
   - type: Examiner
-  - type: GhostRadio
+  - type: IntrinsicRadio
+    channels:
+    - Common
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator

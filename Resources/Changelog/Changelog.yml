@@ -1,86 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Added admin notes., type: Add}
-  id: 1345
-  time: '2022-04-16T18:57:50.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed a broken message when someone else removes a plant., type: Fix}
-  - {message: Stasis beds now behave like other machines when it comes to unanchoring
-      them and powering them., type: Fix}
-  - {message: 'Beds now additionally require cloth, medical beds now additionally
-      require durathread.', type: Tweak}
-  id: 1346
-  time: '2022-04-16T23:04:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Space bears are no longer valid ghost roles., type: Remove}
-  - {message: Modified the rules slightly for salvage mob ghost roles., type: Tweak}
-  - {message: 'Space carps/ticks/etc can no longer disarm, and they''re worse at pulling
-      things.', type: Tweak}
-  - {message: 'Carp, ticks, spiders, and bears now have replacement accents.', type: Tweak}
-  id: 1347
-  time: '2022-04-16T23:08:52.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: You can no longer heal people out of death., type: Tweak}
-  id: 1348
-  time: '2022-04-17T06:29:31.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Chaplains can now summon a familiar from their bible., type: Add}
-  - {message: Evil chaplains can now emag the Pietyvend for some goodies., type: Add}
-  - {message: You can now draw blood from most mobs., type: Fix}
-  id: 1349
-  time: '2022-04-17T07:16:03.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The lathe visualizer now works., type: Fix}
-  - {message: Lathes now correctly let you produce something when you have the exact
-      amount of materials required., type: Fix}
-  - {message: Some lathes now have sounds that play., type: Add}
-  - {message: Lathes with inserting animations will dynamically color them based on
-      the color of the material., type: Add}
-  - {message: 'Increased most lathe production times between 4x and 10x. So, from
-      half a second to 2 seconds in most cases.', type: Tweak}
-  id: 1350
-  time: '2022-04-17T07:34:14.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Made lobby art look less choppy if you aren't playing on exactly 1080p
-      fullscreen., type: Tweak}
-  id: 1351
-  time: '2022-04-17T11:14:53.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: The bible's Summon Familiar now appears in the action bar in addition
-      to being an alternative verb., type: Tweak}
-  - {message: Familiars can now open public and chapel doors by walking into them.,
-    type: Tweak}
-  - {message: Familiars now accurately show when they are dead when examined., type: Fix}
-  id: 1352
-  time: '2022-04-17T21:43:00.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed security techfab visuals, type: Fix}
-  id: 1353
-  time: '2022-04-17T21:55:23.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed docking airlocks not having proper collision., type: Fix}
-  id: 1354
-  time: '2022-04-18T03:25:19.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed most hardsuit helmets not having working lights., type: Fix}
-  id: 1355
-  time: '2022-04-18T06:56:37.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed lamps and lanterns not having working lights., type: Fix}
-  id: 1356
-  time: '2022-04-18T13:23:21.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: You should be less likely to be phased through walls., type: Fix}
@@ -2956,3 +2874,74 @@ Entries:
     type: Tweak}
   id: 1844
   time: '2022-07-02T09:54:39.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
+  id: 1845
+  time: '2022-07-03T02:10:20.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed vomit puddle mopping behavior, type: Fix}
+  id: 1846
+  time: '2022-07-03T02:13:12.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Incidents of sickness from miasma will give all entities the same disease.,
+    type: Tweak}
+  - {message: Moldy food now contains mold., type: Add}
+  id: 1847
+  time: '2022-07-03T02:25:31.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Disarms now deselect after a usage., type: Tweak}
+  id: 1848
+  time: '2022-07-03T02:26:49.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: 'You can now pet Space Dragons, if you''re brave enough!', type: Add}
+  id: 1849
+  time: '2022-07-03T02:32:09.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Detective Support, type: Add}
+  - {message: Arrivals Dock(secondary evac), type: Add}
+  - {message: QoL, type: Add}
+  - {message: Capital L, type: Add}
+  - {message: skub, type: Add}
+  id: 1850
+  time: '2022-07-03T02:34:51.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Wire snipping takes .75 seconds longer to help prevent missclick consequences!,
+    type: Tweak}
+  id: 1851
+  time: '2022-07-03T02:37:44.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Morgues and body bags should behave much more reliably for stopping
+      rotting., type: Fix}
+  - {message: You can preserve bodies so they never rot., type: Fix}
+  id: 1852
+  time: '2022-07-03T02:46:24.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Xenos are now Insulated and Immune to diseases!, type: Tweak}
+  id: 1853
+  time: '2022-07-03T02:49:35.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Exos no longer have an accent, they can talk like a normal person until
+      they get a language.', type: Tweak}
+  id: 1854
+  time: '2022-07-03T02:56:33.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Blue alert now has its own alarm., type: Add}
+  - {message: Red alert alarm sounds more alarming., type: Add}
+  id: 1855
+  time: '2022-07-03T03:52:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: PAI can now only hear Common radio., type: Tweak}
+  id: 1856
+  time: '2022-07-03T08:36:40.0000000+00:00'
