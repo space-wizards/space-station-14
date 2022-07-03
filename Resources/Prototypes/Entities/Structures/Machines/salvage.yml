@@ -12,6 +12,10 @@
   - type: Rotatable
   - type: Transform
     noRot: false
+  - type: Speech
+  - type: IntrinsicRadio
+    channels:
+    - Supply
   - type: SalvageMagnet
     offset: 0, -32
   - type: ApcPowerReceiver
