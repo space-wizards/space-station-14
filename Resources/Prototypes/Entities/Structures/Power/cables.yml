@@ -4,6 +4,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Cable
+    cuttingDelay: 0.5
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
