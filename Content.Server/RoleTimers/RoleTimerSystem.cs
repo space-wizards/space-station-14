@@ -103,7 +103,11 @@ public sealed class RoleTimerSystem : EntitySystem
 
     private void Save(IPlayerSession pSession, TimeSpan currentTime)
     {
-        _lastSetTime.TryGetValue(pSession, out var lastSave);
+        if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
+        {
+            lastSave = currentTime;
+        }
+        
         var addedTime = currentTime - lastSave;
 
         var roles = GetRoles(pSession);
