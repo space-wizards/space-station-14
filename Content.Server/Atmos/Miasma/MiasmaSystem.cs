@@ -126,8 +126,7 @@ namespace Content.Server.Atmos.Miasma
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
             {
-                var source = EnsureComp<BodyPreservedComponent>(args.Entity);
-                ModifyPreservationSource(args.Entity, true, source);
+                ModifyPreservationSource(args.Entity, true);
                 ToggleDecomposition(args.Entity, false, perishable);
             }
         }
@@ -135,8 +134,7 @@ namespace Content.Server.Atmos.Miasma
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
             {
-                var source = EnsureComp<BodyPreservedComponent>(args.Entity);
-                ModifyPreservationSource(args.Entity, false, source);
+                ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
             }
         }
@@ -184,10 +182,9 @@ namespace Content.Server.Atmos.Miasma
         /// Remove is just "add = false"
         /// If we have 0 we remove the whole component.
         /// </summary>
-        public void ModifyPreservationSource(EntityUid uid, bool add, BodyPreservedComponent? component = null)
+        public void ModifyPreservationSource(EntityUid uid, bool add)
         {
-            if (!Resolve(uid, ref component))
-                return;
+            var component = EnsureComp<BodyPreservedComponent>(uid);
 
             if (add)
             {
