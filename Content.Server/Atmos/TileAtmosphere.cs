@@ -88,6 +88,10 @@ namespace Content.Server.Atmos
         public GasMixture? Air { get; set; }
 
         [ViewVariables]
+        [DataField("lastShare")]
+        public float LastShare;
+
+        [ViewVariables]
         public float[]? MolesArchived;
 
         GasMixture IGasMixtureHolder.Air

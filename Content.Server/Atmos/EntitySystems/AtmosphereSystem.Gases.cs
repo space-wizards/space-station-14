@@ -249,6 +249,39 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        public enum GasCompareResult
+        {
+            NoExchange = -2,
+            TemperatureExchange = -1,
+        }
+
+        /// <summary>
+        ///     Compares two gas mixtures to see if they are within acceptable ranges for group processing to be enabled.
+        /// </summary>
+        public GasCompareResult CompareExchange(GasMixture sample, GasMixture otherSample)
+        {
+            var moles = 0f;
+
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var gasMoles = sample.Moles[i];
+                var delta = MathF.Abs(gasMoles - otherSample.Moles[i]);
+                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
+                    return (GasCompareResult)i; // We can move gases!
+                moles += gasMoles;
+            }
+
+            if (moles > Atmospherics.MinimumMolesDeltaToMove)
+            {
+                var tempDelta = MathF.Abs(sample.Temperature - otherSample.Temperature);
+                if (tempDelta > Atmospherics.MinimumTemperatureDeltaToSuspend)
+                    return GasCompareResult.TemperatureExchange; // There can be temperature exchange.
+            }
+
+            // No exchange at all!
+            return GasCompareResult.NoExchange;
+        }
+
         /// <summary>
         ///     Performs reactions for a given gas mixture on an optional holder.
         /// </summary>

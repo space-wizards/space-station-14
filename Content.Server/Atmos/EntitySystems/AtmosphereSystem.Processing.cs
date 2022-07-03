@@ -94,6 +94,8 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
+                        tile.ArchivedCycle = 0;
+                        tile.LastShare = 0f;
                         tile.Hotspot = new Hotspot();
                     }
                 }
@@ -110,6 +112,8 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         tile.Air = null;
                         tile.MolesArchived = null;
+                        tile.ArchivedCycle = 0;
+                        tile.LastShare = 0f;
                         tile.Space = false;
                     }
 

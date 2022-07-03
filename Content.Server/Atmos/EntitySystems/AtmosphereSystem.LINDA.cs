@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     shouldShareAir = true;
-                } else if (tile.Air!.Compare(enemyTile.Air!) != GasMixture.GasCompareResult.NoExchange)
+                } else if (CompareExchange(tile.Air, enemyTile.Air) != GasCompareResult.NoExchange)
                 {
                     if (!enemyTile.Excited)
                     {
@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air == null || tile.ExcitedGroup == null)
                 return;
 
-            switch (tile.Air.LastShare)
+            switch (tile.LastShare)
             {
                 case > Atmospherics.MinimumAirToSuspend:
                     ExcitedGroupResetCooldowns(tile.ExcitedGroup);
@@ -238,7 +238,7 @@ namespace Content.Server.Atmos.EntitySystems
                 absMovedMoles += MathF.Abs(delta);
             }
 
-            receiver.LastShare = absMovedMoles;
+            tileReceiver.LastShare = absMovedMoles;
 
             if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
             {
