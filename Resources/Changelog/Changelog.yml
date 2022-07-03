@@ -2927,7 +2927,7 @@ Entries:
   time: '2022-07-03T02:34:51.0000000+00:00'
 - author: Sammy Boy
   changes:
-  - {message: Wire snipping takes .25 seconds longer to help prevent missclick consequences!,
+  - {message: Wire snipping takes .75 seconds longer to help prevent missclick consequences!,
     type: Tweak}
   id: 1851
   time: '2022-07-03T02:37:44.0000000+00:00'
