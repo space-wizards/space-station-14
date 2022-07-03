@@ -1,10 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Made lobby art look less choppy if you aren't playing on exactly 1080p
-      fullscreen., type: Tweak}
-  id: 1351
-  time: '2022-04-17T11:14:53.0000000+00:00'
 - author: Rane
   changes:
   - {message: The bible's Summon Familiar now appears in the action bar in addition
@@ -2945,3 +2939,9 @@ Entries:
   - {message: skub, type: Add}
   id: 1850
   time: '2022-07-03T02:34:51.0000000+00:00'
+- author: Sammy Boy
+  changes:
+  - {message: Wire snipping takes .25 seconds longer to help prevent missclick consequences!,
+    type: Tweak}
+  id: 1851
+  time: '2022-07-03T02:37:44.0000000+00:00'
