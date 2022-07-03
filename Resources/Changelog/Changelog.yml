@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Added admin notes., type: Add}
-  id: 1345
-  time: '2022-04-16T18:57:50.0000000+00:00'
 - author: Rane
   changes:
   - {message: Fixed a broken message when someone else removes a plant., type: Fix}
@@ -2956,3 +2951,8 @@ Entries:
     type: Tweak}
   id: 1844
   time: '2022-07-02T09:54:39.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: 'Added Shuttle Windows, coming soon to a shuttle near you.', type: Add}
+  id: 1845
+  time: '2022-07-03T02:10:20.0000000+00:00'
