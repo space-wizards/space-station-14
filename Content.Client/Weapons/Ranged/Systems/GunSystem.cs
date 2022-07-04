@@ -1,5 +1,6 @@
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Camera;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -27,6 +28,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly AnimationPlayerSystem _animPlayer = default!;
     [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
 
     public bool SpreadOverlay
     {
@@ -164,6 +166,8 @@ public sealed partial class GunSystem : SharedGunSystem
         // Rather than splitting client / server for every ammo provider it's easier
         // to just delete the spawned entities. This is for programmer sanity despite the wasted perf.
         // This also means any ammo specific stuff can be grabbed as necessary.
+        var direction = fromCoordinates.ToMapPos(EntityManager) - toCoordinates.ToMapPos(EntityManager);
+
         foreach (var ent in ammo)
         {
             switch (ent)
@@ -174,6 +178,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         SetCartridgeSpent(cartridge, true);
                         MuzzleFlash(gun.Owner, cartridge, user);
                         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                        Recoil(user, direction);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
                         //    Del(cartridge.Owner);
@@ -190,6 +195,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gun.Owner, newAmmo, user);
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Recoil(user, direction);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
                     else
@@ -197,9 +203,16 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case HitscanPrototype:
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
+                    Recoil(user, direction);
                     break;
             }
         }
+    }
+
+    private void Recoil(EntityUid? user, Vector2 recoil)
+    {
+        if (!Timing.IsFirstTimePredicted || user == null || recoil == Vector2.Zero) return;
+        _recoil.KickCamera(user.Value, recoil.Normalized * 0.5f);
     }
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
