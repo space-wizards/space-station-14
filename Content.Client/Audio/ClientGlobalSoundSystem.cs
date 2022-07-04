@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -21,6 +22,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<AdminSoundEvent>(PlayAdminSound);
         _cfg.OnValueChanged(CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
 
@@ -31,21 +33,38 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         SubscribeNetworkEvent<GameGlobalSoundEvent>(PlayGameSound);
     }
 
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        ClearAudio();
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
+        ClearAudio();
+    }
+
+    private void ClearAudio()
+    {
         foreach (var stream in _adminAudio)
         {
             stream?.Stop();
         }
         _adminAudio.Clear();
+
+        foreach (var (_, stream) in _eventAudio)
+        {
+            stream?.Stop();
+        }
+
+        _eventAudio.Clear();
     }
 
     private void PlayAdminSound(AdminSoundEvent soundEvent)
     {
         if(!_adminAudioEnabled) return;
 
-        var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
+        var stream = SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
         _adminAudio.Add(stream);
     }
 
@@ -54,22 +73,20 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         // Either the cvar is disabled or it's already playing
         if(!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
 
-        var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
+        var stream = SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
         _eventAudio.Add(soundEvent.Type, stream);
     }
 
     private void PlayGameSound(GameGlobalSoundEvent soundEvent)
     {
-        var stream = SoundSystem.Play(Filter.Local(), soundEvent.Filename, soundEvent.AudioParams);
+        SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
     }
 
     private void StopStationEventMusic(StopStationEventMusic soundEvent)
     {
-        if (_eventAudio.ContainsKey(soundEvent.Type))
-        {
-            _eventAudio[soundEvent.Type]?.Stop();
-            _eventAudio.Remove(soundEvent.Type);
-        }
+        if (!_eventAudio.TryGetValue(soundEvent.Type, out var stream)) return;
+        stream?.Stop();
+        _eventAudio.Remove(soundEvent.Type);
     }
 
     private void ToggleAdminSound(bool enabled)

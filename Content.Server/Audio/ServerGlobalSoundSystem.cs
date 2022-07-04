@@ -38,10 +38,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     public void PlayGlobalOnStation(EntityUid source, string filename, AudioParams? audioParams = null)
     {
         var msg = new GameGlobalSoundEvent(filename, audioParams);
-        foreach(var filter in GetStationFilters(source))
-        {
-            RaiseNetworkEvent(msg, filter);
-        }
+        _stationSystem.
     }
 
     private void PlayStationEventMusic(Filter playerFilter, string filename, StationEventMusicType type, AudioParams? audioParams = null)
@@ -68,21 +65,6 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
         {
             PlayStationEventMusic(filter, soundFile, type, audio);
         }
-    }
-
-    private List<Filter> GetStationFilters(EntityUid source)
-    {
-        var station = _stationSystem.GetOwningStation(source);
-        if (station != null)
-        {
-            if(!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return new List<Filter>(1) {  Filter.Pvs(source) };
-            var filters = new List<Filter>(stationDataComp.Grids.Count);
-            foreach (var gridEnt in stationDataComp.Grids)
-            {
-                filters.Add(Filter.BroadcastGrid(gridEnt));
-            }
-        }
-        return new List<Filter>(1) {  Filter.Pvs(source) };
     }
 
     /// <summary>
