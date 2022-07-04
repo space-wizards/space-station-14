@@ -148,7 +148,7 @@ namespace Content.Server.StationEvents.Events
             if (AnnounceEvent && StartAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-                chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatSystem.DispatchGlobalAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (AnnounceEvent && StartAudio != null)
@@ -171,7 +171,7 @@ namespace Content.Server.StationEvents.Events
             if (AnnounceEvent && EndAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-                chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatSystem.DispatchGlobalAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (AnnounceEvent && EndAudio != null)
