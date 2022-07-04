@@ -158,6 +158,18 @@ public sealed class StationSystem : EntitySystem
 
     #endregion Event handlers
 
+    public Filter GetInStation(EntityUid source, float range = 32f)
+    {
+        var station = GetOwningStation(source);
+
+        if (TryComp<StationDataComponent>(station, out var data))
+        {
+            return GetInStation(data);
+        }
+
+        return Filter.Empty();
+    }
+
     /// <summary>
     /// Retrieves a filter for everything in a particular station or near its member grids.
     /// </summary>
