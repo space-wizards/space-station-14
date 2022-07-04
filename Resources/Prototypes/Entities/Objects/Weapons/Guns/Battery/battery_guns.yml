@@ -270,11 +270,11 @@
       Slots:
         - Belt
     - type: Gun
+      fireRate: 2
       soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/taser.ogg
-    - type: HitscanBatteryAmmoProvider
-      proto: DisablerLaser
-      fireCost: 100
+        path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisabler
     - type: MagazineVisuals
       magState: mag
       steps: 5

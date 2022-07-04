@@ -96,8 +96,8 @@
 
 # Energy projectiles
 - type: entity
-  name : taser bolt
-  id: BulletTaser
+  name : disabler bolt
+  id: BulletDisabler
   parent: BaseBullet
   noSpawn: true
   components:
@@ -107,18 +107,16 @@
       params:
         volume: 5
   - type: Sprite
-    noRot: true
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    color: "#ffff33"
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
-    - state: spark
+    - state: omnilaser
       shader: unshaded
   - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.2,-0.2,0.2,0.2"
+        bounds: "-0.15,-0.3,0.15,0.3"
       hard: false
       id: projectile
       mask:
