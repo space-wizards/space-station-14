@@ -9,6 +9,11 @@
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
 
 - type: shader
+  id: DamageMask
+  kind: source
+  path: "/Textures/Shaders/damage_mask.swsl"
+
+- type: shader
   id: ColoredScreenBorder
   kind: source
   path: "/Textures/Shaders/colored_screen_border.swsl"

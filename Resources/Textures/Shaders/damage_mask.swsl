@@ -1,0 +1,26 @@
+//This shader defines two circles - everything inside the inner circle will be darkened, while everything outside the outer circle
+//will be full black. Between the inner and outer circle it LERPs from the inner darkness to full black.
+
+light_mode unshaded;
+uniform highp float outerCircleRadius;
+
+const highp float darknessAlphaInner =  0.0;
+const highp float innerCircleRadius = 200.0; //Note: this is in pixels
+
+void fragment() {
+	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+    highp vec2 pixelCenter = pixelSize*0.5;
+	highp float distance = length(FRAGCOORD.xy - pixelCenter);
+	if(distance > outerCircleRadius){
+		COLOR = vec4(0, 0.0, 0.0, 255.0);
+	}
+	else if(distance < innerCircleRadius){
+		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
+	}
+	else{
+		highp float intensity = (distance-innerCircleRadius)/(outerCircleRadius-innerCircleRadius);
+		highp float ratio = (1.0-intensity)*darknessAlphaInner + intensity;
+		COLOR = vec4(0, 0.0, 0.0, ratio);
+	}
+}
+

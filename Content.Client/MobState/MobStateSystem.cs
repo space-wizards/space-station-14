@@ -86,18 +86,21 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         switch (stateComponent.CurrentState)
         {
             case DamageState.Critical:
+                Logger.DebugS("mobstate", $"Set level to {Levels - 1}");
                 _overlay.Level = Levels - 1;
                 return;
             case DamageState.Dead:
+                Logger.DebugS("mobstate", $"Set level to {Levels}");
                 _overlay.Level = Levels;
                 return;
         }
 
         if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
-            modifier = (short)(damageable.TotalDamage / (earliestThreshold / Levels - 2) + 1);
+            modifier = (short) ((MathF.Min(1f, (damageable.TotalDamage / earliestThreshold).Float())) * (Levels - 2));
         }
 
+        Logger.DebugS("mobstate", $"Set level to {modifier}");
         _overlay.Level = modifier;
     }
 }
