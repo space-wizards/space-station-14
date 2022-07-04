@@ -233,9 +233,9 @@
       probability: 0.01
       snoughSound:
         collection: Sneezes
-    - !type:DiseaseSnough
+    - !type:DiseasePopUp
       probability: 0.02
-      snoughMessage: disease-think
+      message: disease-think
   cures:
     - !type:DiseaseBedrestCure
       maxLength: 30
