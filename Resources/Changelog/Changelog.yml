@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You should be less likely to be phased through walls., type: Fix}
-  - {message: When pushed by high pressure differences ("space wind") you should be
-      pushed in the direction of the pressure difference again., type: Fix}
-  id: 1357
-  time: '2022-04-18T14:42:32.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Nanotrasen has reported sightings of corpses prowljng the halls, given
@@ -2945,3 +2938,8 @@ Entries:
   - {message: PAI can now only hear Common radio., type: Tweak}
   id: 1856
   time: '2022-07-03T08:36:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
+  id: 1857
+  time: '2022-07-04T05:14:04.0000000+00:00'
