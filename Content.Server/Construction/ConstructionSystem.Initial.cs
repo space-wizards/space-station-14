@@ -14,6 +14,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -161,27 +162,58 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case MaterialConstructionGraphStep materialStep:
+                        // Accrue all valid entity stacks
+                        var validStacks = new List<Tuple<EntityUid,SharedStackComponent>>();
                         foreach (var entity in EnumerateNearby(user))
                         {
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
+                            validStacks.Add(new Tuple<EntityUid,SharedStackComponent>(entity, stack));
+                        }
+                        if (validStacks.Count == 0)
+                            break;
 
-                            if (splitStack == null)
-                                continue;
+                        // Sort stacks by count, smallest to largest, for consumption
+                        var sortedStacks = validStacks.OrderBy(x => x.Item2.Count).ToList();
+
+                        // Determine how many stacks we need to eat
+                        var remainingAmount = materialStep.Amount;
+                        var usedStacks = 0;
+                        while(remainingAmount > 0 && usedStacks < sortedStacks.Count)
+                        {
+                            remainingAmount -= sortedStacks[usedStacks].Item2.Count;
+                            usedStacks++;
+                        }
+
+                        // Use up as many stacks as needed, fully consuming constituent stacks and partially consuming the final stack
+                        remainingAmount = materialStep.Amount;
+                        int i = 0;
+                        for (; i < usedStacks; i++)
+                        {
+                            EntityUid? stackEntity = null;
+                            if (i == usedStacks - 1)
+                                stackEntity = _stackSystem.Split(sortedStacks[i].Item1, remainingAmount, user.ToCoordinates(0, 0), sortedStacks[i].Item2);
+                            else
+                            {
+                                stackEntity = sortedStacks[i].Item1;
+                                remainingAmount -= sortedStacks[i].Item2.Count;
+                            }
+
+                            if (stackEntity == null)
+                                break;
 
                             if (string.IsNullOrEmpty(materialStep.Store))
                             {
-                                if (!container.Insert(splitStack.Value))
-                                    continue;
+                                if (!container.Insert(stackEntity.Value))
+                                    break;
                             }
-                            else if (!GetContainer(materialStep.Store).Insert(splitStack.Value))
-                                    continue;
-
-                            handled = true;
-                            break;
+                            else if (!GetContainer(materialStep.Store).Insert(stackEntity.Value))
+                                break;
                         }
+
+                        if(i >= usedStacks)
+                            handled = true;
 
                         break;
 
