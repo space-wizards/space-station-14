@@ -21,12 +21,17 @@
     drawdepth: Overdoors
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
-    state: icon
+    layers:
+    - state: icon
+      map: ["enum.PortableScrubberVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Pullable
   - type: AtmosDevice
   - type: PortableScrubber
     gasMixture:
-      volume: 1000
+      volume: 1250
       moles:
         - 0 # oxygen
         - 0 # nitrogen
@@ -35,3 +40,14 @@
         - 0 # Tritium
         - 0 # Water vapor
         - 0 # Miasma
+  - type: ApcPowerReceiver
+    powerLoad: 2000
+  - type: ExtensionCableReceiver
+  - type: Appearance
+    visuals:
+    - type: PowerDeviceVisualizer
+  - type: PortableScrubberVisuals
+    idleState: icon
+    runningState: icon-running
+    readyState: unlit
+    fullState: unlit-full

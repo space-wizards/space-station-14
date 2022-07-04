@@ -1,8 +1,10 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.Examine;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Power.Components;
 using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 
@@ -19,14 +21,20 @@ namespace Content.Server.Atmos.Portable
         {
             base.Initialize();
             SubscribeLocalEvent<PortableScrubberComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
+            SubscribeLocalEvent<PortableScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, AtmosDeviceUpdateEvent args)
         {
-            Logger.Error("Received device updated event...");
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
+
+            if (component.Full)
+            {
+                UpdateAppearance(uid, true, false);
+                return;
+            }
 
             var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
 
@@ -42,21 +50,36 @@ namespace Content.Server.Atmos.Portable
 
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
-            Scrub(timeDelta, component, environment);
+            UpdateAppearance(uid, false, Scrub(timeDelta, component, environment));
+        }
+
+        private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, PowerChangedEvent args)
+        {
+            UpdateAppearance(uid,component.Full, args.Powered);
+            component.Enabled = args.Powered;
         }
 
         private void OnExamined(EntityUid uid, PortableScrubberComponent component, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
             {
-                args.PushMarkup("Internal pressure: " + component.Air.Pressure);
+                var percentage = Math.Round(((component.Air.Pressure) / component.MaxPressure) * 100);
+                args.PushMarkup("It's at about " + percentage + "% of its maximum internal pressure.");
             }
         }
 
-        private void Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
+        private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
-            Logger.Error("Scrubbing...");
-            _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
+            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
+        }
+
+        private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(PortableScrubberVisuals.IsFull, isFull);
+            appearance.SetData(PortableScrubberVisuals.IsRunning, isRunning);
         }
     }
 }

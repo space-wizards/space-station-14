@@ -90,13 +90,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             Scrub(timeDelta, scrubber.TransferRate, scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
         }
 
-        public void Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
+        public bool Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
                 || destination.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
             {
-                return;
+                return false;
             }
 
             // Take a gas sample.
@@ -105,7 +105,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             // Nothing left to remove from the tile.
             if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
-                return;
+                return false;
 
             if (mode == ScrubberPumpDirection.Scrubbing)
             {
@@ -118,6 +118,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 _atmosphereSystem.Merge(destination, removed);
             }
+            return true;
         }
 
         private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosMonitorAlarmEvent args)

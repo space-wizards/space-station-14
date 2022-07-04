@@ -18,6 +18,12 @@ namespace Content.Server.Atmos.Portable
             Gas.Miasma
         };
 
+        public bool Full => Air.Pressure >= MaxPressure;
+
+        /// <summary>
+        /// Maximum internal pressure before it refuses to take more.
+        /// </summary>
+        public float MaxPressure = 3000f;
         public float TransferRate = 1000f;
         public bool Enabled = true;
     }
