@@ -9,6 +9,7 @@
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
+    state: full
   - type: Fixtures
     fixtures:
     - shape:
