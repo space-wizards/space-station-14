@@ -89,18 +89,18 @@ namespace Content.Server.Singularity.Components
 
         public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
         {
-            if (component.Connection1?.Item2 == connection)
-            {
-                component.Connection1 = null;
-            }
-            else if (component.Connection2?.Item2 == connection)
-            {
-                component.Connection2 = null;
-            }
-            else if (connection != null)
-            {
-                Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
-            }
+            //if (component.Connection1?.Item2 == connection)
+           // {
+          //      component.Connection1 = null;
+          //  }
+         //   else if (component.Connection2?.Item2 == connection)
+        //    {
+        //        component.Connection2 = null;
+        //    }
+        //    else if (connection != null)
+          //  {
+       //         Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
+        //    }
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
             {
                 bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);

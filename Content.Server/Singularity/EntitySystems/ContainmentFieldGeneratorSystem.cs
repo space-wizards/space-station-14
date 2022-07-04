@@ -18,7 +18,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly ContainmentFieldConnectionSystem _fieldConnectionSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -79,16 +79,16 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
     {
-        component.Connection1?.Item2.Dispose();
-        component.Connection2?.Item2.Dispose();
+        component.Connection1?.Item2.Clear();;
+        component.Connection2?.Item2.Clear();;
     }
 
     private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
         {
-            component.Connection1?.Item2.Dispose();
-            component.Connection2?.Item2.Dispose();
+            component.Connection1?.Item2.Clear();
+            component.Connection2?.Item2.Clear();
         }
     }
 
@@ -123,19 +123,17 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.Parent == null)
         {
             EntityManager.QueueDeleteEntity(uid);
-            return;
         }
     }
 
     public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
     {
         component.PowerBuffer += power;
-        var powerSpread = power / 2;
 
         if (component.PowerBuffer >= component.Power)
         {
-            TryPowerConnection(ref component.Connection1, powerSpread, component);
-            TryPowerConnection(ref component.Connection2, powerSpread, component);
+            TryGenerateFieldConnection(ref component.Connection1,component);
+            TryGenerateFieldConnection(ref component.Connection2,component);
         }
     }
 
@@ -148,27 +146,27 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
-    public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
+    public void RemoveConnection(ContainmentFieldGeneratorComponent component)
     {
-        if (component.Connection1?.Item2 == connection)
+        if (component.Connection1?.Item2 == component.Fields)
         {
             component.Connection1 = null;
             component.IsConnected = false;
             UpdateConnectionLights(component);
         }
-        else if (component.Connection2?.Item2 == connection)
+        else if (component.Connection2?.Item2 == component.Fields)
         {
             component.Connection2 = null;
             component.IsConnected = false;
             UpdateConnectionLights(component);
         }
-        else if (connection != null)
+        else if (component.Fields != null)
         {
             Logger.Error("RemoveConnection called on Containment Field Generator with a connection that can't be found in its connections.");
         }
     }
 
-    private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple, ContainmentFieldGeneratorComponent component)
+    private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, List<EntityUid>>? propertyFieldTuple,ContainmentFieldGeneratorComponent component)
     {
         if (propertyFieldTuple != null) return false;
         if (!component.Enabled) return false; //don't gen a field unless it's on
@@ -176,60 +174,49 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
         {
-            if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue; //this would be the key
+            if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
 
-            foreach (var (dir, fieldComponent) in component.Connections)
-            {
-                if (dir == direction)
-                {
-                    continue;
-                }
-            }
+            var gen1XForm = Transform(component.Owner);
+            var ray = new CollisionRay(gen1XForm.MapPosition.Position, direction.ToVec(), component.CollisionMask);
+            var rayCastResults = _physics.IntersectRay(gen1XForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
 
-            var dirVec = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldRotation.RotateVec(direction.ToVec());
-            var ray = new CollisionRay(EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition, dirVec, (int) CollisionGroup.MobMask);
-            var rawRayCastResults = EntitySystem.Get<SharedPhysicsSystem>().IntersectRay(EntityManager.GetComponent<TransformComponent>(component.Owner).MapID, ray, 4.5f, component.Owner, false);
-
-            var rayCastResults = rawRayCastResults as RayCastResults[] ?? rawRayCastResults.ToArray();
             if (!rayCastResults.Any()) continue;
 
             RayCastResults? closestResult = null;
-            var smallestDist = 4.5f;
             foreach (var res in rayCastResults)
             {
-                if (res.Distance > smallestDist) continue;
-
-                smallestDist = res.Distance;
-                closestResult = res;
+                if (HasComp<ContainmentFieldGeneratorComponent>(res.HitEntity))
+                {
+                    closestResult = res;
+                }
             }
             if (closestResult == null) continue;
+
             var ent = closestResult.Value.HitEntity;
             if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
                 fieldGeneratorComponent.Owner == component.Owner ||
                 !HasFreeConnections(fieldGeneratorComponent) ||
-                IsConnectedWith(component, fieldGeneratorComponent) ||
+                //IsConnectedWith(component, fieldGeneratorComponent) ||
                 !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
                 collidableComponent.BodyType != BodyType.Static)
             {
                 continue;
             }
 
-            //var ev = new ContainmentFieldConnectEvent(component.Owner, fieldGeneratorComponent.Owner);
-            //RaiseLocalEvent(, ev);
+            component.Generator1 = component.Owner;
+            component.Generator2 = fieldGeneratorComponent.Owner;
 
-
-            //This should be a different method, probably containing the event
-            var connection = new ContainmentFieldConnection(component, fieldGeneratorComponent); //make event or method
-            propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
+            GenerateConnection(component);
+            propertyFieldTuple = new Tuple<Direction, List<EntityUid>>(direction, component.Fields);
             if (fieldGeneratorComponent.Connection1 == null)
             {
-                fieldGeneratorComponent.Connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                fieldGeneratorComponent.Connection1 = new Tuple<Direction, List<EntityUid>>(direction.GetOpposite(), component.Fields);
                 if (!fieldGeneratorComponent.IsConnected)
                     fieldGeneratorComponent.IsConnected = true;
             }
             else if (fieldGeneratorComponent.Connection2 == null)
             {
-                fieldGeneratorComponent.Connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                fieldGeneratorComponent.Connection2 = new Tuple<Direction, List<EntityUid>>(direction.GetOpposite(), component.Fields);
                 if (!fieldGeneratorComponent.IsConnected)
                     fieldGeneratorComponent.IsConnected = true;
             }
@@ -246,29 +233,49 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         return false;
     }
 
-    private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp, ContainmentFieldGeneratorComponent otherComp)
+    private void GenerateConnection(ContainmentFieldGeneratorComponent component)
     {
-        return otherComp == comp || comp.Connection1?.Item2.Generator1 == otherComp || comp.Connection1?.Item2.Generator2 == otherComp ||
-               comp.Connection2?.Item2.Generator1 == otherComp || comp.Connection2?.Item2.Generator2 == otherComp;
+        if (component.Generator1 == null || component.Generator2 == null)
+            return;
+
+        var gen1Coords = Transform(component.Generator1.Value).Coordinates;
+        var gen2Coords = Transform(component.Generator2.Value).Coordinates;
+
+        var delta = (gen2Coords - gen1Coords).Position;
+        var dirVec = delta.Normalized;
+        var stopDist = delta.Length;
+        var currentOffset = dirVec;
+        while (currentOffset.Length < stopDist)
+        {
+            var currentCoords = gen1Coords.Offset(currentOffset);
+            var newField = Spawn(component.CreatedField, currentCoords);
+
+            var fieldXForm = Transform(newField);
+            fieldXForm.AttachParent(component.Generator1.Value);
+
+            component.Fields.Add(newField);
+            currentOffset += dirVec;
+        }
     }
 
-    public void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, int powerPerConnection, ContainmentFieldGeneratorComponent component)
+    private void DeleteFields(ContainmentFieldGeneratorComponent component)
     {
-        if (connectionProperty != null)
+        foreach (var field in component.Fields)
         {
-               connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
+            QueueDel(field);
         }
-        else
-        {
-            if (TryGenerateFieldConnection(ref connectionProperty, component))
-            {
-                connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
-            }
-        }
+        component.Fields.Clear();
+
+        component.Generator1 = null;
+        component.Generator2 = null;
     }
 
-    public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component) => component.Connection1?.Item2?.CanRepel(toRepel) == true ||
-                                                                     component.Connection2?.Item2?.CanRepel(toRepel) == true;
+    public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component)
+    {
+        //component.Connection1?.Item2?.CanRepel(toRepel) == true || component.Connection2?.Item2?.CanRepel(toRepel) == true;
+        return false;
+    }
+
 
     public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
     {

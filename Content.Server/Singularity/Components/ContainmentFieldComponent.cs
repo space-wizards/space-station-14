@@ -9,9 +9,10 @@ public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
 
     /// <summary>
     /// How far should this field check before giving up?
-    /// Maybe best put on the generator? Dunno
     /// </summary>
-    public int MaxDistance;
+    [ViewVariables]
+    [DataField("maxLength")]
+    public float MaxLength = 8F;
 
     /// <summary>
     /// The fields connected to one another
