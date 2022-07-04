@@ -227,7 +227,8 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = robustRandom.Pick(possibleTargets);
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp)
+                || !entityManager.TryGetComponent<TransformComponent>(targetGrid, out var transform))
                 return false;
             var grid = gridComp.Grid;
 
@@ -242,7 +243,9 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, transform.MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp))
+                    continue;
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;
