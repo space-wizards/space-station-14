@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Portable
     public sealed class PortableScrubberSystem : EntitySystem
     {
         [Dependency] private readonly GasVentScrubberSystem _scrubberSystem = default!;
-
+        [Dependency] private readonly GasCanisterSystem _canisterSystem = default!;
         [Dependency] private readonly GasPortableSystem _gasPortableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -46,7 +46,9 @@ namespace Content.Server.Atmos.Portable
                 && nodeContainer.TryGetNode(component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
             {
-                HandleEmptying(component, portableNode);
+                _atmosphereSystem.React(component.Air, portableNode);
+                if (portableNode.NodeGroup is PipeNet {NodeCount: > 1} net)
+                    _canisterSystem.MixContainerWithPipeNet(component.Air, net.Air);
             }
 
             if (component.Full)
@@ -75,7 +77,6 @@ namespace Content.Server.Atmos.Portable
             if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
                 return;
 
-            Logger.Error("Setting portableNode connections enabled to " + (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _)));
             portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
         }
 
@@ -98,29 +99,6 @@ namespace Content.Server.Atmos.Portable
         {
             return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
         }
-
-        private void HandleEmptying(PortableScrubberComponent scrubber, PortablePipeNode node)
-        {
-            Logger.Error("Handling emptying...");
-            _atmosphereSystem.React(scrubber.Air, node);
-
-            if (node.NodeGroup is PipeNet {NodeCount: > 1} net)
-            {
-                var buffer = new GasMixture(net.Air.Volume + scrubber.Air.Volume);
-
-                _atmosphereSystem.Merge(buffer, net.Air);
-                _atmosphereSystem.Merge(buffer, scrubber.Air);
-
-                net.Air.Clear();
-                _atmosphereSystem.Merge(net.Air, buffer);
-                net.Air.Multiply(net.Air.Volume / buffer.Volume);
-
-                scrubber.Air.Clear();
-                _atmosphereSystem.Merge(scrubber.Air, buffer);
-                scrubber.Air.Multiply(scrubber.Air.Volume / buffer.Volume);
-            }
-        }
-
         private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
