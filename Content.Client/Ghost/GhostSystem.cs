@@ -76,7 +76,7 @@ namespace Content.Client.Ghost
 
             var eyeManager = IoCManager.Resolve<IEyeManager>().CurrentEye;
             var lightingManager = IoCManager.Resolve<ILightManager>();
-            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false|| lightingManager.Enabled == false)
+            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false || lightingManager.Enabled == false)
             {
                 eyeManager.DrawFov = true;
                 lightingManager.DrawShadows = true;
