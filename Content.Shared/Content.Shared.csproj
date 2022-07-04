@@ -30,12 +30,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MobState\State" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="MobState\State\SharedCriticalMobState.cs" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>
