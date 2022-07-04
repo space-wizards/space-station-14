@@ -20,14 +20,14 @@ public sealed class ListContainer : Control
     public bool Toggle { get; set; }
     public Action<ListData, ListContainerButton>? GenerateItem;
     public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
-    public IReadOnlyList<ListData> Data => _data ?? new List<ListData>();
+    public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
 
     private readonly VScrollBar _vScrollBar;
     private readonly Dictionary<ListData, ListContainerButton> _buttons = new();
 
-    private List<ListData>? _data;
+    private List<ListData> _data = new();
     private int _count = 0;
     private float _itemHeight = 0;
     private float _totalHeight = 0;
@@ -215,7 +215,7 @@ public sealed class ListContainer : Control
                 RemoveChild(child);
             }
 
-            if (_data != null)
+            if (_data.Count > 0)
             {
                 for (var i = _topIndex; i < _bottomIndex; i++)
                 {
