@@ -77,7 +77,8 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
         if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
 
-        short modifier = 0;
+        var modifier = 0f;
+        _overlay.Dead = false;
         _overlay.Level = modifier;
 
         if (!TryComp<DamageableComponent>(uid, out var damageable))
@@ -85,22 +86,25 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
         switch (stateComponent.CurrentState)
         {
-            case DamageState.Critical:
-                Logger.DebugS("mobstate", $"Set level to {Levels - 1}");
-                _overlay.Level = Levels - 1;
-                return;
             case DamageState.Dead:
-                Logger.DebugS("mobstate", $"Set level to {Levels}");
+                _overlay.Dead = true;
                 _overlay.Level = Levels;
                 return;
         }
 
         if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
-            modifier = (short) ((MathF.Min(1f, (damageable.TotalDamage / earliestThreshold).Float())) * (Levels - 2));
+            modifier = MathF.Min(1f, (damageable.TotalDamage / earliestThreshold).Float());
+        }
+
+        // Don't show damage overlay if they're near enough to max.
+        if (modifier < 0.1f)
+        {
+            modifier = 0f;
         }
 
         Logger.DebugS("mobstate", $"Set level to {modifier}");
+        _overlay.Dead = false;
         _overlay.Level = modifier;
     }
 }

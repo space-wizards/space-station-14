@@ -14,8 +14,10 @@ public sealed class DamageOverlay : Overlay
     private readonly ShaderInstance _deadShader;
     private readonly ShaderInstance _damageShader;
 
-    public int Level { get; set; }
-    private int _oldlevel;
+    public float Level;
+    private float _oldlevel;
+
+    public bool Dead = false;
 
     private TimeSpan? _lerpStart;
 
@@ -32,23 +34,26 @@ public sealed class DamageOverlay : Overlay
         var viewport = args.WorldAABB;
         var worldHandle = args.WorldHandle;
 
+        if (Dead)
+        {
+            ClearLerp();
+            worldHandle.UseShader(_deadShader);
+            worldHandle.DrawRect(viewport, Color.White);
+            return;
+        }
+
         switch (Level)
         {
             case 0:
                 ClearLerp();
                 break;
-            case MobStateSystem.Levels:
-                ClearLerp();
-                worldHandle.UseShader(_deadShader);
-                worldHandle.DrawRect(viewport, Color.White);
-                break;
             default:
-                double lerpRate = 2;
-                var level = (float) Level;
-                float maxLevel = 800f;
-                float minLevel = 80f;
+                double lerpRate = 4;
+                var level = Level;
+                float maxLevel = 2000f;
+                float minLevel = 800f;
 
-                if (_oldlevel != Level)
+                if (!_oldlevel.Equals(Level))
                 {
                     _lerpStart ??= _timing.RealTime;
 
@@ -67,7 +72,9 @@ public sealed class DamageOverlay : Overlay
                     }
                 }
 
-                _damageShader.SetParameter("outerCircleRadius", maxLevel - (level / (MobStateSystem.Levels - 1)) * (maxLevel - minLevel));
+                var outerRadius = maxLevel - level * (maxLevel - minLevel);
+                _damageShader.SetParameter("outerCircleRadius", outerRadius);
+                _damageShader.SetParameter("innerCircleRadius", MathF.Min(200f, outerRadius - 400f));
                 worldHandle.UseShader(_damageShader);
                 worldHandle.DrawRect(viewport, Color.White);
                 break;

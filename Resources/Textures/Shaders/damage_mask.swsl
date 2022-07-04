@@ -3,16 +3,17 @@
 
 light_mode unshaded;
 uniform highp float outerCircleRadius;
+uniform highp float innerCircleRadius;
+uniform highp float outerAlpha;
 
-const highp float darknessAlphaInner =  0.0;
-const highp float innerCircleRadius = 200.0; //Note: this is in pixels
+const highp float darknessAlphaInner = 0.0;
 
 void fragment() {
 	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
     highp vec2 pixelCenter = pixelSize*0.5;
 	highp float distance = length(FRAGCOORD.xy - pixelCenter);
 	if(distance > outerCircleRadius){
-		COLOR = vec4(0, 0.0, 0.0, 255.0);
+		COLOR = vec4(1.0, 0.0, 0.0, 1.0);
 	}
 	else if(distance < innerCircleRadius){
 		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
@@ -20,7 +21,7 @@ void fragment() {
 	else{
 		highp float intensity = (distance-innerCircleRadius)/(outerCircleRadius-innerCircleRadius);
 		highp float ratio = (1.0-intensity)*darknessAlphaInner + intensity;
-		COLOR = vec4(0, 0.0, 0.0, ratio);
+		COLOR = vec4(ratio, 0.0, 0.0, ratio);
 	}
 }
 
