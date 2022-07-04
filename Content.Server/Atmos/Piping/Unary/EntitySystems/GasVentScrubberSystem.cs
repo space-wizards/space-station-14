@@ -90,6 +90,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             Scrub(timeDelta, scrubber.TransferRate, scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
         }
 
+        /// <summary>
+        /// True if we were able to scrub, false if we were not.
+        /// </summary>
         public bool Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
         {
             // Cannot scrub if tile is null or air-blocked.

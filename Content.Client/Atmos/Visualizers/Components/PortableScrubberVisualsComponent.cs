@@ -1,8 +1,8 @@
 namespace Content.Client.Atmos.Visualizers;
 
 /// <summary>
-/// Holds the idle and running state for machines to control
-/// playing animtions on the client.
+/// Holds 2 pairs of states. The idle/running pair controls animation, while
+/// the ready / full pair controls the color of the light.
 /// </summary>
 [RegisterComponent]
 public sealed class PortableScrubberVisualsComponent : Component

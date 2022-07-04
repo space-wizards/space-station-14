@@ -50,6 +50,7 @@ namespace Content.Server.Atmos.Portable
             if (!component.Enabled)
                 return;
 
+            /// If we are on top of a connector port, empty into it.
             if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
                 && nodeContainer.TryGetNode(component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
@@ -77,7 +78,7 @@ namespace Content.Server.Atmos.Portable
             var running = Scrub(timeDelta, component, environment);
 
             UpdateAppearance(uid, false, running);
-
+            /// We scrub once to see if we can and set the animation
             if (!running)
                 return;
             /// widenet
@@ -87,6 +88,9 @@ namespace Content.Server.Atmos.Portable
             }
         }
 
+        /// <summary>
+        /// If there is a port under us, let us connect with adjacent atmos pipes.
+        /// </summary>
         private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
         {
             if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
@@ -100,10 +104,13 @@ namespace Content.Server.Atmos.Portable
 
         private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, PowerChangedEvent args)
         {
-            UpdateAppearance(uid,component.Full, args.Powered);
+            UpdateAppearance(uid, component.Full, args.Powered);
             component.Enabled = args.Powered;
         }
 
+        /// <summary>
+        /// Examining tells you how full it is as a %.
+        /// </summary>
         private void OnExamined(EntityUid uid, PortableScrubberComponent component, ExaminedEvent args)
         {
             if (args.IsInDetailsRange)
@@ -113,6 +120,9 @@ namespace Content.Server.Atmos.Portable
             }
         }
 
+        /// <summary>
+        /// When this is destroyed, we dump out all the gas inside.
+        /// </summary>
         private void OnDestroyed(EntityUid uid, PortableScrubberComponent component, DestructionEventArgs args)
         {
             var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
@@ -123,7 +133,6 @@ namespace Content.Server.Atmos.Portable
             _adminLogger.Add(LogType.CanisterPurged, LogImpact.Medium, $"Portable scrubber {ToPrettyString(uid):canister} purged its contents of {component.Air:gas} into the environment.");
             component.Air.Clear();
         }
-
         private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
             return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);

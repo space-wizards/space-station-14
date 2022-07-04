@@ -265,6 +265,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             appearance.SetData(GasCanisterVisuals.TankInserted, false);
         }
 
+        /// <summary>
+        /// Mix air from a gas container into a pipe net.
+        /// Useful for anything that uses connector ports.
+        /// </summary>
         public void MixContainerWithPipeNet(GasMixture containerAir, GasMixture pipeNetAir)
         {
             var buffer = new GasMixture(pipeNetAir.Volume + containerAir.Volume);

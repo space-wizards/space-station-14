@@ -5,8 +5,7 @@ using Content.Client.Power;
 namespace Content.Client.Atmos.Visualizers
 {
     /// <summary>
-    /// Controls client-side visuals for the
-    /// disease machines.
+    /// Controls client-side visuals for portable scrubbers.
     /// </summary>
     public sealed class PortableScrubberSystem : VisualizerSystem<PortableScrubberVisualsComponent>
     {

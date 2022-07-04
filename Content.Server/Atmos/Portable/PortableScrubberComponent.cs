@@ -5,6 +5,9 @@ namespace Content.Server.Atmos.Portable
     [RegisterComponent]
     public sealed class PortableScrubberComponent : Component
     {
+        /// <summary>
+        /// The air inside this machine.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gasMixture")]
         public GasMixture Air { get; } = new();
@@ -13,6 +16,11 @@ namespace Content.Server.Atmos.Portable
         [DataField("port")]
         public string PortName { get; set; } = "port";
 
+        /// <summary>
+        /// Which gases this machine will scrub out.
+        /// Unlike fixed scrubbers controlled by an air alarm,
+        /// this can't be changed in game.
+        /// </summary>
         public HashSet<Gas> FilterGases = new()
         {
             Gas.CarbonDioxide,
@@ -22,6 +30,9 @@ namespace Content.Server.Atmos.Portable
             Gas.Miasma
         };
 
+        /// <summary>
+        /// Can this scrubber hold more gas?
+        /// </summary>
         public bool Full => Air.Pressure >= MaxPressure;
 
         /// <summary>
