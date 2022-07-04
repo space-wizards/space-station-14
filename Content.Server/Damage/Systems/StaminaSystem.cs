@@ -27,7 +27,7 @@ public sealed class StaminaSystem : EntitySystem
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
     /// </summary>
-    private const float StamCritBufferTime = 2f;
+    private const float StamCritBufferTime = 3f;
 
     private readonly List<EntityUid> _dirtyEntities = new();
 
@@ -71,7 +71,12 @@ public sealed class StaminaSystem : EntitySystem
 
         foreach (var comp in toHit)
         {
+            var oldDamage = comp.StaminaDamage;
             TakeStaminaDamage(comp.Owner, component.Damage / toHit.Count, comp);
+            if (comp.StaminaDamage.Equals(oldDamage))
+            {
+                _popup.PopupEntity(Loc.GetString("stamina-resist"), comp.Owner, Filter.Entities(args.User));
+            }
         }
     }
 
@@ -137,17 +142,6 @@ public sealed class StaminaSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Estimate how long it will take to get out of stamina crit.
-    /// </summary>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    private TimeSpan GetStamCritTime(StaminaComponent component)
-    {
-        var damageableSeconds = MathF.Max(0f, (component.StaminaDamage - component.CritThreshold) / component.Decay - StamCritBufferTime);
-        return TimeSpan.FromSeconds(damageableSeconds);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -196,11 +190,6 @@ public sealed class StaminaSystem : EntitySystem
         }
     }
 
-    private float GetCritExcess(StaminaComponent component)
-    {
-        return (6f + StamCritBufferTime) * component.Decay;
-    }
-
     private void EnterStamCrit(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component) ||
@@ -210,14 +199,14 @@ public sealed class StaminaSystem : EntitySystem
         // TODO: Mask?
 
         component.Critical = true;
-        var stamDamageCap = component.CritThreshold + GetCritExcess(component);
-        component.StaminaDamage = stamDamageCap;
+        component.StaminaDamage = component.CritThreshold;
         component.StaminaDecayAccumulator = 0f;
 
-        var stunTime = GetStamCritTime(component);
+        var stunTime = TimeSpan.FromSeconds(6);
         _stunSystem.TryParalyze(uid, stunTime, true);
 
-        component.StaminaDecayAccumulator = (float) stunTime.TotalSeconds;
+        // Give them buffer before being able to be re-stunned
+        component.StaminaDecayAccumulator = (float) stunTime.TotalSeconds + StamCritBufferTime;
     }
 
     private void ExitStamCrit(EntityUid uid, StaminaComponent? component = null)

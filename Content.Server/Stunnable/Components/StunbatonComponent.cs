@@ -9,16 +9,6 @@ namespace Content.Server.Stunnable.Components
     {
         public bool Activated = false;
 
-        /// <summary>
-        /// What the stun cooldown is when the stun baton is active.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("activeCooldown")]
-        public TimeSpan ActiveDelay = TimeSpan.FromSeconds(7);
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("paralyzeTime")]
-        public float ParalyzeTime { get; set; } = 5f;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]
         public float EnergyPerUse { get; set; } = 350;
