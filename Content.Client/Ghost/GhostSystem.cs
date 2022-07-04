@@ -4,8 +4,7 @@ using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Ghost
 {
@@ -15,13 +14,26 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
+            SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
+
+            SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
+            SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
+
+            SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
+            SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
+        }
+
         // Changes to this value are manually propagated.
         // No good way to get an event into the UI.
         public int AvailableGhostRoleCount { get; private set; } = 0;
 
         private bool _ghostVisibility;
-
-        private bool GhostVisibility
+        public bool GhostVisibility
         {
             get => _ghostVisibility;
             set
@@ -43,21 +55,7 @@ namespace Content.Client.Ghost
             }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
-            SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
-
-            SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
-            SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
-
-            SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
-            SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
-        }
-
-        private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
+        private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
@@ -65,7 +63,7 @@ namespace Content.Client.Ghost
             }
         }
 
-        private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
+        private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             component.Gui?.Dispose();
             component.Gui = null;
@@ -74,6 +72,15 @@ namespace Content.Client.Ghost
             if (component.IsAttached)
             {
                 GhostVisibility = false;
+            }
+
+            var eyeManager = IoCManager.Resolve<IEyeManager>().CurrentEye;
+            var lightingManager = IoCManager.Resolve<ILightManager>();
+            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false|| lightingManager.Enabled == false)
+            {
+                eyeManager.DrawFov = true;
+                lightingManager.DrawShadows = true;
+                lightingManager.Enabled = true;
             }
         }
 
