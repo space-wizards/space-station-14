@@ -77,7 +77,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         if (!TryComp<MobStateComponent>(uid, out var stateComponent))
             return;
 
-        if (stateComponent.TryGetEarliestIncapacitatedState(threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
+        if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
             modifier = (short)(damageable.TotalDamage / (earliestThreshold / 5) + 1);
         }

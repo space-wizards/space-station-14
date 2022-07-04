@@ -1,9 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.EntitySystems;
-using Content.Shared.MobState.State;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.MobState.Components
@@ -27,7 +25,7 @@ namespace Content.Shared.MobState.Components
         /// </summary>
         [ViewVariables]
         [DataField("thresholds")]
-        private readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
+        public readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
 
         // TODO Remove Nullability?
         [ViewVariables]

@@ -9,8 +9,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.State;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
@@ -58,7 +56,7 @@ namespace Content.Shared.MobState.EntitySystems
             if (component.CurrentState != null && component.CurrentThreshold != null)
             {
                 // Initialize with given states
-                SetMobState(component, null, (component.CurrentState, component.CurrentThreshold.Value));
+                SetMobState(component, null, (component.CurrentState.Value, component.CurrentThreshold.Value));
             }
             else
             {
@@ -93,7 +91,7 @@ namespace Content.Shared.MobState.EntitySystems
         public bool IsIncapacitated(EntityUid uid, MobStateComponent? component = null)
         {
             if (!Resolve(uid, ref component, false)) return false;
-            return component.CurrentState == DamageState.Critical || component.CurrentState == DamageState.Dead;
+            return component.CurrentState is DamageState.Critical or DamageState.Dead;
         }
 
         #region ActionBlocker
@@ -106,8 +104,8 @@ namespace Content.Shared.MobState.EntitySystems
         {
             switch (component.CurrentState)
             {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
+                case DamageState.Dead:
+                case DamageState.Critical:
                     args.Cancel();
                     break;
             }
@@ -171,7 +169,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {
-            if (component.IsIncapacitated())
+            if (IsIncapacitated(uid, component))
                 args.Cancel();
         }
 
@@ -184,8 +182,8 @@ namespace Content.Shared.MobState.EntitySystems
         {
             switch (component.CurrentState)
             {
-                case SharedCriticalMobState:
-                case SharedDeadMobState:
+                case DamageState.Critical:
+                case DamageState.Dead:
                     args.Cancel();
                     return;
                 default:
@@ -195,7 +193,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
         {
-            if (component.IsIncapacitated())
+            if (IsIncapacitated(uid, component))
                 args.Cancel();
         }
 
@@ -208,8 +206,11 @@ namespace Content.Shared.MobState.EntitySystems
             SetMobState(component, old, null);
         }
 
-        protected void EnterState(MobStateComponent component, DamageState? state)
+        public void EnterState(MobStateComponent? component, DamageState? state)
         {
+            // TODO: Thanks buckle
+            if (component == null) return;
+
             switch (state)
             {
                 case DamageState.Alive:
@@ -278,7 +279,7 @@ namespace Content.Shared.MobState.EntitySystems
                 return;
             }
 
-            SetMobState(component.CurrentState, (newState, threshold));
+            SetMobState(component, component.CurrentState, (newState.Value, threshold));
         }
 
         /// <summary>
@@ -314,9 +315,9 @@ namespace Content.Shared.MobState.EntitySystems
             Dirty(component);
         }
 
-        public (DamageState state, FixedPoint2 threshold)? GetState(FixedPoint2 damage)
+        public (DamageState state, FixedPoint2 threshold)? GetState(MobStateComponent component, FixedPoint2 damage)
         {
-            foreach (var (threshold, state) in _highestToLowestStates)
+            foreach (var (threshold, state) in component._highestToLowestStates)
             {
                 if (damage >= threshold)
                 {
@@ -328,11 +329,12 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         public bool TryGetState(
+            MobStateComponent component,
             FixedPoint2 damage,
             [NotNullWhen(true)] out DamageState? state,
             out FixedPoint2 threshold)
         {
-            var highestState = GetState(damage);
+            var highestState = GetState(component, damage);
 
             if (highestState == null)
             {
@@ -345,9 +347,9 @@ namespace Content.Shared.MobState.EntitySystems
             return true;
         }
 
-        private (DamageState state, FixedPoint2 threshold)? GetEarliestState(FixedPoint2 minimumDamage, Predicate<DamageState> predicate)
+        private (DamageState state, FixedPoint2 threshold)? GetEarliestState(MobStateComponent component, FixedPoint2 minimumDamage, Predicate<DamageState> predicate)
         {
-            foreach (var (threshold, state) in _lowestToHighestStates)
+            foreach (var (threshold, state) in component._lowestToHighestStates)
             {
                 if (threshold < minimumDamage ||
                     !predicate(state))
@@ -361,9 +363,9 @@ namespace Content.Shared.MobState.EntitySystems
             return null;
         }
 
-        private (DamageState state, FixedPoint2 threshold)? GetPreviousState(FixedPoint2 maximumDamage, Predicate<DamageState> predicate)
+        private (DamageState state, FixedPoint2 threshold)? GetPreviousState(MobStateComponent component, FixedPoint2 maximumDamage, Predicate<DamageState> predicate)
         {
-            foreach (var (threshold, state) in _highestToLowestStates)
+            foreach (var (threshold, state) in component._highestToLowestStates)
             {
                 if (threshold > maximumDamage ||
                     !predicate(state))
@@ -377,24 +379,24 @@ namespace Content.Shared.MobState.EntitySystems
             return null;
         }
 
-        public (DamageState state, FixedPoint2 threshold)? GetEarliestCriticalState(FixedPoint2 minimumDamage)
+        public (DamageState state, FixedPoint2 threshold)? GetEarliestCriticalState(MobStateComponent component, FixedPoint2 minimumDamage)
         {
-            return GetEarliestState(minimumDamage, s => s.IsCritical());
+            return GetEarliestState(component, minimumDamage, s => s == DamageState.Critical);
         }
 
-        public (DamageState state, FixedPoint2 threshold)? GetEarliestIncapacitatedState(FixedPoint2 minimumDamage)
+        public (DamageState state, FixedPoint2 threshold)? GetEarliestIncapacitatedState(MobStateComponent component, FixedPoint2 minimumDamage)
         {
-            return GetEarliestState(minimumDamage, s => s.IsIncapacitated());
+            return GetEarliestState(component, minimumDamage, s => s is DamageState.Critical or DamageState.Dead);
         }
 
-        public (DamageState state, FixedPoint2 threshold)? GetEarliestDeadState(FixedPoint2 minimumDamage)
+        public (DamageState state, FixedPoint2 threshold)? GetEarliestDeadState(MobStateComponent component, FixedPoint2 minimumDamage)
         {
-            return GetEarliestState(minimumDamage, s => s.IsDead());
+            return GetEarliestState(component, minimumDamage, s => s == DamageState.Dead);
         }
 
-        public (DamageState state, FixedPoint2 threshold)? GetPreviousCriticalState(FixedPoint2 minimumDamage)
+        public (DamageState state, FixedPoint2 threshold)? GetPreviousCriticalState(MobStateComponent component, FixedPoint2 minimumDamage)
         {
-            return GetPreviousState(minimumDamage, s => s.IsCritical());
+            return GetPreviousState(component, minimumDamage, s => s == DamageState.Critical);
         }
 
         private bool TryGetState(
@@ -414,41 +416,45 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         public bool TryGetEarliestCriticalState(
+            MobStateComponent component,
             FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out DamageState? state,
             out FixedPoint2 threshold)
         {
-            var earliestState = GetEarliestCriticalState(minimumDamage);
+            var earliestState = GetEarliestCriticalState(component, minimumDamage);
 
             return TryGetState(earliestState, out state, out threshold);
         }
 
         public bool TryGetEarliestIncapacitatedState(
+            MobStateComponent component,
             FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out DamageState? state,
             out FixedPoint2 threshold)
         {
-            var earliestState = GetEarliestIncapacitatedState(minimumDamage);
+            var earliestState = GetEarliestIncapacitatedState(component, minimumDamage);
 
             return TryGetState(earliestState, out state, out threshold);
         }
 
         public bool TryGetEarliestDeadState(
+            MobStateComponent component,
             FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out DamageState? state,
             out FixedPoint2 threshold)
         {
-            var earliestState = GetEarliestDeadState(minimumDamage);
+            var earliestState = GetEarliestDeadState(component, minimumDamage);
 
             return TryGetState(earliestState, out state, out threshold);
         }
 
         public bool TryGetPreviousCriticalState(
+            MobStateComponent component,
             FixedPoint2 maximumDamage,
             [NotNullWhen(true)] out DamageState? state,
             out FixedPoint2 threshold)
         {
-            var earliestState = GetPreviousCriticalState(maximumDamage);
+            var earliestState = GetPreviousCriticalState(component, maximumDamage);
 
             return TryGetState(earliestState, out state, out threshold);
         }
