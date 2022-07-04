@@ -28,7 +28,6 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
-        [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
@@ -425,6 +424,7 @@ namespace Content.Server.Nuke
 
             RaiseLocalEvent(new NukeExplodedEvent());
 
+            _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
             EntityManager.DeleteEntity(uid);
         }
 

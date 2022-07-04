@@ -467,17 +467,17 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool> LobbyMusicEnabled =
-            CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.lobby_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         public static readonly CVarDef<bool> EventMusicEnabled =
-            CVarDef.Create("ambience.eventmusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.event_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Admin sounds
          */
 
         public static readonly CVarDef<bool> AdminSoundsEnabled =
-            CVarDef.Create("audio.adminsoundsenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("audio.admin_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD

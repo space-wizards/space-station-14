@@ -35,36 +35,35 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
         RaiseNetworkEvent(msg, playerFilter);
     }
 
+    private Filter GetStationAndPvs(EntityUid source)
+    {
+        var stationFilter = _stationSystem.GetInStation(source);
+        stationFilter.AddPlayersByPvs(source, entityManager: EntityManager);
+        return stationFilter;
+    }
+
     public void PlayGlobalOnStation(EntityUid source, string filename, AudioParams? audioParams = null)
     {
         var msg = new GameGlobalSoundEvent(filename, audioParams);
-        _stationSystem.
-    }
-
-    private void PlayStationEventMusic(Filter playerFilter, string filename, StationEventMusicType type, AudioParams? audioParams = null)
-    {
-        var msg = new StationEventMusicEvent(filename, type, audioParams);
-        RaiseNetworkEvent(msg, playerFilter);
+        var filter = GetStationAndPvs(source);
+        RaiseNetworkEvent(msg, filter);
     }
 
     public void StopStationEventMusic(EntityUid source, StationEventMusicType type)
     {
         var msg = new StopStationEventMusic(type);
-        foreach (var filter in GetStationFilters(source))
-        {
-            RaiseNetworkEvent(msg, filter);
-        }
+        var filter = GetStationAndPvs(source);
+        RaiseNetworkEvent(msg, filter);
     }
 
     public void DispatchStationEventMusic(EntityUid source, SoundSpecifier sound, StationEventMusicType type)
     {
         var audio = AudioParams.Default.WithVolume(-8);
         var soundFile = sound.GetSound();
+        var msg = new StationEventMusicEvent(soundFile, type, audio);
 
-        foreach (var filter in GetStationFilters(source))
-        {
-            PlayStationEventMusic(filter, soundFile, type, audio);
-        }
+        var filter = GetStationAndPvs(source);
+        RaiseNetworkEvent(msg, filter);
     }
 
     /// <summary>
