@@ -1,11 +1,6 @@
 Entries:
 - author: UKNOWH
   changes:
-  - {message: You can now put stuff in the chef hat, type: Add}
-  id: 1365
-  time: '2022-04-20T05:17:03.0000000+00:00'
-- author: UKNOWH
-  changes:
   - {message: Added a Flash payload that allows players to make modular flashbangs,
     type: Add}
   id: 1366
@@ -2944,3 +2939,9 @@ Entries:
       so be careful., type: Add}
   id: 1864
   time: '2022-07-04T07:11:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more playing hot potato with ID cards to early launch the shuttle.,
+    type: Tweak}
+  id: 1865
+  time: '2022-07-04T13:09:10.0000000+00:00'
