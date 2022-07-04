@@ -4,6 +4,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
@@ -11,6 +12,8 @@ namespace Content.Shared.Movement.Systems;
 public abstract class SharedJetpackSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
 
     public override void Initialize()
     {
@@ -101,11 +104,20 @@ public abstract class SharedJetpackSystem : EntitySystem
             {
                 RemComp<JetpackUserComponent>(user.Value);
             }
+
+            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
         appearance?.SetData(JetpackVisuals.Enabled, enabled);
         Dirty(component);
+    }
+
+    public bool IsUserFlying(EntityUid uid)
+    {
+        return (HasComp<JetpackUserComponent>(uid) &&
+                TryComp<PhysicsComponent>(uid, out var physicsComponent) &&
+                uid.IsWeightless(physicsComponent, mapManager: MapManager, entityManager: EntityManager));
     }
 
     protected abstract bool CanEnable(JetpackComponent component);

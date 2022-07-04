@@ -37,7 +37,6 @@ namespace Content.Shared.Damage
             {
                 var speed = component.SpeedModifierThresholds[closest];
                 args.ModifySpeed(speed, speed);
-                args.ModifyJetpackSpeed(speed);
             }
         }
 

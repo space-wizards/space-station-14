@@ -66,6 +66,5 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             return;
 
         args.ModifySpeed(component.WalkModifier, component.SprintModifier);
-        args.ModifyJetpackSpeed(component.SprintModifier);
     }
 }

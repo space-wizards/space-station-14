@@ -22,7 +22,6 @@ namespace Content.Shared.Movement.Systems
                 BaseSprintSpeed = component.BaseSprintSpeed,
                 WalkSpeedModifier = component.WalkSpeedModifier,
                 SprintSpeedModifier = component.SprintSpeedModifier,
-                JetpackSpeedModifier =  component.JetpackSpeedModifier
             };
         }
 
@@ -33,7 +32,6 @@ namespace Content.Shared.Movement.Systems
             component.BaseSprintSpeed = state.BaseSprintSpeed;
             component.WalkSpeedModifier = state.WalkSpeedModifier;
             component.SprintSpeedModifier = state.SprintSpeedModifier;
-            component.JetpackSpeedModifier = state.JetpackSpeedModifier;
         }
 
         public void RefreshMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
@@ -50,7 +48,6 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-            move.JetpackSpeedModifier = ev.JetpackSpeedModifier;
             Dirty(move);
         }
 
@@ -61,7 +58,6 @@ namespace Content.Shared.Movement.Systems
             public float BaseSprintSpeed;
             public float WalkSpeedModifier;
             public float SprintSpeedModifier;
-            public float JetpackSpeedModifier;
         }
     }
 
@@ -76,17 +72,11 @@ namespace Content.Shared.Movement.Systems
 
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
-        public float JetpackSpeedModifier { get; private set; } = 1.0f;
 
         public void ModifySpeed(float walk, float sprint)
         {
             WalkSpeedModifier *= walk;
             SprintSpeedModifier *= sprint;
-        }
-
-        public void ModifyJetpackSpeed(float jetpack)
-        {
-            JetpackSpeedModifier *= jetpack;
         }
     }
 }

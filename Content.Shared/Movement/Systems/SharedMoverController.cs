@@ -221,14 +221,7 @@ namespace Content.Shared.Movement.Systems
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            Vector2 total;
-            if (weightless && HasComp<JetpackUserComponent>(mover.Owner))
-            {
-                total = (walkDir * moveSpeedComponent.BaseWalkSpeed * moveSpeedComponent.JetpackSpeedModifier)
-                        + (sprintDir * moveSpeedComponent.BaseSprintSpeed * moveSpeedComponent.JetpackSpeedModifier);
-            }
-            else
-                total = walkDir * moveSpeedComponent.CurrentWalkSpeed + sprintDir * moveSpeedComponent.CurrentSprintSpeed;
+            var total = walkDir * moveSpeedComponent.CurrentWalkSpeed + sprintDir * moveSpeedComponent.CurrentSprintSpeed;
 
             var parentRotation = GetParentGridAngle(xform, mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
