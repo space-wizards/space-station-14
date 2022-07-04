@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 
 namespace Content.Server.Salvage
@@ -25,7 +26,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
@@ -190,8 +190,14 @@ namespace Content.Server.Salvage
                 return;
             }
 
+            if (salvageTransform.GridUid == null)
+            {
+                Logger.ErrorS("salvage", "Salvage entity has no associated grid?");
+                return;
+            }
+
             var parentTransform = salvageTransform.Parent!;
-            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridID, EntityManager).Recipients)
+            foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridUid.Value, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
                 {
@@ -204,7 +210,9 @@ namespace Content.Server.Salvage
                     Transform(playerEntityUid).AttachParent(parentTransform);
                 }
             }
-            EntityManager.QueueDeleteEntity(salvage);
+
+            // Deletion has to happen before grid traversal re-parents players.
+            EntityManager.DeleteEntity(salvage);
         }
 
         private void TryGetSalvagePlacementLocation(SalvageMagnetComponent component, out MapCoordinates coords, out Angle angle)
@@ -275,18 +283,17 @@ namespace Content.Server.Salvage
                 Offset = spl.Position
             };
 
-            var (_, gridId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
-            if (gridId == null)
+            var (_, salvageEntityId) = _mapLoader.LoadBlueprint(spl.MapId, map.MapPath.ToString(), opts);
+            if (salvageEntityId == null)
             {
                 Report(component.Owner, "salvage-system-announcement-spawn-debris-disintegrated");
                 return false;
             }
-            var salvageEntityId = _mapManager.GetGridEuid(gridId.Value);
             component.AttachedEntity = salvageEntityId;
-            var gridcomp = EntityManager.EnsureComponent<SalvageGridComponent>(salvageEntityId);
+            var gridcomp = EntityManager.EnsureComponent<SalvageGridComponent>(salvageEntityId.Value);
             gridcomp.SpawnerMagnet = component;
 
-            var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId);
+            var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId.Value);
             pulledTransform.WorldRotation = spAngle;
 
             Report(component.Owner, "salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));

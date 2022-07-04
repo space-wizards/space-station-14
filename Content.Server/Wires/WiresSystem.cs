@@ -34,8 +34,8 @@ public sealed class WiresSystem : EntitySystem
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
 
-    private const float ScrewTime = 2.5f;
-    private const float ToolTime = 1f;
+    private const float ScrewTime = 1f;
+    private float _toolTime = 0f;
 
     private static DummyWireAction _dummyWire = new DummyWireAction();
 
@@ -314,7 +314,7 @@ public sealed class WiresSystem : EntitySystem
             {
                 if (wire.CancelToken.IsCancellationRequested)
                 {
-                    RaiseLocalEvent(owner, wire.OnFinish);
+                    RaiseLocalEvent(owner, wire.OnFinish, true);
                     _finishedWires.Add((owner, wire));
                 }
                 else
@@ -322,7 +322,7 @@ public sealed class WiresSystem : EntitySystem
                     wire.TimeLeft -= frameTime;
                     if (wire.TimeLeft <= 0)
                     {
-                        RaiseLocalEvent(owner, wire.OnFinish);
+                        RaiseLocalEvent(owner, wire.OnFinish, true);
                         _finishedWires.Add((owner, wire));
                     }
                 }
@@ -468,11 +468,11 @@ public sealed class WiresSystem : EntitySystem
 
         if (component.IsPanelOpen)
         {
-            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverOpenSound.GetSound(), args.Target);
+            SoundSystem.Play(component.ScrewdriverOpenSound.GetSound(), Filter.Pvs(args.Target), args.Target);
         }
         else
         {
-            SoundSystem.Play(Filter.Pvs(args.Target), component.ScrewdriverCloseSound.GetSound(), args.Target);
+            SoundSystem.Play(component.ScrewdriverCloseSound.GetSound(), Filter.Pvs(args.Target), args.Target);
             _uiSystem.GetUiOrNull(args.Target, WiresUiKey.Key)?.CloseAll();
         }
     }
@@ -649,28 +649,36 @@ public sealed class WiresSystem : EntitySystem
                 break;
         }
 
-        var args = new DoAfterEventArgs(user, ToolTime, default, used)
+        if (_toolTime > 0f)
         {
-            NeedHand = true,
-            BreakOnStun = true,
-            BreakOnDamage = true,
-            BreakOnUserMove = true,
-            TargetFinishedEvent = new OnWireDoAfterEvent
+            var args = new DoAfterEventArgs(user, _toolTime, default, used)
             {
-                Target = used,
-                User = user,
-                Tool = toolEntity,
-                Action = action,
-                Id = id
-            },
-            TargetCancelledEvent = new OnWireDoAfterCancelEvent
-            {
-                Id = id
-            }
-        };
-        _doAfter.DoAfter(args);
+                NeedHand = true,
+                BreakOnStun = true,
+                BreakOnDamage = true,
+                BreakOnUserMove = true,
+                TargetFinishedEvent = new OnWireDoAfterEvent
+                {
+                    Target = used,
+                    User = user,
+                    Tool = toolEntity,
+                    Action = action,
+                    Id = id
+                },
+                TargetCancelledEvent = new OnWireDoAfterCancelEvent
+                {
+                    Id = id
+                }
+            };
 
-        wires.WiresQueue.Add(id);
+            _doAfter.DoAfter(args);
+
+            wires.WiresQueue.Add(id);
+        }
+        else
+        {
+            UpdateWires(used, user, toolEntity, id, action, wires);
+        }
     }
 
 
@@ -742,7 +750,7 @@ public sealed class WiresSystem : EntitySystem
                 wire.Action.Pulse(user, wire);
 
                 UpdateUserInterface(used);
-                SoundSystem.Play(Filter.Pvs(used), wires.PulseSound.GetSound(), used);
+                SoundSystem.Play(wires.PulseSound.GetSound(), Filter.Pvs(used), used);
                 break;
         }
 

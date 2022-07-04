@@ -429,7 +429,7 @@ namespace Content.Client.DragDrop
             // CanInteract() doesn't support checking a second "target" entity.
             // Doing so manually:
             var ev = new GettingInteractedWithAttemptEvent(eventArgs.User, eventArgs.Dragged);
-            RaiseLocalEvent(eventArgs.Dragged, ev);
+            RaiseLocalEvent(eventArgs.Dragged, ev, true);
             if (ev.Cancelled)
                 return false;
 

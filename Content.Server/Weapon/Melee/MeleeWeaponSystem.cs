@@ -74,7 +74,10 @@ namespace Content.Server.Weapon.Melee
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
-            if (curTime < comp.CooldownEnd || args.Target == null)
+            if (curTime < comp.CooldownEnd ||
+                args.Target == null ||
+                args.Target == owner ||
+                args.User == args.Target)
                 return;
 
             var location = Transform(args.User).Coordinates;
@@ -84,7 +87,7 @@ namespace Content.Server.Weapon.Melee
             if (args.Target is {Valid: true} target)
             {
                 // Raise event before doing damage so we can cancel damage if the event is handled
-                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User);
+                var hitEvent = new MeleeHitEvent(new List<EntityUid>() { target }, args.User, comp.Damage);
                 RaiseLocalEvent(owner, hitEvent, false);
 
                 if (!hitEvent.Handled)
@@ -92,7 +95,7 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
-                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(target, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var modifiedDamage = DamageSpecifier.ApplyModifierSets(comp.Damage + hitEvent.BonusDamage, hitEvent.ModifiersList);
                     var damageResult = _damageableSystem.TryChangeDamage(target, modifiedDamage);
@@ -112,18 +115,32 @@ namespace Content.Server.Weapon.Melee
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner, entityManager: EntityManager), comp.MissSound.GetSound(), args.User);
+                SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner, entityManager: EntityManager), args.User);
                 return;
             }
 
             comp.LastAttackTime = curTime;
-            comp.CooldownEnd = comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime);
+            SetAttackCooldown(owner, comp.LastAttackTime + TimeSpan.FromSeconds(comp.CooldownTime), comp);
 
-            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd), false);
+            RaiseLocalEvent(owner, new RefreshItemCooldownEvent(comp.LastAttackTime, comp.CooldownEnd));
+        }
+
+        /// <summary>
+        /// Set the melee weapon cooldown's end to the specified value. Will use the maximum of the existing cooldown or the new one.
+        /// </summary>
+        public void SetAttackCooldown(EntityUid uid, TimeSpan endTime, MeleeWeaponComponent? component = null)
+        {
+            // Some other system may want to artificially inflate melee weapon CD.
+            if (!Resolve(uid, ref component) || component.CooldownEnd > endTime) return;
+
+            component.CooldownEnd = endTime;
+            RaiseLocalEvent(uid, new RefreshItemCooldownEvent(component.LastAttackTime, component.CooldownEnd));
         }
 
         private void OnWideAttack(EntityUid owner, MeleeWeaponComponent comp, WideAttackEvent args)
         {
+            if (string.IsNullOrEmpty(comp.Arc)) return;
+
             args.Handled = true;
             var curTime = _gameTiming.CurTime;
 
@@ -152,7 +169,7 @@ namespace Content.Server.Weapon.Melee
             }
 
             // Raise event before doing damage so we can cancel damage if handled
-            var hitEvent = new MeleeHitEvent(hitEntities, args.User);
+            var hitEvent = new MeleeHitEvent(hitEntities, args.User, comp.Damage);
             RaiseLocalEvent(owner, hitEvent, false);
             SendAnimation(comp.Arc, angle, args.User, owner, hitEntities);
 
@@ -169,12 +186,12 @@ namespace Content.Server.Weapon.Melee
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), Transform(args.User).Coordinates);
+                    SoundSystem.Play(comp.MissSound.GetSound(), Filter.Pvs(owner), Transform(args.User).Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+                    RaiseLocalEvent(entity, new AttackedEvent(args.Used, args.User, args.ClickLocation), true);
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 
@@ -227,17 +244,17 @@ namespace Content.Server.Weapon.Melee
             {
                 if (type == null && damageSoundComp.NoDamageSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundComp.NoDamageSound.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundComp.NoDamageSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundType!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundType!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (type != null && damageSoundComp.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), damageSoundGroup!.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(damageSoundGroup!.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
             }
@@ -247,12 +264,12 @@ namespace Content.Server.Weapon.Melee
             {
                 if (hitSoundOverride != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSoundOverride.GetSound(), target, AudioHelpers.WithVariation(DamagePitchVariation));
+                    SoundSystem.Play(hitSoundOverride.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target, AudioHelpers.WithVariation(DamagePitchVariation));
                     playedSound = true;
                 }
                 else if (hitSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), hitSound.GetSound(), target);
+                    SoundSystem.Play(hitSound.GetSound(), Filter.Pvs(target, entityManager: EntityManager), target);
                     playedSound = true;
                 }
             }
@@ -266,14 +283,14 @@ namespace Content.Server.Weapon.Melee
                     case "Burn":
                     case "Heat":
                     case "Cold":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Items/welder.ogg", target);
+                        SoundSystem.Play("/Audio/Items/welder.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     // No damage, fallback to tappies
                     case null:
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/tap.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/tap.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                     case "Brute":
-                        SoundSystem.Play(Filter.Pvs(target, entityManager: EntityManager), "/Audio/Weapons/smash.ogg", target);
+                        SoundSystem.Play("/Audio/Weapons/smash.ogg", Filter.Pvs(target, entityManager: EntityManager), target);
                         break;
                 }
             }
@@ -353,6 +370,11 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
+        ///     The base amount of damage dealt by the melee hit.
+        /// </summary>
+        public readonly DamageSpecifier BaseDamage = new();
+
+        /// <summary>
         ///     Modifier sets to apply to the hit event when it's all said and done.
         ///     This should be modified by adding a new entry to the list.
         /// </summary>
@@ -382,10 +404,11 @@ namespace Content.Server.Weapon.Melee
         /// </summary>
         public EntityUid User { get; }
 
-        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user)
+        public MeleeHitEvent(List<EntityUid> hitEntities, EntityUid user, DamageSpecifier baseDamage)
         {
             HitEntities = hitEntities;
             User = user;
+            BaseDamage = baseDamage;
         }
     }
 }

@@ -2,6 +2,7 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
@@ -220,7 +221,7 @@ namespace Content.Server.Nuke
             // play alert sound if time is running out
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
-                nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
+                nuke.AlertAudioStream = SoundSystem.Play(nuke.AlertSound.GetSound(), Filter.Broadcast());
                 nuke.PlayedAlertSound = true;
             }
 
@@ -288,7 +289,7 @@ namespace Content.Server.Nuke
                 return;
 
             var anchored = false;
-            if (EntityManager.TryGetComponent(uid, out TransformComponent transform))
+            if (EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 anchored = transform.Anchored;
 
             var allowArm = component.DiskSlot.HasItem &&
@@ -316,8 +317,8 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(uid), sound.GetSound(),
-                uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
+            SoundSystem.Play(sound.GetSound(),
+                Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 
         #region Public API

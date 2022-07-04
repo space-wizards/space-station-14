@@ -80,7 +80,7 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner);
+            SoundSystem.Play(Sound.GetSound(), Filter.Pvs(Owner), Owner);
 
             Dirty();
         }

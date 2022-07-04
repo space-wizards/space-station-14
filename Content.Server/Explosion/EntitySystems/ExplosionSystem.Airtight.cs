@@ -39,9 +39,9 @@ public sealed partial class ExplosionSystem : EntitySystem
     //
     // We then need this data for every tile on a grid. So this mess of a variable maps the Grid ID and Vector2i grid
     // indices to this tile-data struct.
-    private Dictionary<GridId, Dictionary<Vector2i, TileData>> _airtightMap = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _airtightMap = new();
 
-    public void UpdateAirtightMap(GridId gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
+    public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, EntityQuery<AirtightComponent>? query = null)
     {
         if (_mapManager.TryGetGrid(gridId, out var grid))
             UpdateAirtightMap(grid, tile, query);
@@ -62,8 +62,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         var tolerance = new float[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        if (!_airtightMap.ContainsKey(grid.Index))
-            _airtightMap[grid.Index] = new();
+        if (!_airtightMap.ContainsKey(grid.GridEntityId))
+            _airtightMap[grid.GridEntityId] = new();
 
         query ??= EntityManager.GetEntityQuery<AirtightComponent>();
         var damageQuery = EntityManager.GetEntityQuery<DamageableComponent>();
@@ -83,9 +83,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         if (blockedDirections != AtmosDirection.Invalid)
-            _airtightMap[grid.Index][tile] = new(tolerance, blockedDirections);
+            _airtightMap[grid.GridEntityId][tile] = new(tolerance, blockedDirections);
         else
-            _airtightMap[grid.Index].Remove(tile);
+            _airtightMap[grid.GridEntityId].Remove(tile);
     }
 
     /// <summary>
@@ -97,10 +97,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!airtight.AirBlocked)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out TransformComponent transform) || !transform.Anchored)
+        if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform) || !transform.Anchored)
             return;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
             return;
 
         UpdateAirtightMap(grid, grid.CoordinatesToTile(transform.Coordinates));

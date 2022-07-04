@@ -139,7 +139,7 @@
 
 - type: entity
   id: CrateEngineeringShuttle
-  name: shuttle power crate
+  name: shuttle powering crate
   parent: CrateEngineeringSecure
   components:
   - type: StorageFill

@@ -29,7 +29,6 @@
   description: action-description-disarm
   icon: Interface/Actions/disarmOff.png
   iconOn: Interface/Actions/disarm.png
-  repeat: true
   useDelay: 1.5
   interactOnMiss: true
   event: !type:DisarmActionEvent
@@ -48,3 +47,10 @@
   userPopup: action-popup-combat
   popupToggleSuffix: -disabling
   event: !type:ToggleCombatActionEvent
+
+- type: instantAction
+  id: VendingThrow
+  name: vending-machine-action-name
+  description: vending-machine-action-description
+  useDelay: 30
+  event: !type:VendingMachineSelfDispenseEvent

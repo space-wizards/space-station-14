@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Station.Systems;
@@ -51,8 +52,9 @@ public sealed class RandomSentience : StationEvent
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
 
-        var stationSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<StationSystem>();
-        var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+        var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
+        var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
+        var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
         foreach (var target in targetList)
         {
             var station = stationSystem.GetOwningStation(target.Owner);

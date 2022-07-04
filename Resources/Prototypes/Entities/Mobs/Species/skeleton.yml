@@ -198,7 +198,6 @@
     speedModifierThresholds:
       60: 0.9
       80: 0.7
-      90: 0.5
   - type: HeatResistance
   - type: Appearance
     visuals:

@@ -37,9 +37,9 @@ namespace Content.Server.Power.NodeGroups
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager? entMan = null)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
             _powerNetSystem.InitPowerNet(this);
         }

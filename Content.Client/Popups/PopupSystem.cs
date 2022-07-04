@@ -259,7 +259,7 @@ namespace Content.Client.Popups
 
                 if (Entity == null)
                     screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
-                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent xform)
+                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent? xform)
                     && xform.MapID == _eyeManager.CurrentMap)
                     screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
                 else

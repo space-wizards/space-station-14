@@ -34,6 +34,8 @@
   - type: CartridgeAmmo
     proto: PelletShotgunBeanbag
     count: 1
+  - type: SpentAmmoVisuals
+    state: "beanbag"
 
 - type: entity
   id: ShellShotgunSlug
@@ -48,6 +50,8 @@
     proto: PelletShotgunSlug
     count: 4
     spread: 5
+  - type: SpentAmmoVisuals
+    state: "slug"
 
 - type: entity
   id: ShellShotgunFlare
@@ -61,6 +65,8 @@
   - type: CartridgeAmmo
     proto: PelletShotgunFlare
     count: 1
+  - type: SpentAmmoVisuals
+    state: "flare"
 
 - type: entity
   id: ShellShotgun
@@ -85,6 +91,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunFlash
+  - type: SpentAmmoVisuals
+    state: "flash"
 
 - type: entity
   id: ShellShotgunIncendiary
@@ -97,6 +105,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunIncendiary
+  - type: SpentAmmoVisuals
+    state: "incendiary"
 
 - type: entity
   id: ShellShotgunPractice
@@ -109,6 +119,8 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgun
+  - type: SpentAmmoVisuals
+    state: "practice"
 
 - type: entity
   id: ShellTranquilizer
@@ -133,3 +145,5 @@
     solution: ammo
   - type: SolutionTransfer
     maxTransferAmount: 15
+  - type: SpentAmmoVisuals
+    state: "practice"

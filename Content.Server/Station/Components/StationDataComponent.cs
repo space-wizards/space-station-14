@@ -1,12 +1,14 @@
-﻿using Content.Server.Station.Systems;
+﻿using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Components;
 
 /// <summary>
-/// Stores core information about a station, namely it's config and associated grids.
+/// Stores core information about a station, namely its config and associated grids.
 /// All station entities will have this component.
 /// </summary>
-[RegisterComponent, Friend(typeof(StationSystem))]
+[RegisterComponent, Access(typeof(StationSystem))]
 public sealed class StationDataComponent : Component
 {
     /// <summary>
@@ -23,4 +25,16 @@ public sealed class StationDataComponent : Component
     /// </remarks>
     [DataField("grids")]
     public readonly HashSet<EntityUid> Grids = new();
+
+    /// <summary>
+    /// The emergency shuttle assigned to this station.
+    /// </summary>
+    [ViewVariables, Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadWrite)]
+    public EntityUid? EmergencyShuttle;
+
+    /// <summary>
+    /// Emergency shuttle map path for this station.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadExecute)]
+    public ResourcePath EmergencyShuttlePath = new("/Maps/Shuttles/emergency_shuttle.yml");
 }

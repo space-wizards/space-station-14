@@ -15,14 +15,14 @@ public abstract class AlertsSystem : EntitySystem
 
     public IReadOnlyDictionary<AlertKey, AlertState>? GetActiveAlerts(EntityUid euid)
     {
-        return EntityManager.TryGetComponent(euid, out AlertsComponent comp)
+        return EntityManager.TryGetComponent(euid, out AlertsComponent? comp)
             ? comp.Alerts
             : null;
     }
 
     public bool IsShowingAlert(EntityUid euid, AlertType alertType)
     {
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return false;
 
         if (TryGet(alertType, out var alert))
@@ -37,13 +37,13 @@ public abstract class AlertsSystem : EntitySystem
     /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
     public bool IsShowingAlertCategory(EntityUid euid, AlertCategory alertCategory)
     {
-        return EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent)
+        return EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent)
                && alertsComponent.Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
     }
 
     public bool TryGetAlertState(EntityUid euid, AlertKey key, out AlertState alertState)
     {
-        if (EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+        if (EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return alertsComponent.Alerts.TryGetValue(key, out alertState);
 
         alertState = default;
@@ -62,7 +62,7 @@ public abstract class AlertsSystem : EntitySystem
     ///     be erased if there is currently a cooldown for the alert)</param>
     public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
     {
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         if (TryGet(alertType, out var alert))
@@ -100,7 +100,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
-        if(!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+        if(!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         var key = AlertKey.ForCategory(category);
@@ -119,7 +119,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlert(EntityUid euid, AlertType alertType)
     {
-        if (!EntityManager.TryGetComponent(euid, out AlertsComponent alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         if (TryGet(alertType, out var alert))
@@ -182,13 +182,13 @@ public abstract class AlertsSystem : EntitySystem
 
     protected virtual void HandleComponentShutdown(EntityUid uid, AlertsComponent component, ComponentShutdown args)
     {
-        RaiseLocalEvent(uid, new AlertSyncEvent(uid));
+        RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
         _metaSystem.RemoveFlag(uid, MetaDataFlags.EntitySpecific);
     }
 
     private void HandleComponentStartup(EntityUid uid, AlertsComponent component, ComponentStartup args)
     {
-        RaiseLocalEvent(uid, new AlertSyncEvent(uid));
+        RaiseLocalEvent(uid, new AlertSyncEvent(uid), true);
         _metaSystem.AddFlag(uid, MetaDataFlags.EntitySpecific);
     }
 

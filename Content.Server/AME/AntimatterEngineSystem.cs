@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.AME.Components;
 using Content.Server.Power.Components;
 using Content.Server.Hands.Components;
@@ -90,7 +90,7 @@ namespace Content.Server.AME
             if (!_toolSystem.HasQuality(args.Used, component.QualityNeeded))
                 return;
 
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var mapGrid))
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var mapGrid))
                 return; // No AME in space.
 
             var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
@@ -102,7 +102,7 @@ namespace Content.Server.AME
 
             var ent = EntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
 
-            SoundSystem.Play(Filter.Pvs(uid), component.UnwrapSound.GetSound(), uid);
+            SoundSystem.Play(component.UnwrapSound.GetSound(), Filter.Pvs(uid), uid);
 
             EntityManager.QueueDeleteEntity(uid);
         }

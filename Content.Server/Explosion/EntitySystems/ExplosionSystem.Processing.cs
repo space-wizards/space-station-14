@@ -117,12 +117,25 @@ public sealed partial class ExplosionSystem : EntitySystem
             // TODO EXPLOSION  check if active explosion is on a paused map. If it is... I guess support swapping out &
             // storing the "currently active" explosion?
 
-            var processed = _activeExplosion.Process(tilesRemaining);
-            tilesRemaining -= processed;
+#if EXCEPTION_TOLERANCE
+            try
+            {
+#endif
+                var processed = _activeExplosion.Process(tilesRemaining);
+                tilesRemaining -= processed;
 
-            // has the explosion finished processing?
-            if (_activeExplosion.FinishedProcessing)
+                // has the explosion finished processing?
+                if (_activeExplosion.FinishedProcessing)
+                    _activeExplosion = null;
+#if EXCEPTION_TOLERANCE
+            }
+            catch (Exception e)
+            {
+                // Ensure the system does not get stuck in an error-loop.
                 _activeExplosion = null;
+                throw e;
+            }
+#endif
         }
 
         Logger.InfoS("Explosion", $"Processed {TilesPerTick - tilesRemaining} tiles in {Stopwatch.Elapsed.TotalMilliseconds}ms");
@@ -182,7 +195,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery)
+        EntityQuery<PhysicsComponent> physicsQuery,
+        LookupFlags flags)
     {
         var gridBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
 
@@ -192,7 +206,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         void AddIntersecting(List<(EntityUid, TransformComponent?)> listy)
         {
-            foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, LookupFlags.None))
+            // TODO directly query lookup.Tree
+            foreach (var uid in _entityLookup.GetLocalEntitiesIntersecting(lookup, ref gridBox, flags))
             {
                 if (processed.Contains(uid))
                     continue;
@@ -272,7 +287,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         string id,
         EntityQuery<TransformComponent> xformQuery,
         EntityQuery<DamageableComponent> damageQuery,
-        EntityQuery<PhysicsComponent> physicsQuery)
+        EntityQuery<PhysicsComponent> physicsQuery,
+        LookupFlags flags)
     {
         var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
@@ -280,7 +296,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         void AddIntersecting(List<(EntityUid, TransformComponent)> listy)
         {
-            foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, LookupFlags.None))
+            // TODO directly query lookup.Tree
+            foreach (var uid in _entityLookup.GetEntitiesIntersecting(lookup, ref worldBox, flags))
             {
                 if (processed.Contains(uid))
                     return;
@@ -517,6 +534,8 @@ sealed class Explosion
     /// </summary>
     public readonly int Area;
 
+    private readonly LookupFlags _flags = LookupFlags.None;
+
     /// <summary>
     ///     factor used to scale the tile break chances.
     /// </summary>
@@ -562,6 +581,11 @@ sealed class Explosion
         _maxTileBreak = maxTileBreak;
         _canCreateVacuum = canCreateVacuum;
         _entMan = entMan;
+
+        // yeah this should be a cvar, but this is only temporary anyways
+        // see lookup todo
+        if (Area > 100)
+            _flags |= LookupFlags.Approximate;
 
         _xformQuery = entMan.GetEntityQuery<TransformComponent>();
         _physicsQuery = entMan.GetEntityQuery<PhysicsComponent>();
@@ -705,7 +729,8 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery);
+                    _physicsQuery,
+                    _flags);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.
                 if (canDamageFloor)
@@ -725,7 +750,8 @@ sealed class Explosion
                     ExplosionType.ID,
                     _xformQuery,
                     _damageQuery,
-                    _physicsQuery);
+                    _physicsQuery,
+                    _flags);
             }
 
             if (!MoveNext())
@@ -747,7 +773,7 @@ sealed class Explosion
 
         foreach (var (grid, list) in _tileUpdateDict)
         {
-            if (list.Count > 0)
+            if (list.Count > 0 && _entMan.EntityExists(grid.GridEntityId))
             {
                 grid.SetTiles(list);
             }

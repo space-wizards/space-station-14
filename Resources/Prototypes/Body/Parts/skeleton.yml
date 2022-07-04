@@ -61,7 +61,9 @@
       attributes:
         proper: true
     - type: Examiner
-    - type: GhostRadio
+    - type: IntrinsicRadio
+      channels:
+      - Common
     - type: DoAfter
     - type: Actions
     - type: MobState
@@ -70,7 +72,7 @@
     #    criticalThreshold: 50
     #    deadThreshold: 120
 
-    
+
 
 - type: entity
   id: LeftArmSkeleton

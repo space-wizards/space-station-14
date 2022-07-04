@@ -1,8 +1,9 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            SetSize="400 600"
-            MinSize="400 600">
-    <BoxContainer Orientation="Vertical">
+﻿<userInterface:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           SetSize="600 600"
+                           MinSize="600 600">
+    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                    StyleClasses="LabelKeyText" />
@@ -13,29 +14,13 @@
             <Label Text="{Loc 'cargo-console-menu-points-label'}"
                    StyleClasses="LabelKeyText" />
             <Label Name="PointsLabel"
-                   Text="0" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-shuttle-status-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="ShuttleStatusLabel"
-                   Text="{Loc 'cargo-console-menu-shuttle-status-away-text'}" />
+                   Text="$0" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
                    StyleClasses="LabelKeyText" />
             <Label Name="ShuttleCapacityLabel"
                    Text="0/20" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Button Name="CallShuttleButton"
-                    Access="Public"
-                    Text="{Loc 'cargo-console-menu-call-shuttle-button'}"
-                    TextAlign="Center"
-                    HorizontalExpand="True"/>
-            <Button Name="PermissionsButton"
-                    Text="{Loc 'cargo-console-menu-permissions-button'}"
-                    TextAlign="Center" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <OptionButton Name="Categories"
@@ -80,4 +65,4 @@
         </PanelContainer>
         <TextureButton VerticalExpand="True" />
     </BoxContainer>
-</DefaultWindow>
+</userInterface:FancyWindow>
