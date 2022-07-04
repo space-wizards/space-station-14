@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: 'Bees cannot disarm anymore, so no more bee stunning!', type: Tweak}
-  id: 1360
-  time: '2022-04-18T22:41:07.0000000+00:00'
 - author: CrzyPotato
   changes:
   - {message: 'Airlock Painter now has a lathe recipe and can be found in tool closets,
@@ -2943,3 +2938,9 @@ Entries:
     type: Tweak}
   id: 1859
   time: '2022-07-04T06:19:41.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: A song now plays during the nuke countdown. It can be disabled with
+      the Event Music audio setting., type: Add}
+  id: 1860
+  time: '2022-07-04T06:29:38.0000000+00:00'
