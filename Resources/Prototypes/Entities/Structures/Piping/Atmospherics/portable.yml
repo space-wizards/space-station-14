@@ -65,3 +65,5 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/portable_scrubber.ogg
+  - type: Machine
+    board: PortableScrubberMachineCircuitBoard

@@ -55,6 +55,16 @@
     Gold: 50
 
 - type: latheRecipe
+  id: PortableScrubberMachineCircuitBoard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: PortableScrubberMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+
+- type: latheRecipe
   id: MedicalScannerMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: MedicalScannerMachineCircuitboard
@@ -357,7 +367,7 @@
   materials:
     Steel: 100
     Glass: 900
-    
+
 - type: latheRecipe
   id: EmitterCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png

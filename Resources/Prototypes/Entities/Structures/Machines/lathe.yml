@@ -237,6 +237,7 @@
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
