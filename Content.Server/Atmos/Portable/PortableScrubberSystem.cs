@@ -103,7 +103,7 @@ namespace Content.Server.Atmos.Portable
             if (args.IsInDetailsRange)
             {
                 var percentage = Math.Round(((component.Air.Pressure) / component.MaxPressure) * 100);
-                args.PushMarkup("It's at about " + percentage + "% of its maximum internal pressure.");
+                args.PushMarkup(Loc.GetString("portable-scrubber-fill-level", ("percent", percentage)));
             }
         }
 
