@@ -28,7 +28,6 @@ public sealed class ListContainer : Control
     private readonly Dictionary<ListData, ListContainerButton> _buttons = new();
 
     private List<ListData> _data = new();
-    private int _count = 0;
     private float _itemHeight = 0;
     private float _totalHeight = 0;
     private int _topIndex = 0;
@@ -70,7 +69,7 @@ public sealed class ListContainer : Control
 
     public void PopulateList(IReadOnlyList<ListData> data)
     {
-        if (_itemHeight == 0 || _count == 0 && data.Count > 0)
+        if (_itemHeight == 0 || _data is {Count: 0} && data.Count > 0)
         {
             ListContainerButton control = new(data[0]);
             GenerateItem?.Invoke(data[0], control);
@@ -78,7 +77,6 @@ public sealed class ListContainer : Control
             _itemHeight = control.DesiredSize.Y;
             control.Dispose();
         }
-        _count = data.Count;
         _data = data.ToList();
         _updateChildren = true;
         InvalidateArrange();
@@ -198,7 +196,7 @@ public sealed class ListContainer : Control
 
         var oldBottomIndex = _bottomIndex;
         _bottomIndex = (int) Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + separation));
-        _bottomIndex = Math.Min(_bottomIndex, _count);
+        _bottomIndex = Math.Min(_bottomIndex, _data.Count);
         if (_bottomIndex != oldBottomIndex)
             _updateChildren = true;
 
@@ -292,7 +290,7 @@ public sealed class ListContainer : Control
         if (_itemHeight == 0 && childSize.Y != 0)
             _itemHeight = childSize.Y;
 
-        _totalHeight = _itemHeight * _count + ActualSeparation * (_count - 1);
+        _totalHeight = _itemHeight * _data.Count + ActualSeparation * (_data.Count - 1);
 
         return new Vector2(childSize.X, 0);
     }
