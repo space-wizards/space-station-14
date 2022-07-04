@@ -87,31 +87,36 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
+            Scrub(timeDelta, scrubber.TransferRate, scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
+        }
+
+        public void Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
+        {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
-                || outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
+                || destination.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
             {
                 return;
             }
 
             // Take a gas sample.
-            var ratio = MathF.Min(1f, timeDelta * scrubber.TransferRate / tile.Volume);
+            var ratio = MathF.Min(1f, timeDelta * transferRate / tile.Volume);
             var removed = tile.RemoveRatio(ratio);
 
             // Nothing left to remove from the tile.
             if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
                 return;
 
-            if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
+            if (mode == ScrubberPumpDirection.Scrubbing)
             {
-                _atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
+                _atmosphereSystem.ScrubInto(removed, destination, filterGases);
 
                 // Remix the gases.
                 _atmosphereSystem.Merge(tile, removed);
             }
-            else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
+            else if (mode == ScrubberPumpDirection.Siphoning)
             {
-                _atmosphereSystem.Merge(outlet.Air, removed);
+                _atmosphereSystem.Merge(destination, removed);
             }
         }
 
