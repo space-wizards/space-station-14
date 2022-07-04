@@ -10,7 +10,7 @@ public sealed class DamageOverlay : Overlay
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.ScreenSpace;
     private readonly ShaderInstance _deadShader;
     private readonly ShaderInstance _damageShader;
 
@@ -31,14 +31,14 @@ public sealed class DamageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var viewport = args.WorldAABB;
-        var worldHandle = args.WorldHandle;
+        var viewport = args.ViewportBounds;
+        var handle = args.ScreenHandle;
 
         if (Dead)
         {
             ClearLerp();
-            worldHandle.UseShader(_deadShader);
-            worldHandle.DrawRect(viewport, Color.White);
+            handle.UseShader(_deadShader);
+            handle.DrawRect(viewport, Color.White);
             return;
         }
 
@@ -50,8 +50,10 @@ public sealed class DamageOverlay : Overlay
             default:
                 double lerpRate = 0.1;
                 var level = Level;
-                float maxLevel = 2000f;
-                float minLevel = 800f;
+                float outerMaxLevel = 2000f;
+                float outerMinLevel = 800f;
+                float innerMaxLevel = 800f;
+                float innerMinLevel = 200f;
 
                 if (!_oldlevel.Equals(Level))
                 {
@@ -72,11 +74,11 @@ public sealed class DamageOverlay : Overlay
                     }
                 }
 
-                var outerRadius = maxLevel - level * (maxLevel - minLevel);
+                var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
                 _damageShader.SetParameter("outerCircleRadius", outerRadius);
-                _damageShader.SetParameter("innerCircleRadius", MathF.Min(200f, outerRadius - 400f));
-                worldHandle.UseShader(_damageShader);
-                worldHandle.DrawRect(viewport, Color.White);
+                _damageShader.SetParameter("innerCircleRadius", innerMaxLevel - level * (innerMaxLevel - innerMinLevel));
+                handle.UseShader(_damageShader);
+                handle.DrawRect(viewport, Color.White);
                 break;
         }
 
