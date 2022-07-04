@@ -1,9 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
-  id: 1362
-  time: '2022-04-18T22:47:04.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Firelocks and airlocks now close when there are static entities in the
@@ -2946,3 +2941,8 @@ Entries:
       have been added!', type: Add}
   id: 1861
   time: '2022-07-04T06:31:13.0000000+00:00'
+- author: themias
+  changes:
+  - {message: No more Dine and Dash (alt clicking food and running away), type: Fix}
+  id: 1862
+  time: '2022-07-04T06:56:31.0000000+00:00'
