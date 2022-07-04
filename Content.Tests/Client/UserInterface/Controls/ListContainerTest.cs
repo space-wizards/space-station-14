@@ -173,4 +173,45 @@ public sealed class ListContainerTest : RobustUnitTest
         Assert.That(children[4].Position.Y, Is.EqualTo(40));
         Assert.That(button.Position.Y, Is.EqualTo(50));
     }
+
+    [Test]
+    public void TestSelectedKeptOnScroll()
+    {
+        /*
+         * 6 items * 10 height + 5 separation * 3 height = 75
+         * One items should be off the render
+         * 0 13 26 39 52 65 | 75 height
+         */
+        var height = 10;
+        var root = new Control { MinSize = (50, height) };
+        var listContainer = new ListContainer { SeparationOverride = 0 };
+        root.AddChild(listContainer);
+        listContainer.GenerateItem += (_, button) => {
+            button.AddChild(new Control { MinSize = (10, 10) });
+        };
+
+        var list = new List<TestListData> {new(0), new(1), new(2), new(3), new(4), new(5)};
+        listContainer.PopulateList(list);
+        root.Arrange(new UIBox2(0, 0, 50, height));
+
+        var scrollbar = (ScrollBar) listContainer.Children.Last(c => c is ScrollBar);
+
+        var children = listContainer.Children.ToList();
+        if (children[0] is not ListContainerButton oldButton)
+            throw new Exception("First child of ListContainer is not a button");
+
+        listContainer.Select(oldButton.Data);
+
+        // Test that 6th button is not visible when scrolled
+        scrollbar.Value = 11;
+        listContainer.Arrange(root.SizeBox);
+        Assert.That(oldButton.Disposed);
+        scrollbar.Value = 0;
+        listContainer.Arrange(root.SizeBox);
+        children = listContainer.Children.ToList();
+        if (children[0] is not ListContainerButton newButton)
+            throw new Exception("First child of ListContainer is not a button");
+        Assert.That(newButton.Pressed);
+        Assert.That(newButton.Disposed == false);
+    }
 }
