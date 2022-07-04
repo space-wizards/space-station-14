@@ -312,8 +312,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletTaser
-    fireCost: 100
+    proto: BulletDisabler
+    fireCost: 50
   - type: MagazineVisuals
     magState: mag
     steps: 5
