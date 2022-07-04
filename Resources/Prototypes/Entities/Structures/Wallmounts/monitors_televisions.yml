@@ -1,5 +1,5 @@
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: WallmountTelescreenFrame
   name: telescreen frame
   description: Finally, some decent reception around here...
@@ -133,7 +133,7 @@
         - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
           state: television_wall
           shader: shaded
-          
+
 - type: entity
   parent: WallmountTelevisionFrame
   id: WallmountTelevision
