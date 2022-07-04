@@ -205,7 +205,7 @@ public sealed class ListContainer : Control
         {
             _updateChildren = false;
 
-            var buttons = new Dictionary<ListData, ListContainerButton>(_buttons);
+            var toRemove = new Dictionary<ListData, ListContainerButton>(_buttons);
             foreach (var child in Children.ToArray())
             {
                 if (child == _vScrollBar)
@@ -220,7 +220,7 @@ public sealed class ListContainer : Control
                     var data = _data[i];
 
                     if (_buttons.TryGetValue(data, out var button))
-                        buttons.Remove(data);
+                        toRemove.Remove(data);
                     else
                     {
                         button = new ListContainerButton(data);
@@ -236,7 +236,7 @@ public sealed class ListContainer : Control
                 }
             }
 
-            foreach (var (data, button) in buttons)
+            foreach (var (data, button) in toRemove)
             {
                 _buttons.Remove(data);
                 button.Dispose();
