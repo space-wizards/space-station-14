@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Zombie names no longer spam fill the ghost role menu and only appear
-      when able to be taken over., type: Fix}
-  - {message: Probability adjustments for zombie outbreak event., type: Tweak}
-  id: 1364
-  time: '2022-04-20T01:54:11.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: You can now put stuff in the chef hat, type: Add}
@@ -2945,3 +2938,9 @@ Entries:
   - {message: Added telescreens and a large flat screen TV., type: Add}
   id: 1863
   time: '2022-07-04T07:10:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added rusted metal walls! Use a welder to remove the rust. They're weaker
+      so be careful., type: Add}
+  id: 1864
+  time: '2022-07-04T07:11:47.0000000+00:00'
