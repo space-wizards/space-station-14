@@ -18,10 +18,7 @@ public sealed class ListContainerTest : RobustUnitTest
 {
     public override UnitTestProject Project => UnitTestProject.Client;
 
-    private sealed class ControlData : IControlData
-    {
-
-    }
+    private record TestListData : ListData;
 
     [OneTimeSetUp]
     public void Setup()
@@ -39,7 +36,7 @@ public sealed class ListContainerTest : RobustUnitTest
             button.AddChild(new Control { MinSize = (10, 10) });
         };
 
-        var list = new List<ControlData> { new(), new() };
+        var list = new List<TestListData> { new(), new() };
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -67,7 +64,7 @@ public sealed class ListContainerTest : RobustUnitTest
             button.AddChild(new Control { MinSize = (10, 10) });
         };
 
-        var list = new List<ControlData> {new(), new(), new(), new(), new(), new()};
+        var list = new List<TestListData> {new(), new(), new(), new(), new(), new()};
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -106,7 +103,7 @@ public sealed class ListContainerTest : RobustUnitTest
             button.AddChild(new Control { MinSize = (10, 10) });
         };
 
-        var list = new List<ControlData> {new(), new(), new(), new(), new(), new()};
+        var list = new List<TestListData> {new(), new(), new(), new(), new(), new()};
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, 60));
 
@@ -163,7 +160,7 @@ public sealed class ListContainerTest : RobustUnitTest
         };
         root.AddChild(button);
 
-        var list = new List<ControlData> {new(), new(), new(), new(), new(), new()};
+        var list = new List<TestListData> {new(), new(), new(), new(), new(), new()};
         listContainer.PopulateList(list);
         root.Arrange(new UIBox2(0, 0, 50, height));
 

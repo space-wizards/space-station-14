@@ -103,7 +103,7 @@ namespace Content.Client.Storage.UI
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        public void GenerateButton(IControlData data, ListContainerButton button)
+        public void GenerateButton(ListData data, ListContainerButton button)
         {
             if (data is not EntityListData {Uid: var entity}
                 || !_entityManager.EntityExists(entity))

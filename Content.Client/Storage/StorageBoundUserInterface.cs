@@ -40,7 +40,7 @@ namespace Content.Client.Storage
             }
         }
 
-        public void InteractWithItem(BaseButton.ButtonEventArgs args, IControlData cData)
+        public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
         {
             if (cData is not EntityListData {Uid: var entity})
                 return;

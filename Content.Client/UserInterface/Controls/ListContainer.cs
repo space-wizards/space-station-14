@@ -18,16 +18,16 @@ public sealed class ListContainer : Control
         set => _buttonGroup = value ? new ButtonGroup() : null;
     }
     public bool Toggle { get; set; }
-    public Action<IControlData, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs, IControlData>? ItemPressed;
-    public IReadOnlyList<IControlData> Data => _data ?? new List<IControlData>();
+    public Action<ListData, ListContainerButton>? GenerateItem;
+    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
+    public IReadOnlyList<ListData> Data => _data ?? new List<ListData>();
 
     private const int DefaultSeparation = 3;
 
     private readonly VScrollBar _vScrollBar;
-    private readonly Dictionary<IControlData, ListContainerButton> _buttons = new();
+    private readonly Dictionary<ListData, ListContainerButton> _buttons = new();
 
-    private List<IControlData>? _data;
+    private List<ListData>? _data;
     private int _count = 0;
     private float _itemHeight = 0;
     private float _totalHeight = 0;
@@ -68,7 +68,7 @@ public sealed class ListContainer : Control
         _vScrollBar.OnValueChanged += ScrollValueChanged;
     }
 
-    public void PopulateList(IReadOnlyList<IControlData> data)
+    public void PopulateList(IReadOnlyList<ListData> data)
     {
         if (_itemHeight == 0 || _count == 0 && data.Count > 0)
         {
@@ -207,7 +207,7 @@ public sealed class ListContainer : Control
         {
             _updateChildren = false;
 
-            var buttons = new Dictionary<IControlData, ListContainerButton>(_buttons);
+            var buttons = new Dictionary<ListData, ListContainerButton>(_buttons);
             foreach (var child in Children.ToArray())
             {
                 if (child == _vScrollBar)
@@ -319,10 +319,10 @@ public sealed class ListContainer : Control
 
 public sealed class ListContainerButton : ContainerButton
 {
-    public readonly IControlData Data;
+    public readonly ListData Data;
     // public PanelContainer Background;
 
-    public ListContainerButton(IControlData data)
+    public ListContainerButton(ListData data)
     {
         Data = data;
         // AddChild(Background = new PanelContainer
@@ -335,15 +335,7 @@ public sealed class ListContainerButton : ContainerButton
 }
 
 #region Data
-public interface IControlData { }
+public abstract record ListData { }
 
-public sealed class EntityListData : IControlData
-{
-    public EntityUid Uid;
-
-    public EntityListData(EntityUid uid)
-    {
-        Uid = uid;
-    }
-}
+public record EntityListData(EntityUid Uid) : ListData;
 #endregion

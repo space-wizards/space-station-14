@@ -38,7 +38,7 @@ namespace Content.Client.Administration.UI.CustomControls
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
         }
 
-        private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, IControlData data)
+        private void PlayerListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
         {
             if (data is not PlayerListData {Info: var selectedPlayer})
                 return;
@@ -77,7 +77,7 @@ namespace Content.Client.Administration.UI.CustomControls
             PlayerListContainer.PopulateList(players.Select(info => new PlayerListData(info)).ToList());
         }
 
-        private void GenerateButton(IControlData data, ListContainerButton button)
+        private void GenerateButton(ListData data, ListContainerButton button)
         {
             if (data is not PlayerListData {Info: var info})
                 return;
@@ -102,13 +102,5 @@ namespace Content.Client.Administration.UI.CustomControls
         }
     }
 
-    public sealed class PlayerListData : IControlData
-    {
-        public PlayerInfo Info;
-
-        public PlayerListData(PlayerInfo info)
-        {
-            Info = info;
-        }
-    }
+    public record PlayerListData(PlayerInfo Info) : ListData;
 }
