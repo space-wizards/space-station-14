@@ -221,6 +221,7 @@ namespace Content.Server.Nuke
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
                 nuke.AlertAudioStream = SoundSystem.Play(nuke.AlertSound.GetSound(), Filter.Broadcast());
+                _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
                 nuke.PlayedAlertSound = true;
             }
 
