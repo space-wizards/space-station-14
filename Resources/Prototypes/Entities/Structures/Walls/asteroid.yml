@@ -47,6 +47,7 @@
   id: AsteroidRockMining
   parent: AsteroidRock
   name: asteroid rock
+  suffix: higher ore yield
   description: An asteroid.
   components:
   - type: Gatherable
