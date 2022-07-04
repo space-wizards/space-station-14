@@ -153,11 +153,13 @@ namespace Content.Shared.Movement.Systems
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var parentRotation = GetParentGridAngle(transform, mover);
-            var moveSpeedComponent = EnsureComp<MovementSpeedModifierComponent>(mover.Owner);
 
             // Regular movement.
             // Target velocity.
-            var total = walkDir * moveSpeedComponent.CurrentWalkSpeed + sprintDir * moveSpeedComponent.CurrentSprintSpeed;
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
@@ -195,8 +197,6 @@ namespace Content.Shared.Movement.Systems
             var (walkDir, sprintDir) = mover.VelocityDir;
             var touching = false;
 
-            var moveSpeedComponent = EnsureComp<MovementSpeedModifierComponent>(mover.Owner);
-
             // Handle wall-pushes.
             if (weightless)
             {
@@ -221,7 +221,10 @@ namespace Content.Shared.Movement.Systems
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var total = walkDir * moveSpeedComponent.CurrentWalkSpeed + sprintDir * moveSpeedComponent.CurrentSprintSpeed;
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
             var parentRotation = GetParentGridAngle(xform, mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;

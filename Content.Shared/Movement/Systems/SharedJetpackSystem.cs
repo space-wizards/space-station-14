@@ -133,9 +133,9 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     public bool IsUserFlying(EntityUid uid)
     {
-        return (HasComp<JetpackUserComponent>(uid) &&
-                TryComp<PhysicsComponent>(uid, out var physicsComponent) &&
-                uid.IsWeightless(physicsComponent, mapManager: MapManager, entityManager: EntityManager));
+        return HasComp<JetpackUserComponent>(uid) &&
+               TryComp<PhysicsComponent>(uid, out var physicsComponent) &&
+               uid.IsWeightless(physicsComponent, mapManager: MapManager, entityManager: EntityManager);
     }
 
     protected abstract bool CanEnable(JetpackComponent component);
