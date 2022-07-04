@@ -16,7 +16,9 @@ namespace Content.Client.Administration.UI.CustomControls
     {
         private readonly AdminSystem _adminSystem;
         private readonly VerbSystem _verbSystem;
-        private List<PlayerInfo> _sortedPlayerList = new();
+
+        private List<PlayerInfo> _playerList = new();
+        private readonly List<PlayerInfo> _sortedPlayerList = new();
 
         public event Action<PlayerInfo?>? OnSelectionChanged;
 
@@ -33,7 +35,7 @@ namespace Content.Client.Administration.UI.CustomControls
             PlayerListContainer.ItemPressed += PlayerListItemPressed;
             PlayerListContainer.GenerateItem += GenerateButton;
             PopulateList(_adminSystem.PlayerList);
-            FilterLineEdit.OnTextChanged += _ => PopulateList();
+            FilterLineEdit.OnTextChanged += _ => FilterList();
             _adminSystem.PlayerListChanged += PopulateList;
             BackgroundPanel.PanelOverride = new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)};
         }
@@ -52,29 +54,30 @@ namespace Content.Client.Administration.UI.CustomControls
             }
         }
 
-        public void Sort()
+        private void FilterList()
         {
+            _sortedPlayerList.Clear();
+            foreach (var info in _playerList)
+            {
+                var displayName = $"{info.CharacterName} ({info.Username})";
+                if (!string.IsNullOrEmpty(FilterLineEdit.Text)
+                    && !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
+                    continue;
+                _sortedPlayerList.Add(info);
+            }
+
             if (Comparison != null)
                 _sortedPlayerList.Sort((a, b) => Comparison(a, b));
+
+            PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
         }
 
         public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
         {
             players ??= _adminSystem.PlayerList;
-            _sortedPlayerList.Clear();
-            foreach (var info in players)
-            {
-                var displayName = $"{info.CharacterName} ({info.Username})";
-                if (!string.IsNullOrEmpty(FilterLineEdit.Text) &&
-                    !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
-                {
-                    continue;
-                }
 
-                _sortedPlayerList.Add(info);
-            }
-            Sort();
-            PlayerListContainer.PopulateList(players.Select(info => new PlayerListData(info)).ToList());
+            _playerList = players.ToList();
+            FilterList();
         }
 
         private void GenerateButton(ListData data, ListContainerButton button)
