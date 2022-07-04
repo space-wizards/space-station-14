@@ -1,15 +1,12 @@
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.MobState.Overlays;
 
-public sealed class HealthOverlay : Overlay
+public sealed class DamageOverlay : Overlay
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _critShader;
@@ -17,7 +14,7 @@ public sealed class HealthOverlay : Overlay
 
     public int Level { get; set; }
 
-    public HealthOverlay()
+    public DamageOverlay()
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);

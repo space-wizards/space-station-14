@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.EntitySystems;
 using Robust.Client.GameObjects;
@@ -12,15 +13,15 @@ namespace Content.Client.MobState;
 public sealed partial class MobStateSystem : SharedMobStateSystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    private Overlays.HealthOverlay _overlay = default!;
+    private Overlays.DamageOverlay _overlay = default!;
 
-    public const int Levels = 7;
+    public const short Levels = 7;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _overlay = new Overlays.HealthOverlay();
+        _overlay = new Overlays.DamageOverlay();
         IoCManager.Resolve<IOverlayManager>().AddOverlay(_overlay);
 
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
@@ -53,9 +54,9 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
     private void OnPlayerAttach(PlayerAttachedEvent ev)
     {
-        if (TryComp<MobStateComponent>(ev.Entity, out var mobState))
+        if (TryComp<MobStateComponent>(ev.Entity, out var mobState) && TryComp<DamageableComponent>(ev.Entity, out var damageable))
         {
-            _overlay.Level = 0;
+            SetLevel(mobState, damageable.TotalDamage);
         }
     }
 
@@ -64,8 +65,16 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         _overlay.Level = 0;
     }
 
-    public void SetLevel(EntityUid uid, FixedPoint2 threshold)
+    protected override void UpdateState(MobStateComponent component, DamageState? state, FixedPoint2 threshold)
     {
+        base.UpdateState(component, state, threshold);
+        SetLevel(component, threshold);
+    }
+
+    private void SetLevel(MobStateComponent stateComponent, FixedPoint2 threshold)
+    {
+        var uid = stateComponent.Owner;
+
         if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
 
         short modifier = 0;
@@ -74,12 +83,19 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         if (!TryComp<DamageableComponent>(uid, out var damageable))
             return;
 
-        if (!TryComp<MobStateComponent>(uid, out var stateComponent))
-            return;
+        switch (stateComponent.CurrentState)
+        {
+            case DamageState.Critical:
+                _overlay.Level = Levels - 1;
+                return;
+            case DamageState.Dead:
+                _overlay.Level = Levels;
+                return;
+        }
 
         if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
-            modifier = (short)(damageable.TotalDamage / (earliestThreshold / 5) + 1);
+            modifier = (short)(damageable.TotalDamage / (earliestThreshold / Levels - 2) + 1);
         }
 
         _overlay.Level = modifier;

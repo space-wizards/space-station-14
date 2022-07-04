@@ -197,7 +197,7 @@ namespace Content.Shared.MobState.EntitySystems
                 args.Cancel();
         }
 
-        public void RemoveState(MobStateComponent component)
+        public virtual void RemoveState(MobStateComponent component)
         {
             var old = component.CurrentState;
             component.CurrentState = null;
@@ -206,7 +206,7 @@ namespace Content.Shared.MobState.EntitySystems
             SetMobState(component, old, null);
         }
 
-        public void EnterState(MobStateComponent? component, DamageState? state)
+        public virtual void EnterState(MobStateComponent? component, DamageState? state)
         {
             // TODO: Thanks buckle
             if (component == null) return;
@@ -229,7 +229,7 @@ namespace Content.Shared.MobState.EntitySystems
             }
         }
 
-        protected void UpdateState(MobStateComponent component, DamageState? state, FixedPoint2 threshold)
+        protected virtual void UpdateState(MobStateComponent component, DamageState? state, FixedPoint2 threshold)
         {
             switch (state)
             {
@@ -249,7 +249,7 @@ namespace Content.Shared.MobState.EntitySystems
             }
         }
 
-        protected void ExitState(MobStateComponent component, DamageState? state)
+        protected virtual void ExitState(MobStateComponent component, DamageState? state)
         {
             switch (state)
             {
