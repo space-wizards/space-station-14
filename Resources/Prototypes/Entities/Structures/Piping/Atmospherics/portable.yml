@@ -16,9 +16,10 @@
         radius: 0.1
       mass: 130
       mask:
-      - Impassable
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Sprite
-    drawdepth: Overdoors
     netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
     layers:
@@ -89,3 +90,5 @@
                 max: 3
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+  - type: CollideOnAnchor
+    enable: true
