@@ -175,13 +175,8 @@ public sealed class ListContainerTest : RobustUnitTest
     }
 
     [Test]
-    public void TestSelectedKeptOnScroll()
+    public void TestSelectionKeptOnScroll()
     {
-        /*
-         * 6 items * 10 height + 5 separation * 3 height = 75
-         * One items should be off the render
-         * 0 13 26 39 52 65 | 75 height
-         */
         var height = 10;
         var root = new Control { MinSize = (50, height) };
         var listContainer = new ListContainer { SeparationOverride = 0 };
@@ -202,7 +197,7 @@ public sealed class ListContainerTest : RobustUnitTest
 
         listContainer.Select(oldButton.Data);
 
-        // Test that 6th button is not visible when scrolled
+        // Test that the button is selected even when scrolled away and scrolled back.
         scrollbar.Value = 11;
         listContainer.Arrange(root.SizeBox);
         Assert.That(oldButton.Disposed);
