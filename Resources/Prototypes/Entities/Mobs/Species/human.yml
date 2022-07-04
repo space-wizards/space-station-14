@@ -52,6 +52,7 @@
     solution: chemicals
   - type: DrawableSolution
     solution: bloodstream
+  - type: IdExaminable
   - type: HealthExaminable
     examinableTypes:
     - Blunt
