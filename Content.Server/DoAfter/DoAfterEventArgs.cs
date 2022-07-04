@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.DoAfter
@@ -21,7 +21,7 @@ namespace Content.Server.DoAfter
         public EntityUid? Target { get; }
 
         /// <summary>
-        ///     Entity used in a User A used B on target C interaction
+        ///     Entity used by the User on the Target.
         /// </summary>
         public EntityUid? Used { get; set; }
 
@@ -61,9 +61,9 @@ namespace Content.Server.DoAfter
         public bool BreakOnStun { get; set; }
 
         /// <summary>
-        ///     Threshold for distance user is allowed to get from the target
+        ///     Threshold for distance user from the used OR target entities.
         /// </summary>
-        public float? BreakOnDistance { get; set; }
+        public float? DistanceThreshold { get; set; }
 
         /// <summary>
         ///     Requires a function call once at the end (like InRangeUnobstructed).

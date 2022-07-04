@@ -162,20 +162,26 @@ namespace Content.Server.DoAfter
                 }
             }
 
-            if (EventArgs.BreakOnDistance != null)
+            if (EventArgs.DistanceThreshold != null)
             {
-                if (!EventArgs.User.Equals(EventArgs.Target))
+                var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
+                TransformComponent? userXform = null;
+
+                // Check user distance to target AND used entities.
+                if (EventArgs.Target != null && !EventArgs.User.Equals(EventArgs.Target))
                 {
                     //recalculate Target location in case Target has also moved
-                    EntityCoordinates CurrentTargetGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Target!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, CurrentTargetGrid, EventArgs.BreakOnDistance!.Value))
+                    var targetCoordinates = xformQuery.GetComponent(EventArgs.Target.Value).Coordinates;
+                    userXform ??= xformQuery.GetComponent(EventArgs.User);
+                    if (userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
                         return true;
                 }
+
                 if (EventArgs.Used != null)
                 {
-                    //recalculate Used location in case Used has also moved
-                    EntityCoordinates CurrentUsedGrid = entityManager.GetComponent<TransformComponent>(EventArgs.Used!.Value).Coordinates;
-                    if (!entityManager.GetComponent<TransformComponent>(EventArgs.User).Coordinates.InRange(entityManager, CurrentUsedGrid, EventArgs.BreakOnDistance!.Value))
+                    var targetCoordinates = xformQuery.GetComponent(EventArgs.Used.Value).Coordinates;
+                    userXform ??= xformQuery.GetComponent(EventArgs.User);
+                    if (!userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
                         return true;
                 }
             }
