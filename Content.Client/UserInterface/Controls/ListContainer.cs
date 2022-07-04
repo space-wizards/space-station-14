@@ -333,7 +333,7 @@ public sealed class ListContainerButton : ContainerButton
 }
 
 #region Data
-public abstract record ListData { }
+public abstract record ListData;
 
 public record EntityListData(EntityUid Uid) : ListData;
 #endregion

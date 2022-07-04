@@ -8,7 +8,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.UnitTesting;
-using SharpFont;
 
 namespace Content.Tests.Client.UserInterface.Controls;
 
