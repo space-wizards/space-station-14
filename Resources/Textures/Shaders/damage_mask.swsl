@@ -2,25 +2,33 @@
 //will be full black. Between the inner and outer circle it LERPs from the inner darkness to full black.
 
 light_mode unshaded;
-uniform highp float outerCircleRadius;
-uniform highp float innerCircleRadius;
-uniform highp float outerAlpha;
 
+uniform highp float time;
+uniform highp float outerCircleRadius;
+uniform highp float outerCircleMaxRadius;
+uniform highp float innerCircleRadius;
+uniform highp float innerCircleMaxRadius;
+
+const highp float pulseRate = 3.0;
 const highp float darknessAlphaInner = 0.0;
 
 void fragment() {
 	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
-    highp vec2 pixelCenter = pixelSize*0.5;
+    	highp vec2 pixelCenter = pixelSize*0.5;
 	highp float distance = length(FRAGCOORD.xy - pixelCenter);
-	if(distance > outerCircleRadius){
+	
+	highp float innerRadius = innerCircleRadius + (sin(time * pulseRate) + 1.0 / 2.0) * (innerCircleMaxRadius - innerCircleRadius);
+    	highp float outerRadius = outerCircleRadius + (sin(time * pulseRate) + 1.0 / 2.0) * (outerCircleMaxRadius - outerCircleRadius);
+    
+	if(distance > outerRadius){
 		COLOR = vec4(1.0, 0.0, 0.0, 1.0);
 	}
-	else if(distance < innerCircleRadius){
+	else if(distance < innerRadius){
 		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
 	}
 	else{
-		highp float intensity = (distance-innerCircleRadius)/(outerCircleRadius-innerCircleRadius);
-		highp float ratio = (1.0-intensity)*darknessAlphaInner + intensity;
+		highp float intensity = (distance-innerRadius)/(outerRadius-innerRadius);
+        	highp float ratio = (1.0-intensity)*darknessAlphaInner + intensity;
 		COLOR = vec4(ratio, 0.0, 0.0, ratio);
 	}
 }

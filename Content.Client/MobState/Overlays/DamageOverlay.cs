@@ -48,19 +48,21 @@ public sealed class DamageOverlay : Overlay
                 ClearLerp();
                 break;
             default:
-                double lerpRate = 0.05;
+                double lerpRate = 0.25;
                 var level = Level;
-                float outerMaxLevel = 1.6f * args.ViewportBounds.Width;
-                float outerMinLevel = 0.8f * args.ViewportBounds.Width;
-                float innerMaxLevel = 0.5f * args.ViewportBounds.Width;
-                float innerMinLevel = 0.1f * args.ViewportBounds.Width;
+                var distance = args.ViewportBounds.Width;
+
+                float outerMaxLevel = 1.6f * distance;
+                float outerMinLevel = 0.8f * distance;
+                float innerMaxLevel = 0.5f * distance;
+                float innerMinLevel = 0.25f * distance;
+                var currentRealTime = _timing.RealTime;
 
                 if (!_oldlevel.Equals(Level))
                 {
                     _lerpStart ??= _timing.RealTime;
 
                     var timeToLerp = (Level - _oldlevel) / lerpRate;
-                    var currentRealTime = _timing.RealTime;
                     var lerpDifference = (currentRealTime - _lerpStart.Value).TotalSeconds;
 
                     // Lerp time has elapsed so end it.
@@ -75,8 +77,13 @@ public sealed class DamageOverlay : Overlay
                 }
 
                 var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
+                var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
+                _damageShader.SetParameter("time", (float) currentRealTime.TotalSeconds);
+
                 _damageShader.SetParameter("outerCircleRadius", outerRadius);
-                _damageShader.SetParameter("innerCircleRadius", innerMaxLevel - level * (innerMaxLevel - innerMinLevel));
+                _damageShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
+                _damageShader.SetParameter("innerCircleRadius", innerRadius);
+                _damageShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
                 handle.UseShader(_damageShader);
                 handle.DrawRect(viewport, Color.White);
                 break;
