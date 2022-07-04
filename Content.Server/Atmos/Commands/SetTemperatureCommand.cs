@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.Commands
 
             if (!_mapManager.TryGetGrid(gridId, out var grid))
             {
-                shell.WriteLine("Invalid grid.");
+                shell.WriteError("Invalid grid.");
                 return;
             }
 
