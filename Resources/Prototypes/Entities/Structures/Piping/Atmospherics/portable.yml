@@ -59,3 +59,9 @@
     runningState: icon-running
     readyState: unlit
     fullState: unlit-full
+  - type: AmbientSound
+    enabled: false
+    volume: -2
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/portable_scrubber.ogg

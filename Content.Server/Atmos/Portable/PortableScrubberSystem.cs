@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
-
+using Content.Server.Audio;
 
 namespace Content.Server.Atmos.Portable
 {
@@ -22,6 +22,8 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+        [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
         public override void Initialize()
         {
@@ -66,7 +68,17 @@ namespace Content.Server.Atmos.Portable
 
             var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
-            UpdateAppearance(uid, false, Scrub(timeDelta, component, environment));
+            var running = Scrub(timeDelta, component, environment);
+
+            UpdateAppearance(uid, false, running);
+
+            if (!running)
+                return;
+            /// widenet
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
+            {
+                Scrub(timeDelta, component, environment);
+            }
         }
 
         private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
@@ -103,6 +115,8 @@ namespace Content.Server.Atmos.Portable
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
                 return;
+
+            _ambientSound.SetAmbience(uid, isRunning);
 
             appearance.SetData(PortableScrubberVisuals.IsFull, isFull);
             appearance.SetData(PortableScrubberVisuals.IsRunning, isRunning);
