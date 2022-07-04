@@ -84,7 +84,7 @@ public sealed class ListContainer : Control
         InvalidateArrange();
     }
 
-    public void UpdateList()
+    public void DirtyList()
     {
         _updateChildren = true;
         InvalidateArrange();

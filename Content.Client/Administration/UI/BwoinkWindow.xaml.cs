@@ -46,7 +46,7 @@ namespace Content.Client.Administration.UI
                     Title = $"{sel.CharacterName} / {sel.Username}";
                 }
 
-                ChannelSelector.PlayerListContainer.UpdateList();
+                ChannelSelector.PlayerListContainer.DirtyList();
             };
 
             ChannelSelector.OverrideText += (info, text) =>
