@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     try
                     {
-                        gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.GridIndex, indices, (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
+                        gridAtmosphere.Tiles.Add(indices, new TileAtmosphere(mapGrid.Owner, indices, (GasMixture) gridAtmosphere.UniqueMixes![mix].Clone()));
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid to be checked.</param>
         /// <returns>Whether the grid has a simulated atmosphere.</returns>
-        public bool IsSimulatedGrid(GridId grid)
+        public bool IsSimulatedGrid(EntityUid? grid)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get all tile mixtures from.</param>
         /// <param name="invalidate">Whether to invalidate all tiles.</param>
         /// <returns>All tile mixtures in a grid.</returns>
-        public IEnumerable<GasMixture> GetAllTileMixtures(GridId grid, bool invalidate = false)
+        public IEnumerable<GasMixture> GetAllTileMixtures(EntityUid grid, bool invalidate = false)
         {
             // Return an array with a single space gas mixture for invalid grids.
             if (!grid.IsValid())
@@ -207,7 +207,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">The grid in question.</param>
         /// <param name="tiles">The amount of tiles.</param>
         /// <returns>The volume in liters that the tiles occupy.</returns>
-        public float GetVolumeForTiles(GridId grid, int tiles = 1)
+        public float GetVolumeForTiles(EntityUid grid, int tiles = 1)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Atmospherics.CellVolume * tiles;
@@ -289,7 +289,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var tile in mapGrid.GetAllTiles())
             {
                 if(!gridAtmosphere.Tiles.ContainsKey(tile.GridIndices))
-                    gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridIndex, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
+                    gridAtmosphere.Tiles[tile.GridIndices] = new TileAtmosphere(tile.GridUid, tile.GridIndices, new GasMixture(volume){Temperature = Atmospherics.T20C});
 
                 InvalidateTile(gridAtmosphere, tile.GridIndices);
             }
@@ -297,7 +297,7 @@ namespace Content.Server.Atmos.EntitySystems
             foreach (var (position, tile) in gridAtmosphere.Tiles.ToArray())
             {
                 UpdateAdjacent(mapGrid, gridAtmosphere, tile);
-                InvalidateVisuals(mapGrid.Index, position);
+                InvalidateVisuals(mapGrid.GridEntityId, position);
             }
         }
 
@@ -337,7 +337,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to invalidate the tile.</param>
         /// <param name="tile">The indices of the tile.</param>
-        public void InvalidateTile(GridId grid, Vector2i tile)
+        public void InvalidateTile(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -371,7 +371,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void InvalidateVisuals(GridId grid, Vector2i tile)
+        public void InvalidateVisuals(EntityUid grid, Vector2i tile)
         {
             _gasTileOverlaySystem.Invalidate(grid, tile);
         }
@@ -401,7 +401,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Indices of the tile.</param>
         /// <remarks>Do NOT use this outside of atmos internals.</remarks>
         /// <returns>The Tile Atmosphere in the position, or null.</returns>
-        public TileAtmosphere? GetTileAtmosphere(GridId grid, Vector2i tile)
+        public TileAtmosphere? GetTileAtmosphere(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
@@ -450,7 +450,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Indices of the tile.</param>
         /// <remarks>Do NOT use this outside of atmos internals.</remarks>
         /// <returns>The tile atmosphere of a specific position in a grid, a space tile atmosphere if the tile is space or null if the grid doesn't exist.</returns>
-        public TileAtmosphere? GetTileAtmosphereOrCreateSpace(GridId grid, Vector2i tile)
+        public TileAtmosphere? GetTileAtmosphereOrCreateSpace(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
@@ -480,7 +480,7 @@ namespace Content.Server.Atmos.EntitySystems
             // attempts to get the tile atmosphere for it before it has been revalidated by atmos.
             // The tile atmosphere will get revalidated on the next atmos tick, however.
 
-            return tileAtmosphere ?? new TileAtmosphere(mapGrid.Index, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
+            return tileAtmosphere ?? new TileAtmosphere(mapGrid.GridEntityId, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
         }
 
         #endregion
@@ -502,7 +502,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile to be activated.</param>
-        public void AddActiveTile(GridId grid, Vector2i tile)
+        public void AddActiveTile(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -563,7 +563,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile to be deactivated.</param>
         /// <param name="disposeExcitedGroup">Whether to dispose of the tile's <see cref="ExcitedGroup"/></param>
-        public void RemoveActiveTile(GridId grid, Vector2i tile, bool disposeExcitedGroup = true)
+        public void RemoveActiveTile(EntityUid grid, Vector2i tile, bool disposeExcitedGroup = true)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -632,7 +632,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Indices of the tile.</param>
         /// <param name="invalidate">Whether to invalidate the tile.</param>
         /// <returns>The tile mixture, or null</returns>
-        public GasMixture? GetTileMixture(GridId grid, Vector2i tile, bool invalidate = false)
+        public GasMixture? GetTileMixture(EntityUid grid, Vector2i tile, bool invalidate = false)
         {
             // Always return space gas mixtures for invalid grids (grid 0)
             if (!grid.IsValid())
@@ -699,7 +699,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         /// <returns>Reaction results.</returns>
-        public ReactionResult React(GridId grid, Vector2i tile)
+        public ReactionResult React(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return ReactionResult.NoReaction;
@@ -755,7 +755,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Indices of the tile.</param>
         /// <param name="direction">Directions to check.</param>
         /// <returns>Whether the tile is blocked in the directions specified.</returns>
-        public bool IsTileAirBlocked(GridId grid, Vector2i tile, AtmosDirection direction = AtmosDirection.All)
+        public bool IsTileAirBlocked(EntityUid grid, Vector2i tile, AtmosDirection direction = AtmosDirection.All)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -816,7 +816,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to check the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         /// <returns>Whether the tile is space or not.</returns>
-        public bool IsTileSpace(GridId grid, Vector2i tile)
+        public bool IsTileSpace(EntityUid grid, Vector2i tile)
         {
             return !_mapManager.TryGetGrid(grid, out var mapGrid) || IsTileSpace(mapGrid, tile);
         }
@@ -847,7 +847,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Get a tile's heat capacity, based on the tile type, tile contents and tile gas mixture.
         /// </summary>
-        public float GetTileHeatCapacity(GridId grid, Vector2i tile)
+        public float GetTileHeatCapacity(EntityUid grid, Vector2i tile)
         {
             // Always return space gas mixtures for invalid grids (grid 0)
             if (!grid.IsValid())
@@ -913,7 +913,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="tile">Indices of the tile.</param>
         /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
         /// <returns>The positions adjacent to the tile.</returns>
-        public IEnumerable<Vector2i> GetAdjacentTiles(GridId grid, Vector2i tile, bool includeBlocked = false)
+        public IEnumerable<Vector2i> GetAdjacentTiles(EntityUid grid, Vector2i tile, bool includeBlocked = false)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<Vector2i>();
@@ -986,7 +986,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="includeBlocked">Whether to include tiles in directions the tile is air-blocked in.</param>
         /// <param name="invalidate">Whether to invalidate all adjacent tiles.</param>
         /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
-        public IEnumerable<GasMixture> GetAdjacentTileMixtures(GridId grid, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
+        public IEnumerable<GasMixture> GetAdjacentTileMixtures(EntityUid grid, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
         {
             // For invalid grids, return an array with a single space gas mixture in it.
             if (!grid.IsValid())
@@ -1073,7 +1073,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
-        public void UpdateAdjacent(GridId grid, Vector2i tile)
+        public void UpdateAdjacent(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -1149,7 +1149,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         /// <param name="direction">Direction to be updated.</param>
-        public void UpdateAdjacent(GridId grid, Vector2i tile, AtmosDirection direction)
+        public void UpdateAdjacent(EntityUid grid, Vector2i tile, AtmosDirection direction)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -1227,7 +1227,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="exposedTemperature">Temperature to expose to the tile.</param>
         /// <param name="exposedVolume">Volume of the exposed temperature.</param>
         /// <param name="soh">If true, the existing hotspot values will be set to the exposed values, but only if they're smaller.</param>
-        public void HotspotExpose(GridId grid, Vector2i tile, float exposedTemperature, float exposedVolume, bool soh = false)
+        public void HotspotExpose(EntityUid grid, Vector2i tile, float exposedTemperature, float exposedVolume, bool soh = false)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -1264,7 +1264,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
-        public void HotspotExtinguish(GridId grid, Vector2i tile)
+        public void HotspotExtinguish(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -1313,7 +1313,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get the tile</param>
         /// <param name="tile">Indices for the tile</param>
         /// <returns>Whether the hotspot is active or not.</returns>
-        public bool IsHotspotActive(GridId grid, Vector2i tile)
+        public bool IsHotspotActive(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1376,7 +1376,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public bool AddAtmosDevice(AtmosDeviceComponent atmosDevice)
         {
-            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridID;
+            var grid = Comp<TransformComponent>(atmosDevice.Owner).GridUid;
 
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return false;
@@ -1438,7 +1438,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
         /// <returns>Whether the tile's gas mixture is probably safe.</returns>
-        public bool IsTileMixtureProbablySafe(GridId grid, Vector2i tile)
+        public bool IsTileMixtureProbablySafe(EntityUid grid, Vector2i tile)
         {
             return IsMixtureProbablySafe(GetTileMixture(grid, tile));
         }
@@ -1491,7 +1491,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="grid">Grid where to get the tile.</param>
         /// <param name="tile">Indices of the tile.</param>
-        public void FixVacuum(GridId grid, Vector2i tile)
+        public void FixVacuum(EntityUid grid, Vector2i tile)
         {
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return;
@@ -1558,7 +1558,7 @@ namespace Content.Server.Atmos.EntitySystems
             return tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
         }
 
-        public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
+        public bool TryGetGridAndTile(MapCoordinates coordinates, [NotNullWhen(true)] out (EntityUid Grid, Vector2i Tile)? tuple)
         {
             if (!_mapManager.TryFindGridAt(coordinates, out var grid))
             {
@@ -1566,11 +1566,11 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            tuple = (grid.Index, grid.TileIndicesFor(coordinates));
+            tuple = (grid.GridEntityId, grid.TileIndicesFor(coordinates));
             return true;
         }
 
-        public bool TryGetGridAndTile(EntityCoordinates coordinates, [NotNullWhen(true)] out (GridId Grid, Vector2i Tile)? tuple)
+        public bool TryGetGridAndTile(EntityCoordinates coordinates, [NotNullWhen(true)] out (EntityUid Grid, Vector2i Tile)? tuple)
         {
             if (!coordinates.IsValid(EntityManager))
             {
@@ -1578,7 +1578,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            var gridId = coordinates.GetGridId(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
 
             if (!_mapManager.TryGetGrid(gridId, out var grid))
             {
@@ -1586,7 +1586,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
             }
 
-            tuple = (gridId, grid.TileIndicesFor(coordinates));
+            tuple = (gridId.Value, grid.TileIndicesFor(coordinates));
             return true;
         }
 

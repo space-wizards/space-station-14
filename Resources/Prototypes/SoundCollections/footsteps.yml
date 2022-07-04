@@ -55,10 +55,10 @@
 - type: soundCollection
   id: footstep_tile
   files:
-  - /Audio/Effects/Footsteps/tile1.wav
-  - /Audio/Effects/Footsteps/tile2.wav
-  - /Audio/Effects/Footsteps/tile3.wav
-  - /Audio/Effects/Footsteps/tile4.wav
+  - /Audio/Effects/Footsteps/tile1.ogg
+  - /Audio/Effects/Footsteps/tile2.ogg
+  - /Audio/Effects/Footsteps/tile3.ogg
+  - /Audio/Effects/Footsteps/tile4.ogg
 
 - type: soundCollection
   id: footstep_clown
@@ -90,3 +90,11 @@
   id: footstep_snow
   files:
   - /Audio/Effects/Footsteps/snowstep.ogg
+
+- type: soundCollection
+  id: footstep_grass
+  files:
+  - /Audio/Effects/Footsteps/grass1.ogg
+  - /Audio/Effects/Footsteps/grass2.ogg
+  - /Audio/Effects/Footsteps/grass3.ogg
+  - /Audio/Effects/Footsteps/grass4.ogg

@@ -7,3 +7,16 @@
     state: icon
   - type: Clothing
     Slots: [mask]
+
+- type: entity
+  abstract: true
+  parent: ClothingMaskBase
+  id: ClothingMaskPullableBase
+  components:
+  - type: Mask
+    toggleAction:
+      name: action-name-mask
+      description: action-description-mask-toggle
+      icon: Clothing/Mask/gas.rsi/icon.png
+      iconOn: Interface/Inventory/blocked.png
+      event: !type:ToggleMaskEvent

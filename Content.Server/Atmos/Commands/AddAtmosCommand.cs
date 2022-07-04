@@ -1,8 +1,7 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -23,37 +22,29 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var id))
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!EntityUid.TryParse(args[0], out var euid))
             {
-                shell.WriteLine($"{args[0]} is not a valid integer.");
+                shell.WriteError($"Failed to parse euid '{args[0]}'.");
                 return;
             }
 
-            var gridId = new GridId(id);
-
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            if (!entMan.HasComponent<IMapGridComponent>(euid))
             {
-                shell.WriteLine($"{gridId} is not a valid grid id.");
+                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;
             }
 
-            if (!_entities.EntityExists(gridComp.GridEntityId))
-            {
-                shell.WriteLine("Failed to get grid entity.");
-                return;
-            }
-
-            if (_entities.HasComponent<IAtmosphereComponent>(gridComp.GridEntityId))
+            if (_entities.HasComponent<IAtmosphereComponent>(euid))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            _entities.AddComponent<GridAtmosphereComponent>(gridComp.GridEntityId);
+            _entities.AddComponent<GridAtmosphereComponent>(euid);
 
-            shell.WriteLine($"Added atmosphere to grid {id}.");
+            shell.WriteLine($"Added atmosphere to grid {euid}.");
         }
     }
 }

@@ -145,10 +145,14 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
+
+            // Couldn't toggle!
+            if (!IsConnected) return;
+
             _connectStream?.Stop();
 
             if (_connectSound != null)
-                _connectStream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _connectSound.GetSound(), Owner, _connectSound.Params);
+                _connectStream = SoundSystem.Play(_connectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _connectSound.Params);
 
             UpdateUserInterface();
         }
@@ -158,11 +162,12 @@ namespace Content.Server.Atmos.Components
             if (!IsConnected) return;
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
+
             GetInternalsComponent(owner)?.DisconnectTank();
             _disconnectStream?.Stop();
 
             if (_disconnectSound != null)
-                _disconnectStream = SoundSystem.Play(Filter.Pvs(Owner, entityManager: _entMan), _disconnectSound.GetSound(), Owner, _disconnectSound.Params);
+                _disconnectStream = SoundSystem.Play(_disconnectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _disconnectSound.Params);
 
             UpdateUserInterface();
         }
@@ -260,7 +265,7 @@ namespace Content.Server.Atmos.Components
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(_ruptureSound.GetSound(), Filter.Pvs(Owner), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     _entMan.QueueDeleteEntity(Owner);
                     return;

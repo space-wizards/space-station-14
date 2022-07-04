@@ -40,8 +40,8 @@
   parent: HandheldHealthAnalyzer
   id: HandheldHealthAnalyzerZombie
   name: Zombie Infector
-  suffix: DEBUG
+  suffix: Active
   components:
   - type: HealthAnalyzer
     fake: true
-    disease: ZombieInfection
+    disease: ActiveZombieVirus

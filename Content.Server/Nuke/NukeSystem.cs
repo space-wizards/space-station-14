@@ -1,6 +1,8 @@
 using Content.Server.AlertLevel;
+using Content.Server.Audio;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
@@ -14,6 +16,7 @@ using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Nuke
 {
@@ -25,6 +28,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
         public override void Initialize()
@@ -216,7 +220,8 @@ namespace Content.Server.Nuke
             // play alert sound if time is running out
             if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
             {
-                nuke.AlertAudioStream = SoundSystem.Play(Filter.Broadcast(), nuke.AlertSound.GetSound());
+                nuke.AlertAudioStream = SoundSystem.Play(nuke.AlertSound.GetSound(), Filter.Broadcast());
+                _soundSystem.StopStationEventMusic(uid, StationEventMusicType.Nuke);
                 nuke.PlayedAlertSound = true;
             }
 
@@ -312,8 +317,8 @@ namespace Content.Server.Nuke
             if (!Resolve(uid, ref component))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(uid), sound.GetSound(),
-                uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
+            SoundSystem.Play(sound.GetSound(),
+                Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 
         #region Public API
@@ -334,7 +339,7 @@ namespace Content.Server.Nuke
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
             {
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, false, true, true, true);
             }
 
             // warn a crew
@@ -343,8 +348,7 @@ namespace Content.Server.Nuke
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
 
-            // todo: move it to announcements system
-            SoundSystem.Play(Filter.Broadcast(), component.ArmSound.GetSound());
+            NukeArmedAudio(component);
 
             component.Status = NukeStatus.ARMED;
             UpdateUserInterface(uid, component);
@@ -372,8 +376,7 @@ namespace Content.Server.Nuke
             var sender = Loc.GetString("nuke-component-announcement-sender");
             _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
 
-            // todo: move it to announcements system
-            SoundSystem.Play(Filter.Broadcast(), component.DisarmSound.GetSound());
+            NukeDisarmedAudio(component);
 
             // disable sound and reset it
             component.PlayedAlertSound = false;
@@ -422,6 +425,7 @@ namespace Content.Server.Nuke
 
             RaiseLocalEvent(new NukeExplodedEvent());
 
+            _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
             EntityManager.DeleteEntity(uid);
         }
 
@@ -437,6 +441,18 @@ namespace Content.Server.Nuke
             UpdateUserInterface(uid, component);
         }
         #endregion
+
+        private void NukeArmedAudio(NukeComponent component)
+        {
+            _soundSystem.PlayGlobalOnStation(component.Owner, component.ArmSound.GetSound());
+            _soundSystem.DispatchStationEventMusic(component.Owner, component.ArmMusic, StationEventMusicType.Nuke);
+        }
+
+        private void NukeDisarmedAudio(NukeComponent component)
+        {
+            _soundSystem.PlayGlobalOnStation(component.Owner, component.DisarmSound.GetSound());
+            _soundSystem.StopStationEventMusic(component.Owner, StationEventMusicType.Nuke);
+        }
     }
 
     public sealed class NukeExplodedEvent : EntityEventArgs {}

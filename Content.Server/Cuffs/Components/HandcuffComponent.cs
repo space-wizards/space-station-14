@@ -22,14 +22,14 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [ViewVariables]
         [DataField("cuffTime")]
-        public float CuffTime { get; set; } = 5f;
+        public float CuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
         [DataField("uncuffTime")]
-        public float UncuffTime { get; set; } = 5f;
+        public float UncuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
@@ -178,7 +178,7 @@ namespace Content.Server.Cuffs.Components
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
                 eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
             }
-            SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
+            SoundSystem.Play(StartCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             TryUpdateCuff(eventArgs.User, target, cuffed);
             return true;
@@ -215,7 +215,7 @@ namespace Content.Server.Cuffs.Components
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound.GetSound(), Owner);
+                    SoundSystem.Play(EndCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
                     if (target == user)
                     {
                         user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));

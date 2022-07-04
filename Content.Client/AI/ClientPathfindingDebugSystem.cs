@@ -197,17 +197,17 @@ namespace Content.Client.AI
         private readonly Dictionary<int, Color> _graphColors = new();
 
         // Cached regions
-        public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
+        public readonly Dictionary<EntityUid, Dictionary<int, List<Vector2>>> CachedRegions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Color>> _cachedRegionColors =
                      new();
 
         // Regions
-        public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
+        public readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
                     new();
 
-        private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
+        private readonly Dictionary<EntityUid, Dictionary<int, Dictionary<int, Color>>> _regionColors =
                      new();
 
         // Route debugging
@@ -260,7 +260,7 @@ namespace Content.Client.AI
 
         #region Regions
         //Server side debugger should increment every region
-        public void UpdateCachedRegions(GridId gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
+        public void UpdateCachedRegions(EntityUid gridId, Dictionary<int, List<Vector2>> messageRegions, bool cached)
         {
             if (!CachedRegions.ContainsKey(gridId))
             {
@@ -294,7 +294,7 @@ namespace Content.Client.AI
         private void DrawCachedRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var transform = _entities.GetComponentOrNull<TransformComponent>(_playerManager.LocalPlayer?.ControlledEntity);
-            if (transform == null || !CachedRegions.TryGetValue(transform.GridID, out var entityRegions))
+            if (transform == null || transform.GridUid == null || !CachedRegions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -312,12 +312,12 @@ namespace Content.Client.AI
                         screenTile.X + 15.0f,
                         screenTile.Y + 15.0f);
 
-                    screenHandle.DrawRect(box, _cachedRegionColors[transform.GridID][region]);
+                    screenHandle.DrawRect(box, _cachedRegionColors[transform.GridUid.Value][region]);
                 }
             }
         }
 
-        public void UpdateRegions(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
+        public void UpdateRegions(EntityUid gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
         {
             if (!Regions.ContainsKey(gridId))
             {
@@ -344,7 +344,8 @@ namespace Content.Client.AI
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (!_entities.TryGetComponent(attachedEntity, out TransformComponent? transform) ||
-                !Regions.TryGetValue(transform.GridID, out var entityRegions))
+                transform.GridUid == null ||
+                !Regions.TryGetValue(transform.GridUid.Value, out var entityRegions))
             {
                 return;
             }
@@ -364,7 +365,7 @@ namespace Content.Client.AI
                             screenTile.X + 15.0f,
                             screenTile.Y + 15.0f);
 
-                        screenHandle.DrawRect(box, _regionColors[_entities.GetComponent<TransformComponent>(attachedEntity.Value).GridID][chunk][region]);
+                        screenHandle.DrawRect(box, _regionColors[transform.GridUid.Value][chunk][region]);
                     }
                 }
             }
@@ -481,7 +482,7 @@ namespace Content.Client.AI
 
             var screenHandle = args.ScreenHandle;
             screenHandle.UseShader(_shader);
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
 
             if ((Modes & PathfindingDebugMode.Route) != 0)
             {

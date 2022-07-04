@@ -149,7 +149,7 @@ namespace Content.Server.RCD.Systems
                     return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SuccessSound.GetSound(), rcd.Owner);
+            SoundSystem.Play(rcd.SuccessSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), rcd.Owner);
             rcd.CurrentAmmo--;
             args.Handled = true;
         }
@@ -240,7 +240,7 @@ namespace Content.Server.RCD.Systems
 
         private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SwapModeSound.GetSound(), uid);
+            SoundSystem.Play(rcd.SwapModeSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
 
             var mode = (int) rcd.Mode;
             mode = ++mode % RCDModeCount;

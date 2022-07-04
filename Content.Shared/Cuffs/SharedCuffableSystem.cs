@@ -5,8 +5,10 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 
 namespace Content.Shared.Cuffs
 {
@@ -25,10 +27,20 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, PullStartedMessage>(OnPull);
             SubscribeLocalEvent<SharedCuffableComponent, PullStoppedMessage>(OnPull);
         }
 
+
+        private void OnBeingPulledAttempt(EntityUid uid, SharedCuffableComponent component, BeingPulledAttemptEvent args)
+        {
+            if (!TryComp<SharedPullableComponent>(uid, out var pullable))
+                return;
+
+            if (pullable.Puller != null && !component.CanStillInteract) // If we are being pulled already and cuffed, we can't get pulled again.
+                args.Cancel();
+        }
         private void OnPull(EntityUid uid, SharedCuffableComponent component, PullMessage args)
         {
             if (!component.CanStillInteract)
