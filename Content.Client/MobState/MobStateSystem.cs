@@ -92,9 +92,11 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
                 return;
         }
 
+        var roundedDamage = MathF.Round((damageable.TotalDamage / 10f).Float()) * 10f;
+
         if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
-            modifier = MathF.Min(1f, (damageable.TotalDamage / earliestThreshold).Float());
+            modifier = MathF.Min(1f, (roundedDamage / earliestThreshold).Float());
         }
 
         // Don't show damage overlay if they're near enough to max.

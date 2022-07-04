@@ -48,7 +48,7 @@ public sealed class DamageOverlay : Overlay
                 ClearLerp();
                 break;
             default:
-                double lerpRate = 4;
+                double lerpRate = 0.1;
                 var level = Level;
                 float maxLevel = 2000f;
                 float minLevel = 800f;
@@ -57,7 +57,7 @@ public sealed class DamageOverlay : Overlay
                 {
                     _lerpStart ??= _timing.RealTime;
 
-                    var timeToLerp = lerpRate / (Level - _oldlevel);
+                    var timeToLerp = (Level - _oldlevel) / lerpRate;
                     var currentRealTime = _timing.RealTime;
                     var lerpDifference = (currentRealTime - _lerpStart.Value).TotalSeconds;
 
