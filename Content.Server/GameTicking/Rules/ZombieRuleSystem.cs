@@ -69,7 +69,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = GetInfectedPercentage(out var livingHumans);
+        var percent = Math.Round(GetInfectedPercentage(out var livingHumans), 2);
 
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
@@ -92,7 +92,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         ///Gets a bunch of the living players and displays them if they're under a threshold.
         ///InitialInfected is used for the threshold because it scales with the player count well.
-        if (percent > 0 && livingHumans.Count < _initialInfectedNames.Count)
+        if (livingHumans.Count > 0 && livingHumans.Count <= _initialInfectedNames.Count)
         {
             ev.AddLine("");
             ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", livingHumans.Count)));
@@ -150,9 +150,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         var percent = GetInfectedPercentage(out var num);
-        if (MathHelper.CloseTo(percent, 1)) //only one left
-            _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
-        else if (percent >= 1) //oops, all zombies
+        if (num.Count == 1) //only one human left. spooky
+           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
+        if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
 
@@ -195,23 +195,27 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
-        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>();
+        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
+        var allZombers = GetEntityQuery<ZombieComponent>();
+
         var totalPlayers = new List<EntityUid>();
         var livingZombies = new List<EntityUid>();
+
         livingHumans = new();
+
         foreach (var ent in allPlayers)
         {
             if (ent.Item2.IsAlive())
             {
                 totalPlayers.Add(ent.Item2.Owner);
 
-                if (HasComp<ZombieComponent>(ent.Item1.Owner))
+                if (allZombers.HasComponent(ent.Item1.Owner))
                     livingZombies.Add(ent.Item2.Owner);
                 else
                     livingHumans.Add(ent.Item2.Owner);
             }
         }
-        return livingZombies.Count / totalPlayers.Count;
+        return ((float) livingZombies.Count) / (float) totalPlayers.Count;
     }
 
     /// <summary>

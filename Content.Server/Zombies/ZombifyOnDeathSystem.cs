@@ -86,7 +86,7 @@ namespace Content.Server.Zombies
                 return;
 
             //you're a real zombie now, son.
-            var zombiecomp = EnsureComp<ZombieComponent>(target);
+            var zombiecomp = AddComp<ZombieComponent>(target);
 
             ///we need to basically remove all of these because zombies shouldn't
             ///get diseases, breath, be thirst, be hungry, or die in space
