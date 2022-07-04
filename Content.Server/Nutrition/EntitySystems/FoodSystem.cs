@@ -126,13 +126,14 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var moveBreak = user != target;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target, food.Owner)
             {
                 BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
+                DistanceThreshold = 2.0f,
                 TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),
                 NeedHand = true,

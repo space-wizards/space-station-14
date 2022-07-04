@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!Resolve(uid, ref canister, ref transform))
                 return;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
             if (environment is not null)
                 _atmosphereSystem.Merge(environment, canister.Air);
@@ -180,7 +180,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
                 else
                 {
-                    var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(canister.Owner).Coordinates, true);
+                    var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }

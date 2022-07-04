@@ -1,56 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: You should be less likely to be phased through walls., type: Fix}
-  - {message: When pushed by high pressure differences ("space wind") you should be
-      pushed in the direction of the pressure difference again., type: Fix}
-  id: 1357
-  time: '2022-04-18T14:42:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Nanotrasen has reported sightings of corpses prowljng the halls, given
-      new life by unknown forces.', type: Add}
-  id: 1358
-  time: '2022-04-18T22:30:22.0000000+00:00'
-- author: UKNOWH
-  changes:
-  - {message: You can grind pills to test for its substance, type: Add}
-  id: 1359
-  time: '2022-04-18T22:40:35.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: 'Bees cannot disarm anymore, so no more bee stunning!', type: Tweak}
-  id: 1360
-  time: '2022-04-18T22:41:07.0000000+00:00'
-- author: CrzyPotato
-  changes:
-  - {message: 'Airlock Painter now has a lathe recipe and can be found in tool closets,
-      and tool vendors', type: Add}
-  id: 1361
-  time: '2022-04-18T22:43:19.0000000+00:00'
-- author: Mirino97
-  changes:
-  - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
-  id: 1362
-  time: '2022-04-18T22:47:04.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Firelocks and airlocks now close when there are static entities in the
-      way (e.g. anchored tables)., type: Fix}
-  id: 1363
-  time: '2022-04-19T13:45:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombie names no longer spam fill the ghost role menu and only appear
-      when able to be taken over., type: Fix}
-  - {message: Probability adjustments for zombie outbreak event., type: Tweak}
-  id: 1364
-  time: '2022-04-20T01:54:11.0000000+00:00'
-- author: UKNOWH
-  changes:
-  - {message: You can now put stuff in the chef hat, type: Add}
-  id: 1365
-  time: '2022-04-20T05:17:03.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: Added a Flash payload that allows players to make modular flashbangs,
@@ -2945,3 +2893,55 @@ Entries:
   - {message: PAI can now only hear Common radio., type: Tweak}
   id: 1856
   time: '2022-07-03T08:36:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
+  id: 1857
+  time: '2022-07-04T05:14:04.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: 'Adds a new disease, tongue twister.', type: Add}
+  id: 1858
+  time: '2022-07-04T05:22:30.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Salvage magnet broadcasts over supply instead of announcements now.,
+    type: Tweak}
+  id: 1859
+  time: '2022-07-04T06:19:41.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: A song now plays during the nuke countdown. It can be disabled with
+      the Event Music audio setting., type: Add}
+  id: 1860
+  time: '2022-07-04T06:29:38.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Blocking has now been added! Use shields to lower incoming damage.,
+    type: Add}
+  - {message: 'Riot, Laser, Ballistic, Mirror, Clockwork, Makeshift, and Buckler Shields
+      have been added!', type: Add}
+  id: 1861
+  time: '2022-07-04T06:31:13.0000000+00:00'
+- author: themias
+  changes:
+  - {message: No more Dine and Dash (alt clicking food and running away), type: Fix}
+  id: 1862
+  time: '2022-07-04T06:56:31.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added telescreens and a large flat screen TV., type: Add}
+  id: 1863
+  time: '2022-07-04T07:10:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added rusted metal walls! Use a welder to remove the rust. They're weaker
+      so be careful., type: Add}
+  id: 1864
+  time: '2022-07-04T07:11:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more playing hot potato with ID cards to early launch the shuttle.,
+    type: Tweak}
+  id: 1865
+  time: '2022-07-04T13:09:10.0000000+00:00'
