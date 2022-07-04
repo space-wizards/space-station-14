@@ -35,6 +35,7 @@ public sealed class DamageOverlay : Overlay
         switch (Level)
         {
             case 0:
+                ClearLerp();
                 break;
             case MobStateSystem.Levels:
                 ClearLerp();
@@ -42,15 +43,14 @@ public sealed class DamageOverlay : Overlay
                 worldHandle.DrawRect(viewport, Color.White);
                 break;
             default:
-                double lerpRate = 0.5;
+                double lerpRate = 2;
                 var level = (float) Level;
+                float maxLevel = 800f;
+                float minLevel = 80f;
 
                 if (_oldlevel != Level)
                 {
-                    if (_lerpStart == null)
-                    {
-                        _lerpStart = _timing.RealTime;
-                    }
+                    _lerpStart ??= _timing.RealTime;
 
                     var timeToLerp = lerpRate / (Level - _oldlevel);
                     var currentRealTime = _timing.RealTime;
@@ -67,7 +67,7 @@ public sealed class DamageOverlay : Overlay
                     }
                 }
 
-                _damageShader.SetParameter("outerCircleRadius", 600 - (level / (MobStateSystem.Levels - 1)) * (600 - 200));
+                _damageShader.SetParameter("outerCircleRadius", maxLevel - (level / (MobStateSystem.Levels - 1)) * (maxLevel - minLevel));
                 worldHandle.UseShader(_damageShader);
                 worldHandle.DrawRect(viewport, Color.White);
                 break;
