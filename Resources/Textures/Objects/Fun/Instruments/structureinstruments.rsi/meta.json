@@ -41,14 +41,15 @@
     },
     {
       "name": "harp",
-      "directions": 1
     },
     {
       "name": "contrabass",
     },
     {
-      "name": "tuba",
-      "directions": 1
+      "name": "taiko"
+    },
+    {
+      "name": "tuba"
     },
     {
       "name": "daw-base",

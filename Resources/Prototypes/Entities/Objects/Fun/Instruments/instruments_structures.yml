@@ -46,7 +46,7 @@
 
 - type: entity
   name: tuba
-  parent: BasePlaceableInstrumentRotatable
+  parent: BasePlaceableInstrument
   id: TubaInstrument
   description: The big daddy of the brass family. Standing next to its majesty makes you feel insecure.
   components:
@@ -57,7 +57,7 @@
 
 - type: entity
   id: HarpInstrument
-  parent: BasePlaceableInstrumentRotatable
+  parent: BasePlaceableInstrument
   name: harp
   description: Plucking at the strings cuts your fingers, but at least the music is pretty.
   components:
@@ -67,8 +67,19 @@
     state: harp
 
 - type: entity
+  id: TaikoInstrument
+  parent: BasePlaceableInstrument
+  name: taiko
+  description: A large drum. Looking at it fills you with the urge to slap it.
+  components:
+  - type: Instrument
+    program: 116
+  - type: Sprite
+    state: taiko
+
+- type: entity
   id: ContrabassInstrument
-  parent: BasePlaceableInstrumentRotatable
+  parent: BasePlaceableInstrument
   name: contrabass
   description: Perfect for laying down a nice jazzy beat.
   components:
