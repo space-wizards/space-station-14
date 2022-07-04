@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
@@ -23,6 +24,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, MobMovementProfileEvent>(OnJetpackUserMovement);
+        SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
+        SubscribeLocalEvent<GravityChangedMessage>(OnJetpackUserGravityChanged);
     }
 
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
@@ -44,6 +47,21 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
+    }
+
+    private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
+    {
+        MovementSpeedModifier.RefreshMovementSpeedModifiers(component.Owner);
+    }
+
+    private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
+    {
+        var gridUid = ev.ChangedGridIndex;
+        foreach (var (_, transform) in EntityQuery<JetpackUserComponent, TransformComponent>())
+        {
+            if(transform.GridUid == gridUid)
+                MovementSpeedModifier.RefreshMovementSpeedModifiers(transform.Owner);
+        }
     }
 
     private void SetupUser(EntityUid uid, JetpackComponent component)
