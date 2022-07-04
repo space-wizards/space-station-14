@@ -20,6 +20,12 @@ public sealed class HyperspaceComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Accumulator = 0f;
 
+    /// <summary>
+    /// Target Uid to dock with at the end of hyperspace.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("targetUid")]
+    public EntityUid? TargetUid;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("targetCoordinates")]
     public EntityCoordinates TargetCoordinates;
 }

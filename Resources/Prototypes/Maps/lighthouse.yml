@@ -1,11 +1,11 @@
 ﻿- type: gameMap
   id: lighthouse
-  mapName: 'lighthouse'
+  mapName: 'Lighthouse'
   mapPath: /Maps/lighthouse.yml
   minPlayers: 35
   maxPlayers: 70
   stations:
-    lighthouse:
+    Lighthouse:
       mapNameTemplate: '{0} Lighthouse {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
@@ -44,3 +44,4 @@
         MedicalIntern: [ 2, 2 ]
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
+        Detective: [ 1, 1 ]

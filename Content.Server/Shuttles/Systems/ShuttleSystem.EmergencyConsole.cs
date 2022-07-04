@@ -44,7 +44,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// How long after the transit is over to end the round.
     /// </summary>
-    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(3);
+    private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
@@ -113,12 +113,19 @@ public sealed partial class ShuttleSystem
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    // TODO: Add support so Hyperspace will just dock it to Centcomm.
-
-                    Hyperspace(shuttle,
-                        new EntityCoordinates(
-                            _mapManager.GetMapEntityId(_centcommMap.Value),
-                            Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    if (Deleted(_centcomm))
+                    {
+                        // TODO: Need to get non-overlapping positions.
+                        Hyperspace(shuttle,
+                            new EntityCoordinates(
+                                _mapManager.GetMapEntityId(_centcommMap.Value),
+                                Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                    }
+                    else
+                    {
+                        Hyperspace(shuttle,
+                            _centcomm.Value, _consoleAccumulator, _transitTime);
+                    }
                 }
             }
         }
@@ -126,7 +133,7 @@ public sealed partial class ShuttleSystem
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
-            _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{_transitTime:0}")));
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{_transitTime:0}")));
 
             _roundEndCancelToken = new CancellationTokenSource();
             Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
@@ -167,7 +174,7 @@ public sealed partial class ShuttleSystem
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle early launch REPEAL by {args.Session:user}");
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
-        _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", remaining)));
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-console-auth-revoked", ("remaining", remaining)));
         CheckForLaunch(component);
         UpdateAllEmergencyConsoles();
     }
@@ -190,7 +197,7 @@ public sealed partial class ShuttleSystem
         var remaining = component.AuthorizationsRequired - component.AuthorizedEntities.Count;
 
         if (remaining > 0)
-            _chatSystem.DispatchGlobalStationAnnouncement(
+            _chatSystem.DispatchGlobalAnnouncement(
                 Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
                 playDefaultSound: false, colorOverride: DangerColor);
 
@@ -254,7 +261,7 @@ public sealed partial class ShuttleSystem
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
-        _chatSystem.DispatchGlobalStationAnnouncement(
+        _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
             playDefaultSound: false,
             colorOverride: DangerColor);

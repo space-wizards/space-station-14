@@ -58,6 +58,20 @@
       - state: box_security
       - state: ziptie
 
+- type: entity
+  name: forensic pad box
+  parent: BoxCardboard
+  id: BoxForensicPad
+  description: A box of forensic pads.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ForensicPad
+        amount: 10
+  - type: Sprite
+    layers:
+      - state: box_security
+
 # TODO: THESE ARE BAD AND ARE DEPRECATED, DON'T USE THEM PLEASE
 - type: entity
   name: box of shotgun beanbag cartridges

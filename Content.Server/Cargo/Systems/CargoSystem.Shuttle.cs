@@ -293,14 +293,13 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
-        var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
-        var xform = Transform(shuttleUid);
-        MetaData(shuttleUid).EntityName = name;
+        var (_, shuttleUid) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
+        var xform = Transform(shuttleUid!.Value);
+        MetaData(shuttleUid!.Value).EntityName = name;
 
         // TODO: Something better like a bounds check.
         xform.LocalPosition += 100 * _index;
-        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
+        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid!.Value);
         comp.Station = component.Owner;
         comp.Coordinates = xform.Coordinates;
 
@@ -308,7 +307,7 @@ public sealed partial class CargoSystem
         comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
         UpdateShuttleCargoConsoles(comp);
         _index++;
-        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
+        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid!.Value)}");
     }
 
     private void SellPallets(CargoShuttleComponent component, StationBankAccountComponent bank)
