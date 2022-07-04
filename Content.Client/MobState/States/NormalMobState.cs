@@ -1,11 +1,12 @@
-﻿using Content.Shared.MobState;
+﻿using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.MobState.States
 {
     public sealed class NormalMobState : SharedNormalMobState
     {
+
     }
 }

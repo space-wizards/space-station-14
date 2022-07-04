@@ -7,8 +7,8 @@ namespace Content.Shared.MobState
     {
         public MobStateChangedEvent(
             MobStateComponent component,
-            IMobState? oldMobState,
-            IMobState currentMobState)
+            DamageState? oldMobState,
+            DamageState currentMobState)
         {
             Component = component;
             OldMobState = oldMobState;
@@ -19,8 +19,8 @@ namespace Content.Shared.MobState
 
         public MobStateComponent Component { get; }
 
-        public IMobState? OldMobState { get; }
+        public DamageState? OldMobState { get; }
 
-        public IMobState CurrentMobState { get; }
+        public DamageState CurrentMobState { get; }
     }
 }
