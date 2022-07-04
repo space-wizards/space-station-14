@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Nanotrasen has reported sightings of corpses prowljng the halls, given
-      new life by unknown forces.', type: Add}
-  id: 1358
-  time: '2022-04-18T22:30:22.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: You can grind pills to test for its substance, type: Add}
@@ -2943,3 +2937,8 @@ Entries:
   - {message: Shuttle transit time reduced from 2 minutes to 1 minute., type: Tweak}
   id: 1857
   time: '2022-07-04T05:14:04.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: 'Adds a new disease, tongue twister.', type: Add}
+  id: 1858
+  time: '2022-07-04T05:22:30.0000000+00:00'
