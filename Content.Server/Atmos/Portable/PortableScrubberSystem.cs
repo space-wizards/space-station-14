@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Examine;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.Timing;
@@ -18,10 +19,12 @@ namespace Content.Server.Atmos.Portable
         {
             base.Initialize();
             SubscribeLocalEvent<PortableScrubberComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
+            SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnDeviceUpdated(EntityUid uid, PortableScrubberComponent component, AtmosDeviceUpdateEvent args)
         {
+            Logger.Error("Received device updated event...");
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
@@ -42,8 +45,17 @@ namespace Content.Server.Atmos.Portable
             Scrub(timeDelta, component, environment);
         }
 
+        private void OnExamined(EntityUid uid, PortableScrubberComponent component, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange)
+            {
+                args.PushMarkup("Internal pressure: " + component.Air.Pressure);
+            }
+        }
+
         private void Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
+            Logger.Error("Scrubbing...");
             _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
         }
     }

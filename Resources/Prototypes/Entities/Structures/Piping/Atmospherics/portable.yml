@@ -1,0 +1,37 @@
+- type: entity
+  id: PortableScrubber
+  parent: BaseStructureDynamic
+  name: portable scrubber
+  description: It scrubs, portably!
+  components:
+  - type: Transform
+    noRot: true
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.1
+      mass: 130
+      mask:
+      - Impassable
+  - type: Sprite
+    drawdepth: Overdoors
+    netsync: false
+    sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
+    state: icon
+  - type: Pullable
+  - type: AtmosDevice
+  - type: PortableScrubber
+    gasMixture:
+      volume: 1000
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 0 # Water vapor
+        - 0 # Miasma
