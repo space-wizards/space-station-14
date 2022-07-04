@@ -1,10 +1,4 @@
 Entries:
-- author: CrzyPotato
-  changes:
-  - {message: 'Airlock Painter now has a lathe recipe and can be found in tool closets,
-      and tool vendors', type: Add}
-  id: 1361
-  time: '2022-04-18T22:43:19.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: Replaced light bulbs in fixtures will no longer remain off!, type: Fix}
@@ -2944,3 +2938,11 @@ Entries:
       the Event Music audio setting., type: Add}
   id: 1860
   time: '2022-07-04T06:29:38.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Blocking has now been added! Use shields to lower incoming damage.,
+    type: Add}
+  - {message: 'Riot, Laser, Ballistic, Mirror, Clockwork, Makeshift, and Buckler Shields
+      have been added!', type: Add}
+  id: 1861
+  time: '2022-07-04T06:31:13.0000000+00:00'
