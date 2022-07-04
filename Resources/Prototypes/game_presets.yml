@@ -4,7 +4,7 @@
     - extended
     - shittersafari
   name: extended-title
-  showInVote: true
+  showInVote: false #2boring2vote
   description: extended-description
 
 - type: gamePreset

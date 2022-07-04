@@ -42,6 +42,8 @@
       types:
         Piercing: 8
         Slash: 7
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

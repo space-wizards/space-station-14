@@ -26,10 +26,10 @@
     size: 14
     compatibility: Biological
     mechanisms:
-    - OrganHumanHeart
+    - OrganAnimalHeart
     - OrganHumanLungs
-    - OrganHumanStomach
-    - OrganHumanLiver
+    - OrganAnimalStomach
+    - OrganAnimalLiver
     - OrganHumanKidneys
 #    criticalThreshold: 100
 #    deadThreshold: 150

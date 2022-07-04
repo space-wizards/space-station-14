@@ -454,6 +454,7 @@ namespace Content.Server.Database
         Ban = 0,
         Whitelist = 1,
         Full = 2,
+        Panic = 3,
     }
 
     public class ServerBanHit

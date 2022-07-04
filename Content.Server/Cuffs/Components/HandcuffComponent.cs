@@ -22,14 +22,14 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [ViewVariables]
         [DataField("cuffTime")]
-        public float CuffTime { get; set; } = 5f;
+        public float CuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
         [DataField("uncuffTime")]
-        public float UncuffTime { get; set; } = 5f;
+        public float UncuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.

@@ -61,6 +61,8 @@
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: Gun
     fireRate: 10
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -83,6 +85,8 @@
   - type: Item
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: ChamberMagazineAmmoProvider
     # autoEject: true # Do not set this until the PVS prediction issue is resolved
   - type: MagazineVisuals
@@ -109,6 +113,8 @@
   - type: Gun
     fireRate: 6
     selectedMode: FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
     availableModes:
     - FullAuto
   - type: ItemSlots

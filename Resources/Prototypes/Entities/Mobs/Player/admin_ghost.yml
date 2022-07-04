@@ -44,8 +44,8 @@
         type: CommunicationsConsoleBoundUserInterface
       - key: enum.RadarConsoleUiKey.Key
         type: RadarConsoleBoundUserInterface
-      - key: enum.CargoConsoleUiKey.Key
-        type: CargoConsoleBoundUserInterface
+      - key: enum.CargoConsoleUiKey.Orders
+        type: CargoOrderConsoleBoundUserInterface
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
   - type: IntrinsicUI
@@ -77,7 +77,7 @@
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
-      - key: enum.CargoConsoleUiKey.Key
+      - key: enum.CargoConsoleUiKey.Orders
         toggleAction:
           name: action-name-show-cargo-console
           description: action-description-show-cargo-console
@@ -100,8 +100,7 @@
     title: communicationsconsole-announcement-title-centcom
     color: "#228b22"
   - type: RadarConsole
-  - type: CargoConsole
-  - type: CargoOrderDatabase
+  - type: CargoOrderConsole
   - type: CrewMonitoringConsole
     snap: false
     precision: 3

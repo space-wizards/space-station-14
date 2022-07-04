@@ -76,7 +76,7 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var player in _playerManager.Sessions)
             {
                 if (player.AttachedEntity is not {Valid: true} attached
-                    || EntityManager.GetComponent<TransformComponent>(attached).GridEntityId != gridId
+                    || EntityManager.GetComponent<TransformComponent>(attached).GridUid != gridId
                     || !EntityManager.HasComponent<CameraRecoilComponent>(attached))
                 {
                     continue;

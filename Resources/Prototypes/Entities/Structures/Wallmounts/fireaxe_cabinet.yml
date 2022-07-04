@@ -33,6 +33,8 @@
     - type: ItemCabinetVisuals
       openState: glass-up
       closedState: glass
+    - type: AccessReader
+      access: [["Atmospherics"]]
   placement:
     mode: SnapgridCenter
 

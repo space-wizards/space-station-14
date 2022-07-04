@@ -46,13 +46,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   # Organs
   - type: InjectableSolution
     solution: chemicals
@@ -80,7 +74,10 @@
     - KnockedDown
     - SlowedDown
     - Stutter
+    - SeeingRainbows
     - Electrocution
+    - Drunk
+    - SlurredSpeech
     - PressureImmunity
     - Muted
   - type: DiseaseCarrier
@@ -252,10 +249,8 @@
       - !type:GibBehavior { }
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.8
-      60: 0.6
-      80: 0.4
-      90: 0.2
+      60: 0.7
+      80: 0.5
   - type: HeatResistance
   - type: Appearance
     visuals:
@@ -323,6 +318,7 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: Fingerprint
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.

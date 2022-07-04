@@ -65,6 +65,8 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
         if (state is not ShuttleConsoleBoundInterfaceState cState) return;
+
+        _window?.SetMatrix(cState.Coordinates, cState.Angle);
         _window?.UpdateState(cState);
     }
 }

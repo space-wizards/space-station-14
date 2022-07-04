@@ -1,12 +1,16 @@
 using System.Linq;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
+using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Station.Systems;
@@ -23,9 +27,11 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -152,12 +158,71 @@ public sealed class StationSystem : EntitySystem
 
     #endregion Event handlers
 
+    public Filter GetInStation(EntityUid source, float range = 32f)
+    {
+        var station = GetOwningStation(source);
+
+        if (TryComp<StationDataComponent>(station, out var data))
+        {
+            return GetInStation(data);
+        }
+
+        return Filter.Empty();
+    }
+
+    /// <summary>
+    /// Retrieves a filter for everything in a particular station or near its member grids.
+    /// </summary>
+    public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
+    {
+        // Could also use circles if you wanted.
+        var bounds = new ValueList<Box2>(dataComponent.Grids.Count);
+        var filter = Filter.Empty();
+        var mapIds = new ValueList<MapId>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+                !xformQuery.TryGetComponent(gridUid, out var xform)) continue;
+
+            var mapId = xform.MapID;
+            var position = _transform.GetWorldPosition(xform, xformQuery);
+            var bound = grid.LocalAABB.Enlarged(range).Translated(position);
+
+            bounds.Add(bound);
+            if (!mapIds.Contains(mapId))
+            {
+                mapIds.Add(grid.ParentMapId);
+            }
+        }
+
+        foreach (var session in Filter.GetAllPlayers(_player))
+        {
+            var entity = session.AttachedEntity;
+            if (entity == null || !xformQuery.TryGetComponent(entity, out var xform)) continue;
+
+            var mapId = xform.MapID;
+
+            if (!mapIds.Contains(mapId)) continue;
+
+            var position = _transform.GetWorldPosition(xform, xformQuery);
+
+            foreach (var bound in bounds)
+            {
+                if (!bound.Contains(position)) continue;
+
+                filter.AddPlayer(session);
+                break;
+            }
+        }
+
+        return filter;
+    }
 
     /// <summary>
     /// Generates a station name from the given config.
     /// </summary>
-    /// <param name="config"></param>
-    /// <returns></returns>
     public static string GenerateStationName(StationConfig config)
     {
         return config.NameGenerator is not null
@@ -224,7 +289,7 @@ public sealed class StationSystem : EntitySystem
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false));
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
 
         _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
@@ -247,7 +312,7 @@ public sealed class StationSystem : EntitySystem
         RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner));
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
         _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
@@ -273,7 +338,7 @@ public sealed class StationSystem : EntitySystem
             _chatSystem.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
-        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));
+        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);
     }
 
     /// <summary>
@@ -317,13 +382,13 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if (xform.GridEntityId == EntityUid.Invalid)
+        if (xform.GridUid == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
         }
 
-        return CompOrNull<StationMemberComponent>(xform.GridEntityId)?.Station;
+        return CompOrNull<StationMemberComponent>(xform.GridUid)?.Station;
     }
 }
 

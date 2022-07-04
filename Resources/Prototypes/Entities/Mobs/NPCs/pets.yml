@@ -19,7 +19,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 12
       mask:
       - MobMask
       layer:
@@ -50,6 +50,8 @@
   - type: SentienceTarget
     flavorKind: corgi
   - type: Puller
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: corrupted corgi
@@ -80,6 +82,8 @@
       types:
         Piercing: 5
         Slash: 5
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -243,7 +247,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 5
       mask:
       - MobMask
       layer:
@@ -272,6 +276,8 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: Runtime
@@ -380,6 +386,16 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 15
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Grammar
     attributes:
       gender: male
@@ -405,7 +421,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 6
       mask:
       - MobMask
       layer:
@@ -451,7 +467,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 2
       mask:
       - MobMask
       layer:
@@ -508,7 +524,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 5
       mask:
       - MobMask
       layer:
@@ -554,7 +570,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 8
       mask:
       - MobMask
       layer:
