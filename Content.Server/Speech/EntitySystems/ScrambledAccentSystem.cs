@@ -9,10 +9,6 @@ namespace Content.Server.Speech.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private static readonly IReadOnlyList<string> Words = new List<string>{
-            "Who?", "What?", "When?", "Where?", "Why!", "How?", "Me!"
-        }.AsReadOnly();
-
         public override void Initialize()
         {
             SubscribeLocalEvent<ScrambledAccentComponent, AccentGetEvent>(OnAccent);
@@ -24,8 +20,9 @@ namespace Content.Server.Speech.EntitySystems
 
             if (words.Length < 2)
             {
+                var pick = _random.Next(1, 8);
                 // If they try to weasel out of it by saying one word at a time we give them this.
-                return message.Replace(message, _random.Pick(Words));
+                return Loc.GetString($"accent-scrambled-words-{pick}");
             }
 
             //Scramble the words
