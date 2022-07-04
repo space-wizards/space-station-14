@@ -26,6 +26,12 @@
       "directions": 4
     },
     {
+      "name": "burnt"
+    },
+    {
+      "name": "flashing"
+    },
+    {
       "name": "on-inhand-right",
       "directions": 4
     }
