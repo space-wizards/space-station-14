@@ -62,6 +62,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
     private void OnPlayerDetach(PlayerDetachedEvent ev)
     {
+        _overlay.Dead = false;
         _overlay.Level = 0;
     }
 
@@ -100,7 +101,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         }
 
         // Don't show damage overlay if they're near enough to max.
-        if (modifier < 0.1f)
+        if (modifier < 0.05f)
         {
             modifier = 0f;
         }

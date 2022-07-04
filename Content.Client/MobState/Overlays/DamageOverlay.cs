@@ -48,12 +48,12 @@ public sealed class DamageOverlay : Overlay
                 ClearLerp();
                 break;
             default:
-                double lerpRate = 0.1;
+                double lerpRate = 0.05;
                 var level = Level;
-                float outerMaxLevel = 2000f;
-                float outerMinLevel = 800f;
-                float innerMaxLevel = 800f;
-                float innerMinLevel = 200f;
+                float outerMaxLevel = 1.6f * args.ViewportBounds.Width;
+                float outerMinLevel = 0.8f * args.ViewportBounds.Width;
+                float innerMaxLevel = 0.5f * args.ViewportBounds.Width;
+                float innerMinLevel = 0.1f * args.ViewportBounds.Width;
 
                 if (!_oldlevel.Equals(Level))
                 {
