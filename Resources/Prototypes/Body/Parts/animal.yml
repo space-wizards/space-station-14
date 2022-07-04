@@ -10,9 +10,6 @@
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: Sprite
-    netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
 
 # For primates mainly
 - type: entity
@@ -74,6 +71,9 @@
   abstract: true
   components:
   - type: Mechanism
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
   id: OrganAnimalLungs
