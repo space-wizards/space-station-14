@@ -8,6 +8,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Shared.Containers;
@@ -20,6 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -110,8 +112,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
                 if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
+                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == smokable.Owner) ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
+                {
                     continue;
+                }
 
                 _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
                 _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);

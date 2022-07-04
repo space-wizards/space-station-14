@@ -376,7 +376,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -483,7 +483,7 @@ namespace Content.Server.GameTicking
                 if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
-                    _chatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(proto.Message), playSound: true);
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
                 if (proto.Sound != null)
                     SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
