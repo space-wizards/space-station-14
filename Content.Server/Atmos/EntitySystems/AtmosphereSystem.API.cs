@@ -33,7 +33,6 @@ public partial class AtmosphereSystem
             if (ev.Handled)
                 return ev.Gas;
         }
-
         // Oops, we did a little bit of code duplication...
         else if(!Resolve(uid, ref transform))
         {
