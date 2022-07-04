@@ -19,7 +19,7 @@ namespace Content.Shared.Nutrition.EntitySystems
             if (_jetpack.IsUserFlying(component.Owner))
                 return;
 
-            float mod = component.CurrentHungerThreshold == HungerThreshold.Starving ? 0.05f : 1.0f;
+            float mod = component.CurrentHungerThreshold == HungerThreshold.Starving ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
     }
