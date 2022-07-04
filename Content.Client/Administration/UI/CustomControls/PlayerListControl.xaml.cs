@@ -21,6 +21,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private readonly List<PlayerInfo> _sortedPlayerList = new();
 
         public event Action<PlayerInfo?>? OnSelectionChanged;
+        public IReadOnlyList<PlayerInfo> PlayerInfo => _playerList;
 
         public Func<PlayerInfo, string, string>? OverrideText;
         public Comparison<PlayerInfo>? Comparison;

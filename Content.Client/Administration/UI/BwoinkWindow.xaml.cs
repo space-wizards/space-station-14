@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
@@ -12,6 +13,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Administration.UI
@@ -140,11 +142,11 @@ namespace Content.Client.Administration.UI
 
         public void SelectChannel(NetUserId channel)
         {
-            // TODO ShadowCommander implement selecting item in ListContainer
-            // if (!ChannelSelector.PlayerListContainer.Buttons.TryFirstOrDefault(
-            //     i => i.Data is PlayerListData {Info: var info} && info.SessionId == channel, out var pi))
-            //     return;
-            // ChannelSelector.PlayerListContainer.Select(pi);
+            if (!ChannelSelector.PlayerInfo.TryFirstOrDefault(
+                i => i.SessionId == channel, out var info))
+                return;
+            ChannelSelector.PopulateList();
+            ChannelSelector.PlayerListContainer.Select(new PlayerListData(info));
         }
 
         private void FixButtons()

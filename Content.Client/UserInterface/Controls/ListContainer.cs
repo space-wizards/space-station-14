@@ -2,6 +2,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
+using Robust.Shared.Map;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -28,6 +30,7 @@ public sealed class ListContainer : Control
     private readonly Dictionary<ListData, ListContainerButton> _buttons = new();
 
     private List<ListData> _data = new();
+    private ListData? _selected;
     private float _itemHeight = 0;
     private float _totalHeight = 0;
     private int _topIndex = 0;
@@ -89,6 +92,20 @@ public sealed class ListContainer : Control
     }
 
     #region Selection
+
+    public void Select(ListData data)
+    {
+        if (!_data.Contains(data))
+            return;
+        if (_buttons.TryGetValue(data, out var button))
+            button.Pressed = true;
+        _selected = data;
+        button ??= new ListContainerButton(data);
+        OnItemPressed(new BaseButton.ButtonEventArgs(button,
+            new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick, BoundKeyState.Up,
+                new ScreenCoordinates(0, 0, WindowId.Main), true, Vector2.Zero, Vector2.Zero)));
+    }
+
     /*
      * Need to implement selecting the first item in code.
      * Need to implement updating one entry without having to repopulate
@@ -99,6 +116,7 @@ public sealed class ListContainer : Control
     {
         if (args.Button is not ListContainerButton button)
             return;
+        _selected = button.Data;
         ItemPressed?.Invoke(args, button.Data);
     }
 
@@ -230,6 +248,9 @@ public sealed class ListContainer : Control
 
                         GenerateItem?.Invoke(data, button);
                         _buttons.Add(data, button);
+
+                        if (data == _selected)
+                            button.Pressed = true;
                     }
                     AddChild(button);
                     button.Measure(finalSize);
