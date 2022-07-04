@@ -29,6 +29,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Pullable
   - type: AtmosDevice
+    joinSystem: true
   - type: PortableScrubber
     gasMixture:
       volume: 1250
@@ -40,6 +41,13 @@
         - 0 # Tritium
         - 0 # Water vapor
         - 0 # Miasma
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+        rotationsEnabled: false
+        volume: 1
   - type: ApcPowerReceiver
     powerLoad: 2000
   - type: ExtensionCableReceiver

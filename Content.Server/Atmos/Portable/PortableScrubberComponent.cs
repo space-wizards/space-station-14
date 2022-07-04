@@ -9,6 +9,10 @@ namespace Content.Server.Atmos.Portable
         [DataField("gasMixture")]
         public GasMixture Air { get; } = new();
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("port")]
+        public string PortName { get; set; } = "port";
+
         public HashSet<Gas> FilterGases = new()
         {
             Gas.CarbonDioxide,
