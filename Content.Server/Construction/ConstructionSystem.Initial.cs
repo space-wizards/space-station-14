@@ -86,6 +86,69 @@ namespace Content.Server.Construction
             }
         }
 
+        // HOLY SHIT THIS IS SOME HACKY CODE.
+        // But I'd rather do this shit than risk having collisions with other containers.
+        Container GetContainer(EntityUid user, Dictionary<string, Container> containers, string name)
+        {
+            if (containers!.ContainsKey(name))
+                return containers[name];
+
+            while (true)
+            {
+                var random = _robustRandom.Next();
+                var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
+
+                if (existed) continue;
+
+                containers[name] = c;
+                return c;
+            }
+        }
+
+        bool StoreUsedStacksForConstruction(EntityUid user, int amountNeeded, List<Tuple<EntityUid, SharedStackComponent>> stacks, Dictionary<string, Container> containers, String store, Container container)
+        {
+            // Sort stacks by count, smallest to largest, for consumption
+            var sortedStacks = stacks.OrderBy(x => x.Item2.Count).ToList();
+
+            // Determine how many stacks we need to eat
+            var remainingAmount = amountNeeded;
+            var usedStacks = 0;
+            while (remainingAmount > 0 && usedStacks < sortedStacks.Count)
+            {
+                remainingAmount -= sortedStacks[usedStacks].Item2.Count;
+                usedStacks++;
+            }
+
+            // Use up as many stacks as needed, fully consuming constituent stacks and partially consuming the final stack
+            remainingAmount = amountNeeded;
+            int i = 0;
+            for (; i < usedStacks; i++)
+            {
+                EntityUid? stackEntity = null;
+                if (i == usedStacks - 1)
+                    stackEntity = _stackSystem.Split(sortedStacks[i].Item1, remainingAmount, user.ToCoordinates(0, 0), sortedStacks[i].Item2);
+                else
+                {
+                    stackEntity = sortedStacks[i].Item1;
+                    remainingAmount -= sortedStacks[i].Item2.Count;
+                }
+
+                if (stackEntity == null)
+                    break;
+
+                if (string.IsNullOrEmpty(store))
+                {
+                    if (!container.Insert(stackEntity.Value))
+                        break;
+                }
+                else if (!GetContainer(user, containers, store).Insert(stackEntity.Value))
+                    break;
+            }
+
+
+            return (i >= usedStacks);
+        }
+
         // LEGACY CODE. See warning at the top of the file!
         private async Task<EntityUid?> Construct(EntityUid user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
@@ -101,25 +164,6 @@ namespace Content.Server.Construction
             var containers = new Dictionary<string, Container>();
 
             var doAfterTime = 0f;
-
-            // HOLY SHIT THIS IS SOME HACKY CODE.
-            // But I'd rather do this shit than risk having collisions with other containers.
-            Container GetContainer(string name)
-            {
-                if (containers!.ContainsKey(name))
-                    return containers[name];
-
-                while (true)
-                {
-                    var random = _robustRandom.Next();
-                    var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
-
-                    if (existed) continue;
-
-                    containers[name] = c;
-                    return c;
-                }
-            }
 
             void FailCleanup()
             {
@@ -162,62 +206,81 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case MaterialConstructionGraphStep materialStep:
+                    {
                         // Accrue all valid entity stacks
-                        var validStacks = new List<Tuple<EntityUid,SharedStackComponent>>();
+                        var validStacks = new List<Tuple<EntityUid, SharedStackComponent>>();
                         foreach (var entity in EnumerateNearby(user))
                         {
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            validStacks.Add(new Tuple<EntityUid,SharedStackComponent>(entity, stack));
+                            validStacks.Add(new Tuple<EntityUid, SharedStackComponent>(entity, stack));
                         }
                         if (validStacks.Count == 0)
                             break;
 
-                        // Sort stacks by count, smallest to largest, for consumption
-                        var sortedStacks = validStacks.OrderBy(x => x.Item2.Count).ToList();
-
-                        // Determine how many stacks we need to eat
-                        var remainingAmount = materialStep.Amount;
-                        var usedStacks = 0;
-                        while(remainingAmount > 0 && usedStacks < sortedStacks.Count)
-                        {
-                            remainingAmount -= sortedStacks[usedStacks].Item2.Count;
-                            usedStacks++;
-                        }
-
-                        // Use up as many stacks as needed, fully consuming constituent stacks and partially consuming the final stack
-                        remainingAmount = materialStep.Amount;
-                        int i = 0;
-                        for (; i < usedStacks; i++)
-                        {
-                            EntityUid? stackEntity = null;
-                            if (i == usedStacks - 1)
-                                stackEntity = _stackSystem.Split(sortedStacks[i].Item1, remainingAmount, user.ToCoordinates(0, 0), sortedStacks[i].Item2);
-                            else
-                            {
-                                stackEntity = sortedStacks[i].Item1;
-                                remainingAmount -= sortedStacks[i].Item2.Count;
-                            }
-
-                            if (stackEntity == null)
-                                break;
-
-                            if (string.IsNullOrEmpty(materialStep.Store))
-                            {
-                                if (!container.Insert(stackEntity.Value))
-                                    break;
-                            }
-                            else if (!GetContainer(materialStep.Store).Insert(stackEntity.Value))
-                                break;
-                        }
-
-                        if(i >= usedStacks)
+                        // Attempt to consume the required amount and leave the rest
+                        if (StoreUsedStacksForConstruction(user, materialStep.Amount, validStacks, containers, materialStep.Store, container))
                             handled = true;
 
                         break;
+                    }
+                    case PrototypeConstructionGraphStep prototypeStep:
+                    {
+                        // Accrue all valid entities OR stacks. Only one of the two will be used, depending on whether the prototype is stackable
+                        var validEntities = new List<EntityUid>();
+                        var validStacks = new List<Tuple<EntityUid, SharedStackComponent>>();
+                        foreach (var entity in EnumerateNearby(user))
+                        {
+                            if (!prototypeStep.EntityValid(entity, out var stack))
+                                continue;
 
+                            if (stack != null)
+                                validStacks.Add(new Tuple<EntityUid, SharedStackComponent>(entity, stack));
+                            else
+                                validEntities.Add(entity);
+
+                        }
+
+                        if (validStacks.Count != 0)
+                        {
+                            // For stackable prototypes, attempt consumption like for materials
+                            if (StoreUsedStacksForConstruction(user, prototypeStep.Amount, validStacks, containers, prototypeStep.Store, container))
+                                handled = true;
+                        }
+                        else if (validEntities.Count != 0)
+                        {
+                            // For non-stackable prototypes, do we have enough single entities?
+                            if (validEntities.Count < prototypeStep.Amount)
+                                break;
+
+                            // If so, use them up until we've hit the target
+                            var amountRemaining = prototypeStep.Amount;
+                            foreach (var entity in validEntities)
+                            {
+                                if (string.IsNullOrEmpty(prototypeStep.Store))
+                                {
+                                    if (!container.Insert(entity))
+                                        continue;
+                                }
+                                else if (!GetContainer(user, containers, prototypeStep.Store).Insert(entity))
+                                {
+                                    continue;
+                                }
+
+                                amountRemaining--;
+                                if(amountRemaining <= 0)
+                                {
+                                    handled = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
+                    {
                         foreach (var entity in EnumerateNearby(user))
                         {
                             if (!arbitraryStep.EntityValid(entity, EntityManager))
@@ -228,7 +291,7 @@ namespace Content.Server.Construction
                                 if (!container.Insert(entity))
                                     continue;
                             }
-                            else if (!GetContainer(arbitraryStep.Store).Insert(entity))
+                            else if (!GetContainer(user, containers, arbitraryStep.Store).Insert(entity))
                                 continue;
 
                             handled = true;
@@ -236,6 +299,7 @@ namespace Content.Server.Construction
                         }
 
                         break;
+                    }
                 }
 
                 if (handled == false)
