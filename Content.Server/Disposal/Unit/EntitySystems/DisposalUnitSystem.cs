@@ -42,6 +42,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
@@ -521,8 +522,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             var air = component.Air;
             var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
+            var indices = _transformSystem.GetGridOrMapTilePosition(component.Owner, xform);
 
-            if (_atmosSystem.GetTileMixture(xform.Coordinates, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is {Temperature: > 0} environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
