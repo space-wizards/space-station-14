@@ -75,27 +75,18 @@ public sealed class BlockingSystem : EntitySystem
         if(args.Handled)
             return;
 
-            foreach (var shield in _handsSystem.EnumerateHeld(args.Performer))
+        foreach (var shield in _handsSystem.EnumerateHeld(args.Performer))
+        {
+            if (shield == uid)
+                continue;
+            if (TryComp<BlockingComponent>(shield, out var otherBlockComp) && otherBlockComp.IsBlocking)
             {
-                if (TryComp<BlockingComponent>(shield, out var otherBlockComp))
-                {
-                    if (!component.IsBlocking && otherBlockComp.IsBlocking)
-                    {
-                        StopBlocking(shield, otherBlockComp, args.Performer);
-                        StartBlocking(uid, component, args.Performer);
-                        return;
-                    }
-
-                    if (component.IsBlocking && !otherBlockComp.IsBlocking)
-                    {
-                        StopBlocking(uid, component, args.Performer);
-                        StartBlocking(shield, otherBlockComp, args.Performer);
-                        return;
-                    }
-                }
+                CantBlockError(args.Performer);
+                return;
             }
+        }
 
-            if (component.IsBlocking)
+        if (component.IsBlocking)
             StopBlocking(uid, component, args.Performer);
         else
             StartBlocking(uid, component, args.Performer);
