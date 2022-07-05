@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
@@ -13,6 +15,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -26,6 +32,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
@@ -299,7 +306,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                var air = _atmosphereSystem.GetTileMixture(transform.Coordinates);
+                var air = _atmosphereSystem.GetContainingMixture(uid);
 
                 // If we're in an oxygenless environment, put the fire out.
                 if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
@@ -308,7 +315,13 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
                 }
 
-                _atmosphereSystem.HotspotExpose(transform.Coordinates, 700f, 50f, true);
+                if(transform.GridUid != null)
+                {
+                    _atmosphereSystem.HotspotExpose(transform.GridUid.Value,
+                        _transformSystem.GetGridOrMapTilePosition(uid, transform),
+                        700f, 50f, true);
+
+                }
 
                 foreach (var otherUid in flammable.Collided.ToArray())
                 {

@@ -67,7 +67,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(vent.Owner).Coordinates, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)

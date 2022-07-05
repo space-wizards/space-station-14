@@ -31,3 +31,24 @@
   icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
   objectType: Item
 
+- type: construction
+  name: wooden buckler
+  id: WoodenBuckler
+  graph: WoodenBuckler
+  startNode: start
+  targetNode: woodenBuckler
+  category: Weapons
+  description: A nicely carved wooden shield!
+  icon: Objects/Weapons/Melee/shields.rsi/buckler-icon.png
+  objectType: Item
+
+- type: construction
+  name: makeshift shield
+  id: MakeshiftShield
+  graph: MakeshiftShield
+  startNode: start
+  targetNode: makeshiftShield
+  category: Weapons
+  description: Crude and falling apart. Why would you make this?
+  icon: Objects/Weapons/Melee/shields.rsi/makeshift-icon.png
+  objectType: Item

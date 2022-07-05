@@ -8,3 +8,6 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              FluidSynth or a development package
                                              for FluidSynth.
 
+# SwappableInstrumentComponent
+swappable-instrument-component-style-set = Style set to "{$style}"
+

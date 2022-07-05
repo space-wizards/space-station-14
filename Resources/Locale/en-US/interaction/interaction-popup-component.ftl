@@ -19,6 +19,7 @@ petting-success-sloth = You pet {THE($target)} on {POSS-ADJ($target)} slow movin
 petting-success-space-cat = You pet {THE($target)} on {POSS-ADJ($target)} glass domed head.
 petting-success-tarantula = You pet {THE($target)} on {POSS-ADJ($target)} hairy little head.
 petting-success-holo = You pet {THE($target)} on {POSS-ADJ($target)} metallic spiky head.
+petting-success-dragon = Dodging teeth, claws, and flames, you pet {THE($target)} on {POSS-ADJ($target)} massive scaled head.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -30,6 +31,7 @@ petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($targe
 petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
 petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow dodge with ludicrous speed!
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
+petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 
 ## Knocking on windows
 
