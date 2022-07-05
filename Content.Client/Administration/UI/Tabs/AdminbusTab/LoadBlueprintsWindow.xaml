@@ -27,5 +27,6 @@
             <SpinBox Name="RotationSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <Button Name="SubmitButton" Text="{Loc Load Blueprint}" />
+        <Button Name="TeleportButton" Text="{Loc Teleport to}" />
     </BoxContainer>
 </DefaultWindow>

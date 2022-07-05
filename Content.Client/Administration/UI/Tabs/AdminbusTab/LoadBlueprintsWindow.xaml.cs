@@ -75,7 +75,8 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
             RotationSpin.OverrideValue((int) rotation.Degrees);
             RotationSpin.ValueChanged += OnRotate;
-            SubmitButton.OnPressed += SubmitButtonOnOnPressed;
+            SubmitButton.OnPressed += OnSubmitButtonPressed;
+            TeleportButton.OnPressed += OnTeleportButtonPressed;
         }
 
         private void OnRotate(object? sender, ValueChangedEventArgs e)
@@ -99,7 +100,13 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             MapOptions.SelectId(obj.Id);
         }
 
-        private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void OnTeleportButtonPressed(BaseButton.ButtonEventArgs obj)
+        {
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
+                $"tp {XCoordinate.Value} {YCoordinate.Value} {MapOptions.SelectedId}");
+        }
+
+        private void OnSubmitButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"loadbp {MapOptions.SelectedId} \"{_pathIndices[MapPath.SelectedId]}\" {XCoordinate.Value} {YCoordinate.Value} {RotationSpin.Value}");
