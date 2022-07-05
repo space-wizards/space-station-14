@@ -79,11 +79,12 @@ public sealed class DamageOverlay : Overlay
                 var distance = args.ViewportBounds.Width;
 
                 float outerMaxLevel = 1.6f * distance;
-                float outerMinLevel = 0.6f * distance;
+                float outerMinLevel = 0.8f * distance;
                 float innerMaxLevel = 0.5f * distance;
                 float innerMinLevel = 0.1f * distance;
                 var currentRealTime = _timing.RealTime;
 
+                // TODO: This is still kinda jank lerping for heals.
                 if (!_oldlevel.Equals(Level))
                 {
                     _lerpStart ??= _timing.RealTime;
