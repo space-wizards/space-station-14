@@ -1,12 +1,6 @@
 Entries:
 - author: UKNOWH
   changes:
-  - {message: Added a Flash payload that allows players to make modular flashbangs,
-    type: Add}
-  id: 1366
-  time: '2022-04-20T06:08:57.0000000+00:00'
-- author: UKNOWH
-  changes:
   - {message: mouse size changed form 0 to 5, type: Add}
   id: 1367
   time: '2022-04-20T07:19:33.0000000+00:00'
@@ -2945,3 +2939,9 @@ Entries:
     type: Tweak}
   id: 1865
   time: '2022-07-04T13:09:10.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Players can now examine each other's ID card slots while an ID/PDA is
+      worn, type: Add}
+  id: 1866
+  time: '2022-07-05T00:20:44.0000000+00:00'
