@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade Penguin's explosion now does more damage., type: Tweak}
-  - {message: Grenade Penguin AI should be less buggy., type: Fix}
-  id: 1372
-  time: '2022-04-21T22:32:44.0000000+00:00'
 - author: Saakra
   changes:
   - {message: Bibles and Necronomicons can now be worn in the belt slot, type: Add}
@@ -2953,3 +2947,8 @@ Entries:
     type: Fix}
   id: 1871
   time: '2022-07-05T13:40:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
+  id: 1872
+  time: '2022-07-05T14:11:29.0000000+00:00'
