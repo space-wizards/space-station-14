@@ -1,11 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Added several gas mask variants, type: Add}
-  - {message: Tweaked Survival Boxes, type: Tweak}
-  - {message: Tweaked Locker Fills, type: Tweak}
-  id: 1369
-  time: '2022-04-21T12:11:26.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Split Station massive update!, type: Add}
@@ -2946,3 +2939,15 @@ Entries:
   - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
   id: 1868
   time: '2022-07-05T01:30:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The nuke music now times itself properly so as to end right before the
+      nuke alarm goes off., type: Tweak}
+  - {message: 'The nuke can no longer have its disk ejected while the nuke is armed.
+      This means nuclear operatives have a phase where they must defend the nuke for
+      the time that it''s active, until the timer hits 30 seconds and they can run.',
+    type: Tweak}
+  - {message: Disarming the nuke now has a suspenseful 30 second doafter., type: Tweak}
+  - {message: 'The nuke now has a much, much larger blast radius.', type: Tweak}
+  id: 1869
+  time: '2022-07-05T06:49:19.0000000+00:00'
