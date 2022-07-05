@@ -1,3 +1,4 @@
+using Content.Shared.MobState;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
@@ -12,12 +13,25 @@ public sealed class DamageOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
     private readonly ShaderInstance _deadShader;
+    private readonly ShaderInstance _critShader;
     private readonly ShaderInstance _damageShader;
 
+    public DamageState State = DamageState.Alive;
+
+    /// <summary>
+    /// Current level for the radius from 0 -> 1
+    /// </summary>
     public float Level;
+
+    /// <summary>
+    /// Used for lerping.
+    /// </summary>
     private float _oldlevel;
 
-    public bool Dead = false;
+    /// <summary>
+    /// Timer for pulsing.
+    /// </summary>
+    private float _timer;
 
     private TimeSpan? _lerpStart;
 
@@ -26,6 +40,7 @@ public sealed class DamageOverlay : Overlay
         // TODO: Replace
         IoCManager.InjectDependencies(this);
         _deadShader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
+        _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         _damageShader = _prototypeManager.Index<ShaderPrototype>("DamageMask").InstanceUnique();
     }
 
@@ -34,28 +49,39 @@ public sealed class DamageOverlay : Overlay
         var viewport = args.ViewportBounds;
         var handle = args.ScreenHandle;
 
-        if (Dead)
+        switch (State)
         {
-            ClearLerp();
-            handle.UseShader(_deadShader);
-            handle.DrawRect(viewport, Color.White);
-            return;
+            case DamageState.Dead:
+                ClearLerp();
+                handle.UseShader(_deadShader);
+                handle.DrawRect(viewport, Color.White);
+                return;
+            case DamageState.Critical:
+                ClearLerp();
+                handle.UseShader(_critShader);
+                handle.DrawRect(viewport, Color.White);
+                return;
+            case DamageState.Alive:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
+        // I just didn't want all of alive indented
         switch (Level)
         {
             case 0:
                 ClearLerp();
                 break;
             default:
-                double lerpRate = 0.25;
+                double lerpRate = 0.5;
                 var level = Level;
                 var distance = args.ViewportBounds.Width;
 
                 float outerMaxLevel = 1.6f * distance;
-                float outerMinLevel = 0.8f * distance;
+                float outerMinLevel = 0.4f * distance;
                 float innerMaxLevel = 0.5f * distance;
-                float innerMinLevel = 0.25f * distance;
+                float innerMinLevel = 0.1f * distance;
                 var currentRealTime = _timing.RealTime;
 
                 if (!_oldlevel.Equals(Level))
@@ -86,13 +112,14 @@ public sealed class DamageOverlay : Overlay
                 _damageShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
                 handle.UseShader(_damageShader);
                 handle.DrawRect(viewport, Color.White);
+                _timer += (float) _timing.FrameTime.TotalSeconds;
                 break;
         }
-
     }
 
     private void ClearLerp()
     {
+        _timer = 0f;
         _oldlevel = Level;
         _lerpStart = null;
     }

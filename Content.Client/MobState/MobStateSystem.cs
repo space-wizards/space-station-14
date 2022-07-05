@@ -62,7 +62,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
     private void OnPlayerDetach(PlayerDetachedEvent ev)
     {
-        _overlay.Dead = false;
+        _overlay.State = DamageState.Alive;
         _overlay.Level = 0;
     }
 
@@ -79,7 +79,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
 
         var modifier = 0f;
-        _overlay.Dead = false;
+        _overlay.State = DamageState.Alive;
         _overlay.Level = modifier;
 
         if (!TryComp<DamageableComponent>(uid, out var damageable))
@@ -88,7 +88,11 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         switch (stateComponent.CurrentState)
         {
             case DamageState.Dead:
-                _overlay.Dead = true;
+                _overlay.State = DamageState.Dead;
+                _overlay.Level = Levels;
+                return;
+            case DamageState.Critical:
+                _overlay.State = DamageState.Critical;
                 _overlay.Level = Levels;
                 return;
         }
@@ -107,7 +111,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         }
 
         Logger.DebugS("mobstate", $"Set level to {modifier}");
-        _overlay.Dead = false;
+        _overlay.State = DamageState.Alive;
         _overlay.Level = modifier;
     }
 }
