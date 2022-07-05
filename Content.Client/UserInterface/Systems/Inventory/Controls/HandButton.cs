@@ -5,7 +5,7 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
 public sealed class HandButton : SlotControl
 {
-    public HandButton(InventoryUIController parentController,string handName, HandLocation handLocation)
+    public HandButton(string handName, HandLocation handLocation)
     {
         Name = "hand_" + handName;
         SlotName = handName;
@@ -14,23 +14,12 @@ public sealed class HandButton : SlotControl
 
     private void SetBackground(HandLocation handLoc)
     {
-        switch (handLoc)
+        ButtonTexturePath = handLoc switch
         {
-            case HandLocation.Left:
-            {
-                ButtonTexturePath = "slots/hand_l";
-                break;
-            }
-            case HandLocation.Middle:
-            {
-                ButtonTexturePath = "slots/hand_m";
-                break;
-            }
-            case HandLocation.Right:
-            {
-                ButtonTexturePath = "slots/hand_r";
-                break;
-            }
-        }
+            HandLocation.Left => "slots/hand_l",
+            HandLocation.Middle => "slots/hand_m",
+            HandLocation.Right => "slots/hand_r",
+            _ => ButtonTexturePath
+        };
     }
 }

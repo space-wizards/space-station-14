@@ -1,6 +1,7 @@
 ﻿using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Content.Client.UserInterface.Systems.Inventory.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -11,18 +12,24 @@ namespace Content.Client.UserInterface.Systems.Inventory;
 
 public sealed partial class InventoryUIController
 {
-    [UISystemDependency] private HandsSystem _handsSystem = default!;
-    private List<HandsContainer> _handsContainers = new();
+    [Dependency] private readonly IEntityManager _entities = default!;
+
+    [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
+
+    private readonly List<HandsContainer> _handsContainers = new();
     private readonly Dictionary<string,int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
     private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
     private int _backupSuffix = 0;//this is used when autogenerating container names if they don't have names
 
+    private HandsGui HandsGui => UIManager.GetActiveUIWidget<HandsGui>();
+
     private void OnHandsSystemActivate()
     {
         _handsSystem.OnAddHand += AddHand;
-        _handsSystem.OnSpriteUpdate += UpdateButtonSprite;
+        _handsSystem.OnItemAdded += OnItemAdded;
+        _handsSystem.OnItemRemoved += OnItemRemoved;
         _handsSystem.OnSetActiveHand += SetActiveHand;
         _handsSystem.OnRemoveHand += RemoveHand;
         _handsSystem.OnComponentConnected += LoadPlayerHands;
@@ -34,7 +41,8 @@ public sealed partial class InventoryUIController
     private void OnHandsSystemDeactivate()
     {
         _handsSystem.OnAddHand -= AddHand;
-        _handsSystem.OnSpriteUpdate -= UpdateButtonSprite;
+        _handsSystem.OnItemAdded -= OnItemAdded;
+        _handsSystem.OnItemRemoved -= OnItemRemoved;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
         _handsSystem.OnRemoveHand -= RemoveHand;
         _handsSystem.OnComponentConnected -= LoadPlayerHands;
@@ -114,11 +122,23 @@ public sealed partial class InventoryUIController
         return result;
     }
 
-    private void UpdateButtonSprite(string name, ISpriteComponent? spriteComp)
+    private void OnItemAdded(string name, EntityUid entity)
     {
+        HandsGui.StatusPanel.Update(entity);
         var hand = GetHand(name);
         if (hand == null) return;
-        hand.SpriteView.Sprite = spriteComp;
+        if (_entities.TryGetComponent(entity, out ISpriteComponent sprite))
+        {
+            hand.SpriteView.Sprite = sprite;
+        }
+    }
+
+    private void OnItemRemoved(string name, EntityUid entity)
+    {
+        HandsGui.StatusPanel.Update(null);
+        var hand = GetHand(name);
+        if (hand == null) return;
+        hand.SpriteView.Sprite = null;
     }
 
     private HandsContainer GetFirstAvailableContainer()
@@ -190,7 +210,7 @@ public sealed partial class InventoryUIController
 
     private void AddHand(string handName, HandLocation location)
     {
-        var newHandButton = new HandButton(this, handName, location);
+        var newHandButton = new HandButton(handName, location);
         newHandButton.StoragePressed += StorageActivate;
         newHandButton.Pressed += HandPressed;
         if (!_handLookup.TryAdd(handName, newHandButton))

@@ -31,7 +31,8 @@ namespace Content.Client.Hands
         public Action<string?>? OnSetActiveHand = null;
         public Action<HandsComponent>? OnComponentConnected = null;
         public Action? OnComponentDisconnected = null;
-        public Action<string,ISpriteComponent?>? OnSpriteUpdate = null;
+        public Action<string, EntityUid>? OnItemAdded = null;
+        public Action<string, EntityUid>? OnItemRemoved = null;
         public event Action<string>? OnHandBlocked;
         public event Action<string>? OnHandUnblocked;
 
@@ -222,8 +223,7 @@ namespace Content.Client.Hands
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
 
-            EntityManager.TryGetComponent(args.Entity, out ISpriteComponent? sprite);
-            OnSpriteUpdate?.Invoke(hand.Name,sprite);
+            OnItemAdded?.Invoke(hand.Name, args.Entity);
 
             if (HasComp<HandVirtualItemComponent>(args.Entity))
                 OnHandBlocked?.Invoke(hand.Name);
@@ -236,7 +236,7 @@ namespace Content.Client.Hands
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
 
-            OnSpriteUpdate?.Invoke(hand.Name,null);
+            OnItemRemoved?.Invoke(hand.Name, args.Entity);
 
             if (HasComp<HandVirtualItemComponent>(args.Entity))
                 OnHandUnblocked?.Invoke(hand.Name);

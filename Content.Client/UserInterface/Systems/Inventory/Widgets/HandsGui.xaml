@@ -6,16 +6,16 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     Orientation="Horizontal"
-
-    HorizontalAlignment="Center"
-    >
-   <BoxContainer>
-       <controls:ItemSlotButtonContainer SlotGroup="SecondHotbar"/>
-       <controls:HandsContainer
-           Name="HandContainer"
-           Access= "Protected"
-           ColumnLimit="6"
-           />
-       <controls:ItemSlotButtonContainer SlotGroup="MainHotbar"/>
-   </BoxContainer>
+    HorizontalAlignment="Center">
+    <BoxContainer Orientation="Vertical">
+        <Control Name="StatusContainer" />
+        <BoxContainer Orientation="Horizontal">
+            <controls:ItemSlotButtonContainer SlotGroup="SecondHotbar" />
+            <controls:HandsContainer
+                Name="HandContainer"
+                Access="Protected"
+                ColumnLimit="6" />
+            <controls:ItemSlotButtonContainer SlotGroup="MainHotbar" />
+        </BoxContainer>
+    </BoxContainer>
 </widgets:HandsGui>
