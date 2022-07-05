@@ -28,10 +28,7 @@ public sealed class DamageOverlay : Overlay
     /// </summary>
     private float _oldlevel;
 
-    /// <summary>
-    /// Timer for pulsing.
-    /// </summary>
-    private float _timer;
+    public float 
 
     private TimeSpan? _lerpStart;
 
@@ -113,14 +110,12 @@ public sealed class DamageOverlay : Overlay
                 _damageShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
                 handle.UseShader(_damageShader);
                 handle.DrawRect(viewport, Color.White);
-                _timer += (float) _timing.FrameTime.TotalSeconds;
                 break;
         }
     }
 
     private void ClearLerp()
     {
-        _timer = 0f;
         _oldlevel = Level;
         _lerpStart = null;
     }
