@@ -1,21 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added a number identifier to all mobs. Now it's easier to report rule
-      breaking ghost roles such as ticks and carp., type: Add}
-  id: 1371
-  time: '2022-04-21T22:32:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade Penguin's explosion now does more damage., type: Tweak}
-  - {message: Grenade Penguin AI should be less buggy., type: Fix}
-  id: 1372
-  time: '2022-04-21T22:32:44.0000000+00:00'
-- author: Saakra
-  changes:
-  - {message: Bibles and Necronomicons can now be worn in the belt slot, type: Add}
-  id: 1373
-  time: '2022-04-22T01:20:07.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Players can't suicide if they're already dead., type: Add}
@@ -2953,3 +2936,19 @@ Entries:
     type: Add}
   id: 1870
   time: '2022-07-05T07:24:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttle console now no longer needs to be facing South for controls.,
+    type: Fix}
+  id: 1871
+  time: '2022-07-05T13:40:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
+  id: 1872
+  time: '2022-07-05T14:11:29.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Cap Guns now have visible held sprites, type: Add}
+  id: 1873
+  time: '2022-07-05T17:09:54.0000000+00:00'
