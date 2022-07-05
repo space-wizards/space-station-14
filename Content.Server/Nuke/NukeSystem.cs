@@ -173,7 +173,7 @@ namespace Content.Server.Nuke
 
         private void OnKeypadButtonPressed(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
         {
-            PlaySound(uid, component.KeypadPressSound, 0.125f, component);
+            PlayNukeKeypadSound(uid, args.Value, component);
 
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
@@ -356,6 +356,37 @@ namespace Content.Server.Nuke
             };
 
             ui.SetState(state);
+        }
+
+        private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            // This is a C mixolydian blues scale.
+            // 1 2 3    C D Eb
+            // 4 5 6    E F F#
+            // 7 8 9    G A Bb
+            var semitoneShift = number switch
+            {
+                1 => 0,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+                7 => 7,
+                8 => 9,
+                9 => 10,
+                0 => component.LastPlayedKeypadSemitones + 12,
+                _ => 0
+            };
+
+            // Don't double-dip on the octave shifting
+            component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
+
+            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid),
+                AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
         }
 
         private void PlaySound(EntityUid uid, SoundSpecifier sound, float varyPitch = 0f,

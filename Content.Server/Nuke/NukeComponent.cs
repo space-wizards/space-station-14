@@ -54,6 +54,11 @@ namespace Content.Server.Nuke
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
 
+        /// <summary>
+        ///     This is stored so we can do a funny by making 0 shift the last played note up by 12 semitones (octave)
+        /// </summary>
+        public int LastPlayedKeypadSemitones = 0;
+
         [DataField("keypadPressSound")]
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
 
