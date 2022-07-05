@@ -24,37 +24,14 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         protected override void EnteredTree()
         {
-
-            var entManager = IoCManager.Resolve<IEntityManager>();
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
             var provider = IoCManager.Resolve<IResourceManager>();
-            var player = playerManager.LocalPlayer?.ControlledEntity;
-
-            var currentMap = MapId.Nullspace;
-            var position = Vector2.Zero;
-            Angle rotation = Angle.Zero;
-
-            if (entManager.TryGetComponent<TransformComponent>(player, out var xform))
-            {
-                currentMap = xform.MapID;
-                position = xform.WorldPosition;
-
-                if (entManager.TryGetComponent<TransformComponent>(xform.GridUid, out var gridXform))
-                {
-                    rotation = gridXform.WorldRotation;
-                }
-            }
 
             foreach (var mapId in mapManager.GetAllMapIds())
             {
                 MapOptions.AddItem(mapId.ToString(), (int) mapId);
             }
 
-            if (currentMap != MapId.Nullspace)
-                MapOptions.Select((int) currentMap);
-
-            MapOptions.OnItemSelected += OnOptionSelect;
             var pathIndex = 0;
 
             foreach (var path in provider.ContentFindFiles(new ResourcePath("/Maps/")))
@@ -68,15 +45,54 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
                 pathIndex++;
             }
 
+            Reset();
+
+            MapOptions.OnItemSelected += OnOptionSelect;
             MapPath.OnItemSelected += OnPathSelect;
+            RotationSpin.ValueChanged += OnRotate;
+            SubmitButton.OnPressed += OnSubmitButtonPressed;
+            TeleportButton.OnPressed += OnTeleportButtonPressed;
+            ResetButton.OnPressed += OnResetButtonPressed;
+        }
+
+        private void Reset()
+        {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            var player = playerManager.LocalPlayer?.ControlledEntity;
+
+            var currentMap = MapId.Nullspace;
+            var position = Vector2.Zero;
+            var rotation = Angle.Zero;
+
+            if (entManager.TryGetComponent<TransformComponent>(player, out var xform))
+            {
+                currentMap = xform.MapID;
+                position = xform.WorldPosition;
+
+                if (entManager.TryGetComponent<TransformComponent>(xform.GridUid, out var gridXform))
+                {
+                    rotation = gridXform.WorldRotation;
+                }
+                else
+                {
+                    // MapId moment
+                    rotation = xform.WorldRotation - xform.LocalRotation;
+                }
+            }
+
+            if (currentMap != MapId.Nullspace)
+                MapOptions.Select((int) currentMap);
 
             XCoordinate.Value = (int) position.X;
             YCoordinate.Value = (int) position.Y;
 
             RotationSpin.OverrideValue(Wraparound((int) rotation.Degrees));
-            RotationSpin.ValueChanged += OnRotate;
-            SubmitButton.OnPressed += OnSubmitButtonPressed;
-            TeleportButton.OnPressed += OnTeleportButtonPressed;
+        }
+
+        private void OnResetButtonPressed(BaseButton.ButtonEventArgs obj)
+        {
+            Reset();
         }
 
         private void OnRotate(object? sender, ValueChangedEventArgs e)
