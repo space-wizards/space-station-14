@@ -120,8 +120,21 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(ev);
 
             var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
-
             var gridUids = gridIds.Select(g => (EntityUid)g).ToList();
+
+            // Execute map modifiers
+            if (map.MapModifiers is { Count: > 0 })
+            {
+                var mods = map.MapModifiers.OrderBy(mod => mod.Priority).ToList();
+                for (int i = 0; i < mods.Count; i++)
+                {
+                    var mod = mods[i];
+                    Logger.InfoS("map", $"Processing Map Modifier [{i}/{mods.Count}]: {mod.GetType()}");
+                    mod.Execute(targetMapId, entities, gridUids);
+                }
+            }
+
+
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
 
             _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
@@ -376,7 +389,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.

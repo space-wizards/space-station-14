@@ -1,4 +1,5 @@
-﻿using Content.Server.Maps.NameGenerators;
+﻿using Content.Server.Maps;
+using Content.Server.Maps.NameGenerators;
 using JetBrains.Annotations;
 
 namespace Content.Server.Station;
@@ -26,5 +27,11 @@ public sealed partial class StationConfig
     /// </summary>
     [DataField("nameGenerator")]
     public StationNameGenerator? NameGenerator { get; }
+
+    /// <summary>
+    /// A list of the station's modifiers.
+    /// </summary>
+    [DataField("modifiers")]
+    public List<MapModifier>? MapModifiers { get; }
 }
 

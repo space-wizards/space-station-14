@@ -4,6 +4,15 @@
   mapPath: /Maps/Test/empty.yml
   minPlayers: 0
   votable: false
+  modifiers:
+    - !type: ExampleMapModifier
+      priority: 0
+      tileId: floor_steel
+      tilePos: "1.0,1.0"
+    - !type: ExampleMapModifier
+      priority: 1
+      tileId: floor_steel
+      tilePos: "2.0,2.0"
   stations:
     Station: #TODO: Add a BecomesStation to empty.yml
       mapNameTemplate: "Empty"
