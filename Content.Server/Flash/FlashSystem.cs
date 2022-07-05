@@ -1,4 +1,5 @@
 using Content.Server.Flash.Components;
+using Content.Server.Light.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -30,7 +31,7 @@ namespace Content.Server.Flash
         {
             base.Initialize();
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
-            SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
+            SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
 
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
@@ -67,9 +68,7 @@ namespace Content.Server.Flash
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!UseFlash(comp, args.User))
-            {
                 return;
-            }
 
             args.Handled = true;
             foreach (var e in args.HitEntities)
@@ -80,11 +79,10 @@ namespace Content.Server.Flash
 
         private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
-            if (!UseFlash(comp, args.User))
-            {
+            if (args.Handled || !UseFlash(comp, args.User))
                 return;
-            }
 
+            args.Handled = true;
             FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
         }
 
