@@ -3,6 +3,7 @@ using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lathe.Components
 {
@@ -15,6 +16,12 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         [DataField("whitelist")] 
         public EntityWhitelist? LatheWhitelist;
+
+        /// <summary>
+        /// Whitelist generated on runtime for what items are specifically used for the lathe's recipes.
+        /// </summary>
+        [ViewVariables]
+        public List<string> MaterialWhiteList = new();
 
         /// <summary>
         /// The lathe's construction queue
