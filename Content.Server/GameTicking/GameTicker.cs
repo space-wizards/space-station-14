@@ -119,6 +119,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly RoleBanManager _roleBanManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
-        [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
+        [Dependency] private readonly RoleTimerSystem _roleTimers = default!;
     }
 }

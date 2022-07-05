@@ -186,7 +186,7 @@ namespace Content.Server.GameTicking
 
             readyPlayers.RemoveAll(p =>
             {
-                if (_roleTimerManager.IsPlayerTimeCached(p.UserId))
+                if (_roleTimers.IsPlayerTimeCached(p.UserId))
                     return false;
                 Logger.ErrorS("RoleTimers", $"Role timers for player {p} {p.UserId} have not been loaded yet.");
                 return true;
@@ -384,7 +384,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
