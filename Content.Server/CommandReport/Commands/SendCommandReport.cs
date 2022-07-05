@@ -30,9 +30,9 @@ namespace Content.Server.CommandReport.Commands
                 return;
             }
 
-            EntitySystem.Get<CommandReportSystem>().SendCommandReport(bool.Parse(args[0]), args[1]);
+            var wasSent = EntitySystem.Get<CommandReportSystem>().SendCommandReport(bool.Parse(args[0]), args[1]);
 
-            shell.WriteLine("Sent!");
+            shell.WriteLine(wasSent ? "Sent!" : "Sent, but no communication consoles were there to receive the fax.");
         }
     }
 }
