@@ -34,6 +34,18 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatXenohead
+  name: xeno head
+  description: "A helmet made out of chitinous alien hide."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/xenohead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/xenohead.rsi
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHairflower
   name: hairflower
   description: A red rose for beautiful ladies.

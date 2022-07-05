@@ -107,6 +107,17 @@
 
 - type: entity
   parent: ClothingOuterBase
+  id: ClothingOuterSuitXeno
+  name: xeno suit
+  description: A suit made out of chitinous alien hide.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/xeno.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/xeno.rsi
+
+- type: entity
+  parent: ClothingOuterBase
   id: ClothingOuterSuitShrineMaiden
   name: shrine maiden outfit
   description: Makes you want to go deal with some troublesome youkai.
