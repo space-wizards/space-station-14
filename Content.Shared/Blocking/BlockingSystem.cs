@@ -1,10 +1,13 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
+using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -20,6 +23,8 @@ public sealed class BlockingSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -70,6 +75,29 @@ public sealed class BlockingSystem : EntitySystem
         if(args.Handled)
             return;
 
+        if (component.User != null)
+        {
+            foreach (var shield in _handsSystem.EnumerateHeld(component.User.Value))
+            {
+                if (TryComp<BlockingComponent>(shield, out var otherBlockComp))
+                {
+                    if ((!component.IsBlocking && otherBlockComp.IsBlocking))
+                    {
+                        StopBlocking(shield, otherBlockComp, args.Performer);
+                        StartBlocking(uid, component, args.Performer);
+                        return;
+                    }
+
+                    if (component.IsBlocking && !otherBlockComp.IsBlocking)
+                    {
+                        StopBlocking(uid, component, args.Performer);
+                        StartBlocking(shield, otherBlockComp, args.Performer);
+                        return;
+                    }
+                }
+            }
+        }
+
         if (component.IsBlocking)
             StopBlocking(uid, component, args.Performer);
         else
@@ -110,11 +138,16 @@ public sealed class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
+            if (_containerSystem.IsEntityInContainer(user) || !_mapManager.TryFindGridAt(xform.MapPosition, out var grid))
+            {
+                CantBlockError(user);
+                return false;
+            }
+
             _transformSystem.AnchorEntity(xform);
             if (!xform.Anchored)
             {
-                var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
-                _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+                CantBlockError(user);
                 return false;
             }
             _actionsSystem.SetToggled(component.BlockingToggleAction, true);
@@ -137,6 +170,12 @@ public sealed class BlockingSystem : EntitySystem
         component.IsBlocking = true;
 
         return true;
+    }
+
+    private void CantBlockError(EntityUid user)
+    {
+        var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
+        _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
     }
 
     /// <summary>
@@ -163,7 +202,9 @@ public sealed class BlockingSystem : EntitySystem
         if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            _transformSystem.Unanchor(xform);
+            if (Transform(user).Anchored)
+                _transformSystem.Unanchor(xform);
+
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
             physicsComponent.BodyType = blockingUserComponent.OriginalBodyType;
@@ -178,6 +219,7 @@ public sealed class BlockingSystem : EntitySystem
 
     /// <summary>
     /// Called where you want someone to stop blocking and to remove the <see cref="BlockingUserComponent"/> from them
+    /// Won't remove the <see cref="BlockingUserComponent"/> if they're holding another blocking item
     /// </summary>
     /// <param name="uid"> The item the component is attached to</param>
     /// <param name="component"> The <see cref="BlockingComponent"/> </param>
@@ -186,6 +228,15 @@ public sealed class BlockingSystem : EntitySystem
     {
         if (component.IsBlocking)
             StopBlocking(uid, component, user);
+
+        foreach (var shield in _handsSystem.EnumerateHeld(user))
+        {
+            if (HasComp<BlockingComponent>(shield) && TryComp<BlockingUserComponent>(user, out var blockingUserComponent))
+            {
+                blockingUserComponent.BlockingItem = shield;
+                return;
+            }
+        }
 
         RemComp<BlockingUserComponent>(user);
         component.User = null;
