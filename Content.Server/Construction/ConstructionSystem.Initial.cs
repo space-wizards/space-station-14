@@ -86,29 +86,11 @@ namespace Content.Server.Construction
             }
         }
 
-        // HOLY SHIT THIS IS SOME HACKY CODE.
-        // But I'd rather do this shit than risk having collisions with other containers.
-        Container GetContainer(EntityUid user, Dictionary<string, Container> containers, string name)
-        {
-            if (containers!.ContainsKey(name))
-                return containers[name];
-
-            while (true)
-            {
-                var random = _robustRandom.Next();
-                var c = ContainerHelpers.EnsureContainer<Container>(user!, random.ToString(), out var existed);
-
-                if (existed) continue;
-
-                containers[name] = c;
-                return c;
-            }
-        }
-
-        bool StoreUsedStacksForConstruction(EntityUid user, int amountNeeded, List<Tuple<EntityUid, SharedStackComponent>> stacks, Dictionary<string, Container> containers, String store, Container container)
+        // LEGACY CODE. See warning at the top of the file!
+        bool SaveStacksForConstructionUse(List<Tuple<EntityUid, SharedStackComponent>> userStacks, int amountNeeded, ref List<EntityUid> entitiesToUse, ref List<Tuple<EntityUid, SharedStackComponent, int>> partialStacksToUse)
         {
             // Sort stacks by count, smallest to largest, for consumption
-            var sortedStacks = stacks.OrderBy(x => x.Item2.Count).ToList();
+            var sortedStacks = userStacks.OrderBy(x => x.Item2.Count).ToList();
 
             // Determine how many stacks we need to eat
             var remainingAmount = amountNeeded;
@@ -118,35 +100,24 @@ namespace Content.Server.Construction
                 remainingAmount -= sortedStacks[usedStacks].Item2.Count;
                 usedStacks++;
             }
+            if (remainingAmount > 0)
+                return false;
 
-            // Use up as many stacks as needed, fully consuming constituent stacks and partially consuming the final stack
+            // Save many stacks as needed for use, and any final stack that we'll need to split for partial use
             remainingAmount = amountNeeded;
             int i = 0;
             for (; i < usedStacks; i++)
             {
-                EntityUid? stackEntity = null;
                 if (i == usedStacks - 1)
-                    stackEntity = _stackSystem.Split(sortedStacks[i].Item1, remainingAmount, user.ToCoordinates(0, 0), sortedStacks[i].Item2);
+                    partialStacksToUse.Add(new Tuple<EntityUid, SharedStackComponent, int>(sortedStacks[i].Item1, sortedStacks[i].Item2, remainingAmount));
                 else
                 {
-                    stackEntity = sortedStacks[i].Item1;
+                    entitiesToUse.Add(sortedStacks[i].Item1);
                     remainingAmount -= sortedStacks[i].Item2.Count;
                 }
-
-                if (stackEntity == null)
-                    break;
-
-                if (string.IsNullOrEmpty(store))
-                {
-                    if (!container.Insert(stackEntity.Value))
-                        break;
-                }
-                else if (!GetContainer(user, containers, store).Insert(stackEntity.Value))
-                    break;
             }
 
-
-            return (i >= usedStacks);
+            return true;
         }
 
         // LEGACY CODE. See warning at the top of the file!
@@ -161,8 +132,6 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var containers = new Dictionary<string, Container>();
-
             var doAfterTime = 0f;
 
             void FailCleanup()
@@ -172,31 +141,25 @@ namespace Content.Server.Construction
                     container.Remove(entity);
                 }
 
-                foreach (var cont in containers!.Values)
-                {
-                    foreach (var entity in cont.ContainedEntities.ToArray())
-                    {
-                        cont.Remove(entity);
-                    }
-                }
-
                 // If we don't do this, items are invisible for some fucking reason. Nice.
-                Timer.Spawn(1, ShutdownContainers);
+                Timer.Spawn(1, ShutdownContainer);
             }
 
-            void ShutdownContainers()
+            void ShutdownContainer()
             {
                 container!.Shutdown();
-                foreach (var c in containers!.Values.ToArray())
-                {
-                    c.Shutdown();
-                }
             }
 
             var failed = false;
 
-            var steps = new List<ConstructionGraphStep>();
+            // Two phases: validation and consumption
+            // In validation, we will iterate steps and keep track of what will need to be used up
+            // Afterwards, if all steps passed, we will actually perform the deletions
 
+            List<EntityUid> fullEntitiesToUse = new List<EntityUid>(); // Includes single entities and full stacks
+            List<Tuple<EntityUid, SharedStackComponent, int>> partialStacksToUse = new List<Tuple<EntityUid, SharedStackComponent, int>>(); // Last stack of any step that will have some left-over
+
+            var steps = new List<ConstructionGraphStep>();
             foreach (var step in edge.Steps)
             {
                 doAfterTime += step.DoAfter;
@@ -220,7 +183,7 @@ namespace Content.Server.Construction
                             break;
 
                         // Attempt to consume the required amount and leave the rest
-                        if (StoreUsedStacksForConstruction(user, materialStep.Amount, validStacks, containers, materialStep.Store, container))
+                        if (SaveStacksForConstructionUse(validStacks, materialStep.Amount, ref fullEntitiesToUse, ref partialStacksToUse))
                             handled = true;
 
                         break;
@@ -244,8 +207,8 @@ namespace Content.Server.Construction
 
                         if (validStacks.Count != 0)
                         {
-                            // For stackable prototypes, attempt consumption like for materials
-                            if (StoreUsedStacksForConstruction(user, prototypeStep.Amount, validStacks, containers, prototypeStep.Store, container))
+                            // For stackable prototypes, attempt stack save like for materials
+                            if (SaveStacksForConstructionUse(validStacks, prototypeStep.Amount, ref fullEntitiesToUse, ref partialStacksToUse))
                                 handled = true;
                         }
                         else if (validEntities.Count != 0)
@@ -254,27 +217,12 @@ namespace Content.Server.Construction
                             if (validEntities.Count < prototypeStep.Amount)
                                 break;
 
-                            // If so, use them up until we've hit the target
-                            var amountRemaining = prototypeStep.Amount;
-                            foreach (var entity in validEntities)
+                            // If so, save them for consumption until we've hit the target
+                            for (int i = 0; i < prototypeStep.Amount; i++)
                             {
-                                if (string.IsNullOrEmpty(prototypeStep.Store))
-                                {
-                                    if (!container.Insert(entity))
-                                        continue;
-                                }
-                                else if (!GetContainer(user, containers, prototypeStep.Store).Insert(entity))
-                                {
-                                    continue;
-                                }
-
-                                amountRemaining--;
-                                if(amountRemaining <= 0)
-                                {
-                                    handled = true;
-                                    break;
-                                }
+                                fullEntitiesToUse.Add(validEntities[i]);
                             }
+                            handled = true;
                         }
 
                         break;
@@ -286,14 +234,7 @@ namespace Content.Server.Construction
                             if (!arbitraryStep.EntityValid(entity, EntityManager))
                                 continue;
 
-                            if (string.IsNullOrEmpty(arbitraryStep.Store))
-                            {
-                                if (!container.Insert(entity))
-                                    continue;
-                            }
-                            else if (!GetContainer(user, containers, arbitraryStep.Store).Insert(entity))
-                                continue;
-
+                            fullEntitiesToUse.Add(entity);
                             handled = true;
                             break;
                         }
@@ -333,6 +274,25 @@ namespace Content.Server.Construction
                 return null;
             }
 
+            // We're a go! Eat it all.
+            foreach (var entity in fullEntitiesToUse)
+            {
+                if (!container.Insert(entity))
+                {
+                    FailCleanup();
+                    return null;
+                }
+            }
+            foreach (var partialStack in partialStacksToUse)
+            {
+                EntityUid? stackEntity = _stackSystem.Split(partialStack.Item1, partialStack.Item3, user.ToCoordinates(0, 0), partialStack.Item2);
+                if (stackEntity == null || !container.Insert(stackEntity.Value))
+                {
+                    FailCleanup();
+                    return null;
+                }
+            }
+
             var newEntityProto = graph.Nodes[edge.Target].Entity;
             var newEntity = EntityManager.SpawnEntity(newEntityProto, EntityManager.GetComponent<TransformComponent>(user).Coordinates);
 
@@ -346,20 +306,8 @@ namespace Content.Server.Construction
             // We attempt to set the pathfinding target.
             SetPathfindingTarget(newEntity, targetNode.Name, construction);
 
-            // We preserve the containers...
-            foreach (var (name, cont) in containers)
-            {
-                var newCont = ContainerHelpers.EnsureContainer<Container>(newEntity, name);
-
-                foreach (var entity in cont.ContainedEntities.ToArray())
-                {
-                    cont.ForceRemove(entity);
-                    newCont.Insert(entity);
-                }
-            }
-
             // We now get rid of all them.
-            ShutdownContainers();
+            ShutdownContainer();
 
             // We have step completed steps!
             foreach (var step in steps)
