@@ -2,7 +2,7 @@
 
 namespace Content.Server.Maps.MapModifiers;
 
-public abstract class ExampleMapModifier : MapModifier
+public sealed class ExampleMapModifier : MapModifier
 {
     [DataField("tileId")]
     public string TileId = "floor_wood";

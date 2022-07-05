@@ -31,6 +31,12 @@ public sealed partial class GameMapPrototype : IPrototype
     [DataField("mapPath", required: true)]
     public ResourcePath MapPath { get; } = default!;
 
+    /// <summary>
+    /// A list of the map's modifiers.
+    /// </summary>
+    [DataField("modifiers")]
+    public List<MapModifier>? MapModifiers { get; }
+
     [DataField("stations", required: true)]
     private Dictionary<string, StationConfig> _stations = new();
 
