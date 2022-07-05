@@ -24,7 +24,7 @@ namespace Content.Server.CommandReport
         /// <summary>
         ///     Broadcast a command report to the radio or through command console
         /// </summary>
-        /// <returns>True if successfully broadcasted or at least one communication console got the report</returns>
+        /// <returns>True if at least one communication console got the report</returns>
         public bool SendCommandReport(bool broadcastToRadio, string message)
         {
             // Such copypaste code... So sorry...
@@ -37,28 +37,22 @@ namespace Content.Server.CommandReport
 
             _chatManager.ChatMessageToAll(ChatChannel.Radio, broadcastToRadio == true ? message : Loc.GetString("command-reports-confidential-announcement-message"), messageWrap, colorOverride: Color.Gold);
 
-            if (broadcastToRadio == false)
+            // some copypaste code from NukeCodeSystem.cs, to the person making fax, don't forget to convert this too!
+            var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
+            foreach (var console in consoles)
             {
-                // some copypaste code from NukeCodeSystem.cs, to the person making fax, don't forget to convert this too!
-                var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
-                foreach (var console in consoles)
-                {
-                    if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
-                        continue;
-
-                    var consolePos = transform.MapPosition;
-                    var paper = EntityManager.SpawnEntity("Paper", consolePos);
-                    var papercomp = EntityManager.GetComponent<PaperComponent>(paper);
-                    var papermeta = EntityManager.GetComponent<MetaDataComponent>(paper);
-                    papercomp.Content = $"Central Command Report\n{message}";
-                    papercomp.Mode = SharedPaperComponent.PaperAction.Read;
-                    papermeta.EntityName = Loc.GetString("command-reports-paper-name");
-                    papermeta.EntityDescription = Loc.GetString("command-reports-paper-description");
-
-                    wasSent = true;
-                }
+                if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
+                    continue;
+                var consolePos = transform.MapPosition;
+                var paper = EntityManager.SpawnEntity("Paper", consolePos);
+                var papercomp = EntityManager.GetComponent<PaperComponent>(paper);
+                var papermeta = EntityManager.GetComponent<MetaDataComponent>(paper);
+                papercomp.Content = $"Central Command Report\n{message}";
+                papercomp.Mode = SharedPaperComponent.PaperAction.Read;
+                papermeta.EntityName = Loc.GetString("command-reports-paper-name");
+                papermeta.EntityDescription = Loc.GetString("command-reports-paper-description");
+                wasSent = true;
             }
-            else wasSent = true;
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Command report sent: {message}");
 
