@@ -25,7 +25,6 @@ public sealed class BlockingUserSystem : EntitySystem
 
         SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
-        SubscribeLocalEvent<BlockingUserComponent, BuckleChangeEvent>(OnBuckle);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
 
@@ -42,17 +41,6 @@ public sealed class BlockingUserSystem : EntitySystem
         if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
         {
             _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
-        }
-    }
-
-    private void OnBuckle(EntityUid uid, BlockingUserComponent component, BuckleChangeEvent args)
-    {
-        if (args.Buckling)
-        {
-            if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            {
-                _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
-            }
         }
     }
 

@@ -199,7 +199,7 @@ public sealed class BlockingSystem : EntitySystem
         if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            if (Transform(user).Anchored)
+            if (xform.Anchored)
                 _transformSystem.Unanchor(xform);
 
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
