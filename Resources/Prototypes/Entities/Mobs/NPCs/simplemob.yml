@@ -70,8 +70,6 @@
       types:
         Bloodloss:
           -0.25
-  - type: DrawableSolution
-    solution: bloodstream
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed

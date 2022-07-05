@@ -1,34 +1,4 @@
 Entries:
-- author: UKNOWH
-  changes:
-  - {message: Added a Flash payload that allows players to make modular flashbangs,
-    type: Add}
-  id: 1366
-  time: '2022-04-20T06:08:57.0000000+00:00'
-- author: UKNOWH
-  changes:
-  - {message: mouse size changed form 0 to 5, type: Add}
-  id: 1367
-  time: '2022-04-20T07:19:33.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: 'Atlas, a low-pop ship map adapted from Goonstation (SS13). Major credit
-      goes to all those who worked on the original layout of Atlas on Goonstation.',
-    type: Add}
-  id: 1368
-  time: '2022-04-20T21:08:43.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Added several gas mask variants, type: Add}
-  - {message: Tweaked Survival Boxes, type: Tweak}
-  - {message: Tweaked Locker Fills, type: Tweak}
-  id: 1369
-  time: '2022-04-21T12:11:26.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Split Station massive update!, type: Add}
-  id: 1370
-  time: '2022-04-21T13:19:44.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added a number identifier to all mobs. Now it's easier to report rule
@@ -2945,3 +2915,41 @@ Entries:
     type: Tweak}
   id: 1865
   time: '2022-07-04T13:09:10.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Players can now examine each other's ID card slots while an ID/PDA is
+      worn, type: Add}
+  id: 1866
+  time: '2022-07-05T00:20:44.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Taking blood from mobs now also takes a small amount of their chemstream,
+      letting you see what''s affecting them.', type: Add}
+  - {message: All mobs whose blood couldn't be drawn for no reason before should work
+      now., type: Fix}
+  id: 1867
+  time: '2022-07-05T00:37:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
+  id: 1868
+  time: '2022-07-05T01:30:45.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The nuke music now times itself properly so as to end right before the
+      nuke alarm goes off., type: Tweak}
+  - {message: 'The nuke can no longer have its disk ejected while the nuke is armed.
+      This means nuclear operatives have a phase where they must defend the nuke for
+      the time that it''s active, until the timer hits 30 seconds and they can run.',
+    type: Tweak}
+  - {message: Disarming the nuke now has a suspenseful 30 second doafter., type: Tweak}
+  - {message: 'The nuke now has a much, much larger blast radius.', type: Tweak}
+  id: 1869
+  time: '2022-07-05T06:49:19.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The nuke keypad now plays a scale (C mixolydian blues), so you can
+      bang out some funny tunes on it. "0" plays the last note an octave higher.',
+    type: Add}
+  id: 1870
+  time: '2022-07-05T07:24:37.0000000+00:00'
