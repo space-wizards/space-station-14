@@ -2,9 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking.Events;
+using Content.Server.Labels.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
+
+using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -414,8 +417,10 @@ public sealed partial class CargoSystem
         {
             var order = orders[i];
 
-            Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product,
-                new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition));
+            var coordinates = new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
+
+            var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, coordinates);
+            spawnAndAttachOrderManifest(item, order, coordinates, component);
             order.Amount--;
 
             if (order.Amount == 0)
@@ -428,6 +433,41 @@ public sealed partial class CargoSystem
             {
                 orderDatabase.Orders[order.OrderNumber] = order;
             }
+        }
+    }
+
+    /// <summary>
+    /// In this method we are printing and attaching order manifests to the orders.
+    /// </summary>
+    private void spawnAndAttachOrderManifest(EntityUid item, CargoOrderData order, EntityCoordinates coordinates, CargoShuttleComponent component) {
+
+        if (!_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? prototype))
+            return;
+
+        // spawn a piece of paper.
+        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+
+        if (!TryComp<PaperComponent>(printed, out var paper))
+            return;
+
+        // fill in the order data
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderNumber));
+
+        MetaData(printed).EntityName = val;
+
+        _paperSystem.SetContent(printed, Loc.GetString(
+            "cargo-console-paper-print-text",
+            ("orderNumber", order.OrderNumber),
+            ("itemName", prototype.Name),
+            ("requester", order.Requester),
+            ("reason", order.Reason),
+            ("approver", order.Approver)),
+            paper);
+
+        // attempt to attach the label
+        if (TryComp<PaperLabelComponent>(item, out var label))
+        {
+            _slots.TryInsert(component.Owner, label.LabelSlot, printed, null);
         }
     }
 
