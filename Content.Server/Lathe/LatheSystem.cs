@@ -138,7 +138,6 @@ namespace Content.Server.Lathe
                 return;
             }
 
-
             var multiplier = 1;
 
             if (TryComp<StackComponent>(args.Used, out var stack))
