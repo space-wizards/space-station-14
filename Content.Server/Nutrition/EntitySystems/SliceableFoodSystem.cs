@@ -7,7 +7,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -73,8 +72,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), transform.Coordinates,
-                AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
+                transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             component.Count--;
             // If someone makes food proto with 1 slice...

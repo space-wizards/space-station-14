@@ -27,11 +27,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-vent
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -99,11 +98,10 @@
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
-      deviceNetId: Apc
+      deviceNetId: AtmosDevices
       receiveFrequencyId: AtmosMonitor
       transmitFrequencyId: AtmosMonitor
       prefix: device-address-prefix-scrubber
-    - type: ApcNetworkConnection
     - type: AtmosAlarmable
       alarmedBy:
       - AirAlarm
@@ -141,15 +139,26 @@
   placement:
     mode: SnapgridCenter
   components:
-
-    # TODO ATMOS: Actual sprite for this.
     - type: Sprite
       drawdepth: FloorObjects
       netsync: false
+      sprite: Structures/Piping/Atmospherics/outletinjector.rsi
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+        - state: injector
+        - state: injector-unshaded
+          shader: unshaded
+          map: [ "unshaded" ]
+          color: "#990000"
+    - type: GenericVisualizer
+      visuals:
+       # toggle color of the unshaded light:
+       enum.OutletInjectorVisuals.Enabled:
+         unshaded:
+           True: { color: "#5eff5e" }
+           False: { color: "#990000" }
     - type: Appearance
       visuals:
         - type: PipeColorVisualizer
@@ -218,9 +227,12 @@
           enabledState: freezer_on
     - type: GasThermoMachine
       mode: Freezer
-      minTemperature: 73.15
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -244,6 +256,9 @@
           enabledState: heater_on
     - type: GasThermoMachine
       mode: Heater
-      maxTemperature: 573.15 # This is changed when parts are refreshed.
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
+    - type: ContainerContainer
+      containers:
+        machine_parts: !type:Container
+        machine_board: !type:Container

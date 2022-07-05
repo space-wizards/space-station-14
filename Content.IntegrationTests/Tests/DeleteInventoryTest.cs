@@ -2,7 +2,6 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Inventory;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -12,14 +11,15 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class DeleteInventoryTest : ContentIntegrationTest
+    public sealed class DeleteInventoryTest
     {
         // Test that when deleting an entity with an InventoryComponent,
         // any equipped items also get deleted.
         [Test]
         public async Task Test()
         {
-            var server = StartServer();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             await server.WaitAssertion(() =>
             {
@@ -47,6 +47,7 @@ namespace Content.IntegrationTests.Tests
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Content.Server.Buckle.Components;
 using Content.Server.Construction;
+using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
-using Content.Server.Tools;
-using Content.Shared.Acts;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Interaction;
@@ -16,12 +14,10 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Storage.Components
 {
@@ -29,7 +25,7 @@ namespace Content.Server.Storage.Components
     [Virtual]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -42,9 +38,9 @@ namespace Content.Server.Storage.Components
         ///     Collision masks that get removed when the storage gets opened.
         /// </summary>
         private const int MasksToRemove = (int) (
-            CollisionGroup.MobImpassable |
-            CollisionGroup.VaultImpassable |
-            CollisionGroup.SmallImpassable);
+            CollisionGroup.MidImpassable |
+            CollisionGroup.HighImpassable |
+            CollisionGroup.LowImpassable);
 
         /// <summary>
         ///     Collision masks that were removed from ANY layer when the storage was opened;
@@ -61,7 +57,7 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         [DataField("EnteringRange")]
-        private float _enteringRange = -0.4f;
+        private float _enteringRange = -0.18f;
 
         [DataField("showContents")]
         private bool _showContents;
@@ -70,16 +66,7 @@ namespace Content.Server.Storage.Components
         private bool _occludesLight = true;
 
         [DataField("open")]
-        private bool _open;
-
-        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _weldingQuality = "Welding";
-
-        [DataField("CanWeldShut")]
-        private bool _canWeldShut = true;
-
-        [DataField("IsWeldedShut")]
-        private bool _isWeldedShut;
+        public bool Open;
 
         [DataField("closeSound")]
         private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
@@ -116,39 +103,7 @@ namespace Content.Server.Storage.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Open
-        {
-            get => _open;
-            private set => _open = value;
-        }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsWeldedShut
-        {
-            get => _isWeldedShut;
-            set
-            {
-                if (_isWeldedShut == value) return;
-
-                _isWeldedShut = value;
-                UpdateAppearance();
-            }
-        }
-
-        private bool _beingWelded;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut
-        {
-            get => _canWeldShut;
-            set
-            {
-                if (_canWeldShut == value) return;
-
-                _canWeldShut = value;
-                UpdateAppearance();
-            }
-        }
+        public bool IsWeldedShut;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float EnteringRange
@@ -161,7 +116,7 @@ namespace Content.Server.Storage.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
+            Contents = Owner.EnsureContainer<Container>(EntityStorageSystem.ContainerName);
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
@@ -172,8 +127,6 @@ namespace Content.Server.Storage.Components
             {
                 EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner, Open, surface);
             }
-
-            UpdateAppearance();
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -198,7 +151,7 @@ namespace Content.Server.Storage.Components
             }
 
             var @event = new StorageOpenAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -206,7 +159,7 @@ namespace Content.Server.Storage.Components
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             var @event = new StorageCloseAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -249,7 +202,7 @@ namespace Content.Server.Storage.Components
             }
 
             ModifyComponents();
-                SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
+                SoundSystem.Play(_closeSound.GetSound(), Filter.Pvs(Owner), Owner);
             LastInternalOpenAttempt = default;
         }
 
@@ -263,13 +216,13 @@ namespace Content.Server.Storage.Components
             // 4. items can always be eaten unless a previous law prevents it
             // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
             // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
-
-            // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-            if (_entMan.HasComponent<GhostComponent>(entity))
+            var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
+            _entMan.EventBus.RaiseLocalEvent(entity, attemptEvent);
+            if (attemptEvent.Cancelled)
                 return false;
 
             // checks
-
+            // TODO: Make the others sub to it.
             var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
             var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
             var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
@@ -287,8 +240,9 @@ namespace Content.Server.Storage.Components
                     allowedToEat = true;
                 else
                 {
-                    // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
-                    allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
+                    var storeEv = new StoreThisAttemptEvent();
+                    _entMan.EventBus.RaiseLocalEvent(Owner, storeEv);
+                    allowedToEat = !storeEv.Cancelled;
                 }
             }
 
@@ -298,18 +252,9 @@ namespace Content.Server.Storage.Components
         protected virtual void OpenStorage()
         {
             Open = true;
-            EmptyContents();
+            EntitySystem.Get<EntityStorageSystem>().EmptyContents(Owner, this);
             ModifyComponents();
-                SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
-        }
-
-        private void UpdateAppearance()
-        {
-            if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(StorageVisuals.CanWeld, _canWeldShut);
-                appearance.SetData(StorageVisuals.Welded, _isWeldedShut);
-            }
+                SoundSystem.Play(_openSound.GetSound(), Filter.Pvs(Owner), Owner);
         }
 
         private void ModifyComponents()
@@ -366,21 +311,6 @@ namespace Content.Server.Storage.Components
             return _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
         }
 
-        private void EmptyContents()
-        {
-            foreach (var contained in Contents.ContainedEntities.ToArray())
-            {
-                if (Contents.Remove(contained))
-                {
-                    _entMan.GetComponent<TransformComponent>(contained).WorldPosition = ContentsDumpPosition();
-                    if (_entMan.TryGetComponent<IPhysBody?>(contained, out var physics))
-                    {
-                        physics.CanCollide = true;
-                    }
-                }
-            }
-        }
-
         public virtual bool TryOpenStorage(EntityUid user)
         {
             if (!CanOpen(user)) return false;
@@ -431,54 +361,6 @@ namespace Content.Server.Storage.Components
             return Contents.CanInsert(entity);
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (_beingWelded)
-                return false;
-
-            if (Open)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            if (!CanWeldShut)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            if (Contents.Contains(eventArgs.User))
-            {
-                _beingWelded = false;
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("entity-storage-component-already-contains-user-message"));
-                return false;
-            }
-
-            if (_beingWelded)
-                return false;
-
-            _beingWelded = true;
-
-            var toolSystem = EntitySystem.Get<ToolSystem>();
-
-            if (!await toolSystem.UseTool(eventArgs.Using, eventArgs.User, Owner, 1f, 1f, _weldingQuality))
-            {
-                _beingWelded = false;
-                return false;
-            }
-
-            _beingWelded = false;
-            IsWeldedShut ^= true;
-            return true;
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Open = true;
-            EmptyContents();
-        }
-
         protected virtual IEnumerable<EntityUid> DetermineCollidingEntities()
         {
             var entityLookup = EntitySystem.Get<EntityLookupSystem>();
@@ -486,6 +368,15 @@ namespace Content.Server.Storage.Components
         }
     }
 
+    public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
     public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
     {
 

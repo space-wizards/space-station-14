@@ -1,7 +1,4 @@
 using Content.Server.Storage.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Server.AI.WorldState.States.Inventory
 {

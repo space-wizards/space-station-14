@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: true
+    netsync: false
     layers:
     - state: icon
     - state: light-icon
@@ -14,16 +14,29 @@
   - type: Clothing
     HeldPrefix: off
   - type: PointLight
+    netsync: false
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
     radius: 3
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer
   - type: HandheldLight
-    addPrefix: true
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      right:
+      - state: on-inhand-right
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

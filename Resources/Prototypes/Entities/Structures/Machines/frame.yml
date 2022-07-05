@@ -11,22 +11,16 @@
       noRot: true
     - type: Physics
       bodyType: Static
-      fixedRotation: false
     - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
+          bounds: "-0.25,-0.5,0.25,0.5"
         mass: 25
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
         mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -64,22 +58,16 @@
       noRot: true
     - type: Physics
       bodyType: Static
-      fixedRotation: false
     - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.25,-0.5,0.25,0.5"
+          bounds: "-0.25,-0.5,0.25,0.5"
         mass: 25
-        layer:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - Opaque
         mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -124,8 +112,6 @@
     - type: Construction
       graph: Machine
       node: destroyedMachineFrame
-    - type: Physics
-      fixedRotation: false
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic

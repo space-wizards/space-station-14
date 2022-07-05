@@ -2,12 +2,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Robust.Server;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
@@ -16,19 +14,20 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that the
     /// </summary>
     [TestFixture]
-    public sealed class SaveLoadSaveTest : ContentIntegrationTest
+    public sealed class SaveLoadSaveTest
     {
         [Test]
         public async Task SaveLoadSave()
         {
-            var server = StartServer(new ServerContentIntegrationOption {Pool = false});
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new (){Fresh = true, Disconnected = true});
+            var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
-                // TODO: Un-hardcode the grid Id for this test.
-                mapLoader.SaveBlueprint(new GridId(1), "save load save 1.yml");
+                // TODO: Properly find the "main" station grid.
+                var grid0 = mapManager.GetAllGrids().First();
+                mapLoader.SaveBlueprint(grid0.GridEntityId, "save load save 1.yml");
                 var mapId = mapManager.CreateMap();
                 var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml").gridId;
                 mapLoader.SaveBlueprint(grid!.Value, "save load save 2.yml");
@@ -72,6 +71,7 @@ namespace Content.IntegrationTests.Tests
                     TestContext.Error.WriteLine(twoTmp);
                 }
             });
+            await pairTracker.CleanReturnAsync();
         }
 
         /// <summary>
@@ -80,12 +80,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveSaltern()
         {
-            var server = StartServerDummyTicker(new ServerIntegrationOptions()
-            {
-                // Don't blame me look at SaveLoadMultiGridMap
-                FailureLogLevel = LogLevel.Error,
-            });
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
@@ -104,7 +100,7 @@ namespace Content.IntegrationTests.Tests
             // Run 5 ticks.
             server.RunTicks(5);
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 mapLoader.SaveMap(mapId, "/load save ticks save 2.yml");
             });
@@ -145,6 +141,7 @@ namespace Content.IntegrationTests.Tests
                     TestContext.Error.WriteLine(twoTmp);
                 }
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

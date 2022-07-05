@@ -19,6 +19,7 @@ namespace Content.Client.Chat.Managers
 
         void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble);
 
+        IReadOnlyDictionary<EntityUid, List<SpeechBubble>> GetSpeechBubbles();
         IReadOnlyDictionary<ChatChannel, int> UnreadMessages { get; }
         IReadOnlyList<StoredChatMessage> History { get; }
         int MaxMessageLength { get; }

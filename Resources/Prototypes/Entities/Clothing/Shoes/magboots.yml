@@ -46,6 +46,8 @@
     sprintModifier: 1
     enabled: false
   - type: NoSlip
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   parent: ClothingShoesBase

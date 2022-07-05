@@ -3,8 +3,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
@@ -29,7 +27,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent man))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;

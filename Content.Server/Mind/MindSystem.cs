@@ -1,14 +1,9 @@
-using System;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -47,7 +42,7 @@ public sealed class MindSystem : EntitySystem
             return;
 
         mind.Mind = value;
-        RaiseLocalEvent(uid, new MindAddedMessage());
+        RaiseLocalEvent(uid, new MindAddedMessage(), true);
     }
 
     /// <summary>
@@ -61,7 +56,7 @@ public sealed class MindSystem : EntitySystem
             return;
 
         if (!Deleted(uid))
-            RaiseLocalEvent(uid, new MindRemovedMessage());
+            RaiseLocalEvent(uid, new MindRemovedMessage(), true);
 
         mind.Mind = null;
     }
@@ -85,6 +80,7 @@ public sealed class MindSystem : EntitySystem
             }
             else if (mind.GhostOnShutdown)
             {
+                Transform(uid).AttachToGridOrMap();
                 var spawnPosition = Transform(uid).Coordinates;
                 // Use a regular timer here because the entity has probably been deleted.
                 Timer.Spawn(0, () =>
@@ -94,8 +90,8 @@ public sealed class MindSystem : EntitySystem
                         return;
 
                     // Async this so that we don't throw if the grid we're on is being deleted.
-                    var gridId = spawnPosition.GetGridId(EntityManager);
-                    if (!spawnPosition.IsValid(EntityManager) || gridId == GridId.Invalid || !_mapManager.GridExists(gridId))
+                    var gridId = spawnPosition.GetGridUid(EntityManager);
+                    if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid || !_mapManager.GridExists(gridId))
                     {
                         spawnPosition = _gameTicker.GetObserverSpawnPoint();
                     }

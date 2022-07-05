@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.AI.Utils
@@ -26,7 +22,7 @@ namespace Content.Server.AI.Utils
             {
                 var transform = entityManager.GetComponent<TransformComponent>(entity);
 
-                if (transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
+                if (transform.Coordinates.GetGridUid(entityManager) != grid.GetGridUid(entityManager))
                 {
                     continue;
                 }

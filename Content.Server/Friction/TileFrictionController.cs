@@ -1,6 +1,5 @@
 using Content.Server.Physics.Controllers;
 using Content.Shared.Friction;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Friction
 {

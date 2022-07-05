@@ -2,7 +2,6 @@
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nuke.Commands
 {

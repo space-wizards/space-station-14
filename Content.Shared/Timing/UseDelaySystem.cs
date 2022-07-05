@@ -75,10 +75,10 @@ public sealed class UseDelaySystem : EntitySystem
 
         foreach (var delay in _activeDelays)
         {
-            if (curTime > delay.DelayEndTime
-                || !mQuery.TryGetComponent(delay.Owner, out var meta)
-                || meta.Deleted
-                || delay.CancellationTokenSource?.Token.IsCancellationRequested == true)
+            if (delay.DelayEndTime == null ||
+                curTime > delay.DelayEndTime ||
+                Deleted(delay.Owner, mQuery) ||
+                delay.CancellationTokenSource?.Token.IsCancellationRequested == true)
             {
                 toRemove.Add(delay);
             }
@@ -89,6 +89,7 @@ public sealed class UseDelaySystem : EntitySystem
             delay.CancellationTokenSource = null;
             delay.DelayEndTime = null;
             _activeDelays.Remove(delay);
+            Dirty(delay);
         }
     }
 
@@ -113,6 +114,11 @@ public sealed class UseDelaySystem : EntitySystem
         var cooldown = EnsureComp<ItemCooldownComponent>(component.Owner);
         cooldown.CooldownStart = currentTime;
         cooldown.CooldownEnd = component.DelayEndTime;
+    }
+
+    public bool ActiveDelay(EntityUid uid, UseDelayComponent? component = null)
+    {
+        return Resolve(uid, ref component, false) && component.ActiveDelay;
     }
 
     public void Cancel(UseDelayComponent component)

@@ -211,7 +211,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound.GetSound(), Owner);
+            SoundSystem.Play(strap.BuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -314,7 +314,7 @@ namespace Content.Server.Buckle.Components
                 appearance.SetData(BuckleVisuals.Buckled, false);
 
             if (_entMan.HasComponent<KnockedDownComponent>(Owner)
-                | _entMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated())
+                | (_entMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated()))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
@@ -328,7 +328,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
+            SoundSystem.Play(oldBuckledTo.UnbuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = Owner };
             _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);

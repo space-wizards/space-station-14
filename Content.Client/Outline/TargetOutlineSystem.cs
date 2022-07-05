@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Outline;
 
@@ -14,6 +15,7 @@ namespace Content.Client.Outline;
 public sealed class TargetOutlineSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -95,9 +97,9 @@ public sealed class TargetOutlineSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        base.FrameUpdate(frameTime);
+        base.Update(frameTime);
 
-        if (!_enabled)
+        if (!_enabled || !_timing.IsFirstTimePredicted)
             return;
 
         HighlightTargets();
@@ -114,19 +116,20 @@ public sealed class TargetOutlineSystem : EntitySystem
         // find possible targets on screen
         // TODO: Duplicated in SpriteSystem and DragDropSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
-        var bounds = new Box2(mousePos - LookupSize, mousePos + LookupSize);
+        var bounds = new Box2(mousePos - LookupSize / 2f, mousePos + LookupSize / 2f);
         var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+        var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)
         {
-            if (!TryComp(entity, out SpriteComponent? sprite) || !sprite.Visible)
+            if (!spriteQuery.TryGetComponent(entity, out var sprite) || !sprite.Visible)
                 continue;
 
             // Check the predicate
             var valid = Predicate?.Invoke(entity) ?? true;
 
             // check the entity whitelist
-            if (valid  && Whitelist != null)
+            if (valid && Whitelist != null)
                 valid = Whitelist.IsValid(entity);
 
             // and check the cancellable event

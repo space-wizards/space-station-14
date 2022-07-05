@@ -3,6 +3,8 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
+using Content.Client.GhostKick;
+using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -84,22 +86,23 @@ namespace Content.Client.Entry
             IoCManager.InjectDependencies(this);
 
             _componentFactory.DoAutoRegistrations();
+            _componentFactory.IgnoreMissingComponents();
 
             foreach (var ignoreName in IgnoredComponents.List)
             {
                 _componentFactory.RegisterIgnore(ignoreName);
             }
 
-            _componentFactory.RegisterClass<SharedResearchConsoleComponent>();
+
+            // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedLatheComponent>();
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
             _componentFactory.RegisterClass<SharedVendingMachineComponent>();
-            _componentFactory.RegisterClass<SharedWiresComponent>();
-            _componentFactory.RegisterClass<SharedCargoConsoleComponent>();
             _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
             _componentFactory.RegisterClass<SharedChemMasterComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
+            // Do not add to the above, they are legacy
 
             _prototypeManager.RegisterIgnore("accent");
             _prototypeManager.RegisterIgnore("material");
@@ -125,7 +128,6 @@ namespace Content.Client.Entry
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
-            _parallaxManager.LoadParallax();
             _stylesheetManager.Initialize();
             _screenshotHook.Initialize();
             _changelogManager.Initialize();
@@ -146,6 +148,9 @@ namespace Content.Client.Entry
             base.PostInit();
             // Setup key contexts
             ContentContexts.SetupContexts(_inputManager.Contexts);
+
+            _parallaxManager.LoadParallax();
+
             _overlayManager.AddOverlay(new ParallaxOverlay());
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.

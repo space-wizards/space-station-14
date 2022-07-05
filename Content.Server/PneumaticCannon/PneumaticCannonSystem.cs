@@ -161,7 +161,7 @@ namespace Content.Server.PneumaticCannon
             {
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", component.Owner)));
-                SoundSystem.Play(Filter.Pvs(args.Used), "/Audio/Items/hiss.ogg", args.Used, AudioParams.Default);
+                SoundSystem.Play("/Audio/Items/hiss.ogg", Filter.Pvs(args.Used), args.Used, AudioParams.Default);
                 return;
             }
             AddToQueue(component, args.User, args.ClickLocation);
@@ -174,7 +174,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
             {
-                SoundSystem.Play(Filter.Pvs((comp).Owner), "/Audio/Weapons/click.ogg", ((IComponent) comp).Owner, AudioParams.Default);
+                SoundSystem.Play("/Audio/Weapons/click.ogg", Filter.Pvs((comp).Owner), ((IComponent) comp).Owner, AudioParams.Default);
                 return;
             }
 
@@ -211,7 +211,7 @@ namespace Content.Server.PneumaticCannon
             {
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", comp.Owner)));
-                SoundSystem.Play(Filter.Pvs(((IComponent) comp).Owner), "/Audio/Items/hiss.ogg", ((IComponent) comp).Owner, AudioParams.Default);
+                SoundSystem.Play("/Audio/Items/hiss.ogg", Filter.Pvs(((IComponent) comp).Owner), ((IComponent) comp).Owner, AudioParams.Default);
                 return;
             }
 
@@ -225,9 +225,9 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities.Count == 0) return; // click sound?
 
             var ent = _random.Pick(storage.StoredEntities);
-            storage.Remove(ent);
+            _storageSystem.RemoveAndDrop(comp.Owner, ent, storage);
 
-            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound(), ((IComponent) comp).Owner, AudioParams.Default);
+            SoundSystem.Play(comp.FireSound.GetSound(), Filter.Pvs(data.User), ((IComponent) comp).Owner, AudioParams.Default);
             if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
             {
                 var kick = Vector2.One * data.Strength;
@@ -252,7 +252,7 @@ namespace Content.Server.PneumaticCannon
             {
                 // we checked for this earlier in HasGas so a GetComp is okay
                 var gas = EntityManager.GetComponent<GasTankComponent>(contained);
-                var environment = _atmos.GetTileMixture(EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates, true);
+                var environment = _atmos.GetContainingMixture(comp.Owner, false, true);
                 var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
                 if (environment != null && removed != null)
                 {
@@ -333,7 +333,7 @@ namespace Content.Server.PneumaticCannon
                 if (storage.StoredEntities == null) return;
                 foreach (var entity in storage.StoredEntities.ToArray())
                 {
-                    storage.Remove(entity);
+                    _storageSystem.RemoveAndDrop(component.Owner, entity, storage);
                 }
 
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-ejected-all",

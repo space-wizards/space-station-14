@@ -3,7 +3,9 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
 using Content.Client.Eui;
+using Content.Client.GhostKick;
 using Content.Client.Info;
+using Content.Client.Launcher;
 using Content.Client.Module;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
@@ -13,6 +15,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Module;
 
 namespace Content.Client.IoC
@@ -37,6 +40,9 @@ namespace Content.Client.IoC
             IoCManager.Register<ViewportManager, ViewportManager>();
             IoCManager.Register<IGamePrototypeLoadManager, GamePrototypeLoadManager>();
             IoCManager.Register<NetworkResourceManager>();
+            IoCManager.Register<ISharedAdminLogManager, SharedAdminLogManager>();
+            IoCManager.Register<GhostKickManager>();
+            IoCManager.Register<ExtendedDisconnectInformationManager>();
         }
     }
 }

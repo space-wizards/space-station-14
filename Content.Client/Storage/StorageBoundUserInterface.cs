@@ -42,7 +42,7 @@ namespace Content.Client.Storage
         {
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendMessage(new StorageRemoveItemMessage(entity));
+                SendMessage(new StorageInteractWithItemEvent(entity));
             }
             else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
             {

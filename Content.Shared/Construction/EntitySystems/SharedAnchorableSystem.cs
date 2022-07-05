@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
@@ -12,10 +13,11 @@ public abstract class SharedAnchorableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(SharedConstructionSystem) });
+        SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
+            before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
     }
 
-    private async void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
+    private void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -25,16 +27,16 @@ public abstract class SharedAnchorableSystem : EntitySystem
             return;
 
         args.Handled = true;
-        await TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool: usedTool);
+        TryToggleAnchor(uid, args.User, args.Used, anchorable, usingTool: usedTool);
     }
 
-    public virtual async Task<bool> TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
+    public virtual void TryToggleAnchor(EntityUid uid, EntityUid userUid, EntityUid usingUid,
         AnchorableComponent? anchorable = null,
         TransformComponent? transform = null,
         SharedPullableComponent? pullable = null,
         ToolComponent? usingTool = null)
     {
         // Thanks tool system.
-        return false;
+        return;
     }
 }

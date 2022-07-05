@@ -1,13 +1,6 @@
-using System;
-using Content.Server.Stunnable;
-using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
-using Content.Shared.MobState;
 using Content.Shared.MobState.State;
 using Content.Shared.StatusEffect;
-using Content.Shared.Stunnable;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
 {

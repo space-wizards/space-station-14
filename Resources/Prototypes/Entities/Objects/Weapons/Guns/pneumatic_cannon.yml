@@ -1,7 +1,7 @@
-﻿- type: entity
+- type: entity
   name: improvised pneumatic cannon
   parent: BaseStorageItem
-  id: ImprovisedPneumaticCannon
+  id: WeaponImprovisedPneumaticCannon
   description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
   components:
   - type: Sprite
@@ -43,10 +43,6 @@
       components:
       - CreamPie
     clickInsert: false
-    storageOpenSound:
-      collection: BikeHorn
-    storageInsertSound:
-      collection: BikeHorn
     capacity: 40
   - type: PneumaticCannon
     gasTankRequired: false

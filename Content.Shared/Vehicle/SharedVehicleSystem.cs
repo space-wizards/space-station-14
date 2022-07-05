@@ -48,4 +48,26 @@ namespace Content.Shared.Vehicle
     /// Raised when someone honks a vehicle horn
     /// </summary>
     public sealed class HonkActionEvent : InstantActionEvent { }
+
+    /// <summary>
+    /// Raised on the rider when someone is buckled to a vehicle.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BuckledToVehicleEvent : EntityEventArgs
+    {
+        public EntityUid Vehicle;
+
+        public EntityUid Rider;
+
+        /// <summary>
+        /// Whether they were buckled or unbuckled
+        /// </summary>
+        public bool Buckling;
+        public BuckledToVehicleEvent(EntityUid vehicle, EntityUid rider, bool buckling)
+        {
+            Vehicle = vehicle;
+            Rider = rider;
+            Buckling = buckling;
+        }
+    }
 }

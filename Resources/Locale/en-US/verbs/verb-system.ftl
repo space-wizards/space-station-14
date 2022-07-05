@@ -17,8 +17,10 @@ verb-categories-insert = Insert
 verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
 verb-categories-rotate = Rotate
+verb-categories-smite = Smite
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split
+verb-categories-instrument-style = Instrument Style
 verb-categories-set-sensor = Sensor
 verb-categories-timer = Set Delay
 

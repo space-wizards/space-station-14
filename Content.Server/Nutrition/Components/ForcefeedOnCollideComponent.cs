@@ -1,14 +1,11 @@
 ﻿using Content.Server.Nutrition.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Nutrition.Components
 {
     /// <summary>
     ///     A food item with this component will be forcefully fed to anyone
     /// </summary>
-    [RegisterComponent, Friend(typeof(ForcefeedOnCollideSystem))]
+    [RegisterComponent, Access(typeof(ForcefeedOnCollideSystem))]
     public sealed class ForcefeedOnCollideComponent : Component
     {
         /// <summary>

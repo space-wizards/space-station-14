@@ -1,126 +1,109 @@
 - type: entity
-  name: Launcher Base
+  name: BaseWeaponLauncher
   parent: BaseItem
-  id: LauncherBase
+  id: BaseWeaponLauncher
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
   - type: Item
-    size: 24
+    size: 60
 
 - type: entity
   name: china lake
-  parent: LauncherBase
-  id: LauncherChinaLake
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherChinaLake
   description: PLOOP
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    caliber: Grenade
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: GrenadeFrag
+  - type: Gun
     fireRate: 1
-    capacity: 3
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Grenade
+    autoCycle: false
+    capacity: 3
+    proto: GrenadeFrag
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
 
 - type: entity
   name: RPG-7
-  parent: LauncherBase
-  id: LauncherRocket
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    caliber: Rocket
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: RocketAmmo
+  - type: Gun
     fireRate: 0.5
-    capacity: 1
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - Cartridge
+    proto: CartridgeRocket
+    capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
   name: multiple rocket launcher
-  parent: LauncherBase
-  id: LauncherMultipleRocket
+  parent: BaseWeaponLauncher
+  id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    caliber: Rocket
-    currentSelector: Automatic
-    allSelectors:
-    - Single
-    fillPrototype: SlowRocketAmmo
+  - type: Gun
     fireRate: 6
-    minAngle: 0
-    maxAngle: 15
-    angleIncrease: 15
-    angleDecay: 60
-    capacity: 30
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: CartridgeRocketSlow
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true

@@ -1,10 +1,7 @@
-using System;
 using Content.Server.RCD.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 
 namespace Content.Server.RCD.Systems
 {

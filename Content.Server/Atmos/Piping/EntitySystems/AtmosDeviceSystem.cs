@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
@@ -31,20 +27,25 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
-        private bool CanJoinAtmosphere(AtmosDeviceComponent component)
+        private bool CanJoinAtmosphere(AtmosDeviceComponent component, TransformComponent transform)
         {
-            return !component.RequireAnchored || EntityManager.GetComponent<TransformComponent>(component.Owner).Anchored;
+            return (!component.RequireAnchored || transform.Anchored) && transform.GridUid != null;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)
         {
-            if (!CanJoinAtmosphere(component))
+            var transform = Transform(component.Owner);
+
+            if (!CanJoinAtmosphere(component, transform))
             {
                 return;
             }
 
+            // TODO: low-hanging fruit for perf improvements around here
+
+            // GridUid is not null because we can join atmosphere.
             // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(component))
+            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
             {
                 if (component.JoinSystem)
                 {
@@ -66,7 +67,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
             // Try to remove the component from an atmosphere, and if not
-            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component))
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component.JoinedGrid.Value, component))
             {
                 // The grid might have been removed but not us... This usually shouldn't happen.
                 component.JoinedGrid = null;

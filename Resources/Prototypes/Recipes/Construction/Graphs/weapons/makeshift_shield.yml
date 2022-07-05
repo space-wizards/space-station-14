@@ -1,0 +1,17 @@
+﻿- type: constructionGraph
+  id: MakeshiftShield
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: makeshiftShield
+          steps:
+            - material: Cable
+              amount: 15
+              doAfter: 2
+            - material: Steel
+              amount: 30
+              doAfter: 2
+
+    - node: makeshiftShield
+      entity: MakeshiftShield

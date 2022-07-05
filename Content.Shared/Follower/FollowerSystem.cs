@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.Follower;
@@ -72,13 +72,14 @@ public sealed class FollowerSystem : EntitySystem
         var xform = Transform(follower);
         xform.AttachParent(entity);
         xform.LocalPosition = Vector2.Zero;
+        xform.LocalRotation = Angle.Zero;
 
         EnsureComp<OrbitVisualsComponent>(follower);
 
         var followerEv = new StartedFollowingEntityEvent(entity, follower);
         var entityEv = new EntityStartedFollowingEvent(entity, follower);
 
-        RaiseLocalEvent(follower, followerEv);
+        RaiseLocalEvent(follower, followerEv, true);
         RaiseLocalEvent(entity, entityEv, false);
     }
 
@@ -106,7 +107,7 @@ public sealed class FollowerSystem : EntitySystem
         var uidEv = new StoppedFollowingEntityEvent(target, uid);
         var targetEv = new EntityStoppedFollowingEvent(target, uid);
 
-        RaiseLocalEvent(uid, uidEv);
+        RaiseLocalEvent(uid, uidEv, true);
         RaiseLocalEvent(target, targetEv, false);
     }
 

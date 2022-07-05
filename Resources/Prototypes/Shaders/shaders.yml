@@ -32,6 +32,21 @@
     life: 0
 
 - type: shader
+  id: Rainbow
+  kind: source
+  path: "/Textures/Shaders/rainbow.swsl"
+
+- type: shader
+  id: CameraStatic
+  kind: source
+  path: "/Textures/Shaders/camera_static.swsl"
+
+- type: shader
+  id: Drunk
+  kind: source
+  path: "/Textures/Shaders/drunk.swsl"
+
+- type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"

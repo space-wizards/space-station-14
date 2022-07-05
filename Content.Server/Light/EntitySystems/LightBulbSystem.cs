@@ -1,10 +1,8 @@
 using Content.Server.Light.Components;
-using Content.Server.Light.Events;
+using Content.Shared.Destructible;
 using Content.Shared.Light;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
@@ -17,6 +15,7 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<LightBulbComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<LightBulbComponent, LandEvent>(HandleLand);
+            SubscribeLocalEvent<LightBulbComponent, BreakageEventArgs>(OnBreak);
         }
 
         private void OnInit(EntityUid uid, LightBulbComponent bulb, ComponentInit args)
@@ -30,6 +29,11 @@ namespace Content.Server.Light.EntitySystems
         {
             PlayBreakSound(uid, bulb);
             SetState(uid, LightBulbState.Broken, bulb);
+        }
+
+        private void OnBreak(EntityUid uid, LightBulbComponent component, BreakageEventArgs args)
+        {
+            SetState(uid, LightBulbState.Broken, component);
         }
 
         /// <summary>
@@ -61,7 +65,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref bulb))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(uid), bulb.BreakSound.GetSound(), uid);
+            SoundSystem.Play(bulb.BreakSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,

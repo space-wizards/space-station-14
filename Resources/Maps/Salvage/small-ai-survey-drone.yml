@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -597,9 +597,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 37
   type: CableApcExtension
@@ -732,9 +732,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 53
   type: TableReinforced
@@ -755,7 +755,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 56
-  type: SalternSMES
+  type: SMESBasic
   components:
   - pos: -2.5,0.5
     parent: 0
@@ -847,9 +847,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 67
   type: LockerWeldingSuppliesFilled
@@ -859,10 +859,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 68
   type: ReinforcedWindow
   components:

@@ -6,10 +6,11 @@ namespace Content.Server.Entry
         public static string[] List => new [] {
             "ConstructionGhost",
             "IconSmooth",
-            "ReinforcedWall",
             "StasisBedVisuals",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
+            "EffectVisuals",
+            "DamageStateVisuals",
             "AnimationsTest",
             "ItemStatus",
             "VehicleVisuals",
@@ -22,9 +23,17 @@ namespace Content.Server.Entry
             "LatheVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
+            "SpentAmmoVisuals",
+            "MagazineVisuals",
+            "PowerCellVisuals",
             "ToggleableLightVisuals",
+            "CableVisualizer",
             "PotencyVisuals",
-            "PaperVisuals"
+            "PaperVisuals",
+            "SurveillanceCameraVisuals",
+            "KudzuVisuals",
+            "AMEControllerVisuals",
+            "AMEShieldingVisuals",
         };
     }
 }

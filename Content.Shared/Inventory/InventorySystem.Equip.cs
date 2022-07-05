@@ -1,18 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -82,10 +82,10 @@ public abstract partial class InventorySystem
             return;
 
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, unequippedEvent);
+        RaiseLocalEvent(uid, unequippedEvent, true);
 
         var gotUnequippedEvent = new GotUnequippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotUnequippedEvent);
+        RaiseLocalEvent(args.Entity, gotUnequippedEvent, true);
     }
 
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
@@ -94,10 +94,10 @@ public abstract partial class InventorySystem
            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, equippedEvent);
+        RaiseLocalEvent(uid, equippedEvent, true);
 
         var gotEquippedEvent = new GotEquippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotEquippedEvent);
+        RaiseLocalEvent(args.Entity, gotEquippedEvent, true);
     }
 
     /// <summary>
@@ -123,11 +123,13 @@ public abstract partial class InventorySystem
             return;
         }
 
-        // interact with an empty hand (usually just unequips the item).
+        // unequip the item.
         if (itemUid != null)
         {
-            if (_actionBlockerSystem.CanInteract(actor, itemUid.Value))
-                _interactionSystem.InteractHand(actor, itemUid.Value);
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory))
+                return;
+
+            _handsSystem.PickupOrDrop(actor, item.Value);
             return;
         }
 
@@ -143,9 +145,17 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (_handsSystem.TryDrop(actor, hands.ActiveHand!, doDropInteraction: false, handsComp: hands))
-            TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory);
-        }
+        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
+            return;
+
+        var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
+        var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
+        RaiseLocalEvent(held.Value, gotUnequipped, false);
+        RaiseLocalEvent(actor, didUnequip, true);
+        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
+
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
+    }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
         InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
@@ -197,7 +207,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.EquipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(item.EquipSound.GetSound(), filter, target, item.EquipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();
@@ -264,7 +274,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -275,7 +285,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -284,7 +294,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = itemAttemptEvent.Reason ?? reason;
@@ -376,7 +386,7 @@ public abstract partial class InventorySystem
                     filter.RemoveWhereAttachedEntity(entity => entity == actor);
             }
 
-            SoundSystem.Play(filter, item.UnequipSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(item.UnequipSound.GetSound(), filter, target, item.UnequipSound.Params.WithVolume(-2f));
         }
 
         inventory.Dirty();
@@ -416,7 +426,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -427,7 +437,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -436,7 +446,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;

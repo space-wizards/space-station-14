@@ -1,15 +1,10 @@
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
-    [NetworkedComponent, Friend(typeof(MovementSpeedModifierSystem))]
+    [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
     public sealed class MovementSpeedModifierComponent : Component
     {
         public const float DefaultBaseWalkSpeed = 3.0f;
@@ -22,7 +17,7 @@ namespace Content.Shared.Movement.Components
         public float SprintSpeedModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeedVV
+        private float _baseWalkSpeedVV
         {
             get => BaseWalkSpeed;
             set
@@ -33,7 +28,7 @@ namespace Content.Shared.Movement.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeedVV
+        private float _baseSprintSpeedVV
         {
             get => BaseSprintSpeed;
             set

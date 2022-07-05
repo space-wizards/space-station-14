@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DoAfter
 {
@@ -21,6 +19,11 @@ namespace Content.Server.DoAfter
         ///     Applicable target (if relevant)
         /// </summary>
         public EntityUid? Target { get; }
+
+        /// <summary>
+        ///     Entity used by the User on the Target.
+        /// </summary>
+        public EntityUid? Used { get; set; }
 
         /// <summary>
         ///     Manually cancel the do_after so it no longer runs
@@ -56,6 +59,11 @@ namespace Content.Server.DoAfter
         /// </summary>
         public FixedPoint2 DamageThreshold { get; set; }
         public bool BreakOnStun { get; set; }
+
+        /// <summary>
+        ///     Threshold for distance user from the used OR target entities.
+        /// </summary>
+        public float? DistanceThreshold { get; set; }
 
         /// <summary>
         ///     Requires a function call once at the end (like InRangeUnobstructed).
@@ -104,14 +112,16 @@ namespace Content.Server.DoAfter
             EntityUid user,
             float delay,
             CancellationToken cancelToken = default,
-            EntityUid? target = null)
+            EntityUid? target = null,
+            EntityUid? used = null)
         {
             User = user;
             Delay = delay;
             CancelToken = cancelToken;
             Target = target;
+            Used = used;
             MovementThreshold = 0.1f;
-            DamageThreshold = 0;
+            DamageThreshold = 1.0;
 
             if (Target == null)
             {

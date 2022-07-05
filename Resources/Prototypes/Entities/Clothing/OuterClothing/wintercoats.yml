@@ -8,6 +8,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    size: 10
   - type: TemperatureProtection
     coefficient: 0.1
   - type: Armor
@@ -25,6 +26,16 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterBar
+  name: bartender winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -85,6 +96,16 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterClown
+  name: clown winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -155,6 +176,16 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatmed.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterMime
+  name: mime winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatmime.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -235,3 +266,21 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatviro.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterWarden
+  name: warden's armored winter coat
+  description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatwarden.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.6 #slightly less bulletproof than wardens normal coat
+        Heat: 0.75

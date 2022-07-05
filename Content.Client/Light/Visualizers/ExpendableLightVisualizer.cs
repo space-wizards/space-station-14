@@ -1,4 +1,4 @@
-﻿using Content.Client.Light.Components;
+using Content.Client.Light.Components;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -19,7 +19,7 @@ namespace Content.Client.Light.Visualizers
             var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {
-                if (entities.TryGetComponent(component.Owner, out LightBehaviourComponent lightBehaviour))
+                if (entities.TryGetComponent(component.Owner, out LightBehaviourComponent? lightBehaviour))
                 {
                     lightBehaviour.StopLightBehaviour();
 
@@ -27,7 +27,7 @@ namespace Content.Client.Light.Visualizers
                     {
                         lightBehaviour.StartLightBehaviour(lightBehaviourID);
                     }
-                    else if (entities.TryGetComponent(component.Owner, out PointLightComponent light))
+                    else if (entities.TryGetComponent(component.Owner, out PointLightComponent? light))
                     {
                         light.Enabled = false;
                     }
@@ -40,7 +40,7 @@ namespace Content.Client.Light.Visualizers
             }
 
             if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
-            && entities.TryGetComponent(component.Owner, out ExpendableLightComponent expendableLight))
+            && entities.TryGetComponent(component.Owner, out ExpendableLightComponent? expendableLight))
             {
                 switch (state)
                 {
@@ -49,9 +49,8 @@ namespace Content.Client.Light.Visualizers
                         TryStopStream(expendableLight.PlayingStream);
                         if (expendableLight.LoopedSound != null)
                         {
-                            expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(),
-                                expendableLight.LoopedSound, expendableLight.Owner,
-                                SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
+                            expendableLight.PlayingStream = SoundSystem.Play(expendableLight.LoopedSound, Filter.Local(),
+                                expendableLight.Owner, SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
                         }
                         break;
                     }

@@ -29,6 +29,7 @@
   - type: StorageFillVisualizer
     maxFillLevels: 4
     fillBaseName: icon
+  - type: Dumpable
   - type: Clothing
     Slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi

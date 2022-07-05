@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AME.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AME
 {
@@ -42,14 +37,21 @@ namespace Content.Server.AME
             base.LoadNodes(groupNodes);
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(GridId);
+            IMapGrid? grid = null;
 
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
                 if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
-                    var nodeNeighbors = grid.GetCellsInSquareArea(_entMan.GetComponent<TransformComponent>(nodeOwner).Coordinates, 1)
+                    var xform = _entMan.GetComponent<TransformComponent>(nodeOwner);
+                    if (xform.GridUid != grid?.GridEntityId && !mapManager.TryGetGrid(xform.GridUid, out grid))
+                        continue;
+
+                    if (grid == null)
+                        continue;
+
+                    var nodeNeighbors = grid.GetCellsInSquareArea(xform.Coordinates, 1)
                         .Where(entity => entity != nodeOwner && _entMan.HasComponent<AMEShieldComponent>(entity));
 
                     if (nodeNeighbors.Count() >= 8)

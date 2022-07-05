@@ -1,8 +1,6 @@
-﻿using Content.Server.Examine;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -95,7 +93,7 @@ public sealed class HealthExaminableSystem : EntitySystem
         }
 
         // Anything else want to add on to this?
-        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg));
+        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
 
         return msg;
     }

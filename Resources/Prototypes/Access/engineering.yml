@@ -4,9 +4,13 @@
 
 - type: accessLevel
   id: Engineering
+  
+- type: accessLevel
+  id: Atmospherics
 
 - type: accessGroup
   id: Engineering
   tags:
   - ChiefEngineer
   - Engineering
+  - Atmospherics

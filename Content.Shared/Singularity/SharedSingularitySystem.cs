@@ -1,10 +1,6 @@
-using System;
 using Content.Shared.Ghost;
 using Content.Shared.Radiation;
 using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -119,9 +115,17 @@ namespace Content.Shared.Singularity
                 appearance.SetData(SingularityVisuals.Level, value);
             }
 
-            if (physics != null && _fixtures.GetFixtureOrNull(physics, DeleteFixture) is {Shape: PhysShapeCircle circle})
+            if (physics != null)
             {
-                circle.Radius = value - 0.5f;
+                var fixture = _fixtures.GetFixtureOrNull(physics, DeleteFixture);
+
+                if (fixture != null)
+                {
+                    var circle = (PhysShapeCircle) fixture.Shape;
+                    circle.Radius = value - 0.5f;
+
+                    fixture.Hard = value <= 4;
+                }
             }
 
             if (EntityManager.TryGetComponent(singularity.Owner, out SingularityDistortionComponent? distortion))

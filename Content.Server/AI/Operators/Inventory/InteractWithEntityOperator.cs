@@ -1,9 +1,5 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -30,7 +26,7 @@ namespace Content.Server.AI.Operators.Inventory
         {
             var targetTransform = _entMan.GetComponent<TransformComponent>(_useTarget);
 
-            if (targetTransform.GridID != _entMan.GetComponent<TransformComponent>(_owner).GridID)
+            if (targetTransform.GridUid != _entMan.GetComponent<TransformComponent>(_owner).GridUid)
             {
                 return Outcome.Failed;
             }
