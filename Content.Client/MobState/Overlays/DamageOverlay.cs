@@ -79,7 +79,7 @@ public sealed class DamageOverlay : Overlay
                 var distance = args.ViewportBounds.Width;
 
                 float outerMaxLevel = 1.6f * distance;
-                float outerMinLevel = 0.4f * distance;
+                float outerMinLevel = 0.6f * distance;
                 float innerMaxLevel = 0.5f * distance;
                 float innerMinLevel = 0.1f * distance;
                 var currentRealTime = _timing.RealTime;
@@ -98,7 +98,7 @@ public sealed class DamageOverlay : Overlay
                     }
                     else
                     {
-                        level = (float) (_oldlevel + Math.Min(1, lerpDifference / timeToLerp) * (Level - _oldlevel));
+                        level = (float) (_oldlevel + Math.Clamp(lerpDifference / timeToLerp, -1, 1) * (Level - _oldlevel));
                     }
                 }
 
