@@ -304,8 +304,10 @@
     static: true
     recipes:
       - Flash
+      - FlashPayload
       - Handcuffs
       - Stunbaton
+      - RiotShield
       - CartridgePistol
       - CartridgeMagnum
       - CartridgePistolRubber
