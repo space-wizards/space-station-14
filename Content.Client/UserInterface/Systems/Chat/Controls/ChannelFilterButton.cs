@@ -15,9 +15,11 @@ public sealed class FilterButton : ContainerButton
         private readonly TextureRect _textureRect;
         private readonly ChannelFilterPopup _chatFilterPopup;
         private IUserInterfaceManager _interfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
+        private ChatUIController _chatUIController;
         private const int FilterDropdownOffset = 120;
         public FilterButton()
         {
+            _chatUIController = _interfaceManager.GetUIController<ChatUIController>();
             var filterTexture = IoCManager.Resolve<IResourceCache>()
                 .GetTexture("/Textures/Interface/Nano/filter.svg.96dpi.png");
 
@@ -37,6 +39,9 @@ public sealed class FilterButton : ContainerButton
             OnToggled += OnFilterButtonToggled;
             _chatFilterPopup = _interfaceManager.CreateNamedPopup<ChannelFilterPopup>("ChatFilterPopup", (0, 0)) ??
                                throw new Exception("Tried to add chat filter popup while one already exists");
+
+            _chatUIController.RegisterOnChannelsAdd(_chatFilterPopup.ShowChannels);
+            _chatUIController.RegisterOnChannelsRemove(_chatFilterPopup.HideChannels);
         }
 
         private void OnFilterButtonToggled(ButtonToggledEventArgs args)
@@ -55,7 +60,6 @@ public sealed class FilterButton : ContainerButton
             }
 
         }
-
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
             // needed since we need EnableAllKeybinds - don't double-send both UI click and Use

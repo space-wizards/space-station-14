@@ -39,6 +39,10 @@ public sealed class ChatUIController : UIController
     public static readonly Dictionary<ChatSelectChannel, ChatChannel> SelectorToChannel;
     public static readonly Dictionary<char, ChatSelectChannel> PrefixToSelector;
     public static readonly Dictionary<ChatSelectChannel, char> SelectorToPrefix;
+
+    private readonly HashSet<ChatChannel> AllowedChannels = new();
+    private Action<ChatChannel[]>? _OnChannelsAdd = null;
+    private Action<ChatChannel[]>? _OnChannelsRemove = null;
     static ChatUIController()
     {
         ChannelToSelector = new();
@@ -52,6 +56,56 @@ public sealed class ChatUIController : UIController
             PrefixToSelector.Add(channelSelectorData.Prefix, channelSelectorData.Selector);
             SelectorToPrefix.Add(channelSelectorData.Selector,channelSelectorData.Prefix);
         }
+    }
+
+    public ChatUIController()
+    {
+        foreach (var channelSelectorData in ChannelSelectorSetup)
+        {
+            if (!channelSelectorData.Hidden) AllowedChannels.Add(channelSelectorData.Channel);
+        }
+    }
+
+    public void RegisterOnChannelsAdd(Action<ChatChannel[]> action)
+    {
+        if (_OnChannelsAdd == null)
+        {
+            _OnChannelsAdd = action;
+            return;
+        }
+        _OnChannelsAdd += action;
+    }
+
+    public void RegisterOnChannelsRemove(Action<ChatChannel[]> action)
+    {
+        if (_OnChannelsRemove == null)
+        {
+            _OnChannelsRemove = action;
+            return;
+        }
+        _OnChannelsRemove += action;
+    }
+
+    public void RemoveOnChannelsAdd(Action<ChatChannel[]> action)
+    {
+        if (_OnChannelsRemove == null) return;
+        _OnChannelsRemove -= action;
+    }
+
+    public void RemoveOnChannelsRemove(Action<ChatChannel[]> action)
+    {
+        if (_OnChannelsRemove == null) return;
+        _OnChannelsRemove -= action;
+    }
+
+    public void EnableChannels(params ChatChannel[] channels)
+    {
+        _OnChannelsAdd?.Invoke(channels);
+    }
+
+    public void DisableChannels(params ChatChannel[] channels)
+    {
+        _OnChannelsRemove?.Invoke(channels);
     }
 
     public static string GetChannelSelectorName(ChatSelectChannel channelSelector)

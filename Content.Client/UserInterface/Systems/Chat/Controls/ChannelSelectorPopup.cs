@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Channels;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,6 +9,7 @@ public sealed class ChannelSelectorPopup : Popup
 {
     private readonly BoxContainer _channelSelectorHBox;
     private ChatSelectChannel _activeSelector = ChatSelectChannel.Local;
+    private ChannelSelectorButton? _selectorButton;
     private readonly Dictionary<ChatSelectChannel, ChannelSelectorItemButton> _selectorStates = new();
 
     public ChannelSelectorPopup()
@@ -19,6 +21,18 @@ public sealed class ChannelSelectorPopup : Popup
         };
         SetupChannels(ChatUIController.ChannelSelectorSetup);
         AddChild(_channelSelectorHBox);
+    }
+
+    public ChatSelectChannel? FirstChannel
+    {
+        get
+        {
+            foreach (var selectorControl in _selectorStates.Values)
+            {
+                if (!selectorControl.IsHidden) return selectorControl.Channel;
+            }
+            return null;
+        }
     }
 
     private void SetupChannels(ChatUIController.ChannelSelectorData[] selectorData)
@@ -33,18 +47,26 @@ public sealed class ChannelSelectorPopup : Popup
             {
                 _channelSelectorHBox.AddChild(newSelectorButton);
             }
+            newSelectorButton.OnPressed += OnSelectorPressed;
         }
     }
 
-    public void HideChannels(params ChatSelectChannel[] channelSelectors)
+    private void OnSelectorPressed(BaseButton.ButtonEventArgs args)
     {
-        foreach (var channel in channelSelectors)
+        if (_selectorButton == null) return;
+        _selectorButton.SelectedChannel = ((ChannelSelectorItemButton) args.Button).Channel;
+    }
+
+    public void HideChannels(params ChatChannel[] channels)
+    {
+        foreach (var channel in channels)
         {
-            var selector = _selectorStates[channel];
-            if (!selector.IsHidden)
+            if (!ChatUIController.ChannelToSelector.TryGetValue(channel, out var selector)) continue;
+            var selectorbutton = _selectorStates[selector];
+            if (!selectorbutton.IsHidden)
             {
-                _channelSelectorHBox.RemoveChild(selector);
-                if (_activeSelector != channel) continue; // do nothing
+                _channelSelectorHBox.RemoveChild(selectorbutton);
+                if (_activeSelector != selector) continue; // do nothing
                 if (_channelSelectorHBox.Children.First() is ChannelSelectorItemButton button)
                 {
                     _activeSelector = button.Channel;
@@ -56,15 +78,20 @@ public sealed class ChannelSelectorPopup : Popup
             }
         }
     }
-
-    public void ShowChannels(params ChatSelectChannel[] channelSelectors)
+    //run this only once
+    public void SetSelectorButton(ChannelSelectorButton button)
     {
-        foreach (var channel in channelSelectors)
+        _selectorButton = button;
+    }
+    public void ShowChannels(params ChatChannel[] channels)
+    {
+        foreach (var channel in channels)
         {
-            var selector = _selectorStates[channel];
-            if (selector.IsHidden)
+            if (!ChatUIController.ChannelToSelector.TryGetValue(channel, out var selector)) continue;
+            var selectorbutton = _selectorStates[selector];
+            if (selectorbutton.IsHidden)
             {
-                _channelSelectorHBox.AddChild(selector);
+                _channelSelectorHBox.AddChild(selectorbutton);
             }
         }
     }
