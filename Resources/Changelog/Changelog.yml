@@ -1,11 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'Atlas, a low-pop ship map adapted from Goonstation (SS13). Major credit
-      goes to all those who worked on the original layout of Atlas on Goonstation.',
-    type: Add}
-  id: 1368
-  time: '2022-04-20T21:08:43.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Added several gas mask variants, type: Add}
@@ -2948,3 +2941,8 @@ Entries:
       now., type: Fix}
   id: 1867
   time: '2022-07-05T00:37:21.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Colliding with ignited mobs will now properly ignite you as well., type: Tweak}
+  id: 1868
+  time: '2022-07-05T01:30:45.0000000+00:00'
