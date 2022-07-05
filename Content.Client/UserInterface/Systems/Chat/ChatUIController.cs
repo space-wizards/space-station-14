@@ -1,9 +1,12 @@
-﻿using System.Threading.Channels;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
+// TODO hud refactor BEFORE MERGE
+// Warn typing indicator about change
+// EntitySystem.Get<TypingIndicatorSystem>().ClientChangedChatText();
+// on input change
 public sealed class ChatUIController : UIController
 {
 

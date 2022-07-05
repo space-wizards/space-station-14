@@ -1,4 +1,6 @@
 ﻿using Content.Client.Gameplay;
+using Content.Client.Info;
+using Content.Client.Links;
 using Content.Client.MainMenu;
 using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
@@ -15,6 +17,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly IUriOpener _uri = default!;
 
     private Options.UI.EscapeMenu? _window;
 
@@ -43,8 +46,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
     {
         _window = new Options.UI.EscapeMenu();
 
-        _window.AHelpButton.OnPressed += _ => {
-            _console.ExecuteCommand("openahelp");
+        _window.RulesButton.OnPressed += _ =>
+        {
+            new RulesAndInfoWindow().Open();
             CloseWindow();
         };
 
@@ -57,13 +61,17 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         _window.OptionsButton.OnPressed += _ =>
         {
             new OptionsMenu().OpenCentered();
-            CloseWindow();
         };
 
         _window.QuitButton.OnPressed += _ =>
         {
             _console.ExecuteCommand("quit");
             CloseWindow();
+        };
+
+        _window.WikiButton.OnPressed += _ =>
+        {
+            _uri.OpenUri(UILinks.Wiki);
         };
 
         _window.OpenCentered();
