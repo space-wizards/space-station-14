@@ -346,7 +346,7 @@
   - type: VendingMachine
     pack: MagiVendInventory
   - type: Advertise
-    pack: MagivendAds
+    pack: MagiVendAds
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/magivend.rsi
     layers:
