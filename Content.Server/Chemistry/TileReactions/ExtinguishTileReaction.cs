@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.TileReactions
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, tile.GridIndices, true);
+            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
 
             if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))
                 return FixedPoint2.Zero;
@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.TileReactions
                 MathF.Max(MathF.Min(environment.Temperature - (_coolingTemperature * 1000f),
                         environment.Temperature / _coolingTemperature), Atmospherics.TCMB);
 
-            atmosphereSystem.React(tile.GridUid, tile.GridIndices);
+            atmosphereSystem.ReactTile(tile.GridUid, tile.GridIndices);
             atmosphereSystem.HotspotExtinguish(tile.GridUid, tile.GridIndices);
 
             return FixedPoint2.Zero;

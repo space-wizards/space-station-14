@@ -111,17 +111,19 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void InvalidatePosition(EntityUid gridId, Vector2i pos, bool fixVacuum = false)
         {
-            if (!gridId.IsValid())
+            if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
+
+            var gridUid = grid.GridEntityId;
 
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(gridId, pos, query);
             // TODO make atmos system use query
-            _atmosphereSystem.UpdateAdjacent(gridId, pos);
-            _atmosphereSystem.InvalidateTile(gridId, pos);
+            _atmosphereSystem.UpdateAdjacent(gridUid, pos);
+            _atmosphereSystem.InvalidateTile(gridUid, pos);
 
             if(fixVacuum)
-                _atmosphereSystem.FixVacuum(gridId, pos);
+                _atmosphereSystem.FixTileVacuum(gridUid, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)

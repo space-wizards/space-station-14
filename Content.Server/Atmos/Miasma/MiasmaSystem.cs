@@ -5,6 +5,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
@@ -13,6 +14,7 @@ namespace Content.Server.Atmos.Miasma
 {
     public sealed class MiasmaSystem : EntitySystem
     {
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
@@ -108,9 +110,11 @@ namespace Content.Server.Atmos.Miasma
 
                 float molRate = perishable.MolsPerSecondPerUnitMass * _rotUpdateRate;
 
-                var tileMix = _atmosphereSystem.GetTileMixture(Transform(perishable.Owner).Coordinates);
-                if (tileMix != null)
-                    tileMix.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
+                var transform = Transform(perishable.Owner);
+                var indices = _transformSystem.GetGridOrMapTilePosition(perishable.Owner);
+
+                var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+                tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
             }
         }
 
@@ -167,9 +171,10 @@ namespace Content.Server.Atmos.Miasma
                 return;
 
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
-            var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
-            if (tileMix != null)
-                tileMix.AdjustMoles(Gas.Miasma, molsToDump);
+            var transform = Transform(uid);
+            var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+            var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+            tileMix?.AdjustMoles(Gas.Miasma, molsToDump);
 
             // Waste of entities to let these through
             foreach (var part in args.GibbedParts)
