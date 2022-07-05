@@ -6,16 +6,16 @@ namespace Content.Shared.Cargo
     public sealed class CargoOrderData
     {
         public int OrderNumber;
+        public string ProductId;
+        public int Amount;
         public string Requester;
         // public String RequesterRank; // TODO Figure out how to get Character ID card data
         // public int RequesterId;
         public string Reason;
-        public string ProductId;
-        public int Amount;
         public bool Approved;
         public string Approver = string.Empty;
 
-        public CargoOrderData(int orderNumber, string requester, string reason, string productId, int amount)
+        public CargoOrderData(int orderNumber, string productId, int amount, string requester, string reason)
         {
             OrderNumber = orderNumber;
             Requester = requester;

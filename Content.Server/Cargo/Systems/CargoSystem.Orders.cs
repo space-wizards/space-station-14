@@ -227,7 +227,7 @@ namespace Content.Server.Cargo.Systems
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
         {
-            return new CargoOrderData(index, args.Requester, args.Reason, args.ProductId, args.Amount);
+            return new CargoOrderData(index, args.ProductId, args.Amount, args.Requester, args.Reason);
         }
 
         private int GetOrderCount(StationCargoOrderDatabaseComponent component)
