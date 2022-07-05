@@ -5,6 +5,7 @@ using Content.Server.Communications;
 using Content.Server.Paper;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -31,7 +32,8 @@ namespace Content.Server.CommandReport
             var chat = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
             var messageWrap = Loc.GetString("command-reports-sender-announcement-wrap-message");
 
-            SoundSystem.Play(AnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(AnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));  // Play the "New Command Report Created" sound effect
+
 
             _chatManager.ChatMessageToAll(ChatChannel.Radio, broadcastToRadio == true ? message : Loc.GetString("command-reports-confidential-announcement-message"), messageWrap, colorOverride: Color.Gold);
 
@@ -47,7 +49,11 @@ namespace Content.Server.CommandReport
                     var consolePos = transform.MapPosition;
                     var paper = EntityManager.SpawnEntity("Paper", consolePos);
                     var papercomp = EntityManager.GetComponent<PaperComponent>(paper);
-                    papercomp.Content = $"Central Command Report\n----------{message}";
+                    var papermeta = EntityManager.GetComponent<MetaDataComponent>(paper);
+                    papercomp.Content = $"Central Command Report\n{message}";
+                    papercomp.Mode = SharedPaperComponent.PaperAction.Read;
+                    papermeta.EntityName = Loc.GetString("command-reports-paper-name");
+                    papermeta.EntityDescription = Loc.GetString("command-reports-paper-description");
 
                     wasSent = true;
                 }
