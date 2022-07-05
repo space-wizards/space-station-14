@@ -41,7 +41,7 @@ namespace Content.Server.Nuke
         /// <summary>
         ///     Time to leave between the nuke song and the nuke alarm playing.
         /// </summary>
-        private const float NukeSongBuffer = 3f;
+        private const float NukeSongBuffer = 1.5f;
 
         public override void Initialize()
         {
@@ -257,7 +257,7 @@ namespace Content.Server.Nuke
 
             // Start playing the nuke event song so that it ends a couple seconds before the alert sound
             // should play
-            if (nuke.RemainingTime <= NukeSongLength + nuke.AlertSoundTime + 3f && !nuke.PlayedNukeSong)
+            if (nuke.RemainingTime <= NukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong)
             {
                 _soundSystem.DispatchStationEventMusic(uid, nuke.ArmMusic, StationEventMusicType.Nuke);
                 nuke.PlayedNukeSong = true;
