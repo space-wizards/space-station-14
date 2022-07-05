@@ -18,16 +18,19 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            var adminManager = IoCManager.Resolve<IClientAdminManager>();
+
             // For the SpawnEntitiesButton and SpawnTilesButton we need to do the press manually
             // TODO: This will probably need some command check at some point
-            SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnOnPressed;
+            SpawnEntitiesButton.OnPressed += SpawnEntitiesButtonOnPressed;
             SpawnTilesButton.OnPressed += SpawnTilesButtonOnOnPressed;
             SpawnDecalsButton.OnPressed += SpawnDecalsButtonOnPressed;
-            LoadGamePrototypeButton.OnPressed += LoadGamePrototypeButtonOnOnPressed;
-            LoadGamePrototypeButton.Visible = IoCManager.Resolve<IClientAdminManager>().HasFlag(AdminFlags.Query);
+            LoadGamePrototypeButton.OnPressed += LoadGamePrototypeButtonOnPressed;
+            LoadGamePrototypeButton.Visible = adminManager.HasFlag(AdminFlags.Query);
         }
 
-        private async void LoadGamePrototypeButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private async void LoadGamePrototypeButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
             var dialogManager = IoCManager.Resolve<IFileDialogManager>();
             var loadManager = IoCManager.Resolve<IGamePrototypeLoadManager>();
@@ -42,7 +45,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             loadManager.SendGamePrototype(proto);
         }
 
-        private void SpawnEntitiesButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void SpawnEntitiesButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
             EntitySystem.Get<SandboxSystem>().ToggleEntitySpawnWindow();
         }
