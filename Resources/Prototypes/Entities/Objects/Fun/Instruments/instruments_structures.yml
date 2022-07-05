@@ -67,6 +67,17 @@
     state: harp
 
 - type: entity
+  id: TimpaniInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: timpani
+  description: It goes BOOM BOOM BOOM BOOM!
+  components:
+  - type: Instrument
+    program: 47
+  - type: Sprite
+    state: timpani
+
+- type: entity
   id: TaikoInstrument
   parent: BasePlaceableInstrument
   name: taiko

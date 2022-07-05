@@ -121,3 +121,21 @@
   - type: Tag
     tags:
     - WoodwindInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: BagpipeInstrument
+  name: bagpipe
+  description: Pairs nicely with a kilt.
+  components:
+  - type: Instrument
+    program: 109
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/bagpipes.rsi
+    state: icon
+  - type: Item
+    size: 48
+    sprite: Objects/Fun/Instruments/bagpipes.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
