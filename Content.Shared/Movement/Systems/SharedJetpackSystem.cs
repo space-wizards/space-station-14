@@ -57,7 +57,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
     {
         var gridUid = ev.ChangedGridIndex;
-        foreach (var (_, transform) in EntityQuery<JetpackUserComponent, TransformComponent>())
+        foreach (var (_, transform) in EntityQuery<JetpackUserComponent, TransformComponent>(true))
         {
             if(transform.GridUid == gridUid)
                 MovementSpeedModifier.RefreshMovementSpeedModifiers(transform.Owner);
