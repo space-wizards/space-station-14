@@ -20,39 +20,16 @@ using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
-    public sealed class MapPainter : ContentIntegrationTest
+    public sealed class MapPainter
     {
         public async IAsyncEnumerable<Image> Paint(string map)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var clientOptions = new ClientContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CVars.NetPVS.Name] = "false"
-                },
-                Pool = false,
-                FailureLogLevel = LogLevel.Fatal
-            };
-
-            var serverOptions = new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    [CCVars.GameMap.Name] = map,
-                    [CVars.NetPVS.Name] = "false"
-                },
-                Pool = false,
-                FailureLogLevel = LogLevel.Fatal
-            };
-
-            var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
-
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-            await RunTicksSync(client, server, 10);
-            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings(){ Map = map });
+            var server = pairTracker.Pair.Server;
+            var client = pairTracker.Pair.Client;
 
             Console.WriteLine($"Loaded client and server in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
 
@@ -80,7 +57,7 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await RunTicksSync(client, server, 10);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -106,7 +83,7 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await RunTicksSync(client, server, 10);
+            await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             foreach (var grid in grids)
@@ -147,7 +124,7 @@ namespace Content.MapRenderer.Painters
             // We don't care if it fails as we have already saved the images.
             try
             {
-                await OneTimeTearDown();
+                await pairTracker.CleanReturnAsync();
             }
             catch
             {

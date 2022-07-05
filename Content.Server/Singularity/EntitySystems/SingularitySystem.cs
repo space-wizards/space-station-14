@@ -206,7 +206,7 @@ namespace Content.Server.Singularity.EntitySystems
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 
-                var speed = vec.Length * component.Level * collidableComponent.Mass * 100f;
+                var speed = 1f / vec.Length * component.Level * collidableComponent.Mass * 10f;
 
                 // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
                 collidableComponent.ApplyLinearImpulse(vec.Normalized * speed * frameTime);

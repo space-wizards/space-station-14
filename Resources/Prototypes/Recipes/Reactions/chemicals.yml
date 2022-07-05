@@ -65,6 +65,18 @@
     PolytrinicAcid: 3
 
 - type: reaction
+  id: SulfuricAcid
+  reactants:
+    Hydrogen:
+      amount: 1
+    Sulfur:
+      amount: 1
+    Oxygen:
+      amount: 2
+  products:
+    SulfuricAcid: 3
+
+- type: reaction
   id: FluorosulfuricAcid
   reactants:
     Fluorine:
@@ -261,6 +273,7 @@
 - type: reaction
   id: Desoxyephedrine
   impact: Medium
+  minTemp: 370
   reactants:
     Ephedrine:
       amount: 1

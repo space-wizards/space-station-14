@@ -12,6 +12,12 @@
         [ViewVariables]
         public EntityUid? Pulling { get; set; }
 
+        /// <summary>
+        ///     Does this entity need hands to be able to pull something?
+        /// </summary>
+        [DataField("needsHands")]
+        public bool NeedsHands = true;
+
         protected override void Shutdown()
         {
             EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);

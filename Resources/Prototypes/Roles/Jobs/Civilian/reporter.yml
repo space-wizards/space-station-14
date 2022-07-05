@@ -1,11 +1,11 @@
 - type: job
   id: Reporter
-  name: "reporter"
+  name: job-name-reporter
   startingGear: ReporterGear
   departments:
   - Civilian
   icon: "Reporter"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance
@@ -13,7 +13,6 @@
 - type: startingGear
   id: ReporterGear
   equipment:
-    head: ClothingHeadHatTophat
     jumpsuit: ClothingUniformJumpsuitReporter
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorWhite

@@ -92,8 +92,6 @@
         amount: 3
       - id: GrenadeFrag
         amount: 3
-  - type: Storage
-    capacity: 200
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo

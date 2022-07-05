@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Examine;
 using Content.Server.Radio.Components;
+using Content.Shared.Radio;
 using JetBrains.Annotations;
 
 namespace Content.Server.Radio.EntitySystems
@@ -23,7 +24,7 @@ namespace Content.Server.Radio.EntitySystems
             args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine",("frequency", component.BroadcastFrequency)));
         }
 
-        public void SpreadMessage(IRadio source, EntityUid speaker, string message, int channel)
+        public void SpreadMessage(IRadio source, EntityUid speaker, string message, RadioChannelPrototype channel)
         {
             if (_messages.Contains(message)) return;
 
@@ -31,11 +32,8 @@ namespace Content.Server.Radio.EntitySystems
 
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
-                if (radio.Channels.Contains(channel))
-                {
-                    //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                    radio.Receive(message, channel, speaker);
-                }
+                //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
+                radio.Receive(message, channel, speaker);
             }
 
             _messages.Remove(message);

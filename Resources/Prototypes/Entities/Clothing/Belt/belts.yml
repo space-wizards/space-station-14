@@ -19,12 +19,12 @@
         - Screwdriver
         - Flashlight
         - Wrench
-#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
         - CigPack
       components:
+        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -82,7 +82,6 @@
         - Screwdriver
         - Flashlight
         - Wrench
-#        - Painter
 #        - GeigerCounter
         - Flare
         - CableCoil
@@ -90,6 +89,7 @@
         - JawsOfLife
         - CigPack
       components:
+        - AirlockPainter
         - SignalLinker
         - RCD
         - RCDAmmo
@@ -193,6 +193,7 @@
         - Soap
         - Flashlight
         - CigPack
+        - TrashBag
       components:
         - LightReplacer
   - type: ItemMapper
@@ -292,6 +293,9 @@
         # - PlantAnalyzer
         - PlantSampleTaker
         - BotanyShovel
+        - BotanyHoe
+        - BotanyHatchet
+        - PlantSampleTaker
         - PlantBGone
         - Bottle
         - CigPack
@@ -432,6 +436,25 @@
     sprite: Clothing/Belt/holster.rsi
   - type: Storage
     capacity: 20
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSyndieHolster
+  name: syndicate shoulder holster
+  description: A deep shoulder holster capable of holding many types of ballistics.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/syndieholster.rsi
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+        - Gun
+        - MeeleeWeapon
+        - BallisticAmmoProvider
+        - CartridgeAmmo
 
 - type: entity
   parent: ClothingBeltStorageBase

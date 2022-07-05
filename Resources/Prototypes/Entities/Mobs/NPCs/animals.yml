@@ -24,7 +24,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      mass: 2
       mask:
       - FlyingMobMask
       layer:
@@ -88,7 +88,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.1
-      mass: 5
+      mass: 1
       mask:
       - FlyingMobMask
       layer:
@@ -114,6 +114,8 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
+  - type: MobPrice
+    price: 50
 
 - type: entity
   name: bee
@@ -135,6 +137,8 @@
       types:
         Poison: 2
         Piercing: 1
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -158,6 +162,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 3
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -192,6 +206,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: duck-0
       sprite: Mobs/Animals/duck.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 2 #They actually are pretty light, I looked it up
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -279,7 +303,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      mass: 1
       mask:
       - FlyingMobMask
       layer:
@@ -311,6 +335,8 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: NoSlip
+  - type: MobPrice
+    price: 50
 
 - type: entity
   name: cow
@@ -330,7 +356,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.40
-      mass: 45
+      mass: 700
       mask:
       - MobMask
       layer:
@@ -370,6 +396,8 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/cow_moo.ogg
+  - type: Perishable
+    molsPerSecondPerUnitMass: 0.0015
 
 
 - type: entity
@@ -390,7 +418,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 5
+      mass: 2
       mask:
       - MobMask
       layer:
@@ -427,6 +455,16 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 60
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -476,6 +514,16 @@
       state: goose
       sprite: Mobs/Animals/goose.rsi
   - type: Appearance
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 10
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: DamageStateVisuals
     states:
       Alive:
@@ -516,7 +564,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.48
-      mass: 60
+      mass: 150
       mask:
       - MobMask
       layer:
@@ -553,17 +601,17 @@
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: kangaroo
         sprite: Mobs/Animals/kangaroo.rsi
-  - type: Physics
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
-      mass: 60
+        radius: 0.35
+      mass: 50
       mask:
       - MobMask
       layer:
       - MobLayer
+  - type: Physics
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -606,6 +654,8 @@
     damage:
       types:
         Blunt: 10
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -627,6 +677,16 @@
     flavorKind: primate
   - type: Inventory
     templateId: monkey
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 30
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -772,7 +832,8 @@
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
   - type: CanEscapeInventory
-
+  - type: MobPrice
+    price: 50
 
 - type: entity
   parent: MobMouse
@@ -898,7 +959,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 5
+      mass: 1
       mask:
       - MobMask
       layer:
@@ -944,7 +1005,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.2
-      mass: 2
+      mass: 1
       mask:
       - SmallMobMask
       layer:
@@ -993,7 +1054,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 5
+      mass: 2
       mask:
       - FlyingMobMask
       layer:
@@ -1073,6 +1134,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1091,7 +1154,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 10
+      mass: 5
       mask:
       - MobMask
       layer:
@@ -1149,7 +1212,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 8
+      mass: 2
       mask:
       - SmallMobMask
       layer:
@@ -1199,7 +1262,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 25
+      mass: 50
       mask:
       - MobMask
       layer:
@@ -1239,6 +1302,8 @@
     - type: AiFactionTag
       factions:
         - Xeno
+    - type: PlayerInputMover
+    - type: PlayerMobMover
     - type: UtilityAI
       behaviorSets:
         - Idle
@@ -1384,7 +1449,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 20
+      mass: 20 #They actually are pretty light, I looked it up
       mask:
       - MobMask
       layer:

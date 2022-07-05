@@ -63,7 +63,7 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="target">The entity that will be transformed</param>
         /// <param name="id">The id of the polymorph prototype</param>
-        public EntityUid? PolymorphEntity(EntityUid target, String id)
+        public EntityUid? PolymorphEntity(EntityUid target, string id)
         {
             if (!_proto.TryIndex<PolymorphPrototype>(id, out var proto))
             {
@@ -97,11 +97,10 @@ namespace Content.Server.Polymorph.Systems
             var comp = EnsureComp<PolymorphedEntityComponent>(child);
             comp.Parent = target;
             comp.Prototype = proto;
-            RaiseLocalEvent(child, new PolymorphComponentSetupEvent());
+            RaiseLocalEvent(child, new PolymorphComponentSetupEvent(), true);
 
-            var targetXform = Transform(target);
             var childXform = Transform(child);
-            childXform.LocalRotation = targetXform.LocalRotation;
+            childXform.LocalRotation = targetTransformComp.LocalRotation;
 
             if (_container.TryGetContainingContainer(target, out var cont))
                 cont.Insert(child);

@@ -261,7 +261,7 @@ namespace Content.Server.Electrocution
                 || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, refresh, siemensCoefficient, statusEffects))
                 return false;
 
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
+            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
             return true;
 
         }
@@ -306,7 +306,7 @@ namespace Content.Server.Electrocution
             electrocutionComponent.TimeLeft = 1f;
             electrocutionComponent.Electrocuting = uid;
 
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
+            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
 
             return true;
         }
@@ -314,7 +314,7 @@ namespace Content.Server.Electrocution
         private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient)
         {
             var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient);
-            RaiseLocalEvent(uid, attemptEvent);
+            RaiseLocalEvent(uid, attemptEvent, true);
 
             // Cancel the electrocution early, so we don't recursively electrocute anything.
             if (attemptEvent.Cancelled)

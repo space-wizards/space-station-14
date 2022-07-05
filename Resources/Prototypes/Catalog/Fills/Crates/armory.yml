@@ -2,13 +2,13 @@
   id: CrateArmorySMG
   name: smg crate
   parent: CrateWeaponSecure
-  description: "Contains two high-powered, semiautomatic rifles with six mags. Requires Armory access to open."
+  description: "Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open."
   components:
   - type: StorageFill
     contents:
       - id: WeaponSubMachineGunWt550
         amount: 2
-      - id: MagazineMagnumSubMachineGun
+      - id: MagazinePistolSubMachineGunTopMounted
         amount: 4
 
 - type: entity
