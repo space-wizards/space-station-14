@@ -49,6 +49,8 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+  - type: Item
+    size: 30
   - type: Gun
     fireRate: 2
     selectedMode: FullAuto
