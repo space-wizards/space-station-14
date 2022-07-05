@@ -115,7 +115,7 @@ namespace Content.Server.Light.EntitySystems
                     light.ForciblyEnabled = true;
                     TurnOn(light);
                 }
-                else if (light.ForciblyEnabled)
+                else if (!details.ForceEnableEmergencyLights && light.ForciblyEnabled)
                 {
                     // Previously forcibly enabled, and we went down an alert level.
                     light.ForciblyEnabled = false;
