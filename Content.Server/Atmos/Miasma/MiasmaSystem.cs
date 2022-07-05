@@ -42,7 +42,8 @@ namespace Content.Server.Atmos.Miasma
             "BirdFlew",
             "VanAusdallsRobovirus",
             "BleedersBite",
-            "Plague"
+            "Plague",
+            "TongueTwister"
         };
 
         /// <summary>
