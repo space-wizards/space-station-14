@@ -30,7 +30,7 @@ void fragment() {
 	}
 	else {
         	highp float ratio = (distance - innerRadius) / (outerRadius - innerRadius);
-		highp float alpha = (1.0 - ratio) * darknessAlphaInner + ratio * darknessAlphaOuter;
+		highp float alpha = darknessAlphaInner + (darknessAlphaOuter - darknessAlphaInner) * ratio;
 		COLOR = vec4(colorX, 0.0, 0.0, alpha);
 	}
 }
