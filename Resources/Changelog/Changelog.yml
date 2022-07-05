@@ -1,11 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Split Station massive update!, type: Add}
-  id: 1370
-  time: '2022-04-21T13:19:44.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added a number identifier to all mobs. Now it's easier to report rule
       breaking ghost roles such as ticks and carp., type: Add}
   id: 1371
@@ -2951,3 +2946,10 @@ Entries:
   - {message: 'The nuke now has a much, much larger blast radius.', type: Tweak}
   id: 1869
   time: '2022-07-05T06:49:19.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The nuke keypad now plays a scale (C mixolydian blues), so you can
+      bang out some funny tunes on it. "0" plays the last note an octave higher.',
+    type: Add}
+  id: 1870
+  time: '2022-07-05T07:24:37.0000000+00:00'
