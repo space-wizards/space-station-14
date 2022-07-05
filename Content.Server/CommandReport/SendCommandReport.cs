@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using JetBrains.Annotations;
@@ -43,6 +44,21 @@ namespace Content.Server.CommandReport
             SoundSystem.Play(AnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
 
             _chatManager.ChatMessageToAll(ChatChannel.Radio, args[0] == "true" ? message : Loc.GetString("command-reports-confidential-announcement-message"), messageWrap, colorOverride: Color.Gold);
+
+            if (args[0] == "false")
+            {
+                // some copypaste code from NukeCodeSystem.cs, to the person making fax, don't forget to convert this too!
+                var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
+                foreach (var console in consoles)
+                {
+                    if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
+                        continue;
+
+                    var consolePos = transform.MapPosition;
+                    var paper = EntityManager.SpawnEntity("Paper", consolePos);
+                }
+            }
+
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Command report sent: {message}");
 
             shell.WriteLine("Sent!");
