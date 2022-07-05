@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Players can't suicide if they're already dead., type: Add}
-  id: 1374
-  time: '2022-04-22T05:37:49.0000000+00:00'
 - author: moonheart08
   changes:
   - {message: You can rotate the salvage magnet and PA parts again., type: Fix}
@@ -2952,3 +2947,8 @@ Entries:
   - {message: Cap Guns now have visible held sprites, type: Add}
   id: 1873
   time: '2022-07-05T17:09:54.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: Make the uplink lantern actually flash you., type: Tweak}
+  id: 1874
+  time: '2022-07-05T18:40:19.0000000+00:00'
