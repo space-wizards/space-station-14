@@ -1,9 +1,4 @@
 Entries:
-- author: Saakra
-  changes:
-  - {message: Bibles and Necronomicons can now be worn in the belt slot, type: Add}
-  id: 1373
-  time: '2022-04-22T01:20:07.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Players can't suicide if they're already dead., type: Add}
@@ -2952,3 +2947,8 @@ Entries:
   - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
   id: 1872
   time: '2022-07-05T14:11:29.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Cap Guns now have visible held sprites, type: Add}
+  id: 1873
+  time: '2022-07-05T17:09:54.0000000+00:00'
