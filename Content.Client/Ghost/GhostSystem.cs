@@ -73,15 +73,7 @@ namespace Content.Client.Ghost
             {
                 GhostVisibility = false;
             }
-
-            var eyeManager = IoCManager.Resolve<IEyeManager>().CurrentEye;
-            var lightingManager = IoCManager.Resolve<ILightManager>();
-            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false || lightingManager.Enabled == false)
-            {
-                eyeManager.DrawFov = true;
-                lightingManager.DrawShadows = true;
-                lightingManager.Enabled = true;
-            }
+            GhostGraphicsTogglesChecks();
         }
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
@@ -103,6 +95,7 @@ namespace Content.Client.Ghost
             component.Gui?.Parent?.RemoveChild(component.Gui);
             GhostVisibility = false;
             component.IsAttached = false;
+            GhostGraphicsTogglesChecks();
         }
 
         private void OnGhostWarpsResponse(GhostWarpsResponseEvent msg)
@@ -130,6 +123,18 @@ namespace Content.Client.Ghost
             AvailableGhostRoleCount = msg.AvailableGhostRoles;
             foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
                 ghost.Gui?.Update();
+        }
+
+        private void GhostGraphicsTogglesChecks()
+        {
+            var eyeManager = IoCManager.Resolve<IEyeManager>().CurrentEye;
+            var lightingManager = IoCManager.Resolve<ILightManager>();
+            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false || lightingManager.Enabled == false)
+            {
+                eyeManager.DrawFov = true;
+                lightingManager.DrawShadows = true;
+                lightingManager.Enabled = true;
+            }
         }
     }
 }
