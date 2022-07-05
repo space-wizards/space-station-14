@@ -8,7 +8,7 @@
     prototype: MobRatKing
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
