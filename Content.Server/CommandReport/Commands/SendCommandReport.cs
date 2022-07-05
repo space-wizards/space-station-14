@@ -20,7 +20,7 @@ namespace Content.Server.CommandReport.Commands
     {
         public string Command => "sendcommandreport";
         public string Description => "Send a command report to a communications console or through the radio.";
-        public string Help => $"{Command} <broadcast_to_radio> <message>";
+        public string Help => $"{Command} <broadcast_message_to_radio> <message>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {

@@ -15,7 +15,7 @@ namespace Content.Server.CommandReport
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        private const string AnnouncementSound = "/Audio/Announcements/commandreport.ogg";
+        private const string AnnouncementSound = "/Audio/Announcements/command_report.ogg";
         public override void Initialize()
         {
             base.Initialize();
