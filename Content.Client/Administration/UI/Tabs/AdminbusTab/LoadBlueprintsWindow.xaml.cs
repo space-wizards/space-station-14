@@ -73,7 +73,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             XCoordinate.Value = (int) position.X;
             YCoordinate.Value = (int) position.Y;
 
-            RotationSpin.OverrideValue((int) rotation.Degrees);
+            RotationSpin.OverrideValue(Wraparound((int) rotation.Degrees));
             RotationSpin.ValueChanged += OnRotate;
             SubmitButton.OnPressed += OnSubmitButtonPressed;
             TeleportButton.OnPressed += OnTeleportButtonPressed;
@@ -81,13 +81,20 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         private void OnRotate(object? sender, ValueChangedEventArgs e)
         {
-            var newValue = (e.Value % 360);
-            if (newValue < 0)
-                newValue += 360;
+            var newValue = Wraparound(e.Value);
 
             if (e.Value == newValue) return;
 
             RotationSpin.OverrideValue(newValue);
+        }
+
+        private int Wraparound(int value)
+        {
+            var newValue = (value % 360);
+            if (newValue < 0)
+                newValue += 360;
+
+            return newValue;
         }
 
         private void OnPathSelect(OptionButton.ItemSelectedEventArgs obj)
