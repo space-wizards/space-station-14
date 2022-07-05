@@ -63,7 +63,9 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
     private void OnPlayerDetach(PlayerDetachedEvent ev)
     {
         _overlay.State = DamageState.Alive;
-        _overlay.Level = 0;
+        _overlay.BruteLevel = 0f;
+        _overlay.OxygenLevel = 0f;
+        _overlay.CritLevel = 0f;
     }
 
     protected override void UpdateState(MobStateComponent component, DamageState? state, FixedPoint2 threshold)
@@ -78,9 +80,10 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
         if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
 
-        var modifier = 0f;
         _overlay.State = DamageState.Alive;
-        _overlay.Level = modifier;
+        _overlay.BruteLevel = 0f;
+        _overlay.OxygenLevel = 0f;
+        _overlay.CritLevel = 0f;
 
         if (!TryComp<DamageableComponent>(uid, out var damageable))
             return;
@@ -89,29 +92,41 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         {
             case DamageState.Dead:
                 _overlay.State = DamageState.Dead;
-                _overlay.Level = Levels;
-                return;
-            case DamageState.Critical:
-                _overlay.State = DamageState.Critical;
-                _overlay.Level = Levels;
                 return;
         }
 
-        var roundedDamage = MathF.Round((damageable.TotalDamage / 10f).Float()) * 10f;
+        var bruteLevel = 0f;
+        var oxyLevel = 0f;
+        var critLevel = 0f;
 
         if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
-            modifier = MathF.Min(1f, (roundedDamage / earliestThreshold).Float());
+            if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
+            {
+                bruteLevel = MathF.Min(1f, (bruteDamage / earliestThreshold).Float());
+            }
+
+            if (damageable.Damage.DamageDict.TryGetValue("Asphyxiation", out var oxyDamage))
+            {
+                oxyLevel = MathF.Min(1f, (oxyDamage / earliestThreshold).Float());
+            }
+
+            if (threshold >= earliestThreshold && TryGetEarliestDeadState(stateComponent, threshold, out _, out var earliestDeadHold))
+            {
+                critLevel = (float) Math.Clamp((threshold - earliestThreshold).Double() / (earliestThreshold - earliestDeadHold).Double(), 0.1, 1);
+            }
         }
 
         // Don't show damage overlay if they're near enough to max.
-        if (modifier < 0.05f)
+
+        if (bruteLevel < 0.05f)
         {
-            modifier = 0f;
+            bruteLevel = 0f;
         }
 
-        Logger.DebugS("mobstate", $"Set level to {modifier}");
-        _overlay.State = DamageState.Alive;
-        _overlay.Level = modifier;
+        _overlay.State = critLevel > 0f ? DamageState.Critical : DamageState.Alive;
+        _overlay.BruteLevel = bruteLevel;
+        _overlay.OxygenLevel = oxyLevel;
+        _overlay.CritLevel = critLevel;
     }
 }

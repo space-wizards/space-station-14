@@ -12,111 +12,152 @@ public sealed class DamageOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-    private readonly ShaderInstance _deadShader;
+
     private readonly ShaderInstance _critShader;
-    private readonly ShaderInstance _damageShader;
+    private readonly ShaderInstance _deadShader;
+    private readonly ShaderInstance _oxygenShader;
+    private readonly ShaderInstance _bruteShader;
 
     public DamageState State = DamageState.Alive;
 
     /// <summary>
-    /// Current level for the radius from 0 -> 1
+    /// Handles the red pulsing overlay
     /// </summary>
-    public float Level;
+    public float BruteLevel = 0f;
 
     /// <summary>
-    /// Used for lerping.
+    /// Handles the darkening overlay.
     /// </summary>
-    private float _oldlevel;
+    public float OxygenLevel = 0f;
 
-    public float 
-
-    private TimeSpan? _lerpStart;
+    /// <summary>
+    /// Handles the white overlay when crit.
+    /// </summary>
+    public float CritLevel = 0f;
 
     public DamageOverlay()
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);
         _deadShader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
-        _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
-        _damageShader = _prototypeManager.Index<ShaderPrototype>("DamageMask").InstanceUnique();
+        _oxygenShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
+        _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
+        _bruteShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.ViewportBounds;
         var handle = args.ScreenHandle;
+        var distance = args.ViewportBounds.Width;
 
         switch (State)
         {
             case DamageState.Dead:
-                ClearLerp();
                 handle.UseShader(_deadShader);
                 handle.DrawRect(viewport, Color.White);
                 return;
-            case DamageState.Critical:
-                ClearLerp();
-                handle.UseShader(_critShader);
-                handle.DrawRect(viewport, Color.White);
-                return;
-            case DamageState.Alive:
+           case DamageState.Critical:
+           case DamageState.Alive:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        // I just didn't want all of alive indented
-        switch (Level)
+        var time = (float) _timing.RealTime.TotalSeconds;
+
+        /*
+         * darknessAlphaOuter is the maximum alpha for anything outside of the larger circle
+         * darknessAlphaInner (on the shader) is the alpha for anything inside the smallest circle
+         *
+         * outerCircleRadius is what we end at for max level for the outer circle
+         * outerCircleMaxRadius is what we start at for 0 level for the outer circle
+         *
+         * innerCircleRadius is what we end at for max level for the inner circle
+         * innerCircleMaxRadius is what we start at for 0 level for the inner circle
+         */
+
+        // Makes debugging easier don't @ me
+        float level = 0f;
+        level = BruteLevel;
+        // level = 0f;
+
+        // TODO: Lerping
+        if (level > 0f && CritLevel <= 0f)
         {
-            case 0:
-                ClearLerp();
-                break;
-            default:
-                double lerpRate = 0.5;
-                var level = Level;
-                var distance = args.ViewportBounds.Width;
+            var pulseRate = 3f;
+            var adjustedTime = time * pulseRate;
+            float outerMaxLevel = 2.0f * distance;
+            float outerMinLevel = 0.8f * distance;
+            float innerMaxLevel = 0.6f * distance;
+            float innerMinLevel = 0.2f * distance;
 
-                float outerMaxLevel = 1.6f * distance;
-                float outerMinLevel = 0.8f * distance;
-                float innerMaxLevel = 0.5f * distance;
-                float innerMinLevel = 0.1f * distance;
-                var currentRealTime = _timing.RealTime;
+            var outerRadius = outerMaxLevel - BruteLevel * (outerMaxLevel - outerMinLevel);
+            var innerRadius = innerMaxLevel - BruteLevel * (innerMaxLevel - innerMinLevel);
 
-                // TODO: This is still kinda jank lerping for heals.
-                if (!_oldlevel.Equals(Level))
-                {
-                    _lerpStart ??= _timing.RealTime;
+            var pulse = MathF.Max(0f, MathF.Sin(adjustedTime));
 
-                    var timeToLerp = (Level - _oldlevel) / lerpRate;
-                    var lerpDifference = (currentRealTime - _lerpStart.Value).TotalSeconds;
+            _bruteShader.SetParameter("time", pulse);
+            _bruteShader.SetParameter("colorX", 1.0f);
+            _bruteShader.SetParameter("darknessAlphaOuter", 0.8f);
 
-                    // Lerp time has elapsed so end it.
-                    if (lerpDifference > Math.Abs(timeToLerp))
-                    {
-                        ClearLerp();
-                    }
-                    else
-                    {
-                        level = (float) (_oldlevel + Math.Clamp(lerpDifference / timeToLerp, -1, 1) * (Level - _oldlevel));
-                    }
-                }
-
-                var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
-                var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
-                _damageShader.SetParameter("time", (float) currentRealTime.TotalSeconds);
-
-                _damageShader.SetParameter("outerCircleRadius", outerRadius);
-                _damageShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
-                _damageShader.SetParameter("innerCircleRadius", innerRadius);
-                _damageShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
-                handle.UseShader(_damageShader);
-                handle.DrawRect(viewport, Color.White);
-                break;
+            _bruteShader.SetParameter("outerCircleRadius", outerRadius);
+            _bruteShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
+            _bruteShader.SetParameter("innerCircleRadius", innerRadius);
+            _bruteShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.02f * distance);
+            handle.UseShader(_bruteShader);
+            handle.DrawRect(viewport, Color.White);
         }
-    }
 
-    private void ClearLerp()
-    {
-        _oldlevel = Level;
-        _lerpStart = null;
+        level = OxygenLevel;
+
+        if (CritLevel > 0f || level > 0f)
+        {
+            float outerMaxLevel = 0.6f * distance;
+            float outerMinLevel = 0.06f * distance;
+            float innerMaxLevel = 0.02f * distance;
+            float innerMinLevel = 0.02f * distance;
+
+            var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
+            var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
+
+            float outerDarkness;
+            float critTime;
+
+            // If in crit then just fix it; also pulse it very occasionally so they can see more.
+            if (CritLevel > 0f)
+            {
+                critTime = MathF.Max(0f, MathF.Cos(time / 2f) - 1f + MathF.Sin(time));
+                outerDarkness = 1f;
+            }
+            else
+            {
+                critTime = 0f;
+                outerDarkness = MathF.Min(0.99f, 0.3f * MathF.Log(level) + 1f);
+            }
+
+            _oxygenShader.SetParameter("time", critTime);
+            _oxygenShader.SetParameter("colorX", 0.0f);
+            _oxygenShader.SetParameter("darknessAlphaOuter", outerDarkness);
+            _oxygenShader.SetParameter("innerCircleRadius", innerRadius);
+            _oxygenShader.SetParameter("innerCircleMaxRadius", innerRadius);
+            _oxygenShader.SetParameter("outerCircleRadius", outerRadius);
+            _oxygenShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
+            handle.UseShader(_oxygenShader);
+            handle.DrawRect(viewport, Color.White);
+        }
+
+        level = CritLevel;
+        level = 0f;
+
+        if (level > 0f)
+        {
+            _critShader.SetParameter("darknessAlphaInner", 0.6f);
+            _critShader.SetParameter("darknessAlphaOuter", 0.9f);
+            _critShader.SetParameter("innerCircleRadius", 40.0f);
+            _critShader.SetParameter("outerCircleRadius", 80.0f);
+            handle.UseShader(_critShader);
+            handle.DrawRect(viewport, Color.White);
+        }
     }
 }
