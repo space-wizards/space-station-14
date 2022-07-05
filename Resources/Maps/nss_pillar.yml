@@ -27931,25 +27931,6 @@ entities:
   - containers:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 1102
-  type: WeaponRevolverDeckard
-  components:
-  - pos: -17.504456,12.729088
-    parent: 130
-    type: Transform
-  - chambers:
-    - True
-    - True
-    - True
-    - True
-    - True
-    type: RevolverAmmoProvider
-  - canCollide: False
-    type: Physics
-  - containers:
-      revolver-ammo: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 1103
   type: WallSolid
   components:
