@@ -57,7 +57,7 @@ public sealed class DamageOverlay : Overlay
          * Here's the rundown:
          * 1. There's lerping for each level so the transitions are smooth.
          * 2. There's 3 overlays, 1 for brute damage, 1 for oxygen damage (that also doubles as a crit overlay),
-         * and a white one during crit that closes in as you progress towards death
+         * and a white one during crit that closes in as you progress towards death. When you die it slowly disappears.
          * The crit overlay also occasionally reduces its alpha as a "blink"
          */
 
