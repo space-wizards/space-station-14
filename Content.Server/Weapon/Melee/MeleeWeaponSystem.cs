@@ -187,7 +187,7 @@ namespace Content.Server.Weapon.Melee
 
                     var damageResult = _damageableSystem.TryChangeDamage(entity, modifiedDamage);
 
-                    if (damageResult != null)
+                    if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
                         appliedDamage += damageResult;
 
