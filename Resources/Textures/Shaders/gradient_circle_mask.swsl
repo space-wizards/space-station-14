@@ -3,7 +3,7 @@
 
 light_mode unshaded;
 
-uniform highp float colorX;
+uniform highp vec3 color;
 uniform highp float time;
 // Uniforms because it makes testing way easier. If needed make it const.
 uniform highp float outerCircleRadius;
@@ -23,7 +23,7 @@ void fragment() {
 	highp float outerRadius = outerCircleRadius + time * (outerCircleMaxRadius - outerCircleRadius);
     
 	if(distance > outerRadius) {
-		COLOR = vec4(colorX, 0.0, 0.0, darknessAlphaOuter);
+		COLOR = vec4(color.x, color.y, color.z, darknessAlphaOuter);
 	}
 	else if(distance < innerRadius) {
 		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
@@ -31,6 +31,6 @@ void fragment() {
 	else {
         	highp float ratio = (distance - innerRadius) / (outerRadius - innerRadius);
 		highp float alpha = darknessAlphaInner + (darknessAlphaOuter - darknessAlphaInner) * ratio;
-		COLOR = vec4(colorX, 0.0, 0.0, alpha);
+		COLOR = vec4(color.x, color.y, color.z, alpha);
 	}
 }

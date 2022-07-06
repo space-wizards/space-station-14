@@ -25,15 +25,21 @@ public sealed class DamageOverlay : Overlay
     /// </summary>
     public float BruteLevel = 0f;
 
+    private float _oldBruteLevel = 0f;
+
     /// <summary>
     /// Handles the darkening overlay.
     /// </summary>
     public float OxygenLevel = 0f;
 
+    private float _oldOxygenLevel = 0f;
+
     /// <summary>
     /// Handles the white overlay when crit.
     /// </summary>
     public float CritLevel = 0f;
+
+    private float _oldCritLevel = 0f;
 
     public DamageOverlay()
     {
@@ -47,13 +53,25 @@ public sealed class DamageOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        /*
+         * Here's the rundown:
+         * 1. There's lerping for each level so the transitions are smooth.
+         * 2. There's 3 overlays, 1 for brute damage, 1 for oxygen damage (that also doubles as a crit overlay),
+         * and a white one during crit that closes in as you progress towards death
+         * The crit overlay also occasionally reduces its alpha as a "blink"
+         */
+
         var viewport = args.ViewportBounds;
         var handle = args.ScreenHandle;
         var distance = args.ViewportBounds.Width;
+        var lerpRate = 0.2f;
 
         switch (State)
         {
             case DamageState.Dead:
+                _oldBruteLevel = BruteLevel;
+                _oldCritLevel = CritLevel;
+                _oldOxygenLevel = OxygenLevel;
                 handle.UseShader(_deadShader);
                 handle.DrawRect(viewport, Color.White);
                 return;
@@ -65,6 +83,25 @@ public sealed class DamageOverlay : Overlay
         }
 
         var time = (float) _timing.RealTime.TotalSeconds;
+        var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
+
+        if (!_oldBruteLevel.Equals(BruteLevel))
+        {
+            var diff = BruteLevel - _oldBruteLevel;
+            _oldBruteLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+        }
+
+        if (!_oldOxygenLevel.Equals(OxygenLevel))
+        {
+            var diff = OxygenLevel - _oldOxygenLevel;
+            _oldOxygenLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+        }
+
+        if (!_oldCritLevel.Equals(CritLevel))
+        {
+            var diff = CritLevel - _oldCritLevel;
+            _oldCritLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+        }
 
         /*
          * darknessAlphaOuter is the maximum alpha for anything outside of the larger circle
@@ -79,11 +116,10 @@ public sealed class DamageOverlay : Overlay
 
         // Makes debugging easier don't @ me
         float level = 0f;
-        level = BruteLevel;
-        // level = 0f;
+        level = _oldBruteLevel;
 
         // TODO: Lerping
-        if (level > 0f && CritLevel <= 0f)
+        if (level > 0f && _oldCritLevel <= 0f)
         {
             var pulseRate = 3f;
             var adjustedTime = time * pulseRate;
@@ -92,13 +128,13 @@ public sealed class DamageOverlay : Overlay
             float innerMaxLevel = 0.6f * distance;
             float innerMinLevel = 0.2f * distance;
 
-            var outerRadius = outerMaxLevel - BruteLevel * (outerMaxLevel - outerMinLevel);
-            var innerRadius = innerMaxLevel - BruteLevel * (innerMaxLevel - innerMinLevel);
+            var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
+            var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
 
             var pulse = MathF.Max(0f, MathF.Sin(adjustedTime));
 
             _bruteShader.SetParameter("time", pulse);
-            _bruteShader.SetParameter("colorX", 1.0f);
+            _bruteShader.SetParameter("color", new Vector3(1f, 0f, 0f));
             _bruteShader.SetParameter("darknessAlphaOuter", 0.8f);
 
             _bruteShader.SetParameter("outerCircleRadius", outerRadius);
@@ -108,8 +144,12 @@ public sealed class DamageOverlay : Overlay
             handle.UseShader(_bruteShader);
             handle.DrawRect(viewport, Color.White);
         }
+        else
+        {
+            _oldBruteLevel = BruteLevel;
+        }
 
-        level = CritLevel == 0f ? OxygenLevel : 1f;
+        level = State != DamageState.Critical ? _oldOxygenLevel : 1f;
 
         if (level > 0f)
         {
@@ -125,14 +165,14 @@ public sealed class DamageOverlay : Overlay
             float critTime;
 
             // If in crit then just fix it; also pulse it very occasionally so they can see more.
-            if (CritLevel > 0f)
+            if (_oldCritLevel > 0f)
             {
-                var adjustedTime = time * 1.5f;
-                critTime = MathF.Max(0f, MathF.Cos(adjustedTime / 2f) - 1f + MathF.Sin(adjustedTime));
+                var adjustedTime = time * 2f;
+                critTime = MathF.Max(0, MathF.Sin(adjustedTime) + 2 * MathF.Sin(2 * adjustedTime / 4f) + MathF.Sin(adjustedTime / 4f) - 3f);
 
                 if (critTime > 0f)
                 {
-                    outerDarkness = 1f - critTime / 2f;
+                    outerDarkness = 1f - critTime / 1.5f;
                 }
                 else
                 {
@@ -145,7 +185,7 @@ public sealed class DamageOverlay : Overlay
             }
 
             _oxygenShader.SetParameter("time", 0.0f);
-            _oxygenShader.SetParameter("colorX", 0.0f);
+            _oxygenShader.SetParameter("color", new Vector3(0f, 0f, 0f));
             _oxygenShader.SetParameter("darknessAlphaOuter", outerDarkness);
             _oxygenShader.SetParameter("innerCircleRadius", innerRadius);
             _oxygenShader.SetParameter("innerCircleMaxRadius", innerRadius);
@@ -155,15 +195,28 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = CritLevel;
-        level = 0f;
+        level = _oldCritLevel;
 
         if (level > 0f)
         {
-            _critShader.SetParameter("darknessAlphaInner", 0.6f);
-            _critShader.SetParameter("darknessAlphaOuter", 0.9f);
-            _critShader.SetParameter("innerCircleRadius", 40.0f);
-            _critShader.SetParameter("outerCircleRadius", 80.0f);
+            float outerMaxLevel = 2.0f * distance;
+            float outerMinLevel = 1.0f * distance;
+            float innerMaxLevel = 0.6f * distance;
+            float innerMinLevel = 0.02f * distance;
+
+            var outerRadius = outerMaxLevel - level * (outerMaxLevel - outerMinLevel);
+            var innerRadius = innerMaxLevel - level * (innerMaxLevel - innerMinLevel);
+
+            var pulse = MathF.Max(0f, MathF.Sin(time));
+
+            // If in crit then just fix it; also pulse it very occasionally so they can see more.
+            _critShader.SetParameter("time", pulse);
+            _critShader.SetParameter("color", new Vector3(1f, 1f, 1f));
+            _critShader.SetParameter("darknessAlphaOuter", 1.0f);
+            _critShader.SetParameter("innerCircleRadius", innerRadius);
+            _critShader.SetParameter("innerCircleMaxRadius", innerRadius + 0.005f * distance);
+            _critShader.SetParameter("outerCircleRadius", outerRadius);
+            _critShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);
             handle.UseShader(_critShader);
             handle.DrawRect(viewport, Color.White);
         }

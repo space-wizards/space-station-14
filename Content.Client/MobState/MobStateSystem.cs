@@ -113,7 +113,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
             if (threshold >= earliestThreshold && TryGetEarliestDeadState(stateComponent, threshold, out _, out var earliestDeadHold))
             {
-                critLevel = (float) Math.Clamp((threshold - earliestThreshold).Double() / (earliestThreshold - earliestDeadHold).Double(), 0.1, 1);
+                critLevel = (float) Math.Clamp((damageable.TotalDamage - earliestThreshold).Double() / (earliestDeadHold - earliestThreshold).Double(), 0.1, 1);
             }
         }
 
