@@ -341,10 +341,9 @@ public sealed partial class StationJobsSystem
 
         foreach (var (player, profile) in profiles)
         {
-            if (!_playerManager.TryGetSessionById(player, out var pSession)) continue;
             var roleBans = _roleBanManager.GetJobBans(player);
             var profileJobs = profile.JobPriorities.Keys.ToList();
-            _roleTimers.SetAllowedJobs(pSession, ref profileJobs);
+            _roleTimers.SetAllowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 

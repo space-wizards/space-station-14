@@ -8,6 +8,7 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -161,7 +162,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         PlayerRolesChanged(ev.Player);
     }
 
-    public bool IsAllowed(IPlayerSession pSession, string role)
+    public bool IsAllowed(NetUserId id, string role)
     {
         if (!ProtoManager.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
@@ -172,7 +173,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         foreach (var requirement in job.Requirements)
         {
-            var reason = RequirementMet(pSession, job, requirement, overall, roles);
+            var reason = RequirementMet(id, job, requirement, overall, roles);
             if (reason == null) continue;
             return false;
         }
@@ -180,7 +181,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return true;
     }
 
-    public HashSet<string> GetDisallowedJobs(ICommonSession session)
+    public HashSet<string> GetDisallowedJobs(NetUserId id)
     {
         var roles = new HashSet<string>();
         if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return roles;
@@ -194,7 +195,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    var reason = RequirementMet(session, job, requirement, overallPlaytime, rolePlaytimes);
+                    var reason = RequirementMet(id, job, requirement, overallPlaytime, rolePlaytimes);
                     if (reason == null) continue;
                     goto NoRole;
                 }
@@ -207,7 +208,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return roles;
     }
 
-    public void SetAllowedJobs(ICommonSession session, ref List<string> jobs)
+    public void SetAllowedJobs(NetUserId id, ref List<string> jobs)
     {
         if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return;
 
@@ -224,7 +225,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                var reason = RequirementMet(session, jobber, requirement, overallPlaytime, rolePlaytimes);
+                var reason = RequirementMet(id, jobber, requirement, overallPlaytime, rolePlaytimes);
                 if (reason == null) continue;
 
                 jobs.RemoveSwap(i);
@@ -253,13 +254,13 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         Save(player, _timing.CurTime);
     }
 
-    protected override TimeSpan GetOverallPlaytime(ICommonSession session)
+    protected override TimeSpan GetOverallPlaytime(NetUserId id)
     {
-        return _roleTimers.GetOverallPlaytime(session.UserId).Result;
+        return _roleTimers.GetOverallPlaytime(id).Result;
     }
 
-    protected override Dictionary<string, TimeSpan> GetRolePlaytime(ICommonSession session, string role)
+    protected override Dictionary<string, TimeSpan> GetRolePlaytime(NetUserId id, string role)
     {
-        return _roleTimers.GetRolePlaytimes(session.UserId).Result;
+        return _roleTimers.GetRolePlaytimes(id).Result;
     }
 }

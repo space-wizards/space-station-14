@@ -3,6 +3,7 @@ using System.Text;
 using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using Robust.Client.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 
 namespace Content.Client.Roles;
@@ -55,7 +56,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         foreach (var requirement in job.Requirements)
         {
-            reason = RequirementMet(player, job, requirement, overall, roles);
+            reason = RequirementMet(player.UserId, job, requirement, overall, roles);
 
             if (reason == null) continue;
             reasonBuilder.AppendLine(reason);
@@ -65,12 +66,12 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return reason == null;
     }
 
-    protected override TimeSpan GetOverallPlaytime(ICommonSession session)
+    protected override TimeSpan GetOverallPlaytime(NetUserId _)
     {
         return OverallPlaytime;
     }
 
-    protected override Dictionary<string, TimeSpan> GetRolePlaytime(ICommonSession session, string role)
+    protected override Dictionary<string, TimeSpan> GetRolePlaytime(NetUserId _, string role)
     {
         return _roles;
     }

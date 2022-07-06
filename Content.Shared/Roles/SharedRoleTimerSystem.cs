@@ -1,4 +1,5 @@
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
@@ -20,14 +21,14 @@ public abstract class SharedRoleTimerSystem : EntitySystem
     /// <summary>
     /// Returns a string with the reason why a particular requirement may not be met.
     /// </summary>
-    public string? RequirementMet(ICommonSession session, JobPrototype job, JobRequirement requirement,
+    public string? RequirementMet(NetUserId id, JobPrototype job, JobRequirement requirement,
         TimeSpan? overallTime = null,
         Dictionary<string, TimeSpan>? roleTimes = null)
     {
         switch (requirement)
         {
             case DepartmentTimeRequirement deptRequirement:
-                roleTimes ??= GetRolePlaytime(session, job.ID);
+                roleTimes ??= GetRolePlaytime(id, job.ID);
                 var jobs = new HashSet<JobPrototype>();
                 var playtime = TimeSpan.Zero;
 
@@ -59,7 +60,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
                     ("department", Loc.GetString(deptRequirement.Department)));
 
             case OverallPlaytimeRequirement overallRequirement:
-                overallTime ??= GetOverallPlaytime(session);
+                overallTime ??= GetOverallPlaytime(id);
                 var overallDiff = overallRequirement.Time.TotalMinutes - overallTime.Value.TotalMinutes;
 
                 if (overallDiff <= 0) return null;
@@ -67,7 +68,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
                 return overallTime.Value >= overallRequirement.Time ? null : Loc.GetString("role-timer-overall-insufficient", ("time", $"{overallDiff:0}"));
 
             case RoleTimeRequirement roleRequirement:
-                roleTimes ??= GetRolePlaytime(session, job.ID);
+                roleTimes ??= GetRolePlaytime(id, job.ID);
                 roleTimes.TryGetValue(roleRequirement.Role, out var roleTime);
                 var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
 
@@ -82,6 +83,6 @@ public abstract class SharedRoleTimerSystem : EntitySystem
         }
     }
 
-    protected abstract TimeSpan GetOverallPlaytime(ICommonSession session);
-    protected abstract Dictionary<string, TimeSpan> GetRolePlaytime(ICommonSession session, string role);
+    protected abstract TimeSpan GetOverallPlaytime(NetUserId id);
+    protected abstract Dictionary<string, TimeSpan> GetRolePlaytime(NetUserId id, string role);
 }
