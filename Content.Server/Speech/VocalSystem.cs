@@ -73,7 +73,7 @@ public sealed class VocalSystem : EntitySystem
 
         if (_random.Prob(component.WilhelmProbability))
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.Wilhelm.GetSound(), uid, component.AudioParams);
+            SoundSystem.Play(component.Wilhelm.GetSound(), Filter.Pvs(uid), uid, component.AudioParams);
             return true;
         }
 
@@ -83,10 +83,10 @@ public sealed class VocalSystem : EntitySystem
         switch (sex)
         {
             case Sex.Male:
-                SoundSystem.Play(Filter.Pvs(uid), component.MaleScream.GetSound(), uid, pitchedParams);
+                SoundSystem.Play(component.MaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             case Sex.Female:
-                SoundSystem.Play(Filter.Pvs(uid), component.FemaleScream.GetSound(), uid, pitchedParams);
+                SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

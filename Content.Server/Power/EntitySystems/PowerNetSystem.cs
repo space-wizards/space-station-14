@@ -248,7 +248,7 @@ namespace Content.Server.Power.EntitySystems
 
                     apcReceiver.PoweredLastUpdate = powered;
 
-                    RaiseLocalEvent(apcReceiver.Owner, new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower));
+                    RaiseLocalEvent(apcReceiver.Owner, new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower), true);
 
                     if (appearanceQuery.TryGetComponent(apcReceiver.Owner, out var appearance))
                         appearance.SetData(PowerDeviceVisuals.Powered, powered);
@@ -262,7 +262,7 @@ namespace Content.Server.Power.EntitySystems
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
-                        RaiseLocalEvent(consumer.Owner, msg);
+                        RaiseLocalEvent(consumer.Owner, msg, true);
                     }
                 }
 
@@ -273,11 +273,11 @@ namespace Content.Server.Power.EntitySystems
 
                     if (lastSupply == 0f && currentSupply != 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true}, true);
                     }
                     else if (lastSupply > 0f && currentSupply == 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false}, true);
                     }
 
                     powerNetBattery.LastSupply = currentSupply;

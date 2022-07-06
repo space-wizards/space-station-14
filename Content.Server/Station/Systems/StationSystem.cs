@@ -182,24 +182,21 @@ public sealed class StationSystem : EntitySystem
 
         if (stationConfig is not null && name is null)
         {
-            metaData.EntityName = GenerateStationName(stationConfig);
+            name = GenerateStationName(stationConfig);
         }
-        else if (name is not null)
-        {
-            metaData.EntityName = name;
-        }
-        else
+        else if (name is null)
         {
             _sawmill.Error($"When setting up station {station}, was unable to find a valid name in the config and no name was provided.");
-            metaData.EntityName = "unnamed station";
+            name = "unnamed station";
         }
 
+        metaData.EntityName = name;
         RaiseLocalEvent(new StationInitializedEvent(station));
         _sawmill.Info($"Set up station {metaData.EntityName} ({station}).");
 
         foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
-            AddGridToStation(station, grid, null, data);
+            AddGridToStation(station, grid, null, data, name);
         }
 
         return station;
@@ -213,18 +210,21 @@ public sealed class StationSystem : EntitySystem
     /// <param name="gridComponent">Resolve pattern, grid component of mapGrid.</param>
     /// <param name="stationData">Resolve pattern, station data component of station.</param>
     /// <exception cref="ArgumentException">Thrown when mapGrid or station are not a grid or station, respectively.</exception>
-    public void AddGridToStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null)
+    public void AddGridToStation(EntityUid station, EntityUid mapGrid, IMapGridComponent? gridComponent = null, StationDataComponent? stationData = null, string? name = null)
     {
         if (!Resolve(mapGrid, ref gridComponent))
             throw new ArgumentException("Tried to initialize a station on a non-grid entity!", nameof(mapGrid));
         if (!Resolve(station, ref stationData))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
+        if (!string.IsNullOrEmpty(name))
+            MetaData(mapGrid).EntityName = name;
+
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
         stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false));
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
 
         _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
@@ -247,7 +247,7 @@ public sealed class StationSystem : EntitySystem
         RemComp<StationMemberComponent>(mapGrid);
         stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner));
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
         _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
@@ -273,7 +273,7 @@ public sealed class StationSystem : EntitySystem
             _chatSystem.DispatchStationAnnouncement(station, $"The station {oldName} has been renamed to {name}.");
         }
 
-        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name));
+        RaiseLocalEvent(station, new StationRenamedEvent(oldName, name), true);
     }
 
     /// <summary>
@@ -317,13 +317,13 @@ public sealed class StationSystem : EntitySystem
             return CompOrNull<StationMemberComponent>(entity)?.Station;
         }
 
-        if (xform.GridEntityId == EntityUid.Invalid)
+        if (xform.GridUid == EntityUid.Invalid)
         {
             Logger.Debug("A");
             return null;
         }
 
-        return CompOrNull<StationMemberComponent>(xform.GridEntityId)?.Station;
+        return CompOrNull<StationMemberComponent>(xform.GridUid)?.Station;
     }
 }
 

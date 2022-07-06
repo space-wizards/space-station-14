@@ -149,7 +149,7 @@ namespace Content.Server.Storage.Components
             }
 
             var @event = new StorageOpenAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -157,7 +157,7 @@ namespace Content.Server.Storage.Components
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             var @event = new StorageCloseAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -200,7 +200,7 @@ namespace Content.Server.Storage.Components
             }
 
             ModifyComponents();
-                SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
+                SoundSystem.Play(_closeSound.GetSound(), Filter.Pvs(Owner), Owner);
             LastInternalOpenAttempt = default;
         }
 
@@ -251,7 +251,7 @@ namespace Content.Server.Storage.Components
             Open = true;
             EntitySystem.Get<EntityStorageSystem>().EmptyContents(Owner, this);
             ModifyComponents();
-                SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
+                SoundSystem.Play(_openSound.GetSound(), Filter.Pvs(Owner), Owner);
         }
 
         private void ModifyComponents()

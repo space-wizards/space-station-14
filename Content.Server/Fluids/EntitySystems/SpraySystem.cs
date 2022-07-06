@@ -59,7 +59,7 @@ public sealed class SpraySystem : EntitySystem
 
         var playerPos = Transform(args.User).Coordinates;
 
-        if (args.ClickLocation.GetGridEntityId(EntityManager) != playerPos.GetGridEntityId(EntityManager))
+        if (args.ClickLocation.GetGridUid(EntityManager) != playerPos.GetGridUid(EntityManager))
             return;
 
         var direction = (args.ClickLocation.Position - playerPos.Position).Normalized;
@@ -113,10 +113,10 @@ public sealed class SpraySystem : EntitySystem
                 body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
         }
 
-        SoundSystem.Play(Filter.Pvs(uid), component.SpraySound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
+        SoundSystem.Play(component.SpraySound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
 
         RaiseLocalEvent(uid,
-            new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)));
+            new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)), true);
     }
 }
 

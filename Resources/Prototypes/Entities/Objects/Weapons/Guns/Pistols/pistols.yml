@@ -15,7 +15,7 @@
   - type: Item
     size: 10
   - type: Gun
-    fireRate: 8
+    fireRate: 6
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -29,12 +29,14 @@
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazinePistol
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
+        priority: 1
         whitelist:
           tags:
             - CartridgePistol
@@ -65,6 +67,7 @@
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazinePistol
@@ -72,6 +75,7 @@
       gun_chamber:
         name: Chamber
         startingItem: CartridgePistol
+        priority: 1
         whitelist:
           tags:
             - CartridgePistol
@@ -114,6 +118,7 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: Gun
+    fireRate: 4
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
   - type: ItemSlots
@@ -123,12 +128,14 @@
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
       gun_chamber:
         name: Chamber
         startingItem: CartridgeCaselessRifle
+        priority: 1
         whitelist:
           tags:
             - CartridgeCaselessRifle
@@ -154,3 +161,5 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Gun
     fireRate: 5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg

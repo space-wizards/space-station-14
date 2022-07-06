@@ -76,6 +76,18 @@
         damage:
           groups:
             Brute: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Cryoxadone
@@ -133,6 +145,19 @@
         damage:
           groups:
             Burn: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+        groups:
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Dexalin
@@ -248,6 +273,19 @@
         damage:
           types:
             Radiation: -1
+      - !type:ChemVomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+           Heat: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Ipecac
@@ -539,6 +577,7 @@
       - !type:SatiateHunger
         factor: -1
 
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
   name: reagent-name-omnizine
@@ -598,3 +637,4 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+

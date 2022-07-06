@@ -205,7 +205,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (excluded != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
 
-            SoundSystem.Play(filter, sound.GetSound(), uid, audioParams);
+            SoundSystem.Play(sound.GetSound(), filter, uid, audioParams);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>

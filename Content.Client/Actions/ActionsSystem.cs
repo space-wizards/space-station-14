@@ -527,7 +527,7 @@ namespace Content.Client.Actions
             }
 
             if (action.Sound != null)
-                 SoundSystem.Play(Filter.Local(), action.Sound.GetSound(), user, action.AudioParams);
+                 SoundSystem.Play(action.Sound.GetSound(), Filter.Local(), user, action.AudioParams);
 
             return performedAction;
         }

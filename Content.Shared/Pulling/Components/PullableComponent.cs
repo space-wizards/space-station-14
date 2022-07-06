@@ -11,8 +11,6 @@ namespace Content.Shared.Pulling.Components
     [RegisterComponent]
     public sealed class SharedPullableComponent : Component
     {
-        public float? MaxDistance => PullJoint?.MaxLength;
-
         /// <summary>
         /// The current entity pulling this component.
         /// SharedPullingStateManagementSystem should be writing this. This means definitely not you.
@@ -28,6 +26,20 @@ namespace Content.Shared.Pulling.Components
 
         [Access(typeof(SharedPullingStateManagementSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public EntityCoordinates? MovingTo { get; set; }
+
+        /// <summary>
+        /// If the physics component has FixedRotation should we keep it upon being pulled
+        /// </summary>
+        [Access(typeof(SharedPullingSystem), Other = AccessPermissions.ReadExecute)]
+        [ViewVariables(VVAccess.ReadWrite), DataField("fixedRotation")]
+        public bool FixedRotationOnPull { get; set; }
+
+        /// <summary>
+        /// What the pullable's fixedrotation was set to before being pulled.
+        /// </summary>
+        [Access(typeof(SharedPullingSystem), Other = AccessPermissions.ReadExecute)]
+        [ViewVariables]
+        public bool PrevFixedRotation;
 
         public override ComponentState GetComponentState()
         {

@@ -22,6 +22,6 @@ public sealed class RadiationSystem : EntitySystem
     public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time)
     {
         var msg = new OnIrradiatedEvent(time, radsPerSecond);
-        RaiseLocalEvent(uid, msg);
+        RaiseLocalEvent(uid, msg, true);
     }
 }
