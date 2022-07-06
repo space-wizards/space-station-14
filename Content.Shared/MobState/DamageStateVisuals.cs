@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.MobState
 {
     [Serializable, NetSerializable]
-    public enum DamageStateVisuals : byte
+    public enum DamageStateVisuals
     {
         State
     }

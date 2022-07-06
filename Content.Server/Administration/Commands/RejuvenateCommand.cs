@@ -5,7 +5,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
-using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Administration;
@@ -58,6 +57,7 @@ namespace Content.Server.Administration.Commands
         {
             var targetUid = target;
             var entMan = IoCManager.Resolve<IEntityManager>();
+            entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
 
             // TODO holy shit make this an event my man!

@@ -185,8 +185,8 @@
   - type: Internals
   - type: MobState
     thresholds:
-      0: Alive
-      100: Dead
+      0: !type:NormalMobState {}
+      100: !type:DeadMobState {}
   - type: Destructible
     thresholds:
     - trigger:

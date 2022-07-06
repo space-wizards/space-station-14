@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
@@ -11,6 +12,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.MobState.State;
+using Content.Shared.Doors.Components;
 
 namespace Content.Server.Dragon
 {
@@ -21,6 +24,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {
@@ -123,8 +127,8 @@ namespace Content.Server.Dragon
             {
                 switch (targetState.CurrentState)
                 {
-                    case DamageState.Critical:
-                    case DamageState.Dead:
+                    case SharedCriticalMobState:
+                    case SharedDeadMobState:
                         component.CancelToken = new CancellationTokenSource();
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)

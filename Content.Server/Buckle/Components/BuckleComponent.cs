@@ -7,7 +7,6 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
@@ -324,8 +323,7 @@ namespace Content.Server.Buckle.Components
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .EnterState(mobState, mobState?.CurrentState);
+            mobState?.CurrentState?.EnterState(Owner, _entMan);
 
             UpdateBuckleStatus();
 

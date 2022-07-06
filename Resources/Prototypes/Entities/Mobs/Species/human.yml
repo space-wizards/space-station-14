@@ -235,9 +235,9 @@
   - type: Internals
   - type: MobState
     thresholds:
-      0: Alive
-      100: Critical
-      200: Dead
+      0: !type:NormalMobState {}
+      100: !type:CriticalMobState {}
+      200: !type:DeadMobState {}
   - type: Destructible
     thresholds:
     - trigger:
@@ -442,9 +442,9 @@
       damageContainer: Biological
     - type: MobState
       thresholds:
-        0: Alive
-        100: Critical
-        200: Dead
+        0: !type:NormalMobState {}
+        100: !type:CriticalMobState {}
+        200: !type:DeadMobState {}
     - type: Appearance
       visuals:
       - type: RotationVisualizer
