@@ -23819,8 +23819,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.821884
-      - 82.09186
+      - 21.824387
+      - 82.10127
       - 0
       - 0
       - 0
@@ -23830,8 +23830,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.822918
-      - 82.09575
+      - 21.824558
+      - 82.10191
       - 0
       - 0
       - 0
@@ -23841,8 +23841,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.824085
-      - 82.100136
+      - 21.824749
+      - 82.10263
       - 0
       - 0
       - 0
@@ -23852,8 +23852,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.82468
-      - 82.10237
+      - 21.824848
+      - 82.103
       - 0
       - 0
       - 0
@@ -38560,9 +38560,9 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1873
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -30.457558,0.95884895
+  - pos: -30.490433,0.9149604
     parent: 60
     type: Transform
   - canCollide: False
@@ -41157,18 +41157,42 @@ entities:
     pos: 13.5,-38.5
     parent: 60
     type: Transform
-- uid: 2179
-  type: ShellShotgunBeanbag
+- uid: 2177
+  type: BoxBeanbag
   components:
-  - pos: 11.383304,-35.268364
+  - pos: 11.479033,-35.451874
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 2178
+  type: BoxShotgunFlare
+  components:
+  - pos: 11.479033,-35.3425
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 2179
+  type: WeaponDisabler
+  components:
+  - pos: -27.459183,-7.407415
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 2180
-  type: ShellShotgunBeanbag
+  type: WeaponDisabler
   components:
-  - pos: 11.383304,-35.518364
+  - pos: -30.506058,1.0555854
     parent: 60
     type: Transform
   - canCollide: False
@@ -53195,7 +53219,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -4389.4155
+  - SecondsUntilStateChange: -4521.9814
     state: Opening
     type: Door
 - uid: 3729
@@ -83574,14 +83598,6 @@ entities:
     pos: 38.50196,12.281161
     parent: 60
     type: Transform
-- uid: 7675
-  type: WeaponTaser
-  components:
-  - pos: -27.491865,-7.3054943
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7676
   type: GasPipeStraight
   components:
@@ -97039,14 +97055,6 @@ entities:
   - containers:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 9535
-  type: WeaponTaser
-  components:
-  - pos: -30.470657,1.1337857
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9536
   type: BoxFolderGrey
   components:
