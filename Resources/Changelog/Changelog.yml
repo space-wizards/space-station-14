@@ -1,15 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Hardsuit helmets are now part of a hardsuit. They can be toggled via
-      an action., type: Tweak}
-  id: 1377
-  time: '2022-04-23T03:31:45.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed magboots not properly applying wind/pressure immunity., type: Fix}
-  id: 1378
-  time: '2022-04-23T03:47:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Grids (AKA shuttles / stations) can now split, type: Add}
@@ -2953,3 +2942,20 @@ Entries:
   - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
   id: 1876
   time: '2022-07-06T03:08:57.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Zombie game mode as a low chance option in Secret., type: Add}
+  - {message: 'Added the CBURN Unit, an advanced operations team for Chemical, Biological,
+      Undead, Radiological, and Nuclear threats.', type: Add}
+  - {message: Non-human zombies no longer get a damage buff., type: Tweak}
+  - {message: Zombie infection chance is now based on the amount of clothing worn.,
+    type: Tweak}
+  - {message: Zombies have had a visual overhaul., type: Tweak}
+  - {message: Zombies now do less damage to each other rather than more., type: Fix}
+  id: 1877
+  time: '2022-07-06T03:42:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Rat kings will not spawn until someone takes the ghost role., type: Tweak}
+  id: 1878
+  time: '2022-07-06T03:43:24.0000000+00:00'
