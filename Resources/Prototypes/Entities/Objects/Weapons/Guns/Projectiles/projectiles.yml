@@ -129,6 +129,8 @@
     damage:
       types:
         Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/tap.ogg"
     soundForce: true
 
 - type: entity
