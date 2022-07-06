@@ -193,6 +193,13 @@
       path: /Audio/Animals/chicken_cluck_happy.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: EggLayer
+    eggSpawn:
+    - id: FoodEgg
+  - type: ReplacementAccent
+    accent: chicken
+  - type: SentienceTarget
+    flavorKind: organic
 
 - type: entity
   name: mallard duck #Quack
@@ -237,6 +244,13 @@
       path: /Audio/Animals/duck_quack_happy.ogg
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: EggLayer
+    eggSpawn:
+    - id: FoodEgg
+  - type: ReplacementAccent
+    accent: duck
+  - type: SentienceTarget
+    flavorKind: organic
 
 - type: entity
   name: white duck #Quack
