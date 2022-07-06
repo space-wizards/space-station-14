@@ -14,7 +14,6 @@ public sealed class DamageOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     private readonly ShaderInstance _critShader;
-    private readonly ShaderInstance _deadShader;
     private readonly ShaderInstance _oxygenShader;
     private readonly ShaderInstance _bruteShader;
 
@@ -41,11 +40,12 @@ public sealed class DamageOverlay : Overlay
 
     private float _oldCritLevel = 0f;
 
+    private float _deadLevel = 1f;
+
     public DamageOverlay()
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);
-        _deadShader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
         _oxygenShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
         _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
         _bruteShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
@@ -66,41 +66,36 @@ public sealed class DamageOverlay : Overlay
         var distance = args.ViewportBounds.Width;
         var lerpRate = 0.2f;
 
-        switch (State)
-        {
-            case DamageState.Dead:
-                _oldBruteLevel = BruteLevel;
-                _oldCritLevel = CritLevel;
-                _oldOxygenLevel = OxygenLevel;
-                handle.UseShader(_deadShader);
-                handle.DrawRect(viewport, Color.White);
-                return;
-           case DamageState.Critical:
-           case DamageState.Alive:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
         var time = (float) _timing.RealTime.TotalSeconds;
         var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
+
+        // If they just died then lerp out the white overlay.
+        if (State != DamageState.Dead)
+        {
+            _deadLevel = 1f;
+        }
+        else if (!_deadLevel.Equals(0f))
+        {
+            var diff = -_deadLevel;
+            _deadLevel += GetDiff(diff, lerpRate, lastFrameTime);
+        }
 
         if (!_oldBruteLevel.Equals(BruteLevel))
         {
             var diff = BruteLevel - _oldBruteLevel;
-            _oldBruteLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+            _oldBruteLevel += GetDiff(diff, lerpRate, lastFrameTime);
         }
 
         if (!_oldOxygenLevel.Equals(OxygenLevel))
         {
             var diff = OxygenLevel - _oldOxygenLevel;
-            _oldOxygenLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+            _oldOxygenLevel += GetDiff(diff, lerpRate, lastFrameTime);
         }
 
         if (!_oldCritLevel.Equals(CritLevel))
         {
             var diff = CritLevel - _oldCritLevel;
-            _oldCritLevel += Math.Clamp(diff, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
+            _oldCritLevel += GetDiff(diff, lerpRate, lastFrameTime);
         }
 
         /*
@@ -195,7 +190,7 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = _oldCritLevel;
+        level = State != DamageState.Dead ? _oldCritLevel : _deadLevel;
 
         if (level > 0f)
         {
@@ -220,5 +215,10 @@ public sealed class DamageOverlay : Overlay
             handle.UseShader(_critShader);
             handle.DrawRect(viewport, Color.White);
         }
+    }
+
+    private float GetDiff(float value, float lerpRate, float lastFrameTime)
+    {
+        return Math.Clamp(value, -1 * lerpRate * lastFrameTime, lerpRate * lastFrameTime);
     }
 }
