@@ -45,7 +45,7 @@ public sealed class RadarControl : Control
     /// </summary>
     private Dictionary<EntityUid, Control> _iffControls = new();
 
-    private Dictionary<EntityUid, Dictionary<EntityUid, DockingInterfaceState>> _docks = new();
+    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
@@ -88,7 +88,7 @@ public sealed class RadarControl : Control
         {
             var coordinates = state.Coordinates;
             var grid = _docks.GetOrNew(coordinates.EntityId);
-            grid.Add(state.Entity, state);
+            grid.Add(state);
         }
     }
 
@@ -145,33 +145,30 @@ public sealed class RadarControl : Control
 
         var mapPosition = _coordinates.Value.ToMap(_entManager);
 
-        if (mapPosition.MapId == MapId.Nullspace)
+        if (mapPosition.MapId == MapId.Nullspace || !xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform))
         {
             Clear();
             return;
         }
 
         var offset = _coordinates.Value.Position;
-        Matrix3 matrix;
+        var offsetMatrix = Matrix3.CreateInverseTransform(
+            mapPosition.Position,
+            xform.WorldRotation - _rotation.Value);
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
         if (ourGridId != null)
         {
-            var offsetMatrix = Matrix3.CreateInverseTransform(offset.X, offset.Y, (float) _rotation.Value.Theta);
+            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
             var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
+
+            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
+
             // Draw our grid; use non-filled boxes so it doesn't look awful.
-            DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
+            DrawGrid(handle, matrix, ourGridFixtures, Color.Yellow);
 
-            DrawDocks(handle, ourGridId.Value, offsetMatrix);
-
-            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).InvWorldMatrix;
-
-            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out matrix);
-        }
-        else
-        {
-            matrix = Matrix3.CreateTranslation(-offset);
+            DrawDocks(handle, ourGridId.Value, matrix);
         }
 
         var invertedPosition = _coordinates.Value.Position - offset;
@@ -187,7 +184,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - RadarRange, mapPosition.Position + RadarRange)))
         {
-            if (grid.Index == ourGridId) continue;
+            if (grid.GridEntityId == ourGridId) continue;
 
             var gridBody = bodyQuery.GetComponent(grid.GridEntityId);
             if (gridBody.Mass < 10f)
@@ -205,7 +202,7 @@ public sealed class RadarControl : Control
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
-            Matrix3.Multiply(in gridMatrix, in matrix, out var matty);
+            Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
 
             if (ShowIFF)
             {
@@ -288,8 +285,9 @@ public sealed class RadarControl : Control
 
         if (_docks.TryGetValue(uid, out var docks))
         {
-            foreach (var (ent, state) in docks)
+            foreach (var state in docks)
             {
+                var ent = state.Entity;
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 

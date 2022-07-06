@@ -10,7 +10,7 @@ namespace Content.Shared.GameTicking
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
         public const string FallbackOverflowJob = "Passenger";
-        public const string FallbackOverflowJobName = "passenger";
+        public const string FallbackOverflowJobName = "job-name-passenger";
     }
 
     [Serializable, NetSerializable]

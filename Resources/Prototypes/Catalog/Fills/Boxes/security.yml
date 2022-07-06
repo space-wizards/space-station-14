@@ -58,6 +58,20 @@
       - state: box_security
       - state: ziptie
 
+- type: entity
+  name: forensic pad box
+  parent: BoxCardboard
+  id: BoxForensicPad
+  description: A box of forensic pads.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ForensicPad
+        amount: 10
+  - type: Sprite
+    layers:
+      - state: box_security
+
 # TODO: THESE ARE BAD AND ARE DEPRECATED, DON'T USE THEM PLEASE
 - type: entity
   name: box of shotgun beanbag cartridges
@@ -120,21 +134,6 @@
         - state: shellflare
 
 - type: entity
-  name: box of shotgun flash cartridges
-  parent: BoxCardboard
-  id: BoxShotgunFlash
-  description: A box full of shotgun flash cartridges, designed for riot shotguns.
-  components:
-    - type: StorageFill
-      contents:
-        - id: ShellShotgunFlash
-          amount: 6
-    - type: Sprite
-      layers:
-        - state: boxwide
-        - state: shellflash
-
-- type: entity
   name: box of shotgun incendiary cartridges
   parent: BoxCardboard
   id: BoxShotgunIncendiary
@@ -189,17 +188,6 @@
     - type: StorageFill
       contents:
         - id: MagazineRifle
-          amount: 6
-
-- type: entity
-  name: box of .20 rifle (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazineRifleFlash
-  description: A box full of .20 rifle (flash) magazines.
-  components:
-    - type: StorageFill
-      contents:
-        - id: MagazineRifleFlash
           amount: 6
 
 - type: entity

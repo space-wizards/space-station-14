@@ -48,9 +48,9 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_tileData.ContainsKey(ev.GridId))
+            if (_tileData.ContainsKey(ev.EntityUid))
             {
-                _tileData.Remove(ev.GridId);
+                _tileData.Remove(ev.EntityUid);
             }
         }
 

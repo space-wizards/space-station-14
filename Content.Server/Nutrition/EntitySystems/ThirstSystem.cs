@@ -44,7 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            var mod = (component.CurrentThirstThreshold & (ThirstThreshold.Parched | ThirstThreshold.Dead)) != 0x0 ? 0.75f : 1.0f;
+            var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
 
@@ -135,23 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {
-                        if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                            _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has stopped taking dehydration damage");
-                        else if (calculatedThirstThreshold == ThirstThreshold.Dead)
-                           _adminLogger.Add(LogType.Thirst, $"{EntityManager.ToPrettyString(component.Owner):entity} has started taking dehydration damage");
-
                         component.CurrentThirstThreshold = calculatedThirstThreshold;
                         UpdateEffects(component);
-                    }
-                    if (component.CurrentThirstThreshold == ThirstThreshold.Dead)
-                    {
-                        if (!EntityManager.TryGetComponent(component.Owner, out MobStateComponent? mobState))
-                            return;
-
-                        if (!mobState.IsDead())
-                        {
-                            _damage.TryChangeDamage(component.Owner, component.Damage, true);
-                        }
                     }
                 }
                 _accumulatedFrameTime -= 1;

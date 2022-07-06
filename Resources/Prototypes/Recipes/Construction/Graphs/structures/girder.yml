@@ -143,3 +143,16 @@
                   data: 0
             - tool: Cutting
               doAfter: 1
+              
+    - node: wallrust
+      entity: WallSolidRust
+      edges:
+        - to: wall
+          completed:
+            - !type:SpawnPrototype
+              prototype: WallSolid
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 5

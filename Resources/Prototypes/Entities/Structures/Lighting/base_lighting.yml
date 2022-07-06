@@ -265,6 +265,8 @@
   components:
   - type: Sprite
     state: off
+  - type: AmbientSound
+    enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
     damage:

@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Default metabolism for medicine reagents.
+    /// Causes a random disease from a list, if the user is not already diseased.
     /// </summary>
     [UsedImplicitly]
     public sealed class ChemCauseRandomDisease : ReagentEffect

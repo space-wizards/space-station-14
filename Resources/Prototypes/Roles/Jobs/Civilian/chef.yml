@@ -1,11 +1,11 @@
 - type: job
   id: Chef
-  name: "chef"
+  name: job-name-chef
   startingGear: ChefGear
   departments:
   - Civilian
   icon: "Chef"
-  supervisors: "the head of personnel"
+  supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance

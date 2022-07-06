@@ -1,5 +1,6 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.CCVar
 {
@@ -206,6 +207,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> SoftMaxPlayers =
             CVarDef.Create("game.soft_max_players", 30, CVar.SERVERONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Whether or not panic bunker is currently enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> PanicBunkerEnabled =
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Minimum age of the account (from server's PoV, so from first-seen date) in minutes.
+        /// </summary>
+        public static readonly CVarDef<int> PanicBunkerMinAccountAge =
+            CVarDef.Create("game.panic_bunker.min_account_age", 1440, CVar.SERVERONLY);
+
 #if EXCEPTION_TOLERANCE
         /// <summary>
         ///     Amount of times round start must fail before the server is shut down.
@@ -285,6 +298,19 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> NukeopsPlayersPerOp =
             CVarDef.Create("nukeops.players_per_op", 5);
+
+        /*
+         * Zombie
+         */
+
+        public static readonly CVarDef<int> ZombieMinPlayers =
+            CVarDef.Create("zombie.min_players", 20);
+
+        public static readonly CVarDef<int> ZombieMaxInitialInfected =
+            CVarDef.Create("zombie.max_initial_infected", 6);
+
+        public static readonly CVarDef<int> ZombiePlayersPerInfected =
+            CVarDef.Create("zombie.players_per_infected", 10);
 
         /*
          * Pirates
@@ -450,18 +476,21 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED);
 
         /*
-         * Lobby music
+         * Music
          */
 
         public static readonly CVarDef<bool> LobbyMusicEnabled =
-            CVarDef.Create("ambience.lobbymusicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("ambience.lobby_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> EventMusicEnabled =
+            CVarDef.Create("ambience.event_music_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Admin sounds
          */
 
         public static readonly CVarDef<bool> AdminSoundsEnabled =
-            CVarDef.Create("audio.adminsoundsenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("audio.admin_sounds_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * HUD
@@ -555,7 +584,7 @@ namespace Content.Shared.CCVar
         ///     Actual area may be larger, as it currently doesn't terminate mid neighbor finding. I.e., area may be that of a ~51 tile radius circle instead.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionMaxArea =
-            CVarDef.Create("explosion.max_area", (int) 3.14f * 50 * 50, CVar.SERVERONLY);
+            CVarDef.Create("explosion.max_area", (int) 3.14f * 256 * 256, CVar.SERVERONLY);
 
         /// <summary>
         ///     Upper limit on the number of neighbor finding steps for the explosion system neighbor-finding algorithm.
@@ -565,7 +594,7 @@ namespace Content.Shared.CCVar
         ///     instances, <see cref="ExplosionMaxArea"/> will likely be hit before this becomes a limiting factor.
         /// </remarks>
         public static readonly CVarDef<int> ExplosionMaxIterations =
-            CVarDef.Create("explosion.max_iterations", 150, CVar.SERVERONLY);
+            CVarDef.Create("explosion.max_iterations", 500, CVar.SERVERONLY);
 
         /// <summary>
         ///     Max Time in milliseconds to spend processing explosions every tick.
@@ -838,7 +867,13 @@ namespace Content.Shared.CCVar
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
-            CVarDef.Create("vote.restart_required_ratio", 0.7f, CVar.SERVERONLY);
+            CVarDef.Create("vote.restart_required_ratio", 0.85f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not to restrict the restart vote when there's online admins.
+        /// </summary>
+        public static readonly CVarDef<bool> VoteRestartNotAllowedWhenAdminOnline =
+            CVarDef.Create("vote.restart_not_allowed_when_admin_online", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
@@ -900,6 +935,52 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> ShuttleIdleAngularDamping =
             CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Whether cargo shuttles are enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> CargoShuttles =
+            CVarDef.Create("shuttle.cargo", true, CVar.SERVERONLY);
+
+        /*
+         * Emergency
+         */
+
+        /// <summary>
+        /// How long the emergency shuttle remains docked with the station, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTime =
+            CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long after the console is authorized for the shuttle to early launch.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleAuthorizeTime =
+            CVarDef.Create("shuttle.emergency_authorize_time", 10f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How long after the console is authorized for the shuttle to early launch.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleTransitTime =
+            CVarDef.Create("shuttle.emergency_transit_time", 60f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether the emergency shuttle is enabled or should the round just end.
+        /// </summary>
+        public static readonly CVarDef<bool> EmergencyShuttleEnabled =
+            CVarDef.Create("shuttle.emergency_enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The percentage of time passed from the initial call to when the shuttle can no longer be recalled.
+        ///     ex. a call time of 10min and turning point of 0.5 means the shuttle cannot be recalled after 5 minutes.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyRecallTurningPoint =
+            CVarDef.Create("shuttle.recall_turning_point", 0.5f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The map to load for centcomm for the emergency shuttle to dock to.
+        /// </summary>
+        public static readonly CVarDef<string> CentcommMap =
+            CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
 
         /*
          * VIEWPORT

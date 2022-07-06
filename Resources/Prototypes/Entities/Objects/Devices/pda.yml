@@ -661,3 +661,18 @@
         state: pda-reporter
   - type: Icon
     state: pda-reporter
+
+- type: entity
+  parent: BasePDA
+  id: DetectivePDA
+  name: detective PDA
+  description: Smells like rain... pouring down the rooftops...
+  components:
+  - type: PDA
+    id: DetectiveIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-detective
+  - type: Icon
+    state: pda-detective

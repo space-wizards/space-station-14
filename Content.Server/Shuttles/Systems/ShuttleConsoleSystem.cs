@@ -15,12 +15,14 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -86,7 +88,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryPilot(args.User, uid))
+            if (!component.CanPilot || !TryPilot(args.User, uid))
                 args.Cancel();
         }
 
@@ -233,6 +235,7 @@ namespace Content.Server.Shuttles.Systems
             var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
+            component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();
