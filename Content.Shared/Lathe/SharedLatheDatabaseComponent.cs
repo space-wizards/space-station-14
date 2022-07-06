@@ -11,7 +11,6 @@ namespace Content.Shared.Lathe
     public abstract class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         [DataField("recipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))] private List<string> _recipeIds = new();
-
         public readonly List<LatheRecipePrototype> _recipes = new();
 
         void ISerializationHooks.BeforeSerialization()
