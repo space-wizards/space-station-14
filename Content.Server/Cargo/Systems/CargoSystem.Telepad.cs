@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
@@ -152,7 +151,8 @@ public sealed partial class CargoSystem
             ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
-            ("approver", data.Approver)),
+            ("approverName", data.ApproverName),
+            ("approverJob", data.ApproverJob)),
             paper);
 
         // attempt to attach the label

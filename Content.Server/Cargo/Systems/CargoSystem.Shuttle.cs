@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.GameTicking.Events;
 using Content.Server.Labels.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
-
 using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -17,7 +15,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
-using Robust.Server.GameObjects;
+
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -461,7 +459,8 @@ public sealed partial class CargoSystem
             ("itemName", prototype.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),
-            ("approver", order.Approver)),
+            ("approverName", order.ApproverName),
+            ("approverJob", order.ApproverJob)),
             paper);
 
         // attempt to attach the label
