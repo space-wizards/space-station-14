@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: The game no longer pretends only one salvage magnet can exist at a time.,
-    type: Fix}
-  id: 1376
-  time: '2022-04-23T01:28:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Hardsuit helmets are now part of a hardsuit. They can be toggled via
@@ -2954,3 +2948,8 @@ Entries:
   - {message: Department lathes no longer print common items., type: Tweak}
   id: 1875
   time: '2022-07-05T19:56:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
+  id: 1876
+  time: '2022-07-06T03:08:57.0000000+00:00'
