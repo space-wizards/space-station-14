@@ -14,7 +14,7 @@ public sealed class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRel
     ///     Can be set to whatever, but currently is being additively increased by components & clothing. So think twice
     ///     before multiplying or directly setting this.
     /// </summary>
-    public float Resistance = 0;
+    public float Resistance = 1;
 
     public readonly string ExplotionPrototype;
 
