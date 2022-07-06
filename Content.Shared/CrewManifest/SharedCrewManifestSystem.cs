@@ -76,6 +76,12 @@ public sealed class CrewManifestState : EntityEventArgs
     public EntityUid? Station { get; }
 
     /// <summary>
+    ///     Name of the station. If Station is null, this will
+    ///     always be null.
+    /// </summary>
+    public string? StationName { get; set; }
+
+    /// <summary>
     ///     The entries for this crew manifest. See
     ///     <see cref="Station"/> for how to handle this
     ///     when this is null.

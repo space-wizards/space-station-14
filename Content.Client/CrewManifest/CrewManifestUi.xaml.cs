@@ -9,16 +9,52 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.CrewManifest;
 
+/// <summary>
+///     Crew manifest window. This is intended to be opened by other UIs, and as a result,
+///     those UIs should ensure any controller registers this window with the intended
+///     station it's meant to track.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CrewManifestUi : DefaultWindow
 {
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+    private EntityUid? _station;
 
     public CrewManifestUi()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         StationName.AddStyleClass("LabelBig");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (_station != null)
+        {
+            _entitySystemManager.GetEntitySystem<CrewManifestSystem>().UnsubscribeCrewManifestUpdate(_station.Value, UpdateManifest);
+        }
+    }
+
+    public void Register(EntityUid station)
+    {
+        if (_station != null)
+        {
+            return;
+        }
+
+        _station = station;
+        _entitySystemManager.GetEntitySystem<CrewManifestSystem>().SubscribeCrewManifestUpdate(station, UpdateManifest);
+    }
+
+    private void UpdateManifest(CrewManifestState state)
+    {
+        StationName.Visible = state.Station != null;
+        Populate(state.Entries);
     }
 
     public void Populate(CrewManifestEntries? entries)
