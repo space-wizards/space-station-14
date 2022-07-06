@@ -92,9 +92,9 @@
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
   - type: Destructible
     thresholds:
     - trigger:
