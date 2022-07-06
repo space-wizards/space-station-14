@@ -90,7 +90,7 @@
     - zomber
   name: zombie-title
   description: zombie-description
-  showInVote: true
+  showInVote: false
   rules:
     - Zombie
 
