@@ -176,7 +176,7 @@ public sealed class DamageOverlay : Overlay
             }
             else
             {
-                outerDarkness = MathF.Min(0.98f, 0.8f * MathF.Log(level) + 1f);
+                outerDarkness = MathF.Min(0.98f, 0.3f * MathF.Log(level) + 1f);
             }
 
             _oxygenShader.SetParameter("time", 0.0f);
