@@ -129,8 +129,6 @@
     damage:
       types:
         Heat: 5
-    soundHit:
-      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     soundForce: true
 
 - type: entity

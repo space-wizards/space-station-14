@@ -275,7 +275,7 @@
         path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
     - type: ProjectileBatteryAmmoProvider
       proto: BulletDisabler
-      fireCost: 50
+      fireCost: 100
     - type: MagazineVisuals
       magState: mag
       steps: 5
@@ -313,7 +313,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 50
+    fireCost: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5
