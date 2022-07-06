@@ -2,34 +2,28 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Afk;
 using Content.Server.GameTicking;
 using Content.Server.Players;
-using Content.Server.Roles;
-using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Collections;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.RoleTimers;
+namespace Content.Server.Roles;
 
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class RoleTimerSystem : EntitySystem
+public sealed class RoleTimerSystem : SharedRoleTimerSystem
 {
     [Dependency] private readonly IAfkManager _afk = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly RoleTimerManager _roleTimers = default!;
 
@@ -71,10 +65,8 @@ public sealed class RoleTimerSystem : EntitySystem
                 _lastSetTime[args.Session] = _timing.CurTime;
                 break;
             case SessionStatus.Disconnected:
-            {
                 _lastSetTime.Remove(args.Session);
                 break;
-            }
         }
     }
 
@@ -111,6 +103,7 @@ public sealed class RoleTimerSystem : EntitySystem
 
     private void FullSave()
     {
+        Sawmill.Info("Running full save of role timers");
         var currentTime = _timing.CurTime;
 
         // This is gonna have rounding if someone changes their jobs but it's only 5 minutes anyway, not like we need to track
@@ -120,6 +113,7 @@ public sealed class RoleTimerSystem : EntitySystem
             var pSession = (IPlayerSession) player;
             if (_afk.IsAfk(pSession)) continue;
             Save(pSession, currentTime);
+            _roleTimers.SendRoleTimers(pSession);
         }
     }
 
@@ -131,8 +125,8 @@ public sealed class RoleTimerSystem : EntitySystem
         }
 
         var addedTime = currentTime - lastSave;
-
         var roles = GetRoles(pSession);
+        Sawmill.Info($"Adding {addedTime.TotalMinutes} minutes to {pSession} playtime");
 
         foreach (var role in roles)
         {
@@ -156,128 +150,53 @@ public sealed class RoleTimerSystem : EntitySystem
 
     public bool IsAllowed(IPlayerSession pSession, string role)
     {
-        if (!_protoManager.TryIndex<JobPrototype>(role, out var job) ||
+        if (!ProtoManager.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
-            !_configManager.GetCVar(CCVars.GameRoleTimers)) return true;
+            !ConfigManager.GetCVar(CCVars.GameRoleTimers)) return true;
 
-        var overall = _roleTimers.GetOverallPlaytime(pSession.UserId).Result;
-        var roleTime = _roleTimers.GetPlayTimeForRole(pSession.UserId, role).Result;
+        TimeSpan? overall = null;
+        Dictionary<string, TimeSpan>? roles = null;
 
         foreach (var requirement in job.Requirements)
         {
-            // TODO
+            var reason = RequirementMet(pSession, job, requirement, overall, roles);
+            if (reason == null) continue;
             return false;
         }
 
         return true;
     }
 
-    /// <summary>
-    /// Does the player meet the job requirements for a particular role?
-    /// </summary>
-    public bool IsAllowed(IPlayerSession pSession, string role, TimeSpan overallPlaytime, Dictionary<string, TimeSpan> rolePlaytimes, [NotNullWhen(false)] out string? reason)
-    {
-        reason = null;
-
-        if (!_configManager.GetCVar(CCVars.GameRoleTimers) ||
-            !_protoManager.TryIndex<JobPrototype>(role, out var job) ||
-            job.Requirements == null ||
-            job.Requirements.Count == 0) return true;
-
-        foreach (var requirement in job.Requirements)
-        {
-            switch (requirement)
-            {
-                case DepartmentTimeRequirement deptRequirement:
-                    break;
-                case OverallPlaytimeRequirement overallRequirement:
-                    break;
-                case RoleTimeRequirement roleRequirement:
-                    break;
-            }
-
-            reason = "a";
-            return false;
-        }
-
-        return true;
-    }
-
-    public HashSet<string> GetDisAllowedJobs(NetUserId netUserId)
+    public HashSet<string> GetDisAllowedJobs(ICommonSession session)
     {
         var roles = new HashSet<string>();
-        if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return roles;
+        if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return roles;
 
-        // TODO:
-        return roles;
         TimeSpan? overallPlaytime = null;
         Dictionary<string, TimeSpan>? rolePlaytimes = null;
 
-        foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in ProtoManager.EnumeratePrototypes<JobPrototype>())
         {
             if (job.Requirements != null)
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    switch (requirement)
-                    {
-                        case DepartmentTimeRequirement deptRequirement:
-                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                            break;
-                        case OverallPlaytimeRequirement overallRequirement:
-                            overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
-                            break;
-                        case RoleTimeRequirement roleRequirement:
-                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                            break;
-                    }
+                    var reason = RequirementMet(session, job, requirement, overallPlaytime, rolePlaytimes);
+                    if (reason == null) continue;
+                    goto NoRole;
                 }
             }
 
             roles.Add(job.ID);
+            NoRole:;
         }
 
         return roles;
     }
 
-    public List<string> GetAllowedJobs(NetUserId netUserId)
+    public void SetAllowedJobs(ICommonSession session, ref List<string> jobs)
     {
-        var roleTimers = _configManager.GetCVar(CCVars.GameRoleTimers);
-
-        TimeSpan? overallPlaytime = null;
-        Dictionary<string, TimeSpan>? rolePlaytimes = null;
-        var roles = new List<string>();
-
-        foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
-        {
-            if (roleTimers && job.Requirements != null)
-            {
-                foreach (var requirement in job.Requirements)
-                {
-                    switch (requirement)
-                    {
-                        case DepartmentTimeRequirement deptRequirement:
-                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                            break;
-                        case OverallPlaytimeRequirement overallRequirement:
-                            overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
-                            break;
-                        case RoleTimeRequirement roleRequirement:
-                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                            break;
-                    }
-                }
-            }
-
-            roles.Add(job.ID);
-        }
-
-        return roles;
-    }
-
-    public void SetAllowedJobs(NetUserId netUserId, ref List<string> jobs)
-    {
-        if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return;
+        if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return;
 
         TimeSpan? overallPlaytime = null;
         Dictionary<string, TimeSpan>? rolePlaytimes = null;
@@ -286,24 +205,14 @@ public sealed class RoleTimerSystem : EntitySystem
         {
             var job = jobs[i];
 
-            if (!_protoManager.TryIndex<JobPrototype>(job, out var jobber) ||
+            if (!ProtoManager.TryIndex<JobPrototype>(job, out var jobber) ||
                 jobber.Requirements == null ||
                 jobber.Requirements.Count == 0) continue;
 
             foreach (var requirement in jobber.Requirements)
             {
-                switch (requirement)
-                {
-                    case DepartmentTimeRequirement deptRequirement:
-                        rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                        break;
-                    case OverallPlaytimeRequirement overallRequirement:
-                        overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
-                        break;
-                    case RoleTimeRequirement roleRequirement:
-                        rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
-                        break;
-                }
+                var reason = RequirementMet(session, jobber, requirement, overallPlaytime, rolePlaytimes);
+                if (reason == null) continue;
 
                 jobs.RemoveSwap(i);
                 i--;
@@ -329,5 +238,15 @@ public sealed class RoleTimerSystem : EntitySystem
     public void PlayerRolesChanged(IPlayerSession player)
     {
         Save(player, _timing.CurTime);
+    }
+
+    protected override TimeSpan GetOverallPlaytime(ICommonSession session)
+    {
+        return _roleTimers.GetOverallPlaytime(session.UserId).Result;
+    }
+
+    protected override Dictionary<string, TimeSpan> GetRolePlaytime(ICommonSession session, string role)
+    {
+        return _roleTimers.GetRolePlaytimes(session.UserId).Result;
     }
 }

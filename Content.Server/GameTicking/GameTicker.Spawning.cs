@@ -4,7 +4,6 @@ using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.RoleTimers;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -132,7 +131,7 @@ namespace Content.Server.GameTicking
             // Figure out job restrictions
             var restrictedRoles = new HashSet<string>();
 
-            var getDisallowed = _roleTimers.GetDisAllowedJobs(player.UserId);
+            var getDisallowed = _roleTimers.GetDisAllowedJobs(player);
             restrictedRoles.UnionWith(getDisallowed);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);

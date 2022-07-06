@@ -2,7 +2,7 @@
   id: Chef
   name: job-name-chef
   requirements:
-    - !type:RoleTimeRequirement
+    - !type:DepartmentTimeRequirement
       department: Service
       time: 1800
   startingGear: ChefGear

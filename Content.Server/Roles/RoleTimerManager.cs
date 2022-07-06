@@ -1,16 +1,17 @@
-﻿using System.Collections.Concurrent;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-namespace Content.Server.RoleTimers
+namespace Content.Server.Roles
 {
     public sealed class RoleTimerManager : IEntityEventSubscriber
     {
+        [Dependency] private readonly IEntityNetworkManager _netManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -42,6 +43,18 @@ namespace Content.Server.RoleTimers
                     break;
                 }
             }
+        }
+
+        public async void SendRoleTimers(IPlayerSession pSession)
+        {
+            var overall = await GetOverallPlaytime(pSession.UserId);
+            var roles = await GetRolePlaytimes(pSession.UserId);
+
+            _netManager.SendSystemNetworkMessage(new RoleTimersEvent()
+            {
+                Overall = overall,
+                RoleTimes = roles,
+            }, pSession.ConnectedClient);
         }
 
         public bool IsRoleTimeCachedYet(NetUserId id)

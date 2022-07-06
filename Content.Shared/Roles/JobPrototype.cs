@@ -29,7 +29,7 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
-        [DataField("requirements", serverOnly: true)]
+        [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;
 
         [DataField("joinNotifyCrew")]

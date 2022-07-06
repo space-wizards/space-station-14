@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.CharacterAppearance;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
+using Content.Client.Roles;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
@@ -343,6 +344,7 @@ namespace Content.Client.Preferences.UI
             _jobCategories = new Dictionary<string, BoxContainer>();
 
             var firstCategory = true;
+            var roleTimers = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoleTimerSystem>();
 
             foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.LocalizedName))
             {
@@ -360,17 +362,17 @@ namespace Content.Client.Preferences.UI
                                                     ("departmentName", department))
                         };
 
-                            if (firstCategory)
+                        if (firstCategory)
+                        {
+                            firstCategory = false;
+                        }
+                        else
+                        {
+                            category.AddChild(new Control
                             {
-                                firstCategory = false;
-                            }
-                            else
-                            {
-                                category.AddChild(new Control
-                                {
-                                    MinSize = new Vector2(0, 23),
-                                });
-                            }
+                                MinSize = new Vector2(0, 23),
+                            });
+                        }
 
                         category.AddChild(new PanelContainer
                         {
@@ -390,6 +392,12 @@ namespace Content.Client.Preferences.UI
                     }
 
                     var selector = new JobPrioritySelector(job);
+
+                    if (!roleTimers.IsAllowed(job, out var reason))
+                    {
+                        selector.LockRequirements(reason);
+                    }
+
                     category.AddChild(selector);
                     _jobPriorities.Add(selector);
 
@@ -991,6 +999,8 @@ namespace Content.Client.Preferences.UI
 
             public event Action<JobPriority>? PriorityChanged;
 
+            private Label _requirementsLabel;
+
             public JobPrioritySelector(JobPrototype job)
             {
                 Job = job;
@@ -1027,6 +1037,15 @@ namespace Content.Client.Preferences.UI
                     icon.Texture = specifier.Frame0();
                 }
 
+                _requirementsLabel = new Label()
+                {
+                    FontColorOverride = Color.Red,
+                    Text = "Locked", // TODO: Loc
+                    Visible = false,
+                    MouseFilter = MouseFilterMode.Pass,
+                    TooltipDelay = 0.2f,
+                };
+
                 AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
@@ -1034,9 +1053,23 @@ namespace Content.Client.Preferences.UI
                     {
                         icon,
                         new Label {Text = job.LocalizedName, MinSize = (175, 0)},
-                        _optionButton
+                        _optionButton,
+                        _requirementsLabel,
                     }
                 });
+            }
+
+            public void LockRequirements(string requirements)
+            {
+                _requirementsLabel.ToolTip = requirements;
+                _requirementsLabel.Visible = true;
+                _optionButton.Disabled = true;
+            }
+
+            public void UnlockRequirements()
+            {
+                _requirementsLabel.Visible = false;
+                _optionButton.Disabled = false;
             }
         }
 

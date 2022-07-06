@@ -2,7 +2,7 @@
   id: Bartender
   name: job-name-bartender
   requirements:
-    - !type:RoleTimeRequirement
+    - !type:DepartmentTimeRequirement
       department: Service
       time: 1800
   startingGear: BartenderGear

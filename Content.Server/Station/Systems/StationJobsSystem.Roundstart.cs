@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
-using Content.Server.RoleTimers;
+using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -340,9 +341,10 @@ public sealed partial class StationJobsSystem
 
         foreach (var (player, profile) in profiles)
         {
+            if (!_playerManager.TryGetSessionById(player, out var pSession)) continue;
             var roleBans = _roleBanManager.GetJobBans(player);
             var profileJobs = profile.JobPriorities.Keys.ToList();
-            _roleTimers.SetAllowedJobs(player, ref profileJobs);
+            _roleTimers.SetAllowedJobs(pSession, ref profileJobs);
 
             List<string>? availableJobs = null;
 
