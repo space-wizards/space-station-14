@@ -25,7 +25,7 @@
   - type: TemperatureProtection
     coefficient: 0.001
   - type: ExplosionResistance
-    resistance: 0.8
+    resistance: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
@@ -83,7 +83,7 @@
         Heat: 0.2
         Radiation: 0.2
   - type: ExplosionResistance
-    resistance: 0.3
+    resistance: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -112,7 +112,7 @@
         Heat: 0.7
         Radiation: 0.35
   - type: ExplosionResistance
-    resistance: 0.8
+    resistance: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -141,7 +141,7 @@
         Heat: 0.4
         Radiation: 0.25
   - type: ExplosionResistance
-    resistance: 0.8
+    resistance: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -251,7 +251,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: ExplosionResistance
-    resistance: 0.7
+    resistance: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -282,7 +282,7 @@
         Heat: 0.85
         Radiation: 0.5
   - type: ExplosionResistance
-    resistance: 0.7
+    resistance: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -308,7 +308,7 @@
         Heat: 0.8
         Radiation: 0.25
   - type: ExplosionResistance
-    resistance: 0.6
+    resistance: 0.4
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -360,10 +360,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.55
-        Piercing: 0.4
-        Heat: 0.4 #all the combat numbers are pumped up here
+        Blunt: 0.65
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.4
         Radiation: 0.20
   - type: ExplosionResistance
     resistance: 0.5
@@ -424,7 +424,7 @@
         Heat: 0.5
         Radiation: 0.3
   - type: ExplosionResistance
-    resistance: 0.8
+    resistance: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -507,7 +507,7 @@
         Heat: 0.35
         Radiation: 0.1
   - type: ExplosionResistance
-    resistance: 0.2
+    resistance: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
