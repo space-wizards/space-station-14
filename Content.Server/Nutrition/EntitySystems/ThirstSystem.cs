@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_jetpack.IsUserFlying(component.Owner))
                 return;
 
-            var mod = (component.CurrentThirstThreshold & (ThirstThreshold.Parched | ThirstThreshold.Dead)) != 0x0 ? 0.75f : 1.0f;
+            var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
 

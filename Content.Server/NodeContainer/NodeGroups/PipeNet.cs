@@ -33,10 +33,13 @@ namespace Content.Server.NodeContainer.NodeGroups
             Grid = entMan.GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
 
             if (Grid == null)
+            {
                 Logger.Error($"Created a pipe network without an associated grid. Pipe networks currently need to be tied to a grid for amtos to work. Source entity: {entMan.ToPrettyString(sourceNode.Owner)}");
+                return;
+            }
 
             _atmosphereSystem = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            _atmosphereSystem.AddPipeNet(this);
+            _atmosphereSystem.AddPipeNet(Grid.Value, this);
         }
 
         public void Update()
@@ -85,7 +88,11 @@ namespace Content.Server.NodeContainer.NodeGroups
         private void RemoveFromGridAtmos()
         {
             DebugTools.AssertNotNull(_atmosphereSystem);
-            _atmosphereSystem?.RemovePipeNet(this);
+
+            if (Grid == null)
+                return;
+
+            _atmosphereSystem?.RemovePipeNet(Grid.Value, this);
         }
 
         public override string GetDebugData()

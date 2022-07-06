@@ -5,6 +5,9 @@
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
+  - type: Insulated
+  - type: DiseaseProtection
+    protection: 1
   - type: CombatMode
     canDisarm: true
   - type: PlayerInputMover
@@ -47,8 +50,8 @@
       - MobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      200: Dead
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
     bloodlossDamage:
@@ -89,8 +92,6 @@
     name: xeno
     description: You are a xeno, co-operate with your hive to kill all crewmembers!
     rules: You are an antagonist, smack, slash, and wack!
-  - type: ReplacementAccent
-    accent: xeno
   - type: TypingIndicator
     proto: alien
   - type: Temperature
@@ -120,8 +121,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      300: !type:DeadMobState {}
+      0: Alive
+      300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
@@ -150,8 +151,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      200: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
@@ -183,8 +184,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      1500: !type:DeadMobState {}
+      0: Alive
+      1500: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.8
     baseSprintSpeed : 3.8
@@ -221,8 +222,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      550: !type:DeadMobState {}
+      0: Alive
+      550: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.3
     baseSprintSpeed : 4.2
@@ -259,8 +260,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      250: !type:DeadMobState {}
+      0: Alive
+      250: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 6.0
@@ -307,8 +308,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      300: !type:DeadMobState {}
+      0: Alive
+      300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.4

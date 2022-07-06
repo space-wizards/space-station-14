@@ -91,7 +91,7 @@
     # autoEject: true # Do not set this until the PVS prediction issue is resolved
   - type: MagazineVisuals
     magState: mag
-    steps: 1
+    steps: 6
     zeroVisible: true
   - type: Appearance
 
