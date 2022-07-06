@@ -226,8 +226,8 @@ entities:
       -4,2: 1
       -4,3: 1
       -4,7: 0
-      -4,8: 0
-      -4,9: 0
+      -4,8: 2
+      -4,9: 3
       -3,12: 0
       -3,13: 0
       -3,14: 0
@@ -238,8 +238,8 @@ entities:
       -2,4: 1
       -2,5: 1
       -2,7: 1
-      -2,8: 1
-      -2,9: 1
+      -2,8: 4
+      -2,9: 5
       -2,10: 1
       -1,0: 1
       -1,1: 1
@@ -396,7 +396,7 @@ entities:
       -3,6: 1
       -3,7: 1
       -3,8: 1
-      -3,9: 1
+      -3,9: 6
       -3,10: 1
       -3,11: 1
       -2,6: 1
@@ -507,6 +507,61 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 147.92499
+      moles:
+      - 10.912439
+      - 41.05156
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 184.23123
+      moles:
+      - 13.64055
+      - 51.31445
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 291.44815
+      moles:
+      - 21.696999
+      - 81.62205
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 286.34256
+      moles:
+      - 21.313358
+      - 80.178825
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 265.9203
+      moles:
+      - 19.778797
+      - 74.40595
       - 0
       - 0
       - 0
@@ -1339,33 +1394,33 @@ entities:
     parent: 0
     type: Transform
 - uid: 68
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -3.5,8.5
+  - pos: -1.5,8.5
     parent: 0
     type: Transform
 - uid: 69
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -3.5,9.5
+  - pos: -1.5,9.5
     parent: 0
     type: Transform
 - uid: 70
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
   - pos: -2.5,9.5
     parent: 0
     type: Transform
 - uid: 71
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -1.5,9.5
+  - pos: -3.5,9.5
     parent: 0
     type: Transform
 - uid: 72
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -1.5,8.5
+  - pos: -3.5,8.5
     parent: 0
     type: Transform
 - uid: 73

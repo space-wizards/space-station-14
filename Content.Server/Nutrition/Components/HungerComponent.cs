@@ -64,6 +64,7 @@ namespace Content.Server.Nutrition.Components
             { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
+            { HungerThreshold.Dead, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)

@@ -115,7 +115,7 @@ namespace Content.Server.StationEvents.Events
             _timeUntilLeak += LeakCooldown;
 
             var atmosphereSystem = _entityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            
+
             if (!_foundTile ||
                 _targetGrid == default ||
                 _entityManager.Deleted(_targetGrid) ||
@@ -125,7 +125,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(_targetGrid, _targetTile, true);
+            var environment = atmosphereSystem.GetTileMixture(_targetGrid, null, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
