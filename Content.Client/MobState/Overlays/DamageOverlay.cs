@@ -109,9 +109,9 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = OxygenLevel;
+        level = CritLevel == 0f ? OxygenLevel : 1f;
 
-        if (CritLevel > 0f || level > 0f)
+        if (level > 0f)
         {
             float outerMaxLevel = 0.6f * distance;
             float outerMinLevel = 0.06f * distance;
@@ -127,16 +127,24 @@ public sealed class DamageOverlay : Overlay
             // If in crit then just fix it; also pulse it very occasionally so they can see more.
             if (CritLevel > 0f)
             {
-                critTime = MathF.Max(0f, MathF.Cos(time / 2f) - 1f + MathF.Sin(time));
-                outerDarkness = 1f;
+                var adjustedTime = time * 1.5f;
+                critTime = MathF.Max(0f, MathF.Cos(adjustedTime / 2f) - 1f + MathF.Sin(adjustedTime));
+
+                if (critTime > 0f)
+                {
+                    outerDarkness = 1f - critTime / 2f;
+                }
+                else
+                {
+                    outerDarkness = 1f;
+                }
             }
             else
             {
-                critTime = 0f;
-                outerDarkness = MathF.Min(0.99f, 0.3f * MathF.Log(level) + 1f);
+                outerDarkness = MathF.Min(0.98f, 0.8f * MathF.Log(level) + 1f);
             }
 
-            _oxygenShader.SetParameter("time", critTime);
+            _oxygenShader.SetParameter("time", 0.0f);
             _oxygenShader.SetParameter("colorX", 0.0f);
             _oxygenShader.SetParameter("darknessAlphaOuter", outerDarkness);
             _oxygenShader.SetParameter("innerCircleRadius", innerRadius);
