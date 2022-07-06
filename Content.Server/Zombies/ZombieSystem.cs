@@ -39,10 +39,20 @@ namespace Content.Server.Zombies
             if (!_inv.TryGetContainerSlotEnumerator(uid, out var enumerator, inventoryComponent))
                 return baseChance;
 
+            //Hardcoded, ACK
+            List<string> validInfectionBlockingSlots = new()
+            {
+                "shoes", "jumpsuit", "outerClothing", "gloves",
+                "neck", "mask", "eyes", "head"
+            };
+
             var items = 0f;
             var total = 0f;
             while (enumerator.MoveNext(out var con))
             {
+                if (!validInfectionBlockingSlots.Contains(con.ID))
+                    continue;
+
                 total++;
 
                 if (con.ContainedEntity != null)
@@ -53,6 +63,7 @@ namespace Content.Server.Zombies
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             float chance = (max-min) * ((total - items)/total) + min;
+            Logger.Debug(chance.ToString());
             return chance;
         }
 
