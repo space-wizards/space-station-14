@@ -124,13 +124,13 @@
       - BulletImpassable
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 55
+    damage: 30
   - type: Projectile
     damage:
       types:
         Heat: 5
     soundHit:
-      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+      path: "/Audio/Weapons/tap.ogg"
     soundForce: true
 
 - type: entity
