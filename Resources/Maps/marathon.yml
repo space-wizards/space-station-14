@@ -27317,30 +27317,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 680
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.704681,19.266298
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 681
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.517181,19.250673
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 682
-  type: ShellShotgunFlash
-  components:
-  - pos: -11.329681,19.250673
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 683
   type: ClothingEyesGlassesSunglasses
   components:

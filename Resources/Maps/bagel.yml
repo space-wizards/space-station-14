@@ -41157,23 +41157,6 @@ entities:
     pos: 13.5,-38.5
     parent: 60
     type: Transform
-- uid: 2177
-  type: ShellShotgunFlash
-  components:
-  - pos: 11.711429,-35.299614
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 2178
-  type: ShellShotgunFlash
-  components:
-  - rot: 0.0007520564831793308 rad
-    pos: 11.738948,-35.53393
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2179
   type: ShellShotgunBeanbag
   components:
