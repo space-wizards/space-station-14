@@ -3491,7 +3491,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 513
-  type: BaseAPC
+  type: APCBasic
   components:
   - rot: -1.5707963267948966 rad
     pos: 7.5,-0.5
