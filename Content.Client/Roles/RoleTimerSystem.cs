@@ -61,7 +61,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
             reasonBuilder.AppendLine(reason);
         }
 
-        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
+        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString().TrimEnd('\r', '\n');
         return reason == null;
     }
 

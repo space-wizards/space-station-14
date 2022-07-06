@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Afk;
+using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Shared.CCVar;
@@ -8,7 +8,6 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Timing;
@@ -30,9 +29,9 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
     /// <summary>
     /// Autosave regularly in case of server crash.
     /// </summary>
-    private const float AutosaveDelay = 900;
+    private float _autosaveDelay = 900;
 
-    private float _autoSaveAccumulator = 0f;
+    private float _autoSaveAccumulator;
 
     /// <summary>
     /// If someone just joined track the last time we set their times so the autosave doesn't round up.
@@ -43,16 +42,21 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
     {
         base.Initialize();
 
-        // TODO: This is gonna have ordering bugs with RoleTimerManager so sort that out mate.
+        ConfigManager.OnValueChanged(CCVars.GameRoleTimersSaveFrequency, SetAutosaveDelay, true);
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<AFKEvent>(OnAFK);
+        SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
     }
+
+    private void SetAutosaveDelay(float value) => _autosaveDelay = value;
 
     public override void Shutdown()
     {
         base.Shutdown();
+        ConfigManager.UnsubValueChanged(CCVars.GameRoleTimersSaveFrequency, SetAutosaveDelay);
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
         FullSave();
     }
@@ -62,43 +66,50 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         switch (args.NewStatus)
         {
             case SessionStatus.Connected:
+                _roleTimers.CreatePlayer(args.Session.UserId);
                 _lastSetTime[args.Session] = _timing.CurTime;
                 break;
             case SessionStatus.Disconnected:
+                Save(args.Session, _timing.CurTime);
                 _lastSetTime.Remove(args.Session);
+                _roleTimers.RemovePlayer(args.Session.UserId);
                 break;
         }
     }
 
     private void OnRoundEnd(RoundRestartCleanupEvent ev)
     {
-        _autoSaveAccumulator = AutosaveDelay;
+        _autoSaveAccumulator = 0f;
         FullSave();
     }
 
     public override void Update(float frameTime)
     {
-        if (_ticker.RunLevel != GameRunLevel.InRound) return;
+        if (_ticker.RunLevel != GameRunLevel.InRound || _autosaveDelay < 1f)
+        {
+            _autoSaveAccumulator = 0f;
+            return;
+        }
 
         _autoSaveAccumulator += frameTime;
 
-        if (_autoSaveAccumulator < AutosaveDelay) return;
+        if (_autoSaveAccumulator < _autosaveDelay) return;
 
-        _autoSaveAccumulator -= AutosaveDelay;
+        _autoSaveAccumulator -= _autosaveDelay;
         FullSave();
     }
 
-    // TODO: AFK Events
     // TODO: Mind role events?
 
-    private void OnAfk(IPlayerSession pSession)
+    private void OnUnAFK(ref UnAFKEvent ev)
     {
-        Save(pSession, _timing.CurTime);
+        _lastSetTime[ev.Session] = _timing.CurTime;
     }
 
-    private void OnUnafk(IPlayerSession pSession)
+    private void OnAFK(ref AFKEvent ev)
     {
-        _lastSetTime[pSession] = _timing.CurTime;
+        // Don't just write to the DB every time someone goes AFK.
+        Save(ev.Session, _timing.CurTime, false);
     }
 
     private void FullSave()
@@ -117,23 +128,25 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         }
     }
 
-    private void Save(IPlayerSession pSession, TimeSpan currentTime)
+    private void Save(IPlayerSession pSession, TimeSpan currentTime, bool dbSave = true)
     {
         if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
         {
             lastSave = currentTime;
         }
 
+        if (currentTime <= lastSave) return;
+
         var addedTime = currentTime - lastSave;
         var roles = GetRoles(pSession);
-        Sawmill.Info($"Adding {addedTime.TotalMinutes} minutes to {pSession} playtime");
+        Sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
 
         foreach (var role in roles)
         {
-            _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime);
+            _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime, dbSave);
         }
 
-        _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime);
+        _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
         _lastSetTime[pSession] = currentTime;
     }
 
@@ -167,7 +180,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return true;
     }
 
-    public HashSet<string> GetDisAllowedJobs(ICommonSession session)
+    public HashSet<string> GetDisallowedJobs(ICommonSession session)
     {
         var roles = new HashSet<string>();
         if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return roles;

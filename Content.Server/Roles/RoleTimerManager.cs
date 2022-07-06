@@ -13,7 +13,6 @@ namespace Content.Server.Roles
     {
         [Dependency] private readonly IEntityNetworkManager _netManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /*
          * All of the reads below just read directly from PlayerRoleTimers without touching the DB.
@@ -23,26 +22,15 @@ namespace Content.Server.Roles
         // Shouldn't need concurrentdictionary as we're only modifying the value internally.
         private readonly Dictionary<NetUserId, PlayerRoleTimers> _cachedPlayerData = new();
 
-        public void Initialize()
+        public async void CreatePlayer(NetUserId id)
         {
-            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+            var data = _cachedPlayerData.GetOrNew(id);
+            await CachePlayerRoles(id, data);
         }
 
-        private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+        public async void RemovePlayer(NetUserId id)
         {
-            var id = args.Session.UserId;
-            switch (args.NewStatus)
-            {
-                case SessionStatus.Connected:
-                    var data = _cachedPlayerData.GetOrNew(args.Session.UserId);
-                    await CachePlayerRoles(id, data);
-                    break;
-                case SessionStatus.Disconnected:
-                {
-                    _cachedPlayerData.Remove(id, out _);
-                    break;
-                }
-            }
+            _cachedPlayerData.Remove(id);
         }
 
         public async void SendRoleTimers(IPlayerSession pSession)
@@ -80,23 +68,26 @@ namespace Content.Server.Roles
             timers.Initialized = true;
         }
 
-        public async void AddTimeToRole(NetUserId id, string role, TimeSpan time)
+        public async void AddTimeToRole(NetUserId id, string role, TimeSpan time, bool dbSave = true)
         {
             if (!_cachedPlayerData.TryGetValue(id, out var timers))
                 return;
 
             var totalTime = await timers.AddPlaytimeForRole(role, time);
 
+            if (!dbSave) return;
+
             var query = await _db.CreateOrGetRoleTimer(id, role);
             await _db.SetRoleTime(query.Id, totalTime);
         }
 
-        public async void AddTimeToOverallPlaytime(NetUserId id, TimeSpan time)
+        public async void AddTimeToOverallPlaytime(NetUserId id, TimeSpan time, bool dbSave = true)
         {
             if (!_cachedPlayerData.TryGetValue(id, out var timers))
                 return;
 
             var playtime = await timers.AddOverallPlaytime(time);
+            if (!dbSave) return;
             await _db.SetOverallPlayTime(id, playtime);
         }
 

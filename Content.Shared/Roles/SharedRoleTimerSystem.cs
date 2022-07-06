@@ -55,7 +55,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
                 return Loc.GetString(
                     "role-timer-department-insufficient",
-                    ("time", deptDiff),
+                    ("time", $"{deptDiff:0}"),
                     ("department", Loc.GetString(deptRequirement.Department)));
 
             case OverallPlaytimeRequirement overallRequirement:
@@ -64,7 +64,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
                 if (overallDiff <= 0) return null;
 
-                return overallTime.Value >= overallRequirement.Time ? null : Loc.GetString("role-timer-overall-insufficient", ("time", overallDiff));
+                return overallTime.Value >= overallRequirement.Time ? null : Loc.GetString("role-timer-overall-insufficient", ("time", $"{overallDiff:0}"));
 
             case RoleTimeRequirement roleRequirement:
                 roleTimes ??= GetRolePlaytime(session, job.ID);
@@ -75,13 +75,11 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
                 return Loc.GetString(
                     "role-timer-role-insufficient",
-                    ("time", roleDiff),
+                    ("time", $"{roleDiff:0}"),
                     ("job", ProtoManager.Index<JobPrototype>(roleRequirement.Role).LocalizedName));
             default:
                 throw new NotImplementedException();
         }
-
-        return null;
     }
 
     protected abstract TimeSpan GetOverallPlaytime(ICommonSession session);

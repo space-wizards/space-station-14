@@ -131,7 +131,7 @@ namespace Content.Server.GameTicking
             // Figure out job restrictions
             var restrictedRoles = new HashSet<string>();
 
-            var getDisallowed = _roleTimers.GetDisAllowedJobs(player);
+            var getDisallowed = _roleTimers.GetDisallowedJobs(player);
             restrictedRoles.UnionWith(getDisallowed);
 
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
