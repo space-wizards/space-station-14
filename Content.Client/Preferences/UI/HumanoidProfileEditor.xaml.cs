@@ -1066,6 +1066,7 @@ namespace Content.Client.Preferences.UI
                 _optionButton.Disabled = true;
             }
 
+            // TODO: Subscribe to roletimers event. I am too lazy to do this RN But I doubt most people will notice fn
             public void UnlockRequirements()
             {
                 _requirementsLabel.Visible = false;
