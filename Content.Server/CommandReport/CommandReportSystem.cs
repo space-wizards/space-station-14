@@ -35,13 +35,10 @@ namespace Content.Server.CommandReport
             _chatManager.ChatMessageToAll(ChatChannel.Radio, broadcastToRadio == true ? message : Loc.GetString("command-reports-confidential-announcement-message"), messageWrap, colorOverride: Color.Gold);
 
             // todo: convert this to fax along with NukeCodeSystem.cs
-            var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
+            var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent, TransformComponent>();
             foreach (var console in consoles)
             {
-                if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
-                    continue;
-
-                var consolePos = transform.MapPosition;
+                var consolePos = console.Item2.MapPosition;
                 var paper = EntityManager.SpawnEntity("Paper", consolePos);
 
                 EntityManager.GetComponent<PaperComponent>(paper).Content = $"Central Command Report\n{message}";
