@@ -10,10 +10,6 @@
     baseSprintSpeed : 3.75
   - type: PlayerInputMover
   - type: PlayerMobMover
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -71,7 +67,7 @@
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
   - type: Tag
     tags:
       - CannotSuicide
