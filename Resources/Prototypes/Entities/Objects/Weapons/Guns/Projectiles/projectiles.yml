@@ -124,7 +124,7 @@
       - BulletImpassable
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 55
+    damage: 30
   - type: Projectile
     damage:
       types:
