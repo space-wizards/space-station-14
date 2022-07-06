@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added a new station, NT Barratry, NT''s un-finest ship.', type: Add}
-  id: 1380
-  time: '2022-04-23T19:44:07.0000000+00:00'
 - author: Saakra
   changes:
   - {message: Can now drink liquids from the right-click context menu, type: Add}
@@ -2959,3 +2954,8 @@ Entries:
   - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
   id: 1879
   time: '2022-07-06T03:52:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Taking damage now has an overlay., type: Add}
+  id: 1880
+  time: '2022-07-06T07:58:14.0000000+00:00'
