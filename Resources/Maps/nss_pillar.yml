@@ -74639,14 +74639,6 @@ entities:
   - pos: 11.5,13.5
     parent: 130
     type: Transform
-- uid: 7568
-  type: ShellShotgunFlash
-  components:
-  - pos: 1.4405079,19.67595
-    parent: 130
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7569
   type: CableApcExtension
   components:
@@ -75226,14 +75218,6 @@ entities:
   - pos: 0.5,4.5
     parent: 130
     type: Transform
-- uid: 7664
-  type: ShellShotgunFlash
-  components:
-  - pos: 1.5967579,19.660324
-    parent: 130
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7665
   type: WallReinforced
   components:
@@ -77007,14 +76991,6 @@ entities:
     type: Physics
   - solution: drink
     type: DrainableSolution
-- uid: 7889
-  type: ShellShotgunFlash
-  components:
-  - pos: 1.3155079,19.691576
-    parent: 130
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7890
   type: DrinkGlass
   components:
@@ -92461,18 +92437,6 @@ entities:
     type: Physics
   - containers:
       ballistic-ammo: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 9852
-  type: BoxShotgunFlash
-  components:
-  - pos: -50.401936,33.396786
-    parent: 130
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 9853
@@ -148565,14 +148529,6 @@ entities:
     type: Transform
   - airBlocked: False
     type: Airtight
-  - canCollide: False
-    type: Physics
-- uid: 17447
-  type: ShellShotgunFlash
-  components:
-  - pos: 1.7061329,19.660326
-    parent: 130
-    type: Transform
   - canCollide: False
     type: Physics
 - uid: 17448

@@ -190355,18 +190355,6 @@ entities:
   - pos: 48.5,6.5
     parent: 69
     type: Transform
-- uid: 22390
-  type: BoxShotgunFlash
-  components:
-  - pos: 6.6360016,-56.489788
-    parent: 69
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 22391
   type: DisposalPipe
   components:

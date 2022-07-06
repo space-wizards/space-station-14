@@ -56,9 +56,9 @@
     interactFailureString: petting-failure-corrupted-corgi
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      80: !type:CriticalMobState {}
-      160: !type:DeadMobState {}
+      0: Alive
+      80: Critical
+      160: Dead
   - type: Grammar
     attributes:
       gender: male
