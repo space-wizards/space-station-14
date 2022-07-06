@@ -16,6 +16,7 @@ namespace Content.Server.Abilities.Librarian
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusSystem = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private EntityCoordinates? libraryCoordinates;
@@ -44,7 +45,7 @@ namespace Content.Server.Abilities.Librarian
         private void OnShush(EntityUid uid, LibrarianPowersComponent component, ShushActionEvent args)
         {
             //Can be muted
-            if (TryComp<StatusEffectsComponent>(args.Target, out var effects) && !effects.AllowedEffects.Contains("Muted"))
+            if (!_statusSystem.CanApplyEffect(args.Target, "Muted"))
                 return;
 
             //Already muted
