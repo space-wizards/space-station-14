@@ -44,11 +44,8 @@ namespace Content.Server.CommandReport
                 var consolePos = transform.MapPosition;
                 var paper = EntityManager.SpawnEntity("Paper", consolePos);
 
-                var papercomp = EntityManager.GetComponent<PaperComponent>(paper);
-                var papermeta = EntityManager.GetComponent<MetaDataComponent>(paper);
-
-                papercomp.Content = $"Central Command Report\n{message}";
-                papermeta.EntityName = Loc.GetString("command-reports-paper-name");
+                EntityManager.GetComponent<PaperComponent>(paper).Content = $"Central Command Report\n{message}";
+                EntityManager.GetComponent<MetaDataComponent>(paper).EntityName = Loc.GetString("command-reports-paper-name");
 
                 wasSent = true;
             }
