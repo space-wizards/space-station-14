@@ -27,4 +27,4 @@ reagent-desc-vent-crud = Черное вещество, которое можн�
 reagent-name-corpium = корпиум
 reagent-desc-corpium = Коктейль Синдиката, тщательно собранный из различных источников. Вы не захотите, чтобы это оказалось внутри вас.
 reagent-name-uncooked-animal-proteins = непрожаренные животные протеины
-reagent-desc-uncooked-animal-proteins = This is very risky for the stomachs of softer lifeforms to digest.
+reagent-desc-uncooked-animal-proteins = Крайне опасны для желудков более слабых форм жизни.

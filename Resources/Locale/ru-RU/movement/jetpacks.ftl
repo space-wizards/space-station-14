@@ -1,2 +1,2 @@
-action-name-jetpack-toggle = Toggle jetpack
-action-description-jetpack-toggle = Toggles the jetpack, giving you movement outside the station.
+action-name-jetpack-toggle = Переключить джетпак
+action-description-jetpack-toggle = Переключить джетпак, позволяющий с лёгкостью передвигаться вне станции.

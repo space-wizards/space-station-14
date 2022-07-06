@@ -1,8 +1,8 @@
 ent-ComputerAlert = терминал оповещений
     .desc = Используется для доступа к автоматизированной системе оповещения станции.
     .suffix = { "" }
-ent-ComputerEmergencyShuttle = emergency shuttle console
-    .desc = Handles authorization to early launch the shuttle.
+ent-ComputerEmergencyShuttle = консоль аварийного шаттла
+    .desc = Выдает разрешение на досрочный запуск шаттла.
     .suffix = { "" }
 ent-BaseComputerShuttle = консоль шаттла
     .desc = Используется для пилотирования корабля.

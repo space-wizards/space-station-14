@@ -1,9 +1,9 @@
-ent-ResearchDisk = research point disk (1000)
-    .desc = A disk for the R&D server containing 1000 points.
+ent-ResearchDisk = диск исследовательских очков (1000)
+    .desc = Диск для сервера РНД, содержащий 1000 очков.
     .suffix = { "" }
-ent-ResearchDisk5000 = research point disk (5000)
-    .desc = A disk for the R&D server containing 5000 points.
+ent-ResearchDisk5000 = диск исследовательских очков (5000)
+    .desc = Диск для сервера РНД, содержащий 5000 очков.
     .suffix = { "" }
-ent-ResearchDisk10000 = research point disk (10000)
-    .desc = A disk for the R&D server containing 10000 points.
+ent-ResearchDisk10000 = диск исследовательских очков (10000)
+    .desc = Диск для сервера РНД, содержащий 10000 очков.
     .suffix = { "" }

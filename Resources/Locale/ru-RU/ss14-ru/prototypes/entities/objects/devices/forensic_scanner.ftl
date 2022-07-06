@@ -1,3 +1,3 @@
-ent-ForensicScanner = forensic scanner
-    .desc = A handheld device that can scan objects for fingerprints and fibers.
+ent-ForensicScanner = дактилоскопический сканер
+    .desc = Портативное устройство, которое позволяет сканировать предметы на наличие отпечатков пальцев и волокон.
     .suffix = { "" }
