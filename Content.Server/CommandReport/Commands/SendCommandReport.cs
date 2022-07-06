@@ -19,8 +19,8 @@ namespace Content.Server.CommandReport.Commands
     public sealed class SendNukeCodesCommand : IConsoleCommand
     {
         public string Command => "sendcommandreport";
-        public string Description => "Send a command report to a communications console or through the radio.";
-        public string Help => $"{Command} <broadcast_message_to_radio> <message>";
+        public string Description => Loc.GetString("command-reports-command-description");
+        public string Help => Loc.GetString("command-reports-command-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -30,7 +30,7 @@ namespace Content.Server.CommandReport.Commands
                 return;
             }
 
-            EntitySystem.Get<CommandReportSystem>().SendCommandReport(bool.Parse(args[0]), args[1]);
+            EntitySystem.Get<CommandReportSystem>().SendCommandReport(!bool.Parse(args[0]), args[1]);
 
             shell.WriteLine("Sent!");
         }
