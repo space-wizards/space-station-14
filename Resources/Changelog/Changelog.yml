@@ -1,53 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added a number identifier to all mobs. Now it's easier to report rule
-      breaking ghost roles such as ticks and carp., type: Add}
-  id: 1371
-  time: '2022-04-21T22:32:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Grenade Penguin's explosion now does more damage., type: Tweak}
-  - {message: Grenade Penguin AI should be less buggy., type: Fix}
-  id: 1372
-  time: '2022-04-21T22:32:44.0000000+00:00'
-- author: Saakra
-  changes:
-  - {message: Bibles and Necronomicons can now be worn in the belt slot, type: Add}
-  id: 1373
-  time: '2022-04-22T01:20:07.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Players can't suicide if they're already dead., type: Add}
-  id: 1374
-  time: '2022-04-22T05:37:49.0000000+00:00'
-- author: moonheart08
-  changes:
-  - {message: You can rotate the salvage magnet and PA parts again., type: Fix}
-  id: 1375
-  time: '2022-04-23T01:14:28.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The game no longer pretends only one salvage magnet can exist at a time.,
-    type: Fix}
-  id: 1376
-  time: '2022-04-23T01:28:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Hardsuit helmets are now part of a hardsuit. They can be toggled via
-      an action., type: Tweak}
-  id: 1377
-  time: '2022-04-23T03:31:45.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed magboots not properly applying wind/pressure immunity., type: Fix}
-  id: 1378
-  time: '2022-04-23T03:47:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Grids (AKA shuttles / stations) can now split, type: Add}
-  id: 1379
-  time: '2022-04-23T14:59:39.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added a new station, NT Barratry, NT''s un-finest ship.', type: Add}
@@ -2953,3 +2904,58 @@ Entries:
     type: Add}
   id: 1870
   time: '2022-07-05T07:24:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cargo shuttle console now no longer needs to be facing South for controls.,
+    type: Fix}
+  id: 1871
+  time: '2022-07-05T13:40:30.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Security Officer, Warden and HoS now have external access.', type: Tweak}
+  id: 1872
+  time: '2022-07-05T14:11:29.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Cap Guns now have visible held sprites, type: Add}
+  id: 1873
+  time: '2022-07-05T17:09:54.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: Make the uplink lantern actually flash you., type: Tweak}
+  id: 1874
+  time: '2022-07-05T18:40:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The security techfab now starts with all technologies unlocked., type: Tweak}
+  - {message: Removed security tech tree from science., type: Remove}
+  - {message: Department lathes no longer print common items., type: Tweak}
+  id: 1875
+  time: '2022-07-05T19:56:58.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can no longer become so hungry that you ascend hunger, type: Fix}
+  id: 1876
+  time: '2022-07-06T03:08:57.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Zombie game mode as a low chance option in Secret., type: Add}
+  - {message: 'Added the CBURN Unit, an advanced operations team for Chemical, Biological,
+      Undead, Radiological, and Nuclear threats.', type: Add}
+  - {message: Non-human zombies no longer get a damage buff., type: Tweak}
+  - {message: Zombie infection chance is now based on the amount of clothing worn.,
+    type: Tweak}
+  - {message: Zombies have had a visual overhaul., type: Tweak}
+  - {message: Zombies now do less damage to each other rather than more., type: Fix}
+  id: 1877
+  time: '2022-07-06T03:42:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Rat kings will not spawn until someone takes the ghost role., type: Tweak}
+  id: 1878
+  time: '2022-07-06T03:43:24.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Fuel tanks and water tanks can now be sold by cargo, type: Add}
+  id: 1879
+  time: '2022-07-06T03:52:36.0000000+00:00'

@@ -117,8 +117,11 @@
     Piercing: 0.9
     Shock: 1.5
     Cold: 0.2
-    Heat: 3.0
+    Heat: 2.5
     Poison: 0.0
+  flatReductions: #offsets rotting damage
+    Blunt: 0.3
+    Cellular: 0.3
 
 # immune to everything except physical and heat damage
 - type: damageModifierSet

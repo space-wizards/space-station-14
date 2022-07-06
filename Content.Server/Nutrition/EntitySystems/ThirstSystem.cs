@@ -44,7 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            var mod = (component.CurrentThirstThreshold & (ThirstThreshold.Parched | ThirstThreshold.Dead)) != 0x0 ? 0.75f : 1.0f;
+            var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
 

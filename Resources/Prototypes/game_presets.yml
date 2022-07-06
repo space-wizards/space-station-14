@@ -81,6 +81,20 @@
     - Nukeops
 
 - type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+    - Zombies
+    - zz14
+    - zomber
+  name: zombie-title
+  description: zombie-description
+  showInVote: true
+  rules:
+    - Zombie
+
+- type: gamePreset
   id: Pirates
   alias:
     - pirates
