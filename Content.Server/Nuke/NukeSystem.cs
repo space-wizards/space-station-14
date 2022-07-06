@@ -385,7 +385,7 @@ namespace Content.Server.Nuke
             // Don't double-dip on the octave shifting
             component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid),
+            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid), uid,
                 AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
         }
 
