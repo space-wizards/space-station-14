@@ -4,6 +4,8 @@ using Robust.Server.GameObjects;
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Content.Shared.Materials;
 
 namespace Content.Server.Lathe.Components
 {
@@ -21,6 +23,7 @@ namespace Content.Server.Lathe.Components
         /// Whitelist generated on runtime for what items are specifically used for the lathe's recipes.
         /// </summary>
         [ViewVariables]
+        [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
         public List<string> MaterialWhiteList = new();
 
         /// <summary>
