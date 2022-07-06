@@ -44,6 +44,11 @@ namespace Content.Server.RoleTimers
             }
         }
 
+        public bool IsRoleTimeCachedYet(NetUserId id)
+        {
+            return _cachedPlayerData.TryGetValue(id, out var timers) && timers.Initialized;
+        }
+
         /// <summary>
         /// Puts all relevant database information for a player into the cache.
         /// </summary>
@@ -82,21 +87,21 @@ namespace Content.Server.RoleTimers
             await _db.SetOverallPlayTime(id, playtime);
         }
 
-        public async Task<TimeSpan> GetOverallPlaytime(IPlayerSession pSession)
+        public async Task<TimeSpan> GetOverallPlaytime(NetUserId id)
         {
-            if (!_cachedPlayerData.TryGetValue(pSession.UserId, out var timer)) return TimeSpan.Zero;
+            if (!_cachedPlayerData.TryGetValue(id, out var timer)) return TimeSpan.Zero;
             return await timer.GetOverallTime();
         }
 
-        public async Task<Dictionary<string, TimeSpan>> GetRolePlaytimes(IPlayerSession pSession)
+        public async Task<Dictionary<string, TimeSpan>> GetRolePlaytimes(NetUserId id)
         {
-            if (!_cachedPlayerData.TryGetValue(pSession.UserId, out var timer)) return new Dictionary<string, TimeSpan>();
+            if (!_cachedPlayerData.TryGetValue(id, out var timer)) return new Dictionary<string, TimeSpan>();
             return await timer.GetRoleTimers();
         }
 
-        public async Task<TimeSpan> GetPlayTimeForRole(IPlayerSession pSession, string role)
+        public async Task<TimeSpan> GetPlayTimeForRole(NetUserId id, string role)
         {
-            if (!_cachedPlayerData.TryGetValue(pSession.UserId, out var timers))
+            if (!_cachedPlayerData.TryGetValue(id, out var timers))
             {
                 return TimeSpan.Zero;
             }
@@ -152,7 +157,7 @@ namespace Content.Server.RoleTimers
                 return overallTime;
             }
 
-            public async Task <TimeSpan> AddPlaytimeForRole(string role, TimeSpan time)
+            public async Task<TimeSpan> AddPlaytimeForRole(string role, TimeSpan time)
             {
                 await _semaphore.WaitAsync();
                 var existing = _roleTimers.GetOrNew(role);

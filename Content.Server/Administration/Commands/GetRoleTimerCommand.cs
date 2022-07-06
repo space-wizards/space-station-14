@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
 
             if (args.Length == 1)
             {
-                var timers = roles.GetRolePlaytimes(pSession).Result;
+                var timers = roles.GetRolePlaytimes(pSession.UserId).Result;
 
                 if (timers.Count == 0)
                 {
@@ -52,12 +52,12 @@ namespace Content.Server.Administration.Commands
             {
                 if (args[1] == "Overall")
                 {
-                    var timer = roles.GetOverallPlaytime(pSession).Result;
+                    var timer = roles.GetOverallPlaytime(pSession.UserId).Result;
                     shell.WriteLine($"Overall playtime is {timer}");
                     return;
                 }
 
-                var time = roles.GetPlayTimeForRole(pSession, args[1]).Result;
+                var time = roles.GetPlayTimeForRole(pSession.UserId, args[1]).Result;
                 shell.WriteLine($"Playtime for {args[1]} is: {time}");
             }
         }

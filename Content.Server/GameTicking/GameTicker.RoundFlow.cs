@@ -6,6 +6,7 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Server.RoleTimers;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -184,9 +185,11 @@ namespace Content.Server.GameTicking
                 return true;
             });
 
+            var roleTimerManager = IoCManager.Resolve<RoleTimerManager>();
+
             readyPlayers.RemoveAll(p =>
             {
-                if (_roleTimers.IsPlayerTimeCached(p.UserId))
+                if (roleTimerManager.IsRoleTimeCachedYet(p.UserId))
                     return false;
                 Logger.ErrorS("RoleTimers", $"Role timers for player {p} {p.UserId} have not been loaded yet.");
                 return true;

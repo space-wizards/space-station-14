@@ -154,6 +154,24 @@ public sealed class RoleTimerSystem : EntitySystem
         PlayerRolesChanged(ev.Player);
     }
 
+    public bool IsAllowed(IPlayerSession pSession, string role)
+    {
+        if (!_protoManager.TryIndex<JobPrototype>(role, out var job) ||
+            job.Requirements == null ||
+            !_configManager.GetCVar(CCVars.GameRoleTimers)) return true;
+
+        var overall = _roleTimers.GetOverallPlaytime(pSession.UserId).Result;
+        var roleTime = _roleTimers.GetPlayTimeForRole(pSession.UserId, role).Result;
+
+        foreach (var requirement in job.Requirements)
+        {
+            // TODO
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Does the player meet the job requirements for a particular role?
     /// </summary>
@@ -183,6 +201,78 @@ public sealed class RoleTimerSystem : EntitySystem
         }
 
         return true;
+    }
+
+    public HashSet<string> GetDisAllowedJobs(NetUserId netUserId)
+    {
+        var roles = new HashSet<string>();
+        if (!_configManager.GetCVar(CCVars.GameRoleTimers)) return roles;
+
+        // TODO:
+        return roles;
+        TimeSpan? overallPlaytime = null;
+        Dictionary<string, TimeSpan>? rolePlaytimes = null;
+
+        foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
+        {
+            if (job.Requirements != null)
+            {
+                foreach (var requirement in job.Requirements)
+                {
+                    switch (requirement)
+                    {
+                        case DepartmentTimeRequirement deptRequirement:
+                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                            break;
+                        case OverallPlaytimeRequirement overallRequirement:
+                            overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
+                            break;
+                        case RoleTimeRequirement roleRequirement:
+                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                            break;
+                    }
+                }
+            }
+
+            roles.Add(job.ID);
+        }
+
+        return roles;
+    }
+
+    public List<string> GetAllowedJobs(NetUserId netUserId)
+    {
+        var roleTimers = _configManager.GetCVar(CCVars.GameRoleTimers);
+
+        TimeSpan? overallPlaytime = null;
+        Dictionary<string, TimeSpan>? rolePlaytimes = null;
+        var roles = new List<string>();
+
+        foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
+        {
+            if (roleTimers && job.Requirements != null)
+            {
+                foreach (var requirement in job.Requirements)
+                {
+                    switch (requirement)
+                    {
+                        case DepartmentTimeRequirement deptRequirement:
+                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                            break;
+                        case OverallPlaytimeRequirement overallRequirement:
+                            overallPlaytime ??= _roleTimers.GetOverallPlaytime(netUserId).Result;
+                            break;
+                        case RoleTimeRequirement roleRequirement:
+                            rolePlaytimes ??= _roleTimers.GetRolePlaytimes(netUserId).Result;
+                            break;
+                    }
+                }
+            }
+
+            roles.Add(job.ID);
+        }
+
+        return roles;
     }
 
     public void SetAllowedJobs(NetUserId netUserId, ref List<string> jobs)
@@ -236,7 +326,7 @@ public sealed class RoleTimerSystem : EntitySystem
         return roles;
     }
 
-    private void PlayerRolesChanged(IPlayerSession player)
+    public void PlayerRolesChanged(IPlayerSession player)
     {
         Save(player, _timing.CurTime);
     }
