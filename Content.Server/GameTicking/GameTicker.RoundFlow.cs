@@ -129,6 +129,7 @@ namespace Content.Server.GameTicking
                 for (int i = 0; i < mods.Count; i++)
                 {
                     var mod = mods[i];
+                    IoCManager.InjectDependencies(mod);
                     Logger.InfoS("map", $"Processing Map Modifier [{i}/{mods.Count}]: {mod.GetType()}");
                     mod.Execute(targetMapId, entities, gridUids);
                 }

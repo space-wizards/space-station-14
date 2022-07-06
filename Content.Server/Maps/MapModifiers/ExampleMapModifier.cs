@@ -1,7 +1,9 @@
-﻿using Robust.Shared.Map;
+﻿using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Server.Maps.MapModifiers;
 
+[DataDefinition, PublicAPI]
 public sealed class ExampleMapModifier : MapModifier
 {
     [DataField("tileId")]
@@ -16,19 +18,15 @@ public sealed class ExampleMapModifier : MapModifier
 
     public override void Execute(MapId mapId, IReadOnlyList<EntityUid> entities, IReadOnlyList<EntityUid> grids)
     {
-        IMapGrid gridEntity;
-        if (grids.Count == 0)
-        {
-            Logger.Debug("No grid found on map, adding a new one");
-            gridEntity = _mapMg.CreateGrid(mapId);
-        }
-        else
+        if (grids.Count > 0)
         {
             Logger.Debug("At least one grid on map");
-            gridEntity = _mapMg.GetGrid(grids[0]);
+            foreach (var gridUid in grids)
+            {
+                var id = _tileMg[TileId].TileId;
+                var gridEntity = _mapMg.GetGrid(gridUid);
+                gridEntity.SetTile(new Vector2i((int)TilePos.X, (int)TilePos.Y), new Tile(id));
+            }
         }
-
-        var id = _tileMg[TileId].TileId;
-        gridEntity.SetTile(new Vector2i((int)TilePos.X, (int)TilePos.Y), new Tile(id));
     }
 }
