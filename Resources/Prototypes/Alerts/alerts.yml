@@ -212,6 +212,12 @@
   description: You've broken your vows to Mimes everywhere. You can speak, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
 
 - type: alert
+  id: LibraryDomain
+  icon: /Textures/Objects/Misc/books.rsi/book2.png
+  name: Library Domain
+  description: You are empowered with the magic of reading.
+  
+- type: alert
   id: Pulled
   icon: /Textures/Interface/Alerts/Pull/pulled.png
   onClick: !type:StopBeingPulled  { }

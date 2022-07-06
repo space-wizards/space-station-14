@@ -9,6 +9,10 @@
   access:
   - Service
   - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: LibrarianPowers
 
 - type: startingGear
   id: LibrarianGear
