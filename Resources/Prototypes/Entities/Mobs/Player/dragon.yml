@@ -55,9 +55,9 @@
       - FlyingMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      450: !type:CriticalMobState {}
-      500: !type:DeadMobState {}
+      0: Alive
+      450: Critical
+      500: Dead
   - type: Metabolizer
     solutionOnBody: false
     updateFrequency: 0.25

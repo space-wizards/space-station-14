@@ -48,6 +48,7 @@ namespace Content.Server.Nutrition.Components
             {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
             {ThirstThreshold.Thirsty, AlertType.Thirsty},
             {ThirstThreshold.Parched, AlertType.Parched},
+            {ThirstThreshold.Dead, AlertType.Parched},
         };
     }
 }

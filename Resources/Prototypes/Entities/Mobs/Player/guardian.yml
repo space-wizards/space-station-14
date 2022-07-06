@@ -50,7 +50,7 @@
     damageContainer: Biological
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: HeatResistance
   - type: CombatMode
   - type: Internals

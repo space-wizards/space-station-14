@@ -68,7 +68,7 @@
     - type: Actions
     - type: MobState
       thresholds:
-        0: !type:NormalMobState {}
+        0: Alive
     #    criticalThreshold: 50
     #    deadThreshold: 120
 
