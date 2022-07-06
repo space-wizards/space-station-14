@@ -491,7 +491,6 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-
             if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
