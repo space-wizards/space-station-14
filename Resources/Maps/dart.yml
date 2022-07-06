@@ -1457,7 +1457,7 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - id: dart
+  - id: Dart
     type: BecomesStation
 - uid: 75
   type: Grille
