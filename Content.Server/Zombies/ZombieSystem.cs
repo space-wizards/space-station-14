@@ -11,6 +11,7 @@ using Content.Shared.Inventory;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Content.Server.Inventory;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Zombies
 {
@@ -20,8 +21,9 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,23 +38,21 @@ namespace Content.Server.Zombies
             if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
                 return baseChance;
 
-            if (!_inv.TryGetContainerSlotEnumerator(uid, out var enumerator, inventoryComponent))
-                return baseChance;
-
-            //Hardcoded, ACK
-            List<string> validInfectionBlockingSlots = new()
-            {
-                "shoes", "jumpsuit", "outerClothing", "gloves",
-                "neck", "mask", "eyes", "head"
-            };
+            var enumerator =
+                new InventorySystem.ContainerSlotEnumerator(uid, inventoryComponent.TemplateId, _protoManager, _inv,
+                    SlotFlags.FEET |
+                    SlotFlags.HEAD |
+                    SlotFlags.EYES |
+                    SlotFlags.GLOVES |
+                    SlotFlags.MASK |
+                    SlotFlags.NECK |
+                    SlotFlags.INNERCLOTHING |
+                    SlotFlags.OUTERCLOTHING);
 
             var items = 0f;
             var total = 0f;
             while (enumerator.MoveNext(out var con))
             {
-                if (!validInfectionBlockingSlots.Contains(con.ID))
-                    continue;
-
                 total++;
 
                 if (con.ContainedEntity != null)
