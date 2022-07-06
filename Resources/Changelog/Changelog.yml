@@ -1,9 +1,4 @@
 Entries:
-- author: Saakra
-  changes:
-  - {message: Can now drink liquids from the right-click context menu, type: Add}
-  id: 1381
-  time: '2022-04-23T23:38:21.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Fix hypopen being named 'pen' in uplink, type: Fix}
@@ -2959,3 +2954,12 @@ Entries:
   - {message: Taking damage now has an overlay., type: Add}
   id: 1880
   time: '2022-07-06T07:58:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stamina has been added so weapons won't always immediately stun the
+      target., type: Add}
+  - {message: Stun batons apply a 5 seconds stun with a 7 second cooldown., type: Tweak}
+  - {message: Disablers have been added. It takes 4 shots to put someone into stamcrit
+      for 5 seconds., type: Add}
+  id: 1881
+  time: '2022-07-06T08:06:12.0000000+00:00'
