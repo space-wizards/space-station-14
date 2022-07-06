@@ -484,7 +484,6 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-
             if (TryComp(insertEnt, out ServerStorageComponent? storage) &&
                 storage.StorageCapacityMax >= storageComp.StorageCapacityMax)
             {
