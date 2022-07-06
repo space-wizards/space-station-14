@@ -63,7 +63,6 @@ namespace Content.Server.Zombies
             var min = component.MinZombieInfectionChance;
             //gets a value between the max and min based on how many items the entity is wearing
             float chance = (max-min) * ((total - items)/total) + min;
-            Logger.Debug(chance.ToString());
             return chance;
         }
 
