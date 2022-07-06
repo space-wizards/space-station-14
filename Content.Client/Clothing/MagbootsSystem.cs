@@ -18,6 +18,8 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         if (args.Current is not MagbootsComponentState componentState)
             return;
 
+        if (component.On == componentState.On) return;
+        
         component.On = componentState.On;
         OnChanged(component);
     }
