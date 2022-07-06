@@ -151,14 +151,13 @@ public sealed partial class CargoSystem
             ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
-            ("approverName", data.ApproverName),
-            ("approverJob", data.ApproverJob)),
+            ("approver", data.Approver ?? string.Empty)),
             paper);
 
         // attempt to attach the label
         if (TryComp<PaperLabelComponent>(product, out var label))
         {
-            _slots.TryInsert(component.Owner, label.LabelSlot, printed, null);
+            _slots.TryInsert(product, label.LabelSlot, printed, null);
         }
     }
 }

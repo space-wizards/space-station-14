@@ -154,7 +154,7 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            order.Approved = true;
+            order.Approved = true; // TODO Rinka
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.setApproverData(idCard);
 

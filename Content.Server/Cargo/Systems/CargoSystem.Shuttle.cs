@@ -418,7 +418,7 @@ public sealed partial class CargoSystem
             var coordinates = new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
 
             var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, coordinates);
-            spawnAndAttachOrderManifest(item, order, coordinates, component);
+            SpawnAndAttachOrderManifest(item, order, coordinates, component);
             order.Amount--;
 
             if (order.Amount == 0)
@@ -437,8 +437,8 @@ public sealed partial class CargoSystem
     /// <summary>
     /// In this method we are printing and attaching order manifests to the orders.
     /// </summary>
-    private void spawnAndAttachOrderManifest(EntityUid item, CargoOrderData order, EntityCoordinates coordinates, CargoShuttleComponent component) {
-
+    private void SpawnAndAttachOrderManifest(EntityUid item, CargoOrderData order, EntityCoordinates coordinates, CargoShuttleComponent component)
+    {
         if (!_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? prototype))
             return;
 
@@ -459,14 +459,13 @@ public sealed partial class CargoSystem
             ("itemName", prototype.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),
-            ("approverName", order.ApproverName),
-            ("approverJob", order.ApproverJob)),
+            ("approver", order.Approver ?? string.Empty)),
             paper);
 
         // attempt to attach the label
         if (TryComp<PaperLabelComponent>(item, out var label))
         {
-            _slots.TryInsert(component.Owner, label.LabelSlot, printed, null);
+            _slots.TryInsert(item, label.LabelSlot, printed, null);
         }
     }
 

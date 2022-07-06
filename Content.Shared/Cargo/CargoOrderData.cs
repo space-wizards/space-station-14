@@ -1,5 +1,6 @@
 using Robust.Shared.Serialization;
 using Content.Shared.Access.Components;
+using System.Text;
 namespace Content.Shared.Cargo
 {
     [NetSerializable, Serializable]
@@ -13,22 +14,36 @@ namespace Content.Shared.Cargo
         // public int RequesterId;
         public string Reason;
         public bool Approved;
-        public string Approver = string.Empty;
-        public string ApproverName = string.Empty;
-        public string ApproverJob = string.Empty;
+        // {
+        //     get { return Approver is null; }
+        // }
+        public string? Approver;
 
         public CargoOrderData(int orderNumber, string productId, int amount, string requester, string reason)
         {
             OrderNumber = orderNumber;
-            Requester = requester;
-            Reason = reason;
             ProductId = productId;
             Amount = amount;
+            Requester = requester;
+            Reason = reason;
         }
 
-        public void setApproverData(IdCardComponent? idCard) {
-            ApproverName = idCard?.FullName ?? string.Empty;
-            ApproverJob = idCard?.JobTitle ?? string.Empty;
+        public void setApproverData(IdCardComponent? idCard)
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrWhiteSpace(idCard?.FullName))
+            {
+                sb.Append($"{idCard.FullName} ");
+            }
+            if (!string.IsNullOrWhiteSpace(idCard?.JobTitle))
+            {
+                sb.Append($"({idCard.JobTitle})");
+            }
+
+            if (sb.Length > 0)
+            {
+                Approver = sb.ToString();
+            }
         }
     }
 }
