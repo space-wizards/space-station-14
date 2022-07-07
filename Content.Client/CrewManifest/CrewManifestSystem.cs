@@ -51,7 +51,7 @@ public sealed class CrewManifestSystem : EntitySystem
     ///     Unsubscribes this callback method from the given station.
     /// </summary>
     /// <param name="station">Station that has the callback registered.</param>
-    /// <param name="callback">The callback to unregister.</param>
+    /// <param name="callback">The callback to unregister./param>
     public void UnsubscribeCrewManifestUpdate(EntityUid station, Action<CrewManifestState> callback)
     {
         if (!_registeredCallbacks.TryGetValue(station, out var update))

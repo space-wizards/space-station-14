@@ -30,6 +30,14 @@ public sealed partial class CrewManifestUi : DefaultWindow
         StationName.AddStyleClass("LabelBig");
     }
 
+    public override void Close()
+    {
+        base.Close();
+
+        // ?
+        Dispose(true);
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
