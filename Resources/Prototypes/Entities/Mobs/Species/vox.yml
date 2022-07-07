@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: BaseMobOrganic
   id: BaseMobVox
-  noSpawn: true
+  abstract: true
   components:
   - type: Hunger
   - type: Thirst
