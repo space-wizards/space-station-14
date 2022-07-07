@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Any windoor with an open wire panel can be pried open without deconstruction.
-      To start a windoor deconstruction use a wrench first., type: Tweak}
-  id: 1388
-  time: '2022-04-23T23:45:54.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Space carp can no longer destroy reinforced windows., type: Tweak}
@@ -2962,3 +2956,11 @@ Entries:
   - {message: Useless materials can no longer be inserted in lathes., type: Fix}
   id: 1887
   time: '2022-07-07T03:44:32.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Emergency lights now change color on certain alert levels, and can
+      be forcibly activated by the very dangerous alert levels.', type: Add}
+  - {message: Emergency lights can now be examined to show the current station alert
+      level., type: Tweak}
+  id: 1888
+  time: '2022-07-07T16:16:48.0000000+00:00'
