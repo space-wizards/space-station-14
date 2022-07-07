@@ -24,10 +24,8 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public EntityUid? Grid { get; private set; }
 
-        public override void Initialize(Node sourceNode, IEntityManager? entMan = null)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            IoCManager.Resolve(ref entMan);
-
             base.Initialize(sourceNode, entMan);
 
             Grid = entMan.GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
@@ -35,6 +33,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             if (Grid == null)
             {
                 Logger.Error($"Created a pipe network without an associated grid. Pipe networks currently need to be tied to a grid for amtos to work. Source entity: {entMan.ToPrettyString(sourceNode.Owner)}");
+                // This is probably due to a cannister being spawned in space. Currently canisters need to spawned on grids to function properly, and they'll stop updating if their original grid gets deleted
                 return;
             }
 
@@ -82,13 +81,11 @@ namespace Content.Server.NodeContainer.NodeGroups
                     newAir.Add(newPipeNet.Air);
             }
 
-            _atmosphereSystem!.DivideInto(Air, newAir);
+            _atmosphereSystem?.DivideInto(Air, newAir);
         }
 
         private void RemoveFromGridAtmos()
         {
-            DebugTools.AssertNotNull(_atmosphereSystem);
-
             if (Grid == null)
                 return;
 
