@@ -1,6 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.HUD.UI"
-               Title="{Loc 'crew-manifest-window-title'}">
+               Title="{Loc 'crew-manifest-window-title'}"
+               MinSize="450 750">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
         <ui:StripeBack>
             <PanelContainer>

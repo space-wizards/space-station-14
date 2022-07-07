@@ -76,6 +76,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
         public CrewManifestSection(string sectionTitle, List<CrewManifestEntry> entries, IResourceCache cache)
         {
             Orientation = LayoutOrientation.Vertical;
+            HorizontalExpand = true;
 
             AddChild(new Label()
             {
@@ -87,6 +88,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
             var gridContainer = new GridContainer()
             {
+                HorizontalExpand = true,
                 Columns = 2
             };
 
@@ -99,12 +101,14 @@ public sealed partial class CrewManifestUi : DefaultWindow
             {
                 var name = new Label()
                 {
+                    HorizontalExpand = true,
                     Text = entry.Name
                 };
 
                 var titleContainer = new BoxContainer()
                 {
-                    Orientation = LayoutOrientation.Horizontal
+                    Orientation = LayoutOrientation.Horizontal,
+                    HorizontalExpand = true
                 };
 
                 var title = new Label()
