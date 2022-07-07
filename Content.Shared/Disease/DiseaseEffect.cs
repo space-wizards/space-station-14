@@ -27,7 +27,6 @@ namespace Content.Shared.Disease
             get => _minSeverity;
             set
             {
-                Logger.Debug(" Minseverity " + value);
                 if(value > 1f || value < 0f)
                     DebugTools.Assert( "MinSeverity have been attempted to be set out of range");
                 _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
