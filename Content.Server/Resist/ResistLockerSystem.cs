@@ -6,6 +6,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 
 namespace Content.Server.Resist;
 
@@ -56,7 +57,7 @@ public sealed class ResistLockerSystem : EntitySystem
         };
 
         resistLockerComponent.IsResisting = true;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, Filter.Entities(user));
+        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, Filter.Entities(user), PopupType.Large);
         _doAfterSystem.DoAfter(doAfterEventArgs);
     }
 
@@ -81,7 +82,7 @@ public sealed class ResistLockerSystem : EntitySystem
     {
         component.IsResisting = false;
         component.CancelToken = null;
-        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), ev.User, Filter.Entities(ev.User));
+        _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-resist-interrupted"), ev.User, Filter.Entities(ev.User), PopupType.Medium);
     }
 
     private void OnRemovedFromContainer(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage message)

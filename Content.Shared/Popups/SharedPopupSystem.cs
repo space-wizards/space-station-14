@@ -98,6 +98,7 @@ namespace Content.Shared.Popups
     /// <remarks>
     ///     Actions which can fail or succeed should use a smaller popup for failure and a larger popup for success.
     ///     Actions which have different popups for the user vs. others should use a larger popup for the user and a smaller popup for others.
+    ///     Actions which result in immediate death for a user should almost always show as critical to all parties, such as suicides or smites.
     /// </remarks>
     [Serializable, NetSerializable]
     public enum PopupType : byte
