@@ -15,7 +15,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 1
+        Blunt: 0.6
     hitSound:
       collection: BoxingHit
   - type: Fiber
