@@ -419,8 +419,9 @@ namespace Content.Server.Kitchen.Components
         {
             int portions = 0;
 
-            if (_currentCookTimerTime != recipe.CookTime)
+            if(_currentCookTimerTime % recipe.CookTime != 0)
             {
+                //can't be a multiple of this recipe
                 return (recipe, 0);
             }
 
@@ -446,6 +447,12 @@ namespace Content.Server.Kitchen.Components
                 else
                     portions = portions == 0 ? reagents[reagent.Key].Int() / reagent.Value.Int()
                         : Math.Min(portions, reagents[reagent.Key].Int() / reagent.Value.Int());
+            }
+
+            if (_currentCookTimerTime / recipe.CookTime != portions)
+            {
+                //not correct time multiple for the number of portions found
+                return (recipe, 0);
             }
 
             return (recipe, portions);
