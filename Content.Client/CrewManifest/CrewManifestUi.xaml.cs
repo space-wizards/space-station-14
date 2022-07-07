@@ -54,6 +54,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
     private void UpdateManifest(CrewManifestState state)
     {
         StationName.Visible = state.Station != null;
+        StationName.Text = state.StationName;
         Populate(state.Entries);
     }
 
@@ -74,6 +75,8 @@ public sealed partial class CrewManifestUi : DefaultWindow
     {
         public CrewManifestSection(string sectionTitle, List<CrewManifestEntry> entries, IResourceCache cache)
         {
+            Orientation = LayoutOrientation.Vertical;
+
             AddChild(new Label()
             {
                 StyleClasses = { "LabelBig" },
@@ -86,6 +89,8 @@ public sealed partial class CrewManifestUi : DefaultWindow
             {
                 Columns = 2
             };
+
+            AddChild(gridContainer);
 
             var path = new ResourcePath("/Textures/Interface/Misc/job_icons.rsi");
             cache.TryGetResource(path, out RSIResource? rsi);
