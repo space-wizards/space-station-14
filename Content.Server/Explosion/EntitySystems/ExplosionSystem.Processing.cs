@@ -362,14 +362,16 @@ public sealed partial class ExplosionSystem : EntitySystem
             var ev = new GetExplosionResistanceEvent(id);
             RaiseLocalEvent(uid, ev, false);
 
-            if (ev.Resistance == 0)
+            ev.DamageCoefficient = Math.Max(0, ev.DamageCoefficient);
+
+            if (ev.DamageCoefficient == 1)
             {
                 // no damage-dict multiplication required.
                 _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
             }
-            else if (ev.Resistance < 1)
+            else
             {
-                _damageableSystem.TryChangeDamage(uid, damage * (1 - ev.Resistance), ignoreResistances: true, damageable: damageable);
+                _damageableSystem.TryChangeDamage(uid, damage * ev.DamageCoefficient, ignoreResistances: true, damageable: damageable);
             }
         }
 
