@@ -1,12 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: C4 can't be stuck to any other items (including pills). Mobs and structures
-      are still valid targets for sticking., type: Tweak}
-  - {message: 'C4 damage was significantly reduced for all organic mobs. It should
-      be enough to crit a player, not gib them.', type: Tweak}
-  id: 1392
-  time: '2022-04-24T00:22:14.0000000+00:00'
 - author: Rane
   changes:
   - {message: Emags no longer force open bolted or unpowered doors., type: Tweak}
@@ -2967,3 +2959,8 @@ Entries:
   - {message: Hunger and thirst will no longer affect jetpack speed., type: Tweak}
   id: 1891
   time: '2022-07-07T18:29:25.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
+  id: 1892
+  time: '2022-07-07T19:37:47.0000000+00:00'
