@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Agent ID cards now only show a popup for their user., type: Tweak}
-  id: 1387
-  time: '2022-04-23T23:43:34.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Any windoor with an open wire panel can be pried open without deconstruction.
@@ -2962,3 +2957,8 @@ Entries:
   - {message: Fully Updated Pillar, type: Add}
   id: 1886
   time: '2022-07-07T03:39:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Useless materials can no longer be inserted in lathes., type: Fix}
+  id: 1887
+  time: '2022-07-07T03:44:32.0000000+00:00'
