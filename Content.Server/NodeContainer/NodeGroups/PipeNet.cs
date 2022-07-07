@@ -32,8 +32,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
             if (Grid == null)
             {
-                Logger.Error($"Created a pipe network without an associated grid. Pipe networks currently need to be tied to a grid for amtos to work. Source entity: {entMan.ToPrettyString(sourceNode.Owner)}");
-                // This is probably due to a cannister being spawned in space. Currently canisters need to spawned on grids to function properly, and they'll stop updating if their original grid gets deleted
+                // This is probably due to a cannister or something like that being spawned in space.
                 return;
             }
 
