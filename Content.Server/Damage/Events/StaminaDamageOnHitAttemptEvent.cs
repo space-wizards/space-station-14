@@ -1,3 +1,5 @@
+using Content.Shared.Sound;
+
 namespace Content.Server.Damage.Events;
 
 /// <summary>
@@ -7,4 +9,5 @@ namespace Content.Server.Damage.Events;
 public struct StaminaDamageOnHitAttemptEvent
 {
     public bool Cancelled;
+    public SoundSpecifier? HitSoundOverride;
 }

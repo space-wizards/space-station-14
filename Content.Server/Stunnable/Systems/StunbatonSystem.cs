@@ -50,6 +50,8 @@ namespace Content.Server.Stunnable.Systems
                 return;
             }
 
+            args.HitSoundOverride = component.StunSound;
+
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
                 SoundSystem.Play(component.SparksSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));

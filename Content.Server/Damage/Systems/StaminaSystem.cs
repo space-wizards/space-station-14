@@ -59,6 +59,7 @@ public sealed class StaminaSystem : EntitySystem
 
         if (ev.Cancelled) return;
 
+        args.HitSoundOverride = ev.HitSoundOverride;
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var toHit = new ValueList<StaminaComponent>();
 
