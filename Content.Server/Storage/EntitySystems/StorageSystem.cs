@@ -474,29 +474,49 @@ namespace Content.Server.Storage.EntitySystems
         ///     Verifies if an entity can be stored and if it fits
         /// </summary>
         /// <param name="entity">The entity to check</param>
+        /// <param name="reason">If returning false, the reason displayed to the player</param>
         /// <returns>true if it can be inserted, false otherwise</returns>
-        public bool CanInsert(EntityUid uid, EntityUid insertEnt, ServerStorageComponent? storageComp = null)
+        public bool CanInsert(EntityUid uid, EntityUid insertEnt, out string? reason, ServerStorageComponent? storageComp = null)
         {
             if (!Resolve(uid, ref storageComp))
+            {
+                reason = null;
                 return false;
+            }
 
             if (TryComp(insertEnt, out ServerStorageComponent? storage) &&
                 storage.StorageCapacityMax >= storageComp.StorageCapacityMax)
+            {
+                reason = "comp-storage-insufficient-capacity";
                 return false;
+            }
 
             if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
+            {
+                reason = "comp-storage-insufficient-capacity";
                 return false;
+            }
 
             if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
+            {
+                reason = "comp-storage-invalid-container";
                 return false;
+            }
 
             if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
+            {
+                reason = "comp-storage-invalid-container";
                 return false;
+            }
 
             if (TryComp(insertEnt, out TransformComponent? transformComp) && transformComp.Anchored)
+            {
+                reason = "comp-storage-anchored-failure";
                 return false;
+            }
 
+            reason = null;
             return true;
         }
 
@@ -510,7 +530,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(uid, ref storageComp))
                 return false;
 
-            if (!CanInsert(uid, insertEnt, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
+            if (!CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage?.Insert(insertEnt) == false)
                 return false;
 
             if (storageComp.StorageInsertSound is not null)
@@ -550,9 +570,9 @@ namespace Content.Server.Storage.EntitySystems
 
             var toInsert = hands.ActiveHandEntity;
 
-            if (!CanInsert(uid, toInsert.Value, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
+            if (!CanInsert(uid, toInsert.Value, out var reason, storageComp) || !_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
             {
-                Popup(uid, player, "comp-storage-cant-insert", storageComp);
+                Popup(uid, player, reason ?? "comp-storage-cant-insert", storageComp);
                 return false;
             }
 
