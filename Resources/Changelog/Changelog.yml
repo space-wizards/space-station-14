@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Access readers now merge access from all places you could have an ID.,
-    type: Tweak}
-  id: 1391
-  time: '2022-04-24T00:21:17.0000000+00:00'
 - author: Macoron
   changes:
   - {message: C4 can't be stuck to any other items (including pills). Mobs and structures
@@ -2968,3 +2962,8 @@ Entries:
     type: Fix}
   id: 1890
   time: '2022-07-07T18:21:27.0000000+00:00'
+- author: TekuNut
+  changes:
+  - {message: Hunger and thirst will no longer affect jetpack speed., type: Tweak}
+  id: 1891
+  time: '2022-07-07T18:29:25.0000000+00:00'
