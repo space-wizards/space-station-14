@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Damage.Systems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Components;
@@ -24,6 +25,7 @@ namespace Content.Server.Weapon.Ranged.Systems;
 public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly EffectSystem _effects = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
 
@@ -115,6 +117,9 @@ public sealed partial class GunSystem : SharedGunSystem
                         var result = rayCastResults[0];
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, entityDirection.ToAngle(), hitscan, result.HitEntity);
+
+                        if (hitscan.StaminaDamage > 0f)
+                            _stamina.TakeStaminaDamage(result.HitEntity, hitscan.StaminaDamage);
 
                         var dmg = hitscan.Damage;
 
