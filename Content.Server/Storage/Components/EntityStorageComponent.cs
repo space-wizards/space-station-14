@@ -64,10 +64,12 @@ public sealed class EntityStorageComponent : Component
 }
 
 public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs { }
-public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs { }
+public sealed class StoreMobInItemContainerAttemptEvent : CancellableEntityEventArgs
+{
+    public bool Handled = false;
+}
 public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
-
 public sealed class StorageBeforeCloseEvent : EventArgs
 {
     public EntityUid Container;

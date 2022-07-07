@@ -309,9 +309,9 @@ public sealed class EntityStorageSystem : EntitySystem
                 allowedToEat = true;
             else
             {
-                var storeEv = new StoreThisAttemptEvent();
+                var storeEv = new StoreMobInItemContainerAttemptEvent();
                 RaiseLocalEvent(container, storeEv);
-                allowedToEat = !storeEv.Cancelled;
+                allowedToEat = storeEv.Handled && !storeEv.Cancelled;
             }
         }
 
