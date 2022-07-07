@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added the water cooler. Go stand by it and plot the downfall of the
-      corporations through petty theft., type: Add}
-  id: 1383
-  time: '2022-04-23T23:39:01.0000000+00:00'
 - author: Daemon
   changes:
   - {message: 'Added blood red magboots, and made them available to purchase in the
@@ -2964,3 +2958,8 @@ Entries:
       an actual failure reason, such as insufficient capacity.', type: Tweak}
   id: 1882
   time: '2022-07-07T00:45:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Explosion resistance is now multiplicative and not additive., type: Tweak}
+  id: 1883
+  time: '2022-07-07T03:15:20.0000000+00:00'
