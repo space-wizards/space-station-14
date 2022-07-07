@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Space carp can no longer destroy reinforced windows., type: Tweak}
-  id: 1389
-  time: '2022-04-23T23:46:25.0000000+00:00'
 - author: Veritius
   changes:
   - {message: 'The Syndicate has distributed a special stamp to their operatives,
@@ -2964,3 +2959,8 @@ Entries:
       level., type: Tweak}
   id: 1888
   time: '2022-07-07T16:16:48.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Practice shotgun shells are now much less lethal, type: Fix}
+  id: 1889
+  time: '2022-07-07T17:30:37.0000000+00:00'
