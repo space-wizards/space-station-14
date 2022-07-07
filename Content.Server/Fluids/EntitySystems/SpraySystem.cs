@@ -60,9 +60,14 @@ public sealed class SpraySystem : EntitySystem
         var playerMapPos = Transform(args.User).MapPosition;
         var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
-        var mapDirection = (clickMapPos.Position - playerMapPos.Position).Normalized;
-        var threeQuarters = mapDirection * 0.75f;
-        var quarter = mapDirection * 0.25f;
+        var diffPos = clickMapPos.Position - playerMapPos.Position;
+        var diffLength = diffPos.Length;
+        if (diffLength == 0f)
+            return;
+
+        var diffNorm = diffPos.Normalized;
+        var threeQuarters = diffNorm * 0.75f;
+        var quarter = diffNorm * 0.25f;
 
         var amount = Math.Max(Math.Min((solution.CurrentVolume / component.TransferAmount).Int(), component.VaporAmount), 1);
 
@@ -70,12 +75,8 @@ public sealed class SpraySystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            var rotation = new Angle(mapDirection.ToAngle() + Angle.FromDegrees(spread * i) -
+            var rotation = new Angle(diffNorm.ToAngle() + Angle.FromDegrees(spread * i) -
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
-
-            var diffPos = clickMapPos.Position - playerMapPos.Position;
-            var diffNorm = diffPos.Normalized;
-            var diffLength = diffPos.Length;
 
             var target = playerMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
