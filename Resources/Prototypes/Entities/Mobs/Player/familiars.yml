@@ -22,6 +22,7 @@
   - type: Mind
     showExamineInfo: true
   - type: Alerts
+  - type: Familiar
 
 - type: entity
   name: Cerberus
@@ -71,3 +72,4 @@
     - Chapel
   - type: Mind
     showExamineInfo: true
+  - type: Familiar

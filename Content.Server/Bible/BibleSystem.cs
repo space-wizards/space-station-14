@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
@@ -9,6 +10,8 @@ using Content.Shared.Actions;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.Popups;
+using Content.Server.Ghost.Roles.Components;
+using Content.Serever.Ghost.Roles.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -25,6 +28,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
@@ -35,6 +39,7 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, GetItemActionsEvent>(GetSummonAction);
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
+            SubscribeLocalEvent<FamiliarComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
         }
 
         private Queue<EntityUid> AddQueue = new();
@@ -92,7 +97,7 @@ namespace Content.Server.Bible
             {
                 return;
             }
-            
+
             if (args.Target == null || args.Target == args.User || !TryComp<MobStateComponent>(args.Target, out var mobState)
                 || mobState.IsDead())
             {
@@ -179,7 +184,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
-            if (!args.Component.IsDead() || component.Source == null)
+            if (!_mobStateSystem.IsDead(uid) || component.Source == null)
                 return;
 
             var source = component.Source;
@@ -189,6 +194,17 @@ namespace Content.Server.Bible
             }
         }
 
+        /// <summary>
+        /// When the familiar spawns, set its source to the bible.
+        /// </summary>
+        private void OnSpawned(EntityUid uid, FamiliarComponent component, GhostRoleSpawnerUsedEvent args)
+        {
+            if (!TryComp<SummonableComponent>(Transform(args.Spawner).ParentUid, out var summonable))
+                return;
+
+            component.Source = (EntityUid) summonable.Owner;
+            summonable.Summon = uid;
+        }
 
         private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
@@ -207,12 +223,10 @@ namespace Content.Server.Bible
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
                             component.Summon = familiar;
 
-            /// We only want to add the familiar component to mobs
-            if (HasComp<MobStateComponent>(familiar))
+            /// If this is going to use a ghost role mob spawner, attach it to the bible.
+            if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                /// Make this Summon the familiar's source
-                var familiarComp = EnsureComp<FamiliarComponent>(familiar);
-                familiarComp.Source = component.Owner;
+                Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonAction);
