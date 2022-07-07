@@ -1,3 +1,4 @@
+using System.Globalization;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -18,7 +19,7 @@ namespace Content.Shared.Disease
         public abstract void Effect(DiseaseEffectArgs args);
 
         /// <summary>
-        /// What is the minimal severity needed for this effect to occur?
+        /// The minimal severity needed for this effect to occur
         /// </summary>
         [DataField("minSeverity")]
         public float MinSeverity
@@ -26,7 +27,9 @@ namespace Content.Shared.Disease
             get => _minSeverity;
             set
             {
-                DebugTools.Assert(value > 1f || value < 0f ,"MinSeverity have been attempted to be set out of range");
+                Logger.Debug(" Minseverity " + value);
+                if(value > 1f || value < 0f)
+                    DebugTools.Assert( "MinSeverity have been attempted to be set out of range");
                 _minSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }
@@ -42,7 +45,8 @@ namespace Content.Shared.Disease
             get => _maxSeverity;
             set
             {
-                DebugTools.Assert(value > 1f || value < 0f ,"MaxSeverity have been attempted to be set out of range");
+                if(value > 1f || value < 0f)
+                    DebugTools.Assert("MaxSeverity have been attempted to be set out of range");
                 _maxSeverity = Math.Clamp(value, 0.0f, 1.0f);
             }
         }
