@@ -7,6 +7,8 @@
   suffix: Empty
   description: A fuel tank. It's used to store high amounts of fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
@@ -29,6 +31,8 @@
   suffix: Full
   description: A storage tank containing welding fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -45,6 +49,8 @@
   suffix: Empty
   description: "A water tank. It's used to store high amounts of water."
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: watertank
@@ -54,6 +60,8 @@
   id: WaterTankFull
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:

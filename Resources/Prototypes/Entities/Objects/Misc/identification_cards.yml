@@ -520,3 +520,15 @@
     - state: idboxer
   - type: PresetIdCard
     job: Boxer
+
+- type: entity
+  parent: IDCardStandard
+  id: DetectiveIDCard
+  name: detective ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: iddetective
+    - state: default
+  - type: PresetIdCard
+    job: Detective

@@ -7,16 +7,13 @@ namespace Content.Server.Communications
     [RegisterComponent]
     public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
+        public float UIUpdateAccumulator = 0f;
+
         /// <summary>
         /// Remaining cooldown between making announcements.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float AnnouncementCooldownRemaining;
-
-        /// <summary>
-        /// Has the UI already been refreshed after the announcement
-        /// </summary>
-        public bool AlreadyRefreshed = false;
 
         /// <summary>
         /// Fluent ID for the announcement title

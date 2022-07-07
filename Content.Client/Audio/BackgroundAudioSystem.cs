@@ -99,10 +99,8 @@ namespace Content.Client.Audio
             if(_playMan.LocalPlayer is null || _playMan.LocalPlayer.ControlledEntity != message.Entity ||
                !_timing.IsFirstTimePredicted) return;
 
-            if (!TryComp<TransformComponent>(message.Entity, out var xform)) return;
-
             // Check if we traversed to grid.
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (message.Transform.GridUid != null)
             {
                 if (_currentCollection == _stationAmbience) return;
                 ChangeAmbience(_stationAmbience);

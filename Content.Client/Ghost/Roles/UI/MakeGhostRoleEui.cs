@@ -22,6 +22,7 @@ namespace Content.Client.Ghost.Roles.UI
         {
             _window = new MakeGhostRoleWindow();
 
+
             _window.OnClose += OnClose;
             _window.OnMake += OnMake;
         }

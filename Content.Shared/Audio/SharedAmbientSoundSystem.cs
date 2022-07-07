@@ -20,7 +20,7 @@ namespace Content.Shared.Audio
                 ambience.Enabled == value) return;
 
             ambience.Enabled = value;
-            ambience.Dirty();
+            Dirty(ambience);
         }
 
         private void HandleCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentHandleState args)

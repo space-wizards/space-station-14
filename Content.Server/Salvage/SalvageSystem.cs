@@ -14,7 +14,12 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Ghost.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
+using Content.Shared.Chat;
+using Content.Shared.Radio;
+using Robust.Shared.Network;
 
 namespace Content.Server.Salvage
 {
@@ -26,7 +31,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly RadioSystem _radioSystem = default!;
 
         private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
         private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
@@ -299,10 +304,15 @@ namespace Content.Server.Salvage
             Report(component.Owner, "salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
             return true;
         }
-        private void Report(EntityUid source, string messageKey) =>
-            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
-        private void Report(EntityUid source, string messageKey, params (string, object)[] args) =>
-            _chatSystem.DispatchStationAnnouncement(source, Loc.GetString(messageKey, args), Loc.GetString("salvage-system-announcement-source"), colorOverride: Color.Orange, playDefaultSound: false);
+
+        private void Report(EntityUid source, string messageKey, params (string, object)[] args)
+        {
+            if (!TryComp<IntrinsicRadioComponent>(source, out var radio)) return;
+
+            var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
+            var channel = _prototypeManager.Index<RadioChannelPrototype>("Supply");
+            _radioSystem.SpreadMessage(radio, source, message, channel);
+        }
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)
         {

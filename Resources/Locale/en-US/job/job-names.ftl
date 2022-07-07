@@ -2,6 +2,7 @@
 job-name-security = security officer
 job-name-cadet = security cadet
 job-name-hos = head of security
+job-name-detective = detective
 job-name-scientist = scientist
 job-name-rd = research director
 job-name-psychologist = psychologist
