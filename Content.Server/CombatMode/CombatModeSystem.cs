@@ -63,9 +63,9 @@ namespace Content.Server.CombatMode
 
             if (inTargetHand != null)
             {
-                RaiseLocalEvent(inTargetHand.Value, attemptEvent);
+                RaiseLocalEvent(inTargetHand.Value, attemptEvent, true);
             }
-            RaiseLocalEvent(args.Target, attemptEvent);
+            RaiseLocalEvent(args.Target, attemptEvent, true);
             if (attemptEvent.Cancelled)
                 return;
 
@@ -102,7 +102,7 @@ namespace Content.Server.CombatMode
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
             var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = chance };
-            RaiseLocalEvent(args.Target, eventArgs);
+            RaiseLocalEvent(args.Target, eventArgs, true);
         }
 
 

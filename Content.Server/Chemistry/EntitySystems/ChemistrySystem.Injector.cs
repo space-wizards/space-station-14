@@ -68,6 +68,13 @@ public sealed partial class ChemistrySystem
         }
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
         {
+            /// Draw from a bloodstream, if the target has that
+            if (TryComp<BloodstreamComponent>(target, out var stream))
+            {
+                TryDraw(component, target, stream.BloodSolution, user, stream);
+                return;
+            }
+            /// Draw from an object (food, beaker, etc)
             if (_solutions.TryGetDrawableSolution(target, out var drawableSolution))
             {
                 TryDraw(component, target, drawableSolution, user);
@@ -329,7 +336,7 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private void TryDraw(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user)
+    private void TryDraw(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user, BloodstreamComponent? stream = null)
     {
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
             || solution.AvailableVolume == 0)
@@ -344,6 +351,13 @@ public sealed partial class ChemistrySystem
         {
             _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", targetEntity)),
                 component.Owner, Filter.Entities(user));
+            return;
+        }
+
+        /// We have some snowflaked behavior for streams.
+        if (stream != null)
+        {
+            DrawFromBlood(user, targetEntity, component, solution, stream, (float) realTransferAmount);
             return;
         }
 
@@ -363,6 +377,29 @@ public sealed partial class ChemistrySystem
         AfterDraw(component);
     }
 
+    private void DrawFromBlood(EntityUid user, EntityUid target, InjectorComponent component, Solution injectorSolution, BloodstreamComponent stream, float drawAmount)
+    {
+        float bloodAmount = drawAmount;
+        float chemAmount = 0f;
+        if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
+        {
+            bloodAmount = drawAmount * 0.85f;
+            chemAmount = drawAmount * 0.15f;
+        }
+
+        var bloodTemp = stream.BloodSolution.SplitSolution(bloodAmount);
+        var chemTemp = stream.ChemicalSolution.SplitSolution(chemAmount);
+
+        _solutions.TryAddSolution(component.Owner, injectorSolution, bloodTemp);
+        _solutions.TryAddSolution(component.Owner, injectorSolution, chemTemp);
+
+        _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
+                ("amount", drawAmount),
+                ("target", target)), component.Owner, Filter.Entities(user));
+
+        Dirty(component);
+        AfterDraw(component);
+    }
     private sealed class InjectionCompleteEvent : EntityEventArgs
     {
         public InjectorComponent Component { get; init; } = default!;

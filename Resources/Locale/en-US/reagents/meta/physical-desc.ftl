@@ -13,6 +13,7 @@ reagent-physical-desc-cold = cold
 reagent-physical-desc-bee-guts = bee guts
 reagent-physical-desc-tangy = tangy
 reagent-physical-desc-fizzy = fizzy
+reagent-physical-desc-fuzzy = fuzzy
 reagent-physical-desc-spicy = spicy
 reagent-physical-desc-abrasive = abrasive
 reagent-physical-desc-chalky = chalky

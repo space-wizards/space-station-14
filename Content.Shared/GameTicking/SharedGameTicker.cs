@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameTicking
 {
@@ -9,7 +10,7 @@ namespace Content.Shared.GameTicking
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
         public const string FallbackOverflowJob = "Passenger";
-        public const string FallbackOverflowJobName = "passenger";
+        public const string FallbackOverflowJobName = "job-name-passenger";
     }
 
     [Serializable, NetSerializable]
@@ -127,6 +128,7 @@ namespace Content.Shared.GameTicking
             public string PlayerOOCName;
             public string? PlayerICName;
             public string Role;
+            public EntityUid? PlayerEntityUid;
             public bool Antag;
             public bool Observer;
             public bool Connected;

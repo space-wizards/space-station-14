@@ -18,8 +18,12 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
+using System.Threading;
 using Content.Server.Tools.Systems;
+using Content.Shared.Database;
+using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Doors.Systems;
 
@@ -36,6 +40,9 @@ public sealed class DoorSystem : SharedDoorSystem
 
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
+
+        // Mob prying doors
+        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
 
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
@@ -152,25 +159,43 @@ public sealed class DoorSystem : SharedDoorSystem
             SetState(uid, DoorState.Closed, component);
     }
 
+    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality)) return;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = "Pry door",
+            Impact = LogImpact.Low,
+            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
+        });
+    }
+
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
+        if (door.BeingPried) return false;
+
         if (door.State == DoorState.Welded)
             return false;
 
-        var canEv = new BeforeDoorPryEvent(user);
-        RaiseLocalEvent(target, canEv, false);
+        if (!force)
+        {
+            var canEv = new BeforeDoorPryEvent(user);
+            RaiseLocalEvent(target, canEv, false);
 
-        if (canEv.Cancelled)
-            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
-            // under a windoor.
-            return true;
+            if (canEv.Cancelled)
+                // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+                // under a windoor.
+                return true;
+        }
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
+        door.BeingPried = true;
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 

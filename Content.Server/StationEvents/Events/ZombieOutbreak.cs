@@ -1,6 +1,7 @@
 using Content.Server.Chat;
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Sound;
@@ -41,19 +42,19 @@ namespace Content.Server.StationEvents.Events
             _random.Shuffle(deadList);
 
             var toInfect = _random.Next(1, 3);
-            
+
             var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
-            
+
             // Now we give it to people in the list of dead entities earlier.
             var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
             var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
             var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
-            
+
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
-                    
+
                 zombifysys.ZombifyEntity(target.Owner);
 
                 var station = stationSystem.GetOwningStation(target.Owner);
@@ -65,7 +66,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             foreach (var station in stationsToNotify)
             {
-                chatSystem.DispatchStationAnnouncement((EntityUid) station, Loc.GetString("station-event-zombie-outbreak-announcement"),
+                chatSystem.DispatchStationAnnouncement(station, Loc.GetString("station-event-zombie-outbreak-announcement"),
                     playDefaultSound: false, colorOverride: Color.DarkMagenta);
             }
         }

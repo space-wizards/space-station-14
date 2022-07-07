@@ -63,9 +63,9 @@ namespace Content.Shared.Pulling
             }
 
             var getPulled = new BeingPulledAttemptEvent(puller, pulled);
-            RaiseLocalEvent(pulled, getPulled);
+            RaiseLocalEvent(pulled, getPulled, true);
             var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller, startPull);
+            RaiseLocalEvent(puller, startPull, true);
             return (!startPull.Cancelled && !getPulled.Cancelled);
         }
 
@@ -88,7 +88,7 @@ namespace Content.Shared.Pulling
             }
 
             var msg = new StopPullingEvent(user);
-            RaiseLocalEvent(pullable.Owner, msg);
+            RaiseLocalEvent(pullable.Owner, msg, true);
 
             if (msg.Cancelled) return false;
 
@@ -183,7 +183,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            RaiseLocalEvent(pullable.Owner, pullAttempt);
+            RaiseLocalEvent(pullable.Owner, pullAttempt, true);
 
             if (pullAttempt.Cancelled)
                 return false;

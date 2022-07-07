@@ -29,8 +29,20 @@
   - type: Examiner
     DoRangeCheck: false
   - type: Ghost
-  - type: GhostRadio
+  - type: IntrinsicRadio
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
   - type: Sprite
+    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
     netsync: false
     noRot: true
     drawdepth: Ghosts

@@ -1,4 +1,4 @@
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components
@@ -17,7 +17,7 @@ namespace Content.Shared.Movement.Components
         public float SprintSpeedModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeedVV
+        private float _baseWalkSpeedVV
         {
             get => BaseWalkSpeed;
             set
@@ -28,7 +28,7 @@ namespace Content.Shared.Movement.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeedVV
+        private float _baseSprintSpeedVV
         {
             get => BaseSprintSpeed;
             set

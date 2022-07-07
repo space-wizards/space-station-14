@@ -8,10 +8,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.75
     baseSprintSpeed : 3.75
-  - type: UtilityAI
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -39,9 +37,9 @@
       - MobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      150: !type:CriticalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      150: Critical
+      200: Dead
   - type: MeleeWeapon
     range: 1
     arcwidth: 0
@@ -69,7 +67,7 @@
     makeSentient: true
     name: Rat King
     description: You are the Rat King, scavenge food in order to produce rat minions to do your bidding.
-    rules: You are an antagonist, scavenge, attack, and grow your hoarde!
+    rules: You are an antagonist, scavenge, attack, and grow your hoard!
   - type: Tag
     tags:
       - CannotSuicide
@@ -108,7 +106,7 @@
     - AMIV
     - SpaceCold
     - SpaceFlu
-    - Bird Flew
+    - BirdFlew
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
@@ -125,6 +123,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -156,9 +156,9 @@
       - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      30: !type:CriticalMobState {}
-      60: !type:DeadMobState {}
+      0: Alive
+      30: Critical
+      60: Dead
   - type: MeleeWeapon
     range: 1
     arcwidth: 0
@@ -188,7 +188,7 @@
     - AMIV
     - SpaceCold
     - SpaceFlu
-    - Bird Flew
+    - BirdFlew
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
