@@ -46,7 +46,7 @@ namespace Content.Server.Access.Systems
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid));
+                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }

@@ -95,12 +95,31 @@ namespace Content.Shared.Popups
     /// <summary>
     ///     Used to determine how a popup should appear visually to the client.
     /// </summary>
+    /// <remarks>
+    ///     Actions which can fail or succeed should use a smaller popup for failure and a larger popup for success.
+    ///     Actions which have different popups for the user vs. others should use a larger popup for the user and a smaller popup for others.
+    /// </remarks>
     [Serializable, NetSerializable]
     public enum PopupType : byte
     {
+        /// <summary>
+        ///     Small popups are the default, and denote actions that may be spammable or are otherwise unimportant.
+        /// </summary>
         Small,
+        /// <summary>
+        ///     Medium popups should be used for actions which are not spammable but may not be particularly important.
+        /// </summary>
         Medium,
+        /// <summary>
+        ///     Large popups should be used for actions which may be important or very important to one or more users,
+        ///     but is not life-threatening.
+        /// </summary>
         Large,
+        /// <summary>
+        ///     Critical popups should be used very sparingly, should not be used on anything that is spammable,
+        ///     and should primarily be used when showing popups to one user. Critical popups denote actions which
+        ///     may be directly life-threatening.
+        /// </summary>
         Critical
     }
 }
