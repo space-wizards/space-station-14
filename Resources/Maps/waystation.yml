@@ -26196,25 +26196,25 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1473
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.454634
+  - pos: -2.5227056,21.554695
     parent: 82
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1474
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.579634
+  - pos: -2.5383306,21.398445
     parent: 82
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1475
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.673384
+  - pos: -2.5539556,21.679695
     parent: 82
     type: Transform
   - canCollide: False
