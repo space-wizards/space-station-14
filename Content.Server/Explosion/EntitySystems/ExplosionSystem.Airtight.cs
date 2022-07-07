@@ -143,7 +143,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 continue;
 
             // evaluate the damage that this damage type would do to this entity
-            FixedPoint2 damagePerIntensity = 1;
+            var damagePerIntensity = FixedPoint2.Zero;
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
                 if (!damageable.Damage.DamageDict.ContainsKey(type))
@@ -155,7 +155,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ev, false);
 
-                damagePerIntensity += value * Math.Clamp(0, ev.Resistance, 1);
+                damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
             }
 
             explosionTolerance[index] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);
