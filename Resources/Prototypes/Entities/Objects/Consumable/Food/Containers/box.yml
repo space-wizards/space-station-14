@@ -151,6 +151,7 @@
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
     netsync: false
+  # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     capacity: 8
     whitelist:
