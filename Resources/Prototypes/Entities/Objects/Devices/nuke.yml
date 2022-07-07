@@ -23,12 +23,10 @@
       layer:
       - HalfWallLayer
   - type: Nuke
-    # ~50 tile radius in open space
-    # close to defaulkt max cap.
     explosionType: Default
     maxIntensity: 100
     intensitySlope: 5
-    totalIntensity: 500000
+    totalIntensity: 5000000
     diskSlot:
       name: Disk
       insertSound:

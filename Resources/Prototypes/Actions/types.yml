@@ -8,6 +8,13 @@
   checkCanInteract: false
 
 - type: instantAction
+  id: TurnUndead
+  name: turn-undead-action-name
+  description: turn-undead-action-description
+  icon: Interface/Actions/zombie-turn.png
+  event: !type:ZombifySelfActionEvent
+
+- type: instantAction
   id: ToggleLight
   name: action-name-toggle-light
   description: action-description-toggle-light

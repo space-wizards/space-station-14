@@ -34,15 +34,17 @@
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
-      map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+      map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PipeColorVisualizer
-    - type: PressurePumpVisualizer
-      disabledState: pumpPressure
-      enabledState: pumpPressureOn
+      enum.PumpVisuals.Enabled:
+        enabled:
+          True: { state: pumpPressureOn }
+          False: { state: pumpPressure }
+  - type: PipeColorVisuals
   - type: GasPressurePump
   - type: UserInterface
     interfaces:
@@ -72,15 +74,17 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: PressurePumpVisualizer
-          disabledState: pumpVolume
-          enabledState: pumpVolumeOn
+        enum.PumpVisuals.Enabled:
+          enabled:
+            True: { state: pumpVolumeOn }
+            False: { state: pumpVolume }
+    - type: PipeColorVisuals
     - type: GasVolumePump
     - type: UserInterface
       interfaces:
@@ -110,12 +114,11 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
-      visuals:
-        - type: PipeColorVisualizer
+    - type: PipeColorVisuals
     - type: GasPassiveGate
     - type: Construction
       graph: GasBinary
@@ -142,15 +145,17 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasValveVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: GasValveVisualizer
-          disabledState: pumpManualValve
-          enabledState: pumpManualValveOn
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: pumpManualValveOn }
+            False: { state: pumpManualValve }
+    - type: PipeColorVisuals
     - type: GasValve
     - type: NodeContainer
       nodes:
@@ -188,12 +193,11 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasCanisterPort
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
-      visuals:
-        - type: PipeColorVisualizer
+    - type: PipeColorVisuals
     - type: GasPort
     - type: NodeContainer
       nodes:
@@ -220,13 +224,18 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
-    - type: Appearance
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: VentPumpVisualizer
+        enum.VentPumpVisuals.State:
+          enabled:
+            Off: { state: vent_off }
+            In: { state: vent_in }
+            Out: { state: vent_out }
+            Welded: { state: vent_welded }
+    - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet
       outlet: outlet

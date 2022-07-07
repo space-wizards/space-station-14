@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using JetBrains.Annotations;
+using System.Linq;
 
 namespace Content.Server.Lathe
 {
@@ -93,10 +94,26 @@ namespace Content.Server.Lathe
                 component.UserInterface.OnReceiveMessage += msg => UserInterfaceOnOnReceiveMessage(uid, component, msg);
             }
 
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+            {
+                appearance.SetData(LatheVisuals.IsInserting, false);
+                appearance.SetData(LatheVisuals.IsRunning, false);
+            }
+
+            //Fix this awful shit once Lathes get ECS'd.
+            List<LatheRecipePrototype>? recipes = null;
+            if (TryComp<ProtolatheDatabaseComponent>(uid, out var database))
+                recipes = database.ProtolatheRecipes.ToList();
+            else if (TryComp<LatheDatabaseComponent>(uid, out var database2))
+                recipes = database2._recipes;
+
+            if (recipes == null)
                 return;
-            appearance.SetData(LatheVisuals.IsInserting, false);
-            appearance.SetData(LatheVisuals.IsRunning, false);
+
+            foreach (var recipe in recipes)
+                foreach (var mat in recipe.RequiredMaterials)
+                    if (!component.MaterialWhiteList.Contains(mat.Key))
+                        component.MaterialWhiteList.Add(mat.Key);
         }
 
         /// <summary>
@@ -109,6 +126,17 @@ namespace Content.Server.Lathe
                 || !TryComp<MaterialComponent>(args.Used, out var material)
                 || component.LatheWhitelist?.IsValid(args.Used) == false)
                 return;
+
+            var matUsed = false;
+            foreach (var mat in material.Materials)
+                if (component.MaterialWhiteList.Contains(mat.ID))
+                    matUsed = true;
+
+            if (!matUsed)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("lathe-popup-material-not-used"), uid, Filter.Pvs(uid));
+                return;
+            }
 
             var multiplier = 1;
 
