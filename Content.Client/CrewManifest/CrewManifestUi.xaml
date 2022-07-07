@@ -9,7 +9,10 @@
         </ui:StripeBack>
         <BoxContainer>
             <ScrollContainer>
-                <BoxContainer Name="CrewManifestListing" />
+                <!-- this MIGHT have race conditions -->
+                <BoxContainer Name="CrewManifestListing" >
+                    <Label Text="{Loc 'crew-manifest-no-valid-station'}" />
+                </BoxContainer>
                 <!-- Crew manifest goes here. -->
             </ScrollContainer>
         </BoxContainer>

@@ -62,15 +62,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
         CrewManifestListing.DisposeAllChildren();
         CrewManifestListing.RemoveAllChildren();
 
-        if (entries == null)
-        {
-            CrewManifestListing.AddChild(new Label()
-            {
-                Text = Loc.GetString("crew-manifest-no-valid-station")
-            });
-
-            return;
-        }
+        if (entries == null) return;
 
         foreach (var (title, list) in entries.Entries)
         {

@@ -43,10 +43,8 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
             _ => message.Id
         };
 
-        CrewManifestEntries? entries = null;
-        if (station == null || !_cachedEntries.TryGetValue(station.Value, out entries))
+        if (station == null || !_cachedEntries.TryGetValue(station.Value, out var entries))
         {
-            RaiseNetworkEvent(new CrewManifestState(null, entries), Filter.SinglePlayer(args.SenderSession));
             return;
         }
 

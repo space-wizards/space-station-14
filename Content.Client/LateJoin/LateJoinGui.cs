@@ -1,6 +1,8 @@
 using System.Linq;
+using Content.Client.CrewManifest;
 using Content.Client.GameTicking.Managers;
 using Content.Client.HUD.UI;
+using Content.Shared.CrewManifest;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -25,6 +27,7 @@ namespace Content.Client.LateJoin
         private readonly List<ScrollContainer> _jobLists = new();
 
         private readonly Control _base;
+        private CrewManifestUi? _crewManifest;
 
         public LateJoinGui()
         {
@@ -105,6 +108,28 @@ namespace Content.Client.LateJoin
                         }
                     }
                 });
+
+                var crewManifestButton = new Button();
+                crewManifestButton.OnPressed += args =>
+                {
+                    if (_crewManifest != null)
+                    {
+                        return;
+                    }
+
+                    _crewManifest = new();
+                    _crewManifest.OpenCentered();
+                    _crewManifest.Register(id);
+                    _crewManifest.OnClose += () =>
+                    {
+                        _crewManifest = null;
+                    };
+
+                    EntitySystem.Get<CrewManifestSystem>().RequestCrewManifest(CrewManifestEntitySource.Station, id);
+                };
+
+                _base.AddChild(crewManifestButton);
+
                 var jobListScroll = new ScrollContainer()
                 {
                     VerticalExpand = true,
@@ -237,6 +262,7 @@ namespace Content.Client.LateJoin
 
             if (disposing)
             {
+                _crewManifest?.Dispose();
                 EntitySystem.Get<ClientGameTicker>().LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
                 _jobButtons.Clear();
                 _jobCategories.Clear();
