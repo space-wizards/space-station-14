@@ -1,4 +1,5 @@
-﻿using Content.Client.Gameplay;
+﻿using Content.Client.Administration;
+using Content.Client.Gameplay;
 using Content.Client.Info;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character;
@@ -13,6 +14,38 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
 {
     private RulesAndInfoWindow? _window;
     private MenuButton InfoButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.MenuBar>().InfoButton;
+
+    public override void OnSystemLoaded(IEntitySystem system)
+    {
+        switch (system)
+        {
+            case BwoinkSystem bwoink:
+                bwoink.AdminReceivedAHelp += AdminReceivedAHelp;
+                bwoink.AdminOpenedAHelp += AdminOpenedAHelp;
+                break;
+        }
+    }
+
+    public override void OnSystemUnloaded(IEntitySystem system)
+    {
+        switch (system)
+        {
+            case BwoinkSystem bwoink:
+                bwoink.AdminReceivedAHelp -= AdminReceivedAHelp;
+                bwoink.AdminOpenedAHelp -= AdminOpenedAHelp;
+                break;
+        }
+    }
+
+    private void AdminReceivedAHelp()
+    {
+        SetInfoRed(true);
+    }
+
+    private void AdminOpenedAHelp()
+    {
+        SetInfoRed(false);
+    }
 
     public void OnStateEntered(GameplayState state)
     {
@@ -59,5 +92,13 @@ public sealed class InfoUIController : UIController, IOnStateEntered<GameplaySta
         }
 
         CloseWindow();
+    }
+
+    public void SetInfoRed(bool value)
+    {
+        if (value)
+            InfoButton.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
+        else
+            InfoButton.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
     }
 }

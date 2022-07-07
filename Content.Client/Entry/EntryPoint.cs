@@ -3,8 +3,6 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
-using Content.Client.GhostKick;
-using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -23,15 +21,12 @@ using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
 using Content.Shared.AME;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
 using Content.Shared.Lathe;
 using Content.Shared.Markers;
-using Content.Shared.Research.Components;
 using Content.Shared.VendingMachines;
-using Content.Shared.Wires;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -87,12 +82,6 @@ namespace Content.Client.Entry
 
             _componentFactory.DoAutoRegistrations();
             _componentFactory.IgnoreMissingComponents();
-
-            foreach (var ignoreName in IgnoredComponents.List)
-            {
-                _componentFactory.RegisterIgnore(ignoreName);
-            }
-
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedLatheComponent>();

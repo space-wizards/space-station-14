@@ -1,26 +1,13 @@
 using Content.Client.Administration.Managers;
-using Content.Client.HUD;
 using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Input;
-using Robust.Client.Placement;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 
 namespace Content.Client.Sandbox
 {
     public sealed class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPlacementManager _placementManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         public bool SandboxAllowed { get; private set; }

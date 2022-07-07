@@ -127,7 +127,7 @@ public sealed partial class InventoryUIController
         HandsGui.StatusPanel.Update(entity);
         var hand = GetHand(name);
         if (hand == null) return;
-        if (_entities.TryGetComponent(entity, out ISpriteComponent sprite))
+        if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
         {
             hand.SpriteView.Sprite = sprite;
         }

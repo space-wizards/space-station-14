@@ -141,7 +141,7 @@ public sealed class ActionButton : Control
         Action = action;
 
         if (action.Provider == null ||
-            !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent sprite))
+            !entityManager.TryGetComponent(action.Provider.Value, out SpriteComponent? sprite))
         {
             IconTexture = action.Icon?.Frame0();
             Sprite.Sprite = null;

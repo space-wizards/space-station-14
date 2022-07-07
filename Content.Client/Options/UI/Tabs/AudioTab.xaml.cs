@@ -144,15 +144,18 @@ namespace Content.Client.Options.UI.Tabs
             var isMidiVolumeSame =
                 System.Math.Abs(MidiVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CVars.MidiVolume))) < 0.01f;
             var isAmbienceSame = AmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
-            var isAmbientVolumeSame =
-                Math.Abs(AmbienceVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume))) < 0.01f;
-            var isAmbientSoundsSame = (int)AmbienceSoundsSlider.Value == _cfg.GetCVar(CCVars.MaxAmbientSources);
+            // TODO HUD REFACTOR BEFORE MERGE bring back ambience volume slider
+            // var isAmbientVolumeSame =
+            //     Math.Abs(AmbienceVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume))) < 0.01f;
+            // var isAmbientSoundsSame = (int)AmbienceSoundsSlider.Value == _cfg.GetCVar(CCVars.MaxAmbientSources);
             var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
             var isEventSame = EventMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.EventMusicEnabled);
             var isAdminSoundsSame = AdminSoundsCheckBox.Pressed == _cfg.GetCVar(CCVars.AdminSoundsEnabled);
             var isStationAmbienceSame = StationAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.StationAmbienceEnabled);
             var isSpaceAmbienceSame = SpaceAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
-            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbienceSame && isAmbientVolumeSame && isAmbientSoundsSame && isLobbySame && isEventSame && isAdminSoundsSame && isStationAmbienceSame && isSpaceAmbienceSame;
+            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbienceSame && isLobbySame &&
+                                   isEventSame && isAdminSoundsSame && isStationAmbienceSame &&
+                                   isSpaceAmbienceSame /* && isAmbientVolumeSame && isAmbientSoundsSame */;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             MasterVolumeLabel.Text =

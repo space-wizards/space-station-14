@@ -1,7 +1,7 @@
-<userInterface:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
-                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-               Title="{Loc 'shuttle-console-window-title'}">
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                           Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
                   HorizontalAlignment="Stretch">
         <BoxContainer Name="LeftDisplay"
@@ -12,8 +12,7 @@
                       Orientation="Vertical">
             <PanelContainer StyleClasses="BorderedWindowPanel">
                 <BoxContainer Name="DockPorts"
-                              Orientation="Vertical">
-                </BoxContainer>
+                              Orientation="Vertical" />
             </PanelContainer>
         </BoxContainer>
         <PanelContainer>
@@ -78,4 +77,4 @@
                     Disabled="True"/>
         </BoxContainer>
     </GridContainer>
-</userInterface:FancyWindow>
+</controls:FancyWindow>

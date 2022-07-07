@@ -1,22 +1,16 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.CustomControls;
-using Content.Client.HUD;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
-using Robust.Shared.Localization;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Audio;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Client.Administration
 {
@@ -26,13 +20,15 @@ namespace Content.Client.Administration
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClyde _clyde = default!;
-        [Dependency] private readonly IGameHud _hud = default!;
 
         private BwoinkWindow? _adminWindow;
         private DefaultWindow? _plainWindow;
         private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
 
         public bool IsOpen => (_adminWindow?.IsOpen ?? false) || (_plainWindow?.IsOpen ?? false);
+
+        public event Action? AdminReceivedAHelp;
+        public event Action? AdminOpenedAHelp;
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
@@ -58,7 +54,7 @@ namespace Content.Client.Administration
                 _adminWindow?.OnBwoink(message.ChannelId);
 
                 if (_adminWindow?.IsOpen != true)
-                    _hud.SetInfoRed(true);
+                    AdminReceivedAHelp?.Invoke();
             }
         }
 
@@ -121,7 +117,7 @@ namespace Content.Client.Administration
                 return;
             }
 
-            _hud.SetInfoRed(false);
+            AdminOpenedAHelp?.Invoke();
 
             if (_adminManager.HasFlag(AdminFlags.Adminhelp))
             {
