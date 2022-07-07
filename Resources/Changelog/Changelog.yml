@@ -1,14 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: You will now see when someone hugs you!, type: Tweak}
-  id: 1385
-  time: '2022-04-23T23:43:12.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Space Carps can no longer slip, type: Add}
-  id: 1386
-  time: '2022-04-23T23:43:20.0000000+00:00'
 - author: Rane
   changes:
   - {message: Agent ID cards now only show a popup for their user., type: Tweak}
@@ -2961,3 +2951,14 @@ Entries:
   - {message: Attacks that do no damage now have a particular sound., type: Add}
   id: 1884
   time: '2022-07-07T03:37:47.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Splitstation update and changes. See github PR 9495 for full changelog.,
+    type: Tweak}
+  id: 1885
+  time: '2022-07-07T03:39:03.0000000+00:00'
+- author: ODJ
+  changes:
+  - {message: Fully Updated Pillar, type: Add}
+  id: 1886
+  time: '2022-07-07T03:39:32.0000000+00:00'
