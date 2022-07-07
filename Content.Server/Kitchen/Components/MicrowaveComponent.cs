@@ -449,13 +449,8 @@ namespace Content.Server.Kitchen.Components
                         : Math.Min(portions, reagents[reagent.Key].Int() / reagent.Value.Int());
             }
 
-            if (_currentCookTimerTime / recipe.CookTime != portions)
-            {
-                //not correct time multiple for the number of portions found
-                return (recipe, 0);
-            }
-
-            return (recipe, portions);
+            //cook only as many of those portions as time allows
+            return (recipe, (int)Math.Min(portions, _currentCookTimerTime / recipe.CookTime));
         }
 
         public void ClickSound()
