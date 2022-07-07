@@ -41,7 +41,7 @@
           state: pipeTJunction
           rotation: -90 # fuck you!!! who cares
           map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: gasFilterF
+        - state: gasFilter
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
     - type: GenericVisualizer
