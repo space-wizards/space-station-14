@@ -42,10 +42,10 @@ namespace Content.Server.Singularity.Components
 
 
         [ViewVariables]
-        public Tuple<Direction, List<EntityUid>>? Connection1;
+        public Tuple<Angle, List<EntityUid>>? Connection1;
 
         [ViewVariables]
-        public Tuple<Direction, List<EntityUid>>? Connection2;
+        public Tuple<Angle, List<EntityUid>>? Connection2;
 
         /// <summary>
         /// Is the generator toggled on?

@@ -132,8 +132,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         if (component.PowerBuffer >= component.Power)
         {
-            TryGenerateFieldConnection(ref component.Connection1,component);
-            TryGenerateFieldConnection(ref component.Connection2,component);
+            TryGenerateFieldConnection(ref component.Connection1, component);
+            TryGenerateFieldConnection(ref component.Connection2, component);
         }
     }
 
@@ -166,17 +166,23 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
-    private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, List<EntityUid>>? propertyFieldTuple,ContainmentFieldGeneratorComponent component)
+    private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Angle, List<EntityUid>>? propertyFieldTuple,ContainmentFieldGeneratorComponent component)
     {
         if (propertyFieldTuple != null) return false;
         if (!component.Enabled) return false; //don't gen a field unless it's on
         if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
+        var gen1XForm = Transform(component.Owner);
+        var gen1CardinalDirAngle = gen1XForm.WorldRotation;
+        var south = Direction.South.ToAngle() + gen1CardinalDirAngle;
+        var west = Direction.West.ToAngle() + gen1CardinalDirAngle;
+        var north = Direction.North.ToAngle() + gen1CardinalDirAngle;
+        var east = Direction.East.ToAngle() + gen1CardinalDirAngle;
 
-        foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West })
+
+        foreach (var direction in new[] { south, west, north, east })
         {
             if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
 
-            var gen1XForm = Transform(component.Owner);
             var ray = new CollisionRay(gen1XForm.MapPosition.Position, direction.ToVec(), component.CollisionMask);
             var rayCastResults = _physics.IntersectRay(gen1XForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
 
@@ -188,6 +194,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 if (HasComp<ContainmentFieldGeneratorComponent>(res.HitEntity))
                 {
                     closestResult = res;
+                    break;
                 }
             }
             if (closestResult == null) continue;
@@ -207,16 +214,16 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             component.Generator2 = fieldGeneratorComponent.Owner;
 
             GenerateConnection(component);
-            propertyFieldTuple = new Tuple<Direction, List<EntityUid>>(direction, component.Fields);
+            propertyFieldTuple = new Tuple<Angle, List<EntityUid>>(direction, component.Fields);
             if (fieldGeneratorComponent.Connection1 == null)
             {
-                fieldGeneratorComponent.Connection1 = new Tuple<Direction, List<EntityUid>>(direction.GetOpposite(), component.Fields);
+                fieldGeneratorComponent.Connection1 = new Tuple<Angle, List<EntityUid>>(direction.Opposite(), component.Fields);
                 if (!fieldGeneratorComponent.IsConnected)
                     fieldGeneratorComponent.IsConnected = true;
             }
             else if (fieldGeneratorComponent.Connection2 == null)
             {
-                fieldGeneratorComponent.Connection2 = new Tuple<Direction, List<EntityUid>>(direction.GetOpposite(), component.Fields);
+                fieldGeneratorComponent.Connection2 = new Tuple<Angle, List<EntityUid>>(direction.Opposite(), component.Fields);
                 if (!fieldGeneratorComponent.IsConnected)
                     fieldGeneratorComponent.IsConnected = true;
             }
@@ -241,6 +248,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var gen1Coords = Transform(component.Generator1.Value).Coordinates;
         var gen2Coords = Transform(component.Generator2.Value).Coordinates;
 
+        if (gen1Coords == gen2Coords)
+            return;
+
         var delta = (gen2Coords - gen1Coords).Position;
         var dirVec = delta.Normalized;
         var stopDist = delta.Length;
@@ -250,8 +260,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var currentCoords = gen1Coords.Offset(currentOffset);
             var newField = Spawn(component.CreatedField, currentCoords);
 
-            var fieldXForm = Transform(newField);
-            fieldXForm.AttachParent(component.Generator1.Value);
+            //var fieldXForm = Transform(newField);
+            //fieldXForm.AttachParent(component.Generator1.Value);
 
             component.Fields.Add(newField);
             currentOffset += dirVec;
