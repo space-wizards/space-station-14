@@ -14,11 +14,10 @@
     components:
     - type: Boxer
       modifiers:
-        coefficients:
-          Blunt: 2
-          Slash: 2
-          Piercing: 2
-          Asphyxiation: 2
+        coefficients: #Remember these only apply to unarmed
+          Blunt: 1.5
+          Slash: 1.5
+          Piercing: 1.5
 
 - type: startingGear
   id: BoxerGear

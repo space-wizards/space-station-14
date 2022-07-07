@@ -5,10 +5,13 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
+using Content.Shared.Sound;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Audio;
+
 
 namespace Content.Server.Damage.Systems;
 
@@ -70,10 +73,28 @@ public sealed class StaminaSystem : EntitySystem
             toHit.Add(stam);
         }
 
+        var hitEvent = new StaminaMeleeHitEvent(toHit);
+        RaiseLocalEvent(uid, hitEvent, false);
+
+        if (hitEvent.Handled)
+            return;
+
+        var damage = component.Damage;
+
+        foreach (var multiplier in hitEvent.Multipliers)
+        {
+            damage *= multiplier;
+        }
+
+        foreach (var flatMod in hitEvent.FlatModifiers)
+        {
+            damage += flatMod;
+        }
+
         foreach (var comp in toHit)
         {
             var oldDamage = comp.StaminaDamage;
-            TakeStaminaDamage(comp.Owner, component.Damage / toHit.Count, comp);
+            TakeStaminaDamage(comp.Owner, damage / toHit.Count, comp, component.KnockdownSound);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
                 _popup.PopupEntity(Loc.GetString("stamina-resist"), comp.Owner, Filter.Entities(args.User));
@@ -100,7 +121,7 @@ public sealed class StaminaSystem : EntitySystem
         _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
     }
 
-    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null)
+    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, SoundSpecifier? knockdownSound = null)
     {
         if (!Resolve(uid, ref component, false) || component.Critical) return;
 
@@ -131,6 +152,8 @@ public sealed class StaminaSystem : EntitySystem
         {
             if (component.StaminaDamage >= component.CritThreshold)
             {
+                if (knockdownSound != null)
+                    SoundSystem.Play(knockdownSound.GetSound(), Filter.Pvs(uid), uid);
                 EnterStamCrit(uid, component);
             }
         }

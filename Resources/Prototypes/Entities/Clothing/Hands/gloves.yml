@@ -9,11 +9,13 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: BoxingGloves
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    knockdownSound: /Audio/Weapons/boxingbell.ogg
   - type: MeleeWeapon
     damage:
       types:
         Blunt: 1
-        Asphyxiation: 4
     hitSound:
       collection: BoxingHit
   - type: Fiber
