@@ -14,7 +14,8 @@ namespace Content.Shared.Popups
         /// </summary>
         /// <param name="message">The message to display.</param>
         /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupCursor(string message, Filter filter);
+        /// <param name="type">Used to customize how this popup should appear visually.</param>
+        public abstract void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small);
 
         /// <summary>
         ///     Shows a popup at a world location.
@@ -22,7 +23,8 @@ namespace Content.Shared.Popups
         /// <param name="message">The message to display.</param>
         /// <param name="coordinates">The coordinates where to display the message.</param>
         /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter);
+        /// <param name="type">Used to customize how this popup should appear visually.</param>
+        public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small);
 
         /// <summary>
         ///     Shows a popup above an entity.
@@ -30,7 +32,8 @@ namespace Content.Shared.Popups
         /// <param name="message">The message to display.</param>
         /// <param name="uid">The UID of the entity.</param>
         /// <param name="filter">Filter for the players that will see the popup.</param>
-        public abstract void PopupEntity(string message, EntityUid uid, Filter filter);
+        /// <param name="type">Used to customize how this popup should appear visually.</param>
+        public abstract void PopupEntity(string message, EntityUid uid, Filter filter, PopupType type=PopupType.Small);
     }
 
     /// <summary>
@@ -41,9 +44,12 @@ namespace Content.Shared.Popups
     {
         public string Message { get; }
 
-        protected PopupEvent(string message)
+        public PopupType Type { get; }
+
+        protected PopupEvent(string message, PopupType type)
         {
             Message = message;
+            Type = type;
         }
     }
 
@@ -53,7 +59,7 @@ namespace Content.Shared.Popups
     [Serializable, NetSerializable]
     public sealed class PopupCursorEvent : PopupEvent
     {
-        public PopupCursorEvent(string message) : base(message)
+        public PopupCursorEvent(string message, PopupType type) : base(message, type)
         {
         }
     }
@@ -66,7 +72,7 @@ namespace Content.Shared.Popups
     {
         public EntityCoordinates Coordinates { get; }
 
-        public PopupCoordinatesEvent(string message, EntityCoordinates coordinates) : base(message)
+        public PopupCoordinatesEvent(string message, PopupType type, EntityCoordinates coordinates) : base(message, type)
         {
             Coordinates = coordinates;
         }
@@ -80,9 +86,21 @@ namespace Content.Shared.Popups
     {
         public EntityUid Uid { get; }
 
-        public PopupEntityEvent(string message, EntityUid uid) : base(message)
+        public PopupEntityEvent(string message, PopupType type, EntityUid uid) : base(message, type)
         {
             Uid = uid;
         }
+    }
+
+    /// <summary>
+    ///     Used to determine how a popup should appear visually to the client.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum PopupType : byte
+    {
+        Small,
+        Medium,
+        Large,
+        Critical
     }
 }
