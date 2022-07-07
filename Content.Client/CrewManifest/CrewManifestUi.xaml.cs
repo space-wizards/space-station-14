@@ -53,7 +53,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
     private void UpdateManifest(CrewManifestState state)
     {
-        StationName.Visible = state.Station != null;
+        StationNameContainer.Visible = state.Station != null;
         StationName.Text = state.StationName;
         Populate(state.Entries);
     }

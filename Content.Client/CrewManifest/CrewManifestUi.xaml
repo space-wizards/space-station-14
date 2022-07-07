@@ -3,7 +3,7 @@
                Title="{Loc 'crew-manifest-window-title'}"
                MinSize="450 750">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-        <ui:StripeBack>
+        <ui:StripeBack Name="StationNameContainer">
             <PanelContainer>
                 <Label Name="StationName" Align="Center" />
             </PanelContainer>
@@ -11,7 +11,7 @@
         <BoxContainer HorizontalExpand="True" VerticalExpand="True">
             <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
                 <!-- this MIGHT have race conditions -->
-                <BoxContainer Name="CrewManifestListing" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Name="CrewManifestListing" Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'crew-manifest-no-valid-station'}" HorizontalExpand="True" />
                 </BoxContainer>
                 <!-- Crew manifest goes here. -->

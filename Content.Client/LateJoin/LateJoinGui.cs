@@ -109,7 +109,10 @@ namespace Content.Client.LateJoin
                     }
                 });
 
-                var crewManifestButton = new Button();
+                var crewManifestButton = new Button()
+                {
+                    Text = Loc.GetString("crew-manifest-button-label")
+                };
                 crewManifestButton.OnPressed += args =>
                 {
                     if (_crewManifest != null)
