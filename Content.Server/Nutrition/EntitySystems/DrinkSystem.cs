@@ -323,6 +323,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
                         uid, Filter.Entities(args.User));
+                    _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
+                }
+                else
+                {
+                    _solutionContainerSystem.TryAddSolution(args.Drink.Owner, args.DrinkSolution, drained);
                 }
 
                 return;
