@@ -13,6 +13,9 @@ namespace Content.Client.Ghost
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly ILightManager _lightingManager = default!;
+
 
         public override void Initialize()
         {
@@ -127,13 +130,11 @@ namespace Content.Client.Ghost
 
         private void GhostGraphicsTogglesChecks()
         {
-            var eyeManager = IoCManager.Resolve<IEyeManager>().CurrentEye;
-            var lightingManager = IoCManager.Resolve<ILightManager>();
-            if (eyeManager.DrawFov == false || lightingManager.DrawShadows == false || lightingManager.Enabled == false)
+            if (_eyeManager.CurrentEye.DrawFov == false || _lightingManager.DrawShadows == false || _lightingManager.Enabled == false)
             {
-                eyeManager.DrawFov = true;
-                lightingManager.DrawShadows = true;
-                lightingManager.Enabled = true;
+                _eyeManager.CurrentEye.DrawFov = true;
+                _lightingManager.DrawShadows = true;
+                _lightingManager.Enabled = true;
             }
         }
     }
