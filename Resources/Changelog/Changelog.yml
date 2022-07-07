@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Fix hypopen being named 'pen' in uplink, type: Fix}
-  id: 1382
-  time: '2022-04-23T23:38:31.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added the water cooler. Go stand by it and plot the downfall of the
@@ -2963,3 +2958,9 @@ Entries:
       for 5 seconds., type: Add}
   id: 1881
   time: '2022-07-06T08:06:12.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Failing to insert an item into a storage container will now give you
+      an actual failure reason, such as insufficient capacity.', type: Tweak}
+  id: 1882
+  time: '2022-07-07T00:45:00.0000000+00:00'
