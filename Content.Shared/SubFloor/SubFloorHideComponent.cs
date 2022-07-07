@@ -49,7 +49,7 @@ namespace Content.Shared.SubFloor
         ///     Sprite layer keys for the layers that are always visible, even if the entity is below a floor tile. E.g.,
         ///     the vent part of a vent is always visible, even though the piping is hidden.
         /// </summary>
-        [DataField("visibleLayers", customTypeSerializer:typeof(CustomHashSetSerializer<object, EnumStringSerializer>))]
+        [DataField("visibleLayers", customTypeSerializer:typeof(CustomHashSetSerializer<object, AppearanceKeySerializer>))]
         public HashSet<object> VisibleLayers = new() { SubfloorLayers.FirstLayer };
 
         /// <summary>
