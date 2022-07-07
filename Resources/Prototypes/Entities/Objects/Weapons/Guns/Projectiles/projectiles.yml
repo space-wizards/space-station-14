@@ -1,3 +1,25 @@
+- type: entity
+  id: MuzzleFlashEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_bullet
+  - type: EffectVisuals
+  - type: AnimationPlayer
+  - type: PointLight
+    enabled: true
+    color: "#cc8e2b"
+    radius: 2.0
+    energy: 5.0
+
 # One bullet to bring them all into the darkness and bind them
 - type: entity
   id: BaseBullet
