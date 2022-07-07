@@ -13,6 +13,8 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Map;
+using Robust.Shared.Players;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Sandbox;
@@ -52,6 +54,10 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
             InputCmdHandler.FromDelegate(_ => TileSpawningController.ToggleWindow()));
         _input.SetInputCommand(ContentKeyFunctions.OpenDecalSpawnWindow,
             InputCmdHandler.FromDelegate(_ => DecalPlacerController.ToggleWindow()));
+
+        CommandBinds.Builder
+            .Bind(ContentKeyFunctions.EditorCopyObject, new PointerInputCmdHandler(Copy))
+            .Register<SandboxSystem>();
     }
 
     public override void OnSystemLoaded(IEntitySystem system)
@@ -224,6 +230,11 @@ public sealed class SandboxUIController : UIController, IOnStateEntered<Gameplay
     private void OnSuicideClicked(ButtonEventArgs args)
     {
         _sandbox.Suicide();
+    }
+
+    private bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    {
+        return _sandbox.Copy(session, coords, uid);
     }
 
     // TODO: These should check for command perms + be reset if the round is over.
