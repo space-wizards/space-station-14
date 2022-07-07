@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CharacterAppearance;
+using Content.Client.HUD.UI;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Roles;
@@ -999,6 +1000,7 @@ namespace Content.Client.Preferences.UI
 
             public event Action<JobPriority>? PriorityChanged;
 
+            private StripeBack _lockStripe;
             private Label _requirementsLabel;
 
             public JobPrioritySelector(JobPrototype job)
@@ -1039,11 +1041,22 @@ namespace Content.Client.Preferences.UI
 
                 _requirementsLabel = new Label()
                 {
-                    FontColorOverride = Color.Red,
-                    Text = "Locked", // TODO: Loc
-                    Visible = false,
+                    Text = Loc.GetString("role-timer-locked"),
+                    Visible = true,
                     MouseFilter = MouseFilterMode.Pass,
                     TooltipDelay = 0.2f,
+                    HorizontalAlignment = HAlignment.Center,
+                    StyleClasses = {StyleBase.StyleClassLabelSubText},
+                };
+
+                _lockStripe = new StripeBack()
+                {
+                    Visible = false,
+                    HorizontalExpand = true,
+                    Children =
+                    {
+                        _requirementsLabel
+                    }
                 };
 
                 AddChild(new BoxContainer
@@ -1054,7 +1067,7 @@ namespace Content.Client.Preferences.UI
                         icon,
                         new Label {Text = job.LocalizedName, MinSize = (175, 0)},
                         _optionButton,
-                        _requirementsLabel,
+                        _lockStripe,
                     }
                 });
             }
@@ -1062,15 +1075,16 @@ namespace Content.Client.Preferences.UI
             public void LockRequirements(string requirements)
             {
                 _requirementsLabel.ToolTip = requirements;
-                _requirementsLabel.Visible = true;
-                _optionButton.Disabled = true;
+                _lockStripe.Visible = true;
+                _optionButton.Visible = false;
             }
 
             // TODO: Subscribe to roletimers event. I am too lazy to do this RN But I doubt most people will notice fn
             public void UnlockRequirements()
             {
                 _requirementsLabel.Visible = false;
-                _optionButton.Disabled = false;
+                _lockStripe.Visible = false;
+                _optionButton.Visible = true;
             }
         }
 
