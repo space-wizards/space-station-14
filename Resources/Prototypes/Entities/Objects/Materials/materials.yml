@@ -143,7 +143,6 @@
   - type: Stack
     count: 1
 
-
 # Following not used currently
 - type: entity
   parent: MaterialBase
