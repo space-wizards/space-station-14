@@ -1,31 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Emags no longer force open bolted or unpowered doors., type: Tweak}
-  - {message: Emags no longer work on the ID console., type: Tweak}
-  id: 1393
-  time: '2022-04-24T00:37:49.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Do afters will break after a specific minimum threshold is set, type: Add}
-  id: 1394
-  time: '2022-04-24T00:41:48.0000000+00:00'
-- author: Saakra
-  changes:
-  - {message: 'Bats, bees, butterflies, and parrots no longer slip', type: Add}
-  id: 1395
-  time: '2022-04-24T00:42:24.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Drains will soon be added to stations, making the jobs of Janitors,
-      Chefs, and Chemists much easier.', type: Add}
-  id: 1396
-  time: '2022-04-24T01:04:49.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added vehicles!, type: Add}
-  id: 1397
-  time: '2022-04-24T01:05:02.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Delta Station now has vehicles for Security, Cargo, and the Janitor.',
@@ -2964,3 +2937,30 @@ Entries:
   - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
   id: 1892
   time: '2022-07-07T19:37:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Diseases can now have different stages., type: Add}
+  id: 1893
+  time: '2022-07-08T03:44:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
+  id: 1894
+  time: '2022-07-08T12:30:46.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
+  id: 1895
+  time: '2022-07-08T18:09:27.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Servers now post their max player counts for the launcher to display
+      alongside current player count, type: Add}
+  id: 1896
+  time: '2022-07-08T19:44:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where the t-ray scanner would sometimes flicker when
+      turned off, type: Fix}
+  id: 1897
+  time: '2022-07-08T21:45:16.0000000+00:00'

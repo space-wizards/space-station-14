@@ -418,7 +418,7 @@ namespace Content.Server.Nuke
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
             {
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, false, true, true, true);
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
             }
 
             // warn a crew
