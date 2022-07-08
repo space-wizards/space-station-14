@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Content.Serever.Ghost.Roles.Events;
+using Content.Server.Ghost.Roles.Events;
 
 namespace Content.Server.Ghost.Roles.Components
 {
