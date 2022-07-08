@@ -258,6 +258,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         return !tileBlocked;
     }
+
     private bool GridQueryCallback(
         ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
@@ -267,7 +268,6 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         return true;
     }
-
 
     /// <summary>
     ///     Same as <see cref="ExplodeTile"/>, but for SPAAAAAAACE.
@@ -286,7 +286,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         EntityQuery<PhysicsComponent> physicsQuery,
         LookupFlags flags)
     {
-        var gridBox = new Box2(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
+        var gridBox = Box2.FromDimensions(tile * DefaultTileSize, (DefaultTileSize, DefaultTileSize));
         var worldBox = spaceMatrix.TransformBox(gridBox);
         var list = new List<TransformComponent>();
         var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
