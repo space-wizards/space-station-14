@@ -255,8 +255,9 @@ namespace Content.Shared.Body.Components
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = 0;
-            _entMan.GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
+            var transformComponent = _entMan.GetComponent<TransformComponent>(Owner);
+            transformComponent.LocalRotation = 0;
+            transformComponent.AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
@@ -267,9 +268,9 @@ namespace Content.Shared.Body.Components
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!_entMan.GetComponent<TransformComponent>(Owner).Deleted)
+            if (_entMan.TryGetComponent<TransformComponent>(Owner, out var transformComponent))
             {
-                _entMan.GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
+                transformComponent.AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
@@ -287,12 +288,17 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Gibs the body part.
         /// </summary>
-        public virtual void Gib()
+        public virtual HashSet<EntityUid> Gib()
         {
+            var gibs = new HashSet<EntityUid>();
+
             foreach (var mechanism in _mechanisms)
             {
+                gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
             }
+
+            return gibs;
         }
     }
 

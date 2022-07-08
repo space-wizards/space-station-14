@@ -145,6 +145,10 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
+
+            // Couldn't toggle!
+            if (!IsConnected) return;
+
             _connectStream?.Stop();
 
             if (_connectSound != null)
@@ -158,6 +162,7 @@ namespace Content.Server.Atmos.Components
             if (!IsConnected) return;
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
+
             GetInternalsComponent(owner)?.DisconnectTank();
             _disconnectStream?.Stop();
 
@@ -256,7 +261,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetContainingMixture(Owner, false, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
@@ -274,7 +279,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetContainingMixture(Owner, false, true);
                     if (environment == null)
                         return;
 

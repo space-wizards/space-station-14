@@ -37,18 +37,16 @@
     - !type:RandomTraitorAliveCondition {}
   canBeDuplicate: true
 
-#  These are disabled until we get an evac shuttle and more involved round ends
-#
-#- type: objective
-#  id: StayAliveObjective
-#  issuer: syndicate
-#  requirements:
-#    - !type:TraitorRequirement {}
-#    - !type:IncompatibleConditionsRequirement
-#        conditions:
-#          - DieCondition
-#  conditions:
-#    - !type:StayAliveCondition {}
+- type: objective
+  id: StayAliveObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+        conditions:
+          - DieCondition
+  conditions:
+    - !type:StayAliveCondition {}
 
 - type: objective
   id: DieObjective
@@ -171,3 +169,16 @@
     - !type:StealCondition
       prototype: WeaponAntiqueLaser
 
+- type: objective
+  id: CaptainJetpackStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  prob: 0.1
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:StealCondition
+      prototype: JetpackCaptainFilled

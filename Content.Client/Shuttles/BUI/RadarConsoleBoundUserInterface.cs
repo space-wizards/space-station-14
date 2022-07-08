@@ -16,7 +16,17 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window = new RadarConsoleWindow();
-        _window?.OpenCentered();
+        _window.OnClose += Close;
+        _window.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+        {
+            _window?.Dispose();
+        }
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -24,6 +34,7 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not RadarConsoleBoundInterfaceState cState) return;
 
+        _window?.SetMatrix(cState.Coordinates, cState.Angle);
         _window?.UpdateState(cState);
     }
 }
