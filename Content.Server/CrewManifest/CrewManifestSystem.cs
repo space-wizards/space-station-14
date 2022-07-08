@@ -128,7 +128,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     public void CloseEui(EntityUid station, IPlayerSession session)
     {
-        if (!HasComp<StationRecordsSystem>(station))
+        if (!HasComp<StationRecordsComponent>(station))
         {
             return;
         }
