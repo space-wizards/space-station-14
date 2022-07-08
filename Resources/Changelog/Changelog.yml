@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Emags no longer force open bolted or unpowered doors., type: Tweak}
-  - {message: Emags no longer work on the ID console., type: Tweak}
-  id: 1393
-  time: '2022-04-24T00:37:49.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Do afters will break after a specific minimum threshold is set, type: Add}
@@ -2964,3 +2958,8 @@ Entries:
   - {message: Pizza boxes can no longer be used for nefarious deeds., type: Fix}
   id: 1892
   time: '2022-07-07T19:37:47.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Diseases can now have different stages., type: Add}
+  id: 1893
+  time: '2022-07-08T03:44:39.0000000+00:00'
