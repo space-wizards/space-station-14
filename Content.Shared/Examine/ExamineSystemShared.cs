@@ -2,11 +2,8 @@ using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
-<<<<<<< HEAD
 using Content.Shared.Eye.Blinding;
-=======
 using Content.Shared.MobState.EntitySystems;
->>>>>>> 4a393d46658beedea3a50b39293595a80e09e2c1
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
