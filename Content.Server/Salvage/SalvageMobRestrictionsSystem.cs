@@ -1,26 +1,5 @@
-using Content.Shared.CCVar;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
-using Content.Shared.Damage;
 using Content.Shared.Damage;
 using Content.Server.Body.Components;
-using Robust.Server.Maps;
-using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
 
 namespace Content.Server.Salvage;
 
@@ -50,7 +29,7 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
         {
             rg = AddComp<SalvageMobRestrictionsGridComponent>(gridUid);
         }
-        rg!.MobsToKill.Add(uid);
+        rg.MobsToKill.Add(uid);
         component.LinkedGridEntity = gridUid;
     }
 

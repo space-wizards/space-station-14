@@ -8,6 +8,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
@@ -25,6 +26,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
@@ -37,8 +39,8 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
         }
 
-        private Queue<EntityUid> AddQueue = new();
-        private Queue<EntityUid> RemQueue = new();
+        private readonly Queue<EntityUid> _addQueue = new();
+        private readonly Queue<EntityUid> _remQueue = new();
 
         /// <summary>
         /// This handles familiar respawning.
@@ -47,17 +49,17 @@ namespace Content.Server.Bible
         {
             base.Update(frameTime);
 
-            foreach(var entity in AddQueue)
+            foreach(var entity in _addQueue)
             {
                 EnsureComp<SummonableRespawningComponent>(entity);
             }
-            AddQueue.Clear();
+            _addQueue.Clear();
 
-            foreach(var entity in RemQueue)
+            foreach(var entity in _remQueue)
             {
                 RemComp<SummonableRespawningComponent>(entity);
             }
-            RemQueue.Clear();
+            _remQueue.Clear();
 
             foreach (var (respawning, summonableComp) in EntityQuery<SummonableRespawningComponent, SummonableComponent>())
             {
@@ -66,7 +68,7 @@ namespace Content.Server.Bible
                 {
                     continue;
                 }
-                /// Clean up the old body
+                // Clean up the old body
                 if (summonableComp.Summon != null)
                 {
                     EntityManager.DeleteEntity(summonableComp.Summon.Value);
@@ -75,9 +77,9 @@ namespace Content.Server.Bible
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner, Filter.Pvs(summonableComp.Owner));
                 SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
-                /// Clean up the accumulator and respawn tracking component
+                // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
-                RemQueue.Enqueue(respawning.Owner);
+                _remQueue.Enqueue(respawning.Owner);
             }
         }
 
@@ -92,9 +94,8 @@ namespace Content.Server.Bible
             {
                 return;
             }
-            
-            if (args.Target == null || args.Target == args.User || !TryComp<MobStateComponent>(args.Target, out var mobState)
-                || mobState.IsDead())
+
+            if (args.Target == null || args.Target == args.User || _mobStateSystem.IsDead(args.Target.Value))
             {
                 return;
             }
@@ -152,8 +153,9 @@ namespace Content.Server.Bible
             {
                 Act = () =>
                 {
-                    TransformComponent? position = Comp<TransformComponent>(args.User);
-                    AttemptSummon(component, args.User, position);
+                    if (!TryComp<TransformComponent>(args.User, out var userXform)) return;
+
+                    AttemptSummon(component, args.User, userXform);
                 },
                 Text = Loc.GetString("bible-summon-verb"),
                 Priority = 2
@@ -179,13 +181,13 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
-            if (!args.Component.IsDead() || component.Source == null)
+            if (args.CurrentMobState != DamageState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;
             if (source != null && TryComp<SummonableComponent>(source, out var summonable))
             {
-                AddQueue.Enqueue(summonable.Owner);
+                _addQueue.Enqueue(summonable.Owner);
             }
         }
 
@@ -207,10 +209,10 @@ namespace Content.Server.Bible
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
                             component.Summon = familiar;
 
-            /// We only want to add the familiar component to mobs
+            // We only want to add the familiar component to mobs
             if (HasComp<MobStateComponent>(familiar))
             {
-                /// Make this Summon the familiar's source
+                // Make this Summon the familiar's source
                 var familiarComp = EnsureComp<FamiliarComponent>(familiar);
                 familiarComp.Source = component.Owner;
             }
