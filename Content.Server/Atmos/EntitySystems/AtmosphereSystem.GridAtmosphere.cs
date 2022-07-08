@@ -333,8 +333,8 @@ public sealed partial class AtmosphereSystem
             if (!component.Tiles.TryGetValue(otherIndices, out var adjacent))
             {
                 adjacent = new TileAtmosphere(tile.GridIndex, otherIndices,
-                    GetTileMixture(uid, mapUid, args.Tile),
-                    space:IsTileSpace(uid, mapUid, otherIndices, mapGridComp));
+                    GetTileMixture(null, mapUid, otherIndices),
+                    space:IsTileSpace(null, mapUid, otherIndices, mapGridComp));
             }
 
             var oppositeDirection = direction.GetOpposite();
