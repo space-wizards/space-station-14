@@ -177,7 +177,7 @@ namespace Content.Server.Wieldable
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid));
+                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid), uid);
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
