@@ -1,4 +1,10 @@
 - type: stack
+  id: Biomass
+  name: biomass
+  icon: /Textures/Objects/Misc/monkeycube.rsi/cube.png
+  spawn: MaterialBiomass1
+
+- type: stack
   id: WoodPlank
   name: wood plank
   icon: /Textures/Objects/Materials/materials.rsi/wood.png
@@ -21,7 +27,7 @@
   name: diamond
   icon: /Textures/Objects/Materials/materials.rsi/diamond.png
   spawn: MaterialDiamond1
-  
+
 - type: stack
   id: Cotton
   name: cotton
