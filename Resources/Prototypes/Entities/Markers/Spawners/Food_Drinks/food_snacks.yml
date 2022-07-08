@@ -47,8 +47,8 @@
       - FoodSnackChowMein
       - FoodSnackDanDanNoodles
       - FoodSnackCookieFortune
-      - nutribrick
-      - brownie
+      - FoodSnackNutribrick
+      - FoodSnackMREBrownie
     chance: 0.8
     offset: 0.0
 
