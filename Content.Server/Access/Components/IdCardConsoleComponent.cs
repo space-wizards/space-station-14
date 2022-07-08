@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Access.Systems;
+using Content.Server.Station.Systems;
+using Content.Server.StationRecords;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -80,6 +82,25 @@ namespace Content.Server.Access.Components
 
             var accessSystem = EntitySystem.Get<AccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
+
+            UpdateStationRecord(targetIdEntity, newFullName, newJobTitle);
+        }
+
+        private void UpdateStationRecord(EntityUid idCard, string newFullName, string newJobTitle)
+        {
+            var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
+            if (station == null
+                || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent keyStorage)
+                || keyStorage.Key == null
+                || !EntitySystem.Get<StationRecordsSystem>().TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
+            {
+                return;
+            }
+
+            record.Name = newFullName;
+            record.JobTitle = newJobTitle;
+
+            _entities.EventBus.RaiseEvent(EventSource.Local, new RecordModifiedEvent(keyStorage.Key.Value));
         }
 
         public void UpdateUserInterface()
