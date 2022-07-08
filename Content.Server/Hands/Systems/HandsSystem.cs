@@ -54,7 +54,6 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
-            SubscribeLocalEvent<HandsComponent, PullAttemptEvent>(HandlePullAttempt);
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
@@ -148,19 +147,12 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region pulling
-        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptEvent args)
+        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
                 return;
 
-            // Cancel pull if all hands full.
-            if (!component.IsAnyHandFree())
-                args.Cancelled = true;
-        }
-
-        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
-        {
-            if (args.Puller.Owner != uid)
+            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
             if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))

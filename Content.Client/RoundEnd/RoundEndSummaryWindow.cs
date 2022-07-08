@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Utility;
@@ -10,10 +11,13 @@ namespace Content.Client.RoundEnd
 {
     public sealed class RoundEndSummaryWindow : DefaultWindow
     {
+        private readonly IEntityManager _entityManager;
 
         public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId,
-            RoundEndMessageEvent.RoundEndPlayerInfo[] info)
+            RoundEndMessageEvent.RoundEndPlayerInfo[] info, IEntityManager entityManager)
         {
+            _entityManager = entityManager;
+
             MinSize = SetSize = (520, 580);
 
             Title = Loc.GetString("round-end-summary-window-title");
@@ -105,7 +109,27 @@ namespace Content.Client.RoundEnd
             //Create labels for each player info.
             foreach (var playerInfo in sortedPlayersInfo)
             {
-                var playerInfoText = new RichTextLabel();
+                var hBox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                };
+
+                var playerInfoText = new RichTextLabel
+                {
+                    VerticalAlignment = VAlignment.Center,
+                    VerticalExpand = true,
+                };
+
+                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out ISpriteComponent? sprite))
+                {
+                    hBox.AddChild(new SpriteView
+                    {
+                        Sprite = sprite,
+                        OverrideDirection = Direction.South,
+                        VerticalAlignment = VAlignment.Center,
+                        VerticalExpand = true,
+                    });
+                }
 
                 if (playerInfo.PlayerICName != null)
                 {
@@ -129,7 +153,8 @@ namespace Content.Client.RoundEnd
                                 ("playerRole", Loc.GetString(playerInfo.Role))));
                     }
                 }
-                playerInfoContainer.AddChild(playerInfoText);
+                hBox.AddChild(playerInfoText);
+                playerInfoContainer.AddChild(hBox);
             }
 
             playerInfoContainerScrollbox.AddChild(playerInfoContainer);

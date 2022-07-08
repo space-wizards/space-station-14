@@ -94,7 +94,7 @@ namespace Content.Server.Explosion.EntitySystems
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
             return triggerEvent.Handled;
         }
 

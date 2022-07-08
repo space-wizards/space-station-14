@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskGas
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
@@ -14,7 +14,7 @@
     protection: 0.05
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -29,7 +29,7 @@
     protection: 0.05
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
@@ -45,7 +45,7 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskGasAtmos
   name: atmospheric gas mask
   description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
@@ -94,7 +94,7 @@
     protection: 0.05
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskGasExplorer
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.
@@ -116,7 +116,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskBreathMedical
   name: medical mask
   description: A close-fitting sterile mask that can be connected to an air supply.
@@ -131,7 +131,7 @@
     protection: 0.10
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskBreath
   name: breath mask
   description: Might as well keep this on 24/7.
@@ -182,7 +182,7 @@
   - type: BreathMask
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskSterile
   name: sterile mask
   description: A sterile mask designed to help prevent the spread of diseases.
@@ -191,7 +191,6 @@
     sprite: Clothing/Mask/sterile.rsi
   - type: Clothing
     sprite: Clothing/Mask/sterile.rsi
-  - type: BreathMask
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.1
@@ -212,7 +211,7 @@
       replacement: mumble
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskPlague
   name: plague doctor mask
   description: A bad omen.

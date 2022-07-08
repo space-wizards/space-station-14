@@ -33,6 +33,8 @@ namespace Content.IntegrationTests.Tests
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             EntityUid generator = default;
             var entityMan = server.ResolveDependency<IEntityManager>();
 
@@ -44,7 +46,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapMan = IoCManager.Resolve<IMapManager>();
 
-                var mapId = PoolManager.GetMainGrid(mapMan).ParentMapId;
+                var mapId = testMap.MapId;
                 grid1 = mapMan.CreateGrid(mapId);
                 grid2 = mapMan.CreateGrid(mapId);
 

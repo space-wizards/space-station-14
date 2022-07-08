@@ -89,7 +89,7 @@ namespace Content.Server.Body.Components
             // These have already been forcefully removed from containers so run it here.
             foreach (var part in gibs)
             {
-                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs));
+                _entMan.EventBus.RaiseLocalEvent(part, new PartGibbedEvent(Owner, gibs), true);
             }
 
             SoundSystem.Play(_gibSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), coordinates, AudioHelpers.WithVariation(0.025f));

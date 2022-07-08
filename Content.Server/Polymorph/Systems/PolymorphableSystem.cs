@@ -97,7 +97,7 @@ namespace Content.Server.Polymorph.Systems
             var comp = EnsureComp<PolymorphedEntityComponent>(child);
             comp.Parent = target;
             comp.Prototype = proto;
-            RaiseLocalEvent(child, new PolymorphComponentSetupEvent());
+            RaiseLocalEvent(child, new PolymorphComponentSetupEvent(), true);
 
             var childXform = Transform(child);
             childXform.LocalRotation = targetTransformComp.LocalRotation;

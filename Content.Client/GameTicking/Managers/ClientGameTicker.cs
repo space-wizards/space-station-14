@@ -18,6 +18,8 @@ namespace Content.Client.GameTicking.Managers
     public sealed class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         [ViewVariables] private bool _initialized;
         private Dictionary<EntityUid, Dictionary<string, uint?>>  _jobsAvailable = new();
         private Dictionary<EntityUid, string> _stationNames = new();
@@ -135,7 +137,7 @@ namespace Content.Client.GameTicking.Managers
             RestartSound = message.RestartSound;
 
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, _entityManager);
         }
 
         private void RoundRestartCleanup(RoundRestartCleanupEvent ev)

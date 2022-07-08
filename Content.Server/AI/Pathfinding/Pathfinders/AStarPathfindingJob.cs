@@ -47,7 +47,7 @@ namespace Content.Server.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            if (_entityManager.Deleted(_pathfindingArgs.Start.GridIndex))
+            if (_entityManager.Deleted(_pathfindingArgs.Start.GridUid))
                 return null;
 
             var frontier = new PriorityQueue<ValueTuple<float, PathfindingNode>>(new PathfindingComparer());

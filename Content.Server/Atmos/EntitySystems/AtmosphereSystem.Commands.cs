@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -16,7 +18,7 @@ public sealed partial class AtmosphereSystem
         // Fix Grid Atmos command.
         _consoleHost.RegisterCommand("fixgridatmos",
             "Makes every tile on a grid have a roundstart gas mix.",
-            "fixgridatmos <grid Ids>", FixGridAtmosCommand);
+            "fixgridatmos <grid Ids>", FixGridAtmosCommand, FixGridAtmosCommandCompletions);
     }
 
     private void ShutdownCommands()
@@ -33,7 +35,7 @@ public sealed partial class AtmosphereSystem
            return;
        }
 
-       var mixtures = new GasMixture[6];
+       var mixtures = new GasMixture[7];
        for (var i = 0; i < mixtures.Length; i++)
            mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
 
@@ -57,13 +59,16 @@ public sealed partial class AtmosphereSystem
        mixtures[5].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
        mixtures[5].Temperature = 5000f;
 
-       var entMan = IoCManager.Resolve<IEntityManager>();
+       // 6: (Walk-In) Freezer
+       mixtures[6].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+       mixtures[6].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+       mixtures[6].Temperature = 235f; // Little colder than an actual freezer but gives a grace period to get e.g. themomachines set up, should keep warm for a few door openings
 
-       foreach (var gid in args)
+       foreach (var arg in args)
        {
-           if(EntityUid.TryParse(gid, out var euid))
+           if(!EntityUid.TryParse(arg, out var euid))
            {
-               shell.WriteError($"Failed to parse euid '{gid}'.");
+               shell.WriteError($"Failed to parse euid '{arg}'.");
                return;
            }
 
@@ -79,11 +84,19 @@ public sealed partial class AtmosphereSystem
                continue;
            }
 
+           var transform = Transform(euid);
+
            foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
            {
                var tile = tileMain.Air;
                if (tile == null)
                    continue;
+
+               if (tile.Immutable && !IsTileSpace(euid, transform.MapUid, indices, gridComp))
+               {
+                   tile = new GasMixture(tile.Volume) { Temperature = tile.Temperature };
+                   tileMain.Air = tile;
+               }
 
                tile.Clear();
                var mixtureId = 0;
@@ -98,8 +111,23 @@ public sealed partial class AtmosphereSystem
                Merge(tile, mixture);
                tile.Temperature = mixture.Temperature;
 
-               InvalidateTile(gridAtmosphere, indices);
+               gridAtmosphere.InvalidatedCoords.Add(indices);
            }
        }
+    }
+
+    private CompletionResult FixGridAtmosCommandCompletions(IConsoleShell shell, string[] args)
+    {
+        MapId? playerMap = null;
+        if (shell.Player is { AttachedEntity: { } playerEnt })
+            playerMap = Transform(playerEnt).MapID;
+
+        var options = _mapManager.GetAllGrids()
+            .OrderByDescending(e => playerMap != null && e.ParentMapId == playerMap)
+            .ThenBy(e => (int) e.ParentMapId)
+            .ThenBy(e => (int) e.GridEntityId)
+            .Select(e => new CompletionOption(e.GridEntityId.ToString(), $"{MetaData(e.GridEntityId).EntityName} - Map {e.ParentMapId}"));
+
+        return CompletionResult.FromOptions(options);
     }
 }

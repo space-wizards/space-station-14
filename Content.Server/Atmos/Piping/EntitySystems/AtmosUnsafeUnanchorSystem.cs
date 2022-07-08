@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates) is not {} environment)
+            if (_atmosphereSystem.GetContainingMixture(uid, true) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (_atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(component.Owner).Coordinates, true) is not {} environment)
+            if (_atmosphereSystem.GetContainingMixture(uid, true, true) is not {} environment)
                 environment = GasMixture.SpaceGas;
 
             var lost = 0f;

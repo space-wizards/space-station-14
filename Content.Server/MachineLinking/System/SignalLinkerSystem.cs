@@ -301,7 +301,7 @@ namespace Content.Server.MachineLinking.System
 
             // allow other systems to refuse the connection
             var linkAttempt = new LinkAttemptEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
-            RaiseLocalEvent(transmitter.Owner, linkAttempt);
+            RaiseLocalEvent(transmitter.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
                 if (!quiet)
@@ -309,7 +309,7 @@ namespace Content.Server.MachineLinking.System
                         Filter.Entities(user));
                 return false;
             }
-            RaiseLocalEvent(receiver.Owner, linkAttempt);
+            RaiseLocalEvent(receiver.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
                 if (!quiet)
@@ -346,8 +346,8 @@ namespace Content.Server.MachineLinking.System
                 if (receivers.Remove(new(receiver.Owner, args.ReceiverPort)) &&
                     transmitters.Remove(new(transmitter.Owner, args.TransmitterPort)))
                 {
-                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(args.ReceiverPort));
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(args.TransmitterPort));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(args.ReceiverPort), true);
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(args.TransmitterPort), true);
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-unlinked-port",
                         ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                         ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
@@ -387,11 +387,11 @@ namespace Content.Server.MachineLinking.System
 
             foreach (var (port, receivers) in transmitter.Outputs)
                 if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port), true);
 
             foreach (var (port, transmitters) in receiver.Inputs)
                 if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
-                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port), true);
 
             TryUpdateUI(linker, transmitter, receiver);
         }
@@ -427,11 +427,11 @@ namespace Content.Server.MachineLinking.System
             // First, disconnect existing links.
             foreach (var (port, receivers) in transmitter.Outputs)
                 if (receivers.RemoveAll(id => id.Uid == receiver.Owner) > 0)
-                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(transmitter.Owner, new PortDisconnectedEvent(port), true);
 
             foreach (var (port, transmitters) in receiver.Inputs)
                 if (transmitters.RemoveAll(id => id.Uid == transmitter.Owner) > 0)
-                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port));
+                    RaiseLocalEvent(receiver.Owner, new PortDisconnectedEvent(port), true);
 
             // Then make any valid default connections.
             foreach (var outPort in transmitter.Outputs.Keys)

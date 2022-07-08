@@ -204,7 +204,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void PlaySound(EntityUid gun, string? sound, EntityUid? user = null)
     {
-        if (sound == null || user == null || !Timing.IsFirstTimePredicted) return;
+        if (string.IsNullOrEmpty(sound) || user == null || !Timing.IsFirstTimePredicted) return;
         SoundSystem.Play(sound, Filter.Local(), gun);
     }
 

@@ -264,7 +264,7 @@ public sealed class ClothingSystem : EntitySystem
 
         if (ev.Layers.Count == 0)
         {
-            RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));
+            RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
             return;
         }
 
@@ -299,6 +299,6 @@ public sealed class ClothingSystem : EntitySystem
                 layer.Shader = _stencilDraw;
         }
 
-        RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers));
+        RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
     }
 }

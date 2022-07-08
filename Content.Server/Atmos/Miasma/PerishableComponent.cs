@@ -25,6 +25,8 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         public TimeSpan RotAfter = TimeSpan.FromMinutes(5);
 
+        public bool Rotting => (DeathAccumulator > RotAfter.TotalSeconds);
+
         /// <summary>
         /// Gasses are released every second.
         /// </summary>
@@ -36,6 +38,6 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("molsPerSecondPerUnitMass")]
-        public float MolsPerSecondPerUnitMass = 0.0035f;
+        public float MolsPerSecondPerUnitMass = 0.0025f;
     }
 }

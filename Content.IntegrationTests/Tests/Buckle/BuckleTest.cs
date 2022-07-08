@@ -54,6 +54,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
+
             EntityUid human = default;
             EntityUid chair = default;
             BuckleComponent buckle = null;
@@ -66,8 +69,6 @@ namespace Content.IntegrationTests.Tests.Buckle
 
                 var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
                 var standingState = EntitySystem.Get<StandingStateSystem>();
-
-                var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
@@ -217,6 +218,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
+
             EntityUid human = default;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
@@ -226,10 +230,7 @@ namespace Content.IntegrationTests.Tests.Buckle
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 var chair = entityManager.SpawnEntity(StrapDummyId, coordinates);
@@ -301,6 +302,9 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
+
             EntityUid human = default;
             EntityUid chair = default;
             BuckleComponent buckle = null;
@@ -309,8 +313,6 @@ namespace Content.IntegrationTests.Tests.Buckle
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
                 chair = entityManager.SpawnEntity(StrapDummyId, coordinates);

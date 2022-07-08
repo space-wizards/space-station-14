@@ -89,6 +89,15 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: -1
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: THCOil
@@ -97,6 +106,15 @@
   desc: reagent-desc-thc-oil
   physicalDesc: reagent-physical-desc-skunky
   color: "#DAA520"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: Nicotine
@@ -124,6 +142,15 @@
   desc: reagent-desc-space-drugs
   physicalDesc: reagent-physical-desc-syrupy
   color: "#63806e"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
 
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent

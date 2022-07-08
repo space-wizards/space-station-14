@@ -22,14 +22,15 @@ namespace Content.IntegrationTests.Tests.Fluids
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
             await server.WaitAssertion(() =>
             {
                 var solution = new Solution("Water", FixedPoint2.New(20));
-                var tile = PoolManager.GetMainTile(mapManager);
+                var tile = testMap.Tile;
                 var gridUid = tile.GridUid;
                 var (x, y) = tile.GridIndices;
                 var coordinates = new EntityCoordinates(gridUid, x, y);
@@ -48,7 +49,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<SpillableSystem>();
 
@@ -57,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Remove all tiles
             await server.WaitPost(() =>
             {
-                grid = PoolManager.GetMainGrid(mapManager);
+                grid = testMap.MapGrid;
 
                 foreach (var tile in grid.GetAllTiles())
                 {
