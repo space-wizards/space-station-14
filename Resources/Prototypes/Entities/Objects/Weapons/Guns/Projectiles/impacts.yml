@@ -3,7 +3,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 0.5
+    lifetime: 0.25
   - type: Sprite
     netsync: false
     drawdepth: Effects
@@ -19,7 +19,7 @@
   noSpawn: true
   components:
     - type: TimedDespawn
-      lifetime: 0.4
+      lifetime: 0.2
     - type: Sprite
       netsync: false
       drawdepth: Effects
