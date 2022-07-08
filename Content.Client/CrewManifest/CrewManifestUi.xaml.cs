@@ -41,11 +41,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-
-        if (_station != null)
-        {
-            _entitySystemManager.GetEntitySystem<CrewManifestSystem>().UnsubscribeCrewManifestUpdate(_station.Value, UpdateManifest);
-        }
     }
 
     public void Register(EntityUid station)
@@ -56,20 +51,15 @@ public sealed partial class CrewManifestUi : DefaultWindow
         }
 
         _station = station;
-        _entitySystemManager.GetEntitySystem<CrewManifestSystem>().SubscribeCrewManifestUpdate(station, UpdateManifest);
     }
 
-    private void UpdateManifest(CrewManifestState state)
-    {
-        StationNameContainer.Visible = state.Station != null;
-        StationName.Text = state.StationName;
-        Populate(state.Entries);
-    }
-
-    public void Populate(CrewManifestEntries? entries)
+    public void Populate(string name, CrewManifestEntries? entries)
     {
         CrewManifestListing.DisposeAllChildren();
         CrewManifestListing.RemoveAllChildren();
+
+        StationNameContainer.Visible = entries != null;
+        StationName.Text = name;
 
         if (entries == null) return;
 

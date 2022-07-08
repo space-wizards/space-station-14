@@ -26,7 +26,5 @@ public sealed class CrewManifestBoundUserInterface : BoundUserInterface
         {
             return;
         }
-
-        _ui!.Populate(cast.Entries);
     }
 }
