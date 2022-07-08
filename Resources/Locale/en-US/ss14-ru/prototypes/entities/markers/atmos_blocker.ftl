@@ -13,3 +13,6 @@ ent-AtmosFixPlasmaMarker = Atmos Fix Plasma Marker
 ent-AtmosFixInstantPlasmaFireMarker = Atmos Fix Instant Plasmafire Marker
     .desc = INSTANT PLASMAFIRE
     .suffix = { "" }
+ent-AtmosFixFreezerMarker = Atmos Fix Freezer Marker
+    .desc = Change air temp to 235K, for freezer with a big of wiggle room to get set up.
+    .suffix = { "" }

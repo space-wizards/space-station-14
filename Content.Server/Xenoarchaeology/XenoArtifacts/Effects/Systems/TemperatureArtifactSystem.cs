@@ -2,12 +2,14 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
 public sealed class TemperatureArtifactSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -19,14 +21,16 @@ public sealed class TemperatureArtifactSystem : EntitySystem
     {
         var transform = Transform(uid);
 
-        var center = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+        var center = _atmosphereSystem.GetContainingMixture(uid, false, true);
         if (center == null)
             return;
         UpdateTileTemperature(component, center);
 
-        if (component.EffectAdjacentTiles)
+        if (component.EffectAdjacentTiles && transform.GridUid != null)
         {
-            var adjacent = _atmosphereSystem.GetAdjacentTileMixtures(transform.Coordinates, invalidate: true);
+            var adjacent = _atmosphereSystem.GetAdjacentTileMixtures(transform.GridUid.Value,
+                _transformSystem.GetGridOrMapTilePosition(uid, transform), excite: true);
+
             foreach (var mixture in adjacent)
             {
                 UpdateTileTemperature(component, mixture);

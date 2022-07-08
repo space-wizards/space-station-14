@@ -3,6 +3,7 @@ nuke-component-announcement-sender = Ядерная Боеголовка
 nuke-component-announcement-armed = Внимание! Задействован механизм самоуничтожения станции. { $time } секунд до детонации.
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!
 nuke-component-announcement-send-codes = Внимание! Запрошенные коды самоуничтожения были отправлены на консоли связи.
+nuke-component-doafter-warning = You start fiddling with wires and knobs in order to disarm the nuke.. This may take a while.
 nuke-user-interface-title = Ядерная Боеголовка
 nuke-user-interface-arm-button = ВЗВЕСТИ
 nuke-user-interface-anchor-button = ЯКОРЬ

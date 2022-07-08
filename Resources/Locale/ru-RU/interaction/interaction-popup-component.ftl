@@ -19,6 +19,7 @@ petting-success-sloth = Вы гладите { $target } по его медлен
 petting-success-space-cat = Вы гладите { $target } по её куполообразному стеклянному шлему.
 petting-success-tarantula = Вы гладите { $target } по его маленькой волосатой голове.
 petting-success-holo = Вы гладите { $target } по его металлической шипастой голове.
+petting-success-dragon = Dodging teeth, claws, and flames, you pet { THE($target) } on { POSS-ADJ($target) } massive scaled head.
 petting-failure-generic = Вы тянетесь погладить { $target }, но { $target } настороженно уклоняется от вас.
 petting-failure-bat = Вы тянетесь погладить { $target }, но { $target } очень трудно поймать!
 petting-failure-corrupted-corgi = Вы тянетесь погладить { $target }, но решаете, что лучше не надо.
@@ -28,6 +29,7 @@ petting-failure-goose = Вы тянетесь погладить { $target }, н
 petting-failure-possum = Вы тянетесь погладить { $target }, но на вас шипят и рычат.
 petting-failure-sloth = Вы тянетесь погладить { $target }, но { $target } с невероятной скоростью уклоняется!
 petting-failure-holo = Вы тянетесь погладить { $target }, но { $target } едва не пронзает шипами вашу руку!
+petting-failure-dragon = You raise your hand, but as { THE($target) } roars, you decide you'd rather not be toasty carp food.
 
 ## Knocking on windows
 

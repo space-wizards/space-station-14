@@ -1,9 +1,6 @@
 ent-BulletMagnum = пуля (.40 магнум)
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-ent-BulletMagnumFlash = пуля (.40 магнум светошумовая)
-    .desc = { ent-BaseBulletFlash.desc }
-    .suffix = { "" }
 ent-BulletMagnumHighVelocity = пуля (.40 магнум высокоскоростная)
     .desc = { ent-BaseBulletHighVelocity.desc }
     .suffix = { "" }

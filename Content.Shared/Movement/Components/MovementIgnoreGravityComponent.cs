@@ -60,7 +60,7 @@ namespace Content.Shared.Movement.Components
 
             if (invSys.TryGetSlotEntity(entity, "shoes", out var ent))
             {
-                if (entityManager.TryGetComponent<SharedMagbootsComponent>(ent, out var boots) && boots.On)
+                if (entityManager.TryGetComponent<MagbootsComponent>(ent, out var boots) && boots.On)
                     return false;
             }
 

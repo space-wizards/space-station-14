@@ -96,8 +96,8 @@
     baseSprintSpeed : 5
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      60: !type:DeadMobState {}
+      0: Alive
+      60: Dead
   - type: Flashable
   - type: NoSlip
   - type: StatusEffects
@@ -190,8 +190,8 @@
     baseSprintSpeed : 2
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      1000: !type:DeadMobState {}
+      0: Alive
+      1000: Dead
   - type: Sprite
     drawdepth: Mobs
     netsync: false

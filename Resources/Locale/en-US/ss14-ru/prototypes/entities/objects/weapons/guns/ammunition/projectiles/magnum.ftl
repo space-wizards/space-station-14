@@ -1,9 +1,6 @@
 ent-BulletMagnum = bullet (.40 magnum)
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-ent-BulletMagnumFlash = bullet (.40 magnum flash)
-    .desc = { ent-BaseBulletFlash.desc }
-    .suffix = { "" }
 ent-BulletMagnumHighVelocity = bullet (.40 magnum high-velocity)
     .desc = { ent-BaseBulletHighVelocity.desc }
     .suffix = { "" }

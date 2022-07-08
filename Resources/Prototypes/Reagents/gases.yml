@@ -163,7 +163,7 @@
   metabolisms:
     Gas:
       effects:
-      - !type:ChemCauseRandomDisease
+      - !type:ChemMiasmaPoolSource
         conditions:
         - !type:OrganType
           type: Rat
@@ -171,15 +171,6 @@
         - !type:ReagentThreshold
           reagent: Miasma
           min: 1
-        diseases:
-          - VentCough
-          - AMIV
-          - SpaceCold
-          - SpaceFlu
-          - Bird Flew
-          - VanAusdallsRobovirus
-          - BleedersBite
-          - Plague
       - !type:HealthChange
         conditions:
         - !type:OrganType
