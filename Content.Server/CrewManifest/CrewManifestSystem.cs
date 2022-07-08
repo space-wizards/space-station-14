@@ -10,7 +10,7 @@ using Robust.Shared.Players;
 
 namespace Content.Server.CrewManifest;
 
-public sealed class CrewManifestSystem : SharedCrewManifestSystem
+public sealed class CrewManifestSystem : EntitySystem
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
@@ -41,19 +41,13 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
     // this will never close on its own.
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
     {
-        var station = message.Source switch
-        {
-            CrewManifestEntitySource.Station => message.Id,
-            CrewManifestEntitySource.Entity => _stationSystem.GetOwningStation(message.Id),
-            _ => message.Id
-        };
 
-        if (station == null || !_cachedEntries.TryGetValue(station.Value, out var entries))
+        if (args.SenderSession is not IPlayerSession sessionCast)
         {
             return;
         }
 
-        RaiseNetworkEvent(new CrewManifestState(station, entries), Filter.SinglePlayer(args.SenderSession));
+        OpenEui(message.Id, sessionCast);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time
@@ -116,7 +110,7 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
             return;
         }
 
-        if (!_openEuis.TryGetValue(station.Value, out var euis))
+        if (!_openEuis.TryGetValue(station, out var euis))
         {
             euis = new();
         }
@@ -126,7 +120,7 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
             return;
         }
 
-        var eui = new CrewManifestEui(station.Value, this);
+        var eui = new CrewManifestEui(station, this);
         euis.Add(session, eui);
 
         _euiManager.OpenEui(eui, session);

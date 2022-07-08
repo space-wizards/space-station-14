@@ -23,9 +23,9 @@ public sealed class CrewManifestSystem : EntitySystem
     /// </summary>
     /// <param name="source">What type of entity we're requesting from: a station, or just a game object.</param>
     /// <param name="uid">EntityUid of the entity we're requesting the crew manifest from.</param>
-    public void RequestCrewManifest(CrewManifestEntitySource source, EntityUid uid)
+    public void RequestCrewManifest(EntityUid uid)
     {
-        RaiseNetworkEvent(new RequestCrewManifestMessage(source, uid));
+        RaiseNetworkEvent(new RequestCrewManifestMessage(uid));
     }
 
     /// <summary>

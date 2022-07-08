@@ -128,7 +128,7 @@ namespace Content.Client.LateJoin
                         _crewManifest = null;
                     };
 
-                    EntitySystem.Get<CrewManifestSystem>().RequestCrewManifest(CrewManifestEntitySource.Station, id);
+                    EntitySystem.Get<CrewManifestSystem>().RequestCrewManifest(id);
                 };
 
                 _base.AddChild(crewManifestButton);
