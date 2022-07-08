@@ -332,7 +332,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgun
-        amount: 6
+        amount: 12
 
 - type: entity
   name: box of (.50 beanbag) ammo drums
@@ -343,7 +343,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunBeanbag
-        amount: 6
+        amount: 12
 
 - type: entity
   name: box of (.50 slug) ammo drums
@@ -354,7 +354,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunSlug
-        amount: 6
+        amount: 12
 
 - type: entity
   name: box of (.50 incendiary) ammo drums
@@ -365,7 +365,7 @@
   - type: StorageFill
     contents:
       - id: MagazineShotgunIncendiary
-        amount: 6
+        amount: 12
 
 # Rifle
 - type: entity
