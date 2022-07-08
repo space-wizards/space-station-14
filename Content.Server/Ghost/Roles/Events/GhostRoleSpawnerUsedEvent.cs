@@ -1,4 +1,4 @@
-namespace Content.Serever.Ghost.Roles.Events
+namespace Content.Server.Ghost.Roles.Events
 {
     public sealed class GhostRoleSpawnerUsedEvent : EntityEventArgs
     {

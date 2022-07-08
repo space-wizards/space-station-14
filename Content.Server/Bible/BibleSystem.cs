@@ -1,7 +1,6 @@
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
@@ -9,9 +8,10 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Ghost.Roles.Components;
-using Content.Serever.Ghost.Roles.Events;
+using Content.Server.Ghost.Roles.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -28,7 +28,6 @@ namespace Content.Server.Bible
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
@@ -184,7 +183,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
-            if (!_mobStateSystem.IsDead(uid) || component.Source == null)
+            if (args.CurrentMobState != DamageState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;
