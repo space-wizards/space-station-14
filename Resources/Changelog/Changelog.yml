@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Added vehicles!, type: Add}
-  id: 1397
-  time: '2022-04-24T01:05:02.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Delta Station now has vehicles for Security, Cargo, and the Janitor.',
@@ -2963,3 +2958,9 @@ Entries:
       alongside current player count, type: Add}
   id: 1896
   time: '2022-07-08T19:44:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where the t-ray scanner would sometimes flicker when
+      turned off, type: Fix}
+  id: 1897
+  time: '2022-07-08T21:45:16.0000000+00:00'
