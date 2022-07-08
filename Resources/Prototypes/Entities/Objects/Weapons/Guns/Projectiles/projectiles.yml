@@ -14,11 +14,6 @@
       state: muzzle_bullet
   - type: EffectVisuals
   - type: AnimationPlayer
-  - type: PointLight
-    enabled: true
-    color: "#cc8e2b"
-    radius: 2.0
-    energy: 5.0
 
 # One bullet to bring them all into the darkness and bind them
 - type: entity

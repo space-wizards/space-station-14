@@ -235,8 +235,8 @@ public sealed partial class GunSystem : SharedGunSystem
         var ent = Spawn(message.Prototype, xform.Coordinates);
 
         var effectXform = Transform(ent);
-        effectXform.LocalRotation -= angle + MathF.PI / 2;
-        effectXform.LocalPosition += angle.RotateVec(new Vector2(0f, -0.5f));
+        effectXform.LocalRotation -= MathF.PI / 2;
+        effectXform.LocalPosition += new Vector2(0f, -0.5f);
 
         var lifetime = 0.4f;
 
@@ -260,21 +260,51 @@ public sealed partial class GunSystem : SharedGunSystem
                         new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(1f), 0),
                         new AnimationTrackProperty.KeyFrame(Color.White.WithAlpha(0f), lifetime)
                     }
-                },
-                new AnimationTrackComponentProperty()
+                }
+            }
+        };
+
+        _animPlayer.Play(ent, anim, "muzzle-flash");
+        var light = EnsureComp<PointLightComponent>(uid);
+
+        light.Enabled = true;
+        light.Color = Color.FromHex("#cc8e2b");
+        light.Radius = 2f;
+        light.Energy = 5f;
+
+        var animTwo = new Animation()
+        {
+            Length = TimeSpan.FromSeconds(lifetime),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(PointLightComponent),
                     Property = nameof(PointLightComponent.Energy),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(5f, 0f),
-                        new AnimationTrackProperty.KeyFrame(0f, 0.4f),
+                        new AnimationTrackProperty.KeyFrame(5f, 0),
+                        new AnimationTrackProperty.KeyFrame(0f, lifetime)
+                    }
+                },
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(PointLightComponent),
+                    Property = nameof(PointLightComponent.Enabled),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(true, 0),
+                        new AnimationTrackProperty.KeyFrame(false, lifetime)
                     }
                 }
             }
         };
 
-        _animPlayer.Play(ent, anim, "muzzle-flash");
+        var uidPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+
+        _animPlayer.Stop(uid, uidPlayer, "muzzle-flash-light");
+        _animPlayer.Play(uid, uidPlayer, animTwo,"muzzle-flash-light");
     }
 }
