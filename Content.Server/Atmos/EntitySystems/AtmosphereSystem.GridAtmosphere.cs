@@ -440,6 +440,10 @@ public sealed partial class AtmosphereSystem
 
         var adjacent = adjEv.Result!.ToArray();
 
+        // Return early, let's not cause any funny NaNs or needless vacuums.
+        if (adjacent.Length == 0)
+            return;
+
         tile.Air = new GasMixture
         {
             Volume = GetVolumeForTiles(mapGridComp.Grid, 1),
@@ -448,10 +452,6 @@ public sealed partial class AtmosphereSystem
 
         tile.MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
         tile.ArchivedCycle = 0;
-
-        // Return early, let's not cause any funny NaNs.
-        if (adjacent.Length == 0)
-            return;
 
         var ratio = 1f / adjacent.Length;
         var totalTemperature = 0f;
