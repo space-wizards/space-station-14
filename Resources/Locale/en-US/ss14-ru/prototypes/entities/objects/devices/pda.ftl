@@ -112,3 +112,6 @@ ent-PsychologistPDA = psychologist PDA
 ent-ReporterPDA = reporter PDA
     .desc = Smells like freshly printed press.
     .suffix = { "" }
+ent-DetectivePDA = detective PDA
+    .desc = Smells like rain... pouring down the rooftops...
+    .suffix = { "" }

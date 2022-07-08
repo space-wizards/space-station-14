@@ -15,6 +15,7 @@ ui-options-midi-volume = MIDI (Инструменты) громкость:
 ui-options-ambience-volume = Громкость окружения:
 ui-options-ambience-max-sounds = Кол-во одновременных звуков окружения:
 ui-options-lobby-music = Музыка в лобби
+ui-options-event-music = Event Music
 ui-options-admin-sounds = Музыка админов
 ui-options-station-ambience = Эмбиент станции
 ui-options-space-ambience = Эмбиент космоса

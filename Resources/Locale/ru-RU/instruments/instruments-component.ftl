@@ -8,3 +8,5 @@ instruments-component-menu-no-midi-support =
     Если вы на Linux, вам может потребоваться установить
     FluidSynth или пакет разработки
     для FluidSynth.
+# SwappableInstrumentComponent
+swappable-instrument-component-style-set = Style set to "{ $style }"

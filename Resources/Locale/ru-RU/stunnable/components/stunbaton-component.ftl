@@ -1,5 +1,6 @@
 ### Stunbaton component
 
+comp-stunbaton-stun = Stunned
 
 ## Used when examining the stunbaton
 

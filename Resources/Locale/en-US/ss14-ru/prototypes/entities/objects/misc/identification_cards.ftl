@@ -118,3 +118,6 @@ ent-PsychologistIDCard = psychologist ID card
 ent-ReporterIDCard = reporter ID card
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }
+ent-DetectiveIDCard = detective ID card
+    .desc = { ent-IDCardStandard.desc }
+    .suffix = { "" }

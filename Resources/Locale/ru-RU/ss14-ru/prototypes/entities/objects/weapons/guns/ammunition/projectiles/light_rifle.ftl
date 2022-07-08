@@ -1,9 +1,6 @@
 ent-BulletLightRifle = пуля (.20 винтовочная)
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-ent-BulletLightRifleFlash = пуля (.20 винтовочная светошумовая)
-    .desc = { ent-BaseBulletFlash.desc }
-    .suffix = { "" }
 ent-BulletLightRifleHighVelocity = пуля (.20 винтовочная высокоскоростная)
     .desc = { ent-BaseBulletHighVelocity.desc }
     .suffix = { "" }

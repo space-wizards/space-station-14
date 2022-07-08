@@ -1,9 +1,6 @@
 ent-BulletLightRifle = bullet (.20 rifle)
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-ent-BulletLightRifleFlash = bullet (.20 rifle flash)
-    .desc = { ent-BaseBulletFlash.desc }
-    .suffix = { "" }
 ent-BulletLightRifleHighVelocity = bullet (.20 rifle high-velocity)
     .desc = { ent-BaseBulletHighVelocity.desc }
     .suffix = { "" }

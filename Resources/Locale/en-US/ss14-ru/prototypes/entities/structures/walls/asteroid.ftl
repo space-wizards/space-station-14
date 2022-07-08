@@ -1,6 +1,6 @@
 ent-AsteroidRock = asteroid rock
     .desc = A rocky asteroid.
-    .suffix = { "" }
+    .suffix = Low Ore Yield
 ent-AsteroidRockMining = asteroid rock
     .desc = An asteroid.
-    .suffix = { "" }
+    .suffix = higher ore yield

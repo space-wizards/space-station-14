@@ -112,3 +112,6 @@ ent-PsychologistPDA = КПК психолога
 ent-ReporterPDA = КПК репортёра
     .desc = Пахнет свежеотпечатанной газетой.
     .suffix = { "" }
+ent-DetectivePDA = detective PDA
+    .desc = Smells like rain... pouring down the rooftops...
+    .suffix = { "" }

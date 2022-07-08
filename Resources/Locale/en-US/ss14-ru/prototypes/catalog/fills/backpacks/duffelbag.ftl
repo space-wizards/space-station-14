@@ -1,6 +1,9 @@
 ent-ClothingBackpackDuffelSurgeryFilled = surgical duffel bag
     .desc = A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools.
     .suffix = { "" }
+ent-ClothingBackpackDuffelCBURN = CBURN duffel bag
+    .desc = A duffel bag containing a variety of biological containment equipment.
+    .suffix = { "" }
 ent-ClothingBackpackDuffelSyndicateFilledMedical = syndicate surgical duffel bag
     .desc = A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools.
     .suffix = { "" }

@@ -17,6 +17,7 @@ verb-categories-rotate = Повернуть
 verb-categories-smite = Покарать
 verb-categories-transfer = Установить значение перемещения
 verb-categories-split = Разделить
+verb-categories-instrument-style = Instrument Style
 verb-categories-set-sensor = Датчики
 verb-categories-timer = Установить задержку
 verb-common-toggle-light = Переключить свет

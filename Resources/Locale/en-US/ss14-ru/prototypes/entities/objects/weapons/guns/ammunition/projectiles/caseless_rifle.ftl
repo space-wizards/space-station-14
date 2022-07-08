@@ -1,9 +1,6 @@
 ent-BulletCaselessRifle = bullet (.25 caseless)
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-ent-BulletCaselessRifleFlash = bullet (.25 caseless flash)
-    .desc = { ent-BaseBulletFlash.desc }
-    .suffix = { "" }
 ent-BulletCaselessRifleHighVelocity = bullet (.25 caseless high-velocity)
     .desc = { ent-BaseBulletHighVelocity.desc }
     .suffix = { "" }
