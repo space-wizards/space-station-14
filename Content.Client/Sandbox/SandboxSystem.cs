@@ -390,6 +390,7 @@ namespace Content.Client.Sandbox
             RaiseNetworkEvent(new MsgSandboxSuicide());
         }
 
+
         // TODO: These should check for command perms + be reset if the round is over.
         public void ToggleEntitySpawnWindow()
         {

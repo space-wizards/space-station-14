@@ -5,6 +5,9 @@
   name: admin observer
   noSpawn: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
   - type: Input
     context: "aghost"
   - type: Ghost

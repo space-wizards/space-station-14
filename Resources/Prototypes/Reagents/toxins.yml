@@ -42,6 +42,33 @@
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  color: "#8a9a5b"
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mold
+          min: 1
+        diseases:
+          - VentCough
+          - SpaceCold
+          - SpaceFlu
+          - BirdFlew
+          - Plague
+
 - type: reagent
   id: PolytrinicAcid
   name: reagent-name-polytrinic-acid

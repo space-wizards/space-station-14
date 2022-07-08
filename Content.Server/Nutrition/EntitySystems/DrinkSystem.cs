@@ -315,10 +315,21 @@ namespace Content.Server.Nutrition.EntitySystems
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
-                    uid, Filter.Entities(args.User));
+                _solutionContainerSystem.TryAddSolution(args.Drink.Owner, args.DrinkSolution, drained);
+                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"),
+                    uid, Filter.Entities(uid));
 
-                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
+                if (forceDrink)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
+                        uid, Filter.Entities(args.User));
+                    _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
+                }
+                else
+                {
+                    _solutionContainerSystem.TryAddSolution(args.Drink.Owner, args.DrinkSolution, drained);
+                }
+
                 return;
             }
 
