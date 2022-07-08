@@ -23,17 +23,17 @@ public sealed class FilterTests
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var coordinates = testMap.GridCoords;
 
         await server.WaitPost(() =>
         {
-            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
@@ -43,7 +43,6 @@ public sealed class FilterTests
 
         await server.WaitPost(() =>
         {
-            var coordinates = PoolManager.GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");

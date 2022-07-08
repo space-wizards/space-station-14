@@ -8,7 +8,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Shared.Audio;
@@ -25,7 +25,6 @@ public abstract partial class InventorySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netMan = default!;
@@ -82,10 +81,10 @@ public abstract partial class InventorySystem
             return;
 
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, unequippedEvent);
+        RaiseLocalEvent(uid, unequippedEvent, true);
 
         var gotUnequippedEvent = new GotUnequippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotUnequippedEvent);
+        RaiseLocalEvent(args.Entity, gotUnequippedEvent, true);
     }
 
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
@@ -94,10 +93,10 @@ public abstract partial class InventorySystem
            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(uid, equippedEvent);
+        RaiseLocalEvent(uid, equippedEvent, true);
 
         var gotEquippedEvent = new GotEquippedEvent(uid, args.Entity, slotDef);
-        RaiseLocalEvent(args.Entity, gotEquippedEvent);
+        RaiseLocalEvent(args.Entity, gotEquippedEvent, true);
     }
 
     /// <summary>
@@ -151,7 +150,7 @@ public abstract partial class InventorySystem
         var gotUnequipped = new GotUnequippedHandEvent(actor, held.Value, hands.ActiveHand!);
         var didUnequip = new DidUnequipHandEvent(actor, held.Value, hands.ActiveHand!);
         RaiseLocalEvent(held.Value, gotUnequipped, false);
-        RaiseLocalEvent(actor, didUnequip);
+        RaiseLocalEvent(actor, didUnequip, true);
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
 
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true);
@@ -274,7 +273,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -285,7 +284,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -294,7 +293,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = itemAttemptEvent.Reason ?? reason;
@@ -426,7 +425,7 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent);
+        RaiseLocalEvent(target, attemptEvent, true);
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
@@ -437,7 +436,7 @@ public abstract partial class InventorySystem
         {
             //reuse the event. this is gucci, right?
             attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent);
+            RaiseLocalEvent(actor, attemptEvent, true);
             if (attemptEvent.Cancelled)
             {
                 reason = attemptEvent.Reason ?? reason;
@@ -446,7 +445,7 @@ public abstract partial class InventorySystem
         }
 
         var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(itemUid, itemAttemptEvent);
+        RaiseLocalEvent(itemUid, itemAttemptEvent, true);
         if (itemAttemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;

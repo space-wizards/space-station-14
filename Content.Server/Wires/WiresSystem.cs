@@ -314,7 +314,7 @@ public sealed class WiresSystem : EntitySystem
             {
                 if (wire.CancelToken.IsCancellationRequested)
                 {
-                    RaiseLocalEvent(owner, wire.OnFinish);
+                    RaiseLocalEvent(owner, wire.OnFinish, true);
                     _finishedWires.Add((owner, wire));
                 }
                 else
@@ -322,7 +322,7 @@ public sealed class WiresSystem : EntitySystem
                     wire.TimeLeft -= frameTime;
                     if (wire.TimeLeft <= 0)
                     {
-                        RaiseLocalEvent(owner, wire.OnFinish);
+                        RaiseLocalEvent(owner, wire.OnFinish, true);
                         _finishedWires.Add((owner, wire));
                     }
                 }

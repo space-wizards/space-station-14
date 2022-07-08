@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -147,7 +148,7 @@ namespace Content.Server.StationEvents.Events
             if (AnnounceEvent && StartAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-                chatSystem.DispatchGlobalStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatSystem.DispatchGlobalAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (AnnounceEvent && StartAudio != null)
@@ -170,7 +171,7 @@ namespace Content.Server.StationEvents.Events
             if (AnnounceEvent && EndAnnouncement != null)
             {
                 var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-                chatSystem.DispatchGlobalStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                chatSystem.DispatchGlobalAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (AnnounceEvent && EndAudio != null)
@@ -210,6 +211,12 @@ namespace Content.Server.StationEvents.Events
             entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
             targetStation = robustRandom.Pick(stationSystem.Stations);
             var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
             if (possibleTargets.Count == 0)
@@ -220,7 +227,8 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = robustRandom.Pick(possibleTargets);
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp)
+                || !entityManager.TryGetComponent<TransformComponent>(targetGrid, out var transform))
                 return false;
             var grid = gridComp.Grid;
 
@@ -235,7 +243,9 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, transform.MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp))
+                    continue;
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;

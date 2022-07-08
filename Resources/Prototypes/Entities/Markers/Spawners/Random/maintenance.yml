@@ -71,6 +71,7 @@
         - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
+        - ResearchDisk
       chance: 0.6
       offset: 0.0
 

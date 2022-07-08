@@ -2,7 +2,11 @@ using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
+<<<<<<< HEAD
 using Content.Shared.Eye.Blinding;
+=======
+using Content.Shared.MobState.EntitySystems;
+>>>>>>> 4a393d46658beedea3a50b39293595a80e09e2c1
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -16,6 +20,7 @@ namespace Content.Shared.Examine
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -44,8 +49,8 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
-            // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner, out MobStateComponent? mobState) && mobState.IsIncapacitated())
+            // check if the mob is in critical or dead
+            if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
 
             if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
@@ -95,9 +100,9 @@ namespace Content.Shared.Examine
         {
             if (Resolve(examiner, ref mobState, logMissing: false))
             {
-                if (mobState.IsDead())
+                if (MobStateSystem.IsDead(examiner, mobState))
                     return DeadExamineRange;
-                else if (mobState.IsCritical() || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
+                else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
             }
             return ExamineRange;
@@ -258,7 +263,7 @@ namespace Content.Shared.Examine
             // Raise the event and let things that subscribe to it change the message...
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity, examinedEvent);
+            RaiseLocalEvent(entity, examinedEvent, true);
 
             message.Pop();
 

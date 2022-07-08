@@ -130,19 +130,20 @@ namespace Content.IntegrationTests.Tests.Disposal
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+
             EntityUid human = default!;
             EntityUid wrench = default!;
             EntityUid disposalUnit = default!;
             EntityUid disposalTrunk = default!;
             DisposalUnitComponent unit = default!;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
                 // Spawn the entities
-                var coordinates = PoolManager.GetMainEntityCoordinates(mapManager);
+                var coordinates = testMap.GridCoords;
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);

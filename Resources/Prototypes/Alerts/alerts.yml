@@ -63,6 +63,7 @@
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
+
 - type: alert
   id: Cold
   category: Temperature
@@ -162,6 +163,17 @@
   icon: /Textures/Interface/Alerts/Hunger/Peckish.png
   name: "[color=yellow]Peckish[/color]"
   description: Some food would be good right about now.
+
+- type: alert
+  id: Stamina
+  category: Stamina
+  icon:
+    sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina
+  name: Stamina
+  description: "Stuns you if it is too low."
+  minSeverity: 0
+  maxSeverity: 6
 
 - type: alert
   id: Starving

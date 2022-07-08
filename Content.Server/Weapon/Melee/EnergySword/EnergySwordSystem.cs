@@ -6,6 +6,9 @@ using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Content.Server.CombatMode.Disarm;
+using Content.Server.Kitchen.Components;
+using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -74,6 +77,11 @@ namespace Content.Server.Weapon.Melee.EnergySword
                 malus.Malus -= comp.litDisarmMalus;
             }
 
+            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+                weaponComp.HitSound = comp.OnHitOff;
+
+            RemComp<SharpComponent>(comp.Owner);
+
             SoundSystem.Play(comp.DeActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
             comp.Activated = false;
@@ -88,6 +96,11 @@ namespace Content.Server.Weapon.Melee.EnergySword
             {
                 item.Size = 9999;
             }
+
+            EnsureComp<SharpComponent>(comp.Owner);
+
+            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+                weaponComp.HitSound = comp.OnHitOn;
 
             SoundSystem.Play(comp.ActivateSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 

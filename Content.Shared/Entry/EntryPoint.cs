@@ -38,8 +38,10 @@ namespace Content.Shared.Entry
             IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
-#if !FULL_RELEASE
             var configMan = IoCManager.Resolve<IConfigurationManager>();
+#if FULL_RELEASE
+            configMan.OverrideDefault(CVars.NetInterpRatio, 2);
+#else
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
             configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
@@ -47,7 +49,6 @@ namespace Content.Shared.Entry
             // fake lag rand leads to messages arriving out of order. Sadly, networking is not robust enough, so for now
             // just leaving this disabled.
             // configMan.OverrideDefault(CVars.NetFakeLagRand, 0.01f);
-
 #endif
 
         }

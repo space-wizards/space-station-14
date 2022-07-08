@@ -123,10 +123,7 @@ namespace Content.Client.Atmos.EntitySystems
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_tileData.ContainsKey(ev.GridId))
-            {
-                _tileData.Remove(ev.GridId);
-            }
+            _tileData.Remove(ev.EntityUid);
         }
 
         public bool HasData(EntityUid gridId)

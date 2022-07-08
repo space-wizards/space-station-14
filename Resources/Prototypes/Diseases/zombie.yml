@@ -24,3 +24,12 @@
     - !type:DiseaseReagentCure
       reagent: Romerol
       min: 5
+
+- type: disease
+  id: PassiveZombieVirus
+  name: Zombie Virus
+  infectious: false
+  cureResist: 1 #no cure. Death is your cure.
+  effects:
+    - !type:DiseaseAddComponent
+      comp: ZombifyOnDeath

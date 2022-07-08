@@ -93,9 +93,9 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
     {
-        args.Resistance += component.GlobalResistance;
+        args.DamageCoefficient *= component.DamageCoefficient;
         if (component.Resistances.TryGetValue(args.ExplotionPrototype, out var resistance))
-            args.Resistance += resistance;
+            args.DamageCoefficient *= resistance;
     }
 
     /// <summary>
