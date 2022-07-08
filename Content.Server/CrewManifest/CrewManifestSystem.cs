@@ -124,6 +124,7 @@ public sealed class CrewManifestSystem : EntitySystem
         euis.Add(session, eui);
 
         _euiManager.OpenEui(eui, session);
+        eui.StateDirty();
     }
 
     public void CloseEui(EntityUid station, IPlayerSession session)
