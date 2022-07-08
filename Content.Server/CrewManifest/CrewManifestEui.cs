@@ -1,37 +1,39 @@
 using Content.Server.EUI;
 using Content.Shared.CrewManifest;
+using Content.Shared.Eui;
 
 namespace Content.Server.CrewManifest;
 
 public sealed class CrewManifestEui : BaseEui
 {
     private readonly CrewManifestSystem _crewManifest;
+
     /// <summary>
-    ///     Current station that this EUI is tracking. If the player can't open
-    ///     a crew manifest from their current grid, just show them
-    ///     an error or something
+    ///     Station this EUI instance is currently tracking.
     /// </summary>
     private readonly EntityUid _station;
 
-    /// <summary>
-    ///     Stations this EUI instance is currently tracking.
-    /// </summary>
-    public readonly HashSet<EntityUid> Stations = new();
-
-    public CrewManifestEui(CrewManifestSystem crewManifestSystem)
+    public CrewManifestEui(EntityUid station, CrewManifestSystem crewManifestSystem)
     {
+        _station = station;
         _crewManifest = crewManifestSystem;
     }
 
     public override CrewManifestEuiState GetNewState()
     {
-        var stations = new List<(EntityUid, CrewManifestEntries?)>();
+        var (name, entries) = _crewManifest.GetCrewManifest(_station);
+        return new(name, entries);
+    }
 
-        foreach (var station in Stations)
+    public override void HandleMessage(EuiMessageBase msg)
+    {
+        base.HandleMessage(msg);
+
+        switch (msg)
         {
-            stations.Add((station, _crewManifest.GetCrewManifest(station)));
+            case CrewManifestEuiClosed:
+                _crewManifest.CloseEui(_station, Player);
+                break;
         }
-
-        return new(stations);
     }
 }

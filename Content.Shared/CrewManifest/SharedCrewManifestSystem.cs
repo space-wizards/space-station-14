@@ -70,13 +70,19 @@ public sealed class RequestCrewManifestMessage : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class CrewManifestEuiState : EuiStateBase
 {
-    public List<(EntityUid, CrewManifestEntries?)> Stations { get; }
+    public string StationName { get; }
+    public CrewManifestEntries? Entries { get; }
 
-    public CrewManifestEuiState(List<(EntityUid, CrewManifestEntries?)> stations)
+    public CrewManifestEuiState(string stationName, CrewManifestEntries? entries)
     {
-        Stations = stations;
+        StationName = stationName;
+        Entries = entries;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class CrewManifestEuiClosed : EuiMessageBase
+{}
 
 
 [Serializable, NetSerializable]

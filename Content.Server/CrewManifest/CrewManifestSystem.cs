@@ -31,6 +31,7 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
         SubscribeLocalEvent<ActiveCrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
+        SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
     }
 
@@ -61,19 +62,13 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
     private void AfterGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
+        UpdateEuis(ev.Key.OriginStation);
     }
 
     private void OnRecordModified(RecordModifiedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
-
-        if (_openEuis.TryGetValue(ev.Key.OriginStation, out var euis))
-        {
-            foreach (var eui in euis.Values)
-            {
-                eui.StateDirty();
-            }
-        }
+        UpdateEuis(ev.Key.OriginStation);
     }
 
     private void OnBoundUiClose(EntityUid uid, ActiveCrewManifestViewerComponent component, BoundUIClosedEvent ev)
@@ -86,9 +81,32 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
         }
     }
 
-    public CrewManifestEntries? GetCrewManifest(EntityUid station)
+    public (string name, CrewManifestEntries? entries) GetCrewManifest(EntityUid station)
     {
-        return _cachedEntries.TryGetValue(station, out var manifest) ? manifest : null;
+        var valid = _cachedEntries.TryGetValue(station, out var manifest);
+        return (valid ? MetaData(station).EntityName : string.Empty, valid ? manifest : null);
+    }
+
+    private void UpdateEuis(EntityUid station)
+    {
+        if (_openEuis.TryGetValue(station, out var euis))
+        {
+            foreach (var eui in euis.Values)
+            {
+                eui.StateDirty();
+            }
+        }
+    }
+
+    private void OpenEuiFromBui(EntityUid uid, CrewManifestViewerComponent component, CrewManifestOpenUiMessage msg)
+    {
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || msg.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
+
+        OpenEui(owningStation.Value, sessionCast);
     }
 
     public void OpenEui(EntityUid station, IPlayerSession session)
@@ -98,24 +116,20 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
             return;
         }
 
-        if (!_openEuis.TryGetValue(station, out var euis))
+        if (!_openEuis.TryGetValue(station.Value, out var euis))
         {
             euis = new();
         }
 
-        if (euis.TryGetValue(session, out var eui))
+        if (euis.ContainsKey(session))
         {
-            eui.Stations.Add(station);
-            eui.StateDirty();
+            return;
         }
-        else
-        {
-            eui = new CrewManifestEui(this);
-            euis.Add(session, eui);
 
-            eui.Stations.Add(station);
-            _euiManager.OpenEui(eui, session);
-        }
+        var eui = new CrewManifestEui(station.Value, this);
+        euis.Add(session, eui);
+
+        _euiManager.OpenEui(eui, session);
     }
 
     public void CloseEui(EntityUid station, IPlayerSession session)
@@ -125,20 +139,13 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
             return;
         }
 
-        if (!_openEuis.TryGetValue(station, out var euis)
-            || !euis.TryGetValue(session, out var eui))
+        if (!_openEuis.TryGetValue(station, out var euis))
         {
             return;
         }
 
-        eui.Stations.Remove(station);
-        eui.StateDirty();
-
-        if (eui.Stations.Count == 0)
-        {
-            eui.Close();
-            euis.Remove(session);
-        }
+        euis.Remove(session, out var eui);
+        eui?.Close();
 
         if (euis.Count == 0)
         {
