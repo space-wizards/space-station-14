@@ -72,7 +72,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnMuzzleFlash(EntityUid uid, GunComponent component, MuzzleFlashEvent args)
     {
-        CreateEffect(uid, args, args.Angle);
+        CreateEffect(uid, args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -187,7 +187,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.Spent)
                     {
                         SetCartridgeSpent(cartridge, true);
-                        MuzzleFlash(gun.Owner, cartridge, muzzleDiff, user);
+                        MuzzleFlash(gun.Owner, cartridge, user);
                         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
@@ -203,7 +203,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                     break;
                 case AmmoComponent newAmmo:
-                    MuzzleFlash(gun.Owner, newAmmo, muzzleDiff, user);
+                    MuzzleFlash(gun.Owner, newAmmo, user);
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
                     if (newAmmo.Owner.IsClientSide())
                         Del(newAmmo.Owner);
@@ -229,7 +229,7 @@ public sealed partial class GunSystem : SharedGunSystem
         PopupSystem.PopupEntity(message, uid.Value, Filter.Entities(user.Value));
     }
 
-    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, Angle angle, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<TransformComponent>(uid, out var xform)) return;
         var ent = Spawn(message.Prototype, xform.Coordinates);

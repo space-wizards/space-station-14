@@ -8,12 +8,10 @@ namespace Content.Shared.Weapons.Ranged.Events;
 [Serializable, NetSerializable]
 public sealed class MuzzleFlashEvent : EntityEventArgs
 {
-    public Angle Angle;
     public string Prototype;
 
-    public MuzzleFlashEvent(Angle angle, string prototype)
+    public MuzzleFlashEvent(string prototype)
     {
-        Angle = angle;
         Prototype = prototype;
     }
 }

@@ -73,7 +73,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         }
 
                         SetCartridgeSpent(cartridge, true);
-                        MuzzleFlash(gun.Owner, cartridge, entityDirection.ToAngle(), user);
+                        MuzzleFlash(gun.Owner, cartridge, user);
                         PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                         if (cartridge.DeleteOnSpawn)
@@ -93,7 +93,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
                     shotProjectiles.Add(newAmmo.Owner);
-                    MuzzleFlash(gun.Owner, newAmmo, entityDirection.ToAngle(), user);
+                    MuzzleFlash(gun.Owner, newAmmo, user);
                     PlaySound(gun.Owner, gun.SoundGunshot?.GetSound(Random, ProtoManager), user);
 
                     // Do a throw
@@ -216,7 +216,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}
 
-    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, Angle angle, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
         var filter = Filter.Pvs(uid, entityManager: EntityManager);
 

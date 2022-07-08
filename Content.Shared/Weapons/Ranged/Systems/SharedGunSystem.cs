@@ -339,19 +339,19 @@ public abstract partial class SharedGunSystem : EntitySystem
             SoundSystem.Play(sound, Filter.Pvs(entity, entityManager: EntityManager), coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
-    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, Angle angle, EntityUid? user = null)
+    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
         var sprite = component.MuzzleFlash;
 
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(angle, sprite);
+        var ev = new MuzzleFlashEvent(sprite);
 
-        CreateEffect(gun, ev, angle, user);
+        CreateEffect(gun, ev, user);
     }
 
-    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, Angle angle, EntityUid? user = null);
+    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
     protected sealed class GunComponentState : ComponentState
