@@ -98,12 +98,7 @@ namespace Content.Server.Bible
                 return;
             }
 
-<<<<<<< HEAD
-            if (args.Target == null || args.Target == args.User || !TryComp<MobStateComponent>(args.Target, out var mobState)
-                || mobState.IsDead())
-=======
             if (args.Target == null || args.Target == args.User || _mobStateSystem.IsDead(args.Target.Value))
->>>>>>> 4a393d46658beedea3a50b39293595a80e09e2c1
             {
                 return;
             }
