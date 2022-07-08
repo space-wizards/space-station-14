@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: 'Drains will soon be added to stations, making the jobs of Janitors,
-      Chefs, and Chemists much easier.', type: Add}
-  id: 1396
-  time: '2022-04-24T01:04:49.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Added vehicles!, type: Add}
   id: 1397
   time: '2022-04-24T01:05:02.0000000+00:00'
@@ -2963,3 +2957,9 @@ Entries:
   - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
   id: 1895
   time: '2022-07-08T18:09:27.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Servers now post their max player counts for the launcher to display
+      alongside current player count, type: Add}
+  id: 1896
+  time: '2022-07-08T19:44:49.0000000+00:00'
