@@ -30,7 +30,7 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
-        SubscribeLocalEvent<ActiveCrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
+        SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
     }
@@ -65,14 +65,15 @@ public sealed class CrewManifestSystem : EntitySystem
         UpdateEuis(ev.Key.OriginStation);
     }
 
-    private void OnBoundUiClose(EntityUid uid, ActiveCrewManifestViewerComponent component, BoundUIClosedEvent ev)
+    private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
-        component.Viewers--;
+         var owningStation = _stationSystem.GetOwningStation(uid);
+         if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+         {
+             return;
+         }
 
-        if (component.Viewers == 0)
-        {
-            EntityManager.RemoveComponent<ActiveCrewManifestViewerComponent>(uid);
-        }
+         CloseEui(owningStation.Value, sessionCast);
     }
 
     public (string name, CrewManifestEntries? entries) GetCrewManifest(EntityUid station)
@@ -193,80 +194,5 @@ public sealed class CrewManifestSystem : EntitySystem
         {
             _cachedEntries.Add(station, entries);
         }
-
-        UpdateUserInterface();
-    }
-
-    private void UpdateUserInterface()
-    {
-        foreach (var comp in EntityQuery<ActiveCrewManifestViewerComponent>())
-        {
-            CrewManifestEntries? entries = null;
-            if (comp.Station != null)
-            {
-                _cachedEntries.TryGetValue(comp.Station.Value, out entries);
-            }
-
-            _uiSystem.GetUiOrNull(comp.Owner, CrewManifestUiKey.Key)?.SetState(new CrewManifestBoundUiState(entries));
-        }
-    }
-
-    /// <summary>
-    ///     Opens an user interface for a crew manifest.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="player"></param>
-    /// <param name="actor"></param>
-    public void OpenUserInterface(EntityUid uid, EntityUid player, ActorComponent? actor = null)
-    {
-        if (!Resolve(player, ref actor))
-        {
-            return;
-        }
-
-        var station = _stationSystem.GetOwningStation(uid);
-
-        OpenUserInterface(uid, station, actor.PlayerSession);
-    }
-
-    // Since UI is on freeze, I didn't bother adding in a method for
-    // dealing with how to get this from the lobby. The method I
-    // thought of included just sending messages to the server
-    // to avoid creating a new virtual entity, but at the same time,
-    // you could just add the ActiveCrewManifestViewerComponent
-    // component to the virtual station. It's a little dirty
-    // but it technically works for this instance. If, of course,
-    // the BUI doesn't immediately close because we're too
-    // far away from the station itself...
-
-    /// <summary>
-    ///     Opens an user interface for a crew manifest.
-    /// </summary>
-    /// <param name="uid">
-    ///     Entity to bind this UI to. Can be any entity, so that
-    ///     BUI works as needed.
-    /// </param>
-    /// <param name="station">
-    ///     Station that this UI should track. This can be null
-    ///     and the UI should display a valid state if this is
-    ///     null.
-    /// </param>
-    /// <param name="player">
-    ///     Player to open this UI for.
-    /// </param>
-    public void OpenUserInterface(EntityUid uid, EntityUid? station, IPlayerSession player)
-    {
-        if (!_uiSystem.TryGetUi(uid, CrewManifestUiKey.Key, out var bui))
-        {
-            return;
-        }
-
-        var comp = EnsureComp<ActiveCrewManifestViewerComponent>(uid);
-        comp.Station = station;
-        comp.Viewers++;
-
-        bui.Open(player);
     }
 }
-
-
