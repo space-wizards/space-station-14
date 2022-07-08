@@ -13,9 +13,17 @@ public sealed class CrewManifestEui : BaseEui
     /// </summary>
     private readonly EntityUid _station;
 
-    public CrewManifestEui(EntityUid station, CrewManifestSystem crewManifestSystem)
+    /// <summary>
+    ///     Current owner of this UI, if it has one. This is
+    ///     to ensure that if a BUI is closed, the EUIs related
+    ///     to the BUI are closed as well.
+    /// </summary>
+    public readonly EntityUid? Owner;
+
+    public CrewManifestEui(EntityUid station, EntityUid? owner, CrewManifestSystem crewManifestSystem)
     {
         _station = station;
+        Owner = owner;
         _crewManifest = crewManifestSystem;
     }
 

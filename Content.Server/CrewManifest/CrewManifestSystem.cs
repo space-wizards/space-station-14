@@ -73,7 +73,7 @@ public sealed class CrewManifestSystem : EntitySystem
              return;
          }
 
-         CloseEui(owningStation.Value, sessionCast);
+         CloseEui(owningStation.Value, sessionCast, uid);
     }
 
     public (string name, CrewManifestEntries? entries) GetCrewManifest(EntityUid station)
@@ -101,10 +101,10 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(owningStation.Value, sessionCast);
+        OpenEui(owningStation.Value, sessionCast, uid);
     }
 
-    public void OpenEui(EntityUid station, IPlayerSession session)
+    public void OpenEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
         {
@@ -121,27 +121,31 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        var eui = new CrewManifestEui(station, this);
+        var eui = new CrewManifestEui(station, owner, this);
         euis.Add(session, eui);
 
         _euiManager.OpenEui(eui, session);
         eui.StateDirty();
     }
 
-    public void CloseEui(EntityUid station, IPlayerSession session)
+    public void CloseEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
         {
             return;
         }
 
-        if (!_openEuis.TryGetValue(station, out var euis))
+        if (!_openEuis.TryGetValue(station, out var euis)
+            || !euis.TryGetValue(session, out var eui))
         {
             return;
         }
 
-        euis.Remove(session, out var eui);
-        eui?.Close();
+        if (eui.Owner == owner)
+        {
+            eui.Close();
+            euis.Remove(session);
+        }
 
         if (euis.Count == 0)
         {
