@@ -222,7 +222,7 @@ namespace Content.Server.Bible
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
                             component.Summon = familiar;
 
-            /// If this is going to use a ghost role mob spawner, attach it to the bible.
+            // If this is going to use a ghost role mob spawner, attach it to the bible.
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user));
