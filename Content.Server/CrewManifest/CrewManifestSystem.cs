@@ -1,3 +1,4 @@
+using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
@@ -14,6 +15,7 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -21,6 +23,8 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
     ///     this is inefficient.
     /// </summary>
     private readonly Dictionary<EntityUid, CrewManifestEntries> _cachedEntries = new();
+
+    private readonly Dictionary<EntityUid, Dictionary<IPlayerSession, CrewManifestEui>> _openEuis = new();
 
     public override void Initialize()
     {
@@ -62,6 +66,14 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
     private void OnRecordModified(RecordModifiedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
+
+        if (_openEuis.TryGetValue(ev.Key.OriginStation, out var euis))
+        {
+            foreach (var eui in euis.Values)
+            {
+                eui.StateDirty();
+            }
+        }
     }
 
     private void OnBoundUiClose(EntityUid uid, ActiveCrewManifestViewerComponent component, BoundUIClosedEvent ev)
@@ -71,6 +83,66 @@ public sealed class CrewManifestSystem : SharedCrewManifestSystem
         if (component.Viewers == 0)
         {
             EntityManager.RemoveComponent<ActiveCrewManifestViewerComponent>(uid);
+        }
+    }
+
+    public CrewManifestEntries? GetCrewManifest(EntityUid station)
+    {
+        return _cachedEntries.TryGetValue(station, out var manifest) ? manifest : null;
+    }
+
+    public void OpenEui(EntityUid station, IPlayerSession session)
+    {
+        if (!HasComp<StationRecordsSystem>(station))
+        {
+            return;
+        }
+
+        if (!_openEuis.TryGetValue(station, out var euis))
+        {
+            euis = new();
+        }
+
+        if (euis.TryGetValue(session, out var eui))
+        {
+            eui.Stations.Add(station);
+            eui.StateDirty();
+        }
+        else
+        {
+            eui = new CrewManifestEui(this);
+            euis.Add(session, eui);
+
+            eui.Stations.Add(station);
+            _euiManager.OpenEui(eui, session);
+        }
+    }
+
+    public void CloseEui(EntityUid station, IPlayerSession session)
+    {
+        if (!HasComp<StationRecordsSystem>(station))
+        {
+            return;
+        }
+
+        if (!_openEuis.TryGetValue(station, out var euis)
+            || !euis.TryGetValue(session, out var eui))
+        {
+            return;
+        }
+
+        eui.Stations.Remove(station);
+        eui.StateDirty();
+
+        if (eui.Stations.Count == 0)
+        {
+            eui.Close();
+            euis.Remove(session);
+        }
+
+        if (euis.Count == 0)
+        {
+            _openEuis.Remove(station);
         }
     }
 

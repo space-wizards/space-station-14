@@ -1,3 +1,4 @@
+using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CrewManifest;
@@ -50,6 +51,8 @@ public enum CrewManifestEntitySource
 
 /// <summary>
 ///     A message to send to the server when requesting a crew manifest.
+///     CrewManifestSystem will open an EUI that will send the crew manifest
+///     to the player when it is updated.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class RequestCrewManifestMessage : EntityEventArgs
@@ -63,6 +66,18 @@ public sealed class RequestCrewManifestMessage : EntityEventArgs
         Id = id;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class CrewManifestEuiState : EuiStateBase
+{
+    public List<(EntityUid, CrewManifestEntries?)> Stations { get; }
+
+    public CrewManifestEuiState(List<(EntityUid, CrewManifestEntries?)> stations)
+    {
+        Stations = stations;
+    }
+}
+
 
 [Serializable, NetSerializable]
 public sealed class CrewManifestState : EntityEventArgs
