@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Do afters will break after a specific minimum threshold is set, type: Add}
-  id: 1394
-  time: '2022-04-24T00:41:48.0000000+00:00'
 - author: Saakra
   changes:
   - {message: 'Bats, bees, butterflies, and parrots no longer slip', type: Add}
@@ -2963,3 +2958,8 @@ Entries:
   - {message: Diseases can now have different stages., type: Add}
   id: 1893
   time: '2022-07-08T03:44:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
+  id: 1894
+  time: '2022-07-08T12:30:46.0000000+00:00'
