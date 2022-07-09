@@ -40,7 +40,6 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         // how often to recheck possible targets (prevents calling expensive
@@ -398,8 +397,13 @@ namespace Content.Client.DragDrop
                         && _interactionSystem.InRangeUnobstructed(dropArgs.Target, dropArgs.Target);
                 }
 
+                if (inRangeSprite.PostShader != null &&
+                    inRangeSprite.PostShader != _dropTargetInRangeShader &&
+                    inRangeSprite.PostShader != _dropTargetOutOfRangeShader)
+                    return;
+
                 // highlight depending on whether its in or out of range
-                _spriteSystem.SetPostShader(inRangeSprite.Owner, valid.Value ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader, inRangeSprite);
+                inRangeSprite.PostShader = valid.Value ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                 inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 _highlightedSprites.Add(inRangeSprite);
             }
@@ -409,7 +413,10 @@ namespace Content.Client.DragDrop
         {
             foreach (var highlightedSprite in _highlightedSprites)
             {
-                _spriteSystem.SetPostShader(highlightedSprite.Owner, null, highlightedSprite);
+                if (highlightedSprite.PostShader != _dropTargetInRangeShader && highlightedSprite.PostShader != _dropTargetOutOfRangeShader)
+                    continue;
+
+                highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
 

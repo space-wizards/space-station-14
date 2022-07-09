@@ -19,23 +19,24 @@ namespace Content.Client.Interactable.Components
         private ShaderInstance? _shader;
         private int _lastRenderScale;
 
-        public void OnMouseEnter(bool inInteractionRange, int renderScale, SpriteSystem sys)
+        public void OnMouseEnter(bool inInteractionRange, int renderScale)
         {
             _lastRenderScale = renderScale;
             _inRange = inInteractionRange;
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
+            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite) && sprite.PostShader == null)
             {
                 // TODO why is this creating a new instance of the outline shader every time the mouse enters???
-                sys.SetPostShader(Owner, MakeNewShader(inInteractionRange, renderScale), sprite);
-                sprite.RenderOrder = _entMan.CurrentTick.Value;
+                _shader = MakeNewShader(inInteractionRange, renderScale);
+                sprite.PostShader = _shader;
             }
         }
 
-        public void OnMouseLeave(SpriteSystem sys)
+        public void OnMouseLeave()
         {
             if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite))
             {
-                sys.SetPostShader(Owner, null, sprite);
+                if (sprite.PostShader == _shader)
+                    sprite.PostShader = null;
                 sprite.RenderOrder = 0;
             }
 
@@ -43,16 +44,17 @@ namespace Content.Client.Interactable.Components
             _shader = null;
         }
 
-        public void UpdateInRange(bool inInteractionRange, int renderScale, SpriteSystem sys)
+        public void UpdateInRange(bool inInteractionRange, int renderScale)
         {
             if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite)
+                && sprite.PostShader == _shader
                 && (inInteractionRange != _inRange || _lastRenderScale != renderScale))
             {
                 _inRange = inInteractionRange;
                 _lastRenderScale = renderScale;
 
                 _shader = MakeNewShader(_inRange, _lastRenderScale);
-                sys.SetPostShader(Owner, _shader, sprite);
+                sprite.PostShader = _shader;
             }
         }
 
