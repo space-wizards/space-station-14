@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Split Station minor update. More signage, some wiring fixes, vehicle
-      spawners, memorial in the park and more chance of splitting! (See bar).', type: Add}
-  id: 1407
-  time: '2022-04-25T17:07:53.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: The "suspicion" gamemode now works on every map., type: Tweak}
@@ -2950,3 +2944,10 @@ Entries:
       docks., type: Fix}
   id: 1906
   time: '2022-07-09T05:20:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Jetpacks got some QOL tweaks. Particles don''t show if they''re stationary,
+      it gives popups when it turns off, and they''re unusable under gravity (as they
+      give no effect anyway).', type: Tweak}
+  id: 1907
+  time: '2022-07-09T08:24:49.0000000+00:00'
