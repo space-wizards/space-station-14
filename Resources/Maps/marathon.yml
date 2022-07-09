@@ -13340,7 +13340,7 @@ entities:
       14,10: 0
       14,11: 0
       14,12: 0
-      14,13: 0
+      14,13: 1
       14,14: 0
       14,15: 0
       15,0: 0
@@ -14162,7 +14162,7 @@ entities:
       18,21: 0
       18,22: 0
       18,23: 0
-      18,24: 0
+      18,24: 1
       19,16: 0
       19,17: 0
       19,18: 0
@@ -15895,11 +15895,11 @@ entities:
       24,-18: 0
       24,-17: 0
       25,-32: 0
-      25,-31: 1
+      25,-31: 2
       25,-30: 0
-      25,-29: 2
+      25,-29: 1
       25,-28: 0
-      25,-27: 2
+      25,-27: 1
       25,-26: 0
       25,-25: 3
       25,-24: 0
@@ -15911,11 +15911,11 @@ entities:
       25,-18: 0
       25,-17: 0
       26,-32: 0
-      26,-31: 1
+      26,-31: 2
       26,-30: 0
-      26,-29: 2
+      26,-29: 1
       26,-28: 0
-      26,-27: 2
+      26,-27: 1
       26,-26: 0
       26,-25: 3
       26,-24: 0
@@ -15927,11 +15927,11 @@ entities:
       26,-18: 0
       26,-17: 0
       27,-32: 0
-      27,-31: 1
+      27,-31: 2
       27,-30: 0
-      27,-29: 2
+      27,-29: 1
       27,-28: 0
-      27,-27: 2
+      27,-27: 1
       27,-26: 0
       27,-25: 3
       27,-24: 0
@@ -16223,17 +16223,17 @@ entities:
       24,-34: 0
       24,-33: 0
       25,-36: 0
-      25,-35: 2
+      25,-35: 1
       25,-34: 0
-      25,-33: 2
+      25,-33: 1
       26,-36: 0
-      26,-35: 2
+      26,-35: 1
       26,-34: 0
-      26,-33: 2
+      26,-33: 1
       27,-36: 0
-      27,-35: 2
+      27,-35: 1
       27,-34: 0
-      27,-33: 2
+      27,-33: 1
       28,-36: 0
       28,-35: 0
       28,-34: 0
@@ -19197,7 +19197,7 @@ entities:
       -61,54: 0
       -61,55: 0
       -61,56: 0
-      -61,57: 1
+      -61,57: 2
       -61,58: 0
       -61,59: 0
       -61,60: 0
@@ -22002,15 +22002,15 @@ entities:
       36,-61: 0
       36,-60: 0
       36,-59: 0
-      36,-58: 2
+      36,-58: 1
       36,-57: 0
       36,-56: 0
       36,-55: 0
       37,-64: 0
       37,-63: 0
       37,-62: 0
-      37,-61: 2
-      37,-60: 2
+      37,-61: 1
+      37,-60: 1
       37,-59: 0
       37,-58: 0
       37,-57: 0
@@ -22030,9 +22030,9 @@ entities:
       38,-54: 0
       38,-53: 0
       39,-64: 0
-      39,-63: 2
-      39,-62: 2
-      39,-61: 2
+      39,-63: 1
+      39,-62: 1
+      39,-61: 1
       39,-60: 0
       39,-59: 0
       39,-58: 0
@@ -22041,7 +22041,7 @@ entities:
       39,-55: 0
       39,-54: 0
       39,-53: 0
-      40,-64: 2
+      40,-64: 1
       40,-63: 0
       40,-62: 0
       40,-61: 0
@@ -22077,7 +22077,7 @@ entities:
       43,-64: 0
       43,-63: 0
       43,-62: 0
-      43,-61: 2
+      43,-61: 1
       43,-60: 0
       43,-59: 0
       43,-58: 0
@@ -22181,8 +22181,8 @@ entities:
       35,-70: 0
       35,-69: 0
       35,-68: 0
-      35,-67: 2
-      35,-66: 2
+      35,-67: 1
+      35,-66: 1
       35,-65: 0
       36,-76: 0
       36,-75: 0
@@ -22192,9 +22192,9 @@ entities:
       36,-71: 0
       36,-70: 0
       36,-69: 0
-      36,-68: 2
-      36,-67: 2
-      36,-66: 2
+      36,-68: 1
+      36,-67: 1
+      36,-66: 1
       36,-65: 0
       37,-77: 0
       37,-76: 0
@@ -22205,20 +22205,20 @@ entities:
       37,-71: 0
       37,-70: 0
       37,-69: 0
-      37,-68: 2
-      37,-67: 2
+      37,-68: 1
+      37,-67: 1
       37,-66: 0
       37,-65: 0
       38,-77: 0
       38,-76: 0
       38,-75: 0
-      38,-74: 2
+      38,-74: 1
       38,-73: 0
       38,-72: 0
       38,-71: 0
       38,-70: 0
-      38,-69: 2
-      38,-68: 2
+      38,-69: 1
+      38,-68: 1
       38,-67: 0
       38,-66: 0
       38,-65: 0
@@ -22227,7 +22227,7 @@ entities:
       39,-75: 0
       39,-74: 0
       39,-73: 0
-      39,-72: 2
+      39,-72: 1
       39,-71: 0
       39,-70: 0
       39,-69: 0
@@ -22238,7 +22238,7 @@ entities:
       40,-77: 0
       40,-76: 0
       40,-75: 0
-      40,-74: 2
+      40,-74: 1
       40,-73: 0
       40,-72: 0
       40,-71: 0
@@ -22251,7 +22251,7 @@ entities:
       41,-77: 0
       41,-76: 0
       41,-75: 0
-      41,-74: 2
+      41,-74: 1
       41,-73: 0
       41,-72: 0
       41,-71: 0
@@ -22263,12 +22263,12 @@ entities:
       41,-65: 0
       42,-77: 0
       42,-76: 0
-      42,-75: 2
+      42,-75: 1
       42,-74: 0
       42,-73: 0
       42,-72: 0
       42,-71: 0
-      42,-70: 2
+      42,-70: 1
       42,-69: 0
       42,-68: 0
       42,-67: 0
@@ -22281,8 +22281,8 @@ entities:
       43,-73: 0
       43,-72: 0
       43,-71: 0
-      43,-70: 2
-      43,-69: 2
+      43,-70: 1
+      43,-69: 1
       43,-68: 0
       43,-67: 0
       43,-66: 0
@@ -22292,10 +22292,10 @@ entities:
       44,-74: 0
       44,-73: 0
       44,-72: 0
-      44,-71: 2
-      44,-70: 2
-      44,-69: 2
-      44,-68: 2
+      44,-71: 1
+      44,-70: 1
+      44,-69: 1
+      44,-68: 1
       44,-67: 0
       44,-66: 0
       44,-65: 0
@@ -22304,12 +22304,12 @@ entities:
       45,-73: 0
       45,-72: 0
       45,-71: 0
-      45,-70: 2
+      45,-70: 1
       45,-69: 0
       45,-68: 0
       45,-67: 0
       45,-66: 0
-      45,-65: 2
+      45,-65: 1
       46,-73: 0
       46,-72: 0
       46,-71: 0
@@ -22703,30 +22703,30 @@ entities:
       77,32: 0
       56,15: 0
       57,15: 0
-      30,-23: 2
-      30,-18: 2
-      31,-23: 2
-      31,-18: 2
-      32,-25: 2
-      32,-24: 2
-      32,-23: 2
-      32,-22: 2
-      33,-23: 2
-      33,-18: 2
-      33,-17: 2
-      34,-26: 2
-      34,-25: 2
-      34,-24: 2
-      34,-23: 2
-      34,-22: 2
-      35,-23: 2
-      35,-18: 2
-      35,-17: 2
-      36,-25: 2
-      36,-24: 2
-      36,-23: 2
-      36,-22: 2
-      37,-23: 2
+      30,-23: 1
+      30,-18: 1
+      31,-23: 1
+      31,-18: 1
+      32,-25: 1
+      32,-24: 1
+      32,-23: 1
+      32,-22: 1
+      33,-23: 1
+      33,-18: 1
+      33,-17: 1
+      34,-26: 1
+      34,-25: 1
+      34,-24: 1
+      34,-23: 1
+      34,-22: 1
+      35,-23: 1
+      35,-18: 1
+      35,-17: 1
+      36,-25: 1
+      36,-24: 1
+      36,-23: 1
+      36,-22: 1
+      37,-23: 1
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -22745,7 +22745,7 @@ entities:
       - 0
       - 0
       - 0
-      - 6666.982
+      - 0
       - 0
       - 0
       - 0
@@ -22756,7 +22756,7 @@ entities:
       - 0
       - 0
       - 0
-      - 0
+      - 6666.982
       - 0
       - 0
       - 0
@@ -24340,7 +24340,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 285
-  type: WallSolid
+  type: AirlockMaintLocked
   components:
   - pos: -27.5,21.5
     parent: 30
@@ -27729,9 +27729,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 730
-  type: PottedPlantRandom
+  type: PottedPlant15
   components:
-  - pos: -27.5,20.5
+  - pos: -28.5,20.5
     parent: 30
     type: Transform
   - containers:
@@ -28531,13 +28531,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 842
-  type: WallReinforced
+  type: Grille
   components:
   - pos: -48.5,7.5
     parent: 30
     type: Transform
 - uid: 843
-  type: WallReinforced
+  type: Grille
   components:
   - pos: -48.5,-1.5
     parent: 30
@@ -28545,13 +28545,13 @@ entities:
 - uid: 844
   type: WallReinforced
   components:
-  - pos: -54.5,-1.5
+  - pos: -54.5,-0.5
     parent: 30
     type: Transform
 - uid: 845
   type: WallReinforced
   components:
-  - pos: -54.5,7.5
+  - pos: -54.5,8.5
     parent: 30
     type: Transform
 - uid: 846
@@ -28699,21 +28699,21 @@ entities:
     parent: 30
     type: Transform
 - uid: 870
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -50.5,-2.5
+  - pos: -54.5,6.5
     parent: 30
     type: Transform
 - uid: 871
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -50.5,-1.5
+  - pos: -50.5,7.5
     parent: 30
     type: Transform
 - uid: 872
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -50.5,-0.5
+  - pos: -54.5,-1.5
     parent: 30
     type: Transform
 - uid: 873
@@ -28735,15 +28735,16 @@ entities:
     parent: 30
     type: Transform
 - uid: 876
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -54.5,-0.5
+  - pos: -50.5,-0.5
     parent: 30
     type: Transform
 - uid: 877
-  type: ReinforcedWindow
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -54.5,-2.5
+  - anchored: True
+    pos: -62.5,15.5
     parent: 30
     type: Transform
 - uid: 878
@@ -28867,21 +28868,22 @@ entities:
     parent: 30
     type: Transform
 - uid: 898
-  type: ReinforcedWindow
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -50.5,8.5
+  - anchored: True
+    pos: -62.5,23.5
     parent: 30
     type: Transform
 - uid: 899
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -50.5,7.5
+  - pos: -50.5,-1.5
     parent: 30
     type: Transform
 - uid: 900
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -50.5,6.5
+  - pos: -54.5,-2.5
     parent: 30
     type: Transform
 - uid: 901
@@ -28903,15 +28905,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 904
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -54.5,6.5
+  - pos: -50.5,6.5
     parent: 30
     type: Transform
 - uid: 905
-  type: ReinforcedWindow
+  type: WallReinforced
   components:
-  - pos: -54.5,8.5
+  - pos: -50.5,8.5
     parent: 30
     type: Transform
 - uid: 906
@@ -29005,15 +29007,16 @@ entities:
     parent: 30
     type: Transform
 - uid: 921
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: -54.5,-2.5
+  - pos: -54.5,7.5
     parent: 30
     type: Transform
 - uid: 922
-  type: Grille
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -54.5,-0.5
+  - anchored: True
+    pos: -62.5,21.5
     parent: 30
     type: Transform
 - uid: 923
@@ -29035,19 +29038,23 @@ entities:
     parent: 30
     type: Transform
 - uid: 926
-  type: Grille
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -50.5,-0.5
+  - anchored: True
+    pos: -62.5,13.5
     parent: 30
     type: Transform
 - uid: 927
-  type: Grille
+  type: PottedPlant5
   components:
-  - pos: -50.5,-1.5
+  - pos: 11.5,-6.5
     parent: 30
     type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 928
-  type: Grille
+  type: WallReinforced
   components:
   - pos: -50.5,-2.5
     parent: 30
@@ -29197,21 +29204,43 @@ entities:
     parent: 30
     type: Transform
 - uid: 953
-  type: Grille
+  type: OreProcessor
   components:
-  - pos: -50.5,6.5
+  - pos: 31.5,-8.5
     parent: 30
     type: Transform
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Plasma
+    - Uranium
+    - Gold
+    - Silver
+    type: Lathe
+  - containers:
+    - machine_parts
+    - machine_board
+    type: Construction
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 954
-  type: Grille
+  type: FirelockGlass
   components:
-  - pos: -50.5,7.5
+  - pos: 31.5,-8.5
     parent: 30
     type: Transform
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 955
-  type: Grille
+  type: Table
   components:
-  - pos: -50.5,8.5
+  - pos: 29.5,-7.5
     parent: 30
     type: Transform
 - uid: 956
@@ -29233,15 +29262,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 959
-  type: Grille
+  type: Table
   components:
-  - pos: -54.5,6.5
+  - pos: 28.5,-7.5
     parent: 30
     type: Transform
 - uid: 960
-  type: Grille
+  type: Table
   components:
-  - pos: -54.5,8.5
+  - pos: 27.5,-7.5
     parent: 30
     type: Transform
 - uid: 961
@@ -48779,9 +48808,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 3505
-  type: SignSpace
+  type: CrateFilledSpawner
   components:
-  - pos: -56.5,6.5
+  - pos: 25.5,-5.5
     parent: 30
     type: Transform
 - uid: 3506
@@ -48791,9 +48820,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 3507
-  type: SignSpace
+  type: CrateFilledSpawner
   components:
-  - pos: -48.5,6.5
+  - pos: 25.5,-4.5
     parent: 30
     type: Transform
 - uid: 3508
@@ -48809,9 +48838,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 3510
-  type: SignSpace
+  type: CrateFilledSpawner
   components:
-  - pos: -48.5,-0.5
+  - pos: 29.5,-3.5
     parent: 30
     type: Transform
 - uid: 3511
@@ -48821,9 +48850,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 3512
-  type: SignSpace
+  type: CrateEmptySpawner
   components:
-  - pos: -56.5,-0.5
+  - pos: 23.5,-3.5
     parent: 30
     type: Transform
 - uid: 3513
@@ -89084,14 +89113,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 9161
-  type: PottedPlantRandom
+  type: FirelockGlass
   components:
-  - pos: 3.5,-30.5
+  - pos: 14.5,13.5
     parent: 30
     type: Transform
-  - containers:
-      stash: !type:ContainerSlot {}
-    type: ContainerContainer
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 9162
   type: PottedPlantRandom
   components:
@@ -104489,28 +104519,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 11275
-  type: Protolathe
+  type: FirelockGlass
   components:
-  - pos: 3.5,-42.5
+  - pos: 18.5,24.5
     parent: 30
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-  - materialWhiteList:
-    - Steel
-    - Glass
-    - Plastic
-    - Wood
-    - Gold
-    type: Lathe
-  - containers:
-      machine_board: !type:Container
-        ents: []
-      machine_parts: !type:Container
-        ents: []
-    type: ContainerContainer
+  - airBlocked: False
+    type: Airtight
+  - canCollide: False
+    type: Physics
 - uid: 11276
   type: Autolathe
   components:
@@ -107510,9 +107527,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 11676
-  type: AirlockSalvageGlassLocked
+  type: ReinforcedWindow
   components:
-  - pos: 31.5,-8.5
+  - pos: -48.5,-1.5
     parent: 30
     type: Transform
 - uid: 11677
@@ -180136,6 +180153,12 @@ entities:
   type: MaintenanceWeaponSpawner
   components:
   - pos: 31.5,27.5
+    parent: 30
+    type: Transform
+- uid: 21582
+  type: ReinforcedWindow
+  components:
+  - pos: -48.5,7.5
     parent: 30
     type: Transform
 - uid: 21588
