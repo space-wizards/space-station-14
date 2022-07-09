@@ -3,6 +3,8 @@
   name: random drink spawner
   suffix: Glass
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -20,7 +22,6 @@
       - DrinkBahamaMama
       - DrinkBananaHonkGlass
       - DrinkBarefootGlass
-      - DrinkBeepskySmashGlass
       - DrinkBeerglass
       - DrinkBerryJuice
       - DrinkBilkGlass
@@ -49,7 +50,6 @@
       - DrinkGreenTeaGlass
       - DrinkGrogGlass
       - DrinkHippiesDelightGlass
-      - DrinkHoochGlass
       - DrinkIcedCoffeeGlass
       - DrinkIcedGreenTeaGlass
       - DrinkIcedBeerGlass
@@ -106,7 +106,6 @@
       - DrinkSilencerGlass
       - DrinkShakeMeat
       - DrinkShakeRobo
+      - DrinkHoochGlass
+      - DrinkBeepskySmashGlass
     rareChance: 0.05
-
-  placement:
-    mode: AlignTileAny

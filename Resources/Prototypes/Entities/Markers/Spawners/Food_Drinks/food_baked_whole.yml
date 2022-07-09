@@ -3,6 +3,8 @@
   name: random baked food spawner
   suffix: Whole
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -14,7 +16,6 @@
       - FoodBreadVolcanic
       - FoodBreadPlain
       - FoodBreadMeat
-      - FoodBreadMeatXeno
       - FoodBreadBanana
       - FoodBreadTofu
       - FoodBreadCreamcheese
@@ -53,6 +54,5 @@
       - FoodPieXeno
       - FoodPieAmanita
       - FoodPiePlump
+      - FoodBreadMeatXeno
     rareChance: 0.05
-  placement:
-    mode: AlignTileAny

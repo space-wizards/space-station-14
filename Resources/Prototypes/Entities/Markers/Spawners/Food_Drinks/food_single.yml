@@ -3,6 +3,8 @@
   name: random food spawner
   suffix: Single Serving
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -41,7 +43,6 @@
       - FoodPizzaDankSlice
       - FoodPizzaSassysageSlice
       - FoodPizzaPineappleSlice
-      - FoodPizzaArnoldSlice
       - FoodPizzaMoldySlice
     chance: 0.8
     offset: 0.0
@@ -61,7 +62,5 @@
       - FoodMeatLizardtailKebab
       - FoodMeatRatKebab
       - FoodMeatRatdoubleKebab
+      - FoodPizzaArnoldSlice
     rareChance: 0.05
-
-  placement:
-    mode: AlignTileAny

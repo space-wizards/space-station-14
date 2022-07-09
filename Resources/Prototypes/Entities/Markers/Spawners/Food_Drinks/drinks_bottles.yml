@@ -3,6 +3,8 @@
   name: random drink spawner
   suffix: Bottle
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -34,6 +36,3 @@
     rarePrototypes:
       - DrinkPoisonWinebottleFull
     rareChance: 0.01
-
-  placement:
-    mode: AlignTileAny

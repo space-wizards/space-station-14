@@ -3,6 +3,8 @@
   name: random snack spawner
   #suffix:
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -51,6 +53,3 @@
       - FoodSnackMREBrownie
     chance: 0.8
     offset: 0.0
-
-  placement:
-    mode: AlignTileAny

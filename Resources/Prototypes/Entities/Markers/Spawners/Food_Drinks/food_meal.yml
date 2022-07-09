@@ -3,6 +3,8 @@
   name: random food spawner
   suffix: Meal
   parent: MarkerBase
+  placement:
+    mode: AlignTileAny
   components:
   - type: Sprite
     layers:
@@ -80,6 +82,3 @@
       - FoodSoupEyeball
       - FoodSoupElectron
     rareChance: 0.05
-
-  placement:
-    mode: AlignTileAny
