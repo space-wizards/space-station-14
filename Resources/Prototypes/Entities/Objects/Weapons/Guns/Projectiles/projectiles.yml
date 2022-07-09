@@ -29,11 +29,14 @@
       - Impassable
       - BulletImpassable
   - type: Projectile
+    impactEffect: BulletImpactEffect
     damage:
       types:
         Piercing: 14
     soundHit:
       path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: TimedDespawn
+    lifetime: 10
 
 - type: entity
   id: BaseBulletTrigger # Trigger-on-collide bullets
@@ -126,6 +129,7 @@
   - type: StaminaDamageOnCollide
     damage: 30
   - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Heat: 5

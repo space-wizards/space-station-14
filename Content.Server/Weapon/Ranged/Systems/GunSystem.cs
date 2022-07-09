@@ -7,7 +7,6 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Sound;
-using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -16,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -168,7 +166,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (user != null)
         {
             var projectile = EnsureComp<ProjectileComponent>(uid);
-            projectile.IgnoreEntity(user.Value);
+            Projectiles.SetShooter(projectile, user.Value);
         }
 
         Transform(uid).WorldRotation = direction.ToWorldAngle();
