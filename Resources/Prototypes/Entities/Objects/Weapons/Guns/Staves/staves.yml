@@ -7,7 +7,8 @@
   - type: Sprite
     layers:
     - state: fire
-      map: ["enum.GunVisualLayers.Base"]
+    - state: fire-effect
+      map: ["effect"]
   - type: Item
     state: fire
   - type: Gun
@@ -16,6 +17,7 @@
       path: /Audio/Magic/fireball.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileFireball
+    capacity: 5
 
 - type: entity
   name: staff of carp polymorph
@@ -25,44 +27,49 @@
   components:
   - type: Sprite
     layers:
-    - state: poly-1
-      map: ["enum.GunVisualLayers.Base"]
+    - state: poly
+    - state: poly-effect
+      map: ["effect"]
   - type: Item
-    state: poly-1
+    state: poly
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCarp
+    capacity: 5
+  - type: Appearance
 
 - type: entity
-  name: magical staff of death
+  name: magical staff of instant death
   parent: WeaponStaffBase
   id: WeaponStaffDeath
   description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
   components:
   - type: Sprite
     layers:
-    - state: death-1
-      map: ["enum.GunVisualLayers.Base"]
+    - state: death
+    - state: death-effect
+      map: ["effect"]
   - type: Item
-    state: death-1
+    state: death
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
   - type: BasicEntityAmmoProvider
     proto: BulletInstakillMagic
+    capacity: 3
+  - type: Appearance
 
 - type: entity
   name: staff of healing
   parent: WeaponStaffBase
   id: WeaponStaffHealing
-  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
+  description: You don't foresee having to use this in your quest for carnage too often.
   components:
   - type: Sprite
     layers:
     - state: healing
-      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     state: healing
   - type: Gun
@@ -80,7 +87,6 @@
   - type: Sprite
     layers:
     - state: door
-      map: ["enum.GunVisualLayers.Base"]
   - type: Item
     state: door
   - type: Gun

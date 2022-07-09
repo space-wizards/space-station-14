@@ -70,7 +70,27 @@ public abstract partial class SharedGunSystem
     private void UpdateBasicEntityAppearance(BasicEntityAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
+        appearance.SetData(AmmoVisuals.HasAmmo, component.Count != 0);
         appearance.SetData(AmmoVisuals.AmmoCount, component.Count ?? int.MaxValue);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity ?? int.MaxValue);
     }
+
+    #region Public API
+
+    public bool UpdateBasicEntityAmmoCount(EntityUid uid, int count, BasicEntityAmmoProviderComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (count > component.Capacity)
+            return false;
+
+        component.Count = count;
+        Dirty(component);
+        UpdateBasicEntityAppearance(component);
+
+        return true;
+    }
+
+    #endregion
 }

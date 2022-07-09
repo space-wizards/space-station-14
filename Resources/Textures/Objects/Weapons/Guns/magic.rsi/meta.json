@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "/tg/station at https://github.com/tgstation/tgstation/commit/270acce4f551253d8ac75de19236b8b4be598f7f",
+  "copyright": "/tg/station at https://github.com/tgstation/tgstation/commit/270acce4f551253d8ac75de19236b8b4be598f7f. edited by mirrorcult to allow layering",
   "size": {
     "x": 32,
     "y": 32
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "death-1",
+      "name": "death-effect",
       "delays": [
         [
           0.3,
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "poly-1",
+      "name": "poly-effect",
       "delays": [
         [
           0.5,
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "name": "fire",
+      "name": "fire-effect",
       "delays": [
         [
           0.2,
@@ -84,10 +84,13 @@
       ]
     },
     {
-      "name": "death-0"
+      "name": "death"
     },
     {
-      "name": "poly-0"
+      "name": "poly"
+    },
+    {
+      "name": "fire"
     }
   ]
 }

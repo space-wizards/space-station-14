@@ -80,10 +80,11 @@
   - type: Projectile
     damage:
       groups: # good enough. Maybe make it call the rejuvenate command later.
-        Brute: -600
-        Burn: -600
-        Airloss: -400
-        Toxin: -400
+        Brute: -900
+        Burn: -900
+        Airloss: -600
+        Toxin: -600
+    ignoreResistances: true
 
 - type: entity
   id: BulletInstakillMagic
@@ -96,3 +97,4 @@
     damage:
       types:
         Piercing: 300
+    ignoreResistances: true

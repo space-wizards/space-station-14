@@ -14,3 +14,14 @@
     availableModes:
     - SemiAuto
   - type: AmmoCounter
+  # All staves recharge. Wands are not.
+  - type: RechargeBasicEntityAmmo
+  # These will only do anything if the effect layer is actually set.
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        effect:
+          True: { visible: True }
+          False: { visible: False }
+
