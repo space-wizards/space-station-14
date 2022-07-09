@@ -93,9 +93,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<TransformComponent>(uid, out var xform) &&
-            TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            !CanEnableOnGrid(xform.GridUid))
+        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
+            !CanEnableOnGrid(args.Transform.GridUid))
         {
             SetEnabled(jetpack, false, uid);
 
