@@ -147,6 +147,7 @@
 - type: alert
   id: Internals
   category: Internals
+  onClick: !type:ToggleInternals {}
   icon:
     sprite: /Textures/Interface/Alerts/internals.rsi
     state: internal

@@ -11,25 +11,25 @@ namespace Content.Server.Atmos.Components
         public const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-        public int _integrity = 3;
+        public int Integrity = 3;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")]
-        public SoundSpecifier _ruptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+        public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("connectSound")]
-        public SoundSpecifier? _connectSound =
+        public SoundSpecifier? ConnectSound =
             new SoundPathSpecifier("/Audio/Effects/internals.ogg")
             {
                 Params = AudioParams.Default.WithVolume(5f),
             };
 
         [ViewVariables(VVAccess.ReadWrite), DataField("disconnectSound")]
-        public SoundSpecifier? _disconnectSound;
+        public SoundSpecifier? DisconnectSound;
 
         // Cancel toggles sounds if we re-toggle again.
 
-        public IPlayingAudioStream? _connectStream;
-        public IPlayingAudioStream? _disconnectStream;
+        public IPlayingAudioStream? ConnectStream;
+        public IPlayingAudioStream? DisconnectStream;
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 

@@ -26,7 +26,6 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class GasTankSystem : EntitySystem
     {
-        [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly InternalsSystem _internals = default!;
@@ -46,8 +45,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
-            SubscribeLocalEvent<GasTankComponent, GotEquippedEvent>(OnGasTankEquip);
-            SubscribeLocalEvent<GasTankComponent, GotEquippedHandEvent>(OnGasTankEquipHand);
             SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
 
             SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
@@ -64,7 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.Session is not IPlayerSession playerSession ||
                 playerSession.AttachedEntity is not {} player) return;
 
-            ToggleInternals(player, component);
+            ToggleInternals(component);
         }
 
         private void OnGasTankSetPressure(EntityUid uid, GasTankComponent component, GasTankSetPressureMessage args)
@@ -85,16 +82,6 @@ namespace Content.Server.Atmos.EntitySystems
                 });
         }
 
-        private void OnGasTankEquipHand(EntityUid uid, GasTankComponent component, GotEquippedHandEvent args)
-        {
-            _alerts.ShowAlert(args.User, AlertType.Internals, GetSeverity(component));
-        }
-
-        private void OnGasTankEquip(EntityUid uid, GasTankComponent component, GotEquippedEvent args)
-        {
-            _alerts.ShowAlert(args.Equipee, AlertType.Internals, GetSeverity(component));
-        }
-
         private void BeforeUiOpen(EntityUid uid, GasTankComponent component, BeforeActivatableUIOpenEvent args)
         {
             // Only initial update includes output pressure information, to avoid overwriting client-input as the updates come in.
@@ -104,9 +91,6 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
         {
             DisconnectFromInternals(component, args.User);
-
-            if (CanRemoveAlert(args.User))
-                _alerts.ClearAlertCategory(args.User, AlertCategory.Internals);
         }
 
         private bool CanRemoveAlert(EntityUid user)
@@ -140,7 +124,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.Handled)
                 return;
 
-            ToggleInternals(args.Performer, component);
+            ToggleInternals(component);
             args.Handled = true;
         }
 
@@ -164,7 +148,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void ToggleInternals(EntityUid user, GasTankComponent component)
+        private void ToggleInternals(GasTankComponent component)
         {
             if (component.IsConnected)
             {
@@ -174,8 +158,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 ConnectToInternals(component);
             }
-
-            _alerts.ShowAlert(user, AlertType.Internals, GetSeverity(component));
         }
 
         private short GetSeverity(GasTankComponent component)
@@ -215,9 +197,14 @@ namespace Content.Server.Atmos.EntitySystems
             return air;
         }
 
+        public bool CanConnectToInternals(GasTankComponent component)
+        {
+            return !component.IsConnected && IsFunctional(component);
+        }
+
         public void ConnectToInternals(GasTankComponent component)
         {
-            if (component.IsConnected || !IsFunctional(component)) return;
+            if (!CanConnectToInternals(component)) return;
             var internals = GetInternalsComponent(component);
             if (internals == null) return;
             component.IsConnected = _internals.TryConnectTank(internals, component.Owner);
@@ -226,10 +213,10 @@ namespace Content.Server.Atmos.EntitySystems
             // Couldn't toggle!
             if (!component.IsConnected) return;
 
-            component._connectStream?.Stop();
+            component.ConnectStream?.Stop();
 
-            if (component._connectSound != null)
-                component._connectStream = SoundSystem.Play(component._connectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component._connectSound.Params);
+            if (component.ConnectSound != null)
+                component.ConnectStream = SoundSystem.Play(component.ConnectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.ConnectSound.Params);
 
             UpdateUserInterface(component);
         }
@@ -241,10 +228,10 @@ namespace Content.Server.Atmos.EntitySystems
             _actions.SetToggled(component.ToggleAction, false);
 
             _internals.DisconnectTank(GetInternalsComponent(component, owner));
-            component._disconnectStream?.Stop();
+            component.DisconnectStream?.Stop();
 
-            if (component._disconnectSound != null)
-                component._disconnectStream = SoundSystem.Play(component._disconnectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component._disconnectSound.Params);
+            if (component.DisconnectSound != null)
+                component.DisconnectStream = SoundSystem.Play(component.DisconnectSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, component.DisconnectSound.Params);
 
             UpdateUserInterface(component);
         }
@@ -296,25 +283,25 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (pressure > component.TankRupturePressure)
             {
-                if (component._integrity <= 0)
+                if (component.Integrity <= 0)
                 {
                     var environment = _atmosphereSystem.GetContainingMixture(component.Owner, false, true);
                     if(environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
-                    SoundSystem.Play(component._ruptureSound.GetSound(), Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(component.RuptureSound.GetSound(), Filter.Pvs(component.Owner), Transform(component.Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     QueueDel(component.Owner);
                     return;
                 }
 
-                component._integrity--;
+                component.Integrity--;
                 return;
             }
 
             if (pressure > component.TankLeakPressure)
             {
-                if (component._integrity <= 0)
+                if (component.Integrity <= 0)
                 {
                     var environment = _atmosphereSystem.GetContainingMixture(component.Owner, false, true);
                     if (environment == null)
@@ -325,14 +312,14 @@ namespace Content.Server.Atmos.EntitySystems
                 }
                 else
                 {
-                    component._integrity--;
+                    component.Integrity--;
                 }
 
                 return;
             }
 
-            if (component._integrity < 3)
-                component._integrity++;
+            if (component.Integrity < 3)
+                component.Integrity++;
         }
 
         private bool IsFunctional(GasTankComponent component)
