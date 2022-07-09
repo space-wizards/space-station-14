@@ -4,16 +4,13 @@ using Content.Server.Body.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Actions;
-using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
 using Content.Shared.Examine;
-using Content.Shared.Hands;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -29,7 +26,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
         [Dependency] private readonly InternalsSystem _internals = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -93,19 +89,6 @@ namespace Content.Server.Atmos.EntitySystems
             DisconnectFromInternals(component, args.User);
         }
 
-        private bool CanRemoveAlert(EntityUid user)
-        {
-            _inventory.TryGetContainerSlotEnumerator(user, out var enumerator);
-
-            while (enumerator.MoveNext(out var container))
-            {
-                if (!HasComp<GasTankComponent>(container.ContainedEntity)) continue;
-                return false;
-            }
-
-            return true;
-        }
-
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
@@ -158,12 +141,6 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 ConnectToInternals(component);
             }
-        }
-
-        private short GetSeverity(GasTankComponent component)
-        {
-            if (!component.IsConnected) return 2;
-            return component.Air.TotalMoles > 0f ? (short) 1 : (short) 0;
         }
 
         public GasMixture? RemoveAir(GasTankComponent component, float amount)

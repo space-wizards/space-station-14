@@ -1,7 +1,6 @@
 ﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
