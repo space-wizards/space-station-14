@@ -32,6 +32,7 @@
         Pulled,
         Pulling,
         Magboots,
+        Internals,
         Toxins,
         Muted,
         VowOfSilence,

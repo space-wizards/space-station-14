@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;
@@ -12,8 +11,8 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
 
     public override void Initialize()

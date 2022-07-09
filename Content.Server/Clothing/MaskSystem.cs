@@ -6,6 +6,7 @@ using Content.Shared.Item;
 using Content.Server.Actions;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Clothing.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Nutrition.EntitySystems;
@@ -16,9 +17,11 @@ namespace Content.Server.Clothing
 {
     public sealed class MaskSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ActionsSystem _actionSystem = default!;
+        [Dependency] private readonly InternalsSystem _internals = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -98,7 +101,7 @@ namespace Content.Server.Clothing
                 if (TryComp(wearer, out InternalsComponent? internals))
                 {
                     breathTool.ConnectedInternalsEntity = wearer;
-                    internals.ConnectBreathTool(uid);
+                    _internals.ConnectBreathTool(internals, uid);
                 }
             }
         }

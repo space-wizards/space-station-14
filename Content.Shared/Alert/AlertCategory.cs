@@ -10,6 +10,7 @@ public enum AlertCategory
     Breathing,
     Buckled,
     Health,
+    Internals,
     Stamina,
     Piloting,
     Hunger,
