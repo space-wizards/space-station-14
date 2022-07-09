@@ -1,16 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: 'Medbay now has their own techfab, pending mapping.', type: Add}
-  - {message: 'Printing latex and nitrile gloves, sterile masks, mouth swabs, and
-      health analyzers now requires a Medical Techfab and Biological Technology unlocked.',
-    type: Tweak}
-  - {message: Beds now give back the cloth/durathread too when you deconstruct them.,
-    type: Fix}
-  id: 1400
-  time: '2022-04-24T02:27:13.0000000+00:00'
-- author: Rane
-  changes:
   - {message: 'The chaplain''s familiars can be resummoned now after they die. 3 minutes
       for Remilia, 5 minutes for Cerberus.', type: Add}
   id: 1401
@@ -2958,3 +2948,8 @@ Entries:
     type: Tweak}
   id: 1899
   time: '2022-07-09T02:43:27.0000000+00:00'
+- author: LilJard
+  changes:
+  - {message: Added new sprite for fireaxe, type: Add}
+  id: 1900
+  time: '2022-07-09T03:03:21.0000000+00:00'
