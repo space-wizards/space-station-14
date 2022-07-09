@@ -57,10 +57,12 @@
       "name": "nothing"
     },
 	{
-      "name": "wand-inhand-left"
+      "name": "wand-inhand-left",
+	  "directions": 4
     },
     {
-      "name": "wand-inhand-right"
+      "name": "wand-inhand-right",
+	  "directions": 4
     }
   ]
 }
