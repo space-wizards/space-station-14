@@ -127,9 +127,6 @@
   - type: Sprite
     layers:
       - state: grey
-      - state: can-connector
-        visible: false
-        map: [ "connectedToPort" ]
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -258,9 +255,6 @@
     - type: Sprite
       layers:
         - state: orange
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
