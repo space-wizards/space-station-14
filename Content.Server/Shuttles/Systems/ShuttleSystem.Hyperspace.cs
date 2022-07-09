@@ -251,7 +251,8 @@ public sealed partial class ShuttleSystem
     private bool TryHyperspaceDock(ShuttleComponent component, EntityUid targetUid)
     {
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
-            !TryComp<TransformComponent>(targetUid, out var targetXform)) return false;
+            !TryComp<TransformComponent>(targetUid, out var targetXform) ||
+            targetXform.MapUid == null) return false;
 
         var config = GetDockingConfig(component, targetUid);
 
@@ -291,7 +292,7 @@ public sealed partial class ShuttleSystem
             shuttleBody.AngularVelocity = 0f;
         }
 
-        xform.WorldPosition = spawnPos;
+        xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
         xform.WorldRotation = _random.NextAngle();
         return false;
     }
