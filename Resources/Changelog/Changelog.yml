@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
-    type: Fix}
-  id: 1414
-  time: '2022-04-28T11:56:21.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Adds the rainbow crayon. Honk!, type: Add}
@@ -2950,3 +2944,10 @@ Entries:
       tile., type: Fix}
   id: 1913
   time: '2022-07-09T09:59:39.0000000+00:00'
+- author: Rinkashikachi
+  changes:
+  - {message: added item name to order manifest, type: Add}
+  - {message: added approvers full name and job title to order manifest, type: Add}
+  - {message: added order manifest to shuttle orders, type: Add}
+  id: 1914
+  time: '2022-07-09T13:48:57.0000000+00:00'
