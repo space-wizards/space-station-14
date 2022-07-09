@@ -64,14 +64,12 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
             return;
         }
 
-        var next = component.LastRechargeTime + TimeSpan.FromSeconds(component.NextRechargeTime);
-        var secsLeft = (next - _gameTiming.CurTime).TotalSeconds;
-        args.PushMarkup(Loc.GetString("recharge-basic-entity-ammo-can-recharge", ("seconds", Math.Round(secsLeft))));
+        var timeLeft = component.NextRechargeTime - component.AccumulatedFrameTime;
+        args.PushMarkup(Loc.GetString("recharge-basic-entity-ammo-can-recharge", ("seconds", Math.Round(timeLeft, 1))));
     }
 
     private void UpdateCooldown(RechargeBasicEntityAmmoComponent component)
     {
-        component.LastRechargeTime = _gameTiming.CurTime;
         component.NextRechargeTime = _random.NextFloat(component.MinRechargeCooldown, component.MaxRechargeCooldown);
     }
 }

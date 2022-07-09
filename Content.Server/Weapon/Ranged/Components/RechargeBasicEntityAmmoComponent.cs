@@ -25,10 +25,6 @@ public sealed class RechargeBasicEntityAmmoComponent : Component
 
     [DataField("accumulatedFrametime")]
     public float AccumulatedFrameTime;
-
-    [ViewVariables]
-    public TimeSpan LastRechargeTime;
-
     /// <summary>
     ///     Number of seconds until the next recharge.
     /// </summary>
