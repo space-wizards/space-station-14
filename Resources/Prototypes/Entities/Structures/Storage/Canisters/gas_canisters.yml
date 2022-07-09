@@ -14,20 +14,22 @@
       layers:
         - state: grey
     - type: Appearance
-      visuals:
-        - type: GasCanisterVisualizer
-          insertedTankState: can-open
-          pressureStates:
-            - can-o0
-            - can-o1
-            - can-o2
-            - can-o3
     - type: GenericVisualizer
       visuals:
         enum.GasPortableVisuals.ConnectedState:
           connectedToPort:
             False: { state: can-connector, visible: false }
             True: { state: can-connector, visible: true }
+        enum.GasCanisterVisuals.TankInserted:
+          tankInserted:
+            False: { state: can-open, visible: false }
+            True: { state: can-open, visible: true }
+        enum.GasCanisterVisuals.PressureState:
+          pressureLight:
+            0: { state: can-o0, shader: "unshaded" }
+            1: { state: can-o1, shader: "unshaded" }
+            2: { state: can-o2, shader: "unshaded" }
+            3: { state: can-o3, shader: "unshaded" }
     - type: UserInterface
       interfaces:
         - key: enum.GasCanisterUiKey.Key
