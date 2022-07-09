@@ -27,12 +27,13 @@ namespace Content.Server.PneumaticCannon
     public sealed class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly GasTankSystem _gasTank = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly StunSystem _stun = default!;
+        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
@@ -253,7 +254,7 @@ namespace Content.Server.PneumaticCannon
                 // we checked for this earlier in HasGas so a GetComp is okay
                 var gas = EntityManager.GetComponent<GasTankComponent>(contained);
                 var environment = _atmos.GetContainingMixture(comp.Owner, false, true);
-                var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
+                var removed = _gasTank.RemoveAir(gas, GetMoleUsageFromPower(comp.Power));
                 if (environment != null && removed != null)
                 {
                     _atmos.Merge(environment, removed);

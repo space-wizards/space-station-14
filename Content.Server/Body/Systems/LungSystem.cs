@@ -25,7 +25,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
     {
-        component.DisconnectInternals();
+        _atmosphereSystem.DisconnectInternals(component);
     }
 
     private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)

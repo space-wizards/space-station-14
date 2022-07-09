@@ -7,6 +7,7 @@ namespace Content.Server.Body.Systems;
 
 public sealed class InternalsSystem : EntitySystem
 {
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
 
     public override void Initialize()
@@ -31,7 +32,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (TryComp(old, out BreathToolComponent? breathTool) )
         {
-            breathTool.DisconnectInternals();
+            _atmos.DisconnectInternals(breathTool);
             DisconnectTank(component);
         }
     }
@@ -40,7 +41,7 @@ public sealed class InternalsSystem : EntitySystem
     {
         if (TryComp(component.BreathToolEntity, out BreathToolComponent? tool))
         {
-            tool.DisconnectInternals();
+            _atmos.DisconnectInternals(tool);
         }
 
         component.BreathToolEntity = toolEntity;
