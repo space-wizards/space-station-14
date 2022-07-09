@@ -9,8 +9,6 @@
     - state: fire
     - state: fire-effect
       map: ["effect"]
-  - type: Item
-    state: fire
   - type: Gun
     fireRate: 0.25
     soundGunshot:
@@ -30,8 +28,6 @@
     - state: poly
     - state: poly-effect
       map: ["effect"]
-  - type: Item
-    state: poly
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
@@ -51,8 +47,6 @@
     - state: death
     - state: death-effect
       map: ["effect"]
-  - type: Item
-    state: death
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
@@ -71,7 +65,7 @@
     layers:
     - state: healing
   - type: Item
-    state: healing
+    HeldPrefix: healing
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
@@ -88,7 +82,7 @@
     layers:
     - state: door
   - type: Item
-    state: door
+    HeldPrefix: door
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg

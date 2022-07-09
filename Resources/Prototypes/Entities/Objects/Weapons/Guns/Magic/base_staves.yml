@@ -4,9 +4,10 @@
   parent: BaseItem
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/magic.rsi
+    sprite: Objects/Weapons/Guns/Magic/staves.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/magic.rsi
+    sprite: Objects/Weapons/Guns/Magic/staves.rsi
+    HeldPrefix: staff
     size: 60
   - type: Gun
     fireRate: 0.5
