@@ -1,0 +1,6 @@
+<DefaultWindow xmlns="https://spacestation14.io">
+    <!-- Record display -->
+    <BoxContainer></BoxContainer>
+    <!-- Record listing -->
+    <BoxContainer></BoxContainer>
+</DefaultWindow>
