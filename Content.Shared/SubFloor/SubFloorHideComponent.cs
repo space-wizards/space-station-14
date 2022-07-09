@@ -1,4 +1,6 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.SubFloor
 {
@@ -42,6 +44,13 @@ namespace Content.Shared.SubFloor
         /// </summary>
         [DataField("scannerTransparency")]
         public float ScannerTransparency = 0.8f;
+
+        /// <summary>
+        ///     Sprite layer keys for the layers that are always visible, even if the entity is below a floor tile. E.g.,
+        ///     the vent part of a vent is always visible, even though the piping is hidden.
+        /// </summary>
+        [DataField("visibleLayers", customTypeSerializer:typeof(CustomHashSetSerializer<object, AppearanceKeySerializer>))]
+        public HashSet<object> VisibleLayers = new() { SubfloorLayers.FirstLayer };
 
         /// <summary>
         ///     The entities this subfloor is revealed by.

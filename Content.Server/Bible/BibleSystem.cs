@@ -12,6 +12,7 @@ using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -78,7 +79,8 @@ namespace Content.Server.Bible
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner, Filter.Pvs(summonableComp.Owner));
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", summonableComp.Owner)), summonableComp.Owner,
+                    Filter.Pvs(summonableComp.Owner), PopupType.Medium);
                 SoundSystem.Play("/Audio/Effects/radpulse9.ogg", Filter.Pvs(summonableComp.Owner), summonableComp.Owner, AudioParams.Default.WithVolume(-4f));
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
@@ -123,10 +125,10 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                     var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-                    _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                    _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.PvsExcept(args.User), PopupType.SmallCaution);
 
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
-                    _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User), PopupType.MediumCaution);
 
                     SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);
@@ -135,10 +137,10 @@ namespace Content.Server.Bible
             }
 
             var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(othersMessage, args.User, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+            _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), PopupType.Medium);
 
             var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", args.Target),("bible", uid));
-            _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User), PopupType.Large);
 
             SoundSystem.Play(component.HealSoundPath.GetSound(), Filter.Pvs(args.Target.Value), args.User);
             _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true);
@@ -226,7 +228,7 @@ namespace Content.Server.Bible
             // If this is going to use a ghost role mob spawner, attach it to the bible.
             if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user));
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user), PopupType.Medium);
                 Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;

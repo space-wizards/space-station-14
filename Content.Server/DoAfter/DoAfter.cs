@@ -173,7 +173,7 @@ namespace Content.Server.DoAfter
                     //recalculate Target location in case Target has also moved
                     var targetCoordinates = xformQuery.GetComponent(EventArgs.Target.Value).Coordinates;
                     userXform ??= xformQuery.GetComponent(EventArgs.User);
-                    if (userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
+                    if (!userXform.Coordinates.InRange(entityManager, targetCoordinates, EventArgs.DistanceThreshold.Value))
                         return true;
                 }
 
