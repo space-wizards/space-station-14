@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'The chaplain''s familiars can be resummoned now after they die. 3 minutes
-      for Remilia, 5 minutes for Cerberus.', type: Add}
-  id: 1401
-  time: '2022-04-24T02:27:19.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Splitstation fixes and QoL improvements. See Github PR for details.,
@@ -2953,3 +2947,9 @@ Entries:
   - {message: Added new sprite for fireaxe, type: Add}
   id: 1900
   time: '2022-07-09T03:03:21.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: machine pistol magazine (.35 auto high-velocity) now comes with corresponding
+      stronger cartridges instead of regular ones, type: Fix}
+  id: 1901
+  time: '2022-07-09T03:42:40.0000000+00:00'
