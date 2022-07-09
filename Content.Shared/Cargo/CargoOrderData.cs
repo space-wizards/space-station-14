@@ -25,7 +25,7 @@ namespace Content.Shared.Cargo
             Reason = reason;
         }
 
-        public void setApproverData(IdCardComponent? idCard)
+        public void SetApproverData(IdCardComponent? idCard)
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrWhiteSpace(idCard?.FullName))
