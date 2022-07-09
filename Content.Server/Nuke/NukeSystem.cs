@@ -385,7 +385,7 @@ namespace Content.Server.Nuke
             // Don't double-dip on the octave shifting
             component.LastPlayedKeypadSemitones = number == 0 ? component.LastPlayedKeypadSemitones : semitoneShift;
 
-            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid),
+            SoundSystem.Play(component.KeypadPressSound.GetSound(), Filter.Pvs(uid), uid,
                 AudioHelpers.ShiftSemitone(semitoneShift).WithVolume(-5f));
         }
 
@@ -418,7 +418,7 @@ namespace Content.Server.Nuke
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
             {
-                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, false, true, true, true);
+                _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
             }
 
             // warn a crew

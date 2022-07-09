@@ -1,9 +1,11 @@
 using Content.Shared.Actions;
+using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
@@ -11,6 +13,8 @@ namespace Content.Shared.Movement.Systems;
 public abstract class SharedJetpackSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] protected readonly IMapManager MapManager = default!;
+    [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
 
     public override void Initialize()
     {
@@ -20,6 +24,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, MobMovementProfileEvent>(OnJetpackUserMovement);
+        SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
+        SubscribeLocalEvent<GravityChangedMessage>(OnJetpackUserGravityChanged);
     }
 
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
@@ -41,6 +47,21 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
+    }
+
+    private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
+    {
+        MovementSpeedModifier.RefreshMovementSpeedModifiers(component.Owner);
+    }
+
+    private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
+    {
+        var gridUid = ev.ChangedGridIndex;
+        foreach (var (_, transform) in EntityQuery<JetpackUserComponent, TransformComponent>(true))
+        {
+            if(transform.GridUid == gridUid)
+                MovementSpeedModifier.RefreshMovementSpeedModifiers(transform.Owner);
+        }
     }
 
     private void SetupUser(EntityUid uid, JetpackComponent component)
@@ -101,11 +122,20 @@ public abstract class SharedJetpackSystem : EntitySystem
             {
                 RemComp<JetpackUserComponent>(user.Value);
             }
+
+            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
         appearance?.SetData(JetpackVisuals.Enabled, enabled);
         Dirty(component);
+    }
+
+    public bool IsUserFlying(EntityUid uid)
+    {
+        return HasComp<JetpackUserComponent>(uid) &&
+               TryComp<PhysicsComponent>(uid, out var physicsComponent) &&
+               uid.IsWeightless(physicsComponent, mapManager: MapManager, entityManager: EntityManager);
     }
 
     protected abstract bool CanEnable(JetpackComponent component);

@@ -142,8 +142,6 @@ namespace Content.Client.Entry
 
             _overlayManager.AddOverlay(new ParallaxOverlay());
             _overlayManager.AddOverlay(new SingularityOverlay());
-            _overlayManager.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
-            _overlayManager.AddOverlay(new CircleMaskOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
 

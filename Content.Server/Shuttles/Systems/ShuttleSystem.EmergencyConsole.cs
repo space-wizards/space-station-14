@@ -277,8 +277,8 @@ public sealed partial class ShuttleSystem
     public bool DelayEmergencyRoundEnd()
     {
         if (_roundEndCancelToken == null) return false;
-        _roundEndCancelToken = null;
         _roundEndCancelToken?.Cancel();
+        _roundEndCancelToken = null;
         return true;
     }
 }

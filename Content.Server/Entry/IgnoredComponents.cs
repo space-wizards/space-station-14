@@ -34,6 +34,7 @@ namespace Content.Server.Entry
             "KudzuVisuals",
             "AMEControllerVisuals",
             "AMEShieldingVisuals",
+            "PipeColorVisuals",
         };
     }
 }

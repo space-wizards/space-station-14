@@ -135,7 +135,7 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
-                if (_storageSystem.CanInsert(component.Owner, args.Used, storage))
+                if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
                 {
                     _storageSystem.Insert(component.Owner, args.Used, storage);
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",

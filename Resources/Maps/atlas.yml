@@ -13196,9 +13196,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 700
-  type: WeaponRifleLecter
+  type: WeaponDisabler
   components:
-  - pos: 8.568229,17.50768
+  - pos: 14.379679,19.704338
     parent: 30
     type: Transform
   - canCollide: False
@@ -16825,13 +16825,11 @@ entities:
   - enabled: False
     type: AmbientSound
 - uid: 1186
-  type: MagazinePistolRubber
+  type: WeaponSubMachineGunVector
   components:
-  - pos: 7.2088537,15.726431
+  - pos: 8.551415,17.517046
     parent: 30
     type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 1187
@@ -16954,23 +16952,19 @@ entities:
     parent: 30
     type: Transform
 - uid: 1204
-  type: MagazineRifleRubber
+  type: WeaponSubMachineGunVector
   components:
-  - pos: 8.302604,17.679556
+  - pos: 8.488915,17.595171
     parent: 30
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 1205
-  type: MagazineRifleHighVelocity
+  type: WeaponDisabler
   components:
-  - pos: 8.568229,17.679556
+  - pos: 14.489054,19.641838
     parent: 30
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 1206
@@ -16984,19 +16978,23 @@ entities:
       toggleable-clothing: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 1207
-  type: WeaponTaser
+  type: MagazineMagnumSubMachineGun
   components:
-  - pos: 14.380346,19.601915
+  - pos: 8.25454,17.642046
     parent: 30
     type: Transform
+  - unspawnedCount: 25
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 1208
-  type: WeaponTaser
+  type: MagazineMagnumSubMachineGun
   components:
-  - pos: 14.411596,19.71129
+  - pos: 8.41079,17.642046
     parent: 30
     type: Transform
+  - unspawnedCount: 25
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 1209
@@ -49183,6 +49181,16 @@ entities:
     pos: -15.5,-14.5
     parent: 30
     type: Transform
+- uid: 5430
+  type: MagazineMagnumSubMachineGun
+  components:
+  - pos: 8.56704,17.642046
+    parent: 30
+    type: Transform
+  - unspawnedCount: 25
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 5470
   type: Catwalk
   components:
