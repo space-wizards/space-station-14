@@ -1,3 +1,3 @@
-ent-AtmosDeviceFanTiny = tiny fan
-    .desc = A tiny fan, releasing a thin gust of air.
+ent-AtmosDeviceFanTiny = маленький вентилятор
+    .desc = Маленький вентилятор, создающий легкий поток воздуха.
     .suffix = { "" }

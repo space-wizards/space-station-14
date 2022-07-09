@@ -10,4 +10,4 @@ disease-eaten-inside = Вы чувствуете, как будто вас по�
 disease-banana-compulsion = Вам хочется съесть несколько бананов.
 disease-beat-chest-compulsion = { CAPITALIZE($person) } бьёт { $person } в грудь.
 disease-vomit = { CAPITALIZE($person) } тошнит.
-disease-think = You feel like you can't think straight.
+disease-think = Вы чувствуете, как переплетаются ваши мысли.

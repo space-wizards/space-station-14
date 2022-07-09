@@ -118,6 +118,6 @@ ent-PsychologistIDCard = ID карта психолога
 ent-ReporterIDCard = ID карта репортёра
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }
-ent-DetectiveIDCard = detective ID card
+ent-DetectiveIDCard = ID карта детектива
     .desc = { ent-IDCardStandard.desc }
     .suffix = { "" }

@@ -2,7 +2,7 @@ gun-selected-mode-examine = Выбран режим огня [color={ $color }]{
 gun-fire-rate-examine = Скорострельность [color={ $color }]{ $fireRate }[/color] в секунду.
 gun-selector-verb = Изменить на { $mode }
 gun-selected-mode = Выбран { $mode }
-gun-disabled = You can't use guns!
+gun-disabled = Вы не можете использовать оружие!
 # SelectiveFire
 gun-SemiAuto = полуавто
 gun-Burst = очередь

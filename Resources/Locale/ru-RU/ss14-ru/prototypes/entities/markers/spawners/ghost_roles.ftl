@@ -1,3 +1,3 @@
-ent-SpawnPointGhostRatKing = ghost role spawn point
-    .suffix = rat king
+ent-SpawnPointGhostRatKing = точка спавна роли призрака
+    .suffix = крысиный король
     .desc = { ent-MarkerBase.desc }

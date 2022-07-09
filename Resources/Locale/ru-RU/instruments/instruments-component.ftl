@@ -9,4 +9,4 @@ instruments-component-menu-no-midi-support =
     FluidSynth или пакет разработки
     для FluidSynth.
 # SwappableInstrumentComponent
-swappable-instrument-component-style-set = Style set to "{ $style }"
+swappable-instrument-component-style-set = Установить стиль на "{ $style }"

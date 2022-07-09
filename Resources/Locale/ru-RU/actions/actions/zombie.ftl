@@ -1,2 +1,2 @@
-turn-undead-action-name = Turn Undead
-turn-undead-action-description = Succumb to your infection and become a zombie.
+turn-undead-action-name = Обратиться в зомби
+turn-undead-action-description = Поддайтесь заражению и превратитесь в зомби.

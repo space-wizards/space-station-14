@@ -1,7 +1,7 @@
-action-name-blocking = Block
-action-description-blocking = Raise or lower your shield.
-action-popup-blocking-user = You raise your { $shield }!
-action-popup-blocking-disabling-user = You lower your { $shield }!
-action-popup-blocking-other = { $blockerName } raises their { $shield }!
-action-popup-blocking-disabling-other = { $blockerName } lowers their { $shield }!
-action-popup-blocking-user-cant-block = The gravity here prevents you from blocking.
+action-name-blocking = Блокирование
+action-description-blocking = Поднимите или опустите свой щит.
+action-popup-blocking-user = Вы поднимаете свой { $shield }!
+action-popup-blocking-disabling-user = Вы опускаете свой { $shield }!
+action-popup-blocking-other = { $blockerName } поднимает свой { $shield }!
+action-popup-blocking-disabling-other = { $blockerName } опускает свой { $shield }!
+action-popup-blocking-user-cant-block = Гравитация здесь не позволяет вам блокировать.
