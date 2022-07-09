@@ -247,8 +247,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 500 # a ~7 tile radius. This is pretty big.
-    maxIntensity: 10 # caps at 150 damage
+    totalIntensity: 150 # a ~2 tile radius
+    intensitySlope: 5
+    maxIntensity: 10
 
 - type: entity
   id: BulletGrenadeFlash
@@ -277,7 +278,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 64 # about a ~4 tile radius
+    totalIntensity: 175 # about a ~6 tile radius
+    intensitySlope: 1
+    maxIntensity: 10
 
 - type: entity
   id: BulletFoam
