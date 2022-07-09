@@ -40,13 +40,17 @@ public sealed class ArtifactSystem : EntitySystem
         }
 
         EntityManager.AddComponent(uid, trigger);
-        RaiseLocalEvent(uid, new RandomizeTriggerEvent());
+        RaiseLocalEvent(uid, new RandomizeTriggerEvent(), true);
     }
 
     public bool TryActivateArtifact(EntityUid uid, EntityUid? user = null,
         ArtifactComponent? component = null)
     {
         if (!Resolve(uid, ref component))
+            return false;
+
+        // check if artifact is under suppression field
+        if (component.IsSuppressed)
             return false;
 
         // check if artifact isn't under cooldown
@@ -70,6 +74,6 @@ public sealed class ArtifactSystem : EntitySystem
         {
             Activator = user
         };
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ev, true);
     }
 }

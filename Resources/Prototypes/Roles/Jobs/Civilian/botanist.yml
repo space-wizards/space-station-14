@@ -1,12 +1,12 @@
 - type: job
   id: Botanist
-  name: "botanist"
+  name: job-name-botanist
   startingGear: BotanistGear
   departments:
   - Civilian
   icon: "Botanist"
-  supervisors: "the head of personnel"
-  accessGroups:
+  supervisors: job-supervisors-hop
+  access:
     - AllAccess
 
 - type: startingGear

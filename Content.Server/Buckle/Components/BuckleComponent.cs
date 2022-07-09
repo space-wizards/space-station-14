@@ -2,10 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Vehicle.Components;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
@@ -210,7 +212,7 @@ namespace Content.Server.Buckle.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), strap.BuckleSound.GetSound(), Owner);
+            SoundSystem.Play(strap.BuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -232,8 +234,9 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
-            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner };
-            _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            var ev = new BuckleChangeEvent() { Buckling = true, Strap = BuckledTo.Owner, BuckledEntity = Owner };
+            _entMan.EventBus.RaiseLocalEvent(ev.BuckledEntity, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(ev.Strap, ev, false);
 
             if (_entMan.TryGetComponent(Owner, out SharedPullableComponent? ownerPullable))
             {
@@ -287,6 +290,10 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
+                // If the strap is a vehicle and the rider is not the person unbuckling, return.
+                if (_entMan.TryGetComponent<VehicleComponent>(oldBuckledTo.Owner, out var vehicle) &&
+                        vehicle.Rider != user)
+                    return false;
             }
 
             BuckledTo = null;
@@ -308,7 +315,7 @@ namespace Content.Server.Buckle.Components
                 appearance.SetData(BuckleVisuals.Buckled, false);
 
             if (_entMan.HasComponent<KnockedDownComponent>(Owner)
-                | _entMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated())
+                | (_entMan.TryGetComponent<MobStateComponent>(Owner, out var mobState) && mobState.IsIncapacitated()))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
@@ -317,15 +324,17 @@ namespace Content.Server.Buckle.Components
                 EntitySystem.Get<StandingStateSystem>().Stand(Owner);
             }
 
-            mobState?.CurrentState?.EnterState(Owner, _entMan);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
+                .EnterState(mobState, mobState?.CurrentState);
 
             UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
+            SoundSystem.Play(oldBuckledTo.UnbuckleSound.GetSound(), Filter.Pvs(Owner), Owner);
 
-            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner };
+            var ev = new BuckleChangeEvent() { Buckling = false, Strap = oldBuckledTo.Owner, BuckledEntity = Owner };
             _entMan.EventBus.RaiseLocalEvent(Owner, ev, false);
+            _entMan.EventBus.RaiseLocalEvent(oldBuckledTo.Owner, ev, false);
 
             return true;
         }

@@ -15,13 +15,10 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 15
       layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Inflatable
@@ -59,14 +56,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 15
       layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Door
+    occludes: false
     openSound:
       path: /Audio/Misc/zip.ogg
     closeSound:

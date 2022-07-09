@@ -25,6 +25,7 @@
   - dumpentities
   - getcomponentregistration
   - fuck
+  - ">"
 
 - Flags: VAREDIT
   Commands:
@@ -67,6 +68,7 @@
   - showpos
   - showray
   - showchunkbb
+  - showgridnodes
   - entfo
   - sggcell
   - ldrsc

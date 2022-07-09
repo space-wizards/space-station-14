@@ -1,0 +1,18 @@
+﻿<ui:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:ui="clr-namespace:Content.Client.UserInterface"
+                Title="Network Configurator" MinSize="220 400">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <Control VerticalExpand="True">
+                <PanelContainer StyleClasses="PanelBackgroundBaseDark"></PanelContainer>
+                <BoxContainer Orientation="Vertical" Name="DeviceList" VerticalExpand="True" SeparationOverride="4">
+                </BoxContainer>
+            </Control>
+        </ScrollContainer>
+        <BoxContainer Orientation="Horizontal" Margin="8 8 8 8">
+            <Label Name="DeviceCountLabel" Margin="16 0 0 0" MaxWidth="64"></Label>
+            <Control HorizontalExpand="True" />
+            <Button Name="ClearButton" Access="Public" Text="{Loc 'network-configurator-ui-clear-button'}"></Button>
+        </BoxContainer>
+    </BoxContainer>
+</ui:FancyWindow>

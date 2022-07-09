@@ -1,14 +1,18 @@
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Light.Component
 {
     [NetworkedComponent]
     public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
     {
-        [DataField("toggleAction", required: true)]
-        public InstantAction ToggleAction = new();
+        [DataField("toggleActionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+        public string ToggleActionId = "ToggleLight";
+
+        [DataField("toggleAction")]
+        public InstantAction? ToggleAction;
 
         public const int StatusLevels = 6;
 

@@ -1,12 +1,12 @@
 
 
 - type: latheRecipe
-  id: ClothingUniformJumpsuitColorGrey #Assistant
+  id: ClothingUniformJumpsuitColorGrey # Tide
   icon:
     sprite: Clothing/Uniforms/Jumpsuit/Color/grey.rsi
     state: icon
   result: ClothingUniformJumpsuitColorGrey
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -16,7 +16,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/Color/grey.rsi
     state: icon
   result: ClothingUniformJumpskirtColorGrey
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -26,7 +26,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/bartender.rsi
     state: icon
   result: ClothingUniformJumpsuitBartender
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -36,7 +36,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/bartender.rsi
     state: icon
   result: ClothingUniformJumpskirtBartender
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -46,7 +46,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
     state: icon
   result: ClothingUniformJumpsuitCaptain
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -57,7 +57,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/captain.rsi
     state: icon
   result: ClothingUniformJumpskirtCaptain
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -68,7 +68,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/cargotech.rsi
     state: icon
   result: ClothingUniformJumpsuitCargo
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -78,7 +78,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/cargotech.rsi
     state: icon
   result: ClothingUniformJumpskirtCargo
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -88,7 +88,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
     state: icon
   result: ClothingUniformJumpsuitSalvageSpecialist
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 500 #It's armored but I don't want to include durathread for a non-head
 
@@ -98,7 +98,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ce.rsi
     state: icon
   result: ClothingUniformJumpsuitChiefEngineer
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -109,7 +109,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
     state: icon
   result: ClothingUniformJumpskirtChiefEngineer
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -120,7 +120,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
     state: icon
   result: ClothingUniformJumpsuitChaplain
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -130,7 +130,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
     state: icon
   result: ClothingUniformJumpskirtChaplain
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -140,7 +140,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/chef.rsi
     state: icon
   result: ClothingUniformJumpsuitChef
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -150,7 +150,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/chef.rsi
     state: icon
   result: ClothingUniformJumpskirtChef
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -160,7 +160,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/chemistry.rsi
     state: icon
   result: ClothingUniformJumpsuitChemistry
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -170,7 +170,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/chemistry.rsi
     state: icon
   result: ClothingUniformJumpskirtChemistry
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -180,7 +180,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
     state: icon
   result: ClothingUniformJumpsuitClown
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -190,7 +190,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/cmo.rsi
     state: icon
   result: ClothingUniformJumpsuitCMO
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -201,7 +201,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
     state: icon
   result: ClothingUniformJumpskirtCMO
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -212,7 +212,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
     state: icon
   result: ClothingUniformJumpsuitDetective
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -222,7 +222,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
     state: icon
   result: ClothingUniformJumpskirtDetective
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -232,7 +232,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
     state: icon
   result: ClothingUniformJumpsuitEngineering
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -242,7 +242,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/engineering.rsi
     state: icon
   result: ClothingUniformJumpskirtEngineering
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -252,7 +252,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
     state: icon
   result: ClothingUniformJumpsuitHoP
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -263,7 +263,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
     state: icon
   result: ClothingUniformJumpskirtHoP
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -274,7 +274,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
     state: icon
   result: ClothingUniformJumpsuitHoS
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -285,7 +285,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
     state: icon
   result: ClothingUniformJumpskirtHoS
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -296,7 +296,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hydro.rsi
     state: icon
   result: ClothingUniformJumpsuitHydroponics
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -306,7 +306,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/hydro.rsi
     state: icon
   result: ClothingUniformJumpskirtHydroponics
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -316,7 +316,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/janitor.rsi
     state: icon
   result: ClothingUniformJumpsuitJanitor
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -326,7 +326,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/janitor.rsi
     state: icon
   result: ClothingUniformJumpskirtJanitor
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -336,7 +336,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerblack.rsi
     state: icon
   result: ClothingUniformJumpsuitLawyerBlack
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -346,7 +346,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
     state: icon
   result: ClothingUniformJumpsuitLibrarian
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -356,7 +356,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/Color/lightbrown.rsi
     state: icon
   result: ClothingUniformJumpskirtColorLightBrown
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -366,7 +366,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/medical.rsi
     state: icon
   result: ClothingUniformJumpsuitMedicalDoctor
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -376,7 +376,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/medical.rsi
     state: icon
   result: ClothingUniformJumpskirtMedicalDoctor
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -386,7 +386,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
     state: icon
   result: ClothingUniformJumpsuitMime
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -396,7 +396,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
     state: icon
   result: ClothingUniformJumpskirtMime
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -406,7 +406,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/lawyerpurple.rsi
     state: icon
   result: ClothingUniformJumpsuitLawyerPurple
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -416,7 +416,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
     state: icon
   result: ClothingUniformJumpsuitParamedic
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -426,7 +426,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
     state: icon
   result: ClothingUniformJumpskirtParamedic
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -436,7 +436,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/prisoner.rsi
     state: icon
   result: ClothingUniformJumpsuitPrisoner
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -446,7 +446,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/prisoner.rsi
     state: icon
   result: ClothingUniformJumpskirtPrisoner
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -456,7 +456,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/qm.rsi
     state: icon
   result: ClothingUniformJumpsuitQM
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -466,7 +466,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/qm.rsi
     state: icon
   result: ClothingUniformJumpskirtQM
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -476,7 +476,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/rnd.rsi
     state: icon
   result: ClothingUniformJumpsuitResearchDirector
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -487,7 +487,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/rnd.rsi
     state: icon
   result: ClothingUniformJumpskirtResearchDirector
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
     Durathread: 100
@@ -498,7 +498,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
     state: icon
   result: ClothingUniformJumpsuitScientist
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -508,7 +508,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/scientist.rsi
     state: icon
   result: ClothingUniformJumpskirtScientist
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -518,7 +518,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/security.rsi
     state: icon
   result: ClothingUniformJumpsuitSec
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -528,7 +528,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/security.rsi
     state: icon
   result: ClothingUniformJumpskirtSec
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -538,7 +538,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
     state: icon
   result: ClothingUniformJumpsuitWarden
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
 
@@ -548,84 +548,84 @@
     sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
     state: icon
   result: ClothingUniformJumpskirtWarden
-  completetime: 800
+  completetime: 4
   materials:
     Cloth: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCap
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
     state: icon
   result: ClothingOuterWinterCap
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCE
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
     state: icon
   result: ClothingOuterWinterCE
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterCMO
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatcmo.rsi
     state: icon
   result: ClothingOuterWinterCMO
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterHoP
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coathop.rsi
     state: icon
   result: ClothingOuterWinterHoP
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterHoS
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
     state: icon
   result: ClothingOuterWinterHoS
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterQM
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatqm.rsi
     state: icon
   result: ClothingOuterWinterQM
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-    
+
 - type: latheRecipe
   id: ClothingOuterWinterRD
   icon:
     sprite: Clothing/OuterClothing/WinterCoats/coatrd.rsi
     state: icon
   result: ClothingOuterWinterRD
-  completetime: 800
+  completetime: 3.2
   materials:
     Cloth: 300
     Durathread: 300
-     
+

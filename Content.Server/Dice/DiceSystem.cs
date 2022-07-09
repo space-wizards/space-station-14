@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
@@ -7,9 +6,6 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -79,7 +75,7 @@ namespace Content.Server.Dice
             SetCurrentSide(uid, roll, die);
 
             die.Owner.PopupMessageEveryone(Loc.GetString("dice-component-on-roll-land", ("die", die.Owner), ("currentSide", die.CurrentSide)));
-            SoundSystem.Play(Filter.Pvs(die.Owner), die.Sound.GetSound(), die.Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(die.Sound.GetSound(), Filter.Pvs(die.Owner), die.Owner, AudioHelpers.WithVariation(0.05f));
         }
     }
 }

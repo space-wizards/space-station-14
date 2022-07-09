@@ -1,11 +1,14 @@
+using Content.Server.GameTicking.Rules.Configurations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.GameTicking.Rules;
 
 [Prototype("gameRule")]
 public sealed class GameRulePrototype : IPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
+
+    [DataField("config", required: true)]
+    public GameRuleConfiguration Configuration { get; } = default!;
 }

@@ -19,7 +19,7 @@
     state: icon
   - type: Clothing
     Slots: [innerclothing]
-    EquipSound:
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife
@@ -37,7 +37,7 @@
   - type: Clothing
     Slots: [innerclothing]
     femaleMask: UniformTop
-    EquipSound:
+    equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
   - type: Butcherable
     butcheringType: Knife

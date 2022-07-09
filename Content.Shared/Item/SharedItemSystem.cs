@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
@@ -27,7 +26,7 @@ namespace Content.Shared.Item
 
         private void OnHandInteract(EntityUid uid, SharedItemComponent component, InteractHandEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !component.CanPickup)
                 return;
 
             args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
@@ -68,6 +67,7 @@ namespace Content.Shared.Item
                 args.Using != null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
+                !component.CanPickup ||
                 !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
                 return;
 

@@ -109,7 +109,7 @@
 - type: entity
   name: plant bag
   id: PlantBag
-  parent: BaseItem
+  parent: BaseStorageItem
   description: A bag for botanists to easily move their huge harvests.
   components:
   - type: Sprite
@@ -130,3 +130,4 @@
       components:
         - Produce
         - Seed
+  - type: Dumpable

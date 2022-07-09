@@ -19,7 +19,7 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<UnpoweredFlashlightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerbs);
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetActionsEvent>(OnGetActions);
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<UnpoweredFlashlightComponent, ToggleActionEvent>(OnToggleAction);
         }
 
@@ -33,7 +33,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetActionsEvent args)
+        private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetItemActionsEvent args)
         {
             args.Actions.Add(component.ToggleAction);
         }
@@ -63,9 +63,9 @@ namespace Content.Server.Light.EntitySystems
             if (EntityManager.TryGetComponent(flashlight.Owner, out AppearanceComponent? appearance))
                 appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 
-            SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
+            SoundSystem.Play(flashlight.ToggleSound.GetSound(), Filter.Pvs(light.Owner), flashlight.Owner);
 
-            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn));
+            RaiseLocalEvent(flashlight.Owner, new LightToggleEvent(flashlight.LightOn), true);
             _actionsSystem.SetToggled(flashlight.ToggleAction, flashlight.LightOn);
         }
     }

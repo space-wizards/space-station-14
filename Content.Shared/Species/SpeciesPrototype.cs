@@ -1,7 +1,5 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Species;
 
@@ -44,11 +42,28 @@ public sealed class SpeciesPrototype : IPrototype
     [DataField("skinColoration", required: true)]
     public SpeciesSkinColor SkinColoration { get; }
 
+    [DataField("maleFirstNames")]
+    public string MaleFirstNames { get; } = "names_first_male";
 
+    [DataField("femaleFirstNames")]
+    public string FemaleFirstNames { get; } = "names_first_female";
+
+    [DataField("lastNames")]
+    public string LastNames { get; } = "names_last";
+
+    [DataField("naming")]
+    public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
 }
 
-public enum SpeciesSkinColor
+public enum SpeciesSkinColor : byte
 {
     HumanToned,
     Hues,
+    TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range). 
+}
+
+public enum SpeciesNaming : byte
+{
+    FirstLast,
+    FirstDashFirst,
 }

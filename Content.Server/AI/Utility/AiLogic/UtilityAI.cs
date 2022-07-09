@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
-using System.Threading;
 using Content.Server.AI.Components;
 using Content.Server.AI.EntitySystems;
 using Content.Server.AI.LoadBalancer;
@@ -11,20 +7,17 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Movement.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using System.Runtime.ExceptionServices;
+using System.Threading;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
     // TODO: Need to split out the IMover stuff for NPC to a generic one that can be used for hoomans as well.
     [RegisterComponent]
     [ComponentProtoName("UtilityAI")]
-    [ComponentReference(typeof(AiControllerComponent)), ComponentReference(typeof(IMoverComponent))]
-    public sealed class UtilityAi : AiControllerComponent, ISerializationHooks
+    [ComponentReference(typeof(AiControllerComponent))]
+    public sealed class UtilityAi : AiControllerComponent
     {
         // TODO: Look at having ParallelOperators (probably no more than that as then you'd have a full-blown BT)
         // Also RepeatOperators (e.g. if we're following an entity keep repeating MoveToEntity)

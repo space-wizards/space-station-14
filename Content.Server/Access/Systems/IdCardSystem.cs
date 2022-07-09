@@ -1,7 +1,5 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Kitchen.Components;
@@ -10,7 +8,7 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
-using Robust.Shared.IoC;
+using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -49,7 +47,7 @@ namespace Content.Server.Access.Systems
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid));
+                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
@@ -66,7 +64,7 @@ namespace Content.Server.Access.Systems
                 else
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
-                        uid, Filter.Pvs(uid));
+                        uid, Filter.Pvs(uid), PopupType.Medium);
                 }
 
                 // Give them a wonderful new access to compensate for everything

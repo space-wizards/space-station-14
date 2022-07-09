@@ -1,4 +1,3 @@
-using Content.Server.Act;
 using Content.Server.Buckle.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
@@ -9,12 +8,11 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.Toilet;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -35,8 +33,41 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<ToiletComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ToiletPryFinished>(OnToiletPried);
             SubscribeLocalEvent<ToiletPryInterrupted>(OnToiletInterrupt);
+        }
+
+        private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
+        {
+            if (args.Handled) return;
+
+            // Check that victim has a head
+            if (EntityManager.TryGetComponent<SharedBodyComponent>(args.Victim, out var body) &&
+                body.HasPartOfType(BodyPartType.Head))
+            {
+                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
+                    ("victim", args.Victim), ("owner", uid));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(args.Victim), PopupType.MediumCaution);
+
+                var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
+                    ("owner", uid));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim), PopupType.LargeCaution);
+
+                args.SetHandled(SuicideKind.Asphyxiation);
+            }
+            else
+            {
+                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
+                    ("victim", args.Victim), ("owner", uid));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), PopupType.MediumCaution);
+
+                var selfMessage = Loc.GetString("toilet-component-suicide-message",
+                    ("owner", uid));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim), PopupType.LargeCaution);
+
+                args.SetHandled(SuicideKind.Blunt);
+            }
         }
 
         private void OnInit(EntityUid uid, ToiletComponent component, ComponentInit args)
@@ -123,37 +154,6 @@ namespace Content.Server.Toilet
             }
         }
 
-        public SuicideKind Suicide(EntityUid uid, EntityUid victimUid, ToiletComponent? component = null,
-            MetaDataComponent? meta = null, MetaDataComponent? victimMeta = null)
-        {
-            // check that victim even have head
-            if (EntityManager.TryGetComponent<SharedBodyComponent>(victimUid, out var body) &&
-                body.HasPartOfType(BodyPartType.Head))
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
-                    ("victim", victimUid),("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(victimUid).RemoveWhereAttachedEntity(puid => puid == victimUid));
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
-                    ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
-
-                return SuicideKind.Asphyxiation;
-            }
-            else
-            {
-                var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
-                    ("victim", victimUid),("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == victimUid));
-
-                var selfMessage = Loc.GetString("toilet-component-suicide-message",
-                    ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(victimUid));
-
-                return SuicideKind.Blunt;
-            }
-        }
-
         private void OnToiletInterrupt(ToiletPryInterrupted ev)
         {
             if (!EntityManager.TryGetComponent(ev.Uid, out ToiletComponent? toilet))
@@ -178,8 +178,8 @@ namespace Content.Server.Toilet
                 return;
 
             component.IsSeatUp = !component.IsSeatUp;
-            SoundSystem.Play(Filter.Pvs(uid), component.ToggleSound.GetSound(), uid,
-                AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(component.ToggleSound.GetSound(), Filter.Pvs(uid),
+                uid, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite(uid, component);
         }

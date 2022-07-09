@@ -13,10 +13,11 @@ namespace Content.Client.Light
 {
     public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
+        private const float DegreesPerSecond = 90;
         private static Animation Animation =>
             new()
             {
-                Length = TimeSpan.FromSeconds(4),
+                Length = TimeSpan.FromSeconds(360f/ DegreesPerSecond),
                 AnimationTracks =
                 {
                     new AnimationTrackComponentProperty
@@ -27,7 +28,9 @@ namespace Content.Client.Light
                         KeyFrames =
                         {
                             new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
-                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(1080), 4)
+                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(120), 120f/DegreesPerSecond),
+                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(240), 120f/DegreesPerSecond),
+                            new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), 120f/DegreesPerSecond)
                         }
                     }
                 }

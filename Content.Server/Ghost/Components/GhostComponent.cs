@@ -27,5 +27,5 @@ namespace Content.Server.Ghost.Components
         };
     }
 
-    public sealed class BooActionEvent : PerformActionEvent { }
+    public sealed class BooActionEvent : InstantActionEvent { }
 }

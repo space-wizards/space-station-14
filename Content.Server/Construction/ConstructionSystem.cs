@@ -3,15 +3,8 @@ using Content.Server.DoAfter;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Construction;
-using Content.Shared.Examine;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 

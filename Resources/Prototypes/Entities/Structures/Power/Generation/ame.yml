@@ -8,6 +8,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
     sprite: Structures/Power/Generation/ame.rsi
     state: control
   - type: Physics
@@ -15,16 +16,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+        bounds: "-0.45,-0.45,0.45,0.45"
       mass: 25
       mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+      - FullTileMask
       layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -43,6 +40,7 @@
         acts: ["Destruction"]
   - type: Transform
     anchored: true
+    noRot: true
   - type: Anchorable
   - type: Pullable
   - type: AMEController
@@ -57,8 +55,7 @@
     - key: enum.AMEControllerUiKey.Key
       type: AMEControllerBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: AMEControllerVisualizer
+  - type: AMEControllerVisuals
   - type: NodeContainer
     examinable: true
     nodes:
@@ -81,20 +78,6 @@
   components:
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 25
-      mask:
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-      - SmallImpassable
 
 - type: entity
   id: AMEShielding
@@ -106,6 +89,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    netsync: false
     drawdepth: Walls
     sprite: Structures/Power/Generation/ame.rsi
     state: shield_0
@@ -113,13 +97,12 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+      mass: 25
+      mask:
+      - FullTileMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - WallLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -154,8 +137,7 @@
     energy: 0.5
     color: "#00AAFF"
   - type: Appearance
-    visuals:
-    - type: AMEVisualizer
+  - type: AMEShieldingVisuals
   - type: Construction
     graph: AMEShielding
     node: ameShielding

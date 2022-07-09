@@ -27,9 +27,6 @@
   - type: IconSmooth
     key: walls
     base: brick
-  - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   parent: WallBase
@@ -99,8 +96,8 @@
   components:
   - type: Tag
     tags:
-      - Wall
       - RCDDeconstructWhitelist
+      - Wall
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon
@@ -246,36 +243,6 @@
 
 - type: entity
   parent: WallBase
-  id: WallMetal
-  name: metal wall
-  components:
-  - type: Tag
-    tags:
-      - Wall
-      - RCDDeconstructWhitelist
-  - type: Sprite
-    sprite: Structures/Walls/metal.rsi
-  - type: Icon
-    sprite: Structures/Walls/metal.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: metal
-
-- type: entity
-  parent: WallBase
   id: WallPlasma
   name: plasma wall
   components:
@@ -363,13 +330,14 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: ReinforcedWall
+  - type: IconSmooth
     key: walls
-    base: solid
-    reinforcedBase: reinf_over
+    base: reinf_over
   - type: Appearance
     visuals:
       - type: ReinforcedWallVisualizer
+  - type: StaticPrice
+    price: 41.5 # total material cost. If you change the recipe for the wall you should recalculate this.
 
 # Riveting
 - type: entity
@@ -501,14 +469,10 @@
           - "-0.5,-0.5"
           - "0.5,0.5"
           - "0.5,-0.5"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: Destructible
     thresholds:
     - trigger:
@@ -593,6 +557,47 @@
   - type: IconSmooth
     key: walls
     base: solid
+  - type: StaticPrice
+    price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
+    
+- type: entity
+  parent: WallBase
+  id: WallSolidRust
+  name: solid wall
+  suffix: rusted
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/solidrust.rsi
+  - type: Icon
+    sprite: Structures/Walls/solidrust.rsi
+    state: full
+  - type: Construction
+    graph: Girder
+    node: wallrust
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
+  - type: IconSmooth
+    key: walls
+    base: solidrust
 
 - type: entity
   parent: WallBase
@@ -649,3 +654,104 @@
   - type: IconSmooth
     key: walls
     base: wood
+
+
+# Vault Walls
+
+- type: entity
+  parent: WallBase
+  id: WallVaultAlien
+  name: alien vault wall
+  description: A mysterious ornate looking wall. There may be ancient dangers inside.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: alienvault
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultRock
+  name: rock vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: rockvault
+
+- type: entity
+  parent: WallVaultAlien
+  id: WallVaultSandstone
+  name: sandstone vault wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+  - type: Icon
+    sprite: Structures/Walls/vault.rsi
+    state: sandstonevault
+
+
+# Mime
+
+- type: entity
+  id: WallInvisible
+  name: Invisible Wall
+  components:
+  - type: TimedDespawn
+    lifetime: 30
+  - type: Tag
+    tags:
+      - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+      - FullTileMask
+      layer:
+      - GlassLayer
+  - type: Airtight
+
+- type: entity
+  id: WallForce
+  name: Force Wall
+  components:
+    - type: TimedDespawn
+      lifetime: 20
+    - type: Tag
+      tags:
+        - Wall
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+            - FullTileMask
+          layer:
+            - WallLayer
+    - type: Airtight
+    - type: Sprite
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall
+    - type: Icon
+      sprite: Structures/Magic/forcewall.rsi
+      state: forcewall

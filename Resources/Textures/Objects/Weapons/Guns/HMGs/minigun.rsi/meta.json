@@ -8,6 +8,12 @@
   },
   "states": [
     {
+      "name": "holstered"
+    },
+    {
+      "name": "notholstered"
+    },
+    {
       "name": "base",
       "delays": [
         [
@@ -19,43 +25,7 @@
       ]
     },
     {
-      "name": "holstered"
-    },
-    {
-      "name": "notholstered"
-    },
-    {
-      "name": "bolt-closed",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "bolt-open",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "icon",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "icon"
     }
   ]
 }

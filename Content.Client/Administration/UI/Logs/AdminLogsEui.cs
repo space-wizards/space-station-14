@@ -1,14 +1,12 @@
 ﻿using System.Linq;
 using Content.Client.Eui;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
-using static Content.Shared.Administration.AdminLogsEuiMsg;
+using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Client.Administration.UI.Logs;
 
@@ -48,6 +46,7 @@ public sealed class AdminLogsEui : BaseEui
     {
         var request = new LogsRequest(
             LogsControl.SelectedRoundId,
+            LogsControl.Search,
             LogsControl.SelectedTypes.ToHashSet(),
             null,
             null,
@@ -126,11 +125,17 @@ public sealed class AdminLogsEui : BaseEui
 
         switch (msg)
         {
-            case NewLogs {Replace: true} newLogs:
-                LogsControl.SetLogs(newLogs.Logs);
-                break;
-            case NewLogs {Replace: false} newLogs:
-                LogsControl.AddLogs(newLogs.Logs);
+            case NewLogs newLogs:
+                if (newLogs.Replace)
+                {
+                    LogsControl.SetLogs(newLogs.Logs);
+                }
+                else
+                {
+                    LogsControl.AddLogs(newLogs.Logs);
+                }
+
+                LogsControl.NextButton.Disabled = !newLogs.HasNext;
                 break;
         }
     }

@@ -1,13 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
@@ -49,7 +44,7 @@ public sealed class SpreaderSystem : EntitySystem
         if (!EntityManager.TryGetComponent<TransformComponent>(blocker, out var transform))
             return; // how did we get here?
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
@@ -94,7 +89,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         if (spreader.Enabled == false) return false;
 
-        if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return false;
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return false;
 
         var didGrow = false;
 

@@ -1,6 +1,4 @@
-using System;
 using Content.Shared.StatusEffect;
-using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Speech.EntitySystems
 {

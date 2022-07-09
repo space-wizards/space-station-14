@@ -7,14 +7,18 @@
     snap:
       - Wall
   components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/kudzu.rsi
       state: kudzu_11
       drawdepth: Overdoors
       netsync: false
     - type: Appearance
-      visuals:
-      - type: KudzuVisualizer
+    - type: KudzuVisuals
     - type: Clickable
     - type: Transform
       anchored: true
@@ -27,7 +31,7 @@
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
-          - MobImpassable
+        - MidImpassable
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -69,7 +73,7 @@
       growthResult: Kudzu
       chance: 1
     - type: GrowingKudzu
-      growthTickSkipChance: 0.1666
+      growthTickSkipChance: 0.6666
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2

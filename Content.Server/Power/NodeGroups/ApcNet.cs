@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
@@ -6,11 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.NodeGroups
 {
@@ -25,15 +20,13 @@ namespace Content.Server.Power.NodeGroups
         void RemovePowerProvider(ApcPowerProviderComponent provider);
 
         void QueueNetworkReconnect();
-
-        GridId? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
     public sealed class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
     {
-        private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
+        private PowerNetSystem? _powerNetSystem;
 
         [ViewVariables] public readonly List<ApcComponent> Apcs = new();
         [ViewVariables] public readonly List<ApcPowerProviderComponent> Providers = new();
@@ -46,15 +39,14 @@ namespace Content.Server.Power.NodeGroups
         private IEnumerable<ApcPowerReceiverComponent> AllReceivers =>
             Providers.SelectMany(provider => provider.LinkedReceivers);
 
-        GridId? IApcNet.GridId => GridId;
-
         [ViewVariables]
         public PowerState.Network NetworkNode { get; } = new();
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
+            _powerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
             _powerNetSystem.InitApcNet(this);
         }
 
@@ -62,7 +54,7 @@ namespace Content.Server.Power.NodeGroups
         {
             base.AfterRemake(newGroups);
 
-            _powerNetSystem.DestroyApcNet(this);
+            _powerNetSystem?.DestroyApcNet(this);
         }
 
         public void AddApc(ApcComponent apc)
@@ -113,7 +105,7 @@ namespace Content.Server.Power.NodeGroups
 
         public void QueueNetworkReconnect()
         {
-            _powerNetSystem.QueueReconnectApcNet(this);
+            _powerNetSystem?.QueueReconnectApcNet(this);
         }
 
         protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IApcNet> netConnectorComponent)
@@ -123,6 +115,9 @@ namespace Content.Server.Power.NodeGroups
 
         public override string? GetDebugData()
         {
+            if (_powerNetSystem == null)
+                return null;
+
             // This is just recycling the multi-tool examine.
 
             var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);

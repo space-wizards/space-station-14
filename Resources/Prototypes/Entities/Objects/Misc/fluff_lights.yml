@@ -6,18 +6,24 @@
   components:
   - type: HandheldLight
     addPrefix: true
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PowerCellSlot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
   - type: Sprite
     sprite: Objects/Misc/Lights/lights.rsi
     netsync: false
   - type: Item
     sprite: Objects/Misc/Lights/lights.rsi
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 3
+    energy: 2
+  - type: ToggleableLightVisuals
+  - type: Appearance
+    visuals:
+    - type: FlashLightVisualizer # todo move to light visuals component.
 
 - type: entity
   name: lamp
@@ -35,13 +41,6 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lamp.rsi
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: banana lamp
@@ -56,13 +55,6 @@
         shader: unshaded
         visible: false
         map: [ "light" ]
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: desk lamp
@@ -80,13 +72,6 @@
         map: [ "light" ]
   - type: Item
     sprite: Objects/Misc/Lights/lampgreen.rsi
-  - type: PointLight
-    enabled: false
-    radius: 3
-    energy: 2
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: floodlight
@@ -102,17 +87,17 @@
         visible: false
         map: [ "light" ]
   - type: Physics
+    canCollide: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2, -0.5, 0.2, 0.5"
+        bounds: "-0.2, -0.5, 0.2, 0.5"
       mass: 20
       mask:
-      - Impassable
+      - MachineMask
       layer:
-      - Opaque
-      - Impassable
+      - MachineLayer
   - type: PointLight
     enabled: false
     radius: 8
@@ -137,9 +122,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
 
 - type: entity
   name: broken floodlight
@@ -174,10 +156,10 @@
   - type: Fixtures
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+        bounds: "-0.2, -0.5, 0.2, 0.5"
+      mass: 20
+      mask:
+      - MachineMask
       layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MachineLayer

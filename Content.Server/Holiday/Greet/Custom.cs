@@ -1,6 +1,5 @@
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.Greet
 {
@@ -12,7 +11,7 @@ namespace Content.Server.Holiday.Greet
 
         public string Greet(HolidayPrototype holiday)
         {
-            return _greet;
+            return Loc.GetString(_greet);
         }
     }
 }

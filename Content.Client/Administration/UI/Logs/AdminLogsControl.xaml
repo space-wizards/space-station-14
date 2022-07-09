@@ -5,7 +5,7 @@
          MinHeight="400">
     <PanelContainer>
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#25252add"/>
+            <gfx:StyleBoxFlat BackgroundColor="#25252A"/>
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Horizontal">
             <BoxContainer Orientation="Vertical">
@@ -50,6 +50,8 @@
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <BoxContainer Name="TopRightContainer">
                     <BoxContainer Name="LogImpactContainer" Orientation="Horizontal"/>
+                    <Control HorizontalExpand="True"/>
+                    <Label Name="Count" Access="Public"/>
                     <Control HorizontalExpand="True"/>
                     <Button Name="PopOutButton" Access="Public" Text="{Loc admin-logs-pop-out}"/>
                 </BoxContainer>

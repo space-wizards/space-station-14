@@ -1,15 +1,23 @@
 using Content.Server.Botany.Systems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Botany.Components
 {
-    [RegisterComponent, Friend(typeof(BotanySystem))]
+    [RegisterComponent, Access(typeof(BotanySystem))]
     public sealed class SeedComponent : Component
     {
-        [DataField("seed", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
-        public string SeedName = default!;
+        /// <summary>
+        ///     Seed data containing information about the plant type & properties that this seed can grow seed. If
+        ///     null, will instead attempt to get data from a seed prototype, if one is defined. See <see
+        ///     cref="SeedId"/>.
+        /// </summary>
+        [DataField("seed")]
+        public SeedData? Seed;
+
+        /// <summary>
+        ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
+        /// </summary>
+        [DataField("seedId", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
+        public readonly string? SeedId;
     }
 }

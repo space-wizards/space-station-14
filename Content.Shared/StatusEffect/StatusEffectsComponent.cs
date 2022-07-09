@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.StatusEffect
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(StatusEffectsSystem))]
+    [Access(typeof(StatusEffectsSystem))]
     public sealed class StatusEffectsComponent : Component
     {
         [ViewVariables]
@@ -20,7 +14,7 @@ namespace Content.Shared.StatusEffect
         /// <summary>
         ///     A list of status effect IDs to be allowed
         /// </summary>
-        [DataField("allowed", required: true)]
+        [DataField("allowed", required: true), Access(typeof(StatusEffectsSystem), Other = AccessPermissions.ReadExecute)]
         public List<string> AllowedEffects = default!;
     }
 

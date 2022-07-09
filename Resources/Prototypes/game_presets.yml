@@ -4,8 +4,19 @@
     - extended
     - shittersafari
   name: extended-title
-  showInVote: true
+  showInVote: false #2boring2vote
   description: extended-description
+
+- type: gamePreset
+  id: Secret
+  alias:
+    - secret
+    - sekrit
+  name: secret-title
+  showInVote: true
+  description: secret-description
+  rules:
+    - Secret
 
 - type: gamePreset
   id: Sandbox
@@ -14,6 +25,7 @@
   name: sandbox-title
   description: sandbox-description
   showInVote: true
+  maxPlayers: 5
   rules:
     - Sandbox
 
@@ -23,7 +35,7 @@
     - traitor
   name: traitor-title
   description: traitor-description
-  showInVote: true
+  showInVote: false
   rules:
     - Traitor
 
@@ -57,3 +69,37 @@
   rules:
     - TraitorDeathMatch
     - MaxTimeRestart
+
+- type: gamePreset
+  id: Nukeops
+  alias:
+    - nukeops
+  name: nukeops-title
+  description: nukeops-description
+  showInVote: false
+  rules:
+    - Nukeops
+
+- type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+    - Zombies
+    - zz14
+    - zomber
+  name: zombie-title
+  description: zombie-description
+  showInVote: false
+  rules:
+    - Zombie
+
+- type: gamePreset
+  id: Pirates
+  alias:
+    - pirates
+  name: pirates-title
+  description: pirates-description
+  showInVote: false
+  rules:
+    - Pirates

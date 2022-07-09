@@ -1,9 +1,4 @@
-﻿using System;
-using Content.Shared.Acts;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Server.Destructible.Thresholds.Behaviors
+﻿namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
@@ -11,7 +6,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     {
         /// <summary>
         ///     What acts should be triggered upon activation.
-        ///     See <see cref="ActSystem"/>.
         /// </summary>
         [DataField("acts")]
         public ThresholdActs Acts { get; set; }
@@ -25,12 +19,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         {
             if (HasAct(ThresholdActs.Breakage))
             {
-                system.ActSystem.HandleBreakage(owner);
+                system.BreakEntity(owner);
             }
 
             if (HasAct(ThresholdActs.Destruction))
             {
-                system.ActSystem.HandleDestruction(owner);
+                system.DestroyEntity(owner);
             }
         }
     }

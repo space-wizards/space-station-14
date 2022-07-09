@@ -32,5 +32,12 @@ namespace Content.Server.Explosion.Components
 
         [DataField("beepParams")]
         public AudioParams BeepParams = AudioParams.Default.WithVolume(-2f);
+
+        /// <summary>
+        ///     Should timer be started when it was stuck to another entity.
+        ///     Used for C4 charges and similar behaviour.
+        /// </summary>
+        [DataField("startOnStick")]
+        public bool StartOnStick;
     }
 }

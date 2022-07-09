@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
+using Content.Shared.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Microsoft.Data.Sqlite;
@@ -49,6 +50,7 @@ namespace Content.Tests.Server.Preferences
         {
             return new(
                 "Charlie Charlieson",
+                "The biggest boy around.",
                 "Human",
                 21,
                 Sex.Male,
@@ -59,7 +61,8 @@ namespace Content.Tests.Server.Preferences
                     "Shaved",
                     Color.Aquamarine,
                     Color.Azure,
-                    Color.Beige
+                    Color.Beige,
+                    new MarkingsSet()
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,

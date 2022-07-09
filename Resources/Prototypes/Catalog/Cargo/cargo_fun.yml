@@ -57,3 +57,15 @@
   cost: 1500
   category: Fun
   group: market
+
+- type: cargoProduct
+  name: "ATV crate"
+  id: FunATV
+  description: "An Absolutely Taxable Vehicle to help cargo with hauling."
+  icon:
+    sprite: Objects/Vehicles/atv.rsi
+    state: vehicle
+  product: CrateFunATV
+  cost: 6000
+  category: Fun
+  group: market

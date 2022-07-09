@@ -11,6 +11,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 
@@ -18,7 +19,7 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -42,7 +43,7 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
-    protected virtual void Dirty(ActionType action)
+    public virtual void Dirty(ActionType action)
     {
         if (action.AttachedEntity == null)
             return;
@@ -99,7 +100,7 @@ public abstract class SharedActionsSystem : EntitySystem
     #region Execution
     /// <summary>
     ///     When receiving a request to perform an action, this validates whether the action is allowed. If it is, it
-    ///     will raise the relevant <see cref="PerformActionEvent"/>
+    ///     will raise the relevant <see cref="InstantActionEvent"/>
     /// </summary>
     private void OnActionRequest(RequestPerformActionEvent ev, EntitySessionEventArgs args)
     {
@@ -112,7 +113,7 @@ public abstract class SharedActionsSystem : EntitySystem
         // Does the user actually have the requested action?
         if (!component.Actions.TryGetValue(ev.Action, out var act))
         {
-            _logSystem.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {ev.Action.Name}.");
             return;
         }
@@ -124,7 +125,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (act.Cooldown.HasValue && act.Cooldown.Value.End > curTime)
             return;
 
-        PerformActionEvent? performEvent = null;
+        BaseActionEvent? performEvent = null;
 
         // Validate request by checking action blockers and the like:
         var name = Loc.GetString(act.Name);
@@ -145,10 +146,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                     $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
 
                 if (entityAction.Event != null)
@@ -173,10 +174,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {mapTarget:target}.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {mapTarget:target}.");
 
                 if (worldAction.Event != null)
@@ -193,10 +194,10 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
 
                 if (act.Provider == null)
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action.");
                 else
-                    _logSystem.Add(LogType.Action,
+                    _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(act.Provider.Value):provider}.");
 
                 performEvent = instantAction.Event;
@@ -273,7 +274,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
-    protected void PerformAction(ActionsComponent component, ActionType action, PerformActionEvent? actionEvent, TimeSpan curTime)
+    protected void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
     {
         var handled = false;
 
@@ -332,7 +333,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
         if (action.Sound != null)
-            SoundSystem.Play(filter, action.Sound.GetSound(), performer, action.AudioParams);
+            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;
@@ -356,6 +357,13 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <param name="provider">The entity that enables these actions (e.g., flashlight). May be null (innate actions).</param>
     public virtual void AddAction(EntityUid uid, ActionType action, EntityUid? provider, ActionsComponent? comp = null, bool dirty = true)
     {
+        // Because action classes have state data, e.g. cooldowns and uses-remaining, people should not be adding prototypes directly
+        if (action is IPrototype)
+        {
+            Logger.Error("Attempted to directly add a prototype action. You need to clone a prototype in order to use it.");
+            return;
+        }
+
         comp ??= EnsureComp<ActionsComponent>(uid);
         action.Provider = provider;
         action.AttachedEntity = comp.Owner;
@@ -401,7 +409,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var provided = comp.Actions.Where(act => act.Provider == provider).ToList();
 
-        RemoveActions(uid, provided, comp);
+        if (provided.Count > 0)
+            RemoveActions(uid, provided, comp);
     }
 
     public virtual void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)
@@ -426,7 +435,7 @@ public abstract class SharedActionsSystem : EntitySystem
     #region EquipHandlers
     private void OnDidEquip(EntityUid uid, ActionsComponent component, DidEquipEvent args)
     {
-        var ev = new GetActionsEvent();
+        var ev = new GetItemActionsEvent(args.SlotFlags);
         RaiseLocalEvent(args.Equipment, ev, false);
 
         if (ev.Actions.Count == 0)
@@ -437,7 +446,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnHandEquipped(EntityUid uid, ActionsComponent component, DidEquipHandEvent args)
     {
-        var ev = new GetActionsEvent();
+        var ev = new GetItemActionsEvent();
         RaiseLocalEvent(args.Equipped, ev, false);
 
         if (ev.Actions.Count == 0)

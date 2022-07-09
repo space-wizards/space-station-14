@@ -31,16 +31,18 @@ namespace Content.Client.Atmos.Overlays
             var mapId = args.Viewport.Eye!.Position.MapId;
             var worldBounds = args.WorldBounds;
 
+            drawHandle.UseShader(null);
+
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
-                if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
+                if (!_gasTileOverlaySystem.HasData(mapGrid.GridEntityId))
                     continue;
 
                 drawHandle.SetTransform(mapGrid.WorldMatrix);
 
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices);
+                    var enumerator = _gasTileOverlaySystem.GetOverlays(mapGrid.GridEntityId, tile.GridIndices);
                     while (enumerator.MoveNext(out var tuple))
                     {
                         drawHandle.DrawTexture(tuple.Texture, new Vector2(tile.X, tile.Y), tuple.Color);

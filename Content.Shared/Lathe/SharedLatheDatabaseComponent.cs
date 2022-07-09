@@ -1,13 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Lathe
@@ -16,8 +11,7 @@ namespace Content.Shared.Lathe
     public abstract class SharedLatheDatabaseComponent : Component, IEnumerable<LatheRecipePrototype>, ISerializationHooks
     {
         [DataField("recipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))] private List<string> _recipeIds = new();
-
-        private readonly List<LatheRecipePrototype> _recipes = new();
+        public readonly List<LatheRecipePrototype> _recipes = new();
 
         void ISerializationHooks.BeforeSerialization()
         {

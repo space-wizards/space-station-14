@@ -1,10 +1,12 @@
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech;
@@ -18,6 +20,7 @@ namespace Content.Server.Speech;
 public sealed class VocalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
 
@@ -32,12 +35,20 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)
     {
-        _actions.AddAction(uid, component.Action, null);
+        if (component.ScreamAction == null
+            && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
+        {
+            component.ScreamAction = new(act);
+        }
+
+        if (component.ScreamAction != null)
+            _actions.AddAction(uid, component.ScreamAction, null);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
-        _actions.RemoveAction(uid, component.Action);
+        if (component.ScreamAction != null)
+            _actions.RemoveAction(uid, component.ScreamAction);
     }
 
     private void OnActionPerform(EntityUid uid, VocalComponent component, ScreamActionEvent args)
@@ -56,26 +67,26 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        // Currently this requires humanoid appearance & doesn't have any sort of fall-back or gender-neutral scream.
-        if (!TryComp(uid, out HumanoidAppearanceComponent? humanoid))
-            return false;
+        var sex = Sex.Male; //the default is male because requiring humanoid appearance for this is dogshit
+        if (TryComp(uid, out HumanoidAppearanceComponent? humanoid))
+            sex = humanoid.Sex;
 
-        if (_random.Prob(.01f))
+        if (_random.Prob(component.WilhelmProbability))
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.Wilhelm.GetSound(), uid, component.AudioParams);
+            SoundSystem.Play(component.Wilhelm.GetSound(), Filter.Pvs(uid), uid, component.AudioParams);
             return true;
         }
 
         var scale = (float) _random.NextGaussian(1, VocalComponent.Variation);
         var pitchedParams = component.AudioParams.WithPitchScale(scale);
 
-        switch (humanoid.Sex)
+        switch (sex)
         {
             case Sex.Male:
-                SoundSystem.Play(Filter.Pvs(uid), component.MaleScream.GetSound(), uid, pitchedParams);
+                SoundSystem.Play(component.MaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             case Sex.Female:
-                SoundSystem.Play(Filter.Pvs(uid), component.FemaleScream.GetSound(), uid, pitchedParams);
+                SoundSystem.Play(component.FemaleScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

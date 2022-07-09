@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
@@ -11,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -39,6 +39,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
     }
 
@@ -154,7 +155,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(Filter.Pvs(uid), component.InstantBloodSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
         }
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
@@ -162,9 +163,9 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(Filter.Pvs(uid), component.BloodHealedSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
-                Filter.Entities(uid));
+                Filter.Entities(uid), PopupType.Medium);
 ;       }
     }
 
@@ -193,6 +194,19 @@ public sealed class BloodstreamSystem : EntitySystem
         SpillAllSolutions(uid, component);
     }
 
+    private void OnApplyMetabolicMultiplier(EntityUid uid, BloodstreamComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            component.UpdateInterval *= args.Multiplier;
+            return;
+        }
+        component.UpdateInterval /= args.Multiplier;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrametime >= component.UpdateInterval)
+            component.AccumulatedFrametime = component.UpdateInterval;
+    }
+
     /// <summary>
     ///     Attempt to transfer provided solution to internal solution.
     /// </summary>
@@ -210,6 +224,14 @@ public sealed class BloodstreamSystem : EntitySystem
             return 0.0f;
 
         return (component.BloodSolution.CurrentVolume / component.BloodSolution.MaxVolume).Float();
+    }
+
+    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.BloodlossThreshold = threshold;
     }
 
     /// <summary>
@@ -268,8 +290,11 @@ public sealed class BloodstreamSystem : EntitySystem
         var tempSol = new Solution() { MaxVolume = max };
 
         tempSol.AddSolution(component.BloodSolution);
+        component.BloodSolution.RemoveAllSolution();
         tempSol.AddSolution(component.BloodTemporarySolution);
+        component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution);
+        component.ChemicalSolution.RemoveAllSolution();
         _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

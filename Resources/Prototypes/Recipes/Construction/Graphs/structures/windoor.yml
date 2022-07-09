@@ -115,7 +115,7 @@
       completed:
       - !type:EmptyAllContainers {}
       steps:
-      - tool: Prying
+      - tool: Anchoring
         doAfter: 1
 
   - node: assemblySecure
@@ -215,5 +215,5 @@
       completed:
       - !type:EmptyAllContainers {}
       steps:
-      - tool: Prying
+      - tool: Anchoring
         doAfter: 4

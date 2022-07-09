@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Shared.GameTicking;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Player;
 
 namespace Content.Server.Mind
 {

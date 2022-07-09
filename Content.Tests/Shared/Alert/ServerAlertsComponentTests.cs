@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Content.Server.Alert;
 using Content.Shared.Alert;

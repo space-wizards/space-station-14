@@ -21,20 +21,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - WallLayer
   - type: MorgueEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:
@@ -42,6 +35,10 @@
     openSound:
       path: /Audio/Items/deconstruct.ogg
     trayPrototype: MorgueTray
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      morgue_tray: !type:ContainerSlot
   - type: Appearance
     visuals:
     - type: MorgueVisualizer
@@ -52,6 +49,7 @@
       light_soul: morgue_soul_light
   - type: Transform
     anchored: true
+  - type: AntiRottingContainer
 
 - type: entity
   id: MorgueTray
@@ -62,15 +60,12 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mass: 25
-        mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mass: 25
+      mask:
+      - Impassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
@@ -78,7 +73,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MorgueTray
-
+  - type: AntiRottingContainer
 
 - type: entity
   id: Crematorium
@@ -103,20 +98,13 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
-       - Impassable
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineMask
       layer:
-       - Opaque
-       - MobImpassable
-       - VaultImpassable
-       - SmallImpassable
+      - MachineLayer
   - type: CrematoriumEntityStorage
-    CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
     closeSound:

@@ -1,22 +1,13 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -31,14 +22,14 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [ViewVariables]
         [DataField("cuffTime")]
-        public float CuffTime { get; set; } = 5f;
+        public float CuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
         [DataField("uncuffTime")]
-        public float UncuffTime { get; set; } = 5f;
+        public float UncuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
@@ -154,12 +145,6 @@ namespace Content.Server.Cuffs.Components
                 return false;
             }
 
-            if (eventArgs.Target == eventArgs.User)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-self-error"));
-                return true;
-            }
-
             if (Broken)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-cuffs-broken-error"));
@@ -184,10 +169,16 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
-            eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
-
-            SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
+            if (eventArgs.Target == eventArgs.User)
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-target-self"));
+            }
+            else
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
+                eventArgs.User.PopupMessage(target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
+            }
+            SoundSystem.Play(StartCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             TryUpdateCuff(eventArgs.User, target, cuffed);
             return true;
@@ -224,16 +215,29 @@ namespace Content.Server.Cuffs.Components
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound.GetSound(), Owner);
-
-                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
-                    target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
+                    SoundSystem.Play(EndCuffSound.GetSound(), Filter.Pvs(Owner), Owner);
+                    if (target == user)
+                    {
+                        user.PopupMessage(Loc.GetString("handcuff-component-cuff-self-success-message"));
+                    }
+                    else
+                    {
+                        user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
+                        target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
+                    }
                 }
             }
             else
             {
-                user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-message",("targetName", target)));
-                target.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-other-message",("otherName", user)));
+                if (target == user)
+                {
+                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-self-message"));
+                }
+                else
+                {
+                    user.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-message",("targetName", target)));
+                    target.PopupMessage(Loc.GetString("handcuff-component-cuff-interrupt-other-message",("otherName", user)));
+                }
             }
         }
     }

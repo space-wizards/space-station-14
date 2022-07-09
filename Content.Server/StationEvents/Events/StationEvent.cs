@@ -1,15 +1,15 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
-using Content.Server.Station;
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Database;
-using Content.Shared.Station;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -27,6 +27,11 @@ namespace Content.Server.StationEvents.Events
         ///     If the event has started and is currently running.
         /// </summary>
         public bool Running { get; set; }
+
+        /// <summary>
+        ///     The time when this event last ran.
+        /// </summary>
+        public TimeSpan LastRun { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         ///     Human-readable name for the event.
@@ -51,12 +56,12 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     Starting audio of the event.
         /// </summary>
-        public virtual string? StartAudio { get; set; } = null;
+        public virtual SoundSpecifier? StartAudio { get; set; } = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
         /// <summary>
         ///     Ending audio of the event.
         /// </summary>
-        public virtual string? EndAudio { get; } = null;
+        public virtual SoundSpecifier? EndAudio { get; } = null;
 
         public virtual AudioParams AudioParams { get; } = AudioParams.Default.WithVolume(-10f);
 
@@ -64,6 +69,11 @@ namespace Content.Server.StationEvents.Events
         ///     In minutes, when is the first round time this event can start
         /// </summary>
         public virtual int EarliestStart { get; } = 5;
+
+        /// <summary>
+        ///     In minutes, the amount of time before the same event can occur again
+        /// </summary>
+        public virtual int ReoccurrenceDelay { get; } = 30;
 
         /// <summary>
         ///     When in the lifetime to call Start().
@@ -99,6 +109,11 @@ namespace Content.Server.StationEvents.Events
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
+        ///     Whether or not the event is announced when it is run
+        /// </summary>
+        public virtual bool AnnounceEvent { get; } = true;
+
+        /// <summary>
         ///     Has the startup time elapsed?
         /// </summary>
         protected bool Started { get; set; } = false;
@@ -115,8 +130,9 @@ namespace Content.Server.StationEvents.Events
         {
             Started = true;
             Occurrences += 1;
+            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
         }
 
@@ -126,18 +142,18 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Announce()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
-            if (StartAnnouncement != null)
+            if (AnnounceEvent && StartAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (StartAudio != null)
+            if (AnnounceEvent && StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio, AudioParams);
+                SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Announced = true;
@@ -149,18 +165,18 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public virtual void Shutdown()
         {
-            EntitySystem.Get<AdminLogSystem>()
+            IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
-            if (EndAnnouncement != null)
+            if (AnnounceEvent && EndAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (EndAudio != null)
+            if (AnnounceEvent && EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio, AudioParams);
+                SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Started = false;
@@ -188,26 +204,37 @@ namespace Content.Server.StationEvents.Events
         }
 
 
-        public static bool TryFindRandomTile(out Vector2i tile, out StationId targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null)
+        public static bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords, IRobustRandom? robustRandom = null, IEntityManager? entityManager = null, IMapManager? mapManager = null, StationSystem? stationSystem = null)
         {
             tile = default;
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
+            IoCManager.Resolve(ref robustRandom, ref entityManager, ref mapManager);
+            entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
-            targetStation = robustRandom.Pick(entityManager.EntityQuery<StationComponent>().ToArray()).Station;
-            var t = targetStation; // thanks C#
-            var possibleTargets = entityManager.EntityQuery<StationComponent>()
-                .Where(x => x.Station == t).ToArray();
-            targetGrid = robustRandom.Pick(possibleTargets).Owner;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
+            targetStation = robustRandom.Pick(stationSystem.Stations);
+            var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
+            if (possibleTargets.Count == 0)
+            {
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid!, out var gridComp))
+            targetGrid = robustRandom.Pick(possibleTargets);
+
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp)
+                || !entityManager.TryGetComponent<TransformComponent>(targetGrid, out var transform))
                 return false;
             var grid = gridComp.Grid;
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldBounds;
+            var gridBounds = grid.WorldAABB;
             var gridPos = grid.WorldPosition;
 
             for (var i = 0; i < 10; i++)
@@ -216,7 +243,9 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, transform.MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp))
+                    continue;
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;

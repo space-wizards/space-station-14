@@ -17,6 +17,9 @@ public sealed class StandingStateSystem : EntitySystem
         var direction = EntityManager.TryGetComponent(uid, out PhysicsComponent? comp) ? comp.LinearVelocity / 50 : Vector2.Zero;
         var dropAngle = _random.NextFloat(0.8f, 1.2f);
 
+        var fellEvent = new FellDownEvent(uid);
+        RaiseLocalEvent(uid, fellEvent, false);
+
         if (!TryComp(uid, out SharedHandsComponent? handsComp))
             return;
 
@@ -43,3 +46,15 @@ public sealed class StandingStateSystem : EntitySystem
     }
 
 }
+
+    /// <summary>
+    /// Raised after an entity falls down.
+    /// <summary>
+    public sealed class FellDownEvent : EntityEventArgs
+    {
+        public EntityUid Uid { get; }
+        public FellDownEvent(EntityUid uid)
+        {
+            Uid = uid;
+        }
+    }

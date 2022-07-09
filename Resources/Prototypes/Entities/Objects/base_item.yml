@@ -5,6 +5,8 @@
   components:
   - type: Item
     size: 5
+  - type: StaticPrice
+    price: 5
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -24,14 +26,26 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+        bounds: "-0.25,-0.25,0.25,0.25"
       mass: 5
       mask:
-      - Impassable
-      - SmallImpassable
+      - ItemMask
       restitution: 0.3  # fite me
       friction: 0.2
   - type: Sprite
     drawdepth: Items
     noRot: false
   - type: Pullable
+
+- type: entity
+  name: "storage item"
+  id: BaseStorageItem
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Storage
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+

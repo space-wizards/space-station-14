@@ -63,6 +63,7 @@
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
+
 - type: alert
   id: Cold
   category: Temperature
@@ -164,6 +165,17 @@
   description: Some food would be good right about now.
 
 - type: alert
+  id: Stamina
+  category: Stamina
+  icon:
+    sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina
+  name: Stamina
+  description: "Stuns you if it is too low."
+  minSeverity: 0
+  maxSeverity: 6
+
+- type: alert
   id: Starving
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Starving.png
@@ -190,6 +202,26 @@
   icon: /Textures/Interface/Alerts/Thirst/Parched.png
   name: "[color=red]Parched[/color]"
   description: You're severely thirsty. The thirst makes moving around a chore.
+
+- type: alert
+  id: Muted
+  icon: /Textures/Interface/Alerts/Abilities/silenced.png
+  name: Muted
+  description: You have lost the ability to speak.
+
+- type: alert
+  id: VowOfSilence
+  icon: /Textures/Interface/Alerts/Abilities/silenced.png
+  name: Vow of Silence
+  onClick: !type:BreakVow  { }
+  description: You have taken a vow of silence as part of initiation into the Mystiko Tagma Mimon. Click to break your vow.
+
+- type: alert
+  id: VowBroken
+  icon: /Textures/Interface/Actions/scream.png
+  name: Vow Broken
+  onClick: !type:RetakeVow  { }
+  description: You've broken your vows to Mimes everywhere. You can speak, but you've lost your powers for at least 5 entire minutes!!! Click to try and retake your vow.
 
 - type: alert
   id: Pulled

@@ -2,9 +2,6 @@ using System.Linq;
 using Content.Server.Research.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Lathe.Components

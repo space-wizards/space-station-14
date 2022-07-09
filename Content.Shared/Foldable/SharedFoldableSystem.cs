@@ -1,7 +1,5 @@
-using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Foldable;
@@ -49,7 +47,7 @@ public abstract class SharedFoldableSystem : EntitySystem
     public virtual void SetFolded(FoldableComponent component, bool folded)
     {
         component.IsFolded = folded;
-        component.Dirty();
+        Dirty(component);
 
         if (TryComp(component.Owner, out AppearanceComponent? appearance))
             appearance.SetData(FoldKey, folded);

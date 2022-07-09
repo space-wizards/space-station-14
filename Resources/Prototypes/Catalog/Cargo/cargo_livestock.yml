@@ -78,7 +78,7 @@
     sprite: Mobs/Animals/cow.rsi
     state: cow
   product: CrateNPCCow
-  cost: 1000
+  cost: 3200
   category: Livestock
   group: market
 
@@ -121,11 +121,23 @@
 - type: cargoProduct
   name: "monkey cube crate"
   id: LivestockMonkeyCube
-  description: "A crate containing three boxes of monkey cubes "
+  description: "A crate containing three boxes of monkey cubes"
   icon:
     sprite: Mobs/Animals/monkey.rsi
     state: monkey
   product: CrateNPCMonkeyCube
+  cost: 1500
+  category: Livestock
+  group: market
+
+- type: cargoProduct
+  name: "mice crate"
+  id: LivestockMouse
+  description: "A crate containing five -blind- mice"
+  icon:
+    sprite: Mobs/Animals/mouse.rsi
+    state: icon-0
+  product: CrateNPCMouse
   cost: 1500
   category: Livestock
   group: market

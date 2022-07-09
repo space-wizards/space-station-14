@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Server.Body.Systems;
-using Content.Shared.Body.Components;
+﻿using Content.Server.Body.Systems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(StomachSystem))]
+    [RegisterComponent, Access(typeof(StomachSystem))]
     public sealed class StomachComponent : Component
     {
         public float AccumulatedFrameTime;
@@ -30,7 +24,7 @@ namespace Content.Server.Body.Components
         ///     Initial internal solution storage volume
         /// </summary>
         [DataField("maxVolume")]
-        public FixedPoint2 InitialMaxVolume { get; private set; } = FixedPoint2.New(100);
+        public FixedPoint2 InitialMaxVolume { get; private set; } = FixedPoint2.New(50);
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being

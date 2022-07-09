@@ -1,6 +1,5 @@
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -9,6 +8,10 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public bool SpaceWind { get; private set; }
+        public float SpaceWindPressureForceDivisorThrow { get; private set; }
+        public float SpaceWindPressureForceDivisorPush { get; private set; }
+        public float SpaceWindMaxVelocity { get; private set; }
+        public float SpaceWindMaxPushForce { get; private set; }
         public bool MonstermosEqualization { get; private set; }
         public bool MonstermosDepressurization { get; private set; }
         public bool MonstermosRipTiles { get; private set; }
@@ -23,6 +26,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void InitializeCVars()
         {
             _cfg.OnValueChanged(CCVars.SpaceWind, value => SpaceWind = value, true);
+            _cfg.OnValueChanged(CCVars.SpaceWindPressureForceDivisorThrow, value => SpaceWindPressureForceDivisorThrow = value, true);
+            _cfg.OnValueChanged(CCVars.SpaceWindPressureForceDivisorPush, value => SpaceWindPressureForceDivisorPush = value, true);
+            _cfg.OnValueChanged(CCVars.SpaceWindMaxVelocity, value => SpaceWindMaxVelocity = value, true);
+            _cfg.OnValueChanged(CCVars.SpaceWindMaxPushForce, value => SpaceWindMaxPushForce = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosEqualization, value => MonstermosEqualization = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosDepressurization, value => MonstermosDepressurization = value, true);
             _cfg.OnValueChanged(CCVars.MonstermosRipTiles, value => MonstermosRipTiles = value, true);

@@ -1,55 +1,22 @@
 - type: job
-  id: Assistant
-  name: "assistant"
-  startingGear: AssistantGear
+  id: Passenger
+  name: job-name-passenger
+  startingGear: PassengerGear
   departments:
   - Civilian
-  icon: "Assistant"
-  supervisors: "absolutely everyone"
-  accessGroups:
+  icon: "Passenger"
+  supervisors: job-supervisors-everyone
+  access:
     - AllAccess
 
 - type: startingGear
-  id: AssistantGear
+  id: PassengerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
-    id: AssistantPDA
-    ears: ClothingHeadsetService
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
   innerclothingskirt: ClothingUniformJumpskirtColorGrey
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled
-
-- type: job
-  id: Vagabond
-  name: "vagabond"
-  startingGear: AssistantGear
-  departments:
-    - Civilian
-  icon: "Assistant"
-  supervisors: "absolutely nobody"
-  access:
-    - Captain
-    - HeadOfPersonnel
-    - ChiefEngineer
-    - ChiefMedicalOfficer
-    - HeadOfSecurity
-    - ResearchDirector
-    - Command
-    - Security
-    - Armory
-    - Engineering
-    - Medical
-    - Cargo
-    - Research
-    - Service
-    - Maintenance
-    - External
-    - Janitor
-    - Theatre
-    - Bar
-    - Chemistry
-    - Kitchen
-    - Chapel
-    - Hydroponics

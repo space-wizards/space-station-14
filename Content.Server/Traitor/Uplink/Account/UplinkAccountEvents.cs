@@ -1,5 +1,4 @@
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Traitor.Uplink.Account
 {

@@ -4,7 +4,7 @@
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
   result: Handcuffs
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
 
@@ -14,10 +14,21 @@
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     state: stunbaton_off
   result: Stunbaton
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 300
     Plastic: 300
+
+- type: latheRecipe
+  id: RiotShield
+  icon:
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: riot-icon
+  result: RiotShield
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
 
 - type: latheRecipe
   id: Flash
@@ -25,7 +36,7 @@
     sprite: Objects/Weapons/Melee/flash.rsi
     state: flash
   result: Flash
-  completetime: 500
+  completetime: 2
   materials:
     Glass: 100
     Plastic: 200
@@ -34,65 +45,65 @@
 - type: latheRecipe
   id: ShellShotgunBeanbag
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
-    state: base
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: beanbag
   result: ShellShotgunBeanbag
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 15
     Steel: 10
-    
+
 - type: latheRecipe
   id: CartridgePistolRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistolRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
-    
+
 - type: latheRecipe
   id: CartridgeMagnumRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnumRubber
-  completetime: 500
+  completetime: 2
   materials:
     Plastic: 5
     Steel: 5
-    
+
 - type: latheRecipe
-  id: CartridgeClRifleRubber
+  id: CartridgeCaselessRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeClRifleRubber
-  completetime: 500
+  result: CartridgeCaselessRifleRubber
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
-    
+
 - type: latheRecipe
-  id: CartridgeLRifleRubber
+  id: CartridgeLightRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifleRubber
-  completetime: 500
+  result: CartridgeLightRifleRubber
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
-    
+
 - type: latheRecipe
-  id: CartridgeSRifleRubber
+  id: CartridgeRifleRubber
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeSRifleRubber
-  completetime: 500
+  result: CartridgeRifleRubber
+  completetime: 2
   materials:
     Plastic: 10
     Steel: 5
@@ -103,7 +114,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgePistol
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 10
 
@@ -113,7 +124,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: base
   result: ShellShotgun
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 20
 
@@ -123,16 +134,39 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
   result: CartridgeMagnum
-  completetime: 500
+  completetime: 2
   materials:
     Steel: 20
 
 - type: latheRecipe
-  id: CartridgeLRifle
+  id: CartridgeLightRifle
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: base
-  result: CartridgeLRifle
-  completetime: 500
+  result: CartridgeLightRifle
+  completetime: 2
   materials:
     Steel: 30
+
+- type: latheRecipe
+  id: ShellShotgunFlare
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: flare
+  result: ShellShotgunFlare
+  completetime: 2
+  materials:
+    Plastic: 20
+    Steel: 5
+
+- type: latheRecipe
+  id: ShellTranquilizer
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: practice
+  result: ShellTranquilizer
+  completetime: 4
+  materials:
+    Plastic: 15
+    Steel: 10
+    Glass: 5

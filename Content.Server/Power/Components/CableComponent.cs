@@ -1,9 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Tools;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Components
@@ -12,7 +9,7 @@ namespace Content.Server.Power.Components
     ///     Allows the attached entity to be destroyed by a cutting tool, dropping a piece of cable.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(CableSystem))]
+    [Access(typeof(CableSystem))]
     public sealed class CableComponent : Component
     {
         [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

@@ -4,6 +4,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI

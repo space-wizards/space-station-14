@@ -6,6 +6,8 @@
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
     - type: InteractionOutline
+    - type: Transform
+      noRot: true
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
@@ -48,17 +50,14 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 25
-          mask:
-          - MobMask
-          layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 25
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
@@ -339,6 +338,43 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
 
+- type: entity
+  parent: GasCanister
+  id: MiasmaCanister
+  name: miasma canister
+  components:
+    - type: Sprite
+      state: redws
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 1871.71051 # Miasma
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+
 # Broke Entities
 
 - type: entity
@@ -346,7 +382,6 @@
   id: GasCanisterBrokenBase
   name: broken gas canister
   description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
-  abstract: true
   components:
     - type: Destructible
       thresholds:
@@ -375,17 +410,14 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.4,-0.3,0.4,0.3"
-          mass: 25
-          mask:
-          - MobMask
-          layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        mass: 25
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
 - type: entity
   parent: GasCanisterBrokenBase
@@ -458,3 +490,12 @@
   components:
     - type: Sprite
       state: water_vapor-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: MiasmaCanisterBroken
+  name: broken miasma canister
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: redws-1
