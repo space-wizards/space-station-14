@@ -1,20 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Fireaxes are now the perfect crowbar. They can now be used to pry up
-      floor tiles., type: Tweak}
-  id: 1410
-  time: '2022-04-27T07:29:30.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry now has vehicles., type: Tweak}
-  id: 1411
-  time: '2022-04-28T03:17:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
-  id: 1412
-  time: '2022-04-28T10:23:44.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
@@ -2951,3 +2935,19 @@ Entries:
   - {message: Many popups now vary in size and color., type: Add}
   id: 1909
   time: '2022-07-09T09:09:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Chickens and ducks now lay eggs., type: Add}
+  id: 1910
+  time: '2022-07-09T09:48:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station now has slightly more emergency lights across the station.
+      Salvage got a better exterior., type: Tweak}
+  id: 1911
+  time: '2022-07-09T09:48:53.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Smite spell now knocks back its target, type: Tweak}
+  id: 1912
+  time: '2022-07-09T09:49:31.0000000+00:00'
