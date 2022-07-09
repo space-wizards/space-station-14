@@ -46,7 +46,7 @@ namespace Content.Server.Morgue
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
                     _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity,
-                        Filter.Pvs(entity, entityManager: EntityManager), PopupType.Critical);
+                        Filter.Pvs(entity, entityManager: EntityManager), PopupType.MediumCaution);
                 }
             }
 

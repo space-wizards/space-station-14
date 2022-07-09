@@ -76,9 +76,11 @@ namespace Content.Client.Stylesheets
         public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
+        public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
         public const string StyleClassPopupMessageMedium = "PopupMessageMedium";
+        public const string StyleClassPopupMessageMediumCaution = "PopupMessageMediumCaution";
         public const string StyleClassPopupMessageLarge = "PopupMessageLarge";
-        public const string StyleClassPopupMessageCritical = "PopupMessageCritical";
+        public const string StyleClassPopupMessageLargeCaution = "PopupMessageLargeCaution";
 
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
         public static readonly Color GoodGreenFore = Color.FromHex("#31843E");
@@ -1046,11 +1048,25 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font-color", Color.White),
                     }),
 
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmallCaution}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic10),
+                        new StyleProperty("font-color", Color.Red),
+                    }),
+
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSansItalic12),
                         new StyleProperty("font-color", Color.LightGray),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMediumCaution}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic12),
+                        new StyleProperty("font-color", Color.Red),
                     }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
@@ -1060,10 +1076,10 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font-color", Color.LightGray),
                     }),
 
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageCritical}, null, null),
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLargeCaution}, null, null),
                     new[]
                     {
-                        new StyleProperty("font", notoSansBoldItalic16),
+                        new StyleProperty("font", notoSansBoldItalic14),
                         new StyleProperty("font-color", Color.Red),
                     }),
 

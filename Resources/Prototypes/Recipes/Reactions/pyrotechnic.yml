@@ -23,7 +23,7 @@
   - !type:CreateGas
     gas: Plasma
   - !type:PopupMessage
-    visualType: Critical
+    visualType: LargeCaution
     messages: [ "phlogiston-plasma-created" ]
     type: Pvs
   products:
@@ -48,6 +48,6 @@
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs
-    visualType: Critical
+    visualType: LargeCaution
   products:
     ChlorineTrifluoride: 4
