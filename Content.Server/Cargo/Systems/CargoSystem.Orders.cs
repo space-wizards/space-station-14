@@ -155,7 +155,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
-            order.setApproverData(idCard);
+            order.SetApproverData(idCard);
 
 
             SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
