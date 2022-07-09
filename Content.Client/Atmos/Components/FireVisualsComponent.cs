@@ -1,7 +1,8 @@
 namespace Content.Client.Atmos.Components;
 
 /// <summary>
-/// This is used for...
+/// Sets which sprite RSI is used for displaying the fire visuals and what state to use based on the fire stacks
+/// accumulated.
 /// </summary>
 [RegisterComponent]
 public sealed class FireVisualsComponent : Component
