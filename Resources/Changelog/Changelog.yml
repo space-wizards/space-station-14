@@ -1,9 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Adds the rainbow crayon. Honk!, type: Add}
-  id: 1415
-  time: '2022-04-28T12:23:45.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
@@ -2951,3 +2946,8 @@ Entries:
   - {message: added order manifest to shuttle orders, type: Add}
   id: 1914
   time: '2022-07-09T13:48:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
+  id: 1915
+  time: '2022-07-09T16:40:43.0000000+00:00'
