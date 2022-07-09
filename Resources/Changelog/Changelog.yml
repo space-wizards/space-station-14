@@ -1,12 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: You can no longer get on vehicles if your hands are full., type: Fix}
-  - {message: ATV crate price from 2500 -> 6000., type: Tweak}
-  id: 1403
-  time: '2022-04-25T00:05:54.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Emotes will no longer be capitalized when they shouldn't be., type: Fix}
   id: 1404
   time: '2022-04-25T00:15:40.0000000+00:00'
@@ -2953,3 +2947,8 @@ Entries:
       disablers have a laser., type: Add}
   id: 1902
   time: '2022-07-09T03:46:11.0000000+00:00'
+- author: themias
+  changes:
+  - {message: force-feeding works again, type: Fix}
+  id: 1903
+  time: '2022-07-09T03:57:18.0000000+00:00'
