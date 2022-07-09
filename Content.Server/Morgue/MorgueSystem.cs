@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Content.Server.Players;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Robust.Shared.Player;
 
@@ -44,7 +45,8 @@ namespace Content.Server.Morgue
 
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
-                    _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity, entityManager: EntityManager));
+                    _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity,
+                        Filter.Pvs(entity, entityManager: EntityManager), PopupType.Critical);
                 }
             }
 

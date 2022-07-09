@@ -34,6 +34,7 @@ using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -109,8 +110,11 @@ public sealed partial class AdminVerbSystem
                 EnsureComp<TabletopDraggableComponent>(args.Target);
                 RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
                 var xform = Transform(args.Target);
-                _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target, Filter.Entities(args.Target));
-                _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-chess-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target,
+                    Filter.Entities(args.Target), PopupType.Critical);
+                _popupSystem.PopupCoordinates(
+                    Loc.GetString("admin-smite-chess-others", ("name", args.Target)), xform.Coordinates,
+                    Filter.PvsExcept(args.Target), PopupType.Critical);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
                 xform.Coordinates = EntityCoordinates.FromMap(_mapManager, session.Position);
@@ -134,8 +138,10 @@ public sealed partial class AdminVerbSystem
                     flammable.FireStacks = 99999.9f;
                     _flammableSystem.Ignite(args.Target);
                     var xform = Transform(args.Target);
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target, Filter.Entities(args.Target));
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.Critical);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-set-alight-others", ("name", args.Target)), xform.Coordinates,
+                        Filter.PvsExcept(args.Target), PopupType.Critical);
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Makes them burn.",
@@ -252,8 +258,10 @@ public sealed partial class AdminVerbSystem
                 {
                     _bloodstreamSystem.SpillAllSolutions(args.Target, bloodstream);
                     var xform = Transform(args.Target);
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-blood-self"), args.Target, Filter.Entities(args.Target));
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-blood-others", ("name", args.Target)), xform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-blood-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.Critical);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-blood-others", ("name", args.Target)), xform.Coordinates,
+                        Filter.PvsExcept(args.Target), PopupType.Critical);
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Removes their blood. All of it.",
@@ -283,8 +291,10 @@ public sealed partial class AdminVerbSystem
                         xform.Coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f,0.75f));
                     }
 
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target, Filter.Entities(args.Target));
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.Critical);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-vomit-organs-others", ("name", args.Target)), baseXform.Coordinates,
+                        Filter.PvsExcept(args.Target), PopupType.Critical);
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Causes them to vomit, including their internal organs.",
@@ -304,8 +314,10 @@ public sealed partial class AdminVerbSystem
                         body.RemovePart(part);
                         Transform(part.Owner).Coordinates = baseXform.Coordinates;
                     }
-                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target, Filter.Entities(args.Target));
-                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-others", ("name", args.Target)), baseXform.Coordinates, Filter.Pvs(args.Target).RemoveWhereAttachedEntity(x => x == args.Target));
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.Critical);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-others", ("name", args.Target)), baseXform.Coordinates,
+                        Filter.PvsExcept(args.Target), PopupType.Medium);
                 },
                 Impact = LogImpact.Extreme,
                 Message = "Removes the target's hands.",
@@ -482,7 +494,8 @@ public sealed partial class AdminVerbSystem
             {
                 EntityManager.QueueDeleteEntity(args.Target);
                 Spawn("Ash", Transform(args.Target).Coordinates);
-                _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target, Filter.Pvs(args.Target));
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", args.Target)), args.Target,
+                    Filter.Pvs(args.Target), PopupType.Critical);
             },
             Impact = LogImpact.Extreme,
             Message = "Reduces the target to a small pile of ash.",

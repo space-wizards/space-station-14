@@ -9,6 +9,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 using Content.Shared.Toilet;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
@@ -47,11 +48,11 @@ namespace Content.Server.Toilet
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", args.Victim), ("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(args.Victim).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(args.Victim), PopupType.Critical);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
                     ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim), PopupType.Critical);
 
                 args.SetHandled(SuicideKind.Asphyxiation);
             }
@@ -59,11 +60,11 @@ namespace Content.Server.Toilet
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
                     ("victim", args.Victim), ("owner", uid));
-                _popupSystem.PopupEntity(othersMessage, uid, Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Victim));
+                _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), PopupType.Critical);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-message",
                     ("owner", uid));
-                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim));
+                _popupSystem.PopupEntity(selfMessage, uid, Filter.Entities(args.Victim), PopupType.Critical);
 
                 args.SetHandled(SuicideKind.Blunt);
             }
