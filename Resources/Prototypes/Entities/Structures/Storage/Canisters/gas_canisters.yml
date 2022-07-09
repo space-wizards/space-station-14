@@ -11,11 +11,13 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
-      state: grey
+      layers:
+        - state: grey
+        - state: can-connector
+          visible: false
+          map: ["connectedToPort"]
     - type: Appearance
       visuals:
-        - type: GasPortableVisualizer
-          stateConnected: can-connector
         - type: GasCanisterVisualizer
           insertedTankState: can-open
           pressureStates:
@@ -23,6 +25,12 @@
             - can-o1
             - can-o2
             - can-o3
+    - type: GenericVisualizer
+      visuals:
+        enum.GasPortableVisuals.ConnectedState:
+          connectedToPort:
+            False: { visible: false }
+            True: { visible: true }
     - type: UserInterface
       interfaces:
         - key: enum.GasCanisterUiKey.Key
@@ -80,7 +88,11 @@
   name: storage canister
   components:
     - type: Sprite
-      state: yellow # Classic toxins canister
+      layers:
+        - state: yellow
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -117,7 +129,11 @@
   name: air canister
   components:
   - type: Sprite
-    state: grey
+    layers:
+      - state: grey
+      - state: can-connector
+        visible: false
+        map: [ "connectedToPort" ]
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -148,7 +164,11 @@
   name: oxygen canister
   components:
   - type: Sprite
-    state: blue
+    layers:
+      - state: blue
+      - state: can-connector
+        visible: false
+        map: [ "connectedToPort" ]
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -178,7 +198,11 @@
   name: nitrogen canister
   components:
     - type: Sprite
-      state: red
+      layers:
+        - state: red
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -209,7 +233,11 @@
   name: carbon dioxide canister
   components:
     - type: Sprite
-      state: black
+      layers:
+        - state: black
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -241,7 +269,11 @@
   name: plasma canister
   components:
     - type: Sprite
-      state: orange
+      layers:
+        - state: orange
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -275,7 +307,11 @@
   name: tritium canister
   components:
     - type: Sprite
-      state: green
+      layers:
+        - state: green
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -309,7 +345,11 @@
   name: water vapor canister
   components:
     - type: Sprite
-      state: water_vapor
+      layers:
+        - state: water_vapor
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -344,7 +384,11 @@
   name: miasma canister
   components:
     - type: Sprite
-      state: redws
+      layers:
+        - state: redws
+        - state: can-connector
+          visible: false
+          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
