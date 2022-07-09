@@ -13,10 +13,7 @@ namespace Content.Shared.Cargo
         // public String RequesterRank; // TODO Figure out how to get Character ID card data
         // public int RequesterId;
         public string Reason;
-        public bool Approved
-        {
-            get { return Approver is not null; }
-        }
+        public bool Approved => Approver is not null;
         public string? Approver;
 
         public CargoOrderData(int orderNumber, string productId, int amount, string requester, string reason)
