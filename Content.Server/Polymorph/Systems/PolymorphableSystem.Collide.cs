@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Content.Server.Polymorph.Components;
+﻿using Content.Server.Polymorph.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -19,14 +19,14 @@ public partial class PolymorphableSystem
 
         while (_queuedPolymorphUpdates.TryDequeue(out var data))
         {
-            if (Deleted(data.Ent) || data.Comp.Deleted)
+            if (Deleted(data.Ent))
                 continue;
 
-            var ent = PolymorphEntity(data.Ent, data.Comp.Polymorph);
+            var ent = PolymorphEntity(data.Ent, data.Polymorph);
             if (ent != null)
             {
-                SoundSystem.Play(data.Comp.Sound.GetSound(), Filter.Pvs(ent.Value, entityManager: EntityManager),
-                    ent.Value, data.Comp.Sound.Params);
+                SoundSystem.Play(data.Sound.GetSound(), Filter.Pvs(ent.Value, entityManager: EntityManager),
+                    ent.Value, data.Sound.Params);
             }
         }
     }
@@ -46,18 +46,20 @@ public partial class PolymorphableSystem
             || component.Blacklist != null && component.Blacklist.IsValid(other))
             return;
 
-        _queuedPolymorphUpdates.Enqueue(new (other, component));
+        _queuedPolymorphUpdates.Enqueue(new (other, component.Sound, component.Polymorph));
     }
 }
 
 struct PolymorphQueuedData
 {
     public EntityUid Ent;
-    public PolymorphOnCollideComponent Comp;
+    public SoundSpecifier Sound;
+    public string Polymorph;
 
-    public PolymorphQueuedData(EntityUid ent, PolymorphOnCollideComponent comp)
+    public PolymorphQueuedData(EntityUid ent, SoundSpecifier sound, string polymorph)
     {
         Ent = ent;
-        Comp = comp;
+        Sound = sound;
+        Polymorph = polymorph;
     }
 }
