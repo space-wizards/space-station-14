@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Splitstation fixes and QoL improvements. See Github PR for details.,
-    type: Add}
-  id: 1402
-  time: '2022-04-24T13:10:44.0000000+00:00'
 - author: Rane
   changes:
   - {message: You can no longer get on vehicles if your hands are full., type: Fix}
@@ -2953,3 +2947,9 @@ Entries:
       stronger cartridges instead of regular ones, type: Fix}
   id: 1901
   time: '2022-07-09T03:42:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Projectiles now have impact effects. Most bullets have sparkles and
+      disablers have a laser., type: Add}
+  id: 1902
+  time: '2022-07-09T03:46:11.0000000+00:00'
