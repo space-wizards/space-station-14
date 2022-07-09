@@ -8,7 +8,6 @@ using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
-using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
@@ -114,6 +113,10 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("worldSpell");
             _prototypeManager.RegisterIgnore("entitySpell");
             _prototypeManager.RegisterIgnore("instantSpell");
+            _prototypeManager.RegisterIgnore("roundAnnouncement");
+            _prototypeManager.RegisterIgnore("wireLayout");
+            _prototypeManager.RegisterIgnore("alertLevels");
+            _prototypeManager.RegisterIgnore("nukeopsRole");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
