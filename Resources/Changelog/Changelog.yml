@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: The "suspicion" gamemode now works on every map., type: Tweak}
-  id: 1408
-  time: '2022-04-26T14:57:25.0000000+00:00'
 - author: Veritius
   changes:
   - {message: The Syndicate has distributed new segways for their agents to use.,
@@ -2951,3 +2946,9 @@ Entries:
       give no effect anyway).', type: Tweak}
   id: 1907
   time: '2022-07-09T08:24:49.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that would cause additional reagents to appear when failing
+      to drink something., type: Fix}
+  id: 1908
+  time: '2022-07-09T08:53:18.0000000+00:00'
