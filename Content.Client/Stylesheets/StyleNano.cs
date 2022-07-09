@@ -1043,21 +1043,21 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.LightGray),
+                        new StyleProperty("font-color", Color.White),
                     }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.Gray),
+                        new StyleProperty("font-color", Color.LightGray),
                     }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.Gray),
+                        new StyleProperty("font-color", Color.LightGray),
                     }),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageCritical}, null, null),
