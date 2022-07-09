@@ -23,7 +23,6 @@ public sealed class InteractionOutlineSystem : EntitySystem
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     /// <summary>
     ///     Whether to currently draw the outline. The outline may be temporarily disabled by other systems
@@ -64,7 +63,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave(_spriteSystem);
+            outline.OnMouseLeave();
     }
 
     public void SetEnabled(bool enabled)
@@ -83,7 +82,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave(_spriteSystem);
+            outline.OnMouseLeave();
     }
 
     public override void FrameUpdate(float frameTime)
@@ -146,7 +145,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         {
             if (entityToClick != null && TryComp(entityToClick, out outline))
             {
-                outline.UpdateInRange(inRange, renderScale, _spriteSystem);
+                outline.UpdateInRange(inRange, renderScale);
             }
 
             return;
@@ -155,14 +154,14 @@ public sealed class InteractionOutlineSystem : EntitySystem
         if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity) &&
             TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseLeave(_spriteSystem);
+            outline.OnMouseLeave();
         }
 
         _lastHoveredEntity = entityToClick;
 
         if (_lastHoveredEntity != null && TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseEnter(inRange, renderScale, _spriteSystem);
+            outline.OnMouseEnter(inRange, renderScale);
         }
     }
 }
