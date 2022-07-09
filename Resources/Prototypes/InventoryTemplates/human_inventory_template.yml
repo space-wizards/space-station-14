@@ -16,6 +16,7 @@
     - name: outerClothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
+      slotGroup: MainHotbar
       stripTime: 5
       uiWindowPos: 1,2
       displayName: Suit
@@ -54,6 +55,7 @@
     - name: pocket1
       slotTexture: pocket
       slotFlags: POCKET
+      slotGroup: MainHotbar
       stripTime: 2
       uiWindowPos: 0,3
       dependsOn: jumpsuit
@@ -62,6 +64,7 @@
     - name: pocket2
       slotTexture: pocket
       slotFlags: POCKET
+      slotGroup: MainHotbar
       stripTime: 2
       uiWindowPos: 2,3
       dependsOn: jumpsuit
@@ -77,6 +80,7 @@
     - name: id
       slotTexture: id
       slotFlags: IDCARD
+      slotGroup: SecondHotbar
       stripTime: 5
       uiWindowPos: 2,1
       dependsOn: jumpsuit
@@ -84,12 +88,14 @@
     - name: belt
       slotTexture: belt
       slotFlags: BELT
+      slotGroup: SecondHotbar
       stripTime: 5
       uiWindowPos: 3,1
       displayName: Belt
     - name: back
       slotTexture: back
       slotFlags: BACK
+      slotGroup: SecondHotbar
       stripTime: 5
       uiWindowPos: 3,0
       displayName: Back
