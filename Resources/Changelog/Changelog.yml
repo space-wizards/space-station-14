@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: 'Delta Station now has vehicles for Security, Cargo, and the Janitor.',
-    type: Add}
-  id: 1398
-  time: '2022-04-24T02:26:50.0000000+00:00'
 - author: Rane
   changes:
   - {message: Minibomb radius massively reduced., type: Tweak}
@@ -2964,3 +2958,9 @@ Entries:
       turned off, type: Fix}
   id: 1897
   time: '2022-07-08T21:45:16.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: 'Added the MagiVend, your one-stop shop for various wizard goodies.',
+    type: Add}
+  id: 1898
+  time: '2022-07-09T02:40:49.0000000+00:00'
