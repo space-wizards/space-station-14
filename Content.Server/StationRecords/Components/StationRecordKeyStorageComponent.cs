@@ -1,3 +1,5 @@
+using Content.Shared.StationRecords;
+
 namespace Content.Server.StationRecords;
 
 [RegisterComponent]

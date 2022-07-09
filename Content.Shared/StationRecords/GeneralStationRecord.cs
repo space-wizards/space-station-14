@@ -1,6 +1,6 @@
 using Robust.Shared.Enums;
 
-namespace Content.Server.StationRecords;
+namespace Content.Shared.StationRecords;
 
 /// <summary>
 ///     General station record. Indicates the crewmember's name and job.

@@ -5,6 +5,7 @@ using Content.Server.StationRecords;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Access.Components
