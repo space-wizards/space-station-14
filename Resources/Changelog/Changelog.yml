@@ -1,18 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: NT Barratry has received a small update., type: Tweak}
-  id: 1405
-  time: '2022-04-25T14:45:54.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Most airlocks on Delta Station are now named for your convenience. That
-      ought to clear a few things up around here., type: Add}
-  - {message: 'Delta Station now has an arrivals shuttle, hopefully reducing the amount
-      of deaths to arrivals being spaced.', type: Add}
-  - {message: Delta Station now actually has vehicles., type: Add}
-  id: 1406
-  time: '2022-04-25T14:50:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Split Station minor update. More signage, some wiring fixes, vehicle
@@ -2953,3 +2939,14 @@ Entries:
   - {message: The China Lake bundle no longer comes with flash grenades., type: Tweak}
   id: 1904
   time: '2022-07-09T04:53:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emergency shuttle will now announce its arrival direction., type: Add}
+  id: 1905
+  time: '2022-07-09T05:19:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emergency shuttle will now actually warp-in nearby if there's no available
+      docks., type: Fix}
+  id: 1906
+  time: '2022-07-09T05:20:23.0000000+00:00'
