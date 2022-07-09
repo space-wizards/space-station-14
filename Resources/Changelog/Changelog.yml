@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Emotes will no longer be capitalized when they shouldn't be., type: Fix}
-  id: 1404
-  time: '2022-04-25T00:15:40.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: NT Barratry has received a small update., type: Tweak}
@@ -2952,3 +2947,9 @@ Entries:
   - {message: force-feeding works again, type: Fix}
   id: 1903
   time: '2022-07-09T03:57:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The China Lake's projectiles now have smaller explosions., type: Tweak}
+  - {message: The China Lake bundle no longer comes with flash grenades., type: Tweak}
+  id: 1904
+  time: '2022-07-09T04:53:23.0000000+00:00'
