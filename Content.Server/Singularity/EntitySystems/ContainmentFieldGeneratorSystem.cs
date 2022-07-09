@@ -79,16 +79,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
     {
-        component.Connection1?.Item2.Clear();;
-        component.Connection2?.Item2.Clear();;
+        DeleteFields(component);
     }
 
     private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
         {
-            component.Connection1?.Item2.Clear();
-            component.Connection2?.Item2.Clear();
+            DeleteFields(component);
         }
     }
 
@@ -122,7 +120,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Parent == null)
         {
-            EntityManager.QueueDeleteEntity(uid);
+            //EntityManager.QueueDeleteEntity(uid);
         }
     }
 
@@ -200,20 +198,30 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             if (closestResult == null) continue;
 
             var ent = closestResult.Value.HitEntity;
+
+            //Something could be wrong with this
             if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
                 fieldGeneratorComponent.Owner == component.Owner ||
                 !HasFreeConnections(fieldGeneratorComponent) ||
-                //IsConnectedWith(component, fieldGeneratorComponent) ||
+                IsConnectedWith(component, fieldGeneratorComponent) ||
                 !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
                 collidableComponent.BodyType != BodyType.Static)
             {
                 continue;
             }
 
+            //rework this I don't think it will work out
+            //One gen always appears with no connections
             component.Generator1 = component.Owner;
+            if (component.Generator2 == fieldGeneratorComponent.Owner) //new addition, come back to this
+                continue;
+
             component.Generator2 = fieldGeneratorComponent.Owner;
 
+            //The spawning works fine
             GenerateConnection(component);
+            //Really need to reapproach the tuple approach
+            //Something about this has to not be working.
             propertyFieldTuple = new Tuple<Angle, List<EntityUid>>(direction, component.Fields);
             if (fieldGeneratorComponent.Connection1 == null)
             {
@@ -260,8 +268,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var currentCoords = gen1Coords.Offset(currentOffset);
             var newField = Spawn(component.CreatedField, currentCoords);
 
-            //var fieldXForm = Transform(newField);
-            //fieldXForm.AttachParent(component.Generator1.Value);
+            var fieldXForm = Transform(newField);
+            fieldXForm.AttachParent(component.Generator1.Value);
 
             component.Fields.Add(newField);
             currentOffset += dirVec;
@@ -270,6 +278,27 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void DeleteFields(ContainmentFieldGeneratorComponent component)
     {
+
+        if (component.Connection1?.Item2 != null)
+        {
+            foreach (var field in component.Connection1.Item2)
+            {
+                QueueDel(field);
+            }
+
+            component.Connection1 = null;
+        }
+
+        if (component.Connection2?.Item2 != null)
+        {
+            foreach (var field in component.Connection2.Item2)
+            {
+                QueueDel(field);
+            }
+
+            component.Connection2 = null;
+        }
+
         foreach (var field in component.Fields)
         {
             QueueDel(field);
@@ -286,6 +315,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         return false;
     }
 
+    public bool IsConnectedWith(ContainmentFieldGeneratorComponent mainGen, ContainmentFieldGeneratorComponent connectedGen)
+    {
+        return connectedGen == mainGen || mainGen.Generator1 == connectedGen.Owner ||
+               mainGen.Generator2 == connectedGen.Owner;
+    }
 
     public bool HasFreeConnections(ContainmentFieldGeneratorComponent component)
     {
