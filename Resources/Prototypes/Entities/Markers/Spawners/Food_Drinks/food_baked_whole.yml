@@ -41,7 +41,6 @@
       - FoodPieCherry
       - FoodPieMeat
       - FoodPieFrosty
-      - FoodPieXeno
     chance: 0.8
     offset: 0.0
     #rare
@@ -55,4 +54,5 @@
       - FoodPieAmanita
       - FoodPiePlump
       - FoodBreadMeatXeno
+      - FoodPieXeno
     rareChance: 0.05

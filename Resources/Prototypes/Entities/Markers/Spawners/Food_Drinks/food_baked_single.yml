@@ -60,7 +60,6 @@
       - FoodPieClafoutisSlice
       - FoodPieMeatSlice
       - FoodPieCherrySlice
-      - FoodPieXenoSlice
       - FoodPieFrostySlice
       - FoodTartGrape
       - FoodTartCoco
@@ -75,4 +74,5 @@
       - FoodCakeSpacemanSlice
       - FoodTartGapple
       - FoodBreadMeatXenoSlice
+      - FoodPieXenoSlice
     rareChance: 0.05
