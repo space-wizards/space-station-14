@@ -140,19 +140,12 @@
     sprite: Objects/Tools/Cowtools/milkalyzer.rsi
     layers:
     - state: milkalyzer
-      map: ["analyzer"]
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.GasAnalyzerVisuals.VisualState:
-        analyzer:
-          Off: { state: milkalyzer }
-          Working: { state: milkalyzer }
 
 - type: entity
   name: cow toolbox
