@@ -1,27 +1,13 @@
+using Content.Server.Stunnable.Systems;
 using Content.Shared.Sound;
+using Content.Shared.Timing;
 
 namespace Content.Server.Stunnable.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, Access(typeof(StunbatonSystem))]
     public sealed class StunbatonComponent : Component
     {
         public bool Activated = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("paralyzeChanceNoSlowdown")]
-        public float ParalyzeChanceNoSlowdown { get; set; } = 0.35f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("paralyzeChanceWithSlowdown")]
-        public float ParalyzeChanceWithSlowdown { get; set; } = 0.85f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("paralyzeTime")]
-        public float ParalyzeTime { get; set; } = 10f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("slowdownTime")]
-        public float SlowdownTime { get; set; } = 5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energyPerUse")]

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Stacks
 {
     [NetworkedComponent, Access(typeof(SharedStackSystem))]
-    public abstract class SharedStackComponent : Component, ISerializationHooks
+    public abstract class SharedStackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]

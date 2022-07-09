@@ -12,7 +12,7 @@ public sealed class CargoShuttleComponent : Component
     public TimeSpan? NextCall;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
-    public float Cooldown = 45f;
+    public float Cooldown = 150f;
 
     [ViewVariables]
     public bool CanRecall;

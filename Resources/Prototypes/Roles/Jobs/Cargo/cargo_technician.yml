@@ -1,11 +1,11 @@
 - type: job
   id: CargoTechnician
-  name: "cargo technician"
+  name: job-name-cargoteh
   startingGear: CargoTechGear
   departments:
   - Cargo
   icon: "CargoTechnician"
-  supervisors: "the quartermaster and head of personnel"
+  supervisors: job-supervisors-hop-qm
   access:
   - Cargo
   - Maintenance
