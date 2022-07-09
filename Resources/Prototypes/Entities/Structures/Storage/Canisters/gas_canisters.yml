@@ -13,9 +13,6 @@
       sprite: Structures/Storage/canister.rsi
       layers:
         - state: grey
-        - state: can-connector
-          visible: false
-          map: ["connectedToPort"]
     - type: Appearance
       visuals:
         - type: GasCanisterVisualizer
@@ -29,8 +26,8 @@
       visuals:
         enum.GasPortableVisuals.ConnectedState:
           connectedToPort:
-            False: { visible: false }
-            True: { visible: true }
+            False: { state: can-connector, visible: false }
+            True: { state: can-connector, visible: true }
     - type: UserInterface
       interfaces:
         - key: enum.GasCanisterUiKey.Key
@@ -90,9 +87,6 @@
     - type: Sprite
       layers:
         - state: yellow
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -166,9 +160,6 @@
   - type: Sprite
     layers:
       - state: blue
-      - state: can-connector
-        visible: false
-        map: [ "connectedToPort" ]
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -200,9 +191,6 @@
     - type: Sprite
       layers:
         - state: red
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -235,9 +223,6 @@
     - type: Sprite
       layers:
         - state: black
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -309,9 +294,6 @@
     - type: Sprite
       layers:
         - state: green
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -347,9 +329,6 @@
     - type: Sprite
       layers:
         - state: water_vapor
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -386,9 +365,6 @@
     - type: Sprite
       layers:
         - state: redws
-        - state: can-connector
-          visible: false
-          map: [ "connectedToPort" ]
     - type: GasCanister
       gasMixture:
         volume: 1000
