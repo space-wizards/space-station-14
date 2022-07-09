@@ -91,7 +91,7 @@ namespace Content.Server.Access.Components
         {
             var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
             if (station == null
-                || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent keyStorage)
+                || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
                 || keyStorage.Key == null
                 || !EntitySystem.Get<StationRecordsSystem>().TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
             {
