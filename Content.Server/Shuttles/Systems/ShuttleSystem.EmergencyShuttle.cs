@@ -256,8 +256,16 @@ public sealed partial class ShuttleSystem
 
        if (TryHyperspaceDock(shuttle, targetGrid.Value))
        {
+           if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+           {
+               var mapDiff = xform.WorldPosition - targetXform.WorldPosition;
+               var targetRotation = targetXform.WorldRotation;
+               var angle = mapDiff.ToWorldAngle();
+               angle -= targetRotation;
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
+           }
+
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}")), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
        }
