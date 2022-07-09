@@ -19,6 +19,9 @@ public partial class PolymorphableSystem
 
         while (_queuedPolymorphUpdates.TryDequeue(out var data))
         {
+            if (Deleted(data.Ent) || data.Comp.Deleted)
+                continue;
+
             var ent = PolymorphEntity(data.Ent, data.Comp.Polymorph);
             if (ent != null)
             {

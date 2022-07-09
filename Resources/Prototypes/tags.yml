@@ -427,6 +427,12 @@
   id: Window
 
 - type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag

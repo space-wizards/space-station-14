@@ -1,22 +1,20 @@
 ﻿- type: entity
-  id: WeaponStaffBase
+  id: WeaponWandBase
   abstract: true
   parent: BaseItem
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Magic/staves.rsi
+    sprite: Objects/Weapons/Guns/Magic/wands.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Magic/staves.rsi
-    HeldPrefix: staff
-    size: 60
+    sprite: Objects/Weapons/Guns/Magic/wands.rsi
+    HeldPrefix: wand
+    size: 30
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
   - type: AmmoCounter
-  # All staves recharge. Wands are not.
-  - type: RechargeBasicEntityAmmo
   # These will only do anything if the effect layer is actually set.
   - type: Appearance
   - type: GenericVisualizer
@@ -25,4 +23,6 @@
         effect:
           True: { visible: True }
           False: { visible: False }
-
+  - type: Tag
+    tags:
+    - WizardWand

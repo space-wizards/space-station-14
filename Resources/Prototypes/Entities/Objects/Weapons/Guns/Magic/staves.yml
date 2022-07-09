@@ -1,59 +1,4 @@
-﻿- type: entity
-  name: staff of fireball
-  parent: WeaponStaffBase
-  id: WeaponStaffFireball
-  description: Great big balls of fire!
-  components:
-  - type: Sprite
-    layers:
-    - state: fire
-    - state: fire-effect
-      map: ["effect"]
-  - type: Gun
-    fireRate: 0.25
-    soundGunshot:
-      path: /Audio/Magic/fireball.ogg
-  - type: BasicEntityAmmoProvider
-    proto: ProjectileFireball
-    capacity: 5
-
-- type: entity
-  name: staff of carp polymorph
-  parent: WeaponStaffBase
-  id: WeaponStaffPolymorphCarp
-  description: For when you need a carp filet quick and the clown is looking juicy.
-  components:
-  - type: Sprite
-    layers:
-    - state: poly
-    - state: poly-effect
-      map: ["effect"]
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
-  - type: BasicEntityAmmoProvider
-    proto: ProjectilePolyboltCarp
-    capacity: 5
-  - type: Appearance
-
-- type: entity
-  name: magical staff of instant death
-  parent: WeaponStaffBase
-  id: WeaponStaffDeath
-  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
-  components:
-  - type: Sprite
-    layers:
-    - state: death
-    - state: death-effect
-      map: ["effect"]
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
-  - type: BasicEntityAmmoProvider
-    proto: BulletInstakillMagic
-    capacity: 3
-  - type: Appearance
+﻿# To be implemented: see #9072
 
 - type: entity
   name: staff of healing
@@ -71,9 +16,10 @@
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBolt
+    capacity: 10
 
 - type: entity
-  name: door staff
+  name: staff of entrance
   parent: WeaponStaffBase
   id: WeaponStaffPolymorphDoor
   description: For when you need a get-away route.
@@ -88,3 +34,4 @@
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
+    capacity: 10

@@ -58,6 +58,7 @@
     whitelist:
       components:
       - Airlock
+      - Firelock
       tags:
       - Wall
   - type: Projectile
