@@ -1,10 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: The Syndicate has distributed new segways for their agents to use.,
-    type: Add}
-  id: 1409
-  time: '2022-04-26T22:08:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Fireaxes are now the perfect crowbar. They can now be used to pry up
@@ -2952,3 +2946,8 @@ Entries:
       to drink something., type: Fix}
   id: 1908
   time: '2022-07-09T08:53:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Many popups now vary in size and color., type: Add}
+  id: 1909
+  time: '2022-07-09T09:09:52.0000000+00:00'
