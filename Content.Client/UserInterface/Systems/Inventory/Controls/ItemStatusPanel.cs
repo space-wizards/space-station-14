@@ -13,7 +13,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Systems.Inventory.Controls
 {
-    public sealed class ItemStatusPanel : Control
+    public sealed class ItemStatusPanel : Popup
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -30,18 +30,13 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls
         [ViewVariables]
         private EntityUid? _entity;
 
-        public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
+        public ItemStatusPanel()
         {
             IoCManager.InjectDependencies(this);
 
-            var panel = new StyleBoxTexture
-            {
-                Texture = texture
-            };
+            var panel = new StyleBoxTexture();
             panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
             panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
-            panel.SetPatchMargin(flat, 2);
-            panel.SetPatchMargin(cutout, 13);
 
             AddChild(_panel = new PanelContainer
             {
@@ -62,8 +57,7 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls
                             (_itemNameLabel = new Label
                             {
                                 ClipText = true,
-                                StyleClasses = {StyleNano.StyleClassItemStatus},
-                                Align = textAlign
+                                StyleClasses = {StyleNano.StyleClassItemStatus}
                             })
                         }
                     }
@@ -73,18 +67,11 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls
 
             // TODO: Depending on if its a two-hand panel or not
             MinSize = (150, 0);
+
+            SetSide(HandLocation.Middle);
         }
 
-        /// <summary>
-        ///     Creates a new instance of <see cref="ItemStatusPanel"/>
-        ///     based on whether or not it is being created for the right
-        ///     or left hand.
-        /// </summary>
-        /// <param name="location">
-        ///     The location of the hand that this panel is for
-        /// </param>
-        /// <returns>the new <see cref="ItemStatusPanel"/> instance</returns>
-        public static ItemStatusPanel FromSide(HandLocation location)
+        public void SetSide(HandLocation location)
         {
             string texture;
             StyleBox.Margin cutOut;
@@ -115,7 +102,12 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls
                     throw new ArgumentOutOfRangeException(nameof(location), location, null);
             }
 
-            return new ItemStatusPanel(ResC.GetTexture(texture), cutOut, flat, textAlign);
+            var panel = (StyleBoxTexture) _panel.PanelOverride!;
+            panel.Texture = ResC.GetTexture(texture);
+            panel.SetPatchMargin(flat, 2);
+            panel.SetPatchMargin(cutOut, 13);
+
+            _itemNameLabel.Align = textAlign;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

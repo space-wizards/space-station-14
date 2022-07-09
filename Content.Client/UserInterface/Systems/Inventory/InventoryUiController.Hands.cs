@@ -124,7 +124,7 @@ public sealed partial class InventoryUIController
 
     private void OnItemAdded(string name, EntityUid entity)
     {
-        HandsGui.StatusPanel.Update(entity);
+        HandsGui.UpdatePanelEntity(entity);
         var hand = GetHand(name);
         if (hand == null) return;
         if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
@@ -135,7 +135,7 @@ public sealed partial class InventoryUIController
 
     private void OnItemRemoved(string name, EntityUid entity)
     {
-        HandsGui.StatusPanel.Update(null);
+        HandsGui.UpdatePanelEntity(null);
         var hand = GetHand(name);
         if (hand == null) return;
         hand.SpriteView.Sprite = null;

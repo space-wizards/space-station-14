@@ -8,7 +8,6 @@
     Orientation="Horizontal"
     HorizontalAlignment="Center">
     <BoxContainer Orientation="Vertical">
-        <Control Name="StatusContainer" />
         <BoxContainer Orientation="Horizontal">
             <controls:ItemSlotButtonContainer SlotGroup="SecondHotbar" />
             <controls:HandsContainer
