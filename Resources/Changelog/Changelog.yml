@@ -1,11 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
-  - {message: Use those ores in an Ore processor to turn them into materials for the
-      station!, type: Add}
-  id: 1413
-  time: '2022-04-28T10:41:04.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
@@ -2951,3 +2944,9 @@ Entries:
   - {message: Smite spell now knocks back its target, type: Tweak}
   id: 1912
   time: '2022-07-09T09:49:31.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes the injector sprite not rendering properly when below a floor
+      tile., type: Fix}
+  id: 1913
+  time: '2022-07-09T09:59:39.0000000+00:00'
