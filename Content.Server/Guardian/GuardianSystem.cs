@@ -99,7 +99,7 @@ namespace Content.Server.Guardian
             if (args.Cancelled || args.Target != component.Host)
                 return;
 
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid), PopupType.Large);
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid), PopupType.LargeCaution);
             args.Cancel();
         }
 

@@ -55,7 +55,7 @@
       effects:
       - !type:PopupMessage
         type: Local
-        visualType: Critical
+        visualType: MediumCaution
         messages:
         - "buzzochloricbees-effect-oh-god-bees"
         - "buzzochloricbees-effect-its-the-bees"

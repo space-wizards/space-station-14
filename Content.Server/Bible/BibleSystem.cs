@@ -122,10 +122,10 @@ namespace Content.Server.Bible
                 if (_random.Prob(component.FailChance))
                 {
                     var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
-                    _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.PvsExcept(args.User));
+                    _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.PvsExcept(args.User), PopupType.SmallCaution);
 
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
-                    _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User), PopupType.Medium);
+                    _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User), PopupType.MediumCaution);
 
                     SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true);

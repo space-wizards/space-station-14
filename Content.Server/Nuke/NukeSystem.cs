@@ -542,7 +542,7 @@ namespace Content.Server.Nuke
 
             _doAfterSystem.DoAfter(doafter);
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
-                Filter.Entities(user), PopupType.Large);
+                Filter.Entities(user), PopupType.LargeCaution);
         }
 
         private void NukeArmedAudio(NukeComponent component)

@@ -124,7 +124,7 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateAppearance(uid, null, component);
 
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", userUid), ("victim", victimUid)), uid,
-                Filter.Pvs(userUid), PopupType.Critical);
+                Filter.Pvs(userUid), PopupType.LargeCaution);
 
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
@@ -153,12 +153,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (component.PrototypesToSpawn.Count != 0)
             {
-                _popupSystem.PopupEntity(component.MeatSource1p, uid, Filter.Entities(user), PopupType.Medium);
+                _popupSystem.PopupEntity(component.MeatSource1p, uid, Filter.Entities(user), PopupType.MediumCaution);
             }
             else
             {
                 UpdateAppearance(uid, null, component);
-                _popupSystem.PopupEntity(component.MeatSource0, uid, Filter.Entities(user), PopupType.Medium);
+                _popupSystem.PopupEntity(component.MeatSource0, uid, Filter.Entities(user), PopupType.MediumCaution);
             }
 
             return true;
@@ -223,7 +223,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (userUid != victimUid)
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", userUid), ("this", uid)), victimUid,
-                    Filter.Entities(victimUid), PopupType.Large);
+                    Filter.Entities(victimUid), PopupType.LargeCaution);
             }
             // TODO: make it work when SuicideEvent is implemented
             // else

@@ -147,9 +147,11 @@ namespace Content.Client.Popups
             type switch
             {
                 PopupType.Small => StyleNano.StyleClassPopupMessageSmall,
+                PopupType.SmallCaution => StyleNano.StyleClassPopupMessageSmallCaution,
                 PopupType.Medium => StyleNano.StyleClassPopupMessageMedium,
+                PopupType.MediumCaution => StyleNano.StyleClassPopupMessageMediumCaution,
                 PopupType.Large => StyleNano.StyleClassPopupMessageLarge,
-                PopupType.Critical => StyleNano.StyleClassPopupMessageCritical,
+                PopupType.LargeCaution => StyleNano.StyleClassPopupMessageLargeCaution,
                 _ => StyleNano.StyleClassPopupMessageSmall
             };
 

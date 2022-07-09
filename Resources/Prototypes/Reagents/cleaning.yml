@@ -15,7 +15,7 @@
             Poison: 3
       - !type:PopupMessage
         type: Local
-        visualType: Critical
+        visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
