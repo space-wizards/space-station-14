@@ -58,7 +58,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
@@ -86,7 +86,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var playersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
@@ -197,7 +197,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));

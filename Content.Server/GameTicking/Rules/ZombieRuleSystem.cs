@@ -65,7 +65,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         //this is just the general condition thing used for determining the win/lose text
@@ -113,7 +113,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         _initialInfectedNames = new();
@@ -127,14 +127,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     /// </remarks>
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
         CheckRoundEnd(ev.Entity);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
         CheckRoundEnd(ev.Target);
     }
@@ -158,7 +158,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);

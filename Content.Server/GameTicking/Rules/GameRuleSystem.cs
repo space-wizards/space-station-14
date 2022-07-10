@@ -9,10 +9,16 @@ public abstract class GameRuleSystem : EntitySystem
     [Dependency] protected GameTicker GameTicker = default!;
 
     /// <summary>
-    ///     Whether this GameRule is currently enabled or not.
+    ///     Whether this GameRule is currently added or not.
     ///     Be sure to check this before doing anything rule-specific.
     /// </summary>
-    public bool Enabled { get; protected set; }
+    public bool RuleAdded { get; protected set; }
+
+    /// <summary>
+    ///     Whether this game rule has been started after being added.
+    ///     You probably want to check this before doing any update loop stuff.
+    /// </summary>
+    public bool RuleStarted { get; protected set; }
 
     /// <summary>
     ///     When the GameRule prototype with this ID is added, this system will be enabled.
@@ -42,7 +48,7 @@ public abstract class GameRuleSystem : EntitySystem
             return;
 
         Configuration = ev.Rule.Configuration;
-        Enabled = true;
+        RuleAdded = true;
 
         Added();
     }
@@ -52,6 +58,8 @@ public abstract class GameRuleSystem : EntitySystem
         if (ev.Rule.Configuration.Id != Prototype)
             return;
 
+        RuleStarted = true;
+
         Started();
     }
 
@@ -60,7 +68,8 @@ public abstract class GameRuleSystem : EntitySystem
         if (ev.Rule.Configuration.Id != Prototype)
             return;
 
-        Enabled = false;
+        RuleAdded = false;
+        RuleStarted = false;
         Ended();
     }
 

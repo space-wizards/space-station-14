@@ -52,6 +52,9 @@ namespace Content.Server.StationEvents.Events
         {
             base.Update(frameTime);
 
+            if (!RuleStarted)
+                return;
+
             if (Elapsed > _endAfter)
             {
                 ForceEndSelf();

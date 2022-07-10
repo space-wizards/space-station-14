@@ -64,7 +64,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         switch (args.New)

@@ -43,7 +43,7 @@ namespace Content.Server.StationEvents
 
             // Can't just check debug / release for a default given mappers need to use release mode
             // As such we'll always pause it by default.
-            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
+            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => RuleAdded = value, true);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         }
@@ -51,7 +51,7 @@ namespace Content.Server.StationEvents
         public override void Started()
         {
             if (!_configurationManager.GetCVar(CCVars.EventsEnabled))
-                Enabled = false;
+                RuleAdded = false;
         }
         public override void Ended() { }
 

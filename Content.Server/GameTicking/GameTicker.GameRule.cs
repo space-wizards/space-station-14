@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -37,13 +38,15 @@ namespace Content.Server.GameTicking
             _consoleHost.RegisterCommand("addgamerule",
                 string.Empty,
                 "addgamerule <rules>",
-                AddGameRuleCommand);
+                AddGameRuleCommand,
+                AddGameRuleCompletions);
 
             // End game rule command.
             _consoleHost.RegisterCommand("endgamerule",
                 string.Empty,
                 "endgamerule <rules>",
-                EndGameRuleCommand);
+                EndGameRuleCommand,
+                EndGameRuleCompletions);
 
             // Clear game rules command.
             _consoleHost.RegisterCommand("cleargamerules",
@@ -69,6 +72,7 @@ namespace Content.Server.GameTicking
                 AddGameRule(rule);
 
             _allPreviousGameRules.Add((RoundDuration(), rule));
+            _sawmill.Info($"Started game rule {rule.ID}");
 
             if (_startedGameRules.Add(rule))
                 RaiseLocalEvent(new GameRuleStartedEvent(rule));
@@ -162,10 +166,18 @@ namespace Content.Server.GameTicking
 
                 AddGameRule(rule);
 
-                // Start rule if we're already in the middle of a round.
-                if(RunLevel == GameRunLevel.InRound)
+                // Start rule if we're already in the middle of a round and it's not an event, which start themselves
+                // Yes this is a little hardcoded but its fine
+                if(RunLevel == GameRunLevel.InRound && rule.Configuration is not StationEventRuleConfiguration)
                     StartGameRule(rule);
             }
+        }
+
+        private CompletionResult AddGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            var activeIds = _addedGameRules.Select(c => c.ID);
+            return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<GameRulePrototype>().Where(p => !activeIds.Contains(p.Value)),
+                "<rule>");
         }
 
         [AdminCommand(AdminFlags.Fun)]
@@ -181,6 +193,12 @@ namespace Content.Server.GameTicking
 
                 EndGameRule(rule);
             }
+        }
+
+        private CompletionResult EndGameRuleCompletions(IConsoleShell shell, string[] args)
+        {
+            return CompletionResult.FromHintOptions(_addedGameRules.Select(c => new CompletionOption(c.ID)),
+                "<added rule>");
         }
 
         [AdminCommand(AdminFlags.Fun)]

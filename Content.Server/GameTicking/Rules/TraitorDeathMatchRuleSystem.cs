@@ -63,7 +63,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var session = ev.Player;
@@ -144,7 +144,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnGhostAttempt(GhostAttemptHandleEvent ev)
     {
-        if (!Enabled || ev.Handled)
+        if (!RuleAdded || ev.Handled)
             return;
 
         ev.Handled = true;
@@ -181,7 +181,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var lines = new List<string>();

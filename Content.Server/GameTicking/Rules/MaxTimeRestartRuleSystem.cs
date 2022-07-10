@@ -63,7 +63,7 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         switch (args.New)

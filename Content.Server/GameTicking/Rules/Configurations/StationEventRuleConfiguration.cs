@@ -48,13 +48,13 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     public int ReoccurrenceDelay = 30;
 
     /// <summary>
-    ///     When in the lifetime to call Start().
+    ///     When in the lifetime to start the event.
     /// </summary>
     [DataField("startAfter")]
     public float StartAfter;
 
     /// <summary>
-    ///     When in the lifetime the event should end.
+    ///     When in the lifetime to end the event..
     /// </summary>
     [DataField("endAfter")]
     public float EndAfter = float.MaxValue;

@@ -97,7 +97,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnRoundStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.SuspicionMinPlayers);
@@ -119,7 +119,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnPlayersAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minTraitors = _cfg.GetCVar(CCVars.SuspicionMinTraitors);
@@ -288,7 +288,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void CheckWinConditions()
     {
-        if (!Enabled || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
+        if (!RuleAdded || !_cfg.GetCVar(CCVars.GameLobbyEnableWin))
             return;
 
         var traitorsAlive = 0;
@@ -457,7 +457,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnLateJoinRefresh(RefreshLateJoinAllowedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.Disallow();

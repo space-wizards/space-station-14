@@ -69,6 +69,8 @@ namespace Content.Server.StationEvents.Events
             {
                 SoundSystem.Play(ev.StartAudio.GetSound(), Filter.Broadcast(), ev.StartAudio.Params);
             }
+
+            Elapsed = 0;
         }
 
         /// <summary>
@@ -90,8 +92,6 @@ namespace Content.Server.StationEvents.Events
             {
                 SoundSystem.Play(ev.EndAudio.GetSound(), Filter.Broadcast(), ev.EndAudio.Params);
             }
-
-            Elapsed = 0;
         }
 
         /// <summary>
@@ -100,17 +100,17 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         public override void Update(float frameTime)
         {
-            if (!Enabled || Configuration is not StationEventRuleConfiguration data)
+            if (!RuleAdded || Configuration is not StationEventRuleConfiguration data)
                 return;
 
             Elapsed += frameTime;
 
-            if (!GameTicker.IsGameRuleStarted(Prototype) && Elapsed >= data.StartAfter)
+            if (!RuleStarted && Elapsed >= data.StartAfter)
             {
                 GameTicker.StartGameRule(PrototypeManager.Index<GameRulePrototype>(Prototype));
             }
 
-            if (data.EndAfter <= Elapsed)
+            if (RuleStarted && Elapsed >= data.EndAfter)
             {
                 GameTicker.EndGameRule(PrototypeManager.Index<GameRulePrototype>(Prototype));
             }
