@@ -5,6 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   fallback: true
+  votable: false
   stations:
     Saltern:
       mapNameTemplate: '{0} Saltern {1}'

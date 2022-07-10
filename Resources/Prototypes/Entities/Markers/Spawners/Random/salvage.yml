@@ -19,10 +19,12 @@
         - CrateSalvageEquipment
         - CrateMaterialSteel
         - CrateMaterialGlass
+        - ResearchDisk
       rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
         - CrateSalvageChemistry
+        - ResearchDisk5000
       chance: 0.9
       offset: 0.0
 
