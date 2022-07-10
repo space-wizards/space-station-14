@@ -52,8 +52,6 @@
       - FullTileMask
       layer:
       - GlassLayer
-  - type: Transform
-    anchored: true #maybe nuke this
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
