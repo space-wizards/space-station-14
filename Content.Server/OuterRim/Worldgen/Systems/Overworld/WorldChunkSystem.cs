@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.OuterRim.Worldgen.Components;
 using Content.Server.OuterRim.Worldgen.Prototypes;
@@ -22,6 +23,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
     [Dependency] private readonly DebrisGenerationSystem _debrisGeneration = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public const int WorldLoadRadius = 256;
     public const int ChunkSize = 128;
@@ -52,6 +54,15 @@ public sealed partial class WorldChunkSystem : EntitySystem
         InitBiomeCache();
 
         SubscribeLocalEvent<WorldManagedComponent, MoveEvent>(OnDebrisMoved);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameStart);
+    }
+
+    private void OnGameStart(GameRunLevelChangedEvent ev)
+    {
+        if (ev.Old != GameRunLevel.PreRoundLobby || ev.New != GameRunLevel.InRound)
+            return;
+
+        WorldMap = _gameTicker.DefaultMap;
     }
 
     private void OnDebrisMoved(EntityUid uid, WorldManagedComponent component, ref MoveEvent args)

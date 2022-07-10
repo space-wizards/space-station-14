@@ -22,6 +22,7 @@
       rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
+        - CrateSalvageChemistry
       chance: 0.9
       offset: 0.0
 

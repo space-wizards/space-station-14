@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Maps.NameGenerators;
 
 [UsedImplicitly]
-public class IndependentNameGenerator : GameMapNameGenerator
+public class IndependentNameGenerator : StationNameGenerator
 {
     /// <summary>
     ///     Where the map comes from. Should be a two or three letter code, for example "VG" for Packedstation.

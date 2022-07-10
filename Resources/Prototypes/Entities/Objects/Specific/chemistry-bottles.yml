@@ -127,6 +127,215 @@
           Quantity: 30
 
 - type: entity
+  id: CarbonChemistryBottle
+  name: carbon bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 30
+
+- type: entity
+  id: OxygenChemistryBottle
+  name: oxygen bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Oxygen
+          Quantity: 30
+
+- type: entity
+  id: WaterChemistryBottle
+  name: water bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+
+- type: entity
+  id: PhosphorusChemistryBottle
+  name: phosphorus bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 30
+
+- type: entity
+  id: HydrogenChemistryBottle
+  name: hydrogen bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 30
+
+- type: entity
+  id: NitrogenChemistryBottle
+  name: nitrogen bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Nitrogen
+          Quantity: 30
+
+- type: entity
+  id: SulfurChemistryBottle
+  name: sulfur bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 30
+
+- type: entity
+  id: PotassiumChemistryBottle
+  name: potassium bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 30
+
+- type: entity
+  id: LithiumChemistryBottle
+  name: lithium bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 30
+
+- type: entity
+  id: IronChemistryBottle
+  name: iron bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Iron
+          Quantity: 30
+
+- type: entity
+  id: ChlorineChemistryBottle
+  name: chlorine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 30
+
+- type: entity
+  id: IodineChemistryBottle
+  name: iodine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 30
+
+- type: entity
+  id: MercuryChemistryBottle
+  name: mercury bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 30
+
+- type: entity
+  id: SugarChemistryBottle
+  name: sugar bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 30
+
+- type: entity
+  id: SiliconChemistryBottle
+  name: silicon bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 30
+
+- type: entity
+  id: RadiumChemistryBottle
+  name: radium bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+          maxVol: 30
+          reagents:
+            - ReagentId: Radium
+              Quantity: 30
+
+
+- type: entity
   id: RobustHarvestChemistryBottle
   name: robust harvest bottle
   description: This will increase the potency of your plants.
@@ -161,7 +370,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Ephedrine
@@ -174,7 +383,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: 
+      drink:
         maxVol: 30
         reagents:
         - ReagentId: Omnizine

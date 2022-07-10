@@ -9,7 +9,7 @@ namespace Content.Server.OuterRim.Worldgen.Components;
 /// It tells it which populator to use should the debris enter view range.
 /// </summary>
 [RegisterComponent]
-[Friend(typeof(PopulatorSystem), typeof(DebrisGenerationSystem))]
+[Access(typeof(PopulatorSystem), typeof(DebrisGenerationSystem))]
 public class UnpopulatedComponent : Component
 {
     public override string Name => "Unpopulated";

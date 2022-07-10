@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.OuterRim.Worldgen.Components;
 using Content.Server.OuterRim.Worldgen.Prototypes;
 using Robust.Shared.Map;
@@ -47,13 +48,12 @@ public class DebrisGenerationSystem : EntitySystem
     {
         // NO MORE THAN TWO ALLOCATIONS THANK YOU VERY MUCH.
         var spawnPoints = new HashSet<Vector2i>((int)proto.FloorPlacements * 4);
-        var taken = new HashSet<Vector2i>((int)proto.FloorPlacements);
+        var taken = new Dictionary<Vector2i, Tile>((int)proto.FloorPlacements);
 
         void PlaceTile(Vector2i point)
         {
             // Assume we already know that the spawn point is safe.
             spawnPoints.Remove(point);
-            taken.Add(point);
             var north = point.Offset(Direction.North);
             var south = point.Offset(Direction.South);
             var east = point.Offset(Direction.East);
@@ -62,16 +62,16 @@ public class DebrisGenerationSystem : EntitySystem
 
             // The math done is essentially a fancy way of comparing the distance from 0,0 to the radius,
             // and skipping the sqrt normally needed for dist.
-            if (!taken.Contains(north) && Math.Pow(north.X, 2) + Math.Pow(north.Y, 2)  <= radsq)
+            if (!taken.ContainsKey(north) && Math.Pow(north.X, 2) + Math.Pow(north.Y, 2)  <= radsq)
                 spawnPoints.Add(north);
-            if (!taken.Contains(south) && Math.Pow(south.X, 2) + Math.Pow(south.Y, 2)  <= radsq)
+            if (!taken.ContainsKey(south) && Math.Pow(south.X, 2) + Math.Pow(south.Y, 2)  <= radsq)
                 spawnPoints.Add(south);
-            if (!taken.Contains(east) && Math.Pow(east.X, 2) + Math.Pow(east.Y, 2)  <= radsq)
+            if (!taken.ContainsKey(east) && Math.Pow(east.X, 2) + Math.Pow(east.Y, 2)  <= radsq)
                 spawnPoints.Add(east);
-            if (!taken.Contains(west) && Math.Pow(west.X, 2) + Math.Pow(west.Y, 2)  <= radsq)
+            if (!taken.ContainsKey(west) && Math.Pow(west.X, 2) + Math.Pow(west.Y, 2)  <= radsq)
                 spawnPoints.Add(west);
 
-            grid.SetTile(point, new Tile(_tileDefinition[_random.Pick(proto.FloorTiles)].TileId));
+            taken.Add(point, new Tile(_tileDefinition[_random.Pick(proto.FloorTiles)].TileId));
 
         }
 
@@ -84,16 +84,18 @@ public class DebrisGenerationSystem : EntitySystem
 
             if (blobs)
             {
-                if (!taken.Contains(point.Offset(Direction.North)) && _random.Prob(0.5f))
+                if (!taken.ContainsKey(point.Offset(Direction.North)) && _random.Prob(0.5f))
                     PlaceTile(point.Offset(Direction.North));
-                if (!taken.Contains(point.Offset(Direction.South)) && _random.Prob(0.5f))
+                if (!taken.ContainsKey(point.Offset(Direction.South)) && _random.Prob(0.5f))
                     PlaceTile(point.Offset(Direction.South));
-                if (!taken.Contains(point.Offset(Direction.East)) && _random.Prob(0.5f))
+                if (!taken.ContainsKey(point.Offset(Direction.East)) && _random.Prob(0.5f))
                     PlaceTile(point.Offset(Direction.East));
-                if (!taken.Contains(point.Offset(Direction.West)) && _random.Prob(0.5f))
+                if (!taken.ContainsKey(point.Offset(Direction.West)) && _random.Prob(0.5f))
                     PlaceTile(point.Offset(Direction.West));
             }
         }
+
+        grid.SetTiles(taken.Select(x => (x.Key, x.Value)).ToList());
     }
 
 

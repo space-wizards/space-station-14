@@ -9,7 +9,7 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: AsteroidRock
+    fillerEntity: AsteroidRockMining
 
 - type: debris
   id: RoidDebris2
@@ -22,7 +22,7 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: AsteroidRock
+    fillerEntity: AsteroidRockMining
 
 - type: debris
   id: RoidDebris3
@@ -35,7 +35,7 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: AsteroidRock
+    fillerEntity: AsteroidRockMining
 
 - type: debris
   id: FrozenRoidDebris1
@@ -48,7 +48,7 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: IceRock
+    fillerEntity: AsteroidRockIce
 
 - type: debris
   id: FrozenRoidDebris2
@@ -61,7 +61,7 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: IceRock
+    fillerEntity: AsteroidRockIce
 
 - type: debris
   id: FrozenRoidDebris3
@@ -74,4 +74,4 @@
     - 'floor_asteroid_coarse_sand2'
   populator:
     !type:FillDebrisPopulator
-    fillerEntity: IceRock
+    fillerEntity: AsteroidRockIce

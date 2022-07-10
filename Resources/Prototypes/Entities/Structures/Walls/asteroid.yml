@@ -56,3 +56,20 @@
         - Pickaxe
     loot:
       Pickaxe: MiningLootTable
+
+
+- type: entity
+  id: AsteroidRockMining
+  parent: AsteroidRockIce
+  name: ice rock
+  suffix: higher ore yield
+  description: A massive hunk of ice.
+  components:
+    - type: Gatherable
+      whitelist:
+        tags:
+          - Pickaxe
+      loot:
+        Pickaxe: MiningLootTable
+    - type: Sprite
+      color: "#C2E0F9"

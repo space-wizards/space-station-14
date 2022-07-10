@@ -8,6 +8,7 @@ using Content.Server.Mind;
 using Content.Server.OuterRim.Worldgen.Systems.Overworld;
 using Content.Server.Players;
 using Content.Server.Station;
+using Content.Server.Station.Components;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
@@ -83,7 +84,7 @@ namespace Content.Server.GameTicking
         {
             if (PurchaseAvailable())
             {
-                LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true));
+                LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true), DefaultMap, null);
             }
         }
 
@@ -145,7 +146,7 @@ namespace Content.Server.GameTicking
 
             var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            var gridUids = gridIds.Select(g => (EntityUid) g).ToList();
+            var gridUids = gridIds.ToList();
             RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
 
             _spawnPoint = _mapManager.GetGrid(gridIds[0]).ToCoordinates();
@@ -154,7 +155,7 @@ namespace Content.Server.GameTicking
 
         public bool PurchaseAvailable()
         {
-            return _stationSystem.StationInfo.Values.Any(x => ((float)x.CurrentJobs / x.TotalJobs) <= 0.20) || _stationSystem.StationInfo.Count == 0;
+            return _stationSystem.Stations.All(x => Comp<StationJobsComponent>(x).PercentJobsRemaining < .1);
         }
 
 

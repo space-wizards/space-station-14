@@ -89,3 +89,42 @@
       - id: WeaponRevolverMateba
         prob: 0.0001
 
+- type: entity
+  id: CrateSalvageChemistry
+  suffix: Filled, Salvage Random Chemistry
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: CarbonChemistryBottle
+          prob: 0.5
+        - id: OxygenChemistryBottle
+          prob: 0.5
+        - id: WaterChemistryBottle
+          prob: 0.5
+        - id: PhosphorusChemistryBottle
+          prob: 0.5
+        - id: HydrogenChemistryBottle
+          prob: 0.5
+        - id: NitrogenChemistryBottle
+          prob: 0.5
+        - id: SulfurChemistryBottle
+          prob: 0.5
+        - id: PotassiumChemistryBottle
+          prob: 0.5
+        - id: LithiumChemistryBottle
+          prob: 0.3
+        - id: IronChemistryBottle
+          prob: 0.5
+        - id: ChlorineChemistryBottle
+          prob: 0.3
+        - id: FluorineChemistryBottle
+          prob: 0.2
+        - id: IodineChemistryBottle
+          prob: 0.5
+        - id: MercuryChemistryBottle
+          prob: 0.5
+        - id: RadiumChemistryBottle
+          prob: 0.5
+        - id: SugarChemistryBottle
+          prob: 0.5
