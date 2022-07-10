@@ -6,30 +6,10 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class MouseMigration : StationEventSystem
 {
-    [Dependency] private readonly IRobustRandom RobustRandom = default!;
-    [Dependency] private readonly IEntityManager EntityManager = default!;
-
     public static List<string> SpawnedPrototypeChoices = new List<string>() //we double up for that ez fake probability
         {"MobMouse", "MobMouse1", "MobMouse2", "MobRatServant"};
 
     public override string Prototype => "MouseMigration";
-
-    public override string? StartAnnouncement =>
-        Loc.GetString("station-event-mouse-migration-announcement");
-
-    public override int EarliestStart => 30;
-
-    public override int MinimumPlayers => 35; //this just ensures that it doesn't spawn on lowpop maps.
-
-    public override float Weight => WeightLow;
-
-    public override int? MaxOccurrences => 1;
-
-    public override bool AnnounceEvent => false;
-
-    protected override float StartAfter => 30f;
-
-    protected override float EndAfter => 60;
 
     public override void Started()
     {

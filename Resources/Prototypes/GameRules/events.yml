@@ -81,6 +81,12 @@
   config:
     !type:StationEventRuleConfiguration
     id: MouseMigration
+    earliestStart: 30
+    minimumPlayers: 35
+    weightLow: 5
+    maxOccurrences: 1
+    startAfter: 30
+    endAfter: 50
 
 - type: gameRule
   id: PowerGridCheck
