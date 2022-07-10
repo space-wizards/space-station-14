@@ -3,6 +3,7 @@ using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;

@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Server.Buckle.Components;
 using Content.Server.Construction;
+using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Storage.EntitySystems;
@@ -149,7 +151,7 @@ namespace Content.Server.Storage.Components
             }
 
             var @event = new StorageOpenAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -157,7 +159,7 @@ namespace Content.Server.Storage.Components
         public virtual bool CanClose(EntityUid user, bool silent = false)
         {
             var @event = new StorageCloseAttemptEvent();
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event);
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, @event, true);
 
             return !@event.Cancelled;
         }
@@ -214,13 +216,13 @@ namespace Content.Server.Storage.Components
             // 4. items can always be eaten unless a previous law prevents it
             // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous law prevents it
             // 6. if this is an item, then mobs must only be eaten if some other component prevents pick-up interactions while a mob is inside (e.g. foldable)
-
-            // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
-            if (_entMan.HasComponent<GhostComponent>(entity))
+            var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
+            _entMan.EventBus.RaiseLocalEvent(entity, attemptEvent);
+            if (attemptEvent.Cancelled)
                 return false;
 
             // checks
-
+            // TODO: Make the others sub to it.
             var targetIsItem = _entMan.HasComponent<SharedItemComponent>(entity);
             var targetIsMob = _entMan.HasComponent<SharedBodyComponent>(entity);
             var storageIsItem = _entMan.HasComponent<SharedItemComponent>(Owner);
@@ -238,8 +240,9 @@ namespace Content.Server.Storage.Components
                     allowedToEat = true;
                 else
                 {
-                    // make an exception if this is a foldable-item that is currently un-folded (e.g., body bags).
-                    allowedToEat = _entMan.TryGetComponent(Owner, out FoldableComponent? foldable) && !foldable.IsFolded;
+                    var storeEv = new StoreThisAttemptEvent();
+                    _entMan.EventBus.RaiseLocalEvent(Owner, storeEv);
+                    allowedToEat = !storeEv.Cancelled;
                 }
             }
 
@@ -365,6 +368,15 @@ namespace Content.Server.Storage.Components
         }
     }
 
+    public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
+
+    public sealed class StoreThisAttemptEvent : CancellableEntityEventArgs
+    {
+
+    }
     public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
     {
 

@@ -14,6 +14,7 @@ using Content.Shared.Trigger;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction;
+using Content.Shared.StepTrigger.Systems;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -52,6 +53,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
@@ -91,10 +93,15 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
+        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
+        {
+            Trigger(uid, args.Tripper);
+        }
+
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
-            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent);
+            EntityManager.EventBus.RaiseLocalEvent(trigger, triggerEvent, true);
             return triggerEvent.Handled;
         }
 

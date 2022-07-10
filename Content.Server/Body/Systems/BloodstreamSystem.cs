@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -164,7 +165,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // We'll play a special sound and popup for feedback.
             SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
-                Filter.Entities(uid));
+                Filter.Entities(uid), PopupType.Medium);
 ;       }
     }
 

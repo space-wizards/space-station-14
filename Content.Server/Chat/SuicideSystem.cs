@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -20,6 +21,7 @@ namespace Content.Server.Chat
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         public bool Suicide(EntityUid victim)
         {
@@ -30,7 +32,7 @@ namespace Content.Server.Chat
             }
 
             // Checks to see if the player is dead.
-            if (!EntityManager.TryGetComponent<MobStateComponent>(victim, out var mobState) || mobState.IsDead())
+            if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             {
                 return false;
             }
@@ -41,7 +43,7 @@ namespace Content.Server.Chat
             var suicideEvent = new SuicideEvent(victim);
 
             // If you are critical, you wouldn't be able to use your surroundings to suicide, so you do the default suicide
-            if (!mobState.IsCritical())
+            if (!_mobState.IsCritical(victim, mobState))
             {
                 EnvironmentSuicideHandler(victim, suicideEvent);
             }
@@ -54,7 +56,6 @@ namespace Content.Server.Chat
         /// <summary>
         /// If not handled, does the default suicide, which is biting your own tongue
         /// </summary>
-        /// <param name="victim">The person attempting to die</param>
         private static void DefaultSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             if (suicideEvent.Handled) return;
@@ -69,12 +70,11 @@ namespace Content.Server.Chat
         /// <summary>
         /// Raise event to attempt to use held item, or surrounding entities to commit suicide
         /// </summary>
-        /// <param name="victim">The person attempting to die</param>
         private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             // Suicide by held item
             if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
-                && handsComponent.ActiveHandEntity is EntityUid item)
+                && handsComponent.ActiveHandEntity is { } item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);
 
@@ -82,11 +82,13 @@ namespace Content.Server.Chat
                     return;
             }
 
+            var itemQuery = GetEntityQuery<SharedItemComponent>();
+
             // Suicide by nearby entity (ex: Microwave)
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))
             {
                 // Skip any nearby items that can be picked up, we already checked the active held item above
-                if (EntityManager.HasComponent<SharedItemComponent>(entity))
+                if (itemQuery.HasComponent(entity))
                     continue;
 
                 RaiseLocalEvent(entity, suicideEvent, false);

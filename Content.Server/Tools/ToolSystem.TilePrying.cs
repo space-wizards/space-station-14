@@ -1,9 +1,12 @@
 using System.Threading;
+using Content.Server.Fluids.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tools;
@@ -39,7 +42,7 @@ public sealed partial class ToolSystem
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target != null) return;
+        if (args.Handled || !args.CanReach || (args.Target != null && !HasComp<PuddleComponent>(args.Target))) return;
 
         if (TryPryTile(args.User, component, args.ClickLocation))
             args.Handled = true;

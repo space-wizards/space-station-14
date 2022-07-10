@@ -1,25 +1,36 @@
-//This shader defines two circles - everything inside the inner circle will be darkened, while everything outside the outer circle
-//will be full black. Between the inner and outer circle it LERPs from the inner darkness to full black.
+// Has 2 circles, an inner one that is unaffected and an outer one. Anything past the outer one is full red
+// and in-between is a gradient.
 
 light_mode unshaded;
 
-const highp float darknessAlphaInner =  0.6;
-const highp float innerCircleRadius = 40.0; //Note: this is in pixels
-const highp float outerCircleRadius = 80.0;
+uniform highp vec3 color;
+uniform highp float time;
+// Uniforms because it makes testing way easier. If needed make it const.
+uniform highp float outerCircleRadius;
+uniform highp float outerCircleMaxRadius;
+uniform highp float innerCircleRadius;
+uniform highp float innerCircleMaxRadius;
+uniform highp float darknessAlphaOuter;
+
+const highp float darknessAlphaInner = 0.0;
 
 void fragment() {
 	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
-    highp vec2 pixelCenter = pixelSize*0.5;
+	highp vec2 pixelCenter = pixelSize*0.5;
 	highp float distance = length(FRAGCOORD.xy - pixelCenter);
-	if(distance > outerCircleRadius){
-		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+    
+	highp float innerRadius = innerCircleRadius + time * (innerCircleMaxRadius - innerCircleRadius);
+	highp float outerRadius = outerCircleRadius + time * (outerCircleMaxRadius - outerCircleRadius);
+    
+	if(distance > outerRadius) {
+		COLOR = vec4(color.x, color.y, color.z, darknessAlphaOuter);
 	}
-	else if(distance < innerCircleRadius){
+	else if(distance < innerRadius) {
 		COLOR = vec4(0.0, 0.0, 0.0, darknessAlphaInner);
 	}
-	else{
-		highp float intensity = (distance-innerCircleRadius)/(outerCircleRadius-innerCircleRadius);
-		COLOR = vec4(0.0, 0.0, 0.0, (1.0-intensity)*darknessAlphaInner + intensity);
+	else {
+        	highp float ratio = (distance - innerRadius) / (outerRadius - innerRadius);
+		highp float alpha = darknessAlphaInner + (darknessAlphaOuter - darknessAlphaInner) * ratio;
+		COLOR = vec4(color.x, color.y, color.z, alpha);
 	}
 }
-

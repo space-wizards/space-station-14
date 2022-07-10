@@ -20161,7 +20161,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1961
-  type: ComputerSupplyOrdering
+  type: ComputerCargoOrders
   components:
   - pos: 6.5,8.5
     parent: 4
@@ -20177,7 +20177,7 @@ entities:
     parent: 4
     type: Transform
 - uid: 1963
-  type: cargoTelepad
+  type: CargoTelepad
   components:
   - pos: 6.5,9.5
     parent: 4

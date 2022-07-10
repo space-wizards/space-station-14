@@ -34,12 +34,17 @@ namespace Content.Server.Gravity.EntitySystems
         public void AddAlert(AlertsComponent status)
         {
             var xform = Transform(status.Owner);
-            var alerts = _alerts.GetOrNew(xform.GridID);
-
-            alerts.Add(status);
+            if (xform.GridUid != null)
+            {
+                var alerts = _alerts.GetOrNew(xform.GridUid.Value);
+                alerts.Add(status);
+            }
 
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
+                var alerts = _alerts.GetOrNew(xform.GridUid.Value);
+                alerts.Add(status);
+
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
                     RemoveWeightless(status.Owner);
@@ -48,6 +53,10 @@ namespace Content.Server.Gravity.EntitySystems
                 {
                     AddWeightless(status.Owner);
                 }
+            }
+            else
+            {
+                AddWeightless(status.Owner);
             }
         }
 

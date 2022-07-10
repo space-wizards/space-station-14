@@ -1,4 +1,9 @@
 using Content.Server.AI.EntitySystems;
+using Content.Server.Station.Systems;
+using Content.Shared.Movement.Components;
+using Content.Shared.Roles;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.AI.Components
 {
@@ -7,8 +12,6 @@ namespace Content.Server.AI.Components
     public class AiControllerComponent : Component
     {
         [DataField("logic")] private float _visionRadius = 8.0f;
-
-        public bool CanMove { get; set; } = true;
 
         // TODO: Need to ECS a lot more of the AI first before we can ECS this
         /// <summary>
@@ -38,8 +41,19 @@ namespace Content.Server.AI.Components
         {
             get => _visionRadius;
             set => _visionRadius = value;
-
         }
+
+        /// <summary>
+        ///     Is the entity Sprinting (running)?
+        /// </summary>
+        [ViewVariables]
+        public bool Sprinting { get; } = true;
+
+        /// <summary>
+        ///     Calculated linear velocity direction of the entity.
+        /// </summary>
+        [ViewVariables]
+        public Vector2 VelocityDir { get; set; }
 
         public virtual void Update(float frameTime) {}
     }

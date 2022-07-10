@@ -21,6 +21,7 @@
     modifier: 0.5
   - type: Physics
     bodyType: Dynamic
+    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -47,3 +48,4 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
+

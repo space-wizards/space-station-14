@@ -13,6 +13,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Destructible;
+using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -25,6 +27,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -81,13 +84,23 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure the slot has an item
         ///     container.
         /// </summary>
-        public void AddItemSlot(EntityUid uid, string id, ItemSlot slot)
+        public void AddItemSlot(EntityUid uid, string id, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
-            var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
+            itemSlots ??= EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
+            DebugTools.Assert(itemSlots.Owner == uid);
+
+            if (itemSlots.Slots.TryGetValue(id, out var existing))
+            {
+                if (existing.Local)
+                    Logger.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(itemSlots.Owner).EntityName} ({uid}), key: {id}");
+                else
+                    // server state takes priority
+                    slot.CopyFrom(existing);
+            }
+
             slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
-            if (itemSlots.Slots.ContainsKey(id))
-                Logger.Error($"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(itemSlots.Owner).EntityName} ({uid}), key: {id}");
             itemSlots.Slots[id] = slot;
+            Dirty(itemSlots);
         }
 
         /// <summary>
@@ -110,6 +123,8 @@ namespace Content.Shared.Containers.ItemSlots
 
             if (itemSlots.Slots.Count == 0)
                 EntityManager.RemoveComponent(uid, itemSlots);
+            else
+                Dirty(itemSlots);
         }
         #endregion
 
@@ -128,7 +143,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 args.Handled = true;
-                TryEjectToHands(uid, slot, args.User);
+                TryEjectToHands(uid, slot, args.User, true);
                 break;
             }
         }
@@ -147,7 +162,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 args.Handled = true;
-                TryEjectToHands(uid, slot, args.User);
+                TryEjectToHands(uid, slot, args.User, true);
                 break;
             }
         }
@@ -205,7 +220,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -219,10 +234,10 @@ namespace Content.Shared.Containers.ItemSlots
         {
             if (sound == null || !_gameTiming.IsFirstTimePredicted)
                 return;
+            
+            var filter = Filter.Pvs(uid, entityManager: EntityManager);
 
-            var filter = Filter.Pvs(uid);
-
-            if (excluded != null)
+            if (excluded != null && _netMan.IsServer)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
 
             SoundSystem.Play(sound.GetSound(), filter, uid, audioParams);
@@ -330,7 +345,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
             var ev = new ItemSlotChangedEvent();
-            RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         /// <summary>
@@ -516,7 +531,7 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             if (args.TryEject && slot.HasItem)
-                TryEjectToHands(uid, slot, args.Session.AttachedEntity);
+                TryEjectToHands(uid, slot, args.Session.AttachedEntity, false);
             else if (args.TryInsert && !slot.HasItem && args.Session.AttachedEntity is EntityUid user)
                 TryInsertFromHand(uid, slot, user);
         }
@@ -583,9 +598,25 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Current is not ItemSlotsComponentState state)
                 return;
 
-            foreach (var (id, locked) in state.SlotLocked)
+            foreach (var (key, slot) in component.Slots)
             {
-                component.Slots[id].Locked = locked;
+                if (!state.Slots.ContainsKey(key))
+                    RemoveItemSlot(uid, slot, component);
+            }
+
+            foreach (var (serverKey, serverSlot) in state.Slots)
+            {
+                if (component.Slots.TryGetValue(serverKey, out var itemSlot))
+                {
+                    itemSlot.CopyFrom(serverSlot);
+                    itemSlot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, serverKey);
+                }
+                else
+                {
+                    var slot = new ItemSlot(serverSlot);
+                    slot.Local = false;
+                    AddItemSlot(uid, serverKey, slot);
+                }
             }
         }
 

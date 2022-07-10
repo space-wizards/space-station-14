@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken and modified by Taral from goonstation at commit https://github.com/goonstation/goonstation/pull/2816/commits/b99c5dff45a6527bbf698bc00f7d24b8ca75a806",
+  "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/pull/4949/commits/cd594c23ac3e6f4254ffa96609d555a0133959ef",
   "size": {
     "x": 32,
     "y": 32

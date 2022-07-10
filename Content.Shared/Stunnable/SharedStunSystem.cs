@@ -6,8 +6,8 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
@@ -24,7 +24,7 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
-        [Dependency] private readonly SharedMoverController _SharedMoverController = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
         public override void Initialize()
         {
@@ -32,7 +32,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
-            SubscribeLocalEvent<SlowedDownComponent, ComponentRemove>(OnSlowRemove);
+            SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
 
             SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
             SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
@@ -103,12 +103,14 @@ namespace Content.Shared.Stunnable
 
         private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
         {
-            _SharedMoverController.RefreshMovementSpeedModifiers(uid);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
-        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
+        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
         {
-            _SharedMoverController.RefreshMovementSpeedModifiers(uid);
+            component.SprintSpeedModifier = 1f;
+            component.WalkSpeedModifier = 1f;
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
         private void OnRefreshMovespeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -183,7 +185,7 @@ namespace Content.Shared.Stunnable
                 slowed.WalkSpeedModifier *= walkSpeedMultiplier;
                 slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
-                _SharedMoverController.RefreshMovementSpeedModifiers(uid);
+                _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
 
                 return true;
             }

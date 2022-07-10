@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Hands;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
@@ -12,7 +11,7 @@ namespace Content.Shared.Pulling.Systems
     public sealed class SharedPullerSystem : EntitySystem
     {
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
-        [Dependency] private readonly SharedMoverController _SharedMoverController = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()
@@ -73,7 +72,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void RefreshMovementSpeed(SharedPullerComponent component)
         {
-            _SharedMoverController.RefreshMovementSpeedModifiers((component).Owner);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers((component).Owner);
         }
     }
 }

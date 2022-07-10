@@ -936,3 +936,20 @@
   - type: Sprite
     state: splitmap
 
+- type: entity
+  parent: PosterBase
+  id: PosterMapLighthouse
+  name: "Lighthouse Map"
+  description: "A map of Lighthouse."
+  components:
+  - type: Sprite
+    state: lighthousemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapWaystation
+  name: "Waystation Map"
+  description: "A map of Waystation... wait isn't this packed upside down?"
+  components:
+  - type: Sprite
+    state: waystationmap

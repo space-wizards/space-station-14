@@ -1,3 +1,4 @@
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -84,7 +85,7 @@ namespace Content.Server.Stack
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             AlternativeVerb halve = new()
@@ -129,7 +130,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid));
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid), PopupType.Medium);
                 return;
             }
 

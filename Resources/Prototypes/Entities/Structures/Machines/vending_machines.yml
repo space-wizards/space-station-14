@@ -7,9 +7,9 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    enabled: false
     volume: -9
     range: 3
+    enabled: false
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Sprite
@@ -37,6 +37,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:EjectVendorItems
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -64,6 +65,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: Actions
   - type: SentienceTarget
     flavorKind: mechanical
 
@@ -166,6 +168,8 @@
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: CigaretteMachineAds
   - type: Speech
@@ -232,6 +236,8 @@
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: HotDrinksMachineAds
   - type: Speech
@@ -270,6 +276,8 @@
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: RobustSoftdrinksAds
   - type: Speech
@@ -332,12 +340,46 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineMagivend
+  name: MagiVend
+  description: A magic vending machine.
+  components:
+  - type: VendingMachine
+    pack: MagiVendInventory
+  - type: Advertise
+    pack: MagiVendAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/magivend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      ejectUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9a18d6"
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineDiscount
   name: Discount Dan's
   description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: DiscountDansAds
   - type: Speech
@@ -574,6 +616,8 @@
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: GetmoreChocolateCorpAds
   - type: Speech
@@ -608,6 +652,8 @@
   components:
   - type: VendingMachine
     pack: BodaInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: BodaAds
   - type: Speech
@@ -815,6 +861,8 @@
   components:
   - type: VendingMachine
     pack: ChangInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
   - type: Advertise
     pack: ChangAds
   - type: Speech

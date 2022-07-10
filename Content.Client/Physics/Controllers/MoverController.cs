@@ -1,7 +1,10 @@
+using Content.Shared.MobState.Components;
+using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -18,7 +21,7 @@ namespace Content.Client.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
 
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
-                !TryComp(player, out MobMoverComponent? mover) ||
+                !TryComp(player, out IMoverComponent? mover) ||
                 !TryComp(player, out PhysicsComponent? body) ||
                 !TryComp(player, out TransformComponent? xform))
             {
@@ -62,7 +65,13 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleSimpleMovement(mover, body, xform, frameTime);
+            if (TryComp(player, out IMobMoverComponent? mobMover))
+            {
+                HandleMobMovement(mover, body, mobMover, xform, frameTime);
+                return;
+            }
+
+            HandleKinematicMovement(mover, body);
         }
 
         protected override Filter GetSoundPlayers(EntityUid mover)

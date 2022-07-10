@@ -135,7 +135,7 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
-                if (_storageSystem.CanInsert(component.Owner, args.Used, storage))
+                if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
                 {
                     _storageSystem.Insert(component.Owner, args.Used, storage);
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",
@@ -252,7 +252,7 @@ namespace Content.Server.PneumaticCannon
             {
                 // we checked for this earlier in HasGas so a GetComp is okay
                 var gas = EntityManager.GetComponent<GasTankComponent>(contained);
-                var environment = _atmos.GetTileMixture(EntityManager.GetComponent<TransformComponent>(comp.Owner).Coordinates, true);
+                var environment = _atmos.GetContainingMixture(comp.Owner, false, true);
                 var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
                 if (environment != null && removed != null)
                 {

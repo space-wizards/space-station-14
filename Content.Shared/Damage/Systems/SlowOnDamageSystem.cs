@@ -1,13 +1,12 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Damage
 {
     public sealed class SlowOnDamageSystem : EntitySystem
     {
-        [Dependency] private readonly SharedMoverController _SharedMoverController = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
         public override void Initialize()
         {
@@ -30,7 +29,7 @@ namespace Content.Shared.Damage
             var total = damage.TotalDamage;
             foreach (var thres in component.SpeedModifierThresholds)
             {
-                if (FixedPoint2.Dist(thres.Key, total) < FixedPoint2.Dist(closest, total))
+                if (total >= thres.Key && thres.Key > closest)
                     closest = thres.Key;
             }
 
@@ -46,7 +45,7 @@ namespace Content.Shared.Damage
             // We -could- only refresh if it crossed a threshold but that would kind of be a lot of duplicated
             // code and this isn't a super hot path anyway since basically only humans have this
 
-            _SharedMoverController.RefreshMovementSpeedModifiers(uid);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Movement.Events;
+﻿using Content.Shared.Movement.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
@@ -7,7 +6,7 @@ namespace Content.Shared.Clothing;
 
 public sealed class ClothingSpeedModifierSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMoverController _movementSpeed = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()

@@ -11,18 +11,25 @@
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
-      state: grey
+      layers:
+        - state: grey
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: GasPortableVisualizer
-          stateConnected: can-connector
-        - type: GasCanisterVisualizer
-          insertedTankState: can-open
-          pressureStates:
-            - can-o0
-            - can-o1
-            - can-o2
-            - can-o3
+        enum.GasPortableVisuals.ConnectedState:
+          connectedToPort:
+            False: { state: can-connector, visible: false }
+            True: { state: can-connector, visible: true }
+        enum.GasCanisterVisuals.TankInserted:
+          tankInserted:
+            False: { state: can-open, visible: false }
+            True: { state: can-open, visible: true }
+        enum.GasCanisterVisuals.PressureState:
+          pressureLight:
+            0: { state: can-o0, shader: "unshaded" }
+            1: { state: can-o1, shader: "unshaded" }
+            2: { state: can-o2, shader: "unshaded" }
+            3: { state: can-o3, shader: "unshaded" }
     - type: UserInterface
       interfaces:
         - key: enum.GasCanisterUiKey.Key
@@ -80,7 +87,8 @@
   name: storage canister
   components:
     - type: Sprite
-      state: yellow # Classic toxins canister
+      layers:
+        - state: yellow
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -117,7 +125,8 @@
   name: air canister
   components:
   - type: Sprite
-    state: grey
+    layers:
+      - state: grey
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -148,7 +157,8 @@
   name: oxygen canister
   components:
   - type: Sprite
-    state: blue
+    layers:
+      - state: blue
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -178,7 +188,8 @@
   name: nitrogen canister
   components:
     - type: Sprite
-      state: red
+      layers:
+        - state: red
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -209,7 +220,8 @@
   name: carbon dioxide canister
   components:
     - type: Sprite
-      state: black
+      layers:
+        - state: black
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -241,7 +253,8 @@
   name: plasma canister
   components:
     - type: Sprite
-      state: orange
+      layers:
+        - state: orange
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -275,7 +288,8 @@
   name: tritium canister
   components:
     - type: Sprite
-      state: green
+      layers:
+        - state: green
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -309,7 +323,8 @@
   name: water vapor canister
   components:
     - type: Sprite
-      state: water_vapor
+      layers:
+        - state: water_vapor
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -344,7 +359,8 @@
   name: miasma canister
   components:
     - type: Sprite
-      state: redws
+      layers:
+        - state: redws
     - type: GasCanister
       gasMixture:
         volume: 1000
