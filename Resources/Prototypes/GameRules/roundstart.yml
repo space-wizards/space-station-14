@@ -59,3 +59,10 @@
   config:
     !type:GenericGameRuleConfiguration
     id: Secret
+
+# event schedulers
+- type: gameRule
+  id: BasicEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: BasicEventScheduler

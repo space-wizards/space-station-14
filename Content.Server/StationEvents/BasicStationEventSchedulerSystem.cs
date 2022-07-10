@@ -1,48 +1,230 @@
-﻿using System.Linq;
-using Content.Server.GameTicking;
+using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
+using JetBrains.Annotations;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
-namespace Content.Server.StationEvents;
-
-public sealed class BasicStationEventSchedulerSystem : EntitySystem
+namespace Content.Server.StationEvents
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-
-    #region Private API
-
-    /// <summary>
-    ///     Returns the number of times the event has been run this round.
-    /// </summary>
-    public int TimesEventRun(GameRulePrototype proto)
+    // Somewhat based off of TG's implementation of events
+    [UsedImplicitly]
+    public sealed class BasicStationEventSchedulerSystem : GameRuleSystem
     {
-        var acc = 0;
-        foreach (var (_, rule) in _gameTicker.AllPreviousGameRules)
+        public override string Prototype => "BasicEventScheduler";
+
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+
+        private const float MinimumTimeUntilFirstEvent = 300;
+
+        /// <summary>
+        /// How long until the next check for an event runs
+        /// </summary>
+        /// Default value is how long until first event is allowed
+        private float _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
+
+        public override void Started() { }
+        public override void Ended() { }
+
+        /// <summary>
+        /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart
+        /// </summary>
+        /// <returns></returns>
+        public string RunRandomEvent()
         {
-            if (rule == proto)
-                acc++;
+            var randomEvent = PickRandomEvent();
+
+            if (randomEvent == null
+                || !_prototype.TryIndex<GameRulePrototype>(randomEvent.Id, out var proto))
+            {
+                return Loc.GetString("station-event-system-run-random-event-no-valid-events");
+            }
+
+            GameTicker.AddGameRule(proto);
+            return Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Id));
         }
 
-        return acc;
-    }
-
-    /// <summary>
-    ///     Returns the time since the last specified even prototype was run. If no event prototype is specified,
-    ///     returns the time since any event occurred. If the event has not occurred this round, returns null.
-    /// </summary>
-    public TimeSpan? TimeSinceLastEvent(GameRulePrototype? prototype)
-    {
-        foreach (var (time, rule) in _gameTicker.AllPreviousGameRules.Reverse())
+        /// <summary>
+        /// Randomly picks a valid event.
+        /// </summary>
+        public StationEventRuleConfiguration? PickRandomEvent()
         {
-            if (rule.Configuration is not StationEventRuleConfiguration)
-                continue;
-
-            if (prototype == null || rule == prototype)
-                return time;
+            var availableEvents = AvailableEvents(true);
+            return FindEvent(availableEvents);
         }
 
-        return null;
-    }
+        public override void Initialize()
+        {
+            base.Initialize();
 
-    #endregion
+            // Can't just check debug / release for a default given mappers need to use release mode
+            // As such we'll always pause it by default.
+            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (_timeUntilNextEvent > 0)
+            {
+                _timeUntilNextEvent -= frameTime;
+                return;
+            }
+
+            // No point hammering this trying to find events if none are available
+            var stationEvent = FindEvent(AvailableEvents());
+            if (stationEvent == null
+                || !_prototype.TryIndex<GameRulePrototype>(stationEvent.Id, out var proto))
+            {
+                ResetTimer();
+            }
+            else
+            {
+                GameTicker.AddGameRule(proto);
+            }
+        }
+
+        /// <summary>
+        /// Reset the event timer once the event is done.
+        /// </summary>
+        private void ResetTimer()
+        {
+            // 5 - 15 minutes. TG does 3-10 but that's pretty frequent
+            _timeUntilNextEvent = _random.Next(300, 900);
+        }
+
+        /// <summary>
+        /// Pick a random event from the available events at this time, also considering their weightings.
+        /// </summary>
+        /// <returns></returns>
+        private StationEventRuleConfiguration? FindEvent(List<StationEventRuleConfiguration> availableEvents)
+        {
+            if (availableEvents.Count == 0)
+            {
+                return null;
+            }
+
+            var sumOfWeights = 0;
+
+            foreach (var stationEvent in availableEvents)
+            {
+                sumOfWeights += (int) stationEvent.Weight;
+            }
+
+            sumOfWeights = _random.Next(sumOfWeights);
+
+            foreach (var stationEvent in availableEvents)
+            {
+                sumOfWeights -= (int) stationEvent.Weight;
+
+                if (sumOfWeights <= 0)
+                {
+                    return stationEvent;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the events that have met their player count, time-until start, etc.
+        /// </summary>
+        /// <param name="ignoreEarliestStart"></param>
+        /// <returns></returns>
+        private List<StationEventRuleConfiguration> AvailableEvents(bool ignoreEarliestStart = false)
+        {
+            TimeSpan currentTime;
+            var playerCount = _playerManager.PlayerCount;
+
+            // playerCount does a lock so we'll just keep the variable here
+            if (!ignoreEarliestStart)
+            {
+                currentTime = GameTicker.RoundDuration();
+            }
+            else
+            {
+                currentTime = TimeSpan.Zero;
+            }
+
+            var result = new List<StationEventRuleConfiguration>();
+
+            foreach (var stationEvent in AllEvents())
+            {
+                if (CanRun(stationEvent, playerCount, currentTime))
+                {
+                    result.Add(stationEvent);
+                }
+            }
+
+            return result;
+        }
+
+        private IEnumerable<StationEventRuleConfiguration> AllEvents()
+        {
+            return _prototype.EnumeratePrototypes<GameRulePrototype>()
+                .Where(p => p.Configuration is StationEventRuleConfiguration)
+                .Select(p => (StationEventRuleConfiguration) p.Configuration);
+        }
+
+        private int GetOccurrences(StationEventRuleConfiguration stationEvent)
+        {
+            return GameTicker.AllPreviousGameRules.Count(p => p.Item2.ID == stationEvent.Id);
+        }
+
+        public TimeSpan TimeSinceLastEvent(StationEventRuleConfiguration? stationEvent)
+        {
+            foreach (var (time, rule) in GameTicker.AllPreviousGameRules.Reverse())
+            {
+                if (rule.Configuration is not StationEventRuleConfiguration)
+                    continue;
+
+                if (stationEvent == null || rule.ID == stationEvent.Id)
+                    return time;
+            }
+
+            return TimeSpan.Zero;
+        }
+
+        private bool CanRun(StationEventRuleConfiguration stationEvent, int playerCount, TimeSpan currentTime)
+        {
+            if (stationEvent.MaxOccurrences.HasValue && GetOccurrences(stationEvent) >= stationEvent.MaxOccurrences.Value)
+            {
+                return false;
+            }
+
+            if (playerCount < stationEvent.MinimumPlayers)
+            {
+                return false;
+            }
+
+            if (currentTime != TimeSpan.Zero && currentTime.TotalMinutes < stationEvent.EarliestStart)
+            {
+                return false;
+            }
+
+            var lastRun = TimeSinceLastEvent(stationEvent);
+            if (lastRun != TimeSpan.Zero && currentTime.TotalMinutes <
+                stationEvent.ReoccurrenceDelay + lastRun.TotalMinutes)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void Reset(RoundRestartCleanupEvent ev)
+        {
+            _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
+        }
+    }
 }
