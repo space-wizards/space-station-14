@@ -7,8 +7,8 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class VentCritters : StationEventSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IRobustRandom RobustRandom = default!;
+    [Dependency] private readonly IEntityManager EntityManager = default!;
 
     public static List<string> SpawnedPrototypeChoices = new List<string>()
         {"MobGiantSpiderAngry", "MobMouse", "MobMouse1", "MobMouse2"};
@@ -16,7 +16,7 @@ public sealed class VentCritters : StationEventSystem
     public override string Name => "VentCritters";
 
     public override string? StartAnnouncement =>
-        Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}"))));
+        Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}"))));
 
     public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/aliens.ogg");
 
@@ -37,19 +37,19 @@ public sealed class VentCritters : StationEventSystem
     public override void Started()
     {
         base.Started();
-        var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
-        var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
-        _random.Shuffle(spawnLocations);
+        var spawnChoice = RobustRandom.Pick(SpawnedPrototypeChoices);
+        var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
+        RobustRandom.Shuffle(spawnLocations);
 
-        var spawnAmount = _random.Next(4, 12); // A small colony of critters.
+        var spawnAmount = RobustRandom.Next(4, 12); // A small colony of critters.
         foreach (var location in spawnLocations)
         {
             if (spawnAmount-- == 0)
                 break;
 
-            var coords = _entityManager.GetComponent<TransformComponent>(location.Owner);
+            var coords = EntityManager.GetComponent<TransformComponent>(location.Owner);
 
-            _entityManager.SpawnEntity(spawnChoice, coords.Coordinates);
+            EntityManager.SpawnEntity(spawnChoice, coords.Coordinates);
         }
     }
 }

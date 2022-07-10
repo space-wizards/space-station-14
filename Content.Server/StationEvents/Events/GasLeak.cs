@@ -10,7 +10,7 @@ namespace Content.Server.StationEvents.Events
     internal sealed class GasLeak : StationEventSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager EntityManager = default!;
 
         public override string Name => "GasLeak";
 
@@ -114,11 +114,11 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilLeak > 0f) return;
             _timeUntilLeak += LeakCooldown;
 
-            var atmosphereSystem = _entityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var atmosphereSystem = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
             if (!_foundTile ||
                 _targetGrid == default ||
-                _entityManager.Deleted(_targetGrid) ||
+                EntityManager.Deleted(_targetGrid) ||
                 !atmosphereSystem.IsSimulatedGrid(_targetGrid))
             {
                 Running = false;
@@ -151,7 +151,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if (!_foundTile ||
                     _targetGrid == default ||
-                    (!_entityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    (!EntityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
                     !atmosphereSystem.IsSimulatedGrid(_targetGrid))
                 {
                     return;

@@ -18,3 +18,11 @@
     weight: 5
     maxOccurrences: 2
     endAfter: 1
+
+- type: gameRule
+  id: DiseaseOutbreak
+  config:
+    !type:StationEventRuleConfiguraiton
+    id: DiseaseOutbreak
+    weight: 10
+    endAfter: 1.0

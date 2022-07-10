@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEventSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager EntityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -84,7 +84,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in _mapManager.GetAllGrids())
             {
-                if (grid.ParentMapId != mapId || !_entityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
+                if (grid.ParentMapId != mapId || !EntityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
@@ -105,8 +105,8 @@ namespace Content.Server.StationEvents.Events
                 var angle = new Angle(_robustRandom.NextFloat() * MathF.Tau);
                 var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
-                var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
-                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor);
+                var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
+                var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.LinearDamping = 0f;
                 physics.AngularDamping = 0f;

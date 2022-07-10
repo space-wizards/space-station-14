@@ -14,8 +14,8 @@ namespace Content.Server.StationEvents.Events
     /// </summary>
     public sealed class ZombieOutbreak : StationEventSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom RobustRandom = default!;
+        [Dependency] private readonly IEntityManager EntityManager = default!;
 
         public override string Name => "ZombieOutbreak";
         public override int EarliestStart => 50;
@@ -34,16 +34,16 @@ namespace Content.Server.StationEvents.Events
             base.Started();
             HashSet<EntityUid> stationsToNotify = new();
             List<MobStateComponent> deadList = new();
-            foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
+            foreach (var mobState in EntityManager.EntityQuery<MobStateComponent>())
             {
                 if (mobState.IsDead() || mobState.IsCritical())
                     deadList.Add(mobState);
             }
-            _random.Shuffle(deadList);
+            RobustRandom.Shuffle(deadList);
 
-            var toInfect = _random.Next(1, 3);
+            var toInfect = RobustRandom.Next(1, 3);
 
-            var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
+            var zombifysys = EntityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
 
             // Now we give it to people in the list of dead entities earlier.
             var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();

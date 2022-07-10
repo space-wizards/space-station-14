@@ -6,7 +6,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class KudzuGrowth : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntityManager EntityManager = default!;
 
     public override string Name => "KudzuGrowth";
 
@@ -40,9 +40,9 @@ public sealed class KudzuGrowth : StationEventSystem
         base.Started();
 
         // Pick a place to plant the kudzu.
-        if (TryFindRandomTile(out _targetTile, out _, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))
+        if (TryFindRandomTile(out _targetTile, out _, out _targetGrid, out _targetCoords, _robustRandom, EntityManager))
         {
-            _entityManager.SpawnEntity("Kudzu", _targetCoords);
+            EntityManager.SpawnEntity("Kudzu", _targetCoords);
             Logger.InfoS("stationevents", $"Spawning a Kudzu at {_targetTile} on {_targetGrid}");
         }
 

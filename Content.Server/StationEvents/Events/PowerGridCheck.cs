@@ -13,8 +13,8 @@ namespace Content.Server.StationEvents.Events
     [UsedImplicitly]
     public sealed class PowerGridCheck : StationEventSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager EntityManager = default!;
+        [Dependency] private readonly IRobustRandom RobustRandom = default!;
 
         public override string Name => "PowerGridCheck";
         public override float Weight => WeightNormal;
@@ -46,13 +46,13 @@ namespace Content.Server.StationEvents.Events
 
         public override void Started()
         {
-            foreach (var component in _entityManager.EntityQuery<ApcPowerReceiverComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
                 if (!component.PowerDisabled)
                     _powered.Add(component.Owner);
             }
 
-            _random.Shuffle(_powered);
+            RobustRandom.Shuffle(_powered);
 
             _numberPerSecond = Math.Max(1, (int)(_powered.Count / SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
 
@@ -77,8 +77,8 @@ namespace Content.Server.StationEvents.Events
                     break;
 
                 var selected = _powered.Pop();
-                if (_entityManager.Deleted(selected)) continue;
-                if (_entityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
+                if (EntityManager.Deleted(selected)) continue;
+                if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = true;
                 }
@@ -90,9 +90,9 @@ namespace Content.Server.StationEvents.Events
         {
             foreach (var entity in _unpowered)
             {
-                if (_entityManager.Deleted(entity)) continue;
+                if (EntityManager.Deleted(entity)) continue;
 
-                if (_entityManager.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (EntityManager.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
