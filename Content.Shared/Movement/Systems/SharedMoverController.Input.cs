@@ -4,7 +4,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
 
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public abstract partial class SharedMoverController
 {
@@ -49,14 +49,14 @@ public abstract partial class SharedMoverController
             // Shuttle
             .Bind(ContentKeyFunctions.ShuttleBrake, new ShuttleBrakeInputCmdHandler())
 
-            .Register<SharedMoverController>();
+            .Register<Systems.SharedMoverController>();
 
         // TODO: Space brakes
     }
 
     private void ShutdownInput()
     {
-        CommandBinds.Unregister<SharedMoverController>();
+        CommandBinds.Unregister<Systems.SharedMoverController>();
     }
 
     #region MobMover
@@ -146,10 +146,10 @@ public abstract partial class SharedMoverController
     private sealed class MoverDirInputCmdHandler : InputCmdHandler
     {
         private IEntityManager _entManager;
-        private SharedMoverController _controller;
+        private Systems.SharedMoverController _controller;
         private readonly MoveButtons _dir;
 
-        public MoverDirInputCmdHandler(IEntityManager entManager, SharedMoverController controller, MoveButtons dir)
+        public MoverDirInputCmdHandler(IEntityManager entManager, Systems.SharedMoverController controller, MoveButtons dir)
         {
             _entManager = entManager;
             _controller = controller;
@@ -170,9 +170,9 @@ public abstract partial class SharedMoverController
     private sealed class WalkInputCmdHandler : InputCmdHandler
     {
         private IEntityManager _entManager;
-        private SharedMoverController _controller;
+        private Systems.SharedMoverController _controller;
 
-        public WalkInputCmdHandler(IEntityManager entManager, SharedMoverController controller)
+        public WalkInputCmdHandler(IEntityManager entManager, Systems.SharedMoverController controller)
         {
             _entManager = entManager;
             _controller = controller;

@@ -20,7 +20,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly SharedMoverController _movementSpeedModifier = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     public override void Initialize()

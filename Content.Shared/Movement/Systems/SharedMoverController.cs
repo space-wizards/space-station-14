@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public abstract partial class SharedMoverController : VirtualController
 {

@@ -11,10 +11,10 @@ using Content.Server.Buckle.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Tag;
 using Content.Server.Mind.Components;
-using Content.Shared.Movement.EntitySystems;
 using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using SharedMoverController = Content.Shared.Movement.Systems.SharedMoverController;
 
 namespace Content.Server.Vehicle
 {

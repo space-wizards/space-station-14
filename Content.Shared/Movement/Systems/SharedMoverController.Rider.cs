@@ -1,4 +1,4 @@
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public abstract partial class SharedMoverController
 {

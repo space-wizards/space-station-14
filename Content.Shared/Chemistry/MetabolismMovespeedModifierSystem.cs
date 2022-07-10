@@ -2,8 +2,10 @@ using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComponent;
+using SharedMoverController = Content.Shared.Movement.Systems.SharedMoverController;
 
 namespace Content.Shared.Chemistry
 {
@@ -11,7 +13,7 @@ namespace Content.Shared.Chemistry
     public sealed class MetabolismMovespeedModifierSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movespeed = default!;
+        [Dependency] private readonly SharedMoverController _movespeed = default!;
 
         private readonly List<MovespeedModifierMetabolismComponent> _components = new();
 
@@ -31,7 +33,7 @@ namespace Content.Shared.Chemistry
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
 
-            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
+            if (EntityManager.TryGetComponent<MobMoverComponent>(uid, out var modifier) &&
                 (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
                  !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
             {

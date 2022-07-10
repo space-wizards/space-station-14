@@ -16,7 +16,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Movement.EntitySystems;
+namespace Content.Shared.Movement.Systems;
 
 public abstract partial class SharedMoverController
 {
@@ -68,6 +68,7 @@ public abstract partial class SharedMoverController
 
     private void OnMobInit(EntityUid uid, MobMoverComponent component, ComponentInit args)
     {
+        // TODO: AAA
         component.LastGridAngle = Transform(uid).Parent?.WorldRotation ?? new Angle(0);
     }
 
@@ -340,7 +341,7 @@ public abstract partial class SharedMoverController
         mover.StepSoundDistance -= distanceNeeded;
 
         if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
-            EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
+            TryComp<FootstepModifierComponent>(shoes, out var modifier))
         {
             sound = modifier.SoundCollection.GetSound(_random, _protoManager);
             variation = modifier.Variation;
@@ -352,6 +353,7 @@ public abstract partial class SharedMoverController
 
     private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
     {
+        // TODO: Update footstep sounds to master.
         variation = 0f;
         sound = null;
         var grid = _mapManager.GetGrid(gridId);
@@ -363,7 +365,7 @@ public abstract partial class SharedMoverController
         // i.e. component that emit sound on footsteps emit that sound
         foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
         {
-            if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+            if (TryComp(maybeFootstep, out FootstepModifierComponent? footstep))
             {
                 sound = footstep.SoundCollection.GetSound(_random, _protoManager);
                 variation = footstep.Variation;

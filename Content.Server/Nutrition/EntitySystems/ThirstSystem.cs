@@ -7,6 +7,7 @@ using Content.Shared.Alert;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Damage;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -18,7 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly DamageableSystem _damage = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+        [Dependency] private readonly SharedMoverController _movement = default!;
         [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
         private ISawmill _sawmill = default!;
@@ -81,7 +82,7 @@ namespace Content.Server.Nutrition.EntitySystems
         private void UpdateEffects(ThirstComponent component)
         {
             if (component.LastThirstThreshold == ThirstThreshold.Parched && component.CurrentThirstThreshold != ThirstThreshold.Dead &&
-                    EntityManager.TryGetComponent(component.Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
+                    EntityManager.TryGetComponent(component.Owner, out MobMoverComponent? movementSlowdownComponent))
             {
                 _movement.RefreshMovementSpeedModifiers(component.Owner);
             }
