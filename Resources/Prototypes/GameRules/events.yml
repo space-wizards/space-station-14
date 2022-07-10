@@ -42,6 +42,8 @@
     !type:StationEventRuleConfiguration
     id: GasLeak
     startAnnouncement: station-event-gas-leak-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
     earliestStart: 10
     minimumPlayers: 5
@@ -115,6 +117,8 @@
     !type:StationEventRuleConfiguration
     id: VentClog
     startAnnouncement: station-event-vent-clog-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     minimumPlayers: 15
     weight: 5

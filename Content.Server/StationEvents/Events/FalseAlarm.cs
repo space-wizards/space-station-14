@@ -10,9 +10,9 @@ namespace Content.Server.StationEvents.Events
     {
         public override string Prototype => "FalseAlarm";
 
-        public override void Added()
+        public override void Started()
         {
-            base.Added();
+            base.Started();
 
             var ev = GetRandomEventUnweighted(PrototypeManager, RobustRandom);
 
