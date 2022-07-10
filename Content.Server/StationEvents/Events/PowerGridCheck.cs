@@ -30,7 +30,7 @@ namespace Content.Server.StationEvents.Events
         public override void Added()
         {
             base.Added();
-            _endAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
+            _endAfter = RobustRandom.Next(60, 120);
         }
 
         public override void Started()

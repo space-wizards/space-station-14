@@ -68,7 +68,7 @@ namespace Content.Server.StationEvents.Events
                 var startAfter = ((StationEventRuleConfiguration) Configuration).StartAfter;
                 _molesPerSecond = RobustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
                 _endAfter = totalGas / _molesPerSecond + startAfter;
-                Logger.InfoS("stationevents", $"Leaking {totalGas} of {_leakGas} over {_endAfter - startAfter} seconds at {_targetTile}");
+                Sawmill.Info($"Leaking {totalGas} of {_leakGas} over {_endAfter - startAfter} seconds at {_targetTile}");
             }
 
             // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement

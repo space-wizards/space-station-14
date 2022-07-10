@@ -8,14 +8,18 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents
 {
-    // Somewhat based off of TG's implementation of events
+    /// <summary>
+    ///     The basic event scheduler rule, loosely based off of /tg/ events, which most
+    ///     game presets use.
+    /// </summary>
     [UsedImplicitly]
     public sealed class BasicStationEventSchedulerSystem : GameRuleSystem
     {
-        public override string Prototype => "BasicEventScheduler";
+        public override string Prototype => "BasicStationEventScheduler";
 
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -23,6 +27,7 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         private const float MinimumTimeUntilFirstEvent = 300;
+        private ISawmill _sawmill = default!;
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -30,7 +35,24 @@ namespace Content.Server.StationEvents
         /// Default value is how long until first event is allowed
         private float _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
 
-        public override void Started() { }
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _sawmill = Logger.GetSawmill("basicevents");
+
+            // Can't just check debug / release for a default given mappers need to use release mode
+            // As such we'll always pause it by default.
+            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
+
+        public override void Started()
+        {
+            if (!_configurationManager.GetCVar(CCVars.EventsEnabled))
+                Enabled = false;
+        }
         public override void Ended() { }
 
         /// <summary>
@@ -60,17 +82,6 @@ namespace Content.Server.StationEvents
             return FindEvent(availableEvents);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            // Can't just check debug / release for a default given mappers need to use release mode
-            // As such we'll always pause it by default.
-            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -86,12 +97,12 @@ namespace Content.Server.StationEvents
             if (stationEvent == null
                 || !_prototype.TryIndex<GameRulePrototype>(stationEvent.Id, out var proto))
             {
-                ResetTimer();
+                return;
             }
-            else
-            {
-                GameTicker.AddGameRule(proto);
-            }
+
+            GameTicker.AddGameRule(proto);
+            ResetTimer();
+            _sawmill.Info($"Started event {proto.ID}. Next event in {_timeUntilNextEvent} seconds");
         }
 
         /// <summary>
@@ -197,6 +208,9 @@ namespace Content.Server.StationEvents
 
         private bool CanRun(StationEventRuleConfiguration stationEvent, int playerCount, TimeSpan currentTime)
         {
+            if (GameTicker.IsGameRuleStarted(stationEvent.Id))
+                return false;
+
             if (stationEvent.MaxOccurrences.HasValue && GetOccurrences(stationEvent) >= stationEvent.MaxOccurrences.Value)
             {
                 return false;

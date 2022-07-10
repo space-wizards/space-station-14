@@ -6,6 +6,8 @@
   name: extended-title
   showInVote: false #2boring2vote
   description: extended-description
+  rules:
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Secret
@@ -17,6 +19,7 @@
   description: secret-description
   rules:
     - Secret
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Sandbox
@@ -38,6 +41,7 @@
   showInVote: false
   rules:
     - Traitor
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Suspicion

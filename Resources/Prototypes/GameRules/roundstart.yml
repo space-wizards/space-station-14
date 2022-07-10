@@ -62,7 +62,7 @@
 
 # event schedulers
 - type: gameRule
-  id: BasicEventScheduler
+  id: BasicStationEventScheduler
   config:
     !type:GenericGameRuleConfiguration
-    id: BasicEventScheduler
+    id: BasicStationEventScheduler

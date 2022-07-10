@@ -86,6 +86,7 @@ namespace Content.Server.GameTicking
                 return;
 
             _addedGameRules.Remove(rule);
+            _sawmill.Info($"Ended game rule {rule.ID}");
 
             if (IsGameRuleStarted(rule))
                 _startedGameRules.Remove(rule);
@@ -101,6 +102,7 @@ namespace Content.Server.GameTicking
             if (!_addedGameRules.Add(rule))
                 return false;
 
+            _sawmill.Info($"Added game rule {rule.ID}");
             RaiseLocalEvent(new GameRuleAddedEvent(rule));
             return true;
         }

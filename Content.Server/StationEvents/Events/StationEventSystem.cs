@@ -27,10 +27,19 @@ namespace Content.Server.StationEvents.Events
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationSystem StationSystem = default!;
 
+        protected ISawmill Sawmill = default!;
+
         /// <summary>
         ///     How long has the event existed. Do not change this.
         /// </summary>
         protected float Elapsed { get; set; }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Sawmill = Logger.GetSawmill("stationevents");
+        }
 
         /// <summary>
         ///     Called once to setup the event after StartAfter has elapsed, or if an event is forcibly started.

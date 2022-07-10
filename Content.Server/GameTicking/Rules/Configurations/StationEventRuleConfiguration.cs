@@ -24,16 +24,16 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     public float Weight = WeightNormal;
 
     [DataField("startAnnouncement")]
-    public string? StartAnnouncement = null;
+    public string? StartAnnouncement;
 
     [DataField("endAnnouncement")]
-    public string? EndAnnouncement = null;
+    public string? EndAnnouncement;
 
     [DataField("startAudio")]
-    public SoundSpecifier? StartAudio = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
+    public SoundSpecifier? StartAudio;
 
     [DataField("endAudio")]
-    public SoundSpecifier? EndAudio = null;
+    public SoundSpecifier? EndAudio;
 
     /// <summary>
     ///     In minutes, when is the first round time this event can start
@@ -51,13 +51,13 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     ///     When in the lifetime to call Start().
     /// </summary>
     [DataField("startAfter")]
-    public float StartAfter = 0.0f;
+    public float StartAfter;
 
     /// <summary>
     ///     When in the lifetime the event should end.
     /// </summary>
     [DataField("endAfter")]
-    public float EndAfter = 0.0f;
+    public float EndAfter = float.MaxValue;
 
     /// <summary>
     ///     How many players need to be present on station for the event to run
@@ -66,11 +66,11 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     ///     To avoid running deadly events with low-pop
     /// </remarks>
     [DataField("minimumPlayers")]
-    public int MinimumPlayers = 0;
+    public int MinimumPlayers;
 
     /// <summary>
     ///     How many times this even can occur in a single round
     /// </summary>
     [DataField("maxOccurrences")]
-    public int? MaxOccurrences = null;
+    public int? MaxOccurrences;
 }
