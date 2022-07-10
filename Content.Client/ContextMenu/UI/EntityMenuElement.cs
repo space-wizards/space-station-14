@@ -1,3 +1,5 @@
+using Content.Client.Administration.Managers;
+using Content.Shared.Administration;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -74,7 +76,9 @@ namespace Content.Client.ContextMenu.UI
 
             EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
 
-            if (UserInterfaceManager.DebugMonitors.Visible)
+            var admin = IoCManager.Resolve<IClientAdminManager>();
+
+            if (admin.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
                 Text = _entityManager.ToPrettyString(entity.Value);
             else
                 Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value).EntityName;
