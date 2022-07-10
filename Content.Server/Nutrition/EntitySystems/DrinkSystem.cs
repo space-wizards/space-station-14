@@ -315,7 +315,6 @@ namespace Content.Server.Nutrition.EntitySystems
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _solutionContainerSystem.TryAddSolution(args.Drink.Owner, args.DrinkSolution, drained);
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"),
                     uid, Filter.Entities(uid));
 

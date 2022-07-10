@@ -43,17 +43,17 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnStopAutodockPressed(EntityUid obj)
     {
-        SendMessage(new StopAutodockRequestMessage() {Entity = obj});
+        SendMessage(new StopAutodockRequestMessage() {DockEntity = obj});
     }
 
     private void OnAutodockPressed(EntityUid obj)
     {
-        SendMessage(new AutodockRequestMessage() {Entity = obj});
+        SendMessage(new AutodockRequestMessage() {DockEntity = obj});
     }
 
     private void OnUndockPressed(EntityUid obj)
     {
-        SendMessage(new UndockRequestMessage() {Entity = obj});
+        SendMessage(new UndockRequestMessage() {DockEntity = obj});
     }
 
     private void OnShuttleModePressed(ShuttleMode obj)
