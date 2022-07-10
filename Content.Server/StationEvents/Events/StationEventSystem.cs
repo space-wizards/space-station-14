@@ -20,17 +20,12 @@ namespace Content.Server.StationEvents.Events
     /// <summary>
     ///     An abstract entity system inherited by all station events for their behavior.
     /// </summary>
-    /// <remarks>
-    ///     Events still currently only support one instance of each being run at a time,
-    ///     hence the data stored in each system.
-    /// </remarks>
     public abstract class StationEventSystem : EntitySystem
     {
         [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
-        [Dependency] protected readonly GameTicker GameTicker = default!;
-        [Dependency] protected readonly StationEventSchedulerSystem StationEventScheduler = default!;
+        [Dependency] protected readonly StationEventManagementSystem StationEventManager = default!;
 
         /// <summary>
         ///     The station event prototype that this system is linked with.
@@ -43,32 +38,14 @@ namespace Content.Server.StationEvents.Events
         public bool Enabled { get; set; }
 
         /// <summary>
-        ///     The time when this event last ran.
-        /// </summary>
-        public TimeSpan LastRun { get; set; } = TimeSpan.Zero;
-
-        /// <summary>
         ///     How long has the event existed. Do not change this.
         /// </summary>
         private float Elapsed { get; set; } = 0.0f;
 
         /// <summary>
-        ///     How many players need to be present on station for the event to run
-        /// </summary>
-        /// <remarks>
-        ///     To avoid running deadly events with low-pop
-        /// </remarks>
-        public virtual int MinimumPlayers { get; } = 0;
-
-        /// <summary>
         ///     Has this event commenced (announcement may or may not be used)?
         /// </summary>
         private bool Announced { get; set; } = false;
-
-        /// <summary>
-        ///     How many times this event has run this round
-        /// </summary>
-        public int Occurrences = 0;
 
         /// <summary>
         ///     Called once to setup the event after StartAfter has elapsed.
@@ -79,7 +56,6 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             Started = true;
-            Occurrences += 1;
             LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
             IoCManager.Resolve<IAdminLogManager>()
