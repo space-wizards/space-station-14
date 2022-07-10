@@ -54,6 +54,12 @@
   config:
     !type:StationEventRuleConfiguration
     id: KudzuGrowth
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    maxOccurrences: 2
+    startAfter: 50
+    endAfter: 240
 
 - type: gameRule
   id: MeteorSwarm
