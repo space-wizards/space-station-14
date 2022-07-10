@@ -33,7 +33,7 @@ public sealed class DamageUserOnTriggerSystem : EntitySystem
 
         var damage = new DamageSpecifier(component.Damage);
         var ev = new BeforeDamageUserOnTriggerEvent(damage, target);
-        RaiseLocalEvent(source, ev, true);
+        RaiseLocalEvent(source, ev);
 
         return _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances) is not null;
     }
