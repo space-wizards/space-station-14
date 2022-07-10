@@ -45,9 +45,9 @@ namespace Content.Server.StationEvents.Events
         private const float MaxAngularVelocity = 0.25f;
         private const float MinAngularVelocity = -0.25f;
 
-        public override void Start()
+        public override void Started()
         {
-            base.Start();
+            base.Started();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             _waveCounter = robustRandom.Next(MinimumWaves, MaximumWaves);
         }

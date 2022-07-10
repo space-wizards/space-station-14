@@ -34,9 +34,9 @@ public sealed class VentCritters : StationEventSystem
 
     public override bool AnnounceEvent => false;
 
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
+        base.Started();
         var spawnChoice = _random.Pick(SpawnedPrototypeChoices);
         var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         _random.Shuffle(spawnLocations);

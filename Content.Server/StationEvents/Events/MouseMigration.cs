@@ -19,7 +19,7 @@ public sealed class MouseMigration : StationEventSystem
 
     public override int EarliestStart => 30;
 
-    public override int MinimumPlayers => 35; //this just ensures that it doesn't spawn on lowpop maps. 
+    public override int MinimumPlayers => 35; //this just ensures that it doesn't spawn on lowpop maps.
 
     public override float Weight => WeightLow;
 
@@ -31,10 +31,10 @@ public sealed class MouseMigration : StationEventSystem
 
     protected override float EndAfter => 60;
 
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
-        
+        base.Started();
+
         var spawnLocations = _entityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
         _random.Shuffle(spawnLocations);
 

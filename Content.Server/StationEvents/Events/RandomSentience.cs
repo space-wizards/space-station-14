@@ -20,9 +20,9 @@ public sealed class RandomSentience : StationEventSystem
 
     protected override float EndAfter => 1.0f;
 
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
+        base.Started();
         HashSet<EntityUid> stationsToNotify = new();
 
         var targetList = _entityManager.EntityQuery<SentienceTargetComponent>().ToList();

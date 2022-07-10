@@ -82,9 +82,9 @@ namespace Content.Server.StationEvents.Events
 
         private const float SparkChance = 0.05f;
 
-        public override void Start()
+        public override void Started()
         {
-            base.Start();
+            base.Started();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
             if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
@@ -115,7 +115,7 @@ namespace Content.Server.StationEvents.Events
             _timeUntilLeak += LeakCooldown;
 
             var atmosphereSystem = _entityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-            
+
             if (!_foundTile ||
                 _targetGrid == default ||
                 _entityManager.Deleted(_targetGrid) ||

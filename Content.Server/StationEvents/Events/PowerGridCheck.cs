@@ -44,7 +44,7 @@ namespace Content.Server.StationEvents.Events
             EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
         }
 
-        public override void Start()
+        public override void Started()
         {
             foreach (var component in _entityManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
@@ -56,7 +56,7 @@ namespace Content.Server.StationEvents.Events
 
             _numberPerSecond = Math.Max(1, (int)(_powered.Count / SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
 
-            base.Start();
+            base.Started();
         }
 
         public override void Update(float frameTime)

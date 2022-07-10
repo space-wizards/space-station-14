@@ -29,9 +29,9 @@ namespace Content.Server.StationEvents.Events
         /// Finds 1-3 random, dead entities accross the station
         /// and turns them into zombies.
         /// </summary>
-        public override void Start()
+        public override void Started()
         {
-            base.Start();
+            base.Started();
             HashSet<EntityUid> stationsToNotify = new();
             List<MobStateComponent> deadList = new();
             foreach (var mobState in _entityManager.EntityQuery<MobStateComponent>())
@@ -42,19 +42,19 @@ namespace Content.Server.StationEvents.Events
             _random.Shuffle(deadList);
 
             var toInfect = _random.Next(1, 3);
-            
+
             var zombifysys = _entityManager.EntitySysManager.GetEntitySystem<ZombifyOnDeathSystem>();
-            
+
             // Now we give it to people in the list of dead entities earlier.
             var entSysMgr = IoCManager.Resolve<IEntitySystemManager>();
             var stationSystem = entSysMgr.GetEntitySystem<StationSystem>();
             var chatSystem = entSysMgr.GetEntitySystem<ChatSystem>();
-            
+
             foreach (var target in deadList)
             {
                 if (toInfect-- == 0)
                     break;
-                    
+
                 zombifysys.ZombifyEntity(target.Owner);
 
                 var station = stationSystem.GetOwningStation(target.Owner);

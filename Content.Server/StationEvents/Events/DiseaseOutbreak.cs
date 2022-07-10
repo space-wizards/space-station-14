@@ -45,9 +45,9 @@ public sealed class DiseaseOutbreak : StationEventSystem
     /// and gives them a randomly selected disease.
     /// They all get the same disease.
     /// </summary>
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
+        base.Started();
         HashSet<EntityUid> stationsToNotify = new();
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in _entityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())

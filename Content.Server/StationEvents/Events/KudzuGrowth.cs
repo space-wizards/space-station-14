@@ -35,9 +35,9 @@ public sealed class KudzuGrowth : StationEventSystem
 
     private EntityCoordinates _targetCoords;
 
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
+        base.Started();
 
         // Pick a place to plant the kudzu.
         if (TryFindRandomTile(out _targetTile, out _, out _targetGrid, out _targetCoords, _robustRandom, _entityManager))

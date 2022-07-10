@@ -41,9 +41,9 @@ public sealed class VentClog : StationEventSystem
         "Nutriment", "Sugar", "SpaceLube", "Ethanol", "Mercury", "Ephedrine", "WeldingFuel", "VentCrud"
     };
 
-    public override void Start()
+    public override void Started()
     {
-        base.Start();
+        base.Started();
 
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = _prototypeManager.EnumeratePrototypes<ReagentPrototype>()

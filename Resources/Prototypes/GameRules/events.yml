@@ -7,3 +7,14 @@
     endAfter: 1
     maxOccurrences: 5
     minimumPlayers: 15
+
+- type: gameRule
+  id: BureaucraticError
+  config:
+    !type:StationEventRuleConfiguraiton
+    id: BureaucraticError
+    startAnnouncement: station-event-bureaucratic-error-announcement
+    minimumPlayers: 25
+    weight: 5
+    maxOccurrences: 2
+    endAfter: 1
