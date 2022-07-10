@@ -124,100 +124,127 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
-    ///     Movement while considering actionblockers, weightlessness, etc.
-    /// </summary>
-    protected void HandleSimpleMovement(
-        MobMoverComponent mover,
-        PhysicsComponent physicsComponent,
-        TransformComponent xform,
-        float frameTime)
-    {
-        DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
-
-        if (!UseMobMovement(mover, physicsComponent))
+        ///     Movement while considering actionblockers, weightlessness, etc.
+        /// </summary>
+        protected void HandleMobMovement(
+            MobMoverComponent mover,
+            PhysicsComponent physicsComponent,
+            TransformComponent xform,
+            float frameTime)
         {
-            UsedMobMovement[mover.Owner] = false;
-            return;
-        }
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
 
-        UsedMobMovement[mover.Owner] = true;
-        var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
-        var (walkDir, sprintDir) = GetMobVelocityInput(mover);
-        bool touching = true;
+            if (!UseMobMovement(mover, physicsComponent))
+            {
+                UsedMobMovement[mover.Owner] = false;
+                return;
+            }
 
-        // Handle wall-pushes.
-        if (weightless)
-        {
-            // No gravity: is our entity touching anything?
-            touching = xform.GridUid != null || IsAroundCollider(_physics, xform, mover, physicsComponent);
+            UsedMobMovement[mover.Owner] = true;
+            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
+            var (walkDir, sprintDir) = GetMobVelocityInput(mover);
+            var touching = false;
 
-            if (!touching)
+            // Handle wall-pushes.
+            if (weightless)
             {
                 if (xform.GridUid != null)
-                    mover.LastGridAngle = GetParentGridAngle(xform, mover);
+                    touching = true;
+
+                if (!touching)
+                {
+                    var ev = new CanWeightlessMoveEvent();
+                    RaiseLocalEvent(xform.Owner, ref ev);
+                    // No gravity: is our entity touching anything?
+                    touching = ev.CanMove || IsAroundCollider(_physics, xform, mover, physicsComponent);
+                }
+
+                if (!touching)
+                {
+                    if (xform.GridUid != null)
+                        mover.LastGridAngle = GetParentGridAngle(xform, mover);
+                }
             }
-        }
 
-        // Regular movement.
-        // Target velocity.
-        // This is relative to the map / grid we're on.
-        var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-        var parentRotation = GetParentGridAngle(xform, mover);
-        var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
+            // Regular movement.
+            // Target velocity.
+            // This is relative to the map / grid we're on.
+            var walkSpeed = mover.CurrentWalkSpeed;
+            var sprintSpeed = mover.CurrentSprintSpeed;
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
-        DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
+            var parentRotation = GetParentGridAngle(xform, mover);
+            var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
-        var velocity = physicsComponent.LinearVelocity;
-        float friction;
-        float weightlessModifier;
-        float accel;
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
-        if (weightless)
-        {
-            if (worldTotal != Vector2.Zero && touching)
-                friction = mover.WeightlessFrictionVelocity;
-            else
-                friction = mover.WeightlessFrictionVelocityNoInput;
+            var velocity = physicsComponent.LinearVelocity;
+            float friction;
+            float weightlessModifier;
+            float accel;
 
-            weightlessModifier = mover.WeightlessModifier;
-            accel = mover.WeightlessAcceleration;
-        }
-        else
-        {
-            friction = mover.FrictionVelocity;
-            weightlessModifier = 1f;
-            accel = mover.Acceleration;
-        }
-
-        Friction(mover, frameTime, friction, ref velocity);
-
-        if (xform.GridUid != EntityUid.Invalid)
-            mover.LastGridAngle = parentRotation;
-
-        if (worldTotal != Vector2.Zero)
-        {
-            // This should have its event run during island solver soooo
-            xform.DeferUpdates = true;
-            xform.LocalRotation = xform.GridUid != EntityUid.Invalid
-                ? total.ToWorldAngle()
-                : worldTotal.ToWorldAngle();
-            xform.DeferUpdates = false;
-
-            if (TryGetSound(mover, xform, out var variation, out var sound))
+            if (weightless)
             {
-                SoundSystem.Play(sound,
-                    GetSoundPlayers(mover.Owner),
-                    mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                if (worldTotal != Vector2.Zero && touching)
+                    friction = mover.WeightlessFrictionVelocity;
+                else
+                    friction = mover.WeightlessFrictionVelocityNoInput;
+
+                weightlessModifier = mover.WeightlessModifier;
+                accel = mover.WeightlessAcceleration;
             }
+            else
+            {
+                friction = mover.FrictionVelocity;
+                weightlessModifier = 1f;
+                accel = mover.Acceleration;
+            }
+
+            var profile = new MobMovementProfileEvent(
+                touching,
+                weightless,
+                friction,
+                weightlessModifier,
+                accel);
+
+            RaiseLocalEvent(xform.Owner, ref profile);
+
+            if (profile.Override)
+            {
+                friction = profile.Friction;
+                weightlessModifier = profile.WeightlessModifier;
+                accel = profile.Acceleration;
+            }
+
+            Friction(mover, frameTime, friction, ref velocity);
+
+            if (xform.GridUid != EntityUid.Invalid)
+                mover.LastGridAngle = parentRotation;
+
+            if (worldTotal != Vector2.Zero)
+            {
+                // This should have its event run during island solver soooo
+                xform.DeferUpdates = true;
+                xform.LocalRotation = xform.GridUid != null
+                    ? total.ToWorldAngle()
+                    : worldTotal.ToWorldAngle();
+                xform.DeferUpdates = false;
+
+                if (!weightless && TryGetSound(mover, xform, out var variation, out var sound))
+                {
+                    SoundSystem.Play(sound,
+                        GetSoundPlayers(mover.Owner),
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                }
+            }
+
+            worldTotal *= weightlessModifier;
+
+            if (!weightless || touching)
+                Accelerate(ref velocity, in worldTotal, accel, frameTime);
+
+            _physics.SetLinearVelocity(physicsComponent, velocity);
         }
-
-        worldTotal *= weightlessModifier;
-
-        if (touching)
-            Accelerate(ref velocity, in worldTotal, accel, frameTime);
-
-        _physics.SetLinearVelocity(physicsComponent, velocity);
-    }
 
     private void Friction(MobMoverComponent mover, float frameTime, float friction, ref Vector2 velocity)
     {

@@ -65,13 +65,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            if (TryComp(player, out MobMoverComponent? mobMover))
-            {
-                HandleMobMovement(mover, body, mobMover, xform, frameTime);
-                return;
-            }
-
-            HandleKinematicMovement(mover, body);
+            HandleMobMovement(mover, body, xform, frameTime);
         }
 
         protected override Filter GetSoundPlayers(EntityUid mover)

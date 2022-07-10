@@ -41,21 +41,15 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mover, physics, xform) in EntityManager.EntityQuery<MobMoverComponent, PhysicsComponent, TransformComponent>())
+            // Handle mob movement last as something may relay or the likes to a particular entity.
+            foreach (var (mover, physics, xform) in EntityQuery<MobMoverComponent, PhysicsComponent, TransformComponent>())
             {
                 _excludedMobs.Add(mover.Owner);
                 HandleMobMovement(mover, physics, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
-            HandleVehicleMovement();
-
-            foreach (var (mover, physics) in EntityManager.EntityQuery<MobMoverComponent, PhysicsComponent>(true))
-            {
-                if (_excludedMobs.Contains(mover.Owner)) continue;
-
-                HandleKinematicMovement(mover, physics);
-            }
+            HandleVehicleMovement(frameTime);
         }
 
         private void HandleShuttleMovement(float frameTime)
@@ -117,7 +111,7 @@ namespace Content.Server.Physics.Controllers
                     case ShuttleMode.Cruise:
                         foreach (var (pilot, mover, consoleXform) in pilots)
                         {
-                            var sprint = mover.VelocityDir.sprinting;
+                            var sprint = GetMobVelocityInput(mover).Sprint;
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
@@ -131,7 +125,7 @@ namespace Content.Server.Physics.Controllers
                         // No angular input possible
                         foreach (var (pilot, mover, consoleXform) in pilots)
                         {
-                            var sprint = mover.VelocityDir.sprinting;
+                            var sprint = GetMobVelocityInput(mover).Sprint;
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
@@ -259,7 +253,7 @@ namespace Content.Server.Physics.Controllers
         /// Add mobs riding vehicles to the list of mobs whose input
         /// should be ignored.
         /// </summary>
-        private void HandleVehicleMovement()
+        private void HandleVehicleMovement(float frameTime)
         {
             // TODO: Nuke this code. It's on my list.
             foreach (var (rider, mover) in EntityQuery<RiderComponent, MobMoverComponent>())
@@ -271,9 +265,10 @@ namespace Content.Server.Physics.Controllers
 
                 if (!TryComp<MobMoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
                     !TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
+                    !TryComp<TransformComponent>(rider.Vehicle.Owner, out var vehicleXform) ||
                     rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
 
-                HandleKinematicMovement(vehicleMover, vehicleBody);
+                HandleMobMovement(vehicleMover, vehicleBody, vehicleXform, frameTime);
             }
         }
     }

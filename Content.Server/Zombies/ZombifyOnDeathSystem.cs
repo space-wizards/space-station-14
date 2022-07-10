@@ -75,7 +75,7 @@ namespace Content.Server.Zombies
         /// <remarks>
         ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
-        ///     attempted to label everything thouroughly for your sanity. I have attempted to 
+        ///     attempted to label everything thouroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
@@ -143,7 +143,7 @@ namespace Content.Server.Zombies
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target));
 
             //Make it sentient if it's an animal or something
-            if (!HasComp<SharedDummyInputMoverComponent>(target)) //this component is cursed and fucks shit up
+            if (!HasComp<MobMoverComponent>(target)) //this component is cursed and fucks shit up
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
             //Make the zombie not die in the cold. Good for space zombies
@@ -178,7 +178,7 @@ namespace Content.Server.Zombies
             }
 
             ///Goes through every hand, drops the items in it, then removes the hand
-            ///may become the source of various bugs. 
+            ///may become the source of various bugs.
             foreach (var hand in _sharedHands.EnumerateHands(target))
             {
                 _sharedHands.SetActiveHand(target, hand);
