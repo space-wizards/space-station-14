@@ -380,6 +380,7 @@
         amount: -10000
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
 
@@ -417,6 +418,7 @@
         probability: 0.2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
         probability: 0.1
 

@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Commands
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            var tile = atmosphereSystem.GetTileMixture(id, indices, true);
+            var tile = atmosphereSystem.GetTileMixture(id, null, indices, true);
 
             if (tile == null)
             {

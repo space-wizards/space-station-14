@@ -174,7 +174,7 @@ public sealed class MagicSystem : EntitySystem
                 // This is shit but you get the idea.
                 var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized);
 
-                if (!_mapManager.TryGetGrid(casterXform.GridID, out var mapGrid))
+                if (!_mapManager.TryGetGrid(casterXform.GridUid, out var mapGrid))
                     return new List<EntityCoordinates>();
 
                 if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
@@ -272,6 +272,10 @@ public sealed class MagicSystem : EntitySystem
     {
         if (ev.Handled)
             return;
+
+        var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
+        var impulseVector = direction * 10000;
+        Comp<PhysicsComponent>(ev.Target).ApplyLinearImpulse(impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;

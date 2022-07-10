@@ -13,8 +13,6 @@
       compatibility: Slime
     - type: Brain
     - type: Stomach
-      maxVolume: 250
-      digestionDelay: 20
     - type: Metabolizer
       maxReagents: 6
       metabolizerTypes: [ Slime ]

@@ -3,6 +3,7 @@ using Content.Shared.Morgue;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;

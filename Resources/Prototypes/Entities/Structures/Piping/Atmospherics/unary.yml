@@ -41,13 +41,19 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
-          map: [ "enum.VentVisualLayers.Vent", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
+    - type: PipeColorVisuals
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: VentPumpVisualizer
+        enum.VentPumpVisuals.State:
+          enabled:
+            Off: { state: vent_off }
+            In: { state: vent_in }
+            Out: { state: vent_out }
+            Welded: { state: vent_welded }
     - type: GasVentPump
     - type: Construction
       graph: GasUnary
@@ -76,12 +82,11 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
-      visuals:
-        - type: PipeColorVisualizer
+    - type: PipeColorVisuals
     - type: GasPassiveVent
     - type: Construction
       graph: GasUnary
@@ -112,13 +117,20 @@
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
-          map: [ "enum.ScrubberVisualLayers.Scrubber", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
+    - type: PipeColorVisuals
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: ScrubberVisualizer
+        enum.ScrubberVisuals.State:
+          enabled:
+            Off: { state: scrub_off }
+            Scrub: { state: scrub_on }
+            Siphon: { state: scrub_purge }
+            WideScrub: { state: scrub_wide }
+            Welded: { state: scrub_welded }
     - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
@@ -146,8 +158,9 @@
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: injector
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
         - state: injector-unshaded
           shader: unshaded
           map: [ "unshaded" ]
@@ -160,12 +173,15 @@
            True: { color: "#5eff5e" }
            False: { color: "#990000" }
     - type: Appearance
-      visuals:
-        - type: PipeColorVisualizer
+    - type: PipeColorVisuals
     - type: GasOutletInjector
     - type: Construction
       graph: GasUnary
       node: outletinjector
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
+      - unshaded
 
 - type: entity
   parent: BaseMachinePowered
@@ -179,8 +195,7 @@
       netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
     - type: Appearance
-      visuals:
-        - type: PipeColorVisualizer
+    - type: PipeColorVisuals
     - type: Rotatable
     - type: GasThermoMachine
     - type: AtmosPipeColor
@@ -216,15 +231,15 @@
     - type: Sprite
       layers:
         - state: freezer_off
-          map: [ "enum.ThermoMachineVisualizer+Layers.Enabled" ]
+          map: [ "enabled" ]
         - state: pipe
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
-    - type: Appearance
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: ThermoMachineVisualizer
-          disabledState: freezer_off
-          enabledState: freezer_on
+        enum.ThermoMachineVisuals.Enabled:
+          enabled:
+            True: { state: freezer_on }
+            False: { state: freezer_off }
     - type: GasThermoMachine
       mode: Freezer
     - type: Machine
@@ -245,15 +260,15 @@
     - type: Sprite
       layers:
         - state: heater_off
-          map: [ "enum.ThermoMachineVisualizer+Layers.Enabled" ]
+          map: [ "enabled" ]
         - state: pipe
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
-    - type: Appearance
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: ThermoMachineVisualizer
-          disabledState: heater_off
-          enabledState: heater_on
+        enum.ThermoMachineVisuals.Enabled:
+          enabled:
+            True: { state: heater_on }
+            False: { state: heater_off }
     - type: GasThermoMachine
       mode: Heater
     - type: Machine

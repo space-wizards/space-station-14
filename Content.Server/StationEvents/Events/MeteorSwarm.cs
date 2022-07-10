@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Sound;
+using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -116,7 +117,7 @@ namespace Content.Server.StationEvents.Events
                     physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * _robustRandom.NextFloat() +
                                     MinAngularVelocity));
                 // TODO: God this disgusts me but projectile needs a refactor.
-                IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(meteor).TimeLeft = 120f;
+                IoCManager.Resolve<IEntityManager>().EnsureComponent<TimedDespawnComponent>(meteor).Lifetime = 120f;
             }
         }
     }

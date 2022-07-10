@@ -341,6 +341,7 @@ namespace Content.Client.Preferences.UI
 
             _jobPriorities = new List<JobPrioritySelector>();
             _jobCategories = new Dictionary<string, BoxContainer>();
+            var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
 
             var firstCategory = true;
 
@@ -389,7 +390,7 @@ namespace Content.Client.Preferences.UI
                         _jobList.AddChild(category);
                     }
 
-                    var selector = new JobPrioritySelector(job);
+                    var selector = new JobPrioritySelector(job, spriteSystem);
                     category.AddChild(selector);
                     _jobPriorities.Add(selector);
 
@@ -991,7 +992,7 @@ namespace Content.Client.Preferences.UI
 
             public event Action<JobPriority>? PriorityChanged;
 
-            public JobPrioritySelector(JobPrototype job)
+            public JobPrioritySelector(JobPrototype job, SpriteSystem sprites)
             {
                 Job = job;
 
@@ -1020,12 +1021,9 @@ namespace Content.Client.Preferences.UI
                     Stretch = TextureRect.StretchMode.KeepCentered
                 };
 
-                if (job.Icon != null)
-                {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
-                        job.Icon);
-                    icon.Texture = specifier.Frame0();
-                }
+                var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
+                    job.Icon);
+                icon.Texture = sprites.Frame0(specifier);
 
                 AddChild(new BoxContainer
                 {

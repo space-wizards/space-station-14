@@ -155,6 +155,10 @@
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      customPuddleSprite: true
 
 - type: entity
   name: toxins vomit
