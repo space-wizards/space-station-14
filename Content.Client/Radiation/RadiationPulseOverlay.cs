@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.StationEvents
+namespace Content.Client.Radiation
 {
     public sealed class RadiationPulseOverlay : Overlay
     {

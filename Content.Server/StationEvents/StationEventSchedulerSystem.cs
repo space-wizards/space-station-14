@@ -150,42 +150,12 @@ namespace Content.Server.StationEvents
         public override void Initialize()
         {
             base.Initialize();
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
-
-            foreach (var type in reflectionManager.GetAllChildren(typeof(StationEventSystem)))
-            {
-                if (type.IsAbstract) continue;
-
-                var stationEvent = (StationEventSystem) typeFactory.CreateInstance(type);
-                IoCManager.InjectDependencies(stationEvent);
-                _stationEvents.Add(stationEvent);
-            }
 
             // Can't just check debug / release for a default given mappers need to use release mode
             // As such we'll always pause it by default.
             _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
 
-            _netManager.RegisterNetMessage<MsgRequestStationEvents>(RxRequest);
-            _netManager.RegisterNetMessage<MsgStationEvents>();
-
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-        }
-
-        private void RxRequest(MsgRequestStationEvents msg)
-        {
-            if (_playerManager.TryGetSessionByChannel(msg.MsgChannel, out var player))
-                SendEvents(player);
-        }
-
-        private void SendEvents(IPlayerSession player)
-        {
-            if (!_conGroupController.CanCommand(player, "events"))
-                return;
-
-            var newMsg = new MsgStationEvents();
-            newMsg.Events = StationEvents.Select(e => e.Name).ToArray();
-            _netManager.ServerSendMessage(newMsg, player.ConnectedClient);
         }
 
         public override void Update(float frameTime)
