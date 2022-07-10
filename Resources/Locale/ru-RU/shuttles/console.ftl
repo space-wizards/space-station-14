@@ -1,12 +1,12 @@
 shuttle-pilot-start = Пилотирование начато
 shuttle-pilot-end = Пилотирование прекращено
 # Display
-shuttle-console-max-radar = Максимальная дальность радара:
-shuttle-console-radar = Дальность радара:
-shuttle-console-position = Местоположение:
-shuttle-console-orientation = Ориентация:
-shuttle-console-linear-velocity = Линейная скорость:
-shuttle-console-angular-velocity = Угловая скорость:
+shuttle-console-max-radar = Макс. дальн. радара:
+shuttle-console-radar = Дальн. радара:
+shuttle-console-position = Местопол:
+shuttle-console-orientation = Ориент:
+shuttle-console-linear-velocity = Линейн. скр:
+shuttle-console-angular-velocity = Угл. скр:
 shuttle-console-docked = { $index } (Пристыкован)
 shuttle-console-dock-button = Пристыковать { $suffix }
 shuttle-console-unknown = Неизвестно
