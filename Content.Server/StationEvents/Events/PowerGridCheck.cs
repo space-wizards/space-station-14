@@ -59,6 +59,7 @@ namespace Content.Server.StationEvents.Events
             }
 
             var updates = 0;
+            _frameTimeAccumulator += frameTime;
             if (_frameTimeAccumulator > UpdateRate)
             {
                 updates = (int) (_frameTimeAccumulator / UpdateRate);
