@@ -120,9 +120,9 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration _) { }
+    public override void Started() { }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {

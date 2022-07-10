@@ -3,8 +3,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
-[Prototype("gameRule"), Virtual]
-public class GameRulePrototype : IPrototype
+[Prototype("gameRule")]
+public sealed class GameRulePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;

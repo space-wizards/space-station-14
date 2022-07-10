@@ -25,7 +25,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Started(GameRuleConfiguration config)
+    public override void Started()
     {
         if (config is not InactivityGameRuleConfiguration inactivityConfig)
             return;
@@ -34,7 +34,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
 

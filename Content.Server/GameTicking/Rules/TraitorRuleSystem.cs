@@ -49,9 +49,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Started(GameRuleConfiguration _) {}
+    public override void Started() {}
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _traitors.Clear();
     }

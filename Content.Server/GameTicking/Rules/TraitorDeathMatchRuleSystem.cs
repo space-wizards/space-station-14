@@ -197,14 +197,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
     }
 

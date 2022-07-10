@@ -1,24 +1,24 @@
-﻿using Content.Server.GameTicking.Rules;
-using Content.Shared.Sound;
-using Robust.Shared.Prototypes;
+﻿using Content.Shared.Sound;
+using JetBrains.Annotations;
 
-namespace Content.Server.StationEvents;
+namespace Content.Server.GameTicking.Rules.Configurations;
 
 /// <summary>
-///     Station event prototypes are direct inheritors of game rules, since they can be added and started in
-///     GameTicker in much the same way.
+///     Defines a configuration for a given station event game rule, since all station events are just
+///     game rules.
 /// </summary>
-[Prototype("stationEvent")]
-public sealed class StationEventPrototype : GameRulePrototype
+[UsedImplicitly]
+public sealed class StationEventRuleConfiguration : GameRuleConfiguration
 {
+    [DataField("id", required: true)]
+    private string _id = default!;
+    public override string Id => _id;
+
     public const float WeightVeryLow = 0.0f;
     public const float WeightLow = 5.0f;
     public const float WeightNormal = 10.0f;
     public const float WeightHigh = 15.0f;
     public const float WeightVeryHigh = 20.0f;
-
-    [IdDataField]
-    public string ID { get; } = default!;
 
     [DataField("name", required: true)]
     public string Name = default!;

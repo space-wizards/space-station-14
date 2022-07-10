@@ -203,7 +203,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
 
@@ -269,7 +269,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         Timer.SpawnRepeating(DeadCheckDelay, CheckWinConditions, _checkTimerCancel.Token);
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         _doorSystem.AccessType = SharedDoorSystem.AccessTypes.Id;
         EndTime = null;

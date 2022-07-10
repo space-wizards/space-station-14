@@ -308,10 +308,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _opsWon = false;
     }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 }

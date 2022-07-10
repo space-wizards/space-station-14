@@ -12,13 +12,19 @@ public abstract class GameRuleSystem : EntitySystem
     ///     Whether this GameRule is currently enabled or not.
     ///     Be sure to check this before doing anything rule-specific.
     /// </summary>
-    public bool Enabled { get; protected set; } = false;
+    public bool Enabled { get; protected set; }
 
     /// <summary>
     ///     When the GameRule prototype with this ID is added, this system will be enabled.
     ///     When it gets removed, this system will be disabled.
     /// </summary>
     public new abstract string Prototype { get; }
+
+    /// <summary>
+    ///     Holds the current configuration after the event has been added.
+    ///     This should not be getting accessed before the event is enabled, as usual.
+    /// </summary>
+    public GameRuleConfiguration Configuration = default!;
 
     public override void Initialize()
     {
@@ -35,7 +41,10 @@ public abstract class GameRuleSystem : EntitySystem
         if (ev.Rule.Configuration.Id != Prototype)
             return;
 
+        Configuration = ev.Rule.Configuration;
         Enabled = true;
+
+        Added();
     }
 
     private void OnGameRuleStarted(GameRuleStartedEvent ev)
@@ -43,7 +52,7 @@ public abstract class GameRuleSystem : EntitySystem
         if (ev.Rule.Configuration.Id != Prototype)
             return;
 
-        Started(ev.Rule.Configuration);
+        Started();
     }
 
     private void OnGameRuleEnded(GameRuleEndedEvent ev)
@@ -52,16 +61,22 @@ public abstract class GameRuleSystem : EntitySystem
             return;
 
         Enabled = false;
-        Ended(ev.Rule.Configuration);
+        Ended();
     }
 
     /// <summary>
-    ///     Called when the game rule has been started..
+    ///     Called when the game rule has been added.
+    ///     You should avoid using this in favor of started--they are not the same thing.
     /// </summary>
-    public abstract void Started(GameRuleConfiguration configuration);
+    public abstract void Added();
 
     /// <summary>
-    ///     Called when the game rule has ended..
+    ///     Called when the game rule has been started.
     /// </summary>
-    public abstract void Ended(GameRuleConfiguration configuration);
+    public abstract void Started();
+
+    /// <summary>
+    ///     Called when the game rule has ended.
+    /// </summary>
+    public abstract void Ended();
 }

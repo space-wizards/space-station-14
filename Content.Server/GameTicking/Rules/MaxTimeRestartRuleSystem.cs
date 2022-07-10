@@ -23,7 +23,7 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Started(GameRuleConfiguration config)
+    public override void Started()
     {
         if (config is not MaxTimeRestartRuleConfiguration maxTimeRestartConfig)
             return;
@@ -34,7 +34,7 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
             RestartTimer();
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
         StopTimer();
     }
