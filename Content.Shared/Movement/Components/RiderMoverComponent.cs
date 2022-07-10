@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.Components;
 /// Relays events to parent entity instead.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RiderMoverComponent : Component
+public sealed class RiderMoverComponent : MoverComponent
 {
 
 }

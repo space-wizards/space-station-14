@@ -35,7 +35,7 @@ namespace Content.Server.Physics.Controllers
 
             }
 
-            foreach (var mover in EntityQuery<ShuttleMoverComponent>())
+            foreach (var mover in EntityQuery<PilotMoverComponent>())
             {
                 EntityUid grid;
 
