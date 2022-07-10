@@ -6,7 +6,7 @@
   - Civilian
   icon: "Botanist"
   supervisors: job-supervisors-hop
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

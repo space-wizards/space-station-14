@@ -59,8 +59,8 @@
 
 
 - type: entity
-  id: AsteroidRockMining
-  parent: AsteroidRockIce
+  id: AsteroidRockIce
+  parent: AsteroidRockMining
   name: ice rock
   suffix: higher ore yield
   description: A massive hunk of ice.

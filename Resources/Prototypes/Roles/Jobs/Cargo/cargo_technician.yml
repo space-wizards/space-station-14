@@ -6,7 +6,7 @@
   - Cargo
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
-  access:
+  accessGroups:
     - AllAccess
 
 - type: startingGear

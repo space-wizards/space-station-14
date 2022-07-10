@@ -270,6 +270,20 @@
           Quantity: 30
 
 - type: entity
+  id: FluorineChemistryBottle
+  name: fluorine bottle
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
+        maxVol: 30
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 30
+
+
+- type: entity
   id: IodineChemistryBottle
   name: iodine bottle
   parent: BaseChemistryEmptyBottle
