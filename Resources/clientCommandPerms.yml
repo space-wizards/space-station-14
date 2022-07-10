@@ -45,6 +45,7 @@
     - showspread
     - showambient
     - showemergencyshuttle
+    - zoom
 
 - Flags: MAPPING
   Commands:
