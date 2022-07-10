@@ -82,8 +82,16 @@ namespace Content.Server.GameTicking
         [AnyCommand]
         private void PurchaseShipCommand(IConsoleShell shell, string argstr, string[] args)
         {
-            if (PurchaseAvailable())
+            if (!PurchaseAvailable()) return;
+
+            for (var i = 0; i < 128; i++)
             {
+                var loc = _robustRandom.Pick(_world.SafeSpawnLocations);
+
+                if (_mapManager.FindGridsIntersecting(DefaultMap,
+                        Box2.CenteredAround(loc * WorldChunkSystem.ChunkSize, Vector2.One * 96)).Any())
+                    continue;
+
                 LoadGameMap(_gameMapManager.GetSelectedMapChecked(true, true), DefaultMap, null);
             }
         }
