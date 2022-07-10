@@ -26,7 +26,9 @@ public sealed class MouseMigration : StationEventSystem
             if (RobustRandom.Prob(0.01f) || i == 0) //small chance for multiple, but always at least 1
                 spawnChoice = "SpawnPointGhostRatKing";
 
-            EntityManager.SpawnEntity(spawnChoice, spawnLocations[i].Item2.Coordinates);
+            var coords = spawnLocations[i].Item2.Coordinates;
+            Sawmill.Info($"Spawning mouse {spawnChoice} at {coords}");
+            EntityManager.SpawnEntity(spawnChoice, coords);
         }
     }
 }

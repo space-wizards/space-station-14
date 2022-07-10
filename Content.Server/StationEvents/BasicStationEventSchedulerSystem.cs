@@ -56,7 +56,7 @@ namespace Content.Server.StationEvents
         public override void Ended() { }
 
         /// <summary>
-        /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart
+        /// Randomly run a valid event <b>immediately</b>, ignoring earlieststart or whether the event is enabled
         /// </summary>
         /// <returns></returns>
         public string RunRandomEvent()
@@ -85,6 +85,9 @@ namespace Content.Server.StationEvents
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            if (!RuleStarted)
+                return;
 
             if (_timeUntilNextEvent > 0)
             {

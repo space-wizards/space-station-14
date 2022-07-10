@@ -20,6 +20,7 @@ public sealed class VentCritters : StationEventSystem
         RobustRandom.Shuffle(spawnLocations);
 
         var spawnAmount = RobustRandom.Next(4, 12); // A small colony of critters.
+        Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
         foreach (var location in spawnLocations)
         {
             if (spawnAmount-- == 0)

@@ -87,7 +87,6 @@
     minimumPlayers: 35
     weightLow: 5
     maxOccurrences: 1
-    startAfter: 30
     endAfter: 50
 
 - type: gameRule
@@ -110,6 +109,8 @@
     id: RandomSentience
     weight: 10
     endAfter: 1
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
 
 - type: gameRule
   id: VentClog
@@ -135,7 +136,6 @@
     minimumPlayers: 15
     weight: 5
     maxOccurrences: 2
-    startAfter: 30
     endAfter: 60
 
 - type: gameRule

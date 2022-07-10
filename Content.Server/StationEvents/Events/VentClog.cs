@@ -37,6 +37,9 @@ public sealed class VentClog : StationEventSystem
         {
             var solution = new Solution();
 
+            if (!RobustRandom.Prob(0.33f))
+                continue;
+
             if (RobustRandom.Prob(0.05f))
             {
                 solution.AddReagent(RobustRandom.Pick(allReagents), 100);
