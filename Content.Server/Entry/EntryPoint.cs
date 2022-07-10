@@ -53,6 +53,7 @@ namespace Content.Server.Entry
             var prototypes = IoCManager.Resolve<IPrototypeManager>();
 
             factory.DoAutoRegistrations();
+            factory.IgnoreMissingComponents("Visuals");
 
             foreach (var ignoreName in IgnoredComponents.List)
             {
