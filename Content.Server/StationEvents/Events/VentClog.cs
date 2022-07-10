@@ -13,27 +13,7 @@ namespace Content.Server.StationEvents.Events;
 [UsedImplicitly]
 public sealed class VentClog : StationEventSystem
 {
-    [Dependency] private readonly IRobustRandom RobustRandom = default!;
-    [Dependency] private readonly IEntityManager EntityManager = default!;
-    [Dependency] private readonly IPrototypeManager PrototypeManager = default!;
-
     public override string Prototype => "VentClog";
-
-    public override string? StartAnnouncement =>
-        Loc.GetString("station-event-vent-clog-start-announcement");
-
-    public override int EarliestStart => 15;
-
-    public override int MinimumPlayers => 15;
-
-    public override float Weight => WeightLow;
-
-    public override int? MaxOccurrences => 2;
-
-    // Give players time to reach cover.
-    protected override float StartAfter => 50f;
-
-    protected override float EndAfter => 51.0f; // This can, surprisingly, cause the event to end before it starts.
 
     public readonly IReadOnlyList<string> SafeishVentChemicals = new[]
     {
