@@ -13,19 +13,13 @@
     - type: RandomSpawner
       rarePrototypes:
         - SalvageHumanCorpse
-        - CrateMaterialPlasteel
         - CrateMaterialWood
-        - CrateMaterialPlastic
         - CrateSalvageEquipment
-        - CrateMaterialSteel
-        - CrateMaterialGlass
-        - ResearchDisk
         - CrateSalvageRDParts
-      rareChance: 0.4
+        - CrateSalvageChemistry
+      rareChance: 0.2
       prototypes:
         - CrateSalvageAssortedGoodies
-        - CrateSalvageChemistry
-        - ResearchDisk5000
       chance: 0.9
       offset: 0.0
 
