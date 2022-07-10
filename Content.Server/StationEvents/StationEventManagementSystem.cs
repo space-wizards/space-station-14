@@ -25,9 +25,6 @@ public sealed class StationEventManagementSystem : EntitySystem
     /// <summary>
     ///     A dictionary containing all events that have been run this round, keyed with their start time.
     /// </summary>
-    /// <remarks>
-    ///
-    /// </remarks>
     public IReadOnlyDictionary<TimeSpan, string> AllEvents => _allEvents;
 
     #region Active Events API
