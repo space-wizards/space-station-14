@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            /*await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             await server.WaitAssertion(() =>
@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
                 }
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pairTracker.CleanReturnAsync();*/
         }
     }
 }
