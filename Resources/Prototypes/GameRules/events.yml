@@ -25,7 +25,7 @@
     !type:StationEventRuleConfiguration
     id: DiseaseOutbreak
     weight: 10
-    endAfter: 1.0
+    endAfter: 1
 
 - type: gameRule
   id: FalseAlarm
@@ -33,7 +33,7 @@
     !type:StationEventRuleConfiguration
     id: FalseAlarm
     weight: 15
-    endAfter: 1.0
+    endAfter: 1
     maxOccurrences: 5
 
 - type: gameRule
@@ -106,6 +106,8 @@
   config:
     !type:StationEventRuleConfiguration
     id: RandomSentience
+    weight: 10
+    endAfter: 1
 
 - type: gameRule
   id: VentClog

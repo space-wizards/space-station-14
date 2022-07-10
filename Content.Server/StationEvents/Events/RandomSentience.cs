@@ -11,14 +11,7 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentience : StationEventSystem
 {
-    [Dependency] private readonly IRobustRandom RobustRandom = default!;
-    [Dependency] private readonly IEntityManager EntityManager = default!;
-
     public override string Prototype => "RandomSentience";
-
-    public override float Weight => WeightNormal;
-
-    protected override float EndAfter => 1.0f;
 
     public override void Started()
     {
