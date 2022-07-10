@@ -8,7 +8,7 @@ public sealed class KudzuGrowth : StationEventSystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IEntityManager EntityManager = default!;
 
-    public override string Name => "KudzuGrowth";
+    public override string Prototype => "KudzuGrowth";
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-kudzu-growth-start-announcement");

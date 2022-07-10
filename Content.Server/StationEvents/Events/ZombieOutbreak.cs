@@ -17,7 +17,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly IRobustRandom RobustRandom = default!;
         [Dependency] private readonly IEntityManager EntityManager = default!;
 
-        public override string Name => "ZombieOutbreak";
+        public override string Prototype => "ZombieOutbreak";
         public override int EarliestStart => 50;
         public override float Weight => WeightLow / 2;
         public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/bloblarm.ogg");

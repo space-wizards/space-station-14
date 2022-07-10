@@ -13,7 +13,7 @@ public sealed class VentCritters : StationEventSystem
     public static List<string> SpawnedPrototypeChoices = new List<string>()
         {"MobGiantSpiderAngry", "MobMouse", "MobMouse1", "MobMouse2"};
 
-    public override string Name => "VentCritters";
+    public override string Prototype => "VentCritters";
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-vent-spiders-start-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}"))));

@@ -11,7 +11,7 @@
 - type: gameRule
   id: BureaucraticError
   config:
-    !type:StationEventRuleConfiguraiton
+    !type:StationEventRuleConfiguration
     id: BureaucraticError
     startAnnouncement: station-event-bureaucratic-error-announcement
     minimumPlayers: 25
@@ -22,7 +22,70 @@
 - type: gameRule
   id: DiseaseOutbreak
   config:
-    !type:StationEventRuleConfiguraiton
+    !type:StationEventRuleConfiguration
     id: DiseaseOutbreak
     weight: 10
     endAfter: 1.0
+
+- type: gameRule
+  id: FalseAlarm
+  config:
+    !type:StationEventRuleConfiguration
+    id: FalseAlarm
+    weight: 15
+    endAfter: 1.0
+    maxOccurrences: 5
+
+- type: gameRule
+  id: GasLeak
+  config:
+    !type:StationEventRuleConfiguration
+    id: GasLeak
+
+- type: gameRule
+  id: KudzuGrowth
+  config:
+    !type:StationEventRuleConfiguration
+    id: KudzuGrowth
+
+- type: gameRule
+  id: MeteorSwarm
+  config:
+    !type:StationEventRuleConfiguration
+    id: MeteorSwarm
+
+- type: gameRule
+  id: MouseMigration
+  config:
+    !type:StationEventRuleConfiguration
+    id: MouseMigration
+
+- type: gameRule
+  id: PowerGridCheck
+  config:
+    !type:StationEventRuleConfiguration
+    id: PowerGridCheck
+
+- type: gameRule
+  id: RandomSentience
+  config:
+    !type:StationEventRuleConfiguration
+    id: RandomSentience
+
+- type: gameRule
+  id: VentClog
+  config:
+    !type:StationEventRuleConfiguration
+    id: VentClog
+
+- type: gameRule
+  id: VentCritters
+  config:
+    !type:StationEventRuleConfiguration
+    id: VentCritters
+
+- type: gameRule
+  id: ZombieOutbreak
+  config:
+    !type:StationEventRuleConfiguration
+    id: ZombieOutbreak

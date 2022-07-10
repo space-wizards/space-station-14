@@ -16,7 +16,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly IEntityManager EntityManager = default!;
         [Dependency] private readonly IRobustRandom RobustRandom = default!;
 
-        public override string Name => "PowerGridCheck";
+        public override string Prototype => "PowerGridCheck";
         public override float Weight => WeightNormal;
         public override int? MaxOccurrences => 3;
         public override string StartAnnouncement => Loc.GetString("station-event-power-grid-check-start-announcement");
@@ -38,7 +38,7 @@ namespace Content.Server.StationEvents.Events
         private float UpdateRate => 1.0f / _numberPerSecond;
         private float _frameTimeAccumulator = 0.0f;
 
-        public override void Announce()
+        public override void Added()
         {
             base.Announce();
             EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);

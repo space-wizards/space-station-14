@@ -14,7 +14,7 @@ public sealed class RandomSentience : StationEventSystem
     [Dependency] private readonly IRobustRandom RobustRandom = default!;
     [Dependency] private readonly IEntityManager EntityManager = default!;
 
-    public override string Name => "RandomSentience";
+    public override string Prototype => "RandomSentience";
 
     public override float Weight => WeightNormal;
 

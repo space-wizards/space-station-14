@@ -12,7 +12,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IEntityManager EntityManager = default!;
 
-        public override string Name => "GasLeak";
+        public override string Prototype => "GasLeak";
 
         public override string StartAnnouncement => Loc.GetString("station-event-gas-leak-start-announcement");
 

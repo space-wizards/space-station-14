@@ -17,7 +17,7 @@ public sealed class VentClog : StationEventSystem
     [Dependency] private readonly IEntityManager EntityManager = default!;
     [Dependency] private readonly IPrototypeManager PrototypeManager = default!;
 
-    public override string Name => "VentClog";
+    public override string Prototype => "VentClog";
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-vent-clog-start-announcement");

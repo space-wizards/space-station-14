@@ -12,7 +12,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        public override string Name => "MeteorSwarm";
+        public override string Prototype => "MeteorSwarm";
 
         public override int EarliestStart => 30;
         public override float Weight => WeightLow;

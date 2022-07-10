@@ -12,7 +12,7 @@ public sealed class MouseMigration : StationEventSystem
     public static List<string> SpawnedPrototypeChoices = new List<string>() //we double up for that ez fake probability
         {"MobMouse", "MobMouse1", "MobMouse2", "MobRatServant"};
 
-    public override string Name => "MouseMigration";
+    public override string Prototype => "MouseMigration";
 
     public override string? StartAnnouncement =>
         Loc.GetString("station-event-mouse-migration-announcement");
