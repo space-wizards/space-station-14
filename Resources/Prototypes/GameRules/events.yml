@@ -1,0 +1,9 @@
+﻿- type: gameRule
+  id: BreakerFlip
+  config:
+    !type:StationEventRuleConfiguration
+    id: BreakerFlip
+    weight: 10
+    endAfter: 1
+    maxOccurrences: 5
+    minimumPlayers: 15

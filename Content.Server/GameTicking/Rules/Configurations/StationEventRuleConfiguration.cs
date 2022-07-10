@@ -20,9 +20,6 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     public const float WeightHigh = 15.0f;
     public const float WeightVeryHigh = 20.0f;
 
-    [DataField("name", required: true)]
-    public string Name = default!;
-
     [DataField("weight")]
     public float Weight = WeightNormal;
 
@@ -76,10 +73,4 @@ public sealed class StationEventRuleConfiguration : GameRuleConfiguration
     /// </summary>
     [DataField("maxOccurrences")]
     public int? MaxOccurrences = null;
-
-    /// <summary>
-    ///     Whether or not the event is announced when it is run
-    /// </summary>
-    [DataField("announceEvent")]
-    public bool AnnounceEvent = true;
 }

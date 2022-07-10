@@ -33,11 +33,6 @@ namespace Content.Server.StationEvents.Events
         private float Elapsed { get; set; }
 
         /// <summary>
-        ///     Has this event commenced (announcement may or may not be used)?
-        /// </summary>
-        private bool Announced { get; set; }
-
-        /// <summary>
         ///     Called once to setup the event after StartAfter has elapsed, or if an event is forcibly started.
         /// </summary>
         public override void Started()
@@ -56,17 +51,15 @@ namespace Content.Server.StationEvents.Events
             if (Configuration is not StationEventRuleConfiguration ev)
                 return;
 
-            if (ev.AnnounceEvent && ev.StartAnnouncement != null)
+            if (ev.StartAnnouncement != null)
             {
                 ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (ev.AnnounceEvent && ev.StartAudio != null)
+            if (ev.StartAudio != null)
             {
                 SoundSystem.Play(ev.StartAudio.GetSound(), Filter.Broadcast(), ev.StartAudio.Params);
             }
-
-            Announced = true;
         }
 
         /// <summary>
@@ -79,17 +72,16 @@ namespace Content.Server.StationEvents.Events
             if (Configuration is not StationEventRuleConfiguration ev)
                 return;
 
-            if (ev.AnnounceEvent && ev.EndAnnouncement != null)
+            if (ev.EndAnnouncement != null)
             {
                 ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.EndAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (ev.AnnounceEvent && ev.EndAudio != null)
+            if (ev.EndAudio != null)
             {
                 SoundSystem.Play(ev.EndAudio.GetSound(), Filter.Broadcast(), ev.EndAudio.Params);
             }
 
-            Announced = false;
             Elapsed = 0;
         }
 
