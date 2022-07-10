@@ -1,10 +1,15 @@
-﻿using Content.Shared.Sound;
+﻿using Content.Server.GameTicking.Rules;
+using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents;
 
+/// <summary>
+///     Station event prototypes are direct inheritors of game rules, since they can be added and started in
+///     GameTicker in much the same way.
+/// </summary>
 [Prototype("stationEvent")]
-public sealed class StationEventPrototype : IPrototype
+public sealed class StationEventPrototype : GameRulePrototype
 {
     public const float WeightVeryLow = 0.0f;
     public const float WeightLow = 5.0f;

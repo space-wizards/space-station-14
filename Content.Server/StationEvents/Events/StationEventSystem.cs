@@ -4,6 +4,8 @@ using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
@@ -20,22 +22,12 @@ namespace Content.Server.StationEvents.Events
     /// <summary>
     ///     An abstract entity system inherited by all station events for their behavior.
     /// </summary>
-    public abstract class StationEventSystem : EntitySystem
+    public abstract class StationEventSystem : GameRuleSystem
     {
         [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationEventManagementSystem StationEventManager = default!;
-
-        /// <summary>
-        ///     The station event prototype that this system is linked with.
-        /// </summary>
-        public new abstract string Prototype { get; }
-
-        /// <summary>
-        ///     If the event has started and is currently running.
-        /// </summary>
-        public bool Enabled { get; set; }
 
         /// <summary>
         ///     How long has the event existed. Do not change this.
@@ -47,16 +39,15 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         private bool Announced { get; set; } = false;
 
+        private StationEventPrototype Data
+
         /// <summary>
-        ///     Called once to setup the event after StartAfter has elapsed.
+        ///     Called once to setup the event after StartAfter has elapsed, or if an event is forcibly started.
         /// </summary>
-        public virtual void Start()
+        public override void Started(GameRuleConfiguration configuration)
         {
             if (!PrototypeManager.TryIndex<StationEventPrototype>(Prototype, out var proto))
                 return;
-
-            Started = true;
-            LastRun = EntitySystem.Get<GameTicker>().RoundDuration();
 
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStarted, LogImpact.High, $"Event startup: {Name}");
@@ -83,13 +74,12 @@ namespace Content.Server.StationEvents.Events
             }
 
             Announced = true;
-            Running = true;
         }
 
         /// <summary>
         ///     Called once when the station event ends for any reason.
         /// </summary>
-        public virtual void Shutdown()
+        public override void Ended(GameRuleConfiguration configuration)
         {
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
@@ -105,7 +95,6 @@ namespace Content.Server.StationEvents.Events
                 SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
-            Started = false;
             Announced = false;
             Elapsed = 0;
         }
@@ -118,14 +107,16 @@ namespace Content.Server.StationEvents.Events
         {
             Elapsed += frameTime;
 
+            if (!PrototypeManager.)
+
             if (!Started && Elapsed >= StartAfter)
             {
-                Start();
+                StationEventManager.StartStationEvent(Prototype);
             }
 
             if (EndAfter <= Elapsed)
             {
-                Running = false;
+                StationEventManager.EndStationEvent(Prototype);
             }
         }
 

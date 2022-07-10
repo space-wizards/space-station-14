@@ -1,4 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System.Linq;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
+using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents;
 
@@ -6,91 +10,86 @@ namespace Content.Server.StationEvents;
 ///     This system handles adding, removing, starting, stopping, announcing, etc station events.
 ///     This system does not handle how these events are started or stopped. That is up to game rules
 ///     (like <see cref="BasicStationEventSchedulerSystem"/>)
+///
+///     This is more or less a proxy to <see cref="GameTicker"/> and its handling of <see cref="GameRulePrototype"/>
+///     management, since station events are inheritors of game rules.
 /// </summary>
 [PublicAPI]
 public sealed class StationEventManagementSystem : EntitySystem
 {
-    private readonly HashSet<string> _activeEvents = new();
-    private readonly Dictionary<TimeSpan, string> _allEvents = new();
-
-    /// <summary>
-    ///     A set containing the current active events prototype IDs.
-    /// </summary>
-    /// <remarks>
-    ///     Some station events can be instantaneous (essentially) while others are long-running. It's up to event systems
-    ///     to manage their own lifetime and to shutdown when necessary, as there is no default behavior for this.
-    /// </remarks>
-    public IReadOnlySet<string> ActiveEvents => _activeEvents;
-
-    /// <summary>
-    ///     A dictionary containing all events that have been run this round, keyed with their start time.
-    /// </summary>
-    public IReadOnlyDictionary<TimeSpan, string> AllEvents => _allEvents;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     #region Active Events API
 
-    public bool StartStationEvent(string prototype)
+    /// <summary>
+    ///     Adds a station event, but does not start it.
+    /// </summary>
+    public void AddStationEvent(StationEventPrototype proto)
     {
-        throw new NotImplementedException();
+        _gameTicker.AddGameRule(proto);
     }
 
-    public bool StopStationEvent(string prototype)
+    /// <summary>
+    ///     Adds and starts a station event.
+    /// </summary>
+    public void StartStationEvent(StationEventPrototype proto)
     {
-        throw new NotImplementedException();
+        _gameTicker.StartGameRule(proto);
     }
 
-    public bool IsStationEventRunning(string prototype)
+    /// <summary>
+    ///     Forcibly ends a station event.
+    /// </summary>
+    public void EndStationEvent(StationEventPrototype proto)
     {
-        throw new NotImplementedException();
+        _gameTicker.EndGameRule(proto);
+    }
+
+    /// <summary>
+    ///     Returns true if the event has been started yet.
+    /// </summary>
+    public bool IsStationEventStarted(StationEventPrototype proto)
+    {
+        return _gameTicker.IsGameRuleStarted(proto);
     }
 
     #endregion
 
     #region All Events API
 
-    public int TimesEventRun(string prototype)
+    /// <summary>
+    ///     Returns the number of times the event has been run this round.
+    /// </summary>
+    public int TimesEventRun(StationEventPrototype proto)
     {
-        throw new NotImplementedException();
+        var acc = 0;
+        foreach (var (_, rule) in _gameTicker.AllPreviousGameRules)
+        {
+            if (rule == proto)
+                acc++;
+        }
+
+        return acc;
     }
 
     /// <summary>
-    ///     Returns the time since the last specified even prototype was runt. If no event prototype is specified,
-    ///     returns the time since any event occurred.
+    ///     Returns the time since the last specified even prototype was run. If no event prototype is specified,
+    ///     returns the time since any event occurred. If the event has not occurred this round, returns null.
     /// </summary>
-    public TimeSpan TimeSinceLastEvent(string? prototype)
+    public TimeSpan? TimeSinceLastEvent(StationEventPrototype? prototype)
     {
-        throw new NotImplementedException();
+        foreach (var (time, rule) in _gameTicker.AllPreviousGameRules.Reverse())
+        {
+            if (rule is not StationEventPrototype)
+                continue;
+
+            if (prototype == null || rule == prototype)
+                return time;
+        }
+
+        return null;
     }
 
     #endregion
-}
-
-/// <summary>
-///     Raised broadcast when a new station event has been started, so that systems may handle it
-///     and perform any necessary startup logic.
-/// </summary>
-public sealed class StationEventStartedEvent : StationEventEvent
-{
-    public StationEventStartedEvent(string prototype) : base(prototype) {
-    }
-}
-
-/// <summary>
-///     Raised broadcast when a station event has been stopped, so that systems may handle it
-///     and perform any necessary cleanup logic.
-/// </summary>
-public sealed class StationEventStoppedEvent : StationEventEvent
-{
-    public StationEventStoppedEvent(string prototype) : base(prototype) {
-    }
-}
-
-public abstract class StationEventEvent : EntityEventArgs
-{
-    public string Prototype;
-
-    protected StationEventEvent(string prototype)
-    {
-        Prototype = prototype;
-    }
 }

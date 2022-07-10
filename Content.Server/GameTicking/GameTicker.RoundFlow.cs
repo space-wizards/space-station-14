@@ -376,7 +376,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -425,6 +425,7 @@ namespace Content.Server.GameTicking
             ClearGameRules();
 
             _addedGameRules.Clear();
+            _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
