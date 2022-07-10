@@ -13,6 +13,12 @@ public abstract class SharedIdentitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<IdentityBlockerComponent, SeeIdentityAttemptEvent>(OnSeeIdentity);
+    }
+
+    private void OnSeeIdentity(EntityUid uid, IdentityBlockerComponent component, SeeIdentityAttemptEvent args)
+    {
+        args.Cancel();
     }
 
     protected virtual void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)

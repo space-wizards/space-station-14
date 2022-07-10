@@ -1,11 +1,11 @@
 ﻿using Content.Server.Access.Systems;
 using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Hands;
 using Content.Shared.Identity;
 using Content.Shared.Identity.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
-using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -24,8 +24,10 @@ public class IdentitySystem : SharedIdentitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<IdentityComponent, DidEquipEvent>(OnEquip);
-        SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>(OnUnequip);
+        SubscribeLocalEvent<IdentityComponent, DidEquipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
     }
 
     public override void Update(float frameTime)
@@ -58,16 +60,6 @@ public class IdentitySystem : SharedIdentitySystem
     public void QueueIdentityUpdate(EntityUid uid)
     {
         _queuedIdentityUpdates.Enqueue(uid);
-    }
-
-    private void OnEquip(EntityUid uid, IdentityComponent component, DidEquipEvent args)
-    {
-        QueueIdentityUpdate(uid);
-    }
-
-    private void OnUnequip(EntityUid uid, IdentityComponent component, DidUnequipEvent args)
-    {
-        QueueIdentityUpdate(uid);
     }
 
     #region Private API
