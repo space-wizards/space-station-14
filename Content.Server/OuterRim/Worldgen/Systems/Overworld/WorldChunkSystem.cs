@@ -63,6 +63,7 @@ public sealed partial class WorldChunkSystem : EntitySystem
             return;
 
         WorldMap = _gameTicker.DefaultMap;
+        ForceEmptyChunk((0, 0));
     }
 
     private void OnDebrisMoved(EntityUid uid, WorldManagedComponent component, ref MoveEvent args)
