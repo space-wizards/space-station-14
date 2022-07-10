@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Made xenos unable to slip., type: Tweak}
-  id: 1417
-  time: '2022-04-28T12:24:39.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: The singularity visuals have been slightly updated. Large singularities
@@ -2950,3 +2945,8 @@ Entries:
   - {message: You can now knock on shutters., type: Tweak}
   id: 1916
   time: '2022-07-10T06:54:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
+  id: 1917
+  time: '2022-07-10T07:57:16.0000000+00:00'
