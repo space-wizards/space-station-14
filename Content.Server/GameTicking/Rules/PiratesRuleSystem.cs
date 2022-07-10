@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -171,7 +171,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             return;
         }
 
-        _pirateShip = _mapManager.GetGridEuid(gridId.Value);
+        _pirateShip = gridId.Value;
 
         // TODO: Loot table or something
         var pirateGear = _prototypeManager.Index<StartingGearPrototype>("PirateGear"); // YARRR

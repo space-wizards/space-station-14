@@ -102,21 +102,6 @@
 
 - type: entity
   parent: BaseMagazineBoxCaselessRifle
-  id: MagazineBoxCaselessRifleFlash
-  name: ammunition box (.25 caseless flash)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifleFlash
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: flash
-
-- type: entity
-  parent: BaseMagazineBoxCaselessRifle
   id: MagazineBoxCaselessRifleHighVelocity
   name: ammunition box (.25 caseless high-velocity)
   components:

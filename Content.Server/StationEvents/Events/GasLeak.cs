@@ -99,7 +99,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var environment = _atmosphere.GetTileMixture(_targetGrid, _targetTile, true);
+            var environment = _atmosphere.GetTileMixture(_targetGrid, null, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }

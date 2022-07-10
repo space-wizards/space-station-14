@@ -165,13 +165,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     #region Announcements
 
     /// <summary>
-    /// Dispatches an announcement to all stations
+    /// Dispatches an announcement to all.
     /// </summary>
     /// <param name="message">The contents of the message</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
-    public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
+    public void DispatchGlobalAnnouncement(string message, string sender = "Central Command",
         bool playDefaultSound = true, Color? colorOverride = null)
     {
         var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
@@ -195,7 +195,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
         var station = _stationSystem.GetOwningStation(source);
-        var filter = Filter.Empty();
 
         if (station == null)
         {
@@ -205,10 +204,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
 
-        foreach (var gridEnt in stationDataComp.Grids)
-        {
-            filter.AddInGrid(gridEnt);
-        }
+        var filter = _stationSystem.GetInStation(stationDataComp);
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, false, colorOverride);
 
@@ -224,12 +220,15 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Private API
 
-    private void SendEntitySpeak(EntityUid source, string message, bool hideChat = false)
+    private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
-        message = TransformSpeech(source, message);
 
-        (message, var channel) = GetRadioPrefix(source, message);
+        var (message, channel) = GetRadioPrefix(source, originalMessage);
+
+        message = TransformSpeech(source, message);
+        if (message.Length == 0)
+            return;
 
         if (channel != null)
             _listener.PingListeners(source, message, channel);
@@ -241,14 +240,21 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {message}");
+
+        if (originalMessage == message)
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
-    private void SendEntityWhisper(EntityUid source, string message, bool hideChat = false)
+    private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false)
     {
         if (!_actionBlocker.CanSpeak(source)) return;
 
-        message = TransformSpeech(source, message);
+        var message = TransformSpeech(source, originalMessage);
+        if (message.Length == 0)
+            return;
+
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
         var transformSource = Transform(source);
@@ -284,7 +290,11 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var ev = new EntitySpokeEvent(message);
         RaiseLocalEvent(source, ev, false);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {message}");
+
+        if (originalMessage == message)
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
     }
 
     private void SendEntityEmote(EntityUid source, string action, bool hideChat)
@@ -408,7 +418,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
         return Filter.Empty()
-            .AddWhereAttachedEntity(uid => HasComp<GhostComponent>(uid))
+            .AddWhereAttachedEntity(HasComp<GhostComponent>)
             .Recipients
             .Union(_adminManager.ActiveAdmins)
             .Select(p => p.ConnectedClient);

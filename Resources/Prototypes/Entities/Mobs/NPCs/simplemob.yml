@@ -12,6 +12,8 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -68,8 +70,6 @@
       types:
         Bloodloss:
           -0.25
-  - type: DrawableSolution
-    solution: bloodstream
   - type: Damageable
     damageContainer: Biological
   - type: AtmosExposed
@@ -92,9 +92,9 @@
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,8 +108,6 @@
   - type: Internals
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
@@ -159,23 +157,26 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:
         Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

@@ -69,7 +69,7 @@ namespace Content.Client.Entry
             factory.DoAutoRegistrations();
             factory.IgnoreMissingComponents();
 
-            factory.RegisterClass<SharedResearchConsoleComponent>();
+            // Do not add to these, they are legacy.
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
             factory.RegisterClass<SharedVendingMachineComponent>();
@@ -77,6 +77,7 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
+            // Do not add to the above, they are legacy
 
             prototypes.RegisterIgnore("accent");
             prototypes.RegisterIgnore("material");
@@ -185,8 +186,6 @@ namespace Content.Client.Entry
             var overlayMgr = IoCManager.Resolve<IOverlayManager>();
             overlayMgr.AddOverlay(new ParallaxOverlay());
             overlayMgr.AddOverlay(new SingularityOverlay());
-            overlayMgr.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
-            overlayMgr.AddOverlay(new CircleMaskOverlay());
             overlayMgr.AddOverlay(new FlashOverlay());
             overlayMgr.AddOverlay(new RadiationPulseOverlay());
 

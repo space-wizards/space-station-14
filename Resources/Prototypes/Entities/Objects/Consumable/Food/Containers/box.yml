@@ -151,29 +151,20 @@
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
     netsync: false
-  - type: EntityStorage
-    Capacity: 8
-  - type: PlaceableSurface
-    placeCentered: true
+  # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
+  - type: Storage
+    capacity: 8
+    whitelist:
+      tags:
+      - Pizza
   - type: Item
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     HeldPrefix: box
-  # - type: Stack
-  #   count: 1
-  #   max: 5
-  #   stackType: PizzaBox
   - type: Appearance
     visuals:
     - type: StorageVisualizer
       state_open: box-open
       state_closed: box
-    # - type: StackVisualizer
-    #   stackLayers:
-    #     - box
-    #     - box1
-    #     - box2
-    #     - box3
-    #     - box4
 
 - type: entity
   name: pizza box

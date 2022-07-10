@@ -30,7 +30,8 @@ public sealed class DiseaseOutbreak : StationEventSystem
         "VentCough",
         "AMIV",
         "SpaceFlu",
-        "BirdFlew"
+        "BirdFlew",
+        "TongueTwister"
     };
 
     /// <summary>

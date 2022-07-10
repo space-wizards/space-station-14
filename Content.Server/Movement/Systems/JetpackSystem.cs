@@ -1,10 +1,7 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Movement.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
-using Robust.Shared.GameStates;
 
 namespace Content.Server.Movement.Systems;
 
@@ -14,7 +11,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     protected override bool CanEnable(JetpackComponent component)
     {
-        return TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
+        return base.CanEnable(component) &&  TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
@@ -31,7 +28,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
             active.Accumulator -= UpdateCooldown;
             var air = gasTank.RemoveAir(comp.MoleUsage);
 
-            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.1f))
+            if (air == null || !MathHelper.CloseTo(air.TotalMoles, comp.MoleUsage, 0.001f))
             {
                 toDisable.Add(comp);
                 continue;

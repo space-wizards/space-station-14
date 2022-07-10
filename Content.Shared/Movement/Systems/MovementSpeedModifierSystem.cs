@@ -21,7 +21,7 @@ namespace Content.Shared.Movement.Systems
                 BaseWalkSpeed = component.BaseWalkSpeed,
                 BaseSprintSpeed = component.BaseSprintSpeed,
                 WalkSpeedModifier = component.WalkSpeedModifier,
-                SprintSpeedModifier = component.SprintSpeedModifier
+                SprintSpeedModifier = component.SprintSpeedModifier,
             };
         }
 
@@ -42,9 +42,12 @@ namespace Content.Shared.Movement.Systems
             var ev = new RefreshMovementSpeedModifiersEvent();
             RaiseLocalEvent(uid, ev);
 
+            if (MathHelper.CloseTo(ev.WalkSpeedModifier, move.WalkSpeedModifier) &&
+                MathHelper.CloseTo(ev.SprintSpeedModifier, move.SprintSpeedModifier))
+                return;
+
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-
             Dirty(move);
         }
 

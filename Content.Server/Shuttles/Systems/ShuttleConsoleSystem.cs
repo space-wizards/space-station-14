@@ -15,6 +15,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -86,7 +87,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!TryPilot(args.User, uid))
+            if (!component.CanPilot || !TryPilot(args.User, uid))
                 args.Cancel();
         }
 
@@ -209,6 +210,8 @@ namespace Content.Server.Shuttles.Systems
                     Angle = xform.LocalRotation,
                     Entity = comp.Owner,
                     Connected = comp.Docked,
+                    Color = comp.RadarColor,
+                    HighlightedColor = comp.HighlightedRadarColor,
                 };
                 result.Add(state);
             }
@@ -233,6 +236,7 @@ namespace Content.Server.Shuttles.Systems
             var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
+            component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             docks ??= GetAllDocks();
