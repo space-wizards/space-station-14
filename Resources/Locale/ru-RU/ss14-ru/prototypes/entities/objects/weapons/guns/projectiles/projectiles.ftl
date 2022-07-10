@@ -43,4 +43,3 @@ ent-BulletFoam = foam dart
 ent-BulletCap = cap bullet
     .desc = { ent-BaseBullet.desc }
     .suffix = { "" }
-    
