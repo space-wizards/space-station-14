@@ -1,4 +1,5 @@
-﻿using Content.Shared.Ghost;
+﻿using Content.Shared.Access.Systems;
+using Content.Shared.Ghost;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Identity;
 public sealed class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
 
     private static string SlotName = "identity";
 
