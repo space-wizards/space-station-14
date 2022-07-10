@@ -373,6 +373,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - BodyBag
   - type: Machine
     board: MedicalTechFabCircuitboard
 
