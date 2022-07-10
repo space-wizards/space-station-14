@@ -93,6 +93,13 @@
   config:
     !type:StationEventRuleConfiguration
     id: PowerGridCheck
+    weight: 10
+    maxOccurrences: 3
+    startAnnouncement: station-event-power-grid-check-start-announcement
+    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAudio:
+      path: /Audio/announcements/power_off.ogg
+    startAfter: 12
 
 - type: gameRule
   id: RandomSentience

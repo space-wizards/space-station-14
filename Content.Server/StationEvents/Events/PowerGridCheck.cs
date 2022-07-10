@@ -13,19 +13,7 @@ namespace Content.Server.StationEvents.Events
     [UsedImplicitly]
     public sealed class PowerGridCheck : StationEventSystem
     {
-        [Dependency] private readonly IEntityManager EntityManager = default!;
-        [Dependency] private readonly IRobustRandom RobustRandom = default!;
-
         public override string Prototype => "PowerGridCheck";
-        public override float Weight => WeightNormal;
-        public override int? MaxOccurrences => 3;
-        public override string StartAnnouncement => Loc.GetString("station-event-power-grid-check-start-announcement");
-        protected override string EndAnnouncement => Loc.GetString("station-event-power-grid-check-end-announcement");
-        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/power_off.ogg");
-
-        // If you need EndAudio it's down below. Not set here because we can't play it at the normal time without spamming sounds.
-
-        protected override float StartAfter => 12.0f;
 
         private CancellationTokenSource? _announceCancelToken;
 
@@ -37,11 +25,12 @@ namespace Content.Server.StationEvents.Events
         private int _numberPerSecond = 0;
         private float UpdateRate => 1.0f / _numberPerSecond;
         private float _frameTimeAccumulator = 0.0f;
+        private float _endAfter = 0.0f;
 
         public override void Added()
         {
-            base.Announce();
-            EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
+            base.Added();
+            _endAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
         }
 
         public override void Started()
@@ -62,7 +51,12 @@ namespace Content.Server.StationEvents.Events
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            _frameTimeAccumulator += frameTime;
+
+            if (Elapsed > _endAfter)
+            {
+                ForceEndSelf();
+                return;
+            }
 
             var updates = 0;
             if (_frameTimeAccumulator > UpdateRate)
@@ -103,7 +97,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                SoundSystem.Play("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams);
+                SoundSystem.Play("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams.Default);
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 
