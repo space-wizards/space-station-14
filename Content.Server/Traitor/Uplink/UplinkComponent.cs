@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
 
@@ -21,6 +22,8 @@ namespace Content.Server.Traitor.Uplink.Components
         public PresetUplinkInfo? PresetInfo = null;
 
         [ViewVariables] public UplinkAccount? UplinkAccount;
+
+        [ViewVariables] public HashSet<JobPrototype>? JobWhitelist = null;
 
         [Serializable]
         [DataDefinition]

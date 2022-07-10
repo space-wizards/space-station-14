@@ -1,8 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Shared.Roles;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink.Account
 {
@@ -17,6 +20,8 @@ namespace Content.Server.Traitor.Uplink.Account
         private readonly UplinkListingSytem _listingSystem = default!;
         [Dependency]
         private readonly SharedStackSystem _stackSystem = default!;
+
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         private readonly HashSet<UplinkAccount> _accounts = new();
 
@@ -68,13 +73,36 @@ namespace Content.Server.Traitor.Uplink.Account
 
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
+        public bool TryPurchaseItem(UplinkComponent component, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
         {
+            var acc = component.UplinkAccount;
             purchasedItem = null;
+
+            if (acc == null) return false;
+            if (acc.AccountHolder == null) return false;
 
             if (!_listingSystem.TryGetListing(itemId, out var listing))
             {
                 return false;
+            }
+
+            if (component.JobWhitelist != null && listing.JobWhitelist != null)
+            {
+                var found = false;
+                foreach (var job in component.JobWhitelist)
+                {
+                    if (listing.JobWhitelist.Contains(job.ID))
+                    {
+                        found = true;
+                        continue;
+                    }
+                }
+                if (!found)
+                {
+                    var meta = MetaData(acc.AccountHolder.Value);
+                    Logger.InfoS("security", $"{meta.EntityName} attempted to purchase an unavailable syndicate shop item.");
+                    return false;
+                }
             }
 
             if (acc.Balance < listing.Price)

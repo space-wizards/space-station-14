@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Server.Mind.Components;
+using Content.Server.Roles;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
@@ -6,6 +8,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -109,7 +112,7 @@ namespace Content.Server.Traitor.Uplink
             if (message.Session.AttachedEntity is not {Valid: true} player) return;
             if (uplink.UplinkAccount == null) return;
 
-            if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
+            if (!_accounts.TryPurchaseItem(uplink, message.ItemId,
                 EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
                 SoundSystem.Play(uplink.InsufficientFundsSound.GetSound(),
@@ -166,9 +169,31 @@ namespace Content.Server.Traitor.Uplink
             var listings = _listing.GetListings().Values.ToArray();
             var acc = component.UplinkAccount;
 
+            HashSet<JobPrototype>? jobList;
             UplinkAccountData accData;
             if (acc != null)
-                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
+            {
+                if (component.JobWhitelist == null &&
+                    acc.AccountHolder != null &&
+                    TryComp<MindComponent>(acc.AccountHolder, out var mind) &&
+                    mind.Mind != null)
+                {
+                    jobList = new();
+                    foreach (var role in mind.Mind.AllRoles.ToList())
+                    {
+                        if (role.GetType() == typeof(Job))
+                        {
+                            var job = (Job) role;
+                            jobList.Add(job.Prototype);
+                        }
+                    }
+                    component.JobWhitelist = jobList;
+                }
+                else
+                    jobList = component.JobWhitelist;
+
+                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance, jobList);
+            }
             else
                 accData = new UplinkAccountData(null, 0);
 

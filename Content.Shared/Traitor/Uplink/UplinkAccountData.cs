@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Traitor.Uplink
@@ -7,11 +8,12 @@ namespace Content.Shared.Traitor.Uplink
     {
         public EntityUid? DataAccountHolder;
         public int DataBalance;
-
-        public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance)
+        public HashSet<JobPrototype>? JobWhitelist;
+        public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance, HashSet<JobPrototype>? jobWhitelist = null)
         {
             DataAccountHolder = dataAccountHolder;
             DataBalance = dataBalance;
+            JobWhitelist = jobWhitelist;
         }
     }
 }
