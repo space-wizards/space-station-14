@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Containers;
 
-namespace Content.Shared.Identity;
+namespace Content.Shared.Identity.Components;
 
 /// <summary>
 ///     Stores the identity entity (whose name is the users 'identity', etc)

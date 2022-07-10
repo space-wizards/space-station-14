@@ -1,11 +1,12 @@
 ﻿using Content.Shared.Access.Systems;
 using Content.Shared.Ghost;
+using Content.Shared.Identity.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Shared.Identity;
 
-public sealed class IdentitySystem : EntitySystem
+public sealed partial class IdentitySystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
@@ -16,10 +17,8 @@ public sealed class IdentitySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnInit);
+        InitializeEvents();
     }
-
-    #region Public API
 
     /// <summary>
     ///     Returns the entity that should be used for identity purposes, for example to pass into localization.
@@ -57,28 +56,11 @@ public sealed class IdentitySystem : EntitySystem
         return HasComp<SharedGhostComponent>(viewer);
     }
 
-    #endregion
+    #region Private API
 
-    #region Private API & Events
-
-    private void OnInit(EntityUid uid, IdentityComponent component, ComponentInit args)
+    private void UpdateIdentityName(EntityUid uid, IdentityComponent identity)
     {
-        component.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(uid, SlotName);
-        var ident = Spawn(null, Transform(uid).Coordinates);
 
-        // Clone the old entity's grammar to the identity entity, for loc purposes.
-        if (TryComp<GrammarComponent>(uid, out var grammar))
-        {
-            var identityGrammar = EnsureComp<GrammarComponent>(ident);
-
-            foreach (var (k, v) in grammar.Attributes)
-            {
-                identityGrammar.Attributes.Add(k, v);
-            }
-        }
-
-        MetaData(ident).EntityName = Name(uid);
-        component.IdentityEntitySlot.Insert(ident);
     }
 
     #endregion
