@@ -19,7 +19,6 @@
   description: secret-description
   rules:
     - Secret
-    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Sandbox
@@ -83,6 +82,7 @@
   showInVote: false
   rules:
     - Nukeops
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Zombie
@@ -97,6 +97,7 @@
   showInVote: false
   rules:
     - Zombie
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Pirates
@@ -107,3 +108,4 @@
   showInVote: false
   rules:
     - Pirates
+    - BasicStationEventScheduler

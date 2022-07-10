@@ -62,7 +62,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.StartAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.StartAudio != null)
@@ -83,7 +83,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.EndAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.EndAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(ev.EndAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.EndAudio != null)
@@ -159,7 +159,8 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp)) continue;
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;

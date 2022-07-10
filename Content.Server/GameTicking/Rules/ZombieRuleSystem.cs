@@ -177,13 +177,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration configuration)
+    public override void Started()
     {
         //this technically will run twice with zombies on roundstart, but it doesn't matter because it fails instantly
         InfectInitialPlayers();
     }
 
-    public override void Ended(GameRuleConfiguration configuration) { }
+    public override void Ended() { }
 
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
     {
