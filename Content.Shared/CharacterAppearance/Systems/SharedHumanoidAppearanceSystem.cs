@@ -107,7 +107,6 @@ namespace Content.Shared.CharacterAppearance.Systems
                 Uid = uid;
                 Args = args;
             }
-
         }
 
         [Serializable, NetSerializable]

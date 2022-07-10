@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Identity.Components;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -9,9 +10,11 @@ public partial class IdentitySystem
     private void InitializeEvents()
     {
         SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnInit);
-
+        SubscribeLocalEvent<IdentityComponent, DidEquipEvent>(OnEquip);
+        SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>(OnUnequip);
     }
 
+    // This is where the magic happens
     private void OnInit(EntityUid uid, IdentityComponent component, ComponentInit args)
     {
         component.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(uid, SlotName);
@@ -30,5 +33,15 @@ public partial class IdentitySystem
 
         MetaData(ident).EntityName = Name(uid);
         component.IdentityEntitySlot.Insert(ident);
+    }
+
+    private void OnEquip(EntityUid uid, IdentityComponent component, DidEquipEvent args)
+    {
+        UpdateIdentityName(uid, component);
+    }
+
+    private void OnUnequip(EntityUid uid, IdentityComponent component, DidUnequipEvent args)
+    {
+        UpdateIdentityName(uid, component);
     }
 }

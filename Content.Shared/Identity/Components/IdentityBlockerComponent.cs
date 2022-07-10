@@ -13,5 +13,6 @@ public sealed class IdentityBlockerComponent : Component
 /// </summary>
 public sealed class SeeIdentityAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots => SlotFlags.All;
+    // i.e. masks or helmets.
+    public SlotFlags TargetSlots => SlotFlags.MASK | SlotFlags.HEAD;
 }
