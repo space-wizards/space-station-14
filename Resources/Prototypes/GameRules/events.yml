@@ -66,6 +66,15 @@
   config:
     !type:StationEventRuleConfiguration
     id: MeteorSwarm
+    earliestStart: 30
+    weight: 5
+    maxOccurrences: 2
+    minimumPlayers: 20
+    startAnnouncement: station-event-meteor-swarm-start-announcement
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    startAudio:
+      path: /Audio/Announcements/meteors.ogg
+    startAfter: 30
 
 - type: gameRule
   id: MouseMigration

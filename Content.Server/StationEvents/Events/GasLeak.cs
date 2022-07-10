@@ -81,7 +81,7 @@ namespace Content.Server.StationEvents.Events
 
             if (Elapsed > _endAfter)
             {
-                GameTicker.EndGameRule(PrototypeManager.Index<GameRulePrototype>(Prototype));
+                ForceEndSelf();
                 return;
             }
 
@@ -90,14 +90,12 @@ namespace Content.Server.StationEvents.Events
             if (_timeUntilLeak > 0f) return;
             _timeUntilLeak += LeakCooldown;
 
-            var _atmosphere = EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-
             if (!_foundTile ||
                 _targetGrid == default ||
                 EntityManager.Deleted(_targetGrid) ||
                 !_atmosphere.IsSimulatedGrid(_targetGrid))
             {
-                GameTicker.EndGameRule(PrototypeManager.Index<GameRulePrototype>(Prototype));
+                ForceEndSelf();
                 return;
             }
 

@@ -1,4 +1,5 @@
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Map;
@@ -8,24 +9,7 @@ namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEventSystem
     {
-        [Dependency] private readonly IEntityManager EntityManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
         public override string Prototype => "MeteorSwarm";
-
-        public override int EarliestStart => 30;
-        public override float Weight => WeightLow;
-        public override int? MaxOccurrences => 2;
-        public override int MinimumPlayers => 20;
-
-        public override string StartAnnouncement =>  Loc.GetString("station-event-meteor-swarm-start-announcement");
-        protected override string EndAnnouncement => Loc.GetString("station-event-meteor-swarm-ebd-announcement");
-
-        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/meteors.ogg");
-
-        protected override float StartAfter => 30f;
-        protected override float EndAfter => float.MaxValue;
 
         private float _cooldown;
 
@@ -48,8 +32,7 @@ namespace Content.Server.StationEvents.Events
         public override void Started()
         {
             base.Started();
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            _waveCounter = robustRandom.Next(MinimumWaves, MaximumWaves);
+            _waveCounter = RobustRandom.Next(MinimumWaves, MaximumWaves);
         }
 
         public override void Ended()
@@ -57,32 +40,30 @@ namespace Content.Server.StationEvents.Events
             base.Ended();
             _waveCounter = 0;
             _cooldown = 0f;
-            EndAfter = float.MaxValue;
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            if (!Started) return;
-
             if (_waveCounter <= 0)
             {
-                Running = false;
+                ForceEndSelf();
                 return;
             }
+
             _cooldown -= frameTime;
 
             if (_cooldown > 0f) return;
 
             _waveCounter--;
 
-            _cooldown += (MaximumCooldown - MinimumCooldown) * _robustRandom.NextFloat() + MinimumCooldown;
+            _cooldown += (MaximumCooldown - MinimumCooldown) * RobustRandom.NextFloat() + MinimumCooldown;
 
             Box2? playableArea = null;
-            var mapId = EntitySystem.Get<GameTicker>().DefaultMap;
+            var mapId = GameTicker.DefaultMap;
 
-            foreach (var grid in _mapManager.GetAllGrids())
+            foreach (var grid in MapManager.GetAllGrids())
             {
                 if (grid.ParentMapId != mapId || !EntityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
@@ -91,7 +72,7 @@ namespace Content.Server.StationEvents.Events
 
             if (playableArea == null)
             {
-                EndAfter = float.MinValue;
+                ForceEndSelf();
                 return;
             }
 
@@ -102,8 +83,8 @@ namespace Content.Server.StationEvents.Events
 
             for (var i = 0; i < MeteorsPerWave; i++)
             {
-                var angle = new Angle(_robustRandom.NextFloat() * MathF.Tau);
-                var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
+                var angle = new Angle(RobustRandom.NextFloat() * MathF.Tau);
+                var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * RobustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
@@ -113,10 +94,10 @@ namespace Content.Server.StationEvents.Events
                 physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
                 physics.ApplyAngularImpulse(
                     // Get a random angular velocity.
-                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * _robustRandom.NextFloat() +
+                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() +
                                     MinAngularVelocity));
                 // TODO: God this disgusts me but projectile needs a refactor.
-                IoCManager.Resolve<IEntityManager>().GetComponent<ProjectileComponent>(meteor).TimeLeft = 120f;
+                Comp<ProjectileComponent>(meteor).TimeLeft = 120f;
             }
         }
     }

@@ -109,6 +109,11 @@ namespace Content.Server.StationEvents.Events
 
         #region Helper Functions
 
+        protected void ForceEndSelf()
+        {
+            GameTicker.EndGameRule(PrototypeManager.Index<GameRulePrototype>(Prototype));
+        }
+
         protected bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
         {
             tile = default;
