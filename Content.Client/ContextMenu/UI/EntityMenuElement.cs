@@ -1,6 +1,8 @@
 using Content.Client.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Identity;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,6 +15,7 @@ namespace Content.Client.ContextMenu.UI
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 
         [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
@@ -81,7 +84,7 @@ namespace Content.Client.ContextMenu.UI
             if (admin.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
                 Text = _entityManager.ToPrettyString(entity.Value);
             else
-                Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value).EntityName;
+                Text = Identity.Name(entity.Value, _entityManager, _playerManager.LocalPlayer!.ControlledEntity!);
         }
     }
 }
