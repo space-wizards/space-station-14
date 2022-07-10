@@ -28,16 +28,21 @@ public sealed partial class IdentitySystem : EntitySystem
     /// </summary>
     public string IdentityName(EntityUid uid, EntityUid? viewer)
     {
-        EntityUid entity = uid;
         if (TryComp<IdentityComponent>(uid, out var identity))
         {
+            var ident = identity.IdentityEntitySlot.ContainedEntity;
+            if (ident is null)
+                return Name(uid);
+
             if (viewer == null || !CanSeeThroughIdentity(uid, viewer.Value))
             {
-                entity = identity.IdentityEntitySlot.ContainedEntity ?? uid;
+                return Name(ident.Value);
             }
+
+            return Name(uid) + $" ({Name(ident.Value)}";
         }
 
-        return Name(entity);
+        return Name(uid);
     }
 
     public bool CanSeeThroughIdentity(EntityUid uid, EntityUid viewer)
