@@ -39,6 +39,10 @@ jobs:
         mkdir "release/${{ github.sha }}"
         mv release/*.zip "release/${{ github.sha }}"
 
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "release/${{ github.sha }}/*"
+
     - name: Upload files to centcomm
       uses: appleboy/scp-action@master
       with:
