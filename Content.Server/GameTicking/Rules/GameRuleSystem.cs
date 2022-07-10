@@ -68,7 +68,10 @@ public abstract class GameRuleSystem : EntitySystem
     ///     Called when the game rule has been added.
     ///     You should avoid using this in favor of started--they are not the same thing.
     /// </summary>
-    public abstract void Added();
+    /// <remarks>
+    ///     This is virtual because it doesn't actually have to be used, and most of the time shouldn't be.
+    /// </remarks>
+    public virtual void Added() { }
 
     /// <summary>
     ///     Called when the game rule has been started.

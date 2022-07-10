@@ -307,7 +307,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-
     public override void Started()
     {
         _opsWon = false;

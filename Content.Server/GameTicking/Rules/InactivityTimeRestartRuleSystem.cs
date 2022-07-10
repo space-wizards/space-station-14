@@ -27,7 +27,7 @@ public sealed class InactivityTimeRestartRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        if (config is not InactivityGameRuleConfiguration inactivityConfig)
+        if (Configuration is not InactivityGameRuleConfiguration inactivityConfig)
             return;
         InactivityMaxTime = inactivityConfig.InactivityMaxTime;
         RoundEndDelay = inactivityConfig.RoundEndDelay;

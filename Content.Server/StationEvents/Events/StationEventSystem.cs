@@ -58,7 +58,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.AnnounceEvent && ev.StartAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalStationAnnouncement(ev.StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.StartAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.AnnounceEvent && ev.StartAudio != null)
@@ -81,7 +81,7 @@ namespace Content.Server.StationEvents.Events
 
             if (ev.AnnounceEvent && ev.EndAnnouncement != null)
             {
-                ChatSystem.DispatchGlobalStationAnnouncement(ev.EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                ChatSystem.DispatchGlobalStationAnnouncement(Loc.GetString(ev.EndAnnouncement), playDefaultSound: false, colorOverride: Color.Gold);
             }
 
             if (ev.AnnounceEvent && ev.EndAudio != null)
@@ -95,8 +95,8 @@ namespace Content.Server.StationEvents.Events
 
         /// <summary>
         ///     Called every tick when this event is running.
+        ///     Events are responsible for their own lifetime, so this handles starting and ending after time.
         /// </summary>
-        /// <param name="frameTime"></param>
         public override void Update(float frameTime)
         {
             if (!Enabled || Configuration is not StationEventRuleConfiguration data)

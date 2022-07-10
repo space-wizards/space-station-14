@@ -25,8 +25,9 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        if (config is not MaxTimeRestartRuleConfiguration maxTimeRestartConfig)
+        if (Configuration is not MaxTimeRestartRuleConfiguration maxTimeRestartConfig)
             return;
+
         RoundMaxTime = maxTimeRestartConfig.RoundMaxTime;
         RoundEndDelay = maxTimeRestartConfig.RoundEndDelay;
 
