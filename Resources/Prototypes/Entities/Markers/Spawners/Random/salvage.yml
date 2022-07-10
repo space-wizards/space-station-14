@@ -20,6 +20,7 @@
         - CrateMaterialSteel
         - CrateMaterialGlass
         - ResearchDisk
+        - CrateSalvageRDParts
       rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
