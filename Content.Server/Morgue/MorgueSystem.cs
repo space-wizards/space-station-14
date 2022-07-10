@@ -27,7 +27,6 @@ namespace Content.Server.Morgue;
 /// </summary>
 public sealed partial class MorgueSystem : EntitySystem
 {
-    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -39,17 +38,13 @@ public sealed partial class MorgueSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MorgueComponent, ComponentInit>(OnInit);
-
         SubscribeLocalEvent<MorgueComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<MorgueComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
-        SubscribeLocalEvent<MorgueComponent, SuicideEvent>(OnSuicide);
-        SubscribeLocalEvent<MorgueTrayComponent, StorageBeforeCloseEvent>(OnStorageBeforeClose);
+        //SubscribeLocalEvent<MorgueComponent, ActivateInWorldEvent>(ToggleMorgueSlab,
+        //    before: new[] { typeof(EntityStorageSystem) });
 
-        //These are used to intercept and override the entityStorage opening functionality.
-        SubscribeLocalEvent<MorgueComponent, ActivateInWorldEvent>(ToggleMorgueSlab,
-            before: new[] { typeof(EntityStorageSystem) });
-        SubscribeLocalEvent<MorgueTrayComponent, ActivateInWorldEvent>(ToggleMorgueTray,
-            before: new[] { typeof(EntityStorageSystem) });
+        SubscribeLocalEvent<MorgueTrayComponent, StorageBeforeCloseEvent>(OnStorageBeforeClose);
+        //SubscribeLocalEvent<MorgueTrayComponent, ActivateInWorldEvent>(ToggleMorgueTray,
+        //    before: new[] { typeof(EntityStorageSystem) });
     }
 
     /// <summary>
@@ -74,12 +69,12 @@ public sealed partial class MorgueSystem : EntitySystem
         args.Handled = true;
 
         //gotta spawn it here due to test weirdness
-        if (component.Tray == new EntityUid())
+        if (component.Tray == null)
         {
             component.Tray = Spawn(component.TrayPrototypeId, Transform(uid).Coordinates);
-            EnsureComp<MorgueTrayComponent>(component.Tray).Morgue = uid;
+            EnsureComp<MorgueTrayComponent>(component.Tray.Value).Morgue = uid;
 
-            component.TrayContainer.Insert(component.Tray);
+            component.TrayContainer.Insert(component.Tray.Value);
         }
 
         if (component.Open)
@@ -88,9 +83,6 @@ public sealed partial class MorgueSystem : EntitySystem
         }
         else if (CanOpenSlab(uid, component))
         {
-            if (component.IsCrematorium && component.Cooking)
-                return;
-
             OpenMorgue(uid, component);
         }
     }
@@ -120,14 +112,17 @@ public sealed partial class MorgueSystem : EntitySystem
             app.SetData(MorgueVisuals.HasMob, false);
         }
 
-        component.TrayContainer.Remove(component.Tray, EntityManager);
-        var trayXform = Transform(component.Tray);
+        if (component.Tray == null)
+            return;
+
+        component.TrayContainer.Remove(component.Tray.Value, EntityManager);
+        var trayXform = Transform(component.Tray.Value);
         trayXform.Coordinates = new EntityCoordinates(uid, 0, -1);
         trayXform.WorldRotation = Transform(uid).WorldRotation;
 
         component.Open = true;
 
-        _entityStorage.OpenStorage(component.Tray);
+        _entityStorage.OpenStorage(component.Tray.Value);
     }
 
     /// <summary>
@@ -143,9 +138,9 @@ public sealed partial class MorgueSystem : EntitySystem
         if (TryComp<AppearanceComponent>(uid, out var app))
             app.SetData(MorgueVisuals.Open, false);
 
-        _entityStorage.CloseStorage(component.Tray, storage);
+        _entityStorage.CloseStorage(component.Tray.Value, storage);
 
-        component.TrayContainer.Insert(component.Tray, EntityManager);
+        component.TrayContainer.Insert(component.Tray.Value, EntityManager);
         CheckContents(uid, component);
     }
 
@@ -174,27 +169,14 @@ public sealed partial class MorgueSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (component.IsCrematorium)
-        {
-            if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
-                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-
-            if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
-            else
-                args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
-        }
+        if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
+        else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
+            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
+        else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
         else
-        {
-            if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
-            else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
-                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-            else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
-                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
-            else
-                args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
-        }
+            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
     }
 
     /// <summary>
@@ -239,8 +221,10 @@ public sealed partial class MorgueSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
+        var uidXform = Transform(uid);
+
         if (!_interactionSystem.InRangeUnobstructed(uid,
-                Transform(uid).Coordinates.Offset(Transform(uid).LocalRotation.GetCardinalDir().ToIntVec()),
+                uidXform.Coordinates.Offset(uidXform.LocalRotation.GetCardinalDir().ToIntVec()),
                 collisionMask: component.TrayCanOpenMask
             ))
         {

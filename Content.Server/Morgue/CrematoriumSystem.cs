@@ -9,19 +9,54 @@ using Content.Shared.Verbs;
 using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Server.Players;
+using Content.Server.GameTicking;
+using Content.Server.Popups;
+using Content.Server.Storage.EntitySystems;
+using Content.Shared.Examine;
 
 namespace Content.Server.Morgue;
 
 /// <summary>
 ///    This is all the crematorium specific logic
 /// </summary>
-public sealed partial class MorgueSystem : EntitySystem
+public sealed class CrematoriumSystem : EntitySystem
 {
-    private void AddCremateVerb(EntityUid uid, MorgueComponent component, GetVerbsEvent<AlternativeVerb> args)
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+
+    public override void Initialize()
     {
-        if (!component.IsCrematorium)
+        base.Initialize();
+
+        SubscribeLocalEvent<CrematoriumComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<CrematoriumComponent, StorageOpenAttemptEvent>(OnAttemptOpen);
+        //SubscribeLocalEvent<CrematoriumComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
+        //SubscribeLocalEvent<CrematoriumComponent, SuicideEvent>(OnSuicide);
+    }
+
+    private void OnExamine(EntityUid uid, CrematoriumComponent component, ExaminedEvent args)
+    {
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
+        if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
+        if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
+        else
+            args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
+    }
+
+    private void OnAttemptOpen(EntityUid uid, CrematoriumComponent component, StorageOpenAttemptEvent args)
+    {
+        if (component.Cooking)
+            args.Cancel();
+    }
+
+    /*
+    private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
         if (!TryComp<EntityStorageComponent>(component.Tray, out var storage))
             return;
 
@@ -38,7 +73,7 @@ public sealed partial class MorgueSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    public void Cremate(EntityUid uid, MorgueComponent? component = null, EntityStorageComponent? storage = null)
+    public void Cremate(EntityUid uid, CrematoriumComponent? component = null, EntityStorageComponent? storage = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -85,7 +120,7 @@ public sealed partial class MorgueSystem : EntitySystem
         }, component.CremateCancelToken.Token);
     }
 
-    public void TryCremate(EntityUid uid, MorgueComponent component, EntityStorageComponent? storage = null)
+    public void TryCremate(EntityUid uid, CrematoriumComponent component, EntityStorageComponent? storage = null)
     {
         if (!Resolve(component.Tray, ref storage))
             return;
@@ -98,7 +133,7 @@ public sealed partial class MorgueSystem : EntitySystem
         Cremate(uid, component, storage);
     }
 
-    private void OnSuicide(EntityUid uid, MorgueComponent component, SuicideEvent args)
+    private void OnSuicide(EntityUid uid, CrematoriumComponent component, SuicideEvent args)
     {
         if (args.Handled || !component.IsCrematorium)
             return;
@@ -130,5 +165,5 @@ public sealed partial class MorgueSystem : EntitySystem
         }
 
         Cremate(uid, component);
-    }
+    }*/
 }

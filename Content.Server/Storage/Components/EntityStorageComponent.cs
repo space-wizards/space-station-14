@@ -34,6 +34,9 @@ public sealed class EntityStorageComponent : Component
     [DataField("IsCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
+    [DataField("enteringOffset")]
+    public Vector2 EnteringOffset = new(0, 0);
+
     [ViewVariables]
     [DataField("EnteringRange")]
     public float EnteringRange = -0.18f;
@@ -68,7 +71,15 @@ public sealed class StoreMobInItemContainerAttemptEvent : CancellableEntityEvent
 {
     public bool Handled = false;
 }
-public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs { }
+public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
+{
+    public bool Silent = false;
+
+    public StorageOpenAttemptEvent (bool silent = false)
+    {
+        Silent = silent;
+    }
+}
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
 {
@@ -84,3 +95,4 @@ public sealed class StorageBeforeCloseEvent : EventArgs
         Contents = contents;
     }
 }
+public sealed class StorageAfterCloseEvent : EventArgs { }

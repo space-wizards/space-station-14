@@ -22,7 +22,7 @@ public sealed class MorgueComponent : Component
     ///     The tray entity that holds the contents
     /// </summary>
     [ViewVariables]
-    public EntityUid Tray;
+    public EntityUid? Tray;
 
     /// <summary>
     ///     The container for the tray. evil.
@@ -52,35 +52,4 @@ public sealed class MorgueComponent : Component
 
     [DataField("occupantHasSoulAlarmSound")]
     public SoundSpecifier OccupantHasSoulAlarmSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-
-    //Crematorium specific stuff
-
-    /// <summary>
-    ///     Whether or not this is a crematorium. self explanatory
-    /// </summary>
-    [DataField("isCrematorium")]
-    public bool IsCrematorium = false;
-
-    /// <summary>
-    ///     Whether or not the crematorium is currently cooking
-    /// </summary>
-    [ViewVariables]
-    public bool Cooking;
-
-    /// <summary>
-    ///     The time it takes to cook
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int BurnMilis = 5000;
-
-    public CancellationTokenSource? CremateCancelToken;
-
-    [DataField("cremateStartSound")]
-    public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
-
-    [DataField("crematingSound")]
-    public SoundSpecifier CrematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
-
-    [DataField("cremateFinishSound")]
-    public SoundSpecifier CremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
 }

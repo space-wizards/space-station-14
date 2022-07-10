@@ -13,17 +13,15 @@ public sealed class CursedEntityStorageSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CursedEntityStorageComponent, ActivateInWorldEvent>(OnActivate,
-            after: new[] { typeof(EntityStorageSystem) });
+        SubscribeLocalEvent<CursedEntityStorageComponent, StorageAfterCloseEvent>(OnClose);
     }
 
-    private void OnActivate(EntityUid uid, CursedEntityStorageComponent component, ActivateInWorldEvent args)
+    private void OnClose(EntityUid uid, CursedEntityStorageComponent component, StorageAfterCloseEvent args)
     {
         if (!TryComp<EntityStorageComponent>(uid, out var storage))
             return;
@@ -31,24 +29,18 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         if (storage.Open || storage.Contents.ContainedEntities.Count <= 0)
             return;
 
-        var lockers = EntityQuery<EntityStorageComponent>().Select(c => c.Owner).ToList();
+        var lockerQuery = EntityQuery<EntityStorageComponent>().ToList();
+        lockerQuery.Remove(storage);
 
-        if (lockers.Contains(uid))
-            lockers.Remove(uid);
-
-        if (lockers.Count == 0)
+        if (lockerQuery.Count == 0)
             return;
 
-        var lockerEnt = _random.Pick(lockers);
-
-        var locker = EntityManager.GetComponent<EntityStorageComponent>(lockerEnt);
-        var lockerContainer = locker.Contents;
+        var lockerEnt = _random.Pick(lockerQuery).Owner;
 
         foreach (var entity in storage.Contents.ContainedEntities.ToArray())
         {
             storage.Contents.Remove(entity);
-            var foo = _entityStorage.AddToContents(entity, lockerEnt, locker);
-            Logger.Debug(foo.ToString());
+            _entityStorage.AddToContents(entity, lockerEnt);
         }
         SoundSystem.Play(component.CursedSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f, _random));
     }

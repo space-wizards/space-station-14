@@ -13,6 +13,7 @@ using Content.Shared.Storage;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 
@@ -114,7 +115,7 @@ public sealed class EntityStorageSystem : EntitySystem
         {
             if (component.Contents.Remove(contained))
             {
-                Transform(contained).WorldPosition = Transform(uid).WorldPosition;
+                Transform(contained).Coordinates = new EntityCoordinates(uid, component.EnteringOffset);
                 if (TryComp(contained, out IPhysBody? physics))
                 {
                     physics.CanCollide = true;
@@ -138,18 +139,16 @@ public sealed class EntityStorageSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-
         component.Open = false;
 
-        var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(uid, component.EnteringRange, LookupFlags.Approximate));
+        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
+
+        var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate));
         RaiseLocalEvent(uid, ev, true);
         
         var count = 0;
         foreach (var entity in ev.Contents)
         {
-            if (_container.IsEntityInContainer(entity))
-                continue;
-
             if (!ev.ContentsWhitelist.Contains(entity))
                 if (!CanFit(entity, uid))
                     continue;
@@ -165,6 +164,7 @@ public sealed class EntityStorageSystem : EntitySystem
         ModifyComponents(uid, component);
         SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
         component.LastInternalOpenAttempt = default;
+        RaiseLocalEvent(uid, new StorageAfterCloseEvent());
     }
 
     public bool Insert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
@@ -236,15 +236,7 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
         }
 
-        if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
-        {
-            if (!silent)
-                _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), target, Filter.Pvs(target));
-
-            return false;
-        }
-
-        var ev = new StorageOpenAttemptEvent();
+        var ev = new StorageOpenAttemptEvent(silent);
         RaiseLocalEvent(target, ev, true);
 
         return !ev.Cancelled;
@@ -281,7 +273,7 @@ public sealed class EntityStorageSystem : EntitySystem
         // 2. maximum item count can block anything
         // 3. ghosts can NEVER be eaten
         // 4. items can always be eaten unless a previous law prevents it
-        // 5. if this is NOT AN ITEM, then mobs can always be eaten unless unless a previous
+        // 5. if this is NOT AN ITEM, then mobs can always be eaten unless a previous
         // law prevents it
         // 6. if this is an item, then mobs must only be eaten if some other component prevents
         // pick-up interactions while a mob is inside (e.g. foldable)
