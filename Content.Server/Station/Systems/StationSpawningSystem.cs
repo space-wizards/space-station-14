@@ -3,6 +3,7 @@ using Content.Server.CharacterAppearance.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.Identity;
 using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -37,6 +38,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
     [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -119,6 +121,7 @@ public sealed class StationSpawningSystem : EntitySystem
             jobSpecial.AfterEquip(entity);
         }
 
+        _identity.QueueIdentityUpdate(entity);
         return entity;
     }
 

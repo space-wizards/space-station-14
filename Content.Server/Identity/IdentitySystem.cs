@@ -18,6 +18,8 @@ public class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
 
+    private Queue<EntityUid> _queuedIdentityUpdates = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,34 +28,46 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>(OnUnequip);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        while (_queuedIdentityUpdates.TryDequeue(out var ent))
+        {
+            if (!TryComp<IdentityComponent>(ent, out var identity))
+                continue;
+
+            UpdateIdentityInfo(ent, identity);
+        }
+    }
+
     // This is where the magic happens
     protected override void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
     {
+        base.OnComponentInit(uid, component, args);
+
         var ident = Spawn(null, Transform(uid).Coordinates);
 
-        // Clone the old entity's grammar to the identity entity, for loc purposes.
-        if (TryComp<GrammarComponent>(uid, out var grammar))
-        {
-            var identityGrammar = EnsureComp<GrammarComponent>(ident);
-
-            foreach (var (k, v) in grammar.Attributes)
-            {
-                identityGrammar.Attributes.Add(k, v);
-            }
-        }
-
-        MetaData(ident).EntityName = Name(uid);
+        QueueIdentityUpdate(uid);
         component.IdentityEntitySlot.Insert(ident);
+    }
+
+    /// <summary>
+    ///     Queues an identity update to the start of the next tick.
+    /// </summary>
+    public void QueueIdentityUpdate(EntityUid uid)
+    {
+        _queuedIdentityUpdates.Enqueue(uid);
     }
 
     private void OnEquip(EntityUid uid, IdentityComponent component, DidEquipEvent args)
     {
-        UpdateIdentityName(uid, component);
+        QueueIdentityUpdate(uid);
     }
 
     private void OnUnequip(EntityUid uid, IdentityComponent component, DidUnequipEvent args)
     {
-        UpdateIdentityName(uid, component);
+        QueueIdentityUpdate(uid);
     }
 
     #region Private API
@@ -61,10 +75,22 @@ public class IdentitySystem : SharedIdentitySystem
     /// <summary>
     ///     Updates the metadata name for the id(entity) from the current state of the character.
     /// </summary>
-    private void UpdateIdentityName(EntityUid uid, IdentityComponent identity)
+    private void UpdateIdentityInfo(EntityUid uid, IdentityComponent identity)
     {
         if (identity.IdentityEntitySlot.ContainedEntity is not { } ident)
             return;
+
+        // Clone the old entity's grammar to the identity entity, for loc purposes.
+        if (TryComp<GrammarComponent>(uid, out var grammar))
+        {
+            var identityGrammar = EnsureComp<GrammarComponent>(ident);
+            identityGrammar.Attributes.Clear();
+
+            foreach (var (k, v) in grammar.Attributes)
+            {
+                identityGrammar.Attributes.Add(k, v);
+            }
+        }
 
         var name = GetIdentityName(uid);
         MetaData(ident).EntityName = name;
