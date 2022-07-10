@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
@@ -59,7 +60,7 @@ namespace Content.Server.Forensics
 
             if (_inventory.TryGetSlotEntity(args.Target.Value, "gloves", out var gloves))
             {
-                _popupSystem.PopupEntity(Loc.GetString("forensic-pad-gloves", ("target", args.Target.Value)), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("forensic-pad-gloves", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, Filter.Entities(args.User));
                 return;
             }
 
@@ -67,8 +68,8 @@ namespace Content.Server.Forensics
             {
                 if (args.User != args.Target)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-user", ("target", args.Target.Value)), args.Target.Value, Filter.Entities(args.User));
-                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", args.User)), args.Target.Value, Filter.Entities(args.Target.Value));
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager))), args.Target.Value, Filter.Entities(args.Target.Value));
                 }
                 StartScan(args.User, args.Target.Value, component, fingerprint.Fingerprint);
                 return;
