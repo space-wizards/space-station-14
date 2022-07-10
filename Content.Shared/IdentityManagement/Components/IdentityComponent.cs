@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 
-namespace Content.Shared.Identity.Components;
+namespace Content.Shared.IdentityManagement.Components;
 
 /// <summary>
 ///     Stores the identity entity (whose name is the users 'identity', etc)

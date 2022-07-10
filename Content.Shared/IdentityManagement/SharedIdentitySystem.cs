@@ -1,4 +1,4 @@
-﻿using Content.Shared.Identity.Components;
+﻿using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.IdentityManagement;

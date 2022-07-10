@@ -1,7 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
-using Content.Shared.Identity.Components;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;

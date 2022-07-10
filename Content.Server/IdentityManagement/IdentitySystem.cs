@@ -3,9 +3,8 @@ using Content.Server.Administration.Logs;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
-using Content.Shared.Identity;
-using Content.Shared.Identity.Components;
 using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
@@ -76,6 +75,9 @@ public class IdentitySystem : SharedIdentitySystem
         if (identity.IdentityEntitySlot.ContainedEntity is not { } ident)
             return;
 
+        var representation = GetIdentityRepresentation(uid);
+        var name = GetIdentityName(uid, representation);
+
         // Clone the old entity's grammar to the identity entity, for loc purposes.
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
@@ -86,9 +88,11 @@ public class IdentitySystem : SharedIdentitySystem
             {
                 identityGrammar.Attributes.Add(k, v);
             }
-        }
 
-        var name = GetIdentityName(uid);
+            // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
+            if (name != representation.TrueName && representation.PresumedName == null)
+                identityGrammar.ProperNoun = false;
+        }
 
         if (name == Name(ident))
             return;
@@ -99,11 +103,8 @@ public class IdentitySystem : SharedIdentitySystem
         RaiseLocalEvent(new IdentityChangedEvent(uid, ident));
     }
 
-    private string GetIdentityName(EntityUid target,
-        InventoryComponent? inventory=null,
-        HumanoidAppearanceComponent? appearance=null)
+    private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
     {
-        var representation = GetIdentityRepresentation(target, inventory, appearance);
         var ev = new SeeIdentityAttemptEvent();
 
         RaiseLocalEvent(target, ev);

@@ -1,5 +1,4 @@
-﻿using Content.Shared.Identity;
-using Content.Shared.IdentityManagement;
+﻿using Content.Shared.IdentityManagement;
 
 namespace Content.Client.IdentityManagement;
 

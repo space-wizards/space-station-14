@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Identity.Components;
+namespace Content.Shared.IdentityManagement.Components;
 
 [RegisterComponent, NetworkedComponent]
 public sealed class IdentityBlockerComponent : Component

@@ -1,6 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.Identity;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;

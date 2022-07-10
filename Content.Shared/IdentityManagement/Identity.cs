@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Ghost;
-using Content.Shared.Identity.Components;
+using Content.Shared.IdentityManagement.Components;
 
-namespace Content.Shared.Identity;
+namespace Content.Shared.IdentityManagement;
 
 /// <summary>
 ///     Static content API for getting the identity entities/names for a given entity.
