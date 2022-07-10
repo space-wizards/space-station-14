@@ -14,24 +14,21 @@ namespace Content.Server.Identity;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public class UpdateIdentitySystem : EntitySystem
+public class IdentitySystem : SharedIdentitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
-
-    private static string SlotName = "identity";
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<IdentityComponent, ComponentInit>(OnInit);
+        base.Initialize();
+
         SubscribeLocalEvent<IdentityComponent, DidEquipEvent>(OnEquip);
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>(OnUnequip);
     }
 
     // This is where the magic happens
-    private void OnInit(EntityUid uid, IdentityComponent component, ComponentInit args)
+    protected override void OnComponentInit(EntityUid uid, IdentityComponent component, ComponentInit args)
     {
-        component.IdentityEntitySlot = _container.EnsureContainer<ContainerSlot>(uid, SlotName);
         var ident = Spawn(null, Transform(uid).Coordinates);
 
         // Clone the old entity's grammar to the identity entity, for loc purposes.

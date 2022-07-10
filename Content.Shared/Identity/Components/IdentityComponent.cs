@@ -8,7 +8,7 @@ namespace Content.Shared.Identity.Components;
 ///     for a given entity, and marks that it can have an identity at all.
 /// </summary>
 /// <remarks>
-///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted with the user.
+///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted and sent with the user.
 /// </remarks>
 [RegisterComponent]
 public sealed class IdentityComponent : Component

@@ -193,7 +193,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = _identity.IdentityName(target, player),
+                Text = Identity.Name(target, EntityManager, player),
                 HorizontalExpand = true,
             });
 

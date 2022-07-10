@@ -1,11 +1,5 @@
-﻿using Content.Shared.Access.Systems;
-using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.Ghost;
+﻿using Content.Shared.Ghost;
 using Content.Shared.Identity.Components;
-using Content.Shared.Inventory;
-using Content.Shared.Preferences;
-using Robust.Shared.Containers;
-using Robust.Shared.Enums;
 
 namespace Content.Shared.Identity;
 
