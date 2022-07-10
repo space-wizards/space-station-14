@@ -156,8 +156,9 @@ public sealed class BlockingSystem : EntitySystem
 
         var shieldName = Name(item);
 
+        var blockerName = Identity.Entity(user, EntityManager);
         var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
-        var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", Name(user)), ("shield", shieldName));
+        var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", blockerName), ("shield", shieldName));
 
         //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture

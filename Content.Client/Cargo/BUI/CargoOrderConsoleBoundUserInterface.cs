@@ -5,6 +5,7 @@ using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
@@ -57,7 +58,7 @@ namespace Content.Client.Cargo.BUI
             string orderRequester;
 
             if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
-                orderRequester = metadata.EntityName;
+                orderRequester = Identity.Name(localPlayer.Value, entityManager);
             else
                 orderRequester = string.Empty;
 

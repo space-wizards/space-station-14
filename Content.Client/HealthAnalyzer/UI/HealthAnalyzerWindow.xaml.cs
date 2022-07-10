@@ -7,7 +7,7 @@ using Content.Shared.Disease.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage;
-
+using Content.Shared.IdentityManagement;
 using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Client.HealthAnalyzer.UI
@@ -28,8 +28,9 @@ namespace Content.Client.HealthAnalyzer.UI
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(msg.TargetEntity, out var damageable))
             {
                 string entityName = "Unknown";
-                if (msg.TargetEntity != null && entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
-                    entityName = metaData.EntityName;
+                if (msg.TargetEntity != null &&
+                    entities.TryGetComponent<MetaDataComponent>(msg.TargetEntity.Value, out var metaData))
+                    entityName = Identity.Name(msg.TargetEntity.Value, entities);
 
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerGroup = damageable.DamagePerGroup;
                 IReadOnlyDictionary<string, FixedPoint2> DamagePerType = damageable.Damage.DamageDict;
