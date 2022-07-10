@@ -127,6 +127,12 @@
   config:
     !type:StationEventRuleConfiguration
     id: VentCritters
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    maxOccurrences: 2
+    startAfter: 30
+    endAfter: 60
 
 - type: gameRule
   id: ZombieOutbreak
