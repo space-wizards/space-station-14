@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Identity.Components;
 using Robust.Shared.Containers;
 
-namespace Content.Shared.Identity;
+namespace Content.Shared.IdentityManagement;
 
 public abstract class SharedIdentitySystem : EntitySystem
 {

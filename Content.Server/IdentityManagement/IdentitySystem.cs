@@ -1,15 +1,18 @@
 ﻿using Content.Server.Access.Systems;
+using Content.Server.Administration.Logs;
 using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Identity;
 using Content.Shared.Identity.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
-namespace Content.Server.Identity;
+namespace Content.Server.IdentityManagement;
 
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
@@ -17,6 +20,7 @@ namespace Content.Server.Identity;
 public class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
     private Queue<EntityUid> _queuedIdentityUpdates = new();
 
@@ -85,7 +89,14 @@ public class IdentitySystem : SharedIdentitySystem
         }
 
         var name = GetIdentityName(uid);
+
+        if (name == Name(ident))
+            return;
+
         MetaData(ident).EntityName = name;
+
+        _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
+        RaiseLocalEvent(new IdentityChangedEvent(uid, ident));
     }
 
     private string GetIdentityName(EntityUid target,
@@ -136,4 +147,16 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     #endregion
+}
+
+public sealed class IdentityChangedEvent : EntityEventArgs
+{
+    public EntityUid CharacterEntity;
+    public EntityUid IdentityEntity;
+
+    public IdentityChangedEvent(EntityUid characterEntity, EntityUid identityEntity)
+    {
+        CharacterEntity = characterEntity;
+        IdentityEntity = identityEntity;
+    }
 }
