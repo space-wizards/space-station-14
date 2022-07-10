@@ -86,7 +86,7 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        public override void Shutdown()
+        public override void Ended()
         {
             foreach (var entity in _unpowered)
             {
@@ -107,7 +107,7 @@ namespace Content.Server.StationEvents.Events
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 
-            base.Shutdown();
+            base.Ended();
         }
     }
 }

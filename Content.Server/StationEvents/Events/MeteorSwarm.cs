@@ -52,9 +52,9 @@ namespace Content.Server.StationEvents.Events
             _waveCounter = robustRandom.Next(MinimumWaves, MaximumWaves);
         }
 
-        public override void Shutdown()
+        public override void Ended()
         {
-            base.Shutdown();
+            base.Ended();
             _waveCounter = 0;
             _cooldown = 0f;
             EndAfter = float.MaxValue;

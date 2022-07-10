@@ -30,7 +30,7 @@ namespace Content.Server.StationEvents.Events
         /// <summary>
         ///     How long has the event existed. Do not change this.
         /// </summary>
-        private float Elapsed { get; set; }
+        protected float Elapsed { get; set; }
 
         /// <summary>
         ///     Called once to setup the event after StartAfter has elapsed, or if an event is forcibly started.
