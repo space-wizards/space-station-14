@@ -17,7 +17,7 @@ namespace Content.Server.Objectives.Conditions
 
         /// <summary>
         /// Help newer players by saying e.g. "steal the chief engineer's advanced magboots"
-        /// instead of "steal advanced magboots.
+        /// instead of "steal advanced magboots. Should be a loc string.
         /// </summary>
         [ViewVariables]
         [DataField("owner", required: true)] private string _owner = string.Empty;
@@ -50,6 +50,7 @@ namespace Content.Server.Objectives.Conditions
                 if (_mind?.OwnedEntity is not {Valid: true} owned) return 0f;
                 if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ContainerManagerComponent?>(owned, out var containerManagerComponent)) return 0f;
 
+                // slightly ugly but fixing it would just be duplicating it with a different return value
                 float count = containerManagerComponent.CountPrototypeOccurencesRecursive(_prototypeId);
                 if (count >= 1)
                     return 1;
