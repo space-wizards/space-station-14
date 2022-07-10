@@ -116,6 +116,7 @@
         probability: 0.2
       - !type:PopupMessage
         messages: [ "clf3-it-burns", "clf3-get-away" ]
+        visualType: MediumCaution
         probability: 0.3
         type: Local
 

@@ -1,153 +1,4 @@
 Entries:
-- author: Saakra
-  changes:
-  - {message: 'Bats, bees, butterflies, and parrots no longer slip', type: Add}
-  id: 1395
-  time: '2022-04-24T00:42:24.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Drains will soon be added to stations, making the jobs of Janitors,
-      Chefs, and Chemists much easier.', type: Add}
-  id: 1396
-  time: '2022-04-24T01:04:49.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Added vehicles!, type: Add}
-  id: 1397
-  time: '2022-04-24T01:05:02.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'Delta Station now has vehicles for Security, Cargo, and the Janitor.',
-    type: Add}
-  id: 1398
-  time: '2022-04-24T02:26:50.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Minibomb radius massively reduced., type: Tweak}
-  - {message: Minibomb timer increased to 10 seconds., type: Tweak}
-  - {message: 'Minibombs have a new, distinctive timer sound.', type: Add}
-  - {message: 'Minibomb will reliably destroy the tile under it, including gibbing
-      dead bodies (but not living people.)', type: Tweak}
-  - {message: Grenades can no longer space tiles., type: Tweak}
-  - {message: TC cost of uplink explosives has been adjusted based on their relative
-      strength., type: Tweak}
-  id: 1399
-  time: '2022-04-24T02:27:02.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Medbay now has their own techfab, pending mapping.', type: Add}
-  - {message: 'Printing latex and nitrile gloves, sterile masks, mouth swabs, and
-      health analyzers now requires a Medical Techfab and Biological Technology unlocked.',
-    type: Tweak}
-  - {message: Beds now give back the cloth/durathread too when you deconstruct them.,
-    type: Fix}
-  id: 1400
-  time: '2022-04-24T02:27:13.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'The chaplain''s familiars can be resummoned now after they die. 3 minutes
-      for Remilia, 5 minutes for Cerberus.', type: Add}
-  id: 1401
-  time: '2022-04-24T02:27:19.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Splitstation fixes and QoL improvements. See Github PR for details.,
-    type: Add}
-  id: 1402
-  time: '2022-04-24T13:10:44.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: You can no longer get on vehicles if your hands are full., type: Fix}
-  - {message: ATV crate price from 2500 -> 6000., type: Tweak}
-  id: 1403
-  time: '2022-04-25T00:05:54.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Emotes will no longer be capitalized when they shouldn't be., type: Fix}
-  id: 1404
-  time: '2022-04-25T00:15:40.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: NT Barratry has received a small update., type: Tweak}
-  id: 1405
-  time: '2022-04-25T14:45:54.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Most airlocks on Delta Station are now named for your convenience. That
-      ought to clear a few things up around here., type: Add}
-  - {message: 'Delta Station now has an arrivals shuttle, hopefully reducing the amount
-      of deaths to arrivals being spaced.', type: Add}
-  - {message: Delta Station now actually has vehicles., type: Add}
-  id: 1406
-  time: '2022-04-25T14:50:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Split Station minor update. More signage, some wiring fixes, vehicle
-      spawners, memorial in the park and more chance of splitting! (See bar).', type: Add}
-  id: 1407
-  time: '2022-04-25T17:07:53.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: The "suspicion" gamemode now works on every map., type: Tweak}
-  id: 1408
-  time: '2022-04-26T14:57:25.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: The Syndicate has distributed new segways for their agents to use.,
-    type: Add}
-  id: 1409
-  time: '2022-04-26T22:08:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Fireaxes are now the perfect crowbar. They can now be used to pry up
-      floor tiles., type: Tweak}
-  id: 1410
-  time: '2022-04-27T07:29:30.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Barratry now has vehicles., type: Tweak}
-  id: 1411
-  time: '2022-04-28T03:17:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Decals (e.g. tile paint) should now be removed correctly., type: Fix}
-  id: 1412
-  time: '2022-04-28T10:23:44.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Salvage is now able to mine for ores inside of asteroid rocks!, type: Add}
-  - {message: Use those ores in an Ore processor to turn them into materials for the
-      station!, type: Add}
-  id: 1413
-  time: '2022-04-28T10:41:04.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Certain drinks containers like paper cups won't shatter to glass anymore.,
-    type: Fix}
-  id: 1414
-  time: '2022-04-28T11:56:21.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Adds the rainbow crayon. Honk!, type: Add}
-  id: 1415
-  time: '2022-04-28T12:23:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
-      and signal switches (All in Machines section)., type: Add}
-  id: 1416
-  time: '2022-04-28T12:24:02.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Made xenos unable to slip., type: Tweak}
-  id: 1417
-  time: '2022-04-28T12:24:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: The singularity visuals have been slightly updated. Large singularities
-      should no longer suffer from pop-in, type: Tweak}
-  id: 1418
-  time: '2022-04-28T12:43:16.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added artifact container. It's used to safely transport or store dangerous
@@ -2963,3 +2814,139 @@ Entries:
   - {message: Fixed bug where tiles would not get depressurized on rare cases., type: Fix}
   id: 1894
   time: '2022-07-08T12:30:46.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an error in the Retro Laser Guns inhand sprites, type: Fix}
+  id: 1895
+  time: '2022-07-08T18:09:27.0000000+00:00'
+- author: Aerocrux
+  changes:
+  - {message: Servers now post their max player counts for the launcher to display
+      alongside current player count, type: Add}
+  id: 1896
+  time: '2022-07-08T19:44:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Fixed an issue where the t-ray scanner would sometimes flicker when
+      turned off, type: Fix}
+  id: 1897
+  time: '2022-07-08T21:45:16.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: 'Added the MagiVend, your one-stop shop for various wizard goodies.',
+    type: Add}
+  id: 1898
+  time: '2022-07-09T02:40:49.0000000+00:00'
+- author: themias
+  changes:
+  - {message: The hot drinks machine now dispenses tea into teacups instead of glasses,
+    type: Tweak}
+  id: 1899
+  time: '2022-07-09T02:43:27.0000000+00:00'
+- author: LilJard
+  changes:
+  - {message: Added new sprite for fireaxe, type: Add}
+  id: 1900
+  time: '2022-07-09T03:03:21.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: machine pistol magazine (.35 auto high-velocity) now comes with corresponding
+      stronger cartridges instead of regular ones, type: Fix}
+  id: 1901
+  time: '2022-07-09T03:42:40.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Projectiles now have impact effects. Most bullets have sparkles and
+      disablers have a laser., type: Add}
+  id: 1902
+  time: '2022-07-09T03:46:11.0000000+00:00'
+- author: themias
+  changes:
+  - {message: force-feeding works again, type: Fix}
+  id: 1903
+  time: '2022-07-09T03:57:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The China Lake's projectiles now have smaller explosions., type: Tweak}
+  - {message: The China Lake bundle no longer comes with flash grenades., type: Tweak}
+  id: 1904
+  time: '2022-07-09T04:53:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emergency shuttle will now announce its arrival direction., type: Add}
+  id: 1905
+  time: '2022-07-09T05:19:53.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Emergency shuttle will now actually warp-in nearby if there's no available
+      docks., type: Fix}
+  id: 1906
+  time: '2022-07-09T05:20:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Jetpacks got some QOL tweaks. Particles don''t show if they''re stationary,
+      it gives popups when it turns off, and they''re unusable under gravity (as they
+      give no effect anyway).', type: Tweak}
+  id: 1907
+  time: '2022-07-09T08:24:49.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that would cause additional reagents to appear when failing
+      to drink something., type: Fix}
+  id: 1908
+  time: '2022-07-09T08:53:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Many popups now vary in size and color., type: Add}
+  id: 1909
+  time: '2022-07-09T09:09:52.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Chickens and ducks now lay eggs., type: Add}
+  id: 1910
+  time: '2022-07-09T09:48:16.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Split Station now has slightly more emergency lights across the station.
+      Salvage got a better exterior., type: Tweak}
+  id: 1911
+  time: '2022-07-09T09:48:53.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Smite spell now knocks back its target, type: Tweak}
+  id: 1912
+  time: '2022-07-09T09:49:31.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes the injector sprite not rendering properly when below a floor
+      tile., type: Fix}
+  id: 1913
+  time: '2022-07-09T09:59:39.0000000+00:00'
+- author: Rinkashikachi
+  changes:
+  - {message: added item name to order manifest, type: Add}
+  - {message: added approvers full name and job title to order manifest, type: Add}
+  - {message: added order manifest to shuttle orders, type: Add}
+  id: 1914
+  time: '2022-07-09T13:48:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
+  id: 1915
+  time: '2022-07-09T16:40:43.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now knock on shutters., type: Tweak}
+  id: 1916
+  time: '2022-07-10T06:54:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
+  id: 1917
+  time: '2022-07-10T07:57:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Glass shards and d4 dice now deal damage to people who walk over them
+      barefoot., type: Add}
+  id: 1918
+  time: '2022-07-10T09:28:37.0000000+00:00'

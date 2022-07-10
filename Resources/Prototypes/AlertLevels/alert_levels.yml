@@ -20,7 +20,7 @@
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
-      emergencyLightColor: Yellow
+      emergencyLightColor: Goldenrod
       shuttleTime: 400
     red:
       announcement: alert-level-red-announcement

@@ -39,6 +39,7 @@
             Poison: 4
       - !type:PopupMessage
         type: Local
+        visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -106,6 +107,7 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -139,6 +141,7 @@
             Caustic: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -179,6 +182,7 @@
             Poison: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
@@ -281,6 +285,7 @@
         - !type:ReagentThreshold
           min: 45
         type: Local
+        visualType: Medium
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
 

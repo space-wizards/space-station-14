@@ -44,6 +44,8 @@ public sealed class DockingInterfaceState
     public Angle Angle;
     public EntityUid Entity;
     public bool Connected;
+    public Color Color;
+    public Color HighlightedColor;
 }
 
 [Serializable, NetSerializable]

@@ -66,10 +66,10 @@ public sealed partial class DockingSystem
 
     private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
     {
-        _sawmill.Debug($"Received undock request for {ToPrettyString(args.Entity)}");
+        _sawmill.Debug($"Received undock request for {ToPrettyString(args.DockEntity)}");
 
         // TODO: Validation
-        if (!TryComp<DockingComponent>(args.Entity, out var dock) ||
+        if (!TryComp<DockingComponent>(args.DockEntity, out var dock) ||
             !dock.Docked) return;
 
         Undock(dock);
@@ -77,28 +77,28 @@ public sealed partial class DockingSystem
 
     private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received autodock request for {ToPrettyString(args.Entity)}");
+        _sawmill.Debug($"Received autodock request for {ToPrettyString(args.DockEntity)}");
         var player = args.Session.AttachedEntity;
 
-        if (player == null || !HasComp<DockingComponent>(args.Entity)) return;
+        if (player == null || !HasComp<DockingComponent>(args.DockEntity)) return;
 
         // TODO: Validation
-        var comp = EnsureComp<AutoDockComponent>(args.Entity);
+        var comp = EnsureComp<AutoDockComponent>(args.DockEntity);
         comp.Requesters.Add(player.Value);
     }
 
     private void OnRequestStopAutodock(EntityUid uid, ShuttleConsoleComponent component, StopAutodockRequestMessage args)
     {
-        _sawmill.Debug($"Received stop autodock request for {ToPrettyString(args.Entity)}");
+        _sawmill.Debug($"Received stop autodock request for {ToPrettyString(args.DockEntity)}");
 
         var player = args.Session.AttachedEntity;
 
         // TODO: Validation
-        if (player == null || !TryComp<AutoDockComponent>(args.Entity, out var comp)) return;
+        if (player == null || !TryComp<AutoDockComponent>(args.DockEntity, out var comp)) return;
 
         comp.Requesters.Remove(player.Value);
 
         if (comp.Requesters.Count == 0)
-            RemComp<AutoDockComponent>(args.Entity);
+            RemComp<AutoDockComponent>(args.DockEntity);
     }
 }

@@ -1,8 +1,9 @@
+using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
 
-namespace Content.Shared.StepTrigger;
+namespace Content.Shared.StepTrigger.Systems;
 
 public sealed class StepTriggerSystem : EntitySystem
 {
@@ -93,7 +94,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         RaiseLocalEvent(uid, ref msg, true);
 
-        return msg.Continue;
+        return msg.Continue && !msg.Cancelled;
     }
 
     private void HandleCollide(EntityUid uid, StepTriggerComponent component, StartCollideEvent args)
@@ -177,6 +178,10 @@ public struct StepTriggerAttemptEvent
     public EntityUid Source;
     public EntityUid Tripper;
     public bool Continue;
+    /// <summary>
+    ///     Set by systems which wish to cancel the step trigger event, regardless of event ordering.
+    /// </summary>
+    public bool Cancelled;
 }
 
 [ByRefEvent]
