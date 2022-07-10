@@ -166,9 +166,8 @@ namespace Content.Server.GameTicking
 
                 AddGameRule(rule);
 
-                // Start rule if we're already in the middle of a round and it's not an event, which start themselves
-                // Yes this is a little hardcoded but its fine
-                if(RunLevel == GameRunLevel.InRound && rule.Configuration is not StationEventRuleConfiguration)
+                // Start rule if we're already in the middle of a round
+                if(RunLevel == GameRunLevel.InRound)
                     StartGameRule(rule);
             }
         }
