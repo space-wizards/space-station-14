@@ -31,6 +31,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -283,12 +284,15 @@ namespace Content.Shared.Movement.Systems
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
 
-                if (!weightless && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                if (!weightless && TryGetSound(mover, mobMover, xform, out var sound))
                 {
                     var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
-                    SoundSystem.Play(sound,
-                        GetSoundPlayers(mover.Owner),
-                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume * soundModifier));
+
+                    var audioParams = sound.Params
+                        .WithVolume(FootstepVolume * soundModifier)
+                        .WithVariation(sound.Params.Variation ?? FootstepVariation);
+
+                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
                 }
             }
 
@@ -376,15 +380,11 @@ namespace Content.Shared.Movement.Systems
             return false;
         }
 
-        // TODO: Predicted audio moment.
-        protected abstract Filter GetSoundPlayers(EntityUid mover);
-
         protected abstract bool CanSound();
 
-        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            variation = 0f;
 
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
@@ -422,17 +422,15 @@ namespace Content.Shared.Movement.Systems
             if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
-                sound = modifier.SoundCollection.GetSound();
-                variation = modifier.Variation;
+                sound = modifier.SoundCollection;
                 return true;
             }
 
-            return TryGetFootstepSound(gridId!.Value, coordinates, out variation, out sound);
+            return TryGetFootstepSound(gridId!.Value, coordinates, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
-            variation = 0f;
             sound = null;
             var grid = _mapManager.GetGrid(gridId);
             var tile = grid.GetTileRef(coordinates);
@@ -445,18 +443,16 @@ namespace Content.Shared.Movement.Systems
             {
                 if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    sound = footstep.SoundCollection.GetSound();
-                    variation = footstep.Variation;
+                    sound = footstep.SoundCollection;
                     return true;
                 }
             }
 
             // Walking on a tile.
             var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            sound = def.FootstepSounds?.GetSound();
-            variation = FootstepVariation;
+            sound = def.FootstepSounds;
 
-            return !string.IsNullOrEmpty(sound);
+            return sound != null;
         }
     }
 }

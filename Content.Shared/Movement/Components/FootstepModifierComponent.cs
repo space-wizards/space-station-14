@@ -10,8 +10,5 @@ namespace Content.Shared.Movement.Components
     {
         [DataField("footstepSoundCollection", required: true)]
         public SoundSpecifier SoundCollection = default!;
-
-        [DataField("variation")]
-        public float Variation = default;
     }
 }
