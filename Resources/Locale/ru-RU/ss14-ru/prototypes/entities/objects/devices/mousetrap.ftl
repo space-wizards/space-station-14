@@ -1,3 +1,3 @@
 ent-Mousetrap = мышеловка
-    .desc = { ent-BaseItem.desc }
+    .desc = Поможет не дать грызунам пробраться на кухню.
     .suffix = { "" }

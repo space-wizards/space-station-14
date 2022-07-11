@@ -31,6 +31,7 @@ cargo-console-insufficient-funds = Недостаточно средств (тр
 cargo-console-paper-print-name = Заказ #{ $orderNumber }
 cargo-console-paper-print-text =
     Заказ #{ $orderNumber }
+    Заказ: { $itemName }
     Запросил: { $requester }
     Причина: { $reason }
     Одобрил: { $approver }
