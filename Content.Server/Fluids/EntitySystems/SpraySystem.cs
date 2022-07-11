@@ -62,8 +62,8 @@ public sealed class SpraySystem : EntitySystem
 
         // The grid/map entity to attach the vapor to.
         EntityUid vaporSpawnEntityUid;
-        if (_mapManager.TryGetGrid(userXform.GridUid, out var grid))
-            vaporSpawnEntityUid = grid.GridEntityId;
+        if (userXform.GridUid != null)
+            vaporSpawnEntityUid = userXform.GridUid.Value;
         else if (userXform.MapUid != null)
             vaporSpawnEntityUid = userXform.MapUid.Value;
         else
