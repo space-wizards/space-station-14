@@ -59,6 +59,8 @@ public sealed class IcarusTerminalSystem : EntitySystem
 
     private void OnInit(EntityUid uid, IcarusTerminalComponent component, ComponentInit args)
     {
+        EnsureComp<ItemSlotsComponent>(uid);
+
         component.RemainingTime = component.Timer;
         UpdateStatus(component);
         UpdateUserInterface(component);
