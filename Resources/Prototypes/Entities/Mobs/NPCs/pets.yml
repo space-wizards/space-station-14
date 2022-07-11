@@ -82,8 +82,7 @@
       types:
         Piercing: 5
         Slash: 5
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -406,7 +405,7 @@
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 1
     baseSprintSpeed : 1
   - type: Sprite

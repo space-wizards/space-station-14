@@ -65,7 +65,7 @@ namespace Content.Server.Disposal.Tube
             args.Verbs.Add(verb);
         }
 
-        private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, DisposalTubeComponent component, ref RelayMovementEntityEvent args)
         {
             if (_gameTiming.CurTime < component.LastClang + DisposalTubeComponent.ClangDelay)
             {

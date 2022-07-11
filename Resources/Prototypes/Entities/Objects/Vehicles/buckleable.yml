@@ -11,10 +11,9 @@
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
     volume: -1
-  - type: PlayerInputMover
   - type: InteractionOutline
   - type: Vehicle
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 7
     baseSprintSpeed : 7
   - type: Eye
@@ -188,7 +187,7 @@
   - type: Strap
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 8
     baseSprintSpeed : 8
   - type: Armor
@@ -230,7 +229,7 @@
     - Maintenance
   - type: RandomMetadata
     descriptionSet: ATVDescriptions
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 8
     baseSprintSpeed : 8
   - type: Strap
@@ -293,7 +292,7 @@
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
-    - type: MovementSpeedModifier
+    - type: MobMover
       baseWalkSpeed : 8
       baseSprintSpeed : 8
     - type: Armor

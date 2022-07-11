@@ -65,7 +65,7 @@ namespace Content.Server.Medical
             UpdateUserInterface(uid, scannerComponent);
         }
 
-        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref RelayMovementEntityEvent args)
         {
             if (!_blocker.CanInteract(args.Entity, scannerComponent.Owner))
                 return;

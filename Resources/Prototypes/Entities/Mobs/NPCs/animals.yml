@@ -7,7 +7,7 @@
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 3
     baseSprintSpeed : 6
   - type: Sprite
@@ -73,7 +73,7 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 7
     baseSprintSpeed : 7
   - type: Sprite
@@ -137,8 +137,7 @@
       types:
         Poison: 2
         Piercing: 1
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -302,7 +301,7 @@
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 6
     baseSprintSpeed : 6
   - type: Sprite
@@ -606,7 +605,7 @@
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed: 4
     baseSprintSpeed: 6
   - type: Sprite
@@ -668,8 +667,7 @@
     damage:
       types:
         Blunt: 10
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -779,7 +777,7 @@
       0: Alive
       10: Critical
       20: Dead
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: Appearance
@@ -906,7 +904,7 @@
   id: MobLizard
   description: A harmless dragon.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2
     baseSprintSpeed : 3
   - type: Sprite
@@ -957,7 +955,7 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2
     baseSprintSpeed : 3
   - type: Sprite
@@ -1003,7 +1001,7 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 4
     baseSprintSpeed : 6
   - type: Sprite
@@ -1052,7 +1050,7 @@
   id: MobParrot
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 6
     baseSprintSpeed : 6
   - type: Sprite
@@ -1144,11 +1142,9 @@
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: PlayerInputMover
-  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1315,8 +1311,7 @@
     - type: AiFactionTag
       factions:
         - Xeno
-    - type: PlayerInputMover
-    - type: PlayerMobMover
+    - type: MobMover
     - type: UtilityAI
       behaviorSets:
         - Idle

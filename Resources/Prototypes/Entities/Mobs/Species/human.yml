@@ -33,7 +33,7 @@
   - type: Flashable
   - type: Polymorphable
   - type: Hands
-  - type: MovementSpeedModifier
+  - type: MobMover
   - type: MovedByPressure
   - type: Barotrauma
     damage:

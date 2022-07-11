@@ -25,7 +25,7 @@ public sealed class ResistLockerSystem : EntitySystem
         SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
     }
 
-    private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, RelayMovementEntityEvent args)
+    private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref RelayMovementEntityEvent args)
     {
         if (component.IsResisting)
             return;

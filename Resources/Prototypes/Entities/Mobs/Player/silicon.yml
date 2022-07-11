@@ -39,7 +39,7 @@
       - MobMask
       layer:
       - MobLayer
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 4
     baseSprintSpeed : 3
   - type: Sprite
@@ -91,7 +91,7 @@
   #   1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
   #   2. You may not harm any being, regardless of intent or circumstance.
   #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: MobState
@@ -185,7 +185,7 @@
     name: Onestar Mecha
     description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
     rules: Use your weapons to cause havok. You are an antagonist.
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 3
     baseSprintSpeed : 2
   - type: MobState

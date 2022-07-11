@@ -16,8 +16,7 @@
     showExamineInfo: true
   - type: Input
     context: "human"
-  - type: PlayerMobMover
-  - type: PlayerInputMover
+  - type: MobMover
   - type: Respirator
     damage:
       types:

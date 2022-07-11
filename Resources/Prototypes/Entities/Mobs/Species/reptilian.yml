@@ -139,7 +139,7 @@
     heatDamage:
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
 

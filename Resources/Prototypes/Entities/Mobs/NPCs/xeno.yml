@@ -10,8 +10,7 @@
     protection: 1
   - type: CombatMode
     canDisarm: true
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -153,7 +152,7 @@
     thresholds:
       0: Alive
       200: Dead
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
   - type: SlowOnDamage
@@ -186,7 +185,7 @@
     thresholds:
       0: Alive
       1500: Dead
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2.8
     baseSprintSpeed : 3.8
   - type: MeleeWeapon
@@ -224,7 +223,7 @@
     thresholds:
       0: Alive
       550: Dead
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2.3
     baseSprintSpeed : 4.2
   - type: MeleeWeapon
@@ -262,7 +261,7 @@
     thresholds:
       0: Alive
       250: Dead
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 2.7
     baseSprintSpeed : 6.0
   - type: MeleeWeapon
@@ -349,8 +348,7 @@
     attributes:
       proper: true
       gender: male
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

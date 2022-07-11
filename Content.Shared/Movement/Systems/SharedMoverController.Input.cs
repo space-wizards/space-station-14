@@ -49,21 +49,21 @@ public abstract partial class SharedMoverController
             // Shuttle
             .Bind(ContentKeyFunctions.ShuttleBrake, new ShuttleBrakeInputCmdHandler())
 
-            .Register<Systems.SharedMoverController>();
+            .Register<SharedMoverController>();
 
         // TODO: Space brakes
     }
 
     private void ShutdownInput()
     {
-        CommandBinds.Unregister<Systems.SharedMoverController>();
+        CommandBinds.Unregister<SharedMoverController>();
     }
 
     #region MobMover
 
     private void SetMoveInput(MobMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
     {
-        TryResetSubtickInput(component, out _);
+        ResetSubtickInput(component);
 
         if (TryGetSubtick(component, subTick, out var fraction))
         {
@@ -86,7 +86,7 @@ public abstract partial class SharedMoverController
 
     private void SetSprintInput(MobMoverComponent component, ushort subTick, bool enabled)
     {
-        TryResetSubtickInput(component, out _);
+        ResetSubtickInput(component);
 
         if (TryGetSubtick(component, subTick, out var fraction))
         {
@@ -94,7 +94,7 @@ public abstract partial class SharedMoverController
             lastMoveAmount += DirVecForButtons(component.HeldMoveButtons) * fraction;
         }
 
-        component.Sprinting = !enabled;
+        component.Sprinting = enabled;
 
         // TODO: Is this even needed?
         Dirty(component);
@@ -116,9 +116,10 @@ public abstract partial class SharedMoverController
 
         Vector2 walk;
         Vector2 sprint;
+        float fraction = 1f;
 
         // We need to work out, since the last time we did our subtick input, how much fraction is remaining and add that on
-        if (!TryResetSubtickInput(component, out var remainingFraction))
+        if (_gameTiming.CurTick > component.LastInputTick)
         {
             walk = Vector2.Zero;
             sprint = Vector2.Zero;
@@ -127,9 +128,10 @@ public abstract partial class SharedMoverController
         {
             walk = component.CurTickWalkMovement;
             sprint = component.CurTickSprintMovement;
+            fraction = (ushort.MaxValue - component.LastInputSubTick) / (float) ushort.MaxValue;
         }
 
-        var curDir = DirVecForButtons(component.HeldMoveButtons) * remainingFraction;
+        var curDir = DirVecForButtons(component.HeldMoveButtons) * fraction;
 
         if (component.Sprinting)
         {
@@ -146,7 +148,7 @@ public abstract partial class SharedMoverController
     private sealed class MoverDirInputCmdHandler : InputCmdHandler
     {
         private IEntityManager _entManager;
-        private Systems.SharedMoverController _controller;
+        private SharedMoverController _controller;
         private readonly MoveButtons _dir;
 
         public MoverDirInputCmdHandler(IEntityManager entManager, Systems.SharedMoverController controller, MoveButtons dir)
@@ -257,19 +259,15 @@ public abstract partial class SharedMoverController
     /// <summary>
     /// If the last tick we handled input on is older than the current tick then reset all of our values.
     /// </summary>
-    private bool TryResetSubtickInput(MoverComponent component, out float remainingFraction)
+    private void ResetSubtickInput(MobMoverComponent component)
     {
         // Reset the input if its last input was on a previous tick
-        if (_gameTiming.CurTick <= component.LastInputTick)
-        {
-            remainingFraction = 1f;
-            return false;
-        }
+        if (_gameTiming.CurTick <= component.LastInputTick) return;
 
+        component.CurTickSprintMovement = Vector2.Zero;
+        component.CurTickWalkMovement = Vector2.Zero;
         component.LastInputTick = _gameTiming.CurTick;
         component.LastInputSubTick = 0;
-        remainingFraction = (ushort.MaxValue - component.LastInputSubTick) / (float) ushort.MaxValue;
-        return true;
     }
 
     /// <summary>
@@ -278,7 +276,7 @@ public abstract partial class SharedMoverController
     /// <returns></returns>
     private bool TryGetSubtick(MoverComponent component, ushort subTick, out float fraction)
     {
-        fraction = 0f;
+        fraction = 1f;
 
         if (subTick < component.LastInputSubTick) return false;
 

@@ -376,7 +376,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, RelayMovementEntityEvent args)
+        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, ref RelayMovementEntityEvent args)
         {
             var currentTime = GameTiming.CurTime;
 

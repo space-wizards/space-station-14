@@ -12,8 +12,7 @@
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
     - type: Vocal
       maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
       femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg

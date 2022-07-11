@@ -11,9 +11,7 @@
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: Input
     context: "human"
-  - type: PlayerMobMover
-  - type: PlayerInputMover
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 7
     baseSprintSpeed : 7
   - type: DamageOnHighSpeedImpact

@@ -15,8 +15,7 @@
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
     - type: Vocal
       maleScream: /Audio/Voice/Vox/shriek1.ogg
       femaleScream: /Audio/Voice/Vox/shriek1.ogg

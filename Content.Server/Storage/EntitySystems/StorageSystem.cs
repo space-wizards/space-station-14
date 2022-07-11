@@ -83,7 +83,7 @@ namespace Content.Server.Storage.EntitySystems
             UpdateStorageUI(uid, storageComp);
         }
 
-        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref RelayMovementEntityEvent args)
         {
             if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
                 return;

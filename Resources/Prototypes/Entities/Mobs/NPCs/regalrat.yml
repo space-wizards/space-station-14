@@ -5,11 +5,9 @@
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3.75
-    baseSprintSpeed : 3.75
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: MobMover
+    baseWalkSpeed: 3.75
+    baseSprintSpeed: 3.75
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -120,11 +118,9 @@
   description: He's da mini rat. He don't make da roolz.
   components:
   - type: CombatMode
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 3.5
     baseSprintSpeed : 3.5
-  - type: PlayerInputMover
-  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

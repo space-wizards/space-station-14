@@ -20,7 +20,6 @@
       mass: 5
       mask:
       - GhostImpassable
-  - type: PlayerInputMover
   - type: Appearance
   - type: Eye
     drawFov: false
@@ -52,7 +51,7 @@
     layers:
       - state: animated
         shader: unshaded
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseSprintSpeed: 8
     baseWalkSpeed: 5
   - type: MovementIgnoreGravity

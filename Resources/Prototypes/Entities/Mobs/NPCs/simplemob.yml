@@ -12,8 +12,6 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: PlayerInputMover
-  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -24,7 +22,7 @@
   - type: AiFactionTag
     factions:
     - SimpleNeutral
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 4
     baseSprintSpeed : 4
   - type: HealthExaminable
@@ -157,8 +155,6 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

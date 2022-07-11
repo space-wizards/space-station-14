@@ -30,7 +30,9 @@
     compatibility: Biological
   - type: Input
     context: "ghost"
-  - type: DummyInputMover
+  - type: MobMover
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
   - type: GhostOnMove
   - type: Brain
 

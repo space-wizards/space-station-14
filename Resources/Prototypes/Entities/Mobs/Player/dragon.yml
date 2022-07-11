@@ -15,9 +15,7 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
-  - type: PlayerMobMover
-  - type: PlayerInputMover
-  - type: MovementSpeedModifier
+  - type: MobMover
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: Sprite
