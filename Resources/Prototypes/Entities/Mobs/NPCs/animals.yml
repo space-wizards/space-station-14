@@ -727,10 +727,9 @@
       Dead:
         Base: dead
   - type: Appearance
-    visuals:
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Monkey_burning
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
   - type: Butcherable
     butcheringType: Spike
     spawned:
