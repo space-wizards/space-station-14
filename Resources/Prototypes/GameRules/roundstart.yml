@@ -65,3 +65,10 @@
   config:
     !type:GenericGameRuleConfiguration
     id: Zombie
+
+# event schedulers
+- type: gameRule
+  id: BasicStationEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: BasicStationEventScheduler

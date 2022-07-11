@@ -17,11 +17,10 @@ using Content.Client.MobState.Overlays;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
+using Content.Client.Radiation;
 using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
-using Content.Client.StationEvents;
-using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -192,7 +191,6 @@ namespace Content.Client.Entry
 
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IStationEventManager>().Initialize();
             IoCManager.Resolve<EuiManager>().Initialize();
             IoCManager.Resolve<IVoteManager>().Initialize();
             IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();

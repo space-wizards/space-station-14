@@ -1,8 +1,6 @@
-using System;
 using Content.Shared.Radiation;
-using Robust.Shared.GameObjects;
 
-namespace Content.Client.StationEvents
+namespace Content.Client.Radiation
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedRadiationPulseComponent))]
