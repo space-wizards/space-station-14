@@ -47,13 +47,13 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         if (player == null) return true;
 
-        var overall = OverallPlaytime;
+        TimeSpan? overall = OverallPlaytime;
         var roles = _roles;
         var reasonBuilder = new StringBuilder();
 
         foreach (var requirement in job.Requirements)
         {
-            reason = RequirementMet(player.UserId, job, requirement, overall, roles);
+            reason = RequirementMet(player.UserId, job, requirement, ref overall, ref roles);
 
             if (reason == null) continue;
             reasonBuilder.AppendLine(reason);

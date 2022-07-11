@@ -22,8 +22,8 @@ public abstract class SharedRoleTimerSystem : EntitySystem
     /// Returns a string with the reason why a particular requirement may not be met.
     /// </summary>
     public string? RequirementMet(NetUserId id, JobPrototype job, JobRequirement requirement,
-        TimeSpan? overallTime = null,
-        Dictionary<string, TimeSpan>? roleTimes = null)
+        ref TimeSpan? overallTime,
+        ref Dictionary<string, TimeSpan>? roleTimes)
     {
         switch (requirement)
         {

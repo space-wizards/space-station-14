@@ -17,7 +17,8 @@ using Robust.Shared.Utility;
 namespace Content.Server.Roles;
 
 /// <summary>
-/// This handles...
+/// This handles issuing saves of role / overall times to the DB during the regular course of play.
+/// <see cref="RoleTimerManager"/> handles the actual data.
 /// </summary>
 public sealed class RoleTimerSystem : SharedRoleTimerSystem
 {
@@ -173,7 +174,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         foreach (var requirement in job.Requirements)
         {
-            var reason = RequirementMet(id, job, requirement, overall, roles);
+            var reason = RequirementMet(id, job, requirement, ref overall, ref roles);
             if (reason == null) continue;
             return false;
         }
@@ -195,7 +196,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    var reason = RequirementMet(id, job, requirement, overallPlaytime, rolePlaytimes);
+                    var reason = RequirementMet(id, job, requirement, ref overallPlaytime, ref rolePlaytimes);
                     if (reason == null) continue;
                     goto NoRole;
                 }
@@ -225,7 +226,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                var reason = RequirementMet(id, jobber, requirement, overallPlaytime, rolePlaytimes);
+                var reason = RequirementMet(id, jobber, requirement, ref overallPlaytime, ref rolePlaytimes);
                 if (reason == null) continue;
 
                 jobs.RemoveSwap(i);

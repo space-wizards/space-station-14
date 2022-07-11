@@ -141,13 +141,7 @@ namespace Content.Server.Roles
             public async Task<Dictionary<string, TimeSpan>> GetRoleTimers()
             {
                 await _semaphore.WaitAsync();
-                var copied = new Dictionary<string, TimeSpan>(_roleTimers.Count);
-
-                foreach (var (role, time) in _roleTimers)
-                {
-                    copied[role] = time;
-                }
-
+                var copied = _roleTimers.ShallowClone();
                 _semaphore.Release();
                 return copied;
             }

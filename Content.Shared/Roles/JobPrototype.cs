@@ -11,8 +11,6 @@ namespace Content.Shared.Roles
     [Prototype("job")]
     public sealed class JobPrototype : IPrototype
     {
-        private string _name = string.Empty;
-
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
