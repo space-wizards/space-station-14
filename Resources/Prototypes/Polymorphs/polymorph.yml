@@ -43,3 +43,12 @@
   entity: SuperSynthesizerInstrument
   forced: true
   inventory: Drop
+
+- type: polymorph
+  id: AMIVMorph
+  entity: MobMonkey
+  forced: true
+  inventory: Transfer
+  transferName: true
+  revertOnCrit: false
+  revertOnDeath: false
