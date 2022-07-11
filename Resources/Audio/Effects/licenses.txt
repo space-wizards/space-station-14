@@ -39,3 +39,5 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
     demon_dies.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
 pop.ogg licensed under CC0 1.0 by mirrorcult
+
+icarus_alarm.ogg, sunbeam_fire.ogg, sunbeam_loop.ogg taken at https://github.com/Skyrat-SS13/Skyrat-tg/commit/e2a68d3b15f0daff453ff14a1745f68eeb76b765

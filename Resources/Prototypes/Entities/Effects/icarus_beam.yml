@@ -6,7 +6,7 @@
   - type: Clickable
   - type: MovementIgnoreGravity
   - type: Sprite
-    sprite: Corvax/AssaultOperatives/sunray.rsi
+    sprite: Effects/sunray.rsi
     drawdepth: Effects
     noRot: true
     scale: 5, 5
@@ -20,7 +20,7 @@
   - type: AmbientSound
     range: 14
     sound:
-      path: /Audio/Corvax/AssaultOperatives/sunbeam_loop.ogg
+      path: /Audio/Effects/sunbeam_loop.ogg
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0

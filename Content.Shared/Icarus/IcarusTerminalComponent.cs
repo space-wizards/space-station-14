@@ -42,13 +42,13 @@ public sealed class IcarusTerminalComponent : Component
     public float CooldownTime;
 
     [DataField("alertSound")]
-    public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Corvax/AssaultOperatives/icarus_alarm.ogg");
+    public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Effects/icarus_alarm.ogg");
 
     [DataField("accessGrantedSound")]
     public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
 
     [DataField("fireSound")]
-    public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Corvax/AssaultOperatives/sunbeam_fire.ogg");
+    public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Effects/sunbeam_fire.ogg");
 
     /// <summary>
     ///     Check if already notified about system authorization
