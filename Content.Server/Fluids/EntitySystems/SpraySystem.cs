@@ -22,6 +22,7 @@ public sealed class SpraySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     public override void Initialize()
     {
@@ -58,9 +59,19 @@ public sealed class SpraySystem : EntitySystem
         }
 
         var playerXform = Transform(args.User);
-        var playerEntPos = playerXform.Coordinates;
         var playerMapPos = playerXform.MapPosition;
-        var playerEntInvMatrix = playerXform.InvWorldMatrix;
+
+        // The grid/map entity to attach the vapor to.
+        var vaporSpawnEntityUid = EntityUid.Invalid;
+        if (_mapManager.TryGetGrid(playerXform.GridUid, out var grid))
+            vaporSpawnEntityUid = grid.GridEntityId;
+        else if (playerXform.MapUid != null)
+            vaporSpawnEntityUid = playerXform.MapUid.Value;
+        else
+            return;
+
+        var gridMapXform = Transform(vaporSpawnEntityUid);
+        var gridMapInvMatrix = gridMapXform.InvWorldMatrix;
 
         var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
@@ -97,12 +108,10 @@ public sealed class SpraySystem : EntitySystem
                 break;
 
             // Spawn the vapor cloud local to the spray user, then reattach to the grid underneath.
-            // TODO: Cache the underlying grid/map on first run. Future runs can just attach directly.
             var vaporPos = playerMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
-            var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(args.User, playerEntInvMatrix.Transform(vaporPos)));
+            var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(vaporSpawnEntityUid, gridMapInvMatrix.Transform(vaporPos)));
             var vaporXform = Transform(vapor);
             vaporXform.WorldRotation = rotation;
-            vaporXform.AttachToGridOrMap();
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
