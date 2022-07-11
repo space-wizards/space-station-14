@@ -28,8 +28,8 @@ namespace Content.Client.PDA
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-            var entity_manager = IoCManager.Resolve<IEntityManager>();
-            var sprite = entity_manager.GetComponent<ISpriteComponent>(entity);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var sprite = entityManager.GetComponent<ISpriteComponent>(entity);
 
             if (_state != null)
             {
@@ -41,7 +41,7 @@ namespace Content.Client.PDA
             sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));
             sprite.LayerSetShader(PDAVisualLayers.IDLight, "unshaded");
 
-            var appearance = entity_manager.GetComponent<PDAComponent>(entity);
+            var appearance = entityManager.GetComponent<PDAComponent>(entity);
             sprite.LayerSetVisible(PDAVisualLayers.IDLight, appearance.IdSlot.StartingItem != null);
         }
 
