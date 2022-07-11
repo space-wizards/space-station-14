@@ -101,7 +101,7 @@ public sealed class StationSpawningSystem : EntitySystem
             var jobEntity = EntityManager.SpawnEntity(job.JobEntity, coordinates);
             MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
             DoJobSpecials(job, jobEntity);
-            _identity.QueueIdentityUpdate(entity);
+            _identity.QueueIdentityUpdate(jobEntity);
             return jobEntity;
         }
 
