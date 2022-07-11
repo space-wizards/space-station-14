@@ -1,0 +1,11 @@
+﻿- type: entity
+  parent: BaseItem
+  id: IcarusKey
+  name: icarus authentication keycard
+  description: A high profile authentication keycard to Nanotrasen's Icarus secured network.
+  components:
+  - type: Sprite
+    sprite: Corvax/AssaultOperatives/goldeneye.rsi
+    layers:
+      - state: goldeneye_key
+  - type: IcarusKey

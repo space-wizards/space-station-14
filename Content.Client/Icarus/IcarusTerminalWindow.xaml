@@ -1,0 +1,21 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'icarus-ui-window-title'}"
+               MinSize="300 120">
+    <BoxContainer Orientation="Vertical">
+        <Button Name="FireButton"
+                Text="{Loc 'icarus-ui-fire-button'}"
+                StyleClasses="Caution"
+                MinHeight="50"
+                Disabled="True" />
+        <BoxContainer Name="TimerBox" Orientation="Horizontal" Visible="False">
+            <Label Text="{Loc 'icarus-ui-timer-label'}" />
+            <Label Text=" " />
+            <Label Name="TimerValue" Text="-" />
+        </BoxContainer>
+        <BoxContainer Name="CooldownBox" Orientation="Horizontal" Visible="False">
+            <Label Text="{Loc 'icarus-ui-cooldown-label'}" />
+            <Label Text=" " />
+            <Label Name="CooldownValue" Text="-" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
