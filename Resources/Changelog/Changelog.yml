@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
-  id: 1423
-  time: '2022-04-30T04:54:35.0000000+00:00'
 - author: lapatison
   changes:
   - {message: plant clippers strap for botanical belt, type: Add}
@@ -2952,3 +2947,9 @@ Entries:
   - {message: Unintended blocking bugs are now fixed., type: Fix}
   id: 1922
   time: '2022-07-11T01:50:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: The nuke now forcibly anchors when armed., type: Tweak}
+  - {message: The nuke now announces its coordinates when armed., type: Tweak}
+  id: 1923
+  time: '2022-07-11T07:29:51.0000000+00:00'
