@@ -57,9 +57,6 @@ namespace Content.Shared.Roles
         [DataField("special", serverOnly:true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
-        [DataField("departments")]
-        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
-
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
 

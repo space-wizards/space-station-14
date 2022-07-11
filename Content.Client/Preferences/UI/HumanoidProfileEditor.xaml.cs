@@ -347,51 +347,52 @@ namespace Content.Client.Preferences.UI
             var firstCategory = true;
             var roleTimers = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoleTimerSystem>();
 
-            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.LocalizedName))
+            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                if(!job.SetPreference) { continue; }
-
-                foreach (var department in job.Departments)
+                if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {
-                    if (!_jobCategories.TryGetValue(department, out var category))
+                    category = new BoxContainer
                     {
-                        category = new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Vertical,
-                            Name = department,
-                            ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                                                    ("departmentName", department))
-                        };
+                        Orientation = LayoutOrientation.Vertical,
+                        Name = department.ID,
+                        ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
+                            ("departmentName", department))
+                    };
 
-                        if (firstCategory)
+                    if (firstCategory)
+                    {
+                        firstCategory = false;
+                    }
+                    else
+                    {
+                        category.AddChild(new Control
                         {
-                            firstCategory = false;
-                        }
-                        else
-                        {
-                            category.AddChild(new Control
-                            {
-                                MinSize = new Vector2(0, 23),
-                            });
-                        }
-
-                        category.AddChild(new PanelContainer
-                        {
-                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
-                            Children =
-                            {
-                                new Label
-                                {
-                                    Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                                         ("departmentName" ,department))
-                                }
-                            }
+                            MinSize = new Vector2(0, 23),
                         });
-
-                        _jobCategories[department] = category;
-                        _jobList.AddChild(category);
                     }
 
+                    category.AddChild(new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                        Children =
+                        {
+                            new Label
+                            {
+                                Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
+                                    ("departmentName" ,department))
+                            }
+                        }
+                    });
+
+                    _jobCategories[department.ID] = category;
+                    _jobList.AddChild(category);
+                }
+
+                var jobs = department.Roles.Select(o => _prototypeManager.Index<JobPrototype>(o)).Where(o => o.SetPreference).ToList();
+                jobs.Sort((x, y) => string.Compare(y.LocalizedName, x.LocalizedName, StringComparison.Ordinal));
+
+                foreach (var job in jobs)
+                {
                     var selector = new JobPrioritySelector(job);
 
                     if (!roleTimers.IsAllowed(job, out var reason))
@@ -426,6 +427,7 @@ namespace Content.Client.Preferences.UI
                             }
                         }
                     };
+
                 }
             }
 

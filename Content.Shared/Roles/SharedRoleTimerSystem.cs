@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
@@ -49,24 +50,15 @@ public abstract class SharedRoleTimerSystem : EntitySystem
         {
             case DepartmentTimeRequirement deptRequirement:
                 roleTimes ??= GetRolePlaytime(id, job.ID);
-                var jobs = new HashSet<JobPrototype>();
                 var playtime = TimeSpan.Zero;
 
                 // Check all jobs' departments
-                foreach (var prototype in ProtoManager.EnumeratePrototypes<JobPrototype>())
-                {
-                    foreach (var dept in prototype.Departments)
-                    {
-                        if (dept != deptRequirement.Department) continue;
-                        jobs.Add(prototype);
-                        break;
-                    }
-                }
+                var jobs = ProtoManager.Index<DepartmentPrototype>(deptRequirement.Department).Roles.ToHashSet();
 
                 // Check all jobs' playtime
                 foreach (var other in jobs)
                 {
-                    roleTimes.TryGetValue(other.ID, out var otherTime);
+                    roleTimes.TryGetValue(other, out var otherTime);
                     playtime += otherTime;
                 }
 
