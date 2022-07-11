@@ -425,6 +425,7 @@ namespace Content.Server.GameTicking
             ClearGameRules();
 
             _addedGameRules.Clear();
+            _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();

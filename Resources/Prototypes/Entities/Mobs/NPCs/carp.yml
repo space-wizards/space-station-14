@@ -37,9 +37,9 @@
       - MobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
   - type: MovementIgnoreGravity
   - type: Appearance
   - type: DamageStateVisuals

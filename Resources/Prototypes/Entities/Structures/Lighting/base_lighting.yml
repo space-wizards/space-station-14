@@ -265,8 +265,6 @@
   components:
   - type: Sprite
     state: off
-  - type: AmbientSound
-    enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
     damage:
@@ -277,7 +275,7 @@
 - type: entity
   id: EmergencyLight
   name: emergency light
-  description: A small red light with an internal battery that turns on as soon as it stops receiving any power.
+  description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
   parent: AlwaysPoweredWallLight
   suffix:
   components:
@@ -285,6 +283,7 @@
     enabled: false
     radius: 10
     energy: 2.5
+    offset: "0, 0.2"
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/cone.png
   - type: ApcPowerReceiver
@@ -296,10 +295,20 @@
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
     layers:
+    - state: base
+      map: ["enum.EmergencyLightVisualLayers.Base"]
     - state: emergency_light_off
+      map: ["enum.EmergencyLightVisualLayers.Light"]
+      color: "#FF4020"
   - type: Appearance
     visuals:
     - type: EmergencyLightVisualizer
+  - type: AmbientSound
+    sound:
+      path: /Audio/Ambience/Objects/alarm.ogg
+    volume: -18
+    range: 5
+    enabled: false
   placement:
     mode: SnapgridCenter
     snap:

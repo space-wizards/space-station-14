@@ -2,6 +2,7 @@
   name: mousetrap
   parent: BaseItem
   id: Mousetrap
+  description: Useful for catching rodents sneaking into your kitchen.
   components:
     - type: Sprite
       sprite: Objects/Devices/mousetrap.rsi
@@ -13,9 +14,9 @@
       intersectRatio: 0.2
       requiredTriggeredSpeed: 0
     - type: Mousetrap
-      ignoreDamageIfInventorySlotsFilled:
-        - shoes # shoes
-    - type: DamageOnTrigger
+    - type: TriggerOnStepTrigger
+    - type: ShoesRequiredStepTrigger
+    - type: DamageUserOnTrigger
       damage:
         types:
           Blunt: 2 # base damage, scales based on mass

@@ -3,6 +3,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -155,11 +156,11 @@ namespace Content.Server.Pointing.EntitySystems
             string selfMessage;
             string viewerMessage;
             string? viewerPointedAtMessage = null;
-            var playerName = Name(player);
+            var playerName = Identity.Entity(player, EntityManager);
 
             if (Exists(pointed))
             {
-                var pointedName = Name(pointed);
+                var pointedName = Identity.Entity(pointed, EntityManager);
 
                 selfMessage = player == pointed
                     ? Loc.GetString("pointing-system-point-at-self")

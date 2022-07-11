@@ -14,11 +14,13 @@
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Violet
+      emergencyLightColor: Violet
       shuttleTime: 600
     yellow:
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
+      emergencyLightColor: Goldenrod
       shuttleTime: 400
     red:
       announcement: alert-level-red-announcement
@@ -33,6 +35,8 @@
           volume: -2
       disableSelection: true
       color: PaleVioletRed
+      emergencyLightColor: PaleVioletRed
+      forceEnableEmergencyLights: true
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
@@ -42,6 +46,8 @@
           volume: -5
       disableSelection: true
       color: DarkRed
+      emergencyLightColor: Orange
+      forceEnableEmergencyLights: true
       shuttleTime: 1200
     epsilon:
       announcement: alert-level-epsilon-announcement
@@ -52,4 +58,6 @@
           volume: -2
       disableSelection: true
       color: DarkViolet
+      emergencyLightColor: DarkViolet
+      forceEnableEmergencyLights: true
       shuttleTime: 1200

@@ -7,11 +7,13 @@ namespace Content.Shared.Forensics
     {
         public readonly List<string> Fingerprints = new();
         public readonly List<string> Fibers = new();
+        public readonly string LastScanned = string.Empty;
 
-        public ForensicScannerUserMessage(List<string> fingerprints, List<string> fibers)
+        public ForensicScannerUserMessage(List<string> fingerprints, List<string> fibers, string lastScanned)
         {
             Fingerprints = fingerprints;
             Fibers = fibers;
+            LastScanned = lastScanned;
         }
     }
 

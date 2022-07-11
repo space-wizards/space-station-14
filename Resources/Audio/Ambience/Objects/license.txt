@@ -5,3 +5,4 @@ gas_vent - https://freesound.org/people/kyles/sounds/453642/ - CC0-1.0
 flowing_water_open - https://freesound.org/people/sterferny/sounds/382322/ - CC0-1.0
 server_fans - https://freesound.org/people/DeVern/sounds/610761/ - CC-BY-3.0
 drain.ogg - https://freesound.org/people/PhreaKsAccount/sounds/46266/ - CC-BY-3.0 (by PhreaKsAccount)
+alarm.ogg - https://github.com/Baystation12/Baystation12/commit/41b11ef289bccfdfa2940480beb9c1e3f50c3b93, fire_alarm.ogg CC-BY-SA-3.0
