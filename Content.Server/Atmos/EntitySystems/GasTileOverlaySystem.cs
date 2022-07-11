@@ -259,8 +259,10 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (grid, gridChunks) in chunksInRange)
             {
-                var gridData = _overlay[grid];
-
+                // Not all grids have atmospheres.
+                if (!_overlay.TryGetValue(grid, out var gridData))
+                    continue;
+                
                 List<GasOverlayChunk> dataToSend = new();
                 ev.UpdatedChunks[grid] = dataToSend;
 
