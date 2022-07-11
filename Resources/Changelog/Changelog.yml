@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added artifact container. It's used to safely transport or store dangerous
-      artifacts. Order it in cargo., type: Add}
-  id: 1419
-  time: '2022-04-28T22:03:40.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: tweaks to handcuffs and restraints so they can now be used to restrain
@@ -2950,3 +2944,9 @@ Entries:
       barefoot., type: Add}
   id: 1918
   time: '2022-07-10T09:28:37.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Forensic pads and reports now label which entity they are from. Detectives
+      rejoice!, type: Add}
+  id: 1919
+  time: '2022-07-11T00:52:54.0000000+00:00'
