@@ -68,13 +68,18 @@ public abstract partial class SharedMoverController
 
     private void OnMobInit(EntityUid uid, MobMoverComponent component, ComponentInit args)
     {
-        // TODO: AAA
-        component.LastGridAngle = Transform(uid).Parent?.WorldRotation ?? new Angle(0);
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var xform = xformQuery.GetComponent(uid);
+        if (xform.ParentUid.IsValid())
+        {
+            component.LastGridAngle = xformQuery.GetComponent(xform.ParentUid).WorldRotation;
+        }
     }
 
     private void OnMobHandleState(EntityUid uid, MobMoverComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MobMoverComponentState state) return;
+        // TODO: Can probably use getstateattempt for these? Will be a decent bandwidth saving at least.
         component.GrabRange = state.GrabRange;
         component.PushStrength = state.PushStrength;
         component.BaseWalkSpeed = state.BaseWalkSpeed;
