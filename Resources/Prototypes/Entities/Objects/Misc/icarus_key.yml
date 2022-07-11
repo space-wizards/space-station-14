@@ -6,6 +6,8 @@
   components:
     - type: Sprite
       sprite: Objects/Misc/icarus_key.rsi
-      layers:
-        - state: goldeneye_key
+      state: icon
+    - type: Item
+      size: 10
+      sprite: Objects/Misc/icarus_key.rsi
     - type: IcarusKey
