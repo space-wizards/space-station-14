@@ -15,9 +15,6 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
     public TimeSpan OverallPlaytime { get; private set; }
     private Dictionary<string, TimeSpan> _roles = new();
 
-    // TODO: Hook the UI up to this.
-    public event Action? ReceivedRoleTimes;
-
     public override void Initialize()
     {
         base.Initialize();
