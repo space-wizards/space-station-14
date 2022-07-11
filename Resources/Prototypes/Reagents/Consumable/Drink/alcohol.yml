@@ -1,4 +1,6 @@
 ###This is not in alphabetical order on purpose to make it not CBT to compare to /tg/'s alcohol reagents
+#How i converted booze power into abv: /tg/ ethanol is 65 booze power, so, multiply all the other booze power by .65
+
 
 - type: reagent
   id: Beer
@@ -15,13 +17,13 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
-  id: BeerLight
-  name: reagent-name-beer-light
+  id: LightBeer
+  name: reagent-name-light-beer
   parent: BaseAlcohol
-  desc: reagent-desc-beer-light
+  desc: reagent-desc-light-beer
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#664300"
   spritePath: glass_beer.rsi
@@ -32,7 +34,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.0325
 
 - type: reagent
   id: MaltLiquor
@@ -49,16 +51,16 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
-  id: BeerGreen
-  name: reagent-name-beer-green
+  id: GreenBeer
+  name: reagent-name-green-beer
   parent: BaseAlcohol
-  desc: reagent-desc-beer-green
+  desc: reagent-desc-green-beer
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#A8E61D"
-  spritePath: glass_beer_green.rsi
+  spritePath: glass_green_beer.rsi
   metabolisms:
     Drink:
       effects:
@@ -66,7 +68,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Kahlua
@@ -83,7 +85,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: Whiskey
@@ -100,7 +102,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: Kong
@@ -117,7 +119,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: CandyCornLiquor
@@ -134,7 +136,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: FourteenLoko
@@ -151,7 +153,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: Vodka
@@ -168,7 +170,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: Bilk
@@ -185,7 +187,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.0975
 
 - type: reagent
   id: ThreeMileIsland
@@ -202,7 +204,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: Gin
@@ -219,7 +221,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: Rum
@@ -236,7 +238,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Tequila
@@ -253,7 +255,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Vermouth
@@ -270,7 +272,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: Wine
@@ -287,7 +289,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: WineLizard
@@ -304,7 +306,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: Grappa
@@ -321,7 +323,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Amaretto
@@ -338,7 +340,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Cognac
@@ -355,7 +357,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: Absinthe
@@ -372,7 +374,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: Hooch
@@ -389,7 +391,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 1.0
 
 - type: reagent
   id: Ale
@@ -406,7 +408,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: Goldschlager
@@ -423,7 +425,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Patron
@@ -440,7 +442,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: GinTonic
@@ -457,7 +459,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: RumCola
@@ -474,7 +476,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: CubaLibre
@@ -491,7 +493,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: WhiskeyCola
@@ -508,7 +510,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Martini
@@ -525,7 +527,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: MartiniVodka
@@ -542,7 +544,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: WhiteRussian
@@ -559,7 +561,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: Screwdriver
@@ -576,7 +578,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3575
 
 - type: reagent
   id: Booger
@@ -593,7 +595,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: BloodyMary
@@ -610,7 +612,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3575
 
 - type: reagent
   id: BraveBull
@@ -627,7 +629,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: TequilaSunrise
@@ -644,7 +646,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: ToxinsSpecial
@@ -661,7 +663,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: BeepskySmash
@@ -678,7 +680,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: IrishCream
@@ -695,7 +697,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: ManlyDorf
@@ -712,7 +714,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.65
 
 - type: reagent
   id: LongIslandIcedTea
@@ -729,7 +731,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Moonshine
@@ -746,7 +748,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.6175
 
 - type: reagent
   id: B52
@@ -763,7 +765,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.5525
 
 - type: reagent
   id:  IrishCoffee
@@ -780,7 +782,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Margarita
@@ -797,7 +799,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: BlackRussian
@@ -814,7 +816,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Manhattan
@@ -831,7 +833,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: ManhattanProject
@@ -848,7 +850,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: WhiskeySoda
@@ -865,7 +867,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Antifreeze
@@ -882,7 +884,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Barefoot
@@ -899,7 +901,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: SnowWhite
@@ -916,7 +918,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: DemonsBlood
@@ -933,7 +935,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: DaemonsBlood
@@ -950,7 +952,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 # felinid accent with drunk accent on top of it
 # heals anyone wearing cat ears
 
@@ -969,7 +971,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: VodkaTonic
@@ -986,7 +988,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: GinFizz
@@ -1003,7 +1005,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: BahamaMama
@@ -1020,7 +1022,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Singulo
@@ -1037,7 +1039,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Sbitten
@@ -1054,7 +1056,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: RedMead
@@ -1071,7 +1073,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2015
 
 - type: reagent
   id: Mead
@@ -1088,7 +1090,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: IcedBeer
@@ -1105,7 +1107,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.0975
 
 - type: reagent
   id: Grog
@@ -1122,7 +1124,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.0065
 
 - type: reagent
   id: Aloe
@@ -1139,7 +1141,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Andalusia
@@ -1156,7 +1158,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: AlliesCocktail #haha, cock. that's hot
@@ -1173,7 +1175,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: AcidSpit
@@ -1190,7 +1192,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Amasec
@@ -1207,7 +1209,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: ChangelingSting
@@ -1224,7 +1226,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: IrishCarBomb
@@ -1241,7 +1243,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: SyndicateBomb
@@ -1258,7 +1260,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.585
 
 - type: reagent
   id: HivemindEraser
@@ -1275,7 +1277,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: ErikaSuprise
@@ -1292,7 +1294,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: DriestMartini
@@ -1309,7 +1311,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: BananaHonk
@@ -1326,7 +1328,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Silencer
@@ -1343,7 +1345,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3835
 
 - type: reagent
   id: DrunkenBlumpkin
@@ -1360,7 +1362,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3215
 
 - type: reagent
   id: WhiskeySour
@@ -1377,7 +1379,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: HardCider
@@ -1394,7 +1396,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: FetchingFizz
@@ -1411,7 +1413,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: HeartyPunch
@@ -1428,7 +1430,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.585
 
 - type: reagent
   id: BacchusBlessing
@@ -1437,7 +1439,7 @@
   desc: reagent-desc-bacchus-blessing
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#371303"
-  spritePath: glass_bacchus_blessing.rsi
+  spritePath: glass_bacchus_blessing.rsi #glass_brown2
   metabolisms:
     Drink:
       effects:
@@ -1445,7 +1447,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 1.95
 
 - type: reagent
   id: AtomicBomb
@@ -1462,7 +1464,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: PanGalacticGargleBlaster
@@ -1479,7 +1481,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: Neurotoxin
@@ -1496,7 +1498,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: HippiesDelight
@@ -1513,7 +1515,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: Eggnog
@@ -1530,7 +1532,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: Narsour
@@ -1547,7 +1549,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: TripleSec
@@ -1564,7 +1566,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: CremeDeMenthe
@@ -1581,7 +1583,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: CremeDeCacao
@@ -1598,7 +1600,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: CremeDeCoconut
@@ -1615,7 +1617,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: QuadrupleSec
@@ -1632,7 +1634,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: QuintupleSec
@@ -1649,7 +1651,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3575
 
 - type: reagent
   id: Grasshopper
@@ -1666,7 +1668,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Stinger
@@ -1683,7 +1685,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: BastionBourbon
@@ -1700,7 +1702,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: SquirtCider
@@ -1717,7 +1719,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: FringeWeaver
@@ -1734,7 +1736,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.585
 
 - type: reagent
   id: SugarRush
@@ -1751,7 +1753,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: CreviceSpike
@@ -1768,7 +1770,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: -0.065
 
 - type: reagent
   id: Sake
@@ -1785,7 +1787,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: PeppermintPatty
@@ -1802,7 +1804,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Alexander
@@ -1819,7 +1821,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: AmarettoAlexander
@@ -1836,7 +1838,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Sidecar
@@ -1853,7 +1855,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2925
 
 - type: reagent
   id: BetweenTheSheets
@@ -1870,7 +1872,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.3575
 
 - type: reagent
   id: Kamikaze
@@ -1887,7 +1889,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Mojito
@@ -1904,7 +1906,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: MoscowMule
@@ -1921,7 +1923,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: Fernet
@@ -1930,7 +1932,7 @@
   desc: reagent-desc-fernet
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#1b2e24"
-  spritePath: glass_.rsi ########################################## Need sprite
+  spritePath: glass_fernet.rsi ########################################## Need sprite
   metabolisms:
     Drink:
       effects:
@@ -1938,7 +1940,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.52
 
 - type: reagent
   id: FernetCola
@@ -1947,7 +1949,7 @@
   desc: reagent-desc-fernet-cola
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#390600"
-  spritePath: glass_.rsi ########################################## Need sprite
+  spritePath: glass_fernet_cola.rsi ########################################## Need sprite
   metabolisms:
     Drink:
       effects:
@@ -1955,7 +1957,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 
 - type: reagent
@@ -1973,7 +1975,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: -0.065
 
 - type: reagent
   id: BrancaMenta
@@ -1990,7 +1992,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: BlankPaper
@@ -2007,7 +2009,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: FruitWine
@@ -2024,7 +2026,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Champagne
@@ -2041,7 +2043,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: WizzFizz
@@ -2058,7 +2060,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: BugSpray
@@ -2075,7 +2077,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: Applejack
@@ -2092,7 +2094,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: JackRose
@@ -2109,7 +2111,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.0975
 
 - type: reagent
   id: Turbo
@@ -2126,7 +2128,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.5525
 
 - type: reagent
   id: OldTimer
@@ -2143,7 +2145,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: Rubberneck
@@ -2160,7 +2162,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Duplex
@@ -2177,7 +2179,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: Trappist
@@ -2194,7 +2196,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: Blazaam
@@ -2211,7 +2213,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: PlanetCracker
@@ -2228,7 +2230,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: MaunaLoa
@@ -2245,7 +2247,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: Painkiller
@@ -2262,7 +2264,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.13
 
 - type: reagent
   id: PinaColada
@@ -2279,7 +2281,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.26
 
 - type: reagent
   id: Pruno
@@ -2296,7 +2298,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.5525
 
 - type: reagent
   id: GingerAmaretto
@@ -2313,7 +2315,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: Godfather
@@ -2330,7 +2332,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: Godmother
@@ -2347,7 +2349,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: Kortara
@@ -2364,7 +2366,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.1625
 
 - type: reagent
   id: SeaBreeze
@@ -2381,7 +2383,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.975
 
 - type: reagent
   id: WhiteTiziran
@@ -2398,7 +2400,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: DrunkenEspatier
@@ -2415,7 +2417,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: ProteinBlend
@@ -2432,7 +2434,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4225
 
 - type: reagent
   id: MushiKombucha
@@ -2449,7 +2451,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: TriumphalArch
@@ -2466,7 +2468,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: TheJuice
@@ -2483,7 +2485,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: RitualWine
@@ -2500,7 +2502,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.585
 
 - type: reagent
   id: Curacao
@@ -2517,7 +2519,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.195
 
 - type: reagent
   id: NavyRum
@@ -2534,7 +2536,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.585
 
 - type: reagent
   id: Bitters
@@ -2551,7 +2553,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.455
 
 - type: reagent
   id: Admiralty
@@ -2568,7 +2570,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.65
 
 - type: reagent
   id: LongHaul
@@ -2585,7 +2587,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.2275
 
 - type: reagent
   id: LongJohnSilver
@@ -2602,7 +2604,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: TropicalStorm
@@ -2619,7 +2621,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.25
 
 - type: reagent
   id: DarkAndStormy
@@ -2636,7 +2638,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.325
 
 - type: reagent
   id: SaltAndSwell
@@ -2653,7 +2655,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.39
 
 - type: reagent
   id: Tiltaellen
@@ -2670,7 +2672,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.065
 
 - type: reagent
   id: TichToch
@@ -2687,7 +2689,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
 
 - type: reagent
   id: Helianthus
@@ -2704,4 +2706,4 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.4875
