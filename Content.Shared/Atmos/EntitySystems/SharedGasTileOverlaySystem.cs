@@ -1,4 +1,6 @@
-using Robust.Shared.Map;
+using Content.Shared.Atmos.Prototypes;
+using Content.Shared.GameTicking;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
@@ -8,91 +10,74 @@ namespace Content.Shared.Atmos.EntitySystems
         public const byte ChunkSize = 8;
         protected float AccumulatedFrameTime;
 
-        public static Vector2i GetGasChunkIndices(Vector2i indices)
+        [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
+
+        /// <summary>
+        ///     array of the ids of all visible gases.
+        /// </summary>
+        public int[] VisibleGasId = default!;
+
+        public override void Initialize()
         {
-            return new((int) Math.Floor((float) indices.X / ChunkSize) * ChunkSize, (int) MathF.Floor((float) indices.Y / ChunkSize) * ChunkSize);
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+
+            List<int> visibleGases = new();
+
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var gasPrototype = ProtoMan.Index<GasPrototype>(i.ToString());
+                if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture) || !string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
+                    visibleGases.Add(i);
+            }
+
+            VisibleGasId = visibleGases.ToArray();
         }
 
-        [Serializable, NetSerializable]
-        public readonly struct GasData : IEquatable<GasData>
+        public abstract void Reset(RoundRestartCleanupEvent ev);
+
+        public static Vector2i GetGasChunkIndices(Vector2i indices)
         {
-            public readonly byte Index;
-            public readonly byte Opacity;
-
-            public GasData(byte gasId, byte opacity)
-            {
-                Index = gasId;
-                Opacity = opacity;
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(Index, Opacity);
-            }
-
-            public bool Equals(GasData other)
-            {
-                return other.Index == Index && other.Opacity == Opacity;
-            }
+            return new((int) MathF.Floor((float) indices.X / ChunkSize), (int) MathF.Floor((float) indices.Y / ChunkSize));
         }
 
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
         {
             public readonly byte FireState;
-            public readonly float FireTemperature;
-            public readonly GasData[]? Gas;
-            public readonly int HashCode;
+            public readonly byte[] Opacity;
 
-            public GasOverlayData(byte fireState, float fireTemperature, GasData[] gas)
+            // TODO change fire color based on temps
+            // But also: dont dirty on a 0.01 kelvin change in temperatures.
+            // Either have a temp tolerance, or map temperature -> byte levels
+
+            public GasOverlayData(byte fireState, byte[] opacity)
             {
                 FireState = fireState;
-                FireTemperature = fireTemperature;
-                Gas = gas;
-
-                Array.Sort(Gas, (a, b) => a.Index.CompareTo(b.Index));
-
-                var hash = new HashCode();
-                hash.Add(FireState);
-                hash.Add(FireTemperature);
-
-                foreach (var gasData in Gas)
-                {
-                    hash.Add(gasData);
-                }
-
-                HashCode = hash.ToHashCode();
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode;
+                Opacity = opacity;
             }
 
             public bool Equals(GasOverlayData other)
             {
-                // If you revert this then you need to make sure the hash comparison between
-                // our Gas[] and the other.Gas[] works.
-                return HashCode == other.HashCode;
+                if (FireState != other.FireState)
+                    return false;
+
+                for (var i = 0; i < Opacity.Length; i++)
+                {
+                    if (Opacity[i] != other.Opacity[i])
+                        return false;
+                }
+
+                return true;
             }
         }
 
-        /// <summary>
-        ///     Invalid tiles for the gas overlay.
-        ///     No point re-sending every tile if only a subset might have been updated.
-        /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasOverlayMessage : EntityEventArgs
+        public sealed class GasOverlayUpdateEvent : EntityEventArgs
         {
-            public EntityUid GridId { get; }
-
-            public List<(Vector2i, GasOverlayData)> OverlayData { get; }
-
-            public GasOverlayMessage(EntityUid gridIndices, List<(Vector2i,GasOverlayData)> overlayData)
-            {
-                GridId = gridIndices;
-                OverlayData = overlayData;
-            }
+            public Dictionary<EntityUid, List<GasOverlayChunk>> UpdatedChunks = new();
+            public Dictionary<EntityUid, HashSet<Vector2i>> RemovedChunks = new();
         }
     }
 }
