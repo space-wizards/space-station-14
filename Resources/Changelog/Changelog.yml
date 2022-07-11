@@ -1,10 +1,4 @@
 Entries:
-- author: AugustEymann
-  changes:
-  - {message: Microwave Circuitboard and ability to print it at Circuit imprinter.,
-    type: Add}
-  id: 1422
-  time: '2022-04-29T04:50:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
@@ -2953,3 +2947,8 @@ Entries:
       you shouldn''t (through a popup, etc) then please report it.', type: Fix}
   id: 1921
   time: '2022-07-11T01:36:53.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Unintended blocking bugs are now fixed., type: Fix}
+  id: 1922
+  time: '2022-07-11T01:50:09.0000000+00:00'
