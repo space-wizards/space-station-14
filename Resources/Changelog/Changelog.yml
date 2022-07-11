@@ -1,10 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: tweaks to handcuffs and restraints so they can now be used to restrain
-      yourself, type: Tweak}
-  id: 1420
-  time: '2022-04-28T22:04:41.0000000+00:00'
 - author: Rane
   changes:
   - {message: Mimes can now create invisible walls using their secret knowledge of
@@ -2950,3 +2944,9 @@ Entries:
       rejoice!, type: Add}
   id: 1919
   time: '2022-07-11T00:52:54.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Bodybags are now printable in the medical techfab., type: Add}
+  - {message: Medical techfab doesn't start with all recipes unlocked anymore., type: Fix}
+  id: 1920
+  time: '2022-07-11T01:11:30.0000000+00:00'
