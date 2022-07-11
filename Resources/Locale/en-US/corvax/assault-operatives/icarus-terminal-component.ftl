@@ -5,7 +5,7 @@ icarus-fire-announcement = /// ICARUS DEFENCE NETWORK BREACHED ///
     Unauthorised Icarus Defence Network access detected.
     ICARUS online.
     Targeting system override detected...
-    New target: /NTSS14/
+    New target: { $target }
     ICARUS firing protocols activated.
     ETA to fire: { $seconds } seconds.
 

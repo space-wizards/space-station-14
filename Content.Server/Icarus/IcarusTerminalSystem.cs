@@ -83,8 +83,11 @@ public sealed class IcarusTerminalSystem : EntitySystem
         component.RemainingTime = component.Timer;
         component.Status = IcarusTerminalStatus.FIRE_PREPARING;
 
+        var target = "/NTSS14/"; // TODO: Somehow get current station name
         _chatSystem.DispatchStationAnnouncement(component.Owner,
-            Loc.GetString("icarus-fire-announcement", ("seconds", component.Timer)),
+            Loc.GetString("icarus-fire-announcement",
+                ("seconds", component.Timer),
+                ("target", target)),
             Loc.GetString("icarus-announce-sender"),
             false,
             Color.Red);
