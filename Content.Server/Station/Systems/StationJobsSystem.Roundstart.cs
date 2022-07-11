@@ -343,7 +343,7 @@ public sealed partial class StationJobsSystem
         {
             var roleBans = _roleBanManager.GetJobBans(player);
             var profileJobs = profile.JobPriorities.Keys.ToList();
-            _roleTimers.SetAllowedJobs(player, ref profileJobs);
+            _roleTimers.RemoveDisallowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 

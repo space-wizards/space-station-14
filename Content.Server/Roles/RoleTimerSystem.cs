@@ -172,14 +172,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         TimeSpan? overall = null;
         Dictionary<string, TimeSpan>? roles = null;
 
-        foreach (var requirement in job.Requirements)
-        {
-            var reason = RequirementMet(id, job, requirement, ref overall, ref roles);
-            if (reason == null) continue;
-            return false;
-        }
-
-        return true;
+        return TryRequirementMet(id, job, ref overall, ref roles, out _);
     }
 
     public HashSet<string> GetDisallowedJobs(NetUserId id)
@@ -196,8 +189,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    var reason = RequirementMet(id, job, requirement, ref overallPlaytime, ref rolePlaytimes);
-                    if (reason == null) continue;
+                    if (TryRequirementMet(id, job, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
                     goto NoRole;
                 }
             }
@@ -209,7 +201,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return roles;
     }
 
-    public void SetAllowedJobs(NetUserId id, ref List<string> jobs)
+    public void RemoveDisallowedJobs(NetUserId id, ref List<string> jobs)
     {
         if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return;
 
@@ -226,8 +218,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                var reason = RequirementMet(id, jobber, requirement, ref overallPlaytime, ref rolePlaytimes);
-                if (reason == null) continue;
+                if (TryRequirementMet(id, jobber, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
 
                 jobs.RemoveSwap(i);
                 i--;
