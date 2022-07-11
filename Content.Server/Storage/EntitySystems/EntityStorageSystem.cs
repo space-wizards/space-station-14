@@ -24,6 +24,7 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
@@ -110,16 +111,14 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        var uidXform = Transform(uid);
         var containedArr = component.Contents.ContainedEntities.ToArray();
         foreach (var contained in containedArr)
         {
             if (component.Contents.Remove(contained))
             {
-                Transform(contained).Coordinates = new EntityCoordinates(uid, component.EnteringOffset);
-                if (TryComp(contained, out IPhysBody? physics))
-                {
-                    physics.CanCollide = true;
-                }
+                Transform(contained).WorldPosition =
+                    uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
             }
         }
     }
@@ -133,6 +132,7 @@ public sealed class EntityStorageSystem : EntitySystem
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
         SoundSystem.Play(component.OpenSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
+        RaiseLocalEvent(uid, new StorageAfterOpenEvent());
     }
 
     public void CloseStorage(EntityUid uid, EntityStorageComponent? component = null)
@@ -234,6 +234,21 @@ public sealed class EntityStorageSystem : EntitySystem
                 _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target, Filter.Pvs(target));
 
             return false;
+        }
+
+        //Checks to see if the opening position, if offset, is inside of a wall.
+        if (component.EnteringOffset != (0, 0)) //if the entering position is offset
+        {
+            var targetXform = Transform(target);
+            if (!_interactionSystem.InRangeUnobstructed(target,
+                targetXform.Coordinates.Offset(targetXform.LocalRotation.GetCardinalDir().ToIntVec()),
+                collisionMask: component.EnteringOffsetCollisionFlags))
+            {
+                if (!silent)
+                    _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target, Filter.Pvs(target));
+
+                return false;
+            }
         }
 
         var ev = new StorageOpenAttemptEvent(silent);
@@ -339,6 +354,10 @@ public sealed class EntityStorageSystem : EntitySystem
             _placeableSurface.SetPlaceable(uid, true, surface);
 
         if (TryComp<AppearanceComponent>(uid, out var appearance))
+        {
             appearance.SetData(StorageVisuals.Open, component.Open);
+            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
+        }
+            
     }
 }

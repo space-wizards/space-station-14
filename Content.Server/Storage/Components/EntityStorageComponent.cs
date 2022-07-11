@@ -34,8 +34,13 @@ public sealed class EntityStorageComponent : Component
     [DataField("IsCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
+    //The offset for where items are emptied/vacuumed for the EntityStorage. 
     [DataField("enteringOffset")]
     public Vector2 EnteringOffset = new(0, 0);
+
+    //The collision groups checked, so that items are depositied or grabbed from inside walls.
+    [DataField("enteringOffsetCollisionFlags")]
+    public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     [ViewVariables]
     [DataField("EnteringRange")]
@@ -80,6 +85,7 @@ public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
         Silent = silent;
     }
 }
+public sealed class StorageAfterOpenEvent : EventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
 {

@@ -77,6 +77,7 @@ namespace Content.Shared.Storage
     public enum StorageVisuals : byte
     {
         Open,
+        HasContents,
         CanLock,
         Locked
     }

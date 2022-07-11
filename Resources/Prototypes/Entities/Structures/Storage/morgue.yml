@@ -9,6 +9,9 @@
     layers:
     - state: morgue_closed
       map: ["enum.MorgueVisualLayers.Base"]
+    - state: morgue_tray
+      offset: 0, -1
+      map: ["enum.StorageVisualLayers.Door"]
     - state: morgue_nomob_light
       visible: false
       map: ["enum.MorgueVisualLayers.Light"]
@@ -36,24 +39,28 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: EntityStorageLayingDownOverride
   - type: Morgue
-    trayPrototype: MorgueTray
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
       morgue_tray: !type:ContainerSlot
   - type: Appearance
     visuals:
-    - type: MorgueVisualizer
-      state_open: morgue_open
-      state_closed: morgue_closed
-      light_contents: morgue_nomob_light
-      light_mob: morgue_nosoul_light
-      light_soul: morgue_soul_light
+    - type: StorageVisualizer
+      state: morgue_closed
+      state_alt: morgue_open
+      state_open: morgue_tray
+      state_closed: no_tray
+  - type: MorgueVisuals
+    lightContents: morgue_nomob_light
+    lightMob: morgue_nosoul_light
+    lightSoul: morgue_soul_light
   - type: Transform
     anchored: true
   - type: AntiRottingContainer
 
+#needs to be removed
 - type: entity
   id: MorgueTray
   name: morgue tray
@@ -74,10 +81,6 @@
     netsync: false
     sprite: Structures/Storage/morgue.rsi
     state: morgue_tray
-  - type: Clickable
-  - type: InteractionOutline
-  - type: MorgueTray
-  - type: AntiRottingContainer
 
 - type: entity
   id: Crematorium
@@ -90,6 +93,9 @@
     layers:
     - state: crema_closed
       map: ["enum.CrematoriumVisualLayers.Base"]
+    - state: crema_tray
+      offset: 0, -1
+      map: ["enum.StorageVisualLayers.Door"]
     - state: crema_contents_light
       visible: false
       map: ["enum.CrematoriumVisualLayers.Light"]
@@ -117,20 +123,22 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
-  - type: Morgue
-    isCrematorium: true
-    trayPrototype: CrematoriumTray
-    doSoulBeep: false
+  - type: EntityStorageLayingDownOverride
+  - type: Crematorium
   - type: Appearance
     visuals:
-    - type: CrematoriumVisualizer
-      state_open: crema_open
-      state_closed: crema_closed
-      light_contents: crema_contents_light
-      light_burning: crema_active_light
+    - type: StorageVisualizer
+      state: crema_closed
+      state_alt: crema_open
+      state_open: crema_tray
+      state_closed: no_tray
+  - type: CrematoriumVisuals
+    lightContents: crema_contents_light
+    lightBurning: crema_active_light
   - type: Transform
     anchored: true
 
+#needs to be removed
 - type: entity
   id: CrematoriumTray
   name: crematorium tray

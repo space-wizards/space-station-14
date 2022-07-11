@@ -62,8 +62,13 @@ namespace Content.Server.Lock
 
         private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, StorageOpenAttemptEvent args)
         {
-            if (!args.Silent)
-                _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+            if (component.Locked)
+            {
+                if (!args.Silent)
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+
+                args.Cancel();
+            }
         }
 
         private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)

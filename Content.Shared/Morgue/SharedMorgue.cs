@@ -5,8 +5,6 @@ namespace Content.Shared.Morgue;
 [Serializable, NetSerializable]
 public enum MorgueVisuals
 {
-    Open,
-    HasContents,
     HasMob,
     HasSoul,
 }

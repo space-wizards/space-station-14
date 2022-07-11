@@ -3,159 +3,21 @@ using Content.Shared.Morgue;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Content.Server.Popups;
-using Content.Shared.Popups;
-using Content.Shared.Standing;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Content.Server.Storage.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.Body.Components;
-using Robust.Server.Containers;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Content.Shared.Interaction;
-using Content.Shared.Verbs;
-using Content.Server.GameTicking;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Storage;
 
 namespace Content.Server.Morgue;
 
-/// <summary>
-///     This is the system for morgues but is also used for 
-///     crematoriums. Anything with a slab that you stick
-///     bodies into would work as well.
-/// </summary>
 public sealed partial class MorgueSystem : EntitySystem
 {
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MorgueComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<MorgueComponent, ExaminedEvent>(OnExamine);
-        //SubscribeLocalEvent<MorgueComponent, ActivateInWorldEvent>(ToggleMorgueSlab,
-        //    before: new[] { typeof(EntityStorageSystem) });
-
-        SubscribeLocalEvent<MorgueTrayComponent, StorageBeforeCloseEvent>(OnStorageBeforeClose);
-        //SubscribeLocalEvent<MorgueTrayComponent, ActivateInWorldEvent>(ToggleMorgueTray,
-        //    before: new[] { typeof(EntityStorageSystem) });
-    }
-
-    /// <summary>
-    ///     Initializes the tray container
-    /// </summary>
-    private void OnInit(EntityUid uid, MorgueComponent component, ComponentInit args)
-    {
-        if (TryComp<AppearanceComponent>(uid, out var app))
-            app.SetData(MorgueVisuals.Open, false);
-
-        component.TrayContainer = _container.EnsureContainer<ContainerSlot>(uid, "morgue_tray");
-        component.TrayContainer.ShowContents = false;
-    }
-
-    /// <summary>
-    ///     Toggles the morgue open and close.
-    /// </summary>
-    public void ToggleMorgueSlab(EntityUid uid, MorgueComponent component, ActivateInWorldEvent args)
-    {
-        if (args.Handled)
-            return;
-        args.Handled = true;
-
-        //gotta spawn it here due to test weirdness
-        if (component.Tray == null)
-        {
-            component.Tray = Spawn(component.TrayPrototypeId, Transform(uid).Coordinates);
-            EnsureComp<MorgueTrayComponent>(component.Tray.Value).Morgue = uid;
-
-            component.TrayContainer.Insert(component.Tray.Value);
-        }
-
-        if (component.Open)
-        {
-            CloseMorgue(uid, component);
-        }
-        else if (CanOpenSlab(uid, component))
-        {
-            OpenMorgue(uid, component);
-        }
-    }
-
-    /// <summary>
-    ///     Just a wrapper so if you click on the tray it closes the corresponding morgue
-    /// </summary>
-    private void ToggleMorgueTray(EntityUid uid, MorgueTrayComponent component, ActivateInWorldEvent args)
-    {
-        if (!TryComp<MorgueComponent>(component.Morgue, out var morb))
-            return;
-
-        ToggleMorgueSlab(component.Morgue, morb, args);
-    }
-
-    /// <summary>
-    ///     Handles appearance changes, places the tray in the proper location,
-    ///     and "opens" its container, allowing the contents to spill out.
-    /// </summary>
-    public void OpenMorgue(EntityUid uid, MorgueComponent component)
-    {
-        if (TryComp<AppearanceComponent>(uid, out var app))
-        {
-            app.SetData(MorgueVisuals.Open, true);
-            app.SetData(MorgueVisuals.HasContents, false);
-            app.SetData(MorgueVisuals.HasSoul, false);
-            app.SetData(MorgueVisuals.HasMob, false);
-        }
-
-        if (component.Tray == null)
-            return;
-
-        component.TrayContainer.Remove(component.Tray.Value, EntityManager);
-        var trayXform = Transform(component.Tray.Value);
-        trayXform.Coordinates = new EntityCoordinates(uid, 0, -1);
-        trayXform.WorldRotation = Transform(uid).WorldRotation;
-
-        component.Open = true;
-
-        _entityStorage.OpenStorage(component.Tray.Value);
-    }
-
-    /// <summary>
-    ///     Same as OpenMorgue(), except it closes it.
-    /// </summary>
-    public void CloseMorgue(EntityUid uid, MorgueComponent component)
-    {
-        component.Open = false;
-
-        if (!TryComp<EntityStorageComponent>(component.Tray, out var storage))
-            return;
-
-        if (TryComp<AppearanceComponent>(uid, out var app))
-            app.SetData(MorgueVisuals.Open, false);
-
-        _entityStorage.CloseStorage(component.Tray.Value, storage);
-
-        component.TrayContainer.Insert(component.Tray.Value, EntityManager);
-        CheckContents(uid, component);
-    }
-
-    /// <summary>
-    ///     Allows laying down bodies to enter into the morgue.
-    ///     Note: it checks the tray because the tray is what actually
-    ///     holds the bodies and such.
-    /// </summary>
-    private void OnStorageBeforeClose(EntityUid uid, MorgueTrayComponent component, StorageBeforeCloseEvent args)
-    {
-        foreach (var ent in args.Contents)
-        {
-            if (HasComp<SharedBodyComponent>(ent) && !_standing.IsDown(ent))
-                args.Contents.Remove(ent);
-        }
     }
 
     /// <summary>
@@ -173,7 +35,7 @@ public sealed partial class MorgueSystem : EntitySystem
             args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
         else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
             args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-        else if (appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
+        else if (appearance.TryGetData(StorageVisuals.HasContents, out bool hasContents) && hasContents)
             args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
         else
             args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
@@ -182,12 +44,9 @@ public sealed partial class MorgueSystem : EntitySystem
     /// <summary>
     ///     Updates data periodically in case something died/got deleted in the morgue.
     /// </summary>
-    private void CheckContents(EntityUid uid, MorgueComponent? morgue = null)
+    private void CheckContents(EntityUid uid, MorgueComponent? morgue = null, EntityStorageComponent? storage = null)
     {
-        if (!Resolve(uid, ref morgue))
-            return;
-
-        if (!TryComp<EntityStorageComponent>(morgue.Tray, out var storage))
+        if (!Resolve(uid, ref morgue, ref storage))
             return;
 
         var hasMob = false;
@@ -203,40 +62,9 @@ public sealed partial class MorgueSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(uid, out var app))
         {
-            app.SetData(MorgueVisuals.HasContents, storage.Contents.ContainedEntities.Count > 0);
             app.SetData(MorgueVisuals.HasMob, hasMob);
             app.SetData(MorgueVisuals.HasSoul, hasSoul);
         }
-    }
-
-    /// <summary>
-    ///     Checks if there is room in front of the morgue to bring out the tray.
-    /// </summary>
-    /// <param name="uid">The morgue being opened</param>
-    /// <param name="component"></param>
-    /// <param name="silent">Whether or not a message is given when the morgue cannot be opened</param>
-    /// <returns>Whether or not the tray can be opened</returns>
-    public bool CanOpenSlab(EntityUid uid, MorgueComponent? component = null, bool silent = false)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        var uidXform = Transform(uid);
-
-        if (!_interactionSystem.InRangeUnobstructed(uid,
-                uidXform.Coordinates.Offset(uidXform.LocalRotation.GetCardinalDir().ToIntVec()),
-                collisionMask: component.TrayCanOpenMask
-            ))
-        {
-            if (!silent)
-                _popup.PopupEntity(Loc.GetString("morgue-entity-storage-component-cannot-open-no-space"), uid, Filter.Pvs(uid));
-            return false;
-        }
-
-        var ev = new StorageOpenAttemptEvent();
-        RaiseLocalEvent(uid, ev, true);
-
-        return !ev.Cancelled;
     }
 
     /// <summary>
@@ -254,7 +82,6 @@ public sealed partial class MorgueSystem : EntitySystem
 
             if (comp.AccumulatedFrameTime < comp.BeepTime)
                 continue;
-
             comp.AccumulatedFrameTime -= comp.BeepTime;
 
             if (comp.DoSoulBeep && TryComp<AppearanceComponent>(comp.Owner, out var appearance) &&
