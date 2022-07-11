@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Mimes can now create invisible walls using their secret knowledge of
-      their craft., type: Add}
-  - {message: Mimes can no longer speak or scream without revoking their Vow of Silence,
-    type: Remove}
-  id: 1421
-  time: '2022-04-29T03:41:03.0000000+00:00'
 - author: AugustEymann
   changes:
   - {message: Microwave Circuitboard and ability to print it at Circuit imprinter.,
@@ -2950,3 +2942,14 @@ Entries:
   - {message: Medical techfab doesn't start with all recipes unlocked anymore., type: Fix}
   id: 1920
   time: '2022-07-11T01:11:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'There is now an identity system. Players may not be who they initially
+      seem. Masks and headgear can cover your true identity, and allow you to pass
+      as the ID you''re wearing, or as an unknown person if you have no visible ID.',
+    type: Add}
+  - {message: 'A lot of popups and UI windows were changed to use identity stuff rather
+      than hard-coded name, so if you''re able to see someones ''true'' name when
+      you shouldn''t (through a popup, etc) then please report it.', type: Fix}
+  id: 1921
+  time: '2022-07-11T01:36:53.0000000+00:00'
