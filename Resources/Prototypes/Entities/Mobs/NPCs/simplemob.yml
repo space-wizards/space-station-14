@@ -125,9 +125,9 @@
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: Generic_mob_burning
   - type: Actions
   - type: DoAfter
   - type: Climbing

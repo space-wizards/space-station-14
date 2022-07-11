@@ -1,47 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added crafting for meat spikes (In furniture) as well as signal buttons
-      and signal switches (All in Machines section)., type: Add}
-  id: 1416
-  time: '2022-04-28T12:24:02.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Made xenos unable to slip., type: Tweak}
-  id: 1417
-  time: '2022-04-28T12:24:39.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: The singularity visuals have been slightly updated. Large singularities
-      should no longer suffer from pop-in, type: Tweak}
-  id: 1418
-  time: '2022-04-28T12:43:16.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added artifact container. It's used to safely transport or store dangerous
-      artifacts. Order it in cargo., type: Add}
-  id: 1419
-  time: '2022-04-28T22:03:40.0000000+00:00'
-- author: freeman2651
-  changes:
-  - {message: tweaks to handcuffs and restraints so they can now be used to restrain
-      yourself, type: Tweak}
-  id: 1420
-  time: '2022-04-28T22:04:41.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Mimes can now create invisible walls using their secret knowledge of
-      their craft., type: Add}
-  - {message: Mimes can no longer speak or scream without revoking their Vow of Silence,
-    type: Remove}
-  id: 1421
-  time: '2022-04-29T03:41:03.0000000+00:00'
-- author: AugustEymann
-  changes:
-  - {message: Microwave Circuitboard and ability to print it at Circuit imprinter.,
-    type: Add}
-  id: 1422
-  time: '2022-04-29T04:50:23.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing hard-suit helmets to get stuck on heads., type: Fix}
@@ -2951,3 +2908,47 @@ Entries:
   - {message: Kudzu now grows slower and should be easier to contain., type: Tweak}
   id: 1915
   time: '2022-07-09T16:40:43.0000000+00:00'
+- author: themias
+  changes:
+  - {message: You can now knock on shutters., type: Tweak}
+  id: 1916
+  time: '2022-07-10T06:54:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The retro and makeshift laser gun are now pistol sized., type: Tweak}
+  id: 1917
+  time: '2022-07-10T07:57:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Glass shards and d4 dice now deal damage to people who walk over them
+      barefoot., type: Add}
+  id: 1918
+  time: '2022-07-10T09:28:37.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Forensic pads and reports now label which entity they are from. Detectives
+      rejoice!, type: Add}
+  id: 1919
+  time: '2022-07-11T00:52:54.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Bodybags are now printable in the medical techfab., type: Add}
+  - {message: Medical techfab doesn't start with all recipes unlocked anymore., type: Fix}
+  id: 1920
+  time: '2022-07-11T01:11:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'There is now an identity system. Players may not be who they initially
+      seem. Masks and headgear can cover your true identity, and allow you to pass
+      as the ID you''re wearing, or as an unknown person if you have no visible ID.',
+    type: Add}
+  - {message: 'A lot of popups and UI windows were changed to use identity stuff rather
+      than hard-coded name, so if you''re able to see someones ''true'' name when
+      you shouldn''t (through a popup, etc) then please report it.', type: Fix}
+  id: 1921
+  time: '2022-07-11T01:36:53.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Unintended blocking bugs are now fixed., type: Fix}
+  id: 1922
+  time: '2022-07-11T01:50:09.0000000+00:00'

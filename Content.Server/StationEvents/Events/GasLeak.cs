@@ -1,4 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -7,41 +9,17 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
 {
-    internal sealed class GasLeak : StationEvent
+    internal sealed class GasLeak : StationEventSystem
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
-        public override string Name => "GasLeak";
-
-        public override string StartAnnouncement => Loc.GetString("station-event-gas-leak-start-announcement");
-
-
-        protected override string EndAnnouncement => Loc.GetString("station-event-gas-leak-end-announcement");
+        public override string Prototype => "GasLeak";
 
         private static readonly Gas[] LeakableGases = {
             Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
         };
-
-        public override int EarliestStart => 10;
-
-        public override int MinimumPlayers => 5;
-
-        public override float Weight => WeightLow;
-
-        public override int? MaxOccurrences => 1;
-
-        /// <summary>
-        ///     Give people time to get their internals on.
-        /// </summary>
-        protected override float StartAfter => 20f;
-
-        /// <summary>
-        ///     Don't know how long the event will be until we calculate the leak amount.
-        /// </summary>
-        protected override float EndAfter { get; set; } = float.MaxValue;
 
         /// <summary>
         ///     Running cooldown of how much time until another leak.
@@ -53,23 +31,18 @@ namespace Content.Server.StationEvents.Events
         /// </summary>
         private const float LeakCooldown = 1.0f;
 
+
         // Event variables
 
         private EntityUid _targetStation;
-
         private EntityUid _targetGrid;
-
         private Vector2i _targetTile;
-
         private EntityCoordinates _targetCoords;
-
         private bool _foundTile;
-
         private Gas _leakGas;
-
         private float _molesPerSecond;
-
         private const int MinimumMolesPerSecond = 20;
+        private float _endAfter = float.MaxValue;
 
         /// <summary>
         ///     Don't want to make it too fast to give people time to flee.
@@ -77,26 +50,25 @@ namespace Content.Server.StationEvents.Events
         private const int MaximumMolesPerSecond = 50;
 
         private const int MinimumGas = 250;
-
         private const int MaximumGas = 1000;
-
         private const float SparkChance = 0.05f;
 
-        public override void Startup()
+        public override void Started()
         {
-            base.Startup();
+            base.Started();
 
             // Essentially we'll pick out a target amount of gas to leak, then a rate to leak it at, then work out the duration from there.
             if (TryFindRandomTile(out _targetTile, out _targetStation, out _targetGrid, out _targetCoords))
             {
                 _foundTile = true;
 
-                _leakGas = _robustRandom.Pick(LeakableGases);
+                _leakGas = RobustRandom.Pick(LeakableGases);
                 // Was 50-50 on using normal distribution.
-                var totalGas = (float) _robustRandom.Next(MinimumGas, MaximumGas);
-                _molesPerSecond = _robustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
-                 EndAfter = totalGas / _molesPerSecond + StartAfter;
-                 Logger.InfoS("stationevents", $"Leaking {totalGas} of {_leakGas} over {EndAfter - StartAfter} seconds at {_targetTile}");
+                var totalGas = (float) RobustRandom.Next(MinimumGas, MaximumGas);
+                var startAfter = ((StationEventRuleConfiguration) Configuration).StartAfter;
+                _molesPerSecond = RobustRandom.Next(MinimumMolesPerSecond, MaximumMolesPerSecond);
+                _endAfter = totalGas / _molesPerSecond + startAfter;
+                Sawmill.Info($"Leaking {totalGas} of {_leakGas} over {_endAfter - startAfter} seconds at {_targetTile}");
             }
 
             // Look technically if you wanted to guarantee a leak you'd do this in announcement but having the announcement
@@ -107,32 +79,37 @@ namespace Content.Server.StationEvents.Events
         {
             base.Update(frameTime);
 
-            if (!Started || !Running) return;
+            if (!RuleStarted)
+                return;
+
+            if (Elapsed > _endAfter)
+            {
+                ForceEndSelf();
+                return;
+            }
 
             _timeUntilLeak -= frameTime;
 
             if (_timeUntilLeak > 0f) return;
             _timeUntilLeak += LeakCooldown;
 
-            var atmosphereSystem = _entityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
-
             if (!_foundTile ||
                 _targetGrid == default ||
-                _entityManager.Deleted(_targetGrid) ||
-                !atmosphereSystem.IsSimulatedGrid(_targetGrid))
+                EntityManager.Deleted(_targetGrid) ||
+                !_atmosphere.IsSimulatedGrid(_targetGrid))
             {
-                Running = false;
+                ForceEndSelf();
                 return;
             }
 
-            var environment = atmosphereSystem.GetTileMixture(_targetGrid, null, _targetTile, true);
+            var environment = _atmosphere.GetTileMixture(_targetGrid, null, _targetTile, true);
 
             environment?.AdjustMoles(_leakGas, LeakCooldown * _molesPerSecond);
         }
 
-        public override void Shutdown()
+        public override void Ended()
         {
-            base.Shutdown();
+            base.Ended();
 
             Spark();
 
@@ -141,25 +118,24 @@ namespace Content.Server.StationEvents.Events
             _targetTile = default;
             _targetCoords = default;
             _leakGas = Gas.Oxygen;
-            EndAfter = float.MaxValue;
+            _endAfter = float.MaxValue;
         }
 
         private void Spark()
         {
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            if (_robustRandom.NextFloat() <= SparkChance)
+            if (RobustRandom.NextFloat() <= SparkChance)
             {
                 if (!_foundTile ||
                     _targetGrid == default ||
-                    (!_entityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : _entityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
-                    !atmosphereSystem.IsSimulatedGrid(_targetGrid))
+                    (!EntityManager.EntityExists(_targetGrid) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(_targetGrid).EntityLifeStage) >= EntityLifeStage.Deleted ||
+                    !_atmosphere.IsSimulatedGrid(_targetGrid))
                 {
                     return;
                 }
 
                 // Don't want it to be so obnoxious as to instantly murder anyone in the area but enough that
                 // it COULD start potentially start a bigger fire.
-                atmosphereSystem.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, true);
+                _atmosphere.HotspotExpose(_targetGrid, _targetTile, 700f, 50f, true);
                 SoundSystem.Play("/Audio/Effects/sparks4.ogg", Filter.Pvs(_targetCoords), _targetCoords);
             }
         }

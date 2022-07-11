@@ -71,6 +71,8 @@ namespace Content.Client.Administration.UI.CustomControls
             foreach (var info in _adminSystem.PlayerList)
             {
                 var displayName = $"{info.CharacterName} ({info.Username})";
+                if (info.IdentityName != info.CharacterName)
+                    displayName += $" [{info.IdentityName}]";
                 if (!string.IsNullOrEmpty(FilterLineEdit.Text) &&
                     !displayName.ToLowerInvariant().Contains(FilterLineEdit.Text.Trim().ToLowerInvariant()))
                 {

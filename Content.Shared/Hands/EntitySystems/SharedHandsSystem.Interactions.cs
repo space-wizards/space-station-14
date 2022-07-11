@@ -1,5 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -166,7 +167,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             if (HasComp<HandVirtualItemComponent>(inhand))
                 continue;
 
-            args.PushText(Loc.GetString("comp-hands-examine", ("user", handsComp.Owner), ("item", inhand)));
+            args.PushText(Loc.GetString("comp-hands-examine", ("user", Identity.Entity(handsComp.Owner, EntityManager)), ("item", inhand)));
         }
     }
 }
