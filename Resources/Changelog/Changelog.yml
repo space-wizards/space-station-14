@@ -1,9 +1,4 @@
 Entries:
-- author: Todd
-  changes:
-  - {message: Added a new lobby theme., type: Add}
-  id: 1425
-  time: '2022-04-30T21:14:36.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: You can now hang trashbags off your toolbelt slot. Janitors rejoice.,
@@ -2953,3 +2948,8 @@ Entries:
   - {message: Fixed typo in lobby countdown, type: Fix}
   id: 1924
   time: '2022-07-11T18:09:29.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
+  id: 1925
+  time: '2022-07-11T21:25:36.0000000+00:00'
