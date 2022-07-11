@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Client.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -192,7 +193,7 @@ namespace Content.Client.Examine
 
             hBox.AddChild(new Label
             {
-                Text = EntityManager.GetComponent<MetaDataComponent>(target).EntityName,
+                Text = Identity.Name(target, EntityManager, player),
                 HorizontalExpand = true,
             });
 

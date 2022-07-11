@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Player;
@@ -241,7 +242,7 @@ namespace Content.Server.Botany.Systems
                     ("owner", uid),
                     ("usingItem", args.Used)), Filter.Entities(args.User), PopupType.Medium);
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
-                    ("user", args.User),
+                    ("user", Identity.Entity(args.User, EntityManager)),
                     ("usingItem", args.Used),
                     ("owner", uid)), uid, Filter.PvsExcept(args.User));
 
