@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. goldeneye, goldeneye_key, goldeneye_key_off take from skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/e2a68d3b15f0daff453ff14a1745f68eeb76b765 and modified",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. icarus, icarus_key, icarus_key_off take from skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/e2a68d3b15f0daff453ff14a1745f68eeb76b765 and modified",
   "size": {
     "x": 32,
     "y": 32
@@ -1569,15 +1569,15 @@
       "name": "detective_television"
     },
     {
-      "name": "goldeneye",
+      "name": "icarus",
       "directions": 4
     },
     {
-      "name": "goldeneye_key",
+      "name": "icarus_key",
       "directions": 4
     },
     {
-      "name": "goldeneye_key_off",
+      "name": "icarus_key_off",
       "directions": 4
     }
   ]

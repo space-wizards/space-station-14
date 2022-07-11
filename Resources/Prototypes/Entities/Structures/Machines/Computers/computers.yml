@@ -596,8 +596,8 @@
     - type: Appearance
       visuals:
         - type: ComputerVisualizer
-          key: goldeneye_key
-          screen: goldeneye
+          key: icarus_key
+          screen: icarus
     - type: Computer
       board: IcarusTerminalComputerCircuitboard
     - type: PointLight
