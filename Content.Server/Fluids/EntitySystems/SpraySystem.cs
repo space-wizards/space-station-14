@@ -52,30 +52,36 @@ public sealed class SpraySystem : EntitySystem
 
         if (solution.CurrentVolume <= 0)
         {
-            _popupSystem.PopupEntity( Loc.GetString("spray-component-is-empty-message"),uid,
+            _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid,
                 Filter.Entities(args.User));
             return;
         }
 
-        var playerMapPos = Transform(args.User).MapPosition;
+        var playerXform = Transform(args.User);
+        var playerEntPos = playerXform.Coordinates;
+        var playerMapPos = playerXform.MapPosition;
+        var playerEntInvMatrix = playerXform.InvWorldMatrix;
+
         var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
         var diffPos = clickMapPos.Position - playerMapPos.Position;
-        var diffLength = diffPos.Length;
-        if (diffLength == 0f)
+        if (diffPos == Vector2.Zero || diffPos == Vector2.NaN)
             return;
 
+        var diffLength = diffPos.Length;
         var diffNorm = diffPos.Normalized;
+        var diffAngle = diffNorm.ToAngle();
+
+        // Vectors to determine the spawn position of the vapor clouds.
         var threeQuarters = diffNorm * 0.75f;
         var quarter = diffNorm * 0.25f;
 
         var amount = Math.Max(Math.Min((solution.CurrentVolume / component.TransferAmount).Int(), component.VaporAmount), 1);
-
         var spread = component.VaporSpread / amount;
 
         for (var i = 0; i < amount; i++)
         {
-            var rotation = new Angle(diffNorm.ToAngle() + Angle.FromDegrees(spread * i) -
+            var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
 
             var target = playerMapPos
@@ -90,9 +96,13 @@ public sealed class SpraySystem : EntitySystem
             if (newSolution.TotalVolume <= FixedPoint2.Zero)
                 break;
 
-            var vapor = Spawn(component.SprayedPrototype,
-                playerMapPos.Offset(distance < 1 ? quarter : threeQuarters));
-            Transform(vapor).LocalRotation = rotation;
+            // Spawn the vapor cloud local to the spray user, then reattach to the grid underneath.
+            // TODO: Cache the underlying grid/map on first run. Future runs can just attach directly.
+            var vaporPos = playerMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
+            var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(args.User, playerEntInvMatrix.Transform(vaporPos)));
+            var vaporXform = Transform(vapor);
+            vaporXform.WorldRotation = rotation;
+            vaporXform.AttachToGridOrMap();
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
@@ -105,9 +115,8 @@ public sealed class SpraySystem : EntitySystem
             _vaporSystem.TryAddSolution(vaporComponent, newSolution);
 
             // impulse direction is defined in world-coordinates, not local coordinates
-            var impulseDirection = Transform(vapor).WorldRotation.ToVec();
-            var targetPlayerLocal = EntityCoordinates.FromMap(args.User, target, EntityManager);
-            _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, targetPlayerLocal, component.SprayAliveTime);
+            var impulseDirection = rotation.ToVec();
+            _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime);
 
             if (component.Impulse > 0f && TryComp(args.User, out PhysicsComponent? body))
                 body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
