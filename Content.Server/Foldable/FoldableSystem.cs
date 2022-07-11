@@ -90,12 +90,6 @@ namespace Content.Server.Foldable
 
         public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)
         {
-            if (args.Handled)
-            {
-                args.Cancel();
-                return;
-            }
-                
             args.Handled = true;
 
             if (comp.IsFolded)
