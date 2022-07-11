@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: plant clippers strap for botanical belt, type: Add}
-  id: 1424
-  time: '2022-04-30T21:14:24.0000000+00:00'
 - author: Todd
   changes:
   - {message: Added a new lobby theme., type: Add}
@@ -2953,3 +2948,8 @@ Entries:
   - {message: The nuke now announces its coordinates when armed., type: Tweak}
   id: 1923
   time: '2022-07-11T07:29:51.0000000+00:00'
+- author: Duddino
+  changes:
+  - {message: Fixed typo in lobby countdown, type: Fix}
+  id: 1924
+  time: '2022-07-11T18:09:29.0000000+00:00'
