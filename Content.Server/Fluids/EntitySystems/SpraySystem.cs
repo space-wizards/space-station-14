@@ -58,24 +58,25 @@ public sealed class SpraySystem : EntitySystem
             return;
         }
 
-        var playerXform = Transform(args.User);
-        var playerMapPos = playerXform.MapPosition;
+        var userXform = Transform(args.User);
 
         // The grid/map entity to attach the vapor to.
-        var vaporSpawnEntityUid = EntityUid.Invalid;
-        if (_mapManager.TryGetGrid(playerXform.GridUid, out var grid))
+        EntityUid vaporSpawnEntityUid;
+        if (_mapManager.TryGetGrid(userXform.GridUid, out var grid))
             vaporSpawnEntityUid = grid.GridEntityId;
-        else if (playerXform.MapUid != null)
-            vaporSpawnEntityUid = playerXform.MapUid.Value;
+        else if (userXform.MapUid != null)
+            vaporSpawnEntityUid = userXform.MapUid.Value;
         else
             return;
 
         var gridMapXform = Transform(vaporSpawnEntityUid);
         var gridMapInvMatrix = gridMapXform.InvWorldMatrix;
 
+        var userMapPos = userXform.MapPosition;
+
         var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
-        var diffPos = clickMapPos.Position - playerMapPos.Position;
+        var diffPos = clickMapPos.Position - userMapPos.Position;
         if (diffPos == Vector2.Zero || diffPos == Vector2.NaN)
             return;
 
@@ -95,12 +96,12 @@ public sealed class SpraySystem : EntitySystem
             var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
 
-            var target = playerMapPos
+            var target = userMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
             var distance = target.Position.Length;
             if (distance > component.SprayDistance)
-                target = playerMapPos.Offset(diffNorm * component.SprayDistance);
+                target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
             var newSolution = _solutionContainerSystem.SplitSolution(uid, solution, component.TransferAmount);
 
@@ -108,10 +109,9 @@ public sealed class SpraySystem : EntitySystem
                 break;
 
             // Spawn the vapor cloud local to the spray user, then reattach to the grid underneath.
-            var vaporPos = playerMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
+            var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
             var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(vaporSpawnEntityUid, gridMapInvMatrix.Transform(vaporPos)));
-            var vaporXform = Transform(vapor);
-            vaporXform.WorldRotation = rotation;
+            Transform(vapor).WorldRotation = rotation;
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
