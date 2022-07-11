@@ -3,7 +3,7 @@
   name: job-name-warden
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Engineering
+      department: Security
       time: 10800
   startingGear: WardenGear
   departments:
