@@ -11,7 +11,7 @@ namespace Content.Server.AI.Utility.Considerations.Movement
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target || entities.Deleted(target) ||
-                entities.GetComponent<TransformComponent>(target).GridEntityId != entities.GetComponent<TransformComponent>(self).GridEntityId)
+                entities.GetComponent<TransformComponent>(target).GridUid != entities.GetComponent<TransformComponent>(self).GridUid)
             {
                 return 0.0f;
             }

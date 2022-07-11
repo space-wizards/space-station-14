@@ -5,6 +5,7 @@ using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
 using Content.Server.Clothing.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
 using Content.Shared.MobState.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -39,6 +40,7 @@ namespace Content.Server.Disease
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
             SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
             SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
@@ -97,6 +99,7 @@ namespace Content.Server.Disease
                 {
                     var disease = carrierComp.Diseases[i];
                     disease.Accumulator += frameTime;
+                    disease.TotalAccumulator += frameTime;
 
                     if (disease.Accumulator < disease.TickTime) continue;
 
@@ -105,9 +108,21 @@ namespace Content.Server.Disease
                     var args = new DiseaseEffectArgs(carrierComp.Owner, disease, EntityManager);
                     disease.Accumulator -= disease.TickTime;
 
+                    int stage = 0; //defaults to stage 0 because you should always have one
+                    float lastThreshold = 0;
+                    for (var j = 0; j < disease.Stages.Count; j++)
+                    {
+                        if (disease.TotalAccumulator >= disease.Stages[j] &&
+                            disease.Stages[j] > lastThreshold)
+                        {
+                            lastThreshold = disease.Stages[j];
+                            stage = j;
+                        }
+                    }
+
                     foreach (var cure in disease.Cures)
                     {
-                        if (cure.Cure(args))
+                        if (cure.Stages.AsSpan().Contains(stage) && cure.Cure(args))
                             CureDisease(carrierComp, disease);
                     }
 
@@ -115,7 +130,7 @@ namespace Content.Server.Disease
                     {
                         foreach (var effect in disease.Effects)
                         {
-                            if (_random.Prob(effect.Probability))
+                            if (effect.Stages.AsSpan().Contains(stage) && _random.Prob(effect.Probability))
                                 effect.Effect(args);
                         }
                     }
@@ -126,6 +141,25 @@ namespace Content.Server.Disease
         ///
         /// Event Handlers
         ///
+
+        /// <summary>
+        /// Fill in the natural immunities of this entity.
+        /// </summary>
+        private void OnInit(EntityUid uid, DiseaseCarrierComponent component, ComponentInit args)
+        {
+            if (component.NaturalImmunities == null || component.NaturalImmunities.Count == 0)
+                return;
+
+            foreach (var immunity in component.NaturalImmunities)
+            {
+                if (_prototypeManager.TryIndex<DiseasePrototype>(immunity, out var disease))
+                    component.PastDiseases.Add(disease);
+                else
+                {
+                    Logger.Error("Failed to index disease prototype + " + immunity + " for " + uid);
+                }
+            }
+        }
 
         /// <summary>
         /// Used when something is trying to cure ANY disease on the target,

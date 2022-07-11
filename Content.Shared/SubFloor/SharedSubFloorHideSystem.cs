@@ -98,7 +98,7 @@ namespace Content.Shared.SubFloor
             if (!Resolve(uid, ref component, ref xform))
                 return;
 
-            if (xform.Anchored && MapManager.TryGetGrid(xform.GridEntityId, out var grid))
+            if (xform.Anchored && MapManager.TryGetGrid(xform.GridUid, out var grid))
                 component.IsUnderCover = HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates));
             else
                 component.IsUnderCover = false;
@@ -183,5 +183,10 @@ namespace Content.Shared.SubFloor
     {
         Covered, // is there a floor tile over this entity
         ScannerRevealed, // is this entity revealed by a scanner or some other entity?
+    }
+
+    public enum SubfloorLayers : byte
+    {
+        FirstLayer
     }
 }

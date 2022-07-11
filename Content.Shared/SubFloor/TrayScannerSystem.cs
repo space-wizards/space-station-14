@@ -64,7 +64,7 @@ public sealed class TrayScannerSystem : EntitySystem
         if (args.Current is not TrayScannerState state)
             return;
 
-        SetScannerEnabled(uid, scanner.Enabled, scanner);
+        SetScannerEnabled(uid, state.Enabled, scanner);
 
         // This is hacky and somewhat inefficient for the client. But when resetting predicted entities we have to unset
         // last position. This is because appearance data gets reset, but if the position isn't reset the scanner won't
@@ -208,7 +208,7 @@ public sealed class TrayScannerSystem : EntitySystem
 
         // For now, limiting to the scanner's own grid. We could do a grid-lookup, but then what do we do if one grid
         // flies away, while the scanner's local-position remains unchanged?
-        if (_mapManager.TryGetGrid(transform.GridEntityId, out var grid))
+        if (_mapManager.TryGetGrid(transform.GridUid, out var grid))
         {
             foreach (var entity in grid.GetAnchoredEntities(worldBox))
             {

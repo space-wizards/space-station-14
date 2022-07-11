@@ -160,20 +160,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazinePistolFlash
-  name: pistol magazine (.35 auto flash)
-  parent: BaseMagazinePistol
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolFlash
-  - type: Sprite
-    layers:
-    - state: flash
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazinePistolHighVelocity
   name: pistol magazine (.35 auto high-velocity)
   parent: BaseMagazinePistol
@@ -235,7 +221,7 @@
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolHighVelocity
   - type: Sprite
     layers:
     - state: high_velocity
@@ -287,20 +273,6 @@
   - type: Sprite
     layers:
     - state: red
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazinePistolSubMachineGunFlash
-  name: SMG magazine (.35 auto flash)
-  parent: BaseMagazinePistolSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolFlash
-  - type: Sprite
-    layers:
-    - state: flash
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

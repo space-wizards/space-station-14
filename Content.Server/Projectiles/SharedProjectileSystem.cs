@@ -1,19 +1,13 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Projectiles.Components;
-using Content.Server.Weapon.Melee;
-using Content.Server.Weapon.Ranged;
-using Content.Shared.Audio;
-using Content.Shared.Body.Components;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Projectiles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
@@ -29,16 +23,20 @@ namespace Content.Server.Projectiles
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
+            SubscribeLocalEvent<ProjectileComponent, ComponentGetState>(OnGetState);
         }
 
-        private void HandleCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
+        private void OnGetState(EntityUid uid, ProjectileComponent component, ref ComponentGetState args)
+        {
+            args.State = new ProjectileComponentState(component.Shooter, component.IgnoreShooter);
+        }
+
+        private void OnStartCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
         {
             // This is so entities that shouldn't get a collision are ignored.
             if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
-            {
                 return;
-            }
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
@@ -62,20 +60,12 @@ namespace Content.Server.Projectiles
             }
 
             if (component.DeleteOnCollide)
-                QueueDel(uid);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            foreach (var component in EntityManager.EntityQuery<ProjectileComponent>())
             {
-                component.TimeLeft -= frameTime;
+                QueueDel(uid);
 
-                if (component.TimeLeft <= 0)
+                if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
                 {
-                    EntityManager.DeleteEntity(component.Owner);
+                    RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates));
                 }
             }
         }

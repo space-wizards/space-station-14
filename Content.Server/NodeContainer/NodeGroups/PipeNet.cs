@@ -22,14 +22,22 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         [ViewVariables] private AtmosphereSystem? _atmosphereSystem;
 
-        public EntityUid Grid => GridId;
+        public EntityUid? Grid { get; private set; }
 
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            base.Initialize(sourceNode);
+            base.Initialize(sourceNode, entMan);
 
-            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-            _atmosphereSystem.AddPipeNet(this);
+            Grid = entMan.GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
+
+            if (Grid == null)
+            {
+                // This is probably due to a cannister or something like that being spawned in space.
+                return;
+            }
+
+            _atmosphereSystem = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            _atmosphereSystem.AddPipeNet(Grid.Value, this);
         }
 
         public void Update()
@@ -72,13 +80,15 @@ namespace Content.Server.NodeContainer.NodeGroups
                     newAir.Add(newPipeNet.Air);
             }
 
-            _atmosphereSystem!.DivideInto(Air, newAir);
+            _atmosphereSystem?.DivideInto(Air, newAir);
         }
 
         private void RemoveFromGridAtmos()
         {
-            DebugTools.AssertNotNull(_atmosphereSystem);
-            _atmosphereSystem?.RemovePipeNet(this);
+            if (Grid == null)
+                return;
+
+            _atmosphereSystem?.RemovePipeNet(Grid.Value, this);
         }
 
         public override string GetDebugData()

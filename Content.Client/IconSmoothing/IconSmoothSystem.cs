@@ -33,9 +33,9 @@ namespace Content.Client.IconSmoothing
             var xform = Transform(uid);
             if (xform.Anchored)
             {
-                component.LastPosition = _mapManager.TryGetGrid(xform.GridEntityId, out var grid)
-                    ? (xform.GridEntityId, grid.TileIndicesFor(xform.Coordinates))
-                    : (EntityUid.Invalid, new Vector2i(0, 0));
+                component.LastPosition = _mapManager.TryGetGrid(xform.GridUid, out var grid)
+                    ? (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates))
+                    : (null, new Vector2i(0, 0));
 
                 DirtyNeighbours(uid, component);
             }
@@ -111,7 +111,7 @@ namespace Content.Client.IconSmoothing
 
             Vector2i pos;
 
-            if (transform.Anchored && _mapManager.TryGetGrid(transform.GridEntityId, out var grid))
+            if (transform.Anchored && _mapManager.TryGetGrid(transform.GridUid, out var grid))
             {
                 pos = grid.CoordinatesToTile(transform.Coordinates);
             }
@@ -155,10 +155,8 @@ namespace Content.Client.IconSmoothing
 
         private void OnAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
         {
-            // Defer updating to next frame update. We do this because this unanchoring might be caused by a detach to
-            // null due to leaving PVS, in which case we can be a bit lazy. However, this event is raised before being
-            // sent to null-space, hence deferring.
-            _anchorChangedEntities.Enqueue(uid);
+            if (!args.Detaching)
+                _anchorChangedEntities.Enqueue(uid);
         }
 
         private void CalculateNewSprite(EntityUid uid,
@@ -191,9 +189,9 @@ namespace Content.Client.IconSmoothing
 
             if (xform.Anchored)
             {
-                if (!_mapManager.TryGetGrid(xform.GridEntityId, out grid))
+                if (!_mapManager.TryGetGrid(xform.GridUid, out grid))
                 {
-                    Logger.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridEntityId} was missing.");
+                    Logger.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridUid} was missing.");
                     return;
                 }
             }

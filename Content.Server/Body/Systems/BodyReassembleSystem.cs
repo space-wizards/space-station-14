@@ -8,6 +8,9 @@ using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Preferences;
+using Content.Shared.Species;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -202,7 +205,7 @@ public sealed class BodyReassembleSystem : EntitySystem
         foreach (var entity in args.PartList)
             EntityManager.DeleteEntity(entity);
 
-        _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
+        _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", Identity.Entity(mob, EntityManager))), mob, Filter.Entities(mob));
     }
 
     /// <summary>

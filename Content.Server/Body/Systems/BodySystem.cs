@@ -5,7 +5,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems

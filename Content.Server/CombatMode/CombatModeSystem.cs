@@ -9,6 +9,7 @@ using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -63,9 +64,9 @@ namespace Content.Server.CombatMode
 
             if (inTargetHand != null)
             {
-                RaiseLocalEvent(inTargetHand.Value, attemptEvent);
+                RaiseLocalEvent(inTargetHand.Value, attemptEvent, true);
             }
-            RaiseLocalEvent(args.Target, attemptEvent);
+            RaiseLocalEvent(args.Target, attemptEvent, true);
             if (attemptEvent.Cancelled)
                 return;
 
@@ -81,14 +82,12 @@ namespace Content.Server.CombatMode
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
-                var targetName = Name(args.Target);
-
                 var msgOther = Loc.GetString(
                     "disarm-action-popup-message-other-clients",
-                    ("performerName", Name(args.Performer)),
-                    ("targetName", targetName));
+                    ("performerName", Identity.Entity(args.Performer, EntityManager)),
+                    ("targetName", Identity.Entity(args.Target, EntityManager)));
 
-                var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", targetName ));
+                var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(args.Target, EntityManager)));
 
                 _popupSystem.PopupEntity(msgOther, args.Performer, filterOther);
                 _popupSystem.PopupEntity(msgUser, args.Performer, Filter.Entities(args.Performer));
@@ -102,7 +101,7 @@ namespace Content.Server.CombatMode
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
             var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = chance };
-            RaiseLocalEvent(args.Target, eventArgs);
+            RaiseLocalEvent(args.Target, eventArgs, true);
         }
 
 

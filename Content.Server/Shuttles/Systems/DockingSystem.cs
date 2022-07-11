@@ -1,12 +1,10 @@
+using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Shuttles.Events;
-using Content.Shared.Verbs;
-using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -35,7 +33,6 @@ namespace Content.Server.Shuttles.Systems
             _sawmill = Logger.GetSawmill("docking");
             SubscribeLocalEvent<DockingComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DockingComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<DockingComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<DockingComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<DockingComponent, ReAnchorEvent>(OnDockingReAnchor);
 
@@ -67,13 +64,12 @@ namespace Content.Server.Shuttles.Systems
 
             // Assume the docking port itself (and its body) is valid
 
-            if (!_mapManager.TryGetGrid(dockingXform.GridEntityId, out var grid) ||
+            if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
                 !HasComp<ShuttleComponent>(grid.GridEntityId)) return null;
 
             var transform = body.GetTransform();
             var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
 
-            // Happens if no power or whatever
             if (dockingFixture == null)
                 return null;
 
@@ -93,7 +89,7 @@ namespace Content.Server.Shuttles.Systems
 
             while (enumerator.MoveNext(out var otherGrid))
             {
-                if (otherGrid.GridEntityId == dockingXform.GridEntityId) continue;
+                if (otherGrid.GridEntityId == dockingXform.GridUid) continue;
 
                 foreach (var ent in otherGrid.GetAnchoredEntities(enlargedAABB))
                 {
@@ -164,16 +160,18 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJoint = null;
             dockA.DockedWith = null;
 
-            // If these grids are ever invalid then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridEntityId).GridEntityId;
-            var gridBUid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridEntityId).GridEntityId;
+            // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
+            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockA.Owner).GridUid;
+            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockB.Owner).GridUid;
+            DebugTools.Assert(gridAUid != null);
+            DebugTools.Assert(gridBUid != null);
 
             var msg = new UndockEvent
             {
                 DockA = dockA,
                 DockB = dockB,
-                GridAUid = gridAUid,
-                GridBUid = gridBUid,
+                GridAUid = gridAUid!.Value,
+                GridBUid = gridBUid!.Value,
             };
 
             EntityManager.EventBus.RaiseLocalEvent(dockA.Owner, msg, false);
@@ -225,22 +223,6 @@ namespace Content.Server.Shuttles.Systems
             Undock(component);
             Dock(component, other);
             _console.RefreshShuttleConsoles();
-        }
-
-        private void OnPowerChange(EntityUid uid, DockingComponent component, PowerChangedEvent args)
-        {
-            var lifestage = MetaData(uid).EntityLifeStage;
-            // This is because power can change during startup for <Reasons> and undock
-            if (lifestage is < EntityLifeStage.MapInitialized or >= EntityLifeStage.Terminating) return;
-
-            if (args.Powered)
-            {
-                EnableDocking(uid, component);
-            }
-            else
-            {
-                DisableDocking(uid, component);
-            }
         }
 
         private void DisableDocking(EntityUid uid, DockingComponent component)
@@ -305,8 +287,10 @@ namespace Content.Server.Shuttles.Systems
             var dockAXform = EntityManager.GetComponent<TransformComponent>(dockA.Owner);
             var dockBXform = EntityManager.GetComponent<TransformComponent>(dockB.Owner);
 
-            var gridA = _mapManager.GetGrid(dockAXform.GridEntityId).GridEntityId;
-            var gridB = _mapManager.GetGrid(dockBXform.GridEntityId).GridEntityId;
+            DebugTools.Assert(dockAXform.GridUid != null);
+            DebugTools.Assert(dockBXform.GridUid != null);
+            var gridA = dockAXform.GridUid!.Value;
+            var gridB = dockBXform.GridUid!.Value;
 
             SharedJointSystem.LinearStiffness(
                 2f,
@@ -338,6 +322,16 @@ namespace Content.Server.Shuttles.Systems
             dockB.DockedWith = dockA.Owner;
             dockA.DockJoint = joint;
             dockB.DockJoint = joint;
+
+            if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
+            {
+                airlockA.SetBoltsWithAudio(true);
+            }
+
+            if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
+            {
+                airlockB.SetBoltsWithAudio(true);
+            }
 
             if (TryComp(dockA.Owner, out DoorComponent? doorA))
             {
@@ -418,13 +412,19 @@ namespace Content.Server.Shuttles.Systems
             Dock(dockA, dockB);
         }
 
-        private void Undock(DockingComponent dock)
+        public void Undock(DockingComponent dock)
         {
             if (dock.DockedWith == null)
-            {
-                DebugTools.Assert(false);
-                _sawmill.Error($"Tried to undock {(dock).Owner} but not docked with anything?");
                 return;
+
+            if (TryComp<AirlockComponent>(dock.Owner, out var airlockA))
+            {
+                airlockA.SetBoltsWithAudio(false);
+            }
+
+            if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
+            {
+                airlockB.SetBoltsWithAudio(false);
             }
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))

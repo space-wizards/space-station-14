@@ -100,7 +100,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform) || !transform.Anchored)
             return;
 
-        if (!_mapManager.TryGetGrid(transform.GridEntityId, out var grid))
+        if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
             return;
 
         UpdateAirtightMap(grid, grid.CoordinatesToTile(transform.Coordinates));
@@ -155,7 +155,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 var ev = new GetExplosionResistanceEvent(explosionType.ID);
                 RaiseLocalEvent(uid, ev, false);
 
-                damagePerIntensity += value * Math.Clamp(0, 1 - ev.Resistance, 1);
+                damagePerIntensity += value * Math.Max(0, ev.DamageCoefficient);
             }
 
             explosionTolerance[index] = (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity);

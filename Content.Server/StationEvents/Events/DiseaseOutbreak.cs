@@ -1,4 +1,5 @@
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
 using Content.Server.Station.Systems;
@@ -29,7 +30,8 @@ public sealed class DiseaseOutbreak : StationEvent
         "VentCough",
         "AMIV",
         "SpaceFlu",
-        "BirdFlew"
+        "BirdFlew",
+        "TongueTwister"
     };
     public override string Name => "DiseaseOutbreak";
     public override float Weight => WeightNormal;

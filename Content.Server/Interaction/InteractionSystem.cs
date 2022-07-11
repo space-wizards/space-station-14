@@ -96,7 +96,7 @@ namespace Content.Server.Interaction
                 return;
 
             // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(msg.Dropped, interactionArgs);
+            RaiseLocalEvent(msg.Dropped, interactionArgs, true);
 
             if (interactionArgs.Handled)
                 return;
@@ -212,7 +212,7 @@ namespace Content.Server.Interaction
                 if (!Deleted(item))
                 {
                     var meleeVee = new MeleeAttackAttemptEvent();
-                    RaiseLocalEvent(item.Value, ref meleeVee);
+                    RaiseLocalEvent(item.Value, ref meleeVee, true);
 
                     if (meleeVee.Cancelled) return;
 

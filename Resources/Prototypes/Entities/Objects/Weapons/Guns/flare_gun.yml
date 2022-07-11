@@ -18,7 +18,7 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:

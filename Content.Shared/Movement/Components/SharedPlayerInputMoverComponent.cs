@@ -33,27 +33,15 @@ namespace Content.Shared.Movement.Components
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        private GameTick _lastInputTick;
-        private ushort _lastInputSubTick;
-        private Vector2 _curTickWalkMovement;
-        private Vector2 _curTickSprintMovement;
+        public GameTick _lastInputTick;
+        public ushort _lastInputSubTick;
+        public Vector2 CurTickWalkMovement;
+        public Vector2 CurTickSprintMovement;
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
         [ViewVariables]
         public Angle LastGridAngle { get; set; } = new(0);
-
-        public float CurrentWalkSpeed =>
-            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-                out var movementSpeedModifierComponent)
-                ? movementSpeedModifierComponent.CurrentWalkSpeed
-                : MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-
-        public float CurrentSprintSpeed =>
-            _entityManager.TryGetComponent<MovementSpeedModifierComponent>(Owner,
-                out var movementSpeedModifierComponent)
-                ? movementSpeedModifierComponent.CurrentSprintSpeed
-                : MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -89,8 +77,8 @@ namespace Content.Shared.Movement.Components
                 }
                 else
                 {
-                    walk = _curTickWalkMovement;
-                    sprint = _curTickSprintMovement;
+                    walk = CurTickWalkMovement;
+                    sprint = CurTickSprintMovement;
                     remainingFraction = (ushort.MaxValue - _lastInputSubTick) / (float) ushort.MaxValue;
                 }
 
@@ -120,7 +108,6 @@ namespace Content.Shared.Movement.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<PhysicsComponent>();
             LastGridAngle = _entityManager.GetComponent<TransformComponent>(Owner).Parent?.WorldRotation ?? new Angle(0);
         }
 
@@ -154,8 +141,8 @@ namespace Content.Shared.Movement.Components
 
             if (_gameTiming.CurTick > _lastInputTick)
             {
-                _curTickWalkMovement = Vector2.Zero;
-                _curTickSprintMovement = Vector2.Zero;
+                CurTickWalkMovement = Vector2.Zero;
+                CurTickSprintMovement = Vector2.Zero;
                 _lastInputTick = _gameTiming.CurTick;
                 _lastInputSubTick = 0;
             }
@@ -164,7 +151,7 @@ namespace Content.Shared.Movement.Components
             {
                 var fraction = (subTick - _lastInputSubTick) / (float) ushort.MaxValue;
 
-                ref var lastMoveAmount = ref Sprinting ? ref _curTickSprintMovement : ref _curTickWalkMovement;
+                ref var lastMoveAmount = ref Sprinting ? ref CurTickSprintMovement : ref CurTickWalkMovement;
 
                 lastMoveAmount += DirVecForButtons(_heldMoveButtons) * fraction;
 

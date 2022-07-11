@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -114,9 +115,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceFeed)
             {
-                EntityManager.TryGetComponent(user, out MetaDataComponent? meta);
-                var userName = meta?.EntityName ?? string.Empty;
-
+                var userName = Identity.Name(user, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
                     user, Filter.Entities(target));
 
@@ -126,13 +125,14 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var moveBreak = user != target;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target, food.Owner)
             {
                 BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = moveBreak,
                 MovementThreshold = 0.01f,
+                DistanceThreshold = 2.0f,
                 TargetFinishedEvent = new FeedEvent(user, food, foodSolution, utensils),
                 BroadcastCancelledEvent = new ForceFeedCancelledEvent(food),
                 NeedHand = true,
@@ -179,12 +179,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceFeed)
             {
-                EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
-                var targetName = targetMeta?.EntityName ?? string.Empty;
-
-                EntityManager.TryGetComponent(args.User, out MetaDataComponent? userMeta);
-                var userName = userMeta?.EntityName ?? string.Empty;
-
+                var targetName = Identity.Name(uid, EntityManager);
+                var userName = Identity.Name(args.User, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName)),
                     uid, Filter.Entities(uid));
 

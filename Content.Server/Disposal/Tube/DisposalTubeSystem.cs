@@ -3,6 +3,7 @@ using Content.Server.UserInterface;
 using Content.Server.Hands.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -125,8 +126,11 @@ namespace Content.Server.Disposal.Tube
                 return null;
             var oppositeDirection = nextDirection.GetOpposite();
 
-            var grid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(targetTube.Owner).GridEntityId);
-            var position = EntityManager.GetComponent<TransformComponent>(targetTube.Owner).Coordinates;
+            var xform = Transform(targetTube.Owner);
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return null;
+
+            var position = xform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
                 if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
