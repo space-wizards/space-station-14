@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -8,12 +6,8 @@ using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 

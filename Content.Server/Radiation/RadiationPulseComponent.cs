@@ -1,5 +1,4 @@
 using Content.Shared.Radiation;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

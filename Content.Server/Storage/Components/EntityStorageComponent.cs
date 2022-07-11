@@ -12,7 +12,6 @@ using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

@@ -1,6 +1,5 @@
 using Content.Shared.Disease;
 using JetBrains.Annotations;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

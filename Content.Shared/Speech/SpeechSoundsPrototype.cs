@@ -1,5 +1,5 @@
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Content.Shared.Sound;
 
 namespace Content.Shared.Speech
 {

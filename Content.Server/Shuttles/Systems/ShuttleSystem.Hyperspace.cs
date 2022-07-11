@@ -4,7 +4,6 @@ using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
-using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;

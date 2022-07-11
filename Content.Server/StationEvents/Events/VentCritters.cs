@@ -1,7 +1,6 @@
-using System.Linq;
 using Content.Server.StationEvents.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 

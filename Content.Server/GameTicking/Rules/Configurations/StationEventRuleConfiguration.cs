@@ -1,5 +1,5 @@
-﻿using Content.Shared.Sound;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using Robust.Shared.Audio;
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 

@@ -1,13 +1,9 @@
-using System;
-using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Trigger
 {

@@ -1,5 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Cabinet
 {

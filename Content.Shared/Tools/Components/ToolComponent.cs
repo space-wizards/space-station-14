@@ -1,4 +1,4 @@
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components

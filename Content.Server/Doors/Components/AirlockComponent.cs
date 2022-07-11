@@ -2,7 +2,6 @@ using System.Threading;
 using Content.Server.Power.Components;
 // using Content.Server.WireHacking;
 using Content.Shared.Doors.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 // using static Content.Shared.Wires.SharedWiresComponent;

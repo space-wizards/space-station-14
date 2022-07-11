@@ -1,5 +1,5 @@
-using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Storage.Components
 {

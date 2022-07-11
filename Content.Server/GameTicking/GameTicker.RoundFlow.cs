@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
@@ -10,7 +8,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Server.Maps;
@@ -21,6 +18,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.GameTicking
 {

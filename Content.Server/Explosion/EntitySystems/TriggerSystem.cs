@@ -9,7 +9,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Sound;
 using Content.Shared.Trigger;
 using Content.Shared.Database;
 using Content.Shared.Explosion;

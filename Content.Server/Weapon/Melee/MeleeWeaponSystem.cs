@@ -7,7 +7,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;

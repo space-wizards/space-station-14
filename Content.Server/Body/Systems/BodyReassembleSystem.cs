@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Cloning;
 using Content.Server.DoAfter;
@@ -13,6 +12,7 @@ using Content.Shared.Species;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Threading;
 
 /// <remarks>
 /// Fair warning, this is all kinda shitcode, but it'll have to wait for a major

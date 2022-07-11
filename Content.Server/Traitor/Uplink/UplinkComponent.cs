@@ -1,5 +1,5 @@
-using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Traitor.Uplink.Components
 {

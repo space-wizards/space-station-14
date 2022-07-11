@@ -4,7 +4,6 @@ using Content.Server.Storage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 

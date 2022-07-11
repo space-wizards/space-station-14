@@ -1,13 +1,9 @@
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
-using Content.Server.Disease.Components;
 using Content.Server.Disease;
+using Content.Server.Disease.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Random;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Events;
 /// <summary>

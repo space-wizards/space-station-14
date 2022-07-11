@@ -4,7 +4,6 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.AME;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

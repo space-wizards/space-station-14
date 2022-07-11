@@ -1,6 +1,5 @@
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 

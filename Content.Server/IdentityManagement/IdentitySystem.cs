@@ -1,4 +1,4 @@
-﻿using Content.Server.Access.Systems;
+using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Database;

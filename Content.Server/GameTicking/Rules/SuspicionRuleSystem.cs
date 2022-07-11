@@ -16,7 +16,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Suspicion;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;

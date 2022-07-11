@@ -1,13 +1,12 @@
+using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.Examine;
-using Content.Shared.Paper;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Content.Server.Popups;
-using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
-
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper

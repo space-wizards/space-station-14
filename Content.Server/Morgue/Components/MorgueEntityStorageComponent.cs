@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

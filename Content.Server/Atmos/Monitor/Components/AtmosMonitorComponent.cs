@@ -1,6 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Monitor.Components

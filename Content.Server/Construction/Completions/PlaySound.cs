@@ -1,5 +1,4 @@
 using Content.Shared.Construction;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
