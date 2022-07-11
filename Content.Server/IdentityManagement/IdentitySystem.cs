@@ -21,7 +21,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
-    private Queue<EntityUid> _queuedIdentityUpdates = new();
+    private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
     public override void Initialize()
     {
@@ -37,13 +37,15 @@ public class IdentitySystem : SharedIdentitySystem
     {
         base.Update(frameTime);
 
-        while (_queuedIdentityUpdates.TryDequeue(out var ent))
+        foreach (var ent in _queuedIdentityUpdates)
         {
             if (!TryComp<IdentityComponent>(ent, out var identity))
                 continue;
 
             UpdateIdentityInfo(ent, identity);
         }
+
+        _queuedIdentityUpdates.Clear();
     }
 
     // This is where the magic happens
@@ -62,7 +64,7 @@ public class IdentitySystem : SharedIdentitySystem
     /// </summary>
     public void QueueIdentityUpdate(EntityUid uid)
     {
-        _queuedIdentityUpdates.Enqueue(uid);
+        _queuedIdentityUpdates.Add(uid);
     }
 
     #region Private API
