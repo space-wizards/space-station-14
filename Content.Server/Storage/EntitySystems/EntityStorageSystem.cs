@@ -240,9 +240,8 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.EnteringOffset != (0, 0)) //if the entering position is offset
         {
             var targetXform = Transform(target);
-            if (!_interactionSystem.InRangeUnobstructed(target,
-                targetXform.Coordinates.Offset(targetXform.LocalRotation.GetCardinalDir().ToIntVec()),
-                collisionMask: component.EnteringOffsetCollisionFlags))
+            var newCoords = new EntityCoordinates(target, component.EnteringOffset);
+            if (!_interactionSystem.InRangeUnobstructed(target, newCoords, collisionMask: component.EnteringOffsetCollisionFlags))
             {
                 if (!silent)
                     _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target, Filter.Pvs(target));

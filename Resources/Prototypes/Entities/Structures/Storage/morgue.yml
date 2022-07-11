@@ -51,7 +51,6 @@
       state: morgue_closed
       state_alt: morgue_open
       state_open: morgue_tray
-      state_closed: no_tray
   - type: MorgueVisuals
     lightContents: morgue_nomob_light
     lightMob: morgue_nosoul_light
@@ -131,7 +130,6 @@
       state: crema_closed
       state_alt: crema_open
       state_open: crema_tray
-      state_closed: no_tray
   - type: CrematoriumVisuals
     lightContents: crema_contents_light
     lightBurning: crema_active_light

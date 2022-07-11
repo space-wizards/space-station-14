@@ -72,7 +72,10 @@ namespace Content.Client.Storage.Visualizers
                     if (_stateClosed != null)
                         sprite.LayerSetState(StorageVisualLayers.Door, _stateClosed);
                     else
+                    {
                         sprite.LayerSetVisible(StorageVisualLayers.Door, false);
+                    }
+
                     if (_stateBase != null)
                         sprite.LayerSetState(0, _stateBase);
                 }

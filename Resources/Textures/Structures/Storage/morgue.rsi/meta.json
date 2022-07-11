@@ -50,10 +50,6 @@
     {
       "name": "morgue_tray",
       "directions": 4
-    },
-    {
-      "name": "no_tray",
-      "directions": 4
     }
   ]
 }
