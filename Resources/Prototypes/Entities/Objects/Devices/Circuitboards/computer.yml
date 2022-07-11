@@ -222,3 +222,12 @@
   components:
     - type: ComputerBoard
       prototype: ComputerShuttleSyndie
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: IcarusTerminalComputerCircuitboard
+  name: icarus terminal board
+  description: A computer printed circuit board for a icarus terminal
+  components:
+    - type: ComputerBoard
+      prototype: ComputerIcarus

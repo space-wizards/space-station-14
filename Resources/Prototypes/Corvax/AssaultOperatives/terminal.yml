@@ -10,7 +10,7 @@
           key: goldeneye_key
           screen: goldeneye
     - type: Computer
-      board: CommsComputerCircuitboard # TODO: Create uniq item
+      board: IcarusTerminalComputerCircuitboard
     - type: PointLight
       radius: 1.5
       energy: 1.6
