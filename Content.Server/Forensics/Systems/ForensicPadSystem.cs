@@ -100,6 +100,11 @@ namespace Content.Server.Forensics
             if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
                 return;
 
+            if (HasComp<FingerprintComponent>(ev.Target))
+                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", ev.Target));
+            else
+                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Target));
+
             component.CancelToken = null;
             component.Sample = ev.Sample;
             component.Used = true;
@@ -124,11 +129,11 @@ namespace Content.Server.Forensics
         private sealed class TargetPadSuccessfulEvent : EntityEventArgs
         {
             public EntityUid User;
-            public EntityUid? Target;
+            public EntityUid Target;
             public EntityUid Pad;
             public string Sample = string.Empty;
 
-            public TargetPadSuccessfulEvent(EntityUid user, EntityUid? target, EntityUid pad, string sample)
+            public TargetPadSuccessfulEvent(EntityUid user, EntityUid target, EntityUid pad, string sample)
             {
                 User = user;
                 Target = target;
