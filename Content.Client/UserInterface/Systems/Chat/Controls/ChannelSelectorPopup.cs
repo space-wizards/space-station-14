@@ -10,8 +10,7 @@ public sealed class ChannelSelectorPopup : Popup
     private readonly BoxContainer _channelSelectorHBox;
     private ChatSelectChannel _activeSelector = ChatSelectChannel.Local;
     private ChannelSelectorButton? _selectorButton;
-    private readonly Dictionary<ChatSelectChannel, ChannelSelectorItemButton> _selectorStates = new();
-
+    private readonly List<ChannelSelectorItemButton> _selectorStates = new();
     public ChannelSelectorPopup()
     {
         _channelSelectorHBox = new BoxContainer
@@ -19,7 +18,7 @@ public sealed class ChannelSelectorPopup : Popup
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 1
         };
-        SetupChannels(ChatUIController.ChannelSelectorSetup);
+        SetupChannels(ChatUIController.ChannelSelectorConfig);
         AddChild(_channelSelectorHBox);
     }
 
@@ -27,7 +26,7 @@ public sealed class ChannelSelectorPopup : Popup
     {
         get
         {
-            foreach (var selectorControl in _selectorStates.Values)
+            foreach (var selectorControl in _selectorStates)
             {
                 if (!selectorControl.IsHidden) return selectorControl.Channel;
             }
@@ -35,14 +34,28 @@ public sealed class ChannelSelectorPopup : Popup
         }
     }
 
-    private void SetupChannels(ChatUIController.ChannelSelectorData[] selectorData)
+    public ChatSelectChannel NextChannel()
+    {
+        var nextChannel = ChatUIController.GetNextChannelSelector(_activeSelector);
+        var index = 0;
+        while (_selectorStates[(int)nextChannel].IsHidden && index <= _selectorStates.Count)
+        {
+            nextChannel =  ChatUIController.GetNextChannelSelector(nextChannel);
+            index++;
+        }
+        _activeSelector = nextChannel;
+        return nextChannel;
+    }
+
+
+    private void SetupChannels(ChatUIController.ChannelSelectorSetup[] selectorData)
     {
         _channelSelectorHBox.DisposeAllChildren(); //cleanup old toggles
         _selectorStates.Clear();
         foreach (var channelSelectorData in selectorData)
         {
             var newSelectorButton = new ChannelSelectorItemButton(channelSelectorData);
-            _selectorStates.Add(channelSelectorData.Selector, newSelectorButton);
+            _selectorStates.Add(newSelectorButton);
             if (!newSelectorButton.IsHidden)
             {
                 _channelSelectorHBox.AddChild(newSelectorButton);
@@ -62,7 +75,7 @@ public sealed class ChannelSelectorPopup : Popup
         foreach (var channel in channels)
         {
             if (!ChatUIController.ChannelToSelector.TryGetValue(channel, out var selector)) continue;
-            var selectorbutton = _selectorStates[selector];
+            var selectorbutton = _selectorStates[(int)selector];
             if (!selectorbutton.IsHidden)
             {
                 _channelSelectorHBox.RemoveChild(selectorbutton);
@@ -87,8 +100,7 @@ public sealed class ChannelSelectorPopup : Popup
     {
         foreach (var channel in channels)
         {
-            if (!ChatUIController.ChannelToSelector.TryGetValue(channel, out var selector)) continue;
-            var selectorbutton = _selectorStates[selector];
+            var selectorbutton = _selectorStates[(int)channel];
             if (selectorbutton.IsHidden)
             {
                 _channelSelectorHBox.AddChild(selectorbutton);

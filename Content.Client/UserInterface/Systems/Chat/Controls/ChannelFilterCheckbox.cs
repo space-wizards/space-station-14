@@ -7,12 +7,13 @@ public sealed class ChannelFilterCheckbox : CheckBox
 {
     public readonly ChatChannel Channel;
     public bool ShowUnread { get; set; }
-    public bool IsHidden { get; set; }
-    public ChannelFilterCheckbox(ChatUIController.ChannelFilterData filterData)
+
+    public bool IsHidden => Parent == null;
+
+    public ChannelFilterCheckbox(ChatChannel channel, bool showUnread)
     {
-        Channel = filterData.Channel;
-        ShowUnread = filterData.ShowUnread;
-        IsHidden = filterData.Hidden;
+        Channel = channel;
+        ShowUnread = showUnread;
         Text = Loc.GetString($"hud-chatbox-channel-{Channel}");
     }
 

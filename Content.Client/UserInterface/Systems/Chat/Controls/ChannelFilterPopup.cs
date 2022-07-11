@@ -34,21 +34,7 @@ public sealed class ChannelFilterPopup : Popup
                 }
             }
         };
-        SetupChannels(ChatUIController.ChannelFilterSetup);
         AddChild(_filterPopupPanel);
-    }
-
-    private void SetupChannels(ChatUIController.ChannelFilterData[] defaultChannelData)
-    {
-        _filterStates.Clear();
-        _filterVBox.DisposeAllChildren(); //cleanup old toggles
-        foreach (var channelData in defaultChannelData)
-        {
-            var newFilter = new ChannelFilterCheckbox(channelData);
-            newFilter.Pressed = channelData.InitialState;
-            _filterStates.Add(channelData.Channel, newFilter);
-            if (!newFilter.IsHidden) _filterVBox.AddChild(newFilter);
-        }
     }
     public void HideChannels(params ChatChannel[] channels)
     {

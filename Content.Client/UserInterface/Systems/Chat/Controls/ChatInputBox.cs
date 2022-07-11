@@ -11,7 +11,7 @@ public class ChatInputBox : PanelContainer
     public readonly HistoryLineEdit Input;
     public readonly FilterButton FilterButton;
     protected readonly BoxContainer Container;
-    protected ChatChannel ActiveChannel { get; set; } = ChatChannel.Local;
+    protected ChatChannel ActiveChannel { get; private set; } = ChatChannel.Local;
     public ChatInputBox()
     {
         Container = new BoxContainer()
@@ -43,5 +43,16 @@ public class ChatInputBox : PanelContainer
             StyleClasses = {"chatFilterOptionButton"}
         };
         Container.AddChild(FilterButton);
+        ChannelSelector.OnChannelSelect += UpdateActiveChannel;
+    }
+
+    ~ChatInputBox()
+    {
+        ChannelSelector.OnChannelSelect -= UpdateActiveChannel;
+    }
+
+    private void UpdateActiveChannel(ChatSelectChannel selectedChannel)
+    {
+        ActiveChannel = (ChatChannel)selectedChannel;
     }
 }

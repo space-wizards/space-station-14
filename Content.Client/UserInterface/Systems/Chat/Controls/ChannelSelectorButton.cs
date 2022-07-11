@@ -15,6 +15,7 @@ public sealed class ChannelSelectorButton : Button
     private IUserInterfaceManager _interfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
     private ChatUIController _chatUIController;
     private ChatSelectChannel selectedChannel;
+    public Action<ChatSelectChannel>? OnChannelSelect = null;
     public ChatSelectChannel SelectedChannel
     {
         get => selectedChannel;
@@ -27,9 +28,11 @@ public sealed class ChannelSelectorButton : Button
             }
             if (selectedChannel == value) return;
             selectedChannel = value;
+            OnChannelSelect?.Invoke(value);
             UpdateLabelText(value);
         }
     }
+
     private const int SelectorDropdownOffset = 38;
     public ChannelSelectorButton()
     {
@@ -62,7 +65,6 @@ public sealed class ChannelSelectorButton : Button
     {
         Text = ChatUIController.GetChannelSelectorName(selector);
     }
-
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
