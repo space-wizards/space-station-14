@@ -351,9 +351,8 @@
   - type: LatheVisuals
     idleState: icon
     runningState: icon
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: ProtolatheDatabase
+    protolatherecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingHandsGlovesNitrile
@@ -373,6 +372,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - BodyBag
   - type: Machine
     board: MedicalTechFabCircuitboard
 

@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -114,9 +115,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceFeed)
             {
-                EntityManager.TryGetComponent(user, out MetaDataComponent? meta);
-                var userName = meta?.EntityName ?? string.Empty;
-
+                var userName = Identity.Name(user, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
                     user, Filter.Entities(target));
 
@@ -180,12 +179,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceFeed)
             {
-                EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
-                var targetName = targetMeta?.EntityName ?? string.Empty;
-
-                EntityManager.TryGetComponent(args.User, out MetaDataComponent? userMeta);
-                var userName = userMeta?.EntityName ?? string.Empty;
-
+                var targetName = Identity.Name(uid, EntityManager);
+                var userName = Identity.Name(args.User, EntityManager);
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName)),
                     uid, Filter.Entities(uid));
 

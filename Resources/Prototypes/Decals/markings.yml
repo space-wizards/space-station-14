@@ -138,6 +138,8 @@
     sprite: Decals/markings.rsi
     state: warn_box_greyscale
 
+# TODO: Remove from here to...
+
 - type: decal
   id: WarnEnd
   tags: ["station", "markings"]
@@ -152,6 +154,8 @@
     sprite: Decals/markings.rsi
     state: warn_end_greyscale
 
+# TODO: Down here
+
 - type: decal
   id: WarnFull
   tags: ["station", "markings"]
@@ -165,6 +169,8 @@
   sprite:
     sprite: Decals/markings.rsi
     state: warn_full_greyscale
+
+# TODO: remove from here down to...
 
 - type: decal
   id: WarningLine
@@ -235,3 +241,229 @@
   sprite:
     sprite: Decals/markings.rsi
     state: warn_corner_flipped_greyscale
+
+# TODO: here
+
+- type: decal
+  id: WarnCornerGreyscaleNE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale_ne
+
+- type: decal
+  id: WarnCornerGreyscaleNW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale_nw
+
+- type: decal
+  id: WarnCornerGreyscaleSE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale_se
+
+- type: decal
+  id: WarnCornerGreyscaleSW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_greyscale_sw
+
+- type: decal
+  id: WarnCornerNE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_ne
+
+- type: decal
+  id: WarnCornerNW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_nw
+
+- type: decal
+  id: WarnCornerSE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_se
+
+- type: decal
+  id: WarnCornerSW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_sw
+
+- type: decal
+  id: WarnCornerSmallGreyscaleNE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_greyscale_ne
+
+- type: decal
+  id: WarnCornerSmallGreyscaleNW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_greyscale_nw
+
+- type: decal
+  id: WarnCornerSmallGreyscaleSE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_greyscale_se
+
+- type: decal
+  id: WarnCornerSmallGreyscaleSW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_greyscale_sw
+
+- type: decal
+  id: WarnCornerSmallNE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_ne
+
+- type: decal
+  id: WarnCornerSmallNW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_nw
+
+- type: decal
+  id: WarnCornerSmallSE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_se
+
+- type: decal
+  id: WarnCornerSmallSW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_corner_small_sw
+
+- type: decal
+  id: WarnEndE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_e
+
+- type: decal
+  id: WarnEndN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_n
+
+- type: decal
+  id: WarnEndS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_s
+
+- type: decal
+  id: WarnEndW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_w
+
+- type: decal
+  id: WarnEndGreyscaleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_greyscale_e
+
+- type: decal
+  id: WarnEndGreyscaleN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_greyscale_n
+
+- type: decal
+  id: WarnEndGreyscaleS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_greyscale_s
+
+- type: decal
+  id: WarnEndGreyscaleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_end_greyscale_w
+
+- type: decal
+  id: WarnLineE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_e
+
+- type: decal
+  id: WarnLineW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_n
+
+- type: decal
+  id: WarnLineN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_s
+
+- type: decal
+  id: WarnLineS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_w
+
+- type: decal
+  id: WarnLineGreyscaleE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_greyscale_e
+
+- type: decal
+  id: WarnLineGreyscaleN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_greyscale_n
+
+- type: decal
+  id: WarnLineGreyscaleS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_greyscale_s
+
+- type: decal
+  id: WarnLineGreyscaleW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: warn_line_greyscale_w
