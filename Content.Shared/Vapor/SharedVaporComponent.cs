@@ -2,12 +2,6 @@
 
 namespace Content.Shared.Vapor
 {
-    [Virtual]
-    public class SharedVaporComponent : Component
-    {
-        public const string SolutionName = "vapor";
-    }
-
     [Serializable, NetSerializable]
     public enum VaporVisuals
     {
