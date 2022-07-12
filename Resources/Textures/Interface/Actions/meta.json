@@ -39,6 +39,9 @@
         },
         {
             "name": "zombie-turn"
+        },
+        {
+            "name": "fire_breath"
         }
     ]
 }

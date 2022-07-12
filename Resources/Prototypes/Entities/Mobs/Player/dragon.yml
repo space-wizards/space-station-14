@@ -109,9 +109,9 @@
       useDelay: 5
     breathFireAction:
       event: !type:DragonBreathFireActionEvent
-      icon: Interface/Actions/carp_summon.png  # TODO: Unique icon for fire breath.
+      icon: Interface/Actions/fire_breath.png
       name: action-name-breath-fire
       description: action-description-breath-fire
       useDelay: 5
-      range: 50
+      range: 20
 
