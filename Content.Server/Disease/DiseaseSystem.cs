@@ -116,7 +116,7 @@ namespace Content.Server.Disease
                             disease.Stages[j] > lastThreshold)
                         {
                             lastThreshold = disease.Stages[j];
-                            stage = j;
+                            stage = (int) lastThreshold;
                         }
                     }
 

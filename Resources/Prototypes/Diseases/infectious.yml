@@ -130,16 +130,16 @@
       visualType: Medium
       stages:
         - 0
-        - 1
-        - 2
+        - 120
+        - 780
     - !type:DiseasePopUp
       probability: 0.03
       message: disease-banana-compulsion
       visualType: Medium
       stages:
         - 0
-        - 1
-        - 2
+        - 120
+        - 780
     - !type:DiseaseSnough
       probability: 0.01
       snoughMessage: disease-screech
@@ -153,34 +153,34 @@
       snoughSound:
         collection: MonkeyScreeches
       stages:
-        - 1
+        - 120
     - !type:DiseaseSnough
       probability: 0.04
       snoughMessage: disease-screech
       snoughSound:
         collection: MonkeyScreeches
       stages:
-        - 2
+        - 780
     - !type:DiseaseGenericStatusEffect
       probability: 0.2
       key: Stutter
       component: MonkeyAccent
       stages:
-        - 1
+        - 120
     - !type:DiseaseGenericStatusEffect
       probability: 0.5
       key: Stutter
       component: MonkeyAccent
       stages:
-        - 2
+        - 780
     - !type:DiseaseHealthChange
       probability: 0.53
       damage:
         types:
           Asphyxiation: 1
       stages:
-        - 1
-        - 2
+        - 120
+        - 780
     - !type:DiseasePolymorph
       probability: 0.000427 ## ~5% chance over 120 secs
       polymorphId: AMIVMorph
@@ -188,20 +188,20 @@
       polymorphSound: 
         path: /Audio/Animals/monkey_scream.ogg
       stages:
-        - 2
+        - 780
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
       stages:
         - 0
-        - 1
-        - 2
+        - 120
+        - 780
     - !type:DiseaseReagentCure
       reagent: BananaHonk
       stages:
         - 0
-        - 1
-        - 2
+        - 120
+        - 780
 
 - type: disease
   id: BleedersBite
