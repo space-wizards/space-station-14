@@ -1,15 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Zombies are now weaker and the zombie infection now progresses slower.,
-    type: Tweak}
-  - {message: romerol now does less damage when consumed., type: Tweak}
-  - {message: The syndicate is now supplying its most devious of agents with a bundle
-      able to bring forth the undead., type: Add}
-  id: 1427
-  time: '2022-04-30T21:21:40.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Addes MREs, military rations that can be found in emergency closets
       and ordered from cargo.', type: Add}
   id: 1428
@@ -2952,3 +2943,9 @@ Entries:
   - {message: Fixed PDA not spawning with the correct light, type: Fix}
   id: 1926
   time: '2022-07-12T00:30:03.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added blindfolds!, type: Add}
+  - {message: 'Added a rare, funny salvage item.', type: Add}
+  id: 1927
+  time: '2022-07-12T05:55:04.0000000+00:00'
