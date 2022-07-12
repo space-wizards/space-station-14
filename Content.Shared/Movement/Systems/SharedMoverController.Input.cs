@@ -59,34 +59,34 @@ namespace Content.Shared.Movement.Systems
             CommandBinds.Unregister<SharedMoverController>();
         }
 
-        public bool DiagonalMovementEnabled => _configManager.GetCVar<bool>(CCVars.GameDiagonalMovement);
+        public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
 
         private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
             if (!TryComp<InputMoverComponent>(session?.AttachedEntity, out var moverComp))
                 return;
 
-            var owner = session?.AttachedEntity;
+            var owner = moverComp.Owner;
+            var moveEvent = new MoveInputEvent(session);
+            RaiseLocalEvent(owner, ref moveEvent);
 
-            if (owner != null && session != null)
+            // For stuff like "Moving out of locker" or the likes
+            // We'll relay a movement input to the parent.
+            if (_container.IsEntityInContainer(owner) &&
+                TryComp<TransformComponent>(owner, out var xform) &&
+                xform.ParentUid.IsValid() &&
+                _mobState.IsAlive(owner))
             {
-                EntityManager.EventBus.RaiseLocalEvent(owner.Value, new RelayMoveInputEvent(session), true);
+                var relayMoveEvent = new ContainerRelayMovementEntityEvent(owner);
+                RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
+            }
 
-                // For stuff like "Moving out of locker" or the likes
-                if (owner.Value.IsInContainer() &&
-                    (!EntityManager.TryGetComponent(owner.Value, out MobStateComponent? mobState) ||
-                     mobState.IsAlive()))
+            // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
+            if (TryComp<RiderComponent>(owner, out var rider) && rider.Vehicle is { HasKey: true })
+            {
+                if (TryComp<InputMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))
                 {
-                    var relayMoveEvent = new RelayMovementEntityEvent(owner.Value);
-                    EntityManager.EventBus.RaiseLocalEvent(EntityManager.GetComponent<TransformComponent>(owner.Value).ParentUid, relayMoveEvent, true);
-                }
-                // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
-                if (TryComp<RiderComponent>(owner.Value, out var rider) && rider.Vehicle != null && rider.Vehicle.HasKey)
-                {
-                    if (TryComp<InputMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))
-                    {
-                        SetVelocityDirection(vehicleMover, dir, subTick, state);
-                    }
+                    SetVelocityDirection(vehicleMover, dir, subTick, state);
                 }
             }
 
@@ -179,14 +179,7 @@ namespace Content.Shared.Movement.Systems
         private void SetMoveInput(InputMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
         {
             // Modifies held state of a movement button at a certain sub tick and updates current tick movement vectors.
-
-            if (_timing.CurTick > component.LastInputTick)
-            {
-                component.CurTickWalkMovement = Vector2.Zero;
-                component.CurTickSprintMovement = Vector2.Zero;
-                component.LastInputTick = _timing.CurTick;
-                component.LastInputSubTick = 0;
-            }
+            ResetSubtick(component);
 
             if (subTick >= component.LastInputSubTick)
             {
@@ -209,6 +202,16 @@ namespace Content.Shared.Movement.Systems
             }
 
             Dirty(component);
+        }
+
+        private void ResetSubtick(InputMoverComponent component)
+        {
+            if (_timing.CurTick <= component.LastInputTick) return;
+
+            component.CurTickWalkMovement = Vector2.Zero;
+            component.CurTickSprintMovement = Vector2.Zero;
+            component.LastInputTick = _timing.CurTick;
+            component.LastInputSubTick = 0;
         }
 
         public void SetSprinting(InputMoverComponent component, ushort subTick, bool walking)

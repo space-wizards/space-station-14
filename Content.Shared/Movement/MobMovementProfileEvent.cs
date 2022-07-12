@@ -12,7 +12,6 @@ public struct MobMovementProfileEvent
     /// </summary>
     public bool Override = false;
 
-    public readonly bool Touching;
     public readonly bool Weightless;
 
     public float Friction;
@@ -20,13 +19,11 @@ public struct MobMovementProfileEvent
     public float Acceleration;
 
     public MobMovementProfileEvent(
-        bool touching,
         bool weightless,
         float friction,
         float weightlessModifier,
         float acceleration)
     {
-        Touching = touching;
         Weightless = weightless;
         Friction = friction;
         WeightlessModifier = weightlessModifier;
