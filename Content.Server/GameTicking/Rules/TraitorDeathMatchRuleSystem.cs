@@ -63,7 +63,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var session = ev.Player;
@@ -144,7 +144,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnGhostAttempt(GhostAttemptHandleEvent ev)
     {
-        if (!Enabled || ev.Handled)
+        if (!RuleAdded || ev.Handled)
             return;
 
         ev.Handled = true;
@@ -181,7 +181,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var lines = new List<string>();
@@ -200,14 +200,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Ended(GameRuleConfiguration _)
+    public override void Ended()
     {
     }
 

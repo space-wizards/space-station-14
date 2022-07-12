@@ -194,6 +194,7 @@
           min: 0.8
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages: [ "miasma-smell" ]
         probability: 0.1
         conditions:

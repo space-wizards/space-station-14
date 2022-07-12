@@ -1,8 +1,10 @@
 ﻿using Content.Shared.Audio;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -21,12 +23,30 @@ public sealed class BlockingUserSystem : EntitySystem
         SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
 
+        SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+    }
+
+    private void OnParentChanged(EntityUid uid, BlockingUserComponent component, ref EntParentChangedMessage args)
+    {
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
+        {
+            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        }
+    }
+
+    private void OnInsertAttempt(EntityUid uid, BlockingUserComponent component, ContainerGettingInsertedAttemptEvent args)
+    {
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
+        {
+            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        }
     }
 
     private void OnAnchorChanged(EntityUid uid, BlockingUserComponent component, ref AnchorStateChangedEvent args)
     {
-        if (!args.Anchored)
+        if (args.Anchored)
             return;
 
         if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
