@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: A certain sealed small asteroid will no longer contain plasmafire or
-      crates., type: Tweak}
-  id: 1430
-  time: '2022-04-30T21:25:56.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added metal and wooden counters to be used in bars and shops for that
@@ -2949,3 +2943,8 @@ Entries:
       it''s mildly radioactive!', type: Fix}
   id: 1929
   time: '2022-07-12T06:05:55.0000000+00:00'
+- author: KIBORG04
+  changes:
+  - {message: 'Added kvass, you can order it in the cargo!', type: Add}
+  id: 1930
+  time: '2022-07-12T06:11:12.0000000+00:00'
