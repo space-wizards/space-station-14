@@ -24,6 +24,8 @@
   config:
     !type:StationEventRuleConfiguration
     startAnnouncement: station-event-disease-outbreak-announcement
+    startAudio:
+      path: /Audio/Announcements/outbreak7.ogg
     id: DiseaseOutbreak
     weight: 5
     endAfter: 1
