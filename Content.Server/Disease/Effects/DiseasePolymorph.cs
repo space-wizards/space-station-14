@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Disease;
