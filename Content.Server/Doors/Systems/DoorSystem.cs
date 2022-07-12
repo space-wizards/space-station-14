@@ -17,19 +17,22 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Content.Shared.Hands.Components;
 using System.Linq;
+using System.Threading;
+using Content.Server.Tools.Systems;
+using Content.Shared.Database;
+using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Doors.Systems;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -38,10 +41,13 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
+        // Mob prying doors
+        SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
+
         SubscribeLocalEvent<DoorComponent, PryFinishedEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, PryCancelledEvent>(OnPryCancelled);
-        SubscribeLocalEvent<DoorComponent, WeldFinishedEvent>(OnWeldFinished);
-        SubscribeLocalEvent<DoorComponent, WeldCancelledEvent>(OnWeldCancelled);
+        SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
+        SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
     }
 
@@ -67,7 +73,7 @@ public sealed class DoorSystem : SharedDoorSystem
             _airtightSystem.SetAirblocked(airtight, collidable);
 
         // Pathfinding / AI stuff.
-        RaiseLocalEvent(new AccessReaderChangeMessage(uid, collidable));
+        RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
 
         base.SetCollidable(uid, collidable, door, physics, occluder);
     }
@@ -110,7 +116,7 @@ public sealed class DoorSystem : SharedDoorSystem
         }
 
         // send the sound to players.
-        SoundSystem.Play(filter, sound, uid, audioParams);
+        SoundSystem.Play(sound, filter, uid, audioParams);
     }
 
 #region DoAfters
@@ -130,75 +136,70 @@ public sealed class DoorSystem : SharedDoorSystem
             args.Handled = TryPryDoor(uid, args.Used, args.User, door);
             return;
         }
+    }
 
-        if (door.Weldable && tool.Qualities.Contains(door.WeldingQuality))
+    private void OnWeldAttempt(EntityUid uid, DoorComponent component, WeldableAttemptEvent args)
+    {
+        if (component.CurrentlyCrushing.Count > 0)
         {
-            args.Handled = TryWeldDoor(uid, args.Used, args.User, door);
+            args.Cancel();
+            return;
+        }
+        if (component.State != DoorState.Closed && component.State != DoorState.Welded)
+        {
+            args.Cancel();
         }
     }
 
-    /// <summary>
-    ///     Attempt to weld a door shut, or unweld it if it is already welded. This does not actually check if the user
-    ///     is holding the correct tool.
-    /// </summary>
-    private bool TryWeldDoor(EntityUid target, EntityUid used, EntityUid user, DoorComponent door)
+    private void OnWeldChanged(EntityUid uid, DoorComponent component, WeldableChangedEvent args)
     {
-        if (!door.Weldable || door.BeingWelded || door.CurrentlyCrushing.Count > 0)
-            return false;
+        if (component.State == DoorState.Closed)
+            SetState(uid, DoorState.Welded, component);
+        else if (component.State == DoorState.Welded)
+            SetState(uid, DoorState.Closed, component);
+    }
 
-        // is the door in a weld-able state?
-        if (door.State != DoorState.Closed && door.State != DoorState.Welded)
-            return false;
+    private void OnDoorAltVerb(EntityUid uid, DoorComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanInteract || !TryComp<ToolComponent>(args.User, out var tool) || !tool.Qualities.Contains(component.PryingQuality)) return;
 
-        // perform a do-after delay
-        door.BeingWelded = true;
-        _toolSystem.UseTool(used, user, target, 3f, 3f, door.WeldingQuality,
-                new WeldFinishedEvent(), new WeldCancelledEvent(), target);
-
-        return true; // we might not actually succeeded, but a do-after has started
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = "Pry door",
+            Impact = LogImpact.Low,
+            Act = () => TryPryDoor(uid, args.User, args.User, component, true),
+        });
     }
 
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door)
+    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
+        if (door.BeingPried) return false;
+
         if (door.State == DoorState.Welded)
             return false;
 
-        var canEv = new BeforeDoorPryEvent(user);
-        RaiseLocalEvent(target, canEv, false);
+        if (!force)
+        {
+            var canEv = new BeforeDoorPryEvent(user);
+            RaiseLocalEvent(target, canEv, false);
 
-        if (canEv.Cancelled)
-            // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
-            // under a windoor.
-            return true;
+            if (canEv.Cancelled)
+                // mark handled, as airlock component will cancel after generating a pop-up & you don't want to pry a tile
+                // under a windoor.
+                return true;
+        }
 
         var modEv = new DoorGetPryTimeModifierEvent();
         RaiseLocalEvent(target, modEv, false);
 
+        door.BeingPried = true;
         _toolSystem.UseTool(tool, user, target, 0f, modEv.PryTimeModifier * door.PryTime, door.PryingQuality,
                 new PryFinishedEvent(), new PryCancelledEvent(), target);
 
         return true; // we might not actually succeeded, but a do-after has started
-    }
-
-    private void OnWeldCancelled(EntityUid uid, DoorComponent door, WeldCancelledEvent args)
-    {
-        door.BeingWelded = false;
-    }
-
-    private void OnWeldFinished(EntityUid uid, DoorComponent door, WeldFinishedEvent args)
-    {
-        door.BeingWelded = false;
-
-        if (!door.Weldable)
-            return;
-
-        if (door.State == DoorState.Closed)
-            SetState(uid, DoorState.Welded, door);
-        else if (door.State == DoorState.Welded)
-            SetState(uid, DoorState.Closed, door);
     }
 
     private void OnPryCancelled(EntityUid uid, DoorComponent door, PryCancelledEvent args)
@@ -240,9 +241,9 @@ public sealed class DoorSystem : SharedDoorSystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(access, user.Value),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(access, user.Value)
+            _ => _accessReaderSystem.IsAllowed(user.Value, access)
         };
     }
 
@@ -262,7 +263,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         var otherUid = args.OtherFixture.Body.Owner;
 
-        if (_tagSystem.HasTag(otherUid, "DoorBumpOpener"))
+        if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
 
@@ -294,6 +295,9 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {
+            if (airlockComponent.BoltsDown || !airlockComponent.IsPowered())
+                return;
+
             if (door.State == DoorState.Closed)
             {
                 SetState(uid, DoorState.Emagging, door);
@@ -318,9 +322,20 @@ public sealed class DoorSystem : SharedDoorSystem
         if(lastState == DoorState.Emagging && TryComp<AirlockComponent>(door.Owner, out var airlockComponent))
             airlockComponent?.SetBoltsWithAudio(!airlockComponent.IsBolted());
     }
+
+    protected override void CheckDoorBump(DoorComponent component, PhysicsComponent body)
+    {
+        if (component.BumpOpen)
+        {
+            foreach (var other in PhysicsSystem.GetCollidingEntities(body))
+            {
+                if (Tags.HasTag(other.Owner, "DoorBumpOpener") &&
+                    TryOpen(component.Owner, component, other.Owner, false, quiet: true)) break;
+            }
+        }
+    }
 }
 
 public sealed class PryFinishedEvent : EntityEventArgs { }
 public sealed class PryCancelledEvent : EntityEventArgs { }
-public sealed class WeldFinishedEvent : EntityEventArgs { }
-public sealed class WeldCancelledEvent : EntityEventArgs { }
+

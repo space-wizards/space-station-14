@@ -6,6 +6,15 @@
   description: A miserable pile of secrets.
   noSpawn: true
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MeatBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MeatLaserImpact
   - type: Tag
     tags:
     - CanPilot
@@ -22,13 +31,15 @@
       effects:
       - !type:WashCreamPieReaction
   - type: Flashable
+  - type: Polymorphable
+  - type: Identity
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.7 #per second, scales with pressure and other constants.
+        Blunt: 0.15 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -36,18 +47,11 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   # Organs
   - type: InjectableSolution
     solution: chemicals
-  - type: DrawableSolution
-    solution: bloodstream
+  - type: IdExaminable
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -64,14 +68,21 @@
       types:
         Bloodloss:
           -0.25
+  - type: Stamina
   - type: StatusEffects
     allowed:
     - Stun
     - KnockedDown
     - SlowedDown
     - Stutter
+    - SeeingRainbows
     - Electrocution
+    - Drunk
+    - SlurredSpeech
+    - PressureImmunity
+    - Muted
   - type: DiseaseCarrier
+  - type: Blindable
   # Other
   - type: Inventory
   - type: Clickable
@@ -162,6 +173,23 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
+  - type: Markings
+    layerPoints:
+      Tail:
+        points: 0
+        required: false
+      HeadTop:
+        points: 0
+        required: false
+      Chest:
+        points: 1
+        required: false
+      Legs:
+        points: 2
+        required: false
+      Arms:
+        points: 2
+        required: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -172,12 +200,9 @@
       mass: 70
       restitution: 0.0
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -192,10 +217,10 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold : 1 #per second, scales with temperature & other constants
+        Cold: 0.1 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat : 1 #per second, scales with temperature & other constants
+        Heat: 0.1 #per second, scales with temperature & other constants
   - type: HumanoidAppearance
   - type: Body
     template: HumanoidTemplate
@@ -213,9 +238,9 @@
   - type: Internals
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      100: !type:CriticalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      100: Critical
+      200: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -226,20 +251,13 @@
       - !type:GibBehavior { }
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.8
-      60: 0.6
-      80: 0.4
-      90: 0.2
+      60: 0.7
+      80: 0.5
   - type: HeatResistance
   - type: Appearance
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
-      alternateState: Standing
-      fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: DamageVisualizer
@@ -257,13 +275,18 @@
           color: "#FF0000"
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+    alternateState: Standing
+    fireStackAlternateState: 3
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     hitSound:
       collection: Punch
     range: 0.8
@@ -290,13 +313,18 @@
 #  - type: Recyclable Turns out turning off recycler safeties without considering the instagib is a bad idea
 #    safe: false
   - type: Speech
+    speechSounds: Alto
   - type: Vocal
   - type: Emoting
   - type: Grammar
     attributes:
       proper: true
   - type: StandingState
-
+  - type: Fingerprint
+  - type: MobPrice
+    price: 1500 # Kidnapping a living person and selling them for cred is a good move.
+    deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
+  - type: Perishable
 
 - type: entity
   save: false
@@ -395,22 +423,20 @@
       - map: [ "pocket2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
+    - type: Markings
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.35,-0.35,0.35,0.35"
+          bounds: "-0.35,-0.35,0.35,0.35"
         mass: 70
         restitution: 0.0
         mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
+        - MobMask
         layer:
-        - Opaque
+        - MobLayer
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate
@@ -419,9 +445,9 @@
       damageContainer: Biological
     - type: MobState
       thresholds:
-        0: !type:NormalMobState {}
-        100: !type:CriticalMobState {}
-        200: !type:DeadMobState {}
+        0: Alive
+        100: Critical
+        200: Dead
     - type: Appearance
       visuals:
       - type: RotationVisualizer

@@ -1,7 +1,6 @@
 using Content.Server.EUI;
 using Content.Shared.Cloning;
 using Content.Shared.Eui;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Cloning
 {

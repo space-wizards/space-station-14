@@ -4,11 +4,12 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
+using Content.Server.Chemistry.EntitySystems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Friend(typeof(BloodstreamSystem))]
+    [RegisterComponent, Access(typeof(BloodstreamSystem), (typeof(ChemistrySystem)))]
     public sealed class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
@@ -129,6 +130,7 @@ namespace Content.Server.Body.Components
         ///     Internal solution for reagent storage
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(BloodstreamSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public Solution ChemicalSolution = default!;
 
         /// <summary>

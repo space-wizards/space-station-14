@@ -103,8 +103,8 @@ namespace Content.Client.Nuke
             FirstStatusLabel.Text = firstMsg;
             SecondStatusLabel.Text = secondMsg;
 
-            EjectButton.Disabled = !state.DiskInserted;
-            AnchorButton.Disabled = !state.DiskInserted;
+            EjectButton.Disabled = !state.DiskInserted || state.Status == NukeStatus.ARMED;
+            AnchorButton.Disabled = state.Status == NukeStatus.ARMED;
             AnchorButton.Pressed = state.IsAnchored;
             ArmButton.Disabled = !state.AllowArm;
         }

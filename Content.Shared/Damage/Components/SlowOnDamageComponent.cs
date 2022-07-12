@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Damage.Components
 {

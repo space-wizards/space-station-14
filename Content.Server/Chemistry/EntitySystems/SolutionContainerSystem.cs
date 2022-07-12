@@ -8,7 +8,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -87,7 +86,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", Loc.GetString(proto.PhysicalDescription))));
+            ("desc", proto.LocalizedPhysicalDescription)));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
@@ -97,7 +96,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        var filledVolumePercent = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
+        var filledVolumePercent = Math.Min(1.0f, solution.CurrentVolume.Float() / solution.MaxVolume.Float());
         appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
             new SolutionContainerVisualState(solution.Color, filledVolumePercent));
     }
@@ -125,7 +124,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
-        RaiseLocalEvent(uid, new SolutionChangedEvent());
+        RaiseLocalEvent(uid, new SolutionChangedEvent(), true);
     }
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)

@@ -1,5 +1,3 @@
-using Robust.Shared.Serialization.Manager.Attributes;
-
 namespace Content.Server.Maps;
 
 [ImplicitDataDefinitionForInheritors]

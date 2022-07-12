@@ -22,10 +22,6 @@
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"
-  params:
-    positionInput: 0,0
-    falloff: 5
-    intensity: 5
 
 - type: shader
   id: Radiation
@@ -34,6 +30,21 @@
   params:
     positionInput: 0,0
     life: 0
+
+- type: shader
+  id: Rainbow
+  kind: source
+  path: "/Textures/Shaders/rainbow.swsl"
+
+- type: shader
+  id: CameraStatic
+  kind: source
+  path: "/Textures/Shaders/camera_static.swsl"
+
+- type: shader
+  id: Drunk
+  kind: source
+  path: "/Textures/Shaders/drunk.swsl"
 
 - type: shader
   id: Texture

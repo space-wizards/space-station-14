@@ -41,6 +41,9 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 2
           steps:
             - tool: Screwing
               doAfter: 1
@@ -62,6 +65,9 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetPlasteel1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MaterialDurathread1
               amount: 2
           steps:
             - tool: Screwing

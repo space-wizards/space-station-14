@@ -1,4 +1,3 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Instruments;
@@ -18,6 +17,12 @@ public abstract class SharedInstrumentSystem : EntitySystem
 
     public virtual void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? instrument = null)
     { }
+
+    public void SetInstrumentProgram(SharedInstrumentComponent component, byte program, byte bank)
+    {
+        component.InstrumentProgram = program;
+        component.InstrumentBank = bank;
+    }
 
     private void OnGetState(EntityUid uid, SharedInstrumentComponent instrument, ref ComponentGetState args)
     {

@@ -12,9 +12,9 @@
       - type: BurnStateVisualizer
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Base for all cigars and cigarettes.
 - type: entity
@@ -25,6 +25,9 @@
   - type: Smokable
     exposeTemperature: 1173.15
   - type: Cigar
+  - type: Tag
+    tags:
+    - Trash
   - type: InjectableSolution
     solution: smokable
   - type: SolutionContainerManager

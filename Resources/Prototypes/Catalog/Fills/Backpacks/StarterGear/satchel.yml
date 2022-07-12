@@ -23,7 +23,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalSecurity
       - id: Flash
 
 - type: entity
@@ -33,7 +33,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalMedical
 
 - type: entity
   noSpawn: true
@@ -53,7 +53,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxSurvival
+      - id: BoxSurvivalEngineering
 
 - type: entity
   noSpawn: true
@@ -103,6 +103,19 @@
         - id: BoxSurvival
         - id: AcousticGuitarInstrument
         - id: SaxophoneInstrument
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelDetectiveFilled
+  components:
+    - type: StorageFill
+      contents:
+      - id: BoxSurvival
+      - id: Lighter
+      - id: CigPackBlack
+      - id: BoxForensicPad
+      - id: HandLabeler
 
 - type: entity
   noSpawn: true

@@ -1,10 +1,7 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Decals;
 
@@ -30,7 +27,7 @@ Possible modes are:\n
             return;
         }
 
-        if (!int.TryParse(args[0], out var gridIdRaw))
+        if (!EntityUid.TryParse(args[0], out var gridId))
         {
             shell.WriteError($"Failed parsing gridId '{args[3]}'.");
             return;
@@ -42,7 +39,6 @@ Possible modes are:\n
             return;
         }
 
-        var gridId = new GridId(gridIdRaw);
         if (!IoCManager.Resolve<IMapManager>().GridExists(gridId))
         {
             shell.WriteError($"No grid with gridId {gridId} exists.");

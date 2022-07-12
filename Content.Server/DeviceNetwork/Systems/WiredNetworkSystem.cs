@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -18,7 +17,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            if (EntityManager.GetComponent<TransformComponent>(uid).GridID != args.SenderTransform.GridID)
+            if (EntityManager.GetComponent<TransformComponent>(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();
             }

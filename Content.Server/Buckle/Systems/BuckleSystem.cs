@@ -1,14 +1,12 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
+using Content.Server.Storage.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Buckle.Systems
 {
@@ -26,15 +24,14 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<StrapComponent, RotateEvent>(RotateEvent);
 
-            SubscribeLocalEvent<BuckleComponent, EntInsertedIntoContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(ContainerModifiedStrap);
 
-            SubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
             SubscribeLocalEvent<BuckleComponent, GetVerbsEvent<InteractionVerb>>(AddUnbuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
 
         private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -98,10 +95,6 @@ namespace Content.Server.Buckle.Systems
             }
         }
 
-        private void ContainerModifiedBuckle(EntityUid uid, BuckleComponent buckle, ContainerModifiedMessage message)
-        {
-            ContainerModifiedReAttach(buckle, buckle.BuckledTo);
-        }
         private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
         {
             foreach (var buckledEntity in strap.BuckledEntities)
@@ -135,6 +128,12 @@ namespace Content.Server.Buckle.Systems
             {
                 buckle.ReAttach(strap);
             }
+        }
+
+        public void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            if (comp.Buckled)
+                args.Cancel();
         }
     }
 }

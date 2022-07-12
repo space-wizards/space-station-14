@@ -9,9 +9,6 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
@@ -50,7 +47,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!entityManager.TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
+            if (!entityManager.HasComponent<InventoryComponent?>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
                 return;
@@ -70,12 +67,18 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManager.TryIndex<StartingGearPrototype>(args[1], out var startingGear))
-            {
+            if (!SetOutfit(target, args[1], entityManager))
                 shell.WriteLine(Loc.GetString("set-outfit-command-invalid-outfit-id-error"));
-                return;
-            }
+        }
+
+        public static bool SetOutfit(EntityUid target, string gear, IEntityManager entityManager, Action<EntityUid, EntityUid>? onEquipped = null)
+        {
+            if (!entityManager.TryGetComponent<InventoryComponent?>(target, out var inventoryComponent))
+                return false;
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            if (!prototypeManager.TryIndex<StartingGearPrototype>(gear, out var startingGear))
+                return false;
 
             HumanoidCharacterProfile? profile = null;
             // Check if we are setting the outfit of a player to respect the preferences
@@ -92,7 +95,7 @@ namespace Content.Server.Administration.Commands
             {
                 foreach (var slot in slotDefinitions)
                 {
-                    invSystem.TryUnequip(target, slot.Name, true, true, inventoryComponent);
+                    invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
                     var gearStr = startingGear.GetGear(slot.Name, profile);
                     if (gearStr == string.Empty)
                     {
@@ -107,8 +110,12 @@ namespace Content.Server.Administration.Commands
                     }
 
                     invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+
+                    onEquipped?.Invoke(target, equipmentEntity);
                 }
             }
+
+            return true;
         }
     }
 }

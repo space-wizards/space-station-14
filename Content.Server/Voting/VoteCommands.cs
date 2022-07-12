@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
@@ -7,8 +6,6 @@ using Content.Shared.Administration;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Voting
 {
@@ -16,8 +13,8 @@ namespace Content.Server.Voting
     public sealed class CreateVoteCommand : IConsoleCommand
     {
         public string Command => "createvote";
-        public string Description => Loc.GetString("create-vote-command-description");
-        public string Help => Loc.GetString("create-vote-command-help");
+        public string Description => Loc.GetString("cmd-createvote-desc");
+        public string Help => Loc.GetString("cmd-createvote-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -29,7 +26,7 @@ namespace Content.Server.Voting
 
             if (!Enum.TryParse<StandardVoteType>(args[0], ignoreCase: true, out var type))
             {
-                shell.WriteError(Loc.GetString("create-vote-command-invalid-vote-type"));
+                shell.WriteError(Loc.GetString("cmd-createvote-invalid-vote-type"));
                 return;
             }
 
@@ -37,24 +34,37 @@ namespace Content.Server.Voting
 
             if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player, type))
             {
-                shell.WriteError(Loc.GetString("create-vote-command-cannot-call-vote-now"));
+                shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
 
             mgr.CreateStandardVote((IPlayerSession?) shell.Player, type);
         }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                var options = Enum.GetNames<StandardVoteType>();
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-createvote-arg-vote-type"));
+            }
+
+            return CompletionResult.Empty;
+        }
     }
 
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class CreateCustomCommand : IConsoleCommand
     {
+        private const int MaxArgCount = 10;
+
         public string Command => "customvote";
-        public string Description => Loc.GetString("create-custom-command-description");
-        public string Help => Loc.GetString("create-custom-command-help");
+        public string Description => Loc.GetString("cmd-customvote-desc");
+        public string Help => Loc.GetString("cmd-customvote-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length < 3 || args.Length > 10)
+            if (args.Length < 3 || args.Length > MaxArgCount)
             {
                 shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 3), ("upper", 10)));
                 return;
@@ -85,13 +95,25 @@ namespace Content.Server.Voting
                 if (eventArgs.Winner == null)
                 {
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
-                    chatMgr.DispatchServerAnnouncement(Loc.GetString("create-custom-command-on-finished-tie",("ties", ties)));
+                    chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie",("ties", ties)));
                 }
                 else
                 {
-                    chatMgr.DispatchServerAnnouncement(Loc.GetString("create-custom-command-on-finished-win",("winner", args[(int) eventArgs.Winner])));
+                    chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
             };
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+                return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-title"));
+
+            if (args.Length > MaxArgCount)
+                return CompletionResult.Empty;
+
+            var n = args.Length - 1;
+            return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-option-n", ("n", n)));
         }
     }
 
@@ -100,14 +122,14 @@ namespace Content.Server.Voting
     public sealed class VoteCommand : IConsoleCommand
     {
         public string Command => "vote";
-        public string Description => Loc.GetString("vote-command-description");
-        public string Help => Loc.GetString("vote-command-help");
+        public string Description => Loc.GetString("cmd-vote-desc");
+        public string Help => Loc.GetString("cmd-vote-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
-                shell.WriteError(Loc.GetString("vote-command-on-execute-error-must-be-player"));
+                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-must-be-player"));
                 return;
             }
 
@@ -119,20 +141,20 @@ namespace Content.Server.Voting
 
             if (!int.TryParse(args[0], out var voteId))
             {
-                shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-vote-id"));
+                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote-id"));
                 return;
             }
 
             if (!int.TryParse(args[1], out var voteOption))
             {
-                shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-vote-options"));
+                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote-options"));
                 return;
             }
 
             var mgr = IoCManager.Resolve<IVoteManager>();
             if (!mgr.TryGetVote(voteId, out var vote))
             {
-                shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-vote"));
+                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-vote"));
                 return;
             }
 
@@ -147,7 +169,7 @@ namespace Content.Server.Voting
             }
             else
             {
-                shell.WriteError(Loc.GetString("vote-command-on-execute-error-invalid-option"));
+                shell.WriteError(Loc.GetString("cmd-vote-on-execute-error-invalid-option"));
                 return;
             }
 
@@ -159,8 +181,8 @@ namespace Content.Server.Voting
     public sealed class ListVotesCommand : IConsoleCommand
     {
         public string Command => "listvotes";
-        public string Description => Loc.GetString("list-votes-command-description");
-        public string Help => Loc.GetString("list-votes-command-help");
+        public string Description => Loc.GetString("cmd-listvotes-desc");
+        public string Help => Loc.GetString("cmd-listvotes-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -177,8 +199,8 @@ namespace Content.Server.Voting
     public sealed class CancelVoteCommand : IConsoleCommand
     {
         public string Command => "cancelvote";
-        public string Description => Loc.GetString("cancel-vote-command-description");
-        public string Help => Loc.GetString("cancel-vote-command-help");
+        public string Description => Loc.GetString("cmd-cancelvote-desc");
+        public string Help => Loc.GetString("cmd-cancelvote-help");
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -186,17 +208,32 @@ namespace Content.Server.Voting
 
             if (args.Length < 1)
             {
-                shell.WriteError(Loc.GetString("cancel-vote-command-on-execute-error-missing-vote-id"));
+                shell.WriteError(Loc.GetString("cmd-cancelvote-error-missing-vote-id"));
                 return;
             }
 
             if (!int.TryParse(args[0], out var id) || !mgr.TryGetVote(id, out var vote))
             {
-                shell.WriteError(Loc.GetString("cancel-vote-command-on-execute-error-invalid-vote-id"));
+                shell.WriteError(Loc.GetString("cmd-cancelvote-error-invalid-vote-id"));
                 return;
             }
 
             vote.Cancel();
+        }
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            var mgr = IoCManager.Resolve<IVoteManager>();
+            if (args.Length == 1)
+            {
+                var options = mgr.ActiveVotes
+                    .OrderBy(v => v.Id)
+                    .Select(v => new CompletionOption(v.Id.ToString(), v.Title));
+
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-cancelvote-arg-id"));
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

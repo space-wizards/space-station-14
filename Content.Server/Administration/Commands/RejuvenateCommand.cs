@@ -1,9 +1,11 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Miasma;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Disease;
+using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Administration;
@@ -56,12 +58,15 @@ namespace Content.Server.Administration.Commands
         {
             var targetUid = target;
             var entMan = IoCManager.Resolve<IEntityManager>();
-            entMan.GetComponentOrNull<MobStateComponent>(targetUid)?.UpdateState(0);
             entMan.GetComponentOrNull<HungerComponent>(targetUid)?.ResetFood();
-            entMan.GetComponentOrNull<ThirstComponent>(targetUid)?.ResetThirst();
 
             // TODO holy shit make this an event my man!
             EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target);
+
+            if(entMan.TryGetComponent(target , out ThirstComponent? thirst))
+            {
+                EntitySystem.Get<ThirstSystem>().ResetThirst(thirst);
+            }
 
             if (entMan.TryGetComponent(target, out FlammableComponent? flammable))
             {
@@ -85,15 +90,13 @@ namespace Content.Server.Administration.Commands
                 sys.TryModifyBloodLevel(target, bloodStream.BloodSolution.AvailableVolume, bloodStream);
             }
 
-            if (entMan.HasComponent<JitteringComponent>(target))
-            {
-                entMan.RemoveComponent<JitteringComponent>(target);
-            }
-
             if (entMan.TryGetComponent<DiseaseCarrierComponent>(target, out var carrier))
             {
                 EntitySystem.Get<DiseaseSystem>().CureAllDiseases(target, carrier);
             }
+
+            entMan.RemoveComponent<JitteringComponent>(target);
+            entMan.RemoveComponent<RottingComponent>(target);
         }
     }
 }

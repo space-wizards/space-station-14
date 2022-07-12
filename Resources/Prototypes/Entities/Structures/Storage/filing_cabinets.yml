@@ -1,0 +1,92 @@
+- type: entity
+  name: filing cabinet
+  parent: BaseStructure
+  id: filingCabinet
+  description: A cabinet for all your filing needs.
+  components:
+  - type: Storage
+    capacity: 80
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/cabinets.rsi
+    state: filingcabinet
+    noRot: true
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: filingcabinet-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.18,-0.48,0.18,0.48"
+      mass: 70
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: InteractionOutline
+
+- type: entity
+  name: tall cabinet
+  parent: filingCabinet
+  id: filingCabinetTall
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/cabinets.rsi
+    state: tallcabinet
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: tallcabinet-open
+
+- type: entity
+  name: chest drawer
+  parent: BaseStructureDynamic
+  id: filingCabinetDrawer
+  description: A small drawer for all your filing needs, Now with wheels!
+  components:
+  - type: Storage
+    capacity: 50
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/cabinets.rsi
+    state: chestdrawer
+    noRot: true
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: chestdrawer-open
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.22,-0.42,0.22,0.34"
+      mass: 70
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: InteractionOutline

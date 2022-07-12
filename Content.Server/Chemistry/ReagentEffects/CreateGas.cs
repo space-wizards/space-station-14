@@ -2,8 +2,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
@@ -23,10 +21,9 @@ public sealed class CreateGas : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        var atmosSys = EntitySystem.Get<AtmosphereSystem>();
+        var atmosSys = args.EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
-        var xform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
-        var tileMix = atmosSys.GetTileMixture(xform.Coordinates);
+        var tileMix = atmosSys.GetContainingMixture(args.SolutionEntity, false, true);
 
         if (tileMix != null)
         {

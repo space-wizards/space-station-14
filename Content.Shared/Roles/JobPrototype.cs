@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Access;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {
@@ -30,6 +26,9 @@ namespace Content.Shared.Roles
         [DataField("name")]
         public string Name { get; } = string.Empty;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string LocalizedName => Loc.GetString(Name);
+
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; } = false;
 
@@ -46,11 +45,19 @@ namespace Content.Shared.Roles
         ///     Whether this job is a head.
         ///     The job system will try to pick heads before other jobs on the same priority level.
         /// </summary>
-        [DataField("head")]
-        public bool IsHead { get; private set; }
+        [DataField("weight")]
+        public int Weight { get; private set; }
 
         [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
         public string? StartingGear { get; private set; }
+
+        /// <summary>
+        /// Use this to spawn in as a non-humanoid (borg, test subject, etc.)
+        /// Starting gear will be ignored.
+        /// If you want to just add special attributes to a humanoid, use AddComponentSpecial instead.
+        /// </summary>
+        [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? JobEntity = null;
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
@@ -65,5 +72,11 @@ namespace Content.Shared.Roles
 
         [DataField("accessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
         public IReadOnlyCollection<string> AccessGroups { get; } = Array.Empty<string>();
+
+        [DataField("extendedAccess", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
+        public IReadOnlyCollection<string> ExtendedAccess { get; } = Array.Empty<string>();
+
+        [DataField("extendedAccessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
+        public IReadOnlyCollection<string> ExtendedAccessGroups { get; } = Array.Empty<string>();
     }
 }

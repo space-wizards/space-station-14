@@ -41,7 +41,7 @@ tilemap:
   34: floor_wood
   35: lattice
   36: plating
-  37: underplating
+  37: plating
 grids:
 - settings:
     chunksize: 16
@@ -862,9 +862,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 17
   type: WallReinforced

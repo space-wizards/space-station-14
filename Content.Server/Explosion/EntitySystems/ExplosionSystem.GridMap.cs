@@ -11,7 +11,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
     /// </summary>
-    private Dictionary<GridId, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
+    private Dictionary<EntityUid, Dictionary<Vector2i, NeighborFlag>> _gridEdges = new();
 
     /// <summary>
     ///     On grid startup, prepare a map of grid edges.
@@ -21,7 +21,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var grid = _mapManager.GetGrid(ev.GridId);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
-        _gridEdges[ev.GridId] = edges;
+        _gridEdges[ev.EntityUid] = edges;
 
         foreach (var tileRef in grid.GetAllTiles())
         {
@@ -32,8 +32,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGridRemoved(GridRemovalEvent ev)
     {
-        _airtightMap.Remove(ev.GridId);
-        _gridEdges.Remove(ev.GridId);
+        _airtightMap.Remove(ev.EntityUid);
+        _gridEdges.Remove(ev.EntityUid);
     }
 
     /// <summary>
@@ -42,8 +42,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     public (Dictionary<Vector2i, BlockedSpaceTile>, ushort) TransformGridEdges(
         MapCoordinates epicentre,
-        GridId? referenceGrid,
-        List<GridId> localGrids,
+        EntityUid? referenceGrid,
+        List<EntityUid> localGrids,
         float maxDistance)
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
@@ -160,7 +160,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 // if this ever changes, this needs to do a try-get.
                 var data = new BlockedSpaceTile();
                 transformedEdges[tile] = data;
-                
+
                 data.UnblockedDirections = AtmosDirection.Invalid; // all directions are blocked automatically.
 
                 if ((dir & NeighborFlag.Cardinal) == 0)
@@ -225,15 +225,15 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (!ev.NewTile.Tile.IsEmpty && !ev.OldTile.IsEmpty)
             return;
 
-        var tileRef = ev.NewTile;
-
-        if (!_mapManager.TryGetGrid(tileRef.GridIndex, out var grid))
+        if (!_mapManager.TryGetGrid(ev.Entity, out var grid))
             return;
 
-        if (!_gridEdges.TryGetValue(tileRef.GridIndex, out var edges))
+        var tileRef = ev.NewTile;
+
+        if (!_gridEdges.TryGetValue(tileRef.GridUid, out var edges))
         {
             edges = new();
-            _gridEdges[tileRef.GridIndex] = edges;
+            _gridEdges[tileRef.GridUid] = edges;
         }
 
         if (tileRef.Tile.IsEmpty)
@@ -373,10 +373,10 @@ public sealed class BlockedSpaceTile
     public sealed class GridEdgeData
     {
         public Vector2i Tile;
-        public GridId? Grid;
+        public EntityUid? Grid;
         public Box2Rotated Box;
 
-        public GridEdgeData(Vector2i tile, GridId? grid, Vector2 center, Angle angle, float size)
+        public GridEdgeData(Vector2i tile, EntityUid? grid, Vector2 center, Angle angle, float size)
         {
             Tile = tile;
             Grid = grid;

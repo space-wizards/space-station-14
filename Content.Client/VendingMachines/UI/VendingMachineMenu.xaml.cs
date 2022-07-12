@@ -56,7 +56,7 @@ namespace Content.Client.VendingMachines.UI
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            Owner.Eject(_cachedInventory[args.ItemIndex].ID);
+            Owner.Eject(_cachedInventory[args.ItemIndex].Type, _cachedInventory[args.ItemIndex].ID);
         }
     }
 }

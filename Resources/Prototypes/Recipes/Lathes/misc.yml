@@ -17,15 +17,6 @@
     Glass: 50
 
 - type: latheRecipe
-  id: PowerCellSmallHigh
-  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
-  result: PowerCellSmallHigh
-  completetime: 2
-  materials:
-    Steel: 100
-    Glass: 100
-
-- type: latheRecipe
   id: GlowstickRed
   icon: Objects/Misc/glowstick.rsi
   result: GlowstickRed

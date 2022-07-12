@@ -2,7 +2,7 @@ namespace Content.Client.Lathe;
 
 /// <summary>
 /// Holds the idle and running state for machines to control
-/// playing animtions on the client.
+/// playing animations on the client.
 /// </summary>
 [RegisterComponent]
 public sealed class LatheVisualsComponent : Component
@@ -12,4 +12,8 @@ public sealed class LatheVisualsComponent : Component
 
     [DataField("runningState", required: true)]
     public string RunningState = default!;
+    
+    [ViewVariables]
+    [DataField("ignoreColor")]
+    public bool IgnoreColor;
 }

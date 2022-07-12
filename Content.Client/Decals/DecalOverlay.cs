@@ -45,8 +45,9 @@ namespace Content.Client.Decals
 
             foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
             {
-                var gridUid = _mapManager.GetGridEuid(gridId);
-                var xform = xformQuery.GetComponent(gridUid);
+                if (zIndexDictionary.Count == 0) continue;
+
+                var xform = xformQuery.GetComponent(gridId);
 
                 handle.SetTransform(_transform.GetWorldMatrix(xform, xformQuery));
 

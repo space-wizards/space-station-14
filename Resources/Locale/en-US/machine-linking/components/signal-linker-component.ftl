@@ -13,5 +13,5 @@ signal-linker-component-out-of-range = Connection is out of range!
 signal-linking-verb-text-link-default = Link default ports
 signal-linking-verb-success = Connected all default {$machine} links.
 signal-linking-verb-fail = Failed to connect all default {$machine} links.
-signal-linking-verb-disabled-no-transmitter = You first need to interact with a transmitter.
-signal-linking-verb-disabled-no-receiver = You first need to interact with a receiver.
+signal-linking-verb-disabled-no-transmitter = First interact with a transmitter, then link default ports.
+signal-linking-verb-disabled-no-receiver = First interact with a receiver, then link default ports.

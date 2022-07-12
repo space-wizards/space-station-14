@@ -2,11 +2,8 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 using System.Linq;
 
 namespace Content.Server.Storage.Components
@@ -50,8 +47,8 @@ namespace Content.Server.Storage.Components
                 locker.Insert(entity);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _cursedSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
-            SoundSystem.Play(Filter.Pvs(lockerEnt), _cursedLockerSound.GetSound(), lockerEnt, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_cursedSound.GetSound(), Filter.Pvs(Owner), Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(_cursedLockerSound.GetSound(), Filter.Pvs(lockerEnt), lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

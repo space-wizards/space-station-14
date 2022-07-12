@@ -1,9 +1,6 @@
-using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameTicking.Commands
 {
@@ -17,6 +14,11 @@ namespace Content.Server.GameTicking.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player as IPlayerSession;
+            if (args.Length != 1)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                return;
+            }
             if (player == null)
             {
                 return;

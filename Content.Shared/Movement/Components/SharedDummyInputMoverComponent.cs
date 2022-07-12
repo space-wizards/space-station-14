@@ -1,6 +1,3 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
 namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
@@ -8,8 +5,7 @@ namespace Content.Shared.Movement.Components
     public sealed class SharedDummyInputMoverComponent : Component, IMoverComponent
     {
         public bool IgnorePaused => false;
-        public float CurrentWalkSpeed => 0f;
-        public float CurrentSprintSpeed => 0f;
+
         public bool CanMove { get; set; } = true;
 
         public Angle LastGridAngle { get => Angle.Zero; set {} }

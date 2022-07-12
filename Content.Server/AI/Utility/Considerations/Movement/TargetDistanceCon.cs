@@ -1,7 +1,5 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Considerations.Movement
 {
@@ -13,7 +11,7 @@ namespace Content.Server.AI.Utility.Considerations.Movement
             var entities = IoCManager.Resolve<IEntityManager>();
 
             if (context.GetState<TargetEntityState>().GetValue() is not {Valid: true} target || entities.Deleted(target) ||
-                entities.GetComponent<TransformComponent>(target).GridID != entities.GetComponent<TransformComponent>(self).GridID)
+                entities.GetComponent<TransformComponent>(target).GridUid != entities.GetComponent<TransformComponent>(self).GridUid)
             {
                 return 0.0f;
             }

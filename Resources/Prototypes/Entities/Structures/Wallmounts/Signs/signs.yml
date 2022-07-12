@@ -199,6 +199,14 @@
 
 - type: entity
   parent: BaseSign
+  id: SignAtmosMinsky
+  name: atmospherics sign
+  components:
+  - type: Sprite
+    state: atmominsky
+    
+- type: entity
+  parent: BaseSign
   id: SignBar
   name: bar sign
   components:
@@ -725,6 +733,14 @@
   components:
   - type: Sprite
     state: xenolab
+
+- type: entity
+  parent: BaseSign
+  id: SignZomlab
+  name: zombie lab sign
+  components:
+  - type: Sprite
+    state: zomlab
 
 - type: entity
   parent: BaseSign

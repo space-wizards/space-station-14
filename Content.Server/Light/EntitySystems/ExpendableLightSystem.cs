@@ -7,8 +7,6 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
@@ -125,7 +123,7 @@ namespace Content.Server.Light.EntitySystems
                 {
                     case ExpendableLightState.Lit:
                     {
-                        SoundSystem.Play(Filter.Pvs(component.Owner), component.LitSound.GetSound(), component.Owner);
+                        SoundSystem.Play(component.LitSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
 
                         if (component.IconStateLit != string.Empty)
                         {
@@ -144,7 +142,7 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Dead:
                     {
                         if (component.DieSound != null)
-                            SoundSystem.Play(Filter.Pvs(component.Owner), component.DieSound.GetSound(), component.Owner);
+                            SoundSystem.Play(component.DieSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
 
                         sprite.LayerSetState(0, component.IconStateSpent);
                         sprite.LayerSetShader(0, "shaded");

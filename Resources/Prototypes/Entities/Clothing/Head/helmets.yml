@@ -17,6 +17,7 @@
         Blunt: 0.5
         Slash: 0.8
         Piercing: 0.8
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -125,6 +126,9 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+  - type: Tag
+    tags:
+    - HidesHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -137,6 +141,10 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - HidesHair
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -161,6 +169,7 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/templar.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -184,9 +193,10 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos techs best friend. Provides some heat resistance and looks cool.
@@ -195,10 +205,13 @@
     sprite: Clothing/Head/Helmets/firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/firehelmet.rsi
+    size: 5
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
   - type: TemperatureProtection
     coefficient: 0.01
   - type: Armor
@@ -212,9 +225,10 @@
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 1000
+  - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase # hardsuitlight base for light and protection
+  parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
@@ -223,6 +237,9 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
+    size: 5
+    canPickup: true
+    quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
     coefficient: 0.005
@@ -237,6 +254,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadBase
@@ -255,6 +273,7 @@
         Slash: 0.5
         Piercing: 0.5
         Heat: 0.9
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingHeadEVAHelmetBase

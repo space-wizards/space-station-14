@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
@@ -9,8 +8,11 @@ namespace Content.Shared.Administration
         Station,
         Server,
     }
+
     [Serializable, NetSerializable]
-    public sealed class AdminAnnounceEuiState : EuiStateBase {}
+    public sealed class AdminAnnounceEuiState : EuiStateBase
+    {
+    }
 
     public static class AdminAnnounceEuiMsg
     {

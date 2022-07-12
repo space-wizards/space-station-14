@@ -16,9 +16,6 @@ namespace Content.Server.Clothing.Components
         [DataField("HeatResistance")]
         private int _heatResistance = 323;
 
-        [DataField("quickEquip")]
-        public bool QuickEquip = true;
-
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
     }

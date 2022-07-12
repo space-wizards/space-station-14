@@ -120,16 +120,8 @@ namespace Content.Client.Administration.UI
 
         public void OnBwoink(NetUserId channel)
         {
-            var open = IsOpen;
-            Open();
-
             ChannelSelector.RefreshDecorators();
             ChannelSelector.Sort();
-
-            if (!open)
-            {
-                SelectChannel(channel);
-            }
         }
 
         public void SelectChannel(NetUserId channel)
@@ -178,9 +170,12 @@ namespace Content.Client.Administration.UI
             if (pl.Antag)
                 sb.Append(new Rune(0x1F5E1)); // 🗡
 
-            sb.AppendFormat("\"{0}\"", pl.CharacterName)
-                .Append(' ')
-                .Append(pl.Username);
+            sb.AppendFormat("\"{0}\"", pl.CharacterName);
+
+            if (pl.IdentityName != pl.CharacterName && pl.IdentityName != string.Empty)
+                sb.Append(' ').AppendFormat("[{0}]", pl.IdentityName);
+
+            sb.Append(' ').Append(pl.Username);
 
             return sb.ToString();
         }

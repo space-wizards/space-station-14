@@ -1,12 +1,7 @@
-﻿using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Shared.Pulling.Components
+﻿namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SharedPullingStateManagementSystem))]
+    [Access(typeof(SharedPullingStateManagementSystem))]
     public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
@@ -16,6 +11,12 @@ namespace Content.Shared.Pulling.Components
 
         [ViewVariables]
         public EntityUid? Pulling { get; set; }
+
+        /// <summary>
+        ///     Does this entity need hands to be able to pull something?
+        /// </summary>
+        [DataField("needsHands")]
+        public bool NeedsHands = true;
 
         protected override void Shutdown()
         {

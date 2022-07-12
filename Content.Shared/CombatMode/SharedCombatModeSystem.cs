@@ -33,12 +33,13 @@ namespace Content.Shared.CombatMode
                 _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
 
             if (component.DisarmAction == null
+                && component.CanDisarm
                 && _protoMan.TryIndex(component.DisarmActionId, out EntityTargetActionPrototype? disarmProto))
             {
                 component.DisarmAction = new(disarmProto);
             }
 
-            if (component.DisarmAction != null)
+            if (component.DisarmAction != null && component.CanDisarm)
                 _actionsSystem.AddAction(uid, component.DisarmAction, null);
         }
 
@@ -49,6 +50,11 @@ namespace Content.Shared.CombatMode
 
             if (component.DisarmAction != null)
                 _actionsSystem.RemoveAction(uid, component.DisarmAction);
+        }
+
+        public bool IsInCombatMode(EntityUid entity)
+        {
+            return TryComp<SharedCombatModeComponent>(entity, out var combatMode) && combatMode.IsInCombatMode;
         }
 
         private void OnActionPerform(EntityUid uid, SharedCombatModeComponent component, ToggleCombatActionEvent args)
@@ -64,10 +70,8 @@ namespace Content.Shared.CombatMode
         {
             var entity = eventArgs.SenderSession.AttachedEntity;
 
-            if (entity == default || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
-            {
+            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
                 return;
-            }
 
             combatModeComponent.IsInCombatMode = ev.Active;
         }

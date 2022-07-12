@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -55,7 +51,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         }
     }
 
-    public enum NodeGroupID
+    public enum NodeGroupID : byte
     {
         Default,
         HVPower,

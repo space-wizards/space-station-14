@@ -1,0 +1,74 @@
+﻿- type: entity
+  id: BaseLandMine
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Pullable
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+        - LowImpassable
+  - type: Sprite
+    drawdepth: Items
+    sprite: Objects/Misc/uglymine.rsi
+    state: uglymine
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: LandMine
+  - type: TriggerOnStepTrigger
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+
+- type: entity
+  name: kick mine
+  parent: BaseLandMine
+  id: LandMineKick
+  components:
+  - type: GhostKickUserOnTrigger
+  - type: DeleteOnTrigger
+
+- type: entity
+  name: modular mine
+  description: This bad boy could be packing any number of dangers. Or a bike horn.
+  parent: BaseLandMine
+  id: LandMineModular
+  components:
+  - type: PayloadCase
+  - type: Construction
+    graph: ModularMineGraph
+    node: emptyCase
+  - type: LandMine
+
+- type: entity
+  name: explosive mine
+  parent: BaseLandMine
+  id: LandMineExplosive
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
+  - type: DeleteOnTrigger

@@ -1,14 +1,14 @@
 - type: job
   id: HeadOfSecurity
-  name: "head of security"
-  head: true
+  name: job-name-hos
+  weight: 10
   startingGear: HoSGear
   departments:
   - Command
   - Security
   icon: "HeadOfSecurity"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - HeadOfSecurity
@@ -18,6 +18,7 @@
   - Armory
   - Maintenance
   - Service
+  - External
 
 - type: startingGear
   id: HoSGear

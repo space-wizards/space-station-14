@@ -3,20 +3,7 @@
   stack: Steel
   name: steel
   icon: Objects/Materials/Sheets/metal.rsi/steel.png
-
-- type: material
-  id: Adamantine
-  stack: Adamantine
-  name: adamantine
-  icon: Objects/Materials/ingots.rsi/adamantine.png
-  color: "#7dc37f"
-
-- type: material
-  id: Copper
-  stack: Copper
-  name: copper
-  icon: Objects/Materials/ingots.rsi/copper.png
-  color: "#B87333"
+  price: 0.0025
 
 - type: material
   id: Gold
@@ -24,18 +11,7 @@
   name: gold
   icon: Objects/Materials/ingots.rsi/gold.png
   color: "#FFD700"
-
-- type: material
-  id: Hydrogen
-  stack: Hydrogen
-  name: hydrogen
-  icon: Objects/Materials/ingots.rsi/hydrogen.png
-
-- type: material
-  id: Iron
-  stack: Iron
-  name: iron
-  icon: Objects/Materials/ingots.rsi/iron.png #Do we even distinguish between steel and iron?
+  price: 0.0625
 
 - type: material
   id: Silver
@@ -43,6 +19,7 @@
   name: silver
   icon: Objects/Materials/ingots.rsi/silver.png
   color: "#C0C0C0"
+  price: 0.025
 
 - type: material
   id: Plasteel
@@ -50,24 +27,4 @@
   name: plasteel
   icon: Objects/Materials/Sheets/metal.rsi/plasteel.png
   color: "#696969" #Okay, this is epic
-
-- type: material
-  id: Brass
-  stack: Brass
-  name: brass
-  icon: Objects/Materials/Sheets/metal.rsi/brass.png
-  color: "#E1C16E"
-
-- type: material
-  id: Titanium
-  stack: Titanium
-  name: titanium
-  icon: Objects/Materials/Sheets/metal.rsi/titanium.png
-  color: "#878681"
-
-- type: material
-  id: Plastitanium
-  stack: Plastitanium
-  name: plastitanium
-  icon: Objects/Materials/Sheets/metal.rsi/plastitanium.png
-  color: "#4e4e4b"
+  price: 0.1025 # 1-1 mix of plasma and steel.

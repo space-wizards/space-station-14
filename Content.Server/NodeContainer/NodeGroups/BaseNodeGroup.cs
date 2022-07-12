@@ -1,11 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
@@ -24,7 +20,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         void Create(NodeGroupID groupId);
 
-        void Initialize(Node sourceNode);
+        void Initialize(Node sourceNode, IEntityManager entMan);
 
         void RemoveNode(Node node);
 
@@ -60,9 +56,6 @@ namespace Content.Server.NodeContainer.NodeGroups
         [ViewVariables]
         public bool Removed { get; set; } = false;
 
-        [ViewVariables]
-        protected GridId GridId { get; private set; }
-
         /// <summary>
         ///     Network ID of this group for client-side debug visualization of nodes.
         /// </summary>
@@ -77,10 +70,8 @@ namespace Content.Server.NodeContainer.NodeGroups
             GroupId = groupId;
         }
 
-        public virtual void Initialize(Node sourceNode)
+        public virtual void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            // TODO: Can we get rid of this GridId?
-            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
         }
 
         /// <summary>

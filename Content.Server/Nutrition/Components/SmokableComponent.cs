@@ -1,14 +1,10 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(SmokingSystem))]
+    [RegisterComponent, Access(typeof(SmokingSystem))]
     public sealed class SmokableComponent : Component
     {
         [DataField("solution")]

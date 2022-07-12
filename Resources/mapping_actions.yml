@@ -1,6 +1,7 @@
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: ReinforcedWindow
+    icon:
+      entity: ReinforcedWindow
     name: ReinforcedWindow
     keywords: []
     clientExclusive: True
@@ -13,7 +14,8 @@
   - 0: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: WallSolid
+    icon:
+      entity: WallSolid
     name: WallSolid
     keywords: []
     clientExclusive: True
@@ -26,7 +28,8 @@
   - 0: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: WallReinforced
+    icon:
+      entity: WallReinforced
     name: WallReinforced
     keywords: []
     clientExclusive: True
@@ -39,7 +42,8 @@
   - 0: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Window
+    icon:
+      entity: Window
     name: Window
     keywords: []
     clientExclusive: True
@@ -52,7 +56,8 @@
   - 0: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Firelock
+    icon:
+      entity: Firelock
     name: Firelock
     keywords: []
     clientExclusive: True
@@ -65,7 +70,8 @@
   - 0: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Grille
+    icon:
+      entity: Grille
     name: Grille
     keywords: []
     clientExclusive: True
@@ -95,7 +101,8 @@
   - 6: 9
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasPipeStraight
+    icon:
+      entity: GasPipeStraight
     name: GasPipeStraight
     keywords: []
     clientExclusive: True
@@ -108,7 +115,8 @@
   - 1: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasPipeBend
+    icon:
+      entity: GasPipeBend
     name: GasPipeBend
     keywords: []
     clientExclusive: True
@@ -121,7 +129,8 @@
   - 1: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasPipeTJunction
+    icon:
+      entity: GasPipeTJunction
     name: GasPipeTJunction
     keywords: []
     clientExclusive: True
@@ -134,7 +143,8 @@
   - 1: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasPipeFourway
+    icon:
+      entity: GasPipeFourway
     name: GasPipeFourway
     keywords: []
     clientExclusive: True
@@ -147,7 +157,8 @@
   - 1: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasVentScrubber
+    icon:
+      entity: GasVentScrubber
     name: GasVentScrubber
     keywords: []
     clientExclusive: True
@@ -160,7 +171,8 @@
   - 1: 4
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: GasVentPump
+    icon:
+      entity: GasVentPump
     name: GasVentPump
     keywords: []
     clientExclusive: True
@@ -173,7 +185,8 @@
   - 1: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirAlarm
+    icon:
+      entity: AirAlarm
     name: AirAlarm
     keywords: []
     clientExclusive: True
@@ -186,7 +199,8 @@
   - 1: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: FireAlarm
+    icon:
+      entity: FireAlarm
     name: FireAlarm
     keywords: []
     clientExclusive: True
@@ -199,20 +213,22 @@
   - 1: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: SalternAPC
-    name: SalternAPC
+    icon:
+      entity: APCBasic
+    name: APCBasic
     keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: SalternAPC
+      entityType: APCBasic
   assignments:
   - 2: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: CableApcExtension
+    icon:
+      entity: CableApcExtension
     name: CableApcExtension
     keywords: []
     clientExclusive: True
@@ -225,7 +241,8 @@
   - 2: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: CableMV
+    icon:
+      entity: CableMV
     name: CableMV
     keywords: []
     clientExclusive: True
@@ -238,7 +255,8 @@
   - 2: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: CableHV
+    icon:
+      entity: CableHV
     name: CableHV
     keywords: []
     clientExclusive: True
@@ -251,20 +269,22 @@
   - 2: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: SalternSubstation
-    name: SalternSubstation
+    icon:
+      entity: SubstationBasic
+    name: SubstationBasic
     keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: SalternSubstation
+      entityType: SubstationBasic
   assignments:
   - 2: 4
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Poweredlight
+    icon:
+      entity: Poweredlight
     name: Poweredlight
     keywords: []
     clientExclusive: True
@@ -277,7 +297,8 @@
   - 2: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: EmergencyLight
+    icon:
+      entity: EmergencyLight
     name: EmergencyLight
     keywords: []
     clientExclusive: True
@@ -290,20 +311,22 @@
   - 2: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: SalternSMES
-    name: SalternSMES
+    icon:
+      entity: SMESBasic
+    name: SMESBasic
     keywords: []
     clientExclusive: True
     autoPopulate: False
     temporary: True
     event: !type:StartPlacementActionEvent
       placementOption: SnapgridCenter
-      entityType: SalternSMES
+      entityType: SMESBasic
   assignments:
   - 2: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: TableWood
+    icon:
+      entity: TableWood
     name: TableWood
     keywords: []
     clientExclusive: True
@@ -316,7 +339,8 @@
   - 3: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Table
+    icon:
+      entity: Table
     name: Table
     keywords: []
     clientExclusive: True
@@ -329,7 +353,8 @@
   - 3: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: ChairWood
+    icon:
+      entity: ChairWood
     name: ChairWood
     keywords: []
     clientExclusive: True
@@ -342,7 +367,8 @@
   - 3: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Chair
+    icon:
+      entity: Chair
     name: Chair
     keywords: []
     clientExclusive: True
@@ -355,7 +381,8 @@
   - 3: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: ChairOfficeLight
+    icon:
+      entity: ChairOfficeLight
     name: ChairOfficeLight
     keywords: []
     clientExclusive: True
@@ -368,7 +395,8 @@
   - 3: 4
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: StoolBar
+    icon:
+      entity: StoolBar
     name: StoolBar
     keywords: []
     clientExclusive: True
@@ -381,7 +409,8 @@
   - 3: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Stool
+    icon:
+      entity: Stool
     name: Stool
     keywords: []
     clientExclusive: True
@@ -394,7 +423,8 @@
   - 3: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Rack
+    icon:
+      entity: Rack
     name: Rack
     keywords: []
     clientExclusive: True
@@ -407,7 +437,8 @@
   - 3: 8
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: ChairOfficeDark
+    icon:
+      entity: ChairOfficeDark
     name: ChairOfficeDark
     keywords: []
     clientExclusive: True
@@ -420,7 +451,8 @@
   - 3: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: LampGold
+    icon:
+      entity: LampGold
     name: LampGold
     keywords: []
     clientExclusive: True
@@ -433,7 +465,8 @@
   - 3: 9
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalPipe
+    icon:
+      entity: DisposalPipe
     name: DisposalPipe
     keywords: []
     clientExclusive: True
@@ -446,7 +479,8 @@
   - 4: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalBend
+    icon:
+      entity: DisposalBend
     name: DisposalBend
     keywords: []
     clientExclusive: True
@@ -459,7 +493,8 @@
   - 4: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalJunction
+    icon:
+      entity: DisposalJunction
     name: DisposalJunction
     keywords: []
     clientExclusive: True
@@ -472,7 +507,8 @@
   - 4: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalJunctionFlipped
+    icon:
+      entity: DisposalJunctionFlipped
     name: DisposalJunctionFlipped
     keywords: []
     clientExclusive: True
@@ -485,7 +521,8 @@
   - 4: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalRouter
+    icon:
+      entity: DisposalRouter
     name: DisposalRouter
     keywords: []
     clientExclusive: True
@@ -498,7 +535,8 @@
   - 4: 4
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalRouterFlipped
+    icon:
+      entity: DisposalRouterFlipped
     name: DisposalRouterFlipped
     keywords: []
     clientExclusive: True
@@ -511,7 +549,8 @@
   - 4: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalUnit
+    icon:
+      entity: DisposalUnit
     name: DisposalUnit
     keywords: []
     clientExclusive: True
@@ -524,7 +563,8 @@
   - 4: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: DisposalTrunk
+    icon:
+      entity: DisposalTrunk
     name: DisposalTrunk
     keywords: []
     clientExclusive: True
@@ -537,7 +577,8 @@
   - 4: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: SignDisposalSpace
+    icon:
+      entity: SignDisposalSpace
     name: SignDisposalSpace
     keywords: []
     clientExclusive: True
@@ -550,7 +591,8 @@
   - 4: 8
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Windoor
+    icon:
+      entity: Windoor
     name: Windoor
     keywords: []
     clientExclusive: True
@@ -563,7 +605,8 @@
   - 5: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: WindowDirectional
+    icon:
+      entity: WindowDirectional
     name: WindowDirectional
     keywords: []
     clientExclusive: True
@@ -576,7 +619,8 @@
   - 5: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: WindowReinforcedDirectional
+    icon:
+      entity: WindowReinforcedDirectional
     name: WindowReinforcedDirectional
     keywords: []
     clientExclusive: True
@@ -589,7 +633,8 @@
   - 5: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: PlasmaWindowDirectional
+    icon:
+      entity: PlasmaWindowDirectional
     name: PlasmaWindowDirectional
     keywords: []
     clientExclusive: True
@@ -602,7 +647,8 @@
   - 5: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: Railing
+    icon:
+      entity: Railing
     name: Railing
     keywords: []
     clientExclusive: True
@@ -615,7 +661,8 @@
   - 5: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: RailingCorner
+    icon:
+      entity: RailingCorner
     name: RailingCorner
     keywords: []
     clientExclusive: True
@@ -628,7 +675,8 @@
   - 5: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: RailingCornerSmall
+    icon:
+      entity: RailingCornerSmall
     name: RailingCornerSmall
     keywords: []
     clientExclusive: True
@@ -641,7 +689,8 @@
   - 5: 8
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockMaintLocked
+    icon:
+      entity: AirlockMaintLocked
     name: AirlockMaintLocked
     keywords: []
     clientExclusive: True
@@ -654,7 +703,8 @@
   - 6: 0
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockGlass
+    icon:
+      entity: AirlockGlass
     name: AirlockGlass
     keywords: []
     clientExclusive: True
@@ -667,7 +717,8 @@
   - 6: 1
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockServiceLocked
+    icon:
+      entity: AirlockServiceLocked
     name: AirlockServiceLocked
     keywords: []
     clientExclusive: True
@@ -680,7 +731,8 @@
   - 6: 2
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockSecurityLocked
+    icon:
+      entity: AirlockSecurityLocked
     name: AirlockSecurityLocked
     keywords: []
     clientExclusive: True
@@ -693,7 +745,8 @@
   - 6: 3
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockCommand
+    icon:
+      entity: AirlockCommand
     name: AirlockCommand
     keywords: []
     clientExclusive: True
@@ -706,7 +759,8 @@
   - 6: 4
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockScience
+    icon:
+      entity: AirlockScience
     name: AirlockScience
     keywords: []
     clientExclusive: True
@@ -719,7 +773,8 @@
   - 6: 5
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockMedical
+    icon:
+      entity: AirlockMedical
     name: AirlockMedical
     keywords: []
     clientExclusive: True
@@ -732,7 +787,8 @@
   - 6: 6
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockEngineering
+    icon:
+      entity: AirlockEngineering
     name: AirlockEngineering
     keywords: []
     clientExclusive: True
@@ -745,7 +801,8 @@
   - 6: 7
 - action: !type:InstantAction
     checkCanInteract: False
-    icon: AirlockCargo
+    icon:
+      entity: AirlockCargo
     name: AirlockCargo
     keywords: []
     clientExclusive: True

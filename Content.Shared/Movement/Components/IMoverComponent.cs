@@ -1,22 +1,9 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-
 namespace Content.Shared.Movement.Components
 {
     // Does nothing except ensure uniqueness between mover components.
     // There can only be one.
     public interface IMoverComponent : IComponent
     {
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
-        /// </summary>
-        float CurrentWalkSpeed { get; }
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints.
-        /// </summary>
-        float CurrentSprintSpeed { get; }
-
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>

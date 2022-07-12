@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Construction;
 
@@ -44,7 +41,7 @@ public sealed partial class ConstructionSystem
         EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent()
         {
             Parts = GetAllParts(component),
-        });
+        }, true);
     }
 
     public void CreateBoardAndStockParts(MachineComponent component)

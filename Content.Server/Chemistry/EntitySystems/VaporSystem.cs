@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -6,10 +6,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Vapor;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Prototypes;
 
@@ -46,7 +43,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        public void Start(VaporComponent vapor, Vector2 dir, float speed, EntityCoordinates target, float aliveTime)
+        public void Start(VaporComponent vapor, Vector2 dir, float speed, MapCoordinates target, float aliveTime)
         {
             vapor.Active = true;
             vapor.Target = target;
@@ -93,16 +90,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             var entity = vapor.Owner;
+            var xform = Transform(entity);
 
             vapor.Timer += frameTime;
             vapor.ReactTimer += frameTime;
 
-            if (vapor.ReactTimer >= ReactTime && EntityManager.GetComponent<TransformComponent>(vapor.Owner).GridID.IsValid())
+            if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out IMapGridComponent? gridComp))
             {
                 vapor.ReactTimer = 0;
-                var mapGrid = _mapManager.GetGrid(EntityManager.GetComponent<TransformComponent>(entity).GridID);
 
-                var tile = mapGrid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates.ToVector2i(EntityManager, _mapManager));
+
+                var tile = gridComp.Grid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
@@ -114,8 +112,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Check if we've reached our target.
             if (!vapor.Reached &&
-                vapor.Target.TryDistance(EntityManager, EntityManager.GetComponent<TransformComponent>(entity).Coordinates, out var distance) &&
-                distance <= 0.5f)
+                (vapor.Target.Position - xform.MapPosition.Position).LengthSquared <= 0.25f)
             {
                 vapor.Reached = true;
             }

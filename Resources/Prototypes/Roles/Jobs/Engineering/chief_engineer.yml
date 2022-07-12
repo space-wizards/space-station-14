@@ -1,14 +1,14 @@
 - type: job
   id: ChiefEngineer
-  name: "chief engineer"
-  head: true
+  name: job-name-ce
+  weight: 10
   startingGear: ChiefEngineerGear
   departments:
   - Command
   - Engineering
   icon: "ChiefEngineer"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Maintenance
@@ -16,6 +16,7 @@
   - Command
   - External
   - ChiefEngineer
+  - Atmospherics
 
 - type: startingGear
   id: ChiefEngineerGear
@@ -25,7 +26,7 @@
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorBrown
     id: CEPDA
-    ears: ClothingHeadsetEngineering
+    ears: ClothingHeadsetCE
     belt: ClothingBeltChiefEngineerFilled
   innerclothingskirt: ClothingUniformJumpskirtChiefEngineer
   satchel: ClothingBackpackSatchelEngineeringFilled

@@ -1,141 +1,141 @@
 - type: barSign
   id: Harmbaton
-  name: "The Harmbaton"
+  name: barsign-prototype-name-harmbaton
   icon: "theharmbaton"
-  description: "A great dining experience for both security members and assistants."
+  description: barsign-prototype-description-harmbaton
 
 - type: barSign
   id: TheSingulo
-  name: "The Singulo"
+  name: barsign-prototype-name-singulo
   icon: "thesingulo"
-  description: "Where people go that'd rather not be called by their name."
+  description: barsign-prototype-description-singulo
 
 - type: barSign
   id: TheDrunkCarp
-  name: "The Drunk Carp"
+  name: barsign-prototype-name-drunk-carp
   icon: "thedrunkcarp"
-  description: "Don't drink and swim."
+  description: barsign-prototype-description-drunk-carp
 
 - type: barSign
   id: OfficerBeersky
-  name: "Officer Beersky's"
+  name: barsign-prototype-name-officer-beersky
   icon: "officerbeersky"
-  description: "Man eat a dong, these drinks are great."
+  description: barsign-prototype-description-officer-beersky
 
 - type: barSign
   id: TheOuterSpess
-  name: "The Outer Spess"
+  name: barsign-prototype-name-outer-spess
   icon: "theouterspess"
-  description: "This bar isn't actually located in outer space."
+  description: barsign-prototype-description-outer-spess
 
 - type: barSign
   id: TheCoderbus
-  name: "The Coderbus"
+  name: barsign-prototype-name-coderbus
   icon: "thecoderbus"
-  description: "A very controversial bar known for its wide variety of constantly-changing drinks."
+  description: barsign-prototype-description-coderbus
 
 - type: barSign
   id: RobustaCafe
-  name: "The Robusta Cafe"
+  name: barsign-prototype-name-robusta-cafe
   icon: "robustacafe"
-  description: "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
+  description: barsign-prototype-description-robusta-cafe
 
 - type: barSign
   id: EmergencyRumParty
-  name: "The Emergency Rum Party"
+  name: barsign-prototype-name-emergency-rum-party
   icon: "emergencyrumparty"
-  description: "Recently relicensed after a long closure."
+  description: barsign-prototype-description-emergency-rum-party
 
 - type: barSign
   id: ComboCafe
-  name: "The Combo Cafe"
+  name: barsign-prototype-name-combo-cafe
   icon: "combocafe"
-  description: "Renowned system-wide for their utterly uncreative drink combinations."
+  description: barsign-prototype-description-combo-cafe
 
 - type: barSign
   id: TheAleNath
-  name: "The Ale' Nath"
+  name: barsign-prototype-name-ale-nath
   icon: "thealenath"
-  description: "All right, buddy. I think you've had EI NATH. Time to get a cab."
+  description: barsign-prototype-description-ale-nath
 
 - type: barSign
   id: TheNet
-  name: "The Net"
+  name: barsign-prototype-name-the-net
   icon: "thenet"
-  description: "You just seem to get caught up in it for hours."
+  description: barsign-prototype-description-the-net
 
 - type: barSign
   id: MaidCafe
-  name: "Maid Cafe"
+  name: barsign-prototype-name-maid-cafe
   icon: "maidcafe"
-  description: "Welcome back, master!"
+  description: barsign-prototype-description-maid-cafe
 
 - type: barSign
   id: MalteseFalcon
-  name: "Maltese Falcon"
+  name: barsign-prototype-name-maltese-falcon
   icon: "maltesefalcon"
-  description: "Play it again, sam."
+  description: barsign-prototype-description-maltese-falcon
 
 - type: barSign
   id: TheSun
-  name: "The Sun"
+  name: barsign-prototype-name-the-sun
   icon: "thesun"
-  description: "Ironically bright for such a shady bar."
+  description: barsign-prototype-description-the-sun
 
 - type: barSign
   id: TheBirdCage
-  name: "The Birdcage"
+  name: barsign-prototype-name-the-birdcage
   icon: "birdcage"
-  description: "Caw caw!"
+  description: barsign-prototype-description-the-birdcage
 
 - type: barSign
   id: Zocalo
-  name: "Zocalo"
+  name: barsign-prototype-name-zocalo
   icon: "zocalo"
-  description: "Anteriormente ubicado en Spessmerica."
+  description: barsign-prototype-description-zocalo
 
 - type: barSign
   id: LV426
-  name: "LV-426"
+  name: barsign-prototype-name-lv426
   icon: "lv426"
-  description: "Drinking with fancy facemasks is clearly more important than going to medbay."
+  description: barsign-prototype-description-lv426
 
 - type: barSign
   id: WiggleRoom
-  name: "The Wiggle Roomm"
+  name: barsign-prototype-name-wiggle-room
   icon: "thewiggleroom"
-  description: "MoMMIs got moves."
+  description: barsign-prototype-description-wiggle-room
 
 - type: barSign
   id: TheLightbulb
-  name: "The Lightbulb"
+  name: barsign-prototype-name-the-lightbulb
   icon: "the_lightbulb"
-  description: "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+  description: barsign-prototype-description-the-lightbulb
 
 - type: barSign
   id: Goose
-  name: "The Loose Goose"
+  name: barsign-prototype-name-goose
   icon: "goose"
-  description: "Drink till you puke and/or break the laws of reality!"
+  description: barsign-prototype-description-goose
 
 - type: barSign
   id: EngineChange
-  name: "The Engine Change"
+  name: barsign-prototype-name-enginechange
   icon: "enginechange"
-  description: "Still waiting."
+  description: barsign-prototype-description-enginechange
 
 - type: barSign
   id: Emprah
-  name: "4 The Emprah"
+  name: barsign-prototype-name-emprah
   icon: "emprah"
-  description: "Enjoyed by fanatics, heretics, and brain-damaged patrons alike."
+  description: barsign-prototype-description-emprah
 
 # Hidden signs list below this point
 - type: barSign
   id: EmpBarSign
   name: ""
   icon: "empbarsign"
-  description: "Something has gone very wrong."
+  description: barsign-prototype-description-empbarsign
   rename_area: false
   hidden: true
 
@@ -143,6 +143,6 @@
   id: SignOff
   name: ""
   icon: "empty"
-  description: "This sign doesn't seem to be on."
+  description: barsign-prototype-description-sign-off
   rename_area: false
   hidden: true

@@ -42,15 +42,22 @@
     - HidesHair
   - type: DiseaseProtection
     protection: 0.05
+  - type: IdentityBlocker
 
 - type: entity
   abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadHardsuitBase
   name: base hardsuit helmet
+  noSpawn: true
   components:
   - type: Clothing
+    #Apparently the hardsuit helmet equip sound is from a walking mech?
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
     size: 15
+    canPickup: false # attached to suit.
+    quickEquip: false
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -70,12 +77,14 @@
     - HidesHair
   - type: DiseaseProtection
     protection: 0.05
+  - type: IdentityBlocker
 
 - type: entity
   abstract: true
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHardsuitWithLightBase
   name: base hardsuit helmet with light
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -99,7 +108,9 @@
     - type: FlashLightVisualizer
   - type: HandheldLight
     addPrefix: true
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHardsuitHelmet # self recharging
-      locked: true # no need to recharge manually
+  - type: Battery
+    maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.

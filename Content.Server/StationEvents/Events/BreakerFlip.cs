@@ -7,34 +7,34 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class BreakerFlip : StationEvent
+public sealed class BreakerFlip : StationEventSystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ApcSystem _apcSystem = default!;
 
-    public override string Name => "BreakerFlip";
-    public override string? StartAnnouncement =>
-        Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{_random.Next(1, 6)}"))));
-    public override float Weight => WeightNormal;
-    protected override float EndAfter => 1.0f;
-    public override int? MaxOccurrences => 5;
-    public override int MinimumPlayers => 15;
+    public override string Prototype => "BreakerFlip";
 
-    public override void Startup()
+    public override void Added()
     {
-        base.Startup();
+        base.Added();
 
-        var apcSys = EntitySystem.Get<ApcSystem>();
-        var allApcs = _entityManager.EntityQuery<ApcComponent>().ToList();
-        var toDisable = Math.Min(_random.Next(3, 7), allApcs.Count);
+        var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}"))));
+        ChatSystem.DispatchGlobalAnnouncement(str, playDefaultSound: false, colorOverride: Color.Gold);
+    }
+
+    public override void Started()
+    {
+        base.Started();
+
+        var allApcs = EntityQuery<ApcComponent>().ToList();
+        var toDisable = Math.Min(RobustRandom.Next(3, 7), allApcs.Count);
         if (toDisable == 0)
             return;
 
-        _random.Shuffle(allApcs);
+        RobustRandom.Shuffle(allApcs);
 
         for (var i = 0; i < toDisable; i++)
         {
-            apcSys.ApcToggleBreaker(allApcs[i].Owner, allApcs[i]);
+            _apcSystem.ApcToggleBreaker(allApcs[i].Owner, allApcs[i]);
         }
     }
 }

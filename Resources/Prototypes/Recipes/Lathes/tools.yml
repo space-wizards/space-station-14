@@ -143,3 +143,12 @@
   materials:
     Steel: 800
     Glass: 300
+
+- type: latheRecipe
+  id: AirlockPainter
+  icon: /Textures/Objects/Tools/airlock_painter.rsi/airlock_painter.png
+  result: AirlockPainter
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100

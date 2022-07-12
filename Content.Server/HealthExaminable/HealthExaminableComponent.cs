@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.HealthExaminable;
 
-[RegisterComponent, Friend(typeof(HealthExaminableSystem))]
+[RegisterComponent, Access(typeof(HealthExaminableSystem))]
 public sealed class HealthExaminableComponent : Component
 {
     public List<FixedPoint2> Thresholds = new()

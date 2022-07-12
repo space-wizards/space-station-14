@@ -14,9 +14,6 @@ namespace Content.Client.Clothing
         [DataField("femaleMask")]
         public FemaleClothingMask FemaleMask { get; } = FemaleClothingMask.UniformFull;
 
-        [DataField("quickEquip")]
-        public bool QuickEquip = true;
-
         public string? InSlot;
     }
 

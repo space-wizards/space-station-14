@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using NUnit.Framework;
 

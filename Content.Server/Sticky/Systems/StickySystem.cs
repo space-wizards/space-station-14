@@ -17,6 +17,7 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     private const string StickerSlotId = "stickers_container";
 
@@ -40,7 +41,14 @@ public sealed class StickySystem : EntitySystem
 
     private void AddUnstickVerb(EntityUid uid, StickyComponent component, GetVerbsEvent<Verb> args)
     {
-        if (component.StuckTo == null || !component.CanUnstick)
+        if (component.StuckTo == null || !component.CanUnstick || !args.CanInteract || args.Hands == null)
+            return;
+
+        // we can't use args.CanAccess, because it stuck in another container
+        // we also need to ignore entity that it stuck to
+        var inRange = _interactionSystem.InRangeUnobstructed(uid, args.User,
+            predicate: entity => component.StuckTo == entity);
+        if (!inRange)
             return;
 
         args.Verbs.Add(new Verb
@@ -55,7 +63,11 @@ public sealed class StickySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
+
+        // check whitelist and blacklist
         if (component.Whitelist != null && !component.Whitelist.IsValid(target))
+            return false;
+        if (component.Blacklist != null && component.Blacklist.IsValid(target))
             return false;
 
         // check if delay is not zero to start do after
@@ -127,8 +139,6 @@ public sealed class StickySystem : EntitySystem
             // if delay is zero - unstick entity immediately
             UnstickFromEntity(uid, user, component);
         }
-
-        return;
     }
 
     private void OnUnstickSuccessful(UnstickSuccessfulEvent ev)
@@ -165,7 +175,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = target;
-        RaiseLocalEvent(uid, new EntityStuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityStuckEvent(target, user), true);
     }
 
     public void UnstickFromEntity(EntityUid uid, EntityUid user, StickyComponent? component = null)
@@ -200,7 +210,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         component.StuckTo = null;
-        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user));
+        RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
 
     private sealed class StickSuccessfulEvent : EntityEventArgs

@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Roles
 {

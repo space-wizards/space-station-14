@@ -1,19 +1,14 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Server.GameObjects;
-using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-	[UsedImplicitly]
+    [UsedImplicitly]
     public sealed class SolutionTransferSystem : EntitySystem
     {
         /// <summary>
@@ -30,7 +25,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void AddSetTransferVerbs(EntityUid uid, SolutionTransferComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount)
+            if (!args.CanAccess || !args.CanInteract || !component.CanChangeTransferAmount || args.Hands == null)
                 return;
 
             if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
@@ -82,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var transferAttempt = new SolutionTransferAttemptEvent(sourceEntity, targetEntity);
 
             // Check if the source is cancelling the transfer
-            RaiseLocalEvent(sourceEntity, transferAttempt);
+            RaiseLocalEvent(sourceEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
                 sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);
@@ -97,7 +92,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             // Check if the target is cancelling the transfer
-            RaiseLocalEvent(targetEntity, transferAttempt);
+            RaiseLocalEvent(targetEntity, transferAttempt, true);
             if (transferAttempt.Cancelled)
             {
                 sourceEntity.PopupMessage(user, transferAttempt.CancelReason!);

@@ -1,6 +1,7 @@
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.Map;
@@ -27,7 +28,7 @@ namespace Content.Client.Physics.Controllers
                 return;
             }
 
-            if (xform.GridID != GridId.Invalid)
+            if (xform.GridUid != null)
                 mover.LastGridAngle = GetParentGridAngle(xform, mover);
 
             // Essentially we only want to set our mob to predicted so every other entity we just interpolate
@@ -54,13 +55,19 @@ namespace Content.Client.Physics.Controllers
                 {
                     pullerBody.Predict = false;
                     body.Predict = false;
+
+                    if (TryComp<SharedPullerComponent>(player, out var playerPuller) && playerPuller.Pulling != null &&
+                        TryComp<PhysicsComponent>(playerPuller.Pulling, out var pulledBody))
+                    {
+                        pulledBody.Predict = false;
+                    }
                 }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (TryComp(player, out IMobMoverComponent? mobMover))
             {
-                HandleMobMovement(mover, body, mobMover, xform);
+                HandleMobMovement(mover, body, mobMover, xform, frameTime);
                 return;
             }
 

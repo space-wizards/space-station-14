@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
   name: merc web vest
   description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
@@ -16,10 +16,10 @@
         Piercing: 0.5
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
     
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -36,7 +36,7 @@
         Piercing: 0.3
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -56,7 +56,7 @@
         Piercing: 0.4
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -73,10 +73,10 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.85
+        Piercing: 0.75
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase

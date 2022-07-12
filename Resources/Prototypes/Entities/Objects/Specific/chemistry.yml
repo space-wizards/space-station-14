@@ -272,12 +272,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 25
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: DeleteOnTrigger
+  - type: Extractable
+    grindableSolutionName: food
 
 - type: entity
   name: pill canister
   id: PillCanister
-  parent: BaseItem
+  parent: BaseStorageItem
   description: Holds up to 12 pills.
   components:
   - type: Sprite

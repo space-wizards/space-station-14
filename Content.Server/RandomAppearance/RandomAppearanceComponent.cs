@@ -1,15 +1,10 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.RandomAppearance;
 
 [RegisterComponent]
-[Friend(typeof(RandomAppearanceSystem))]
+[Access(typeof(RandomAppearanceSystem))]
 public sealed class RandomAppearanceComponent : Component, ISerializationHooks
 {
     [DataField("spriteStates")]

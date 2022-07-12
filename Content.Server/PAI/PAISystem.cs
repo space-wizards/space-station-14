@@ -7,8 +7,8 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
-using Content.Shared.Actions;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
 
 namespace Content.Server.PAI
 {
@@ -59,7 +59,7 @@ namespace Content.Server.PAI
             // Check for pAI activation
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User), PopupType.Large);
                 return;
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
@@ -142,7 +142,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<MindComponent>(uid))
                     {
                         EntityManager.RemoveComponent<MindComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User));
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User), PopupType.Large);
                         PAITurningOff(uid);
                     }
                 };

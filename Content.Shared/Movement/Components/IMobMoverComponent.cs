@@ -1,4 +1,3 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Shared.Movement.Components
@@ -16,7 +15,5 @@ namespace Content.Shared.Movement.Components
         float GrabRange { get; set; }
 
         float PushStrength { get; set; }
-
-        float WeightlessStrength { get; set; }
     }
 }

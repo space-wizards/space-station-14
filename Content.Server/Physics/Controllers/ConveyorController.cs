@@ -104,7 +104,7 @@ namespace Content.Server.Physics.Controllers
 
         public IEnumerable<(EntityUid, TransformComponent)> GetEntitiesToMove(ConveyorComponent comp, TransformComponent xform)
         {
-            if (!_mapManager.TryGetGrid(xform.GridID, out var grid) ||
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
                 !grid.TryGetTileRef(xform.Coordinates, out var tile)) yield break;
 
             var tileAABB = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(0.01f);

@@ -26,6 +26,8 @@ namespace Content.Server.Morgue.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
+        private const CollisionGroup TrayCanOpenMask = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("trayPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _trayPrototypeId;
@@ -69,7 +71,7 @@ namespace Content.Server.Morgue.Components
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner,
                 _entMan.GetComponent<TransformComponent>(Owner).Coordinates.Offset(_entMan.GetComponent<TransformComponent>(Owner).LocalRotation.GetCardinalDir()),
-                collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
+                collisionMask: TrayCanOpenMask
             ))
             {
                 if (!silent)
@@ -164,7 +166,7 @@ namespace Content.Server.Morgue.Components
             if (DoSoulBeep && _entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance) &&
                 appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
+                SoundSystem.Play(_occupantHasSoulAlarmSound.GetSound(), Filter.Pvs(Owner), Owner);
             }
         }
     }

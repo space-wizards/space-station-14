@@ -39,6 +39,7 @@ namespace Content.Client.Stylesheets
         }
 
     }
+
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -73,7 +74,13 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
-        public const string StyleClassPopupMessage = "PopupMessage";
+
+        public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
+        public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
+        public const string StyleClassPopupMessageMedium = "PopupMessageMedium";
+        public const string StyleClassPopupMessageMediumCaution = "PopupMessageMediumCaution";
+        public const string StyleClassPopupMessageLarge = "PopupMessageLarge";
+        public const string StyleClassPopupMessageLargeCaution = "PopupMessageLargeCaution";
 
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
         public static readonly Color GoodGreenFore = Color.FromHex("#31843E");
@@ -92,6 +99,9 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
+
+        public static readonly Color ButtonColorGoodDefault = Color.FromHex("#3E6C45");
+        public static readonly Color ButtonColorGoodHovered = Color.FromHex("#31843E");
 
         // Context menu button colors
         public static readonly Color ButtonColorContext = Color.FromHex("#1119");
@@ -112,6 +122,14 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassItemStatus = "ItemStatus";
 
+        //Background
+        public const string StyleClassBackgroundBaseDark = "PanelBackgroundBaseDark";
+
+        //Buttons
+        public const string StyleClassCrossButtonRed = "CrossButtonRed";
+        public const string StyleClassButtonColorRed = "ButtonColorRed";
+        public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+
         public override Stylesheet Stylesheet { get; }
 
         public StyleNano(IResourceCache resCache) : base(resCache)
@@ -122,6 +140,8 @@ namespace Content.Client.Stylesheets
             var notoSansItalic12 = resCache.NotoStack(variation: "Italic", size: 12);
             var notoSansBold12 = resCache.NotoStack(variation: "Bold", size: 12);
             var notoSansBoldItalic12 = resCache.NotoStack(variation: "BoldItalic", size: 12);
+            var notoSansBoldItalic14 = resCache.NotoStack(variation: "BoldItalic", size: 14);
+            var notoSansBoldItalic16 = resCache.NotoStack(variation: "BoldItalic", size: 16);
             var notoSansDisplayBold14 = resCache.NotoStack(variation: "Bold", display: true, size: 14);
             var notoSansDisplayBold16 = resCache.NotoStack(variation: "Bold", display: true, size: 16);
             var notoSans15 = resCache.NotoStack(variation: "Regular", size: 15);
@@ -461,7 +481,7 @@ namespace Content.Client.Stylesheets
             var directionIconArrowTex = resCache.GetTexture("/Textures/Interface/VerbIcons/drop.svg.192dpi.png");
             var directionIconQuestionTex = resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png");
             var directionIconHereTex = resCache.GetTexture("/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
-            
+
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 // Window title.
@@ -1021,11 +1041,46 @@ namespace Content.Client.Stylesheets
                     }),
 
                 // Popup messages
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessage}, null, null),
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmall}, null, null),
                     new[]
                     {
                         new StyleProperty("font", notoSansItalic10),
+                        new StyleProperty("font-color", Color.White),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmallCaution}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic10),
+                        new StyleProperty("font-color", Color.Red),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic12),
                         new StyleProperty("font-color", Color.LightGray),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMediumCaution}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansItalic12),
+                        new StyleProperty("font-color", Color.Red),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansBoldItalic14),
+                        new StyleProperty("font-color", Color.LightGray),
+                    }),
+
+                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLargeCaution}, null, null),
+                    new[]
+                    {
+                        new StyleProperty("font", notoSansBoldItalic14),
+                        new StyleProperty("font-color", Color.Red),
                     }),
 
                 //APC and SMES power state label colors
@@ -1294,8 +1349,47 @@ namespace Content.Client.Stylesheets
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default })
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
 
-                Element<PanelContainer>().Class("Inset")
-                    .Prop("panel", insetBack),
+                Element<PanelContainer>().Class("WindowHeadingBackgroundLight")
+                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default }),
+
+                //The lengths you have to go through to change a background color smh
+                Element<PanelContainer>().Class("PanelBackgroundBaseDark")
+                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+
+                // X Texture button ---
+                Element<TextureButton>().Class("CrossButtonRed")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png"))
+                    .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
+
+                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+
+                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+                // ---
+
+                // Red Button ---
+                Element<Button>().Class("ButtonColorRed")
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
+
+                Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
+
+                Element<Button>().Class("ButtonColorRed").Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
+                // ---
+
+                // Green Button ---
+                Element<Button>().Class("ButtonColorGreen")
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
+
+                Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
+
+                Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
+                // ---
 
                 Element<Label>().Class("StatusFieldTitle")
                     .Prop("font-color", NanoGold),

@@ -1,12 +1,7 @@
-using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Materials;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Materials
 {
@@ -18,10 +13,10 @@ namespace Content.Server.Materials
     public sealed class MaterialComponent : Component
     {
         [ViewVariables]
-        [DataField("materials", customTypeSerializer:typeof(PrototypeIdListSerializer<MaterialPrototype>))]
+        [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly List<string> _materials = new();
-        public IEnumerable<string> MaterialIds => _materials;
+        public readonly Dictionary<string, int> _materials = new();
+        public List<string> MaterialIds => _materials.Keys.ToList();
 
         /// <summary>
         ///     Returns all materials which make up this entity.

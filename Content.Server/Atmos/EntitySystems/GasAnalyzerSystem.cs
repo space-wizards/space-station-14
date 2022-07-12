@@ -1,6 +1,5 @@
 ﻿using Content.Server.Atmos.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.EntitySystems
 {

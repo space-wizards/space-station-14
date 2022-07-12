@@ -8,8 +8,9 @@ using Content.Shared.Examine;
 using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Audio;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
@@ -20,7 +21,6 @@ namespace Content.Server.Botany.Systems
     public sealed class PlantHolderSystem : EntitySystem
     {
         [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -32,6 +32,7 @@ namespace Content.Server.Botany.Systems
             base.Initialize();
             SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         }
 
         private void OnExamine(EntityUid uid, PlantHolderComponent component, ExaminedEvent args)
@@ -103,7 +104,7 @@ namespace Content.Server.Botany.Systems
 
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", seed.Name),
-                        ("seedNoun", seed.Noun)), Filter.Entities(args.User));
+                        ("seedNoun", seed.Noun)), Filter.Entities(args.User), PopupType.Medium);
 
                     component.Seed = seed;
                     component.Dead = false;
@@ -120,7 +121,7 @@ namespace Content.Server.Botany.Systems
                 }
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User));
+                    ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
                 return;
             }
 
@@ -129,9 +130,9 @@ namespace Content.Server.Botany.Systems
                 if (component.WeedLevel > 0)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User));
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
                     component.WeedLevel = 0;
                     component.UpdateSprite();
                 }
@@ -148,9 +149,9 @@ namespace Content.Server.Botany.Systems
                 if (component.Seed != null)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User));
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), Filter.Entities(args.User), PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User));
                     component.RemovePlant();
                 }
                 else
@@ -171,8 +172,8 @@ namespace Content.Server.Botany.Systems
                 var solutionEntity = args.Used;
 
 
-                SoundSystem.Play(Filter.Pvs(args.Used), spray.SpraySound.GetSound(), args.Used,
-                AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(spray.SpraySound.GetSound(), Filter.Pvs(args.Used),
+                args.Used, AudioHelpers.WithVariation(0.125f));
 
 
                 var split =_solutionSystem.Drain(solutionEntity, solution, amount);
@@ -186,7 +187,7 @@ namespace Content.Server.Botany.Systems
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", uid),
-                    ("amount", split.TotalVolume)), Filter.Entities(args.User));
+                    ("amount", split.TotalVolume)), Filter.Entities(args.User), PopupType.Medium);
 
                _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
@@ -239,11 +240,11 @@ namespace Content.Server.Botany.Systems
             {
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", uid),
-                    ("args.Used", args.Used)), Filter.Entities(args.User));
+                    ("usingItem", args.Used)), Filter.Entities(args.User), PopupType.Medium);
                 _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
-                    ("user", args.User),
-                    ("args.Used", args.Used),
-                    ("owner", uid)), uid, Filter.Pvs(args.User).RemoveWhereAttachedEntity(puid => puid == args.User));
+                    ("user", Identity.Entity(args.User, EntityManager)),
+                    ("usingItem", args.Used),
+                    ("owner", uid)), uid, Filter.PvsExcept(args.User));
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
                 {
@@ -256,6 +257,11 @@ namespace Content.Server.Botany.Systems
 
                 EntityManager.QueueDeleteEntity(args.Used);
             }
+        }
+
+        private void OnInteractHand(EntityUid uid, PlantHolderComponent component, InteractHandEvent args)
+        {
+            component.DoHarvest(args.User);
         }
     }
 }

@@ -33,15 +33,21 @@
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
   - type: Examiner
-  - type: GhostRadio
+  - type: IntrinsicRadio
+    channels:
+    - Common
   - type: DoAfter
   - type: Actions
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

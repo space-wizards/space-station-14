@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -113,12 +107,12 @@ public sealed partial class BotanySystem
         if (proto.ProductPrototypes.Count == 0 || proto.Yield <= 0)
         {
             _popupSystem.PopupCursor(Loc.GetString("botany-harvest-fail-message"),
-                Filter.Entities(user));
+                Filter.Entities(user), PopupType.Medium);
             return Enumerable.Empty<EntityUid>();
         }
 
         _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", proto.DisplayName)),
-            Filter.Entities(user));
+            Filter.Entities(user), PopupType.Medium);
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 
@@ -139,7 +133,7 @@ public sealed partial class BotanySystem
 
         if (totalYield > 1 || proto.HarvestRepeat != HarvestType.NoRepeat)
             proto.Unique = false;
-            
+
         for (var i = 0; i < totalYield; i++)
         {
             var product = _robustRandom.Pick(proto.ProductPrototypes);

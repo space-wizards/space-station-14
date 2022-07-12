@@ -79,6 +79,7 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
+                    doAfter.EventArgs.DamageThreshold,
                     doAfter.EventArgs.Target);
 
                 toAdd.Add(clientDoAfter);
@@ -98,14 +99,22 @@ namespace Content.Server.DoAfter
             }
         }
 
+        /// <summary>
+        /// Cancels DoAfter if it breaks on damage and it meets the threshold
+        /// </summary>
+        /// <param name="_">
+        /// The EntityUID of the user
+        /// </param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
         public void OnDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
         {
-            if (!args.InterruptsDoAfters || !args.DamageIncreased)
+            if (!args.InterruptsDoAfters || !args.DamageIncreased || args.DamageDelta == null)
                 return;
 
             foreach (var (doAfter, _) in component.DoAfters)
             {
-                if (doAfter.EventArgs.BreakOnDamage)
+                if (doAfter.EventArgs.BreakOnDamage && args.DamageDelta?.Total.Float() > doAfter.EventArgs.DamageThreshold)
                 {
                     doAfter.Cancel();
                 }

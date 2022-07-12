@@ -11,10 +11,9 @@ namespace Content.Shared.Explosion;
 public sealed class GetExplosionResistanceEvent : EntityEventArgs, IInventoryRelayEvent
 {
     /// <summary>
-    ///     Can be set to whatever, but currently is being additively increased by components & clothing. So think twice
-    ///     before multiplying or directly setting this.
+    ///     A coefficient applied to overall explosive damage.
     /// </summary>
-    public float Resistance = 0;
+    public float DamageCoefficient = 1;
 
     public readonly string ExplotionPrototype;
 
@@ -35,7 +34,7 @@ public sealed class ExplosionEvent : EntityEventArgs
     public MapCoordinates Epicenter;
 
     public Dictionary<int, List<Vector2i>>? SpaceTiles;
-    public Dictionary<GridId, Dictionary<int, List<Vector2i>>> Tiles;
+    public Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> Tiles;
 
     public List<float> Intensity;
 
@@ -53,7 +52,7 @@ public sealed class ExplosionEvent : EntityEventArgs
         string typeID,
         List<float> intensity,
         Dictionary<int, List<Vector2i>>? spaceTiles,
-        Dictionary<GridId, Dictionary<int, List<Vector2i>>> tiles,
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tiles,
         Matrix3 spaceMatrix,
         ushort spaceTileSize)
     {
