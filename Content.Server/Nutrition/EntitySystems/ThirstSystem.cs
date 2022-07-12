@@ -83,6 +83,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 case ThirstThreshold.Dead:
                 case ThirstThreshold.Parched:
                     return true;
+                case ThirstThreshold.Thirsty:
                 case ThirstThreshold.Okay:
                 case ThirstThreshold.OverHydrated:
                     return false;
