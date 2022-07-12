@@ -21,7 +21,7 @@ namespace Content.Shared.Movement.Systems
                 BaseWalkSpeed = component.BaseWalkSpeed,
                 BaseSprintSpeed = component.BaseSprintSpeed,
                 WalkSpeedModifier = component.WalkSpeedModifier,
-                SprintSpeedModifier = component.SprintSpeedModifier
+                SprintSpeedModifier = component.SprintSpeedModifier,
             };
         }
 

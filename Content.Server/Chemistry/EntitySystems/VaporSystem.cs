@@ -43,7 +43,7 @@ namespace Content.Server.Chemistry.EntitySystems
             }
         }
 
-        public void Start(VaporComponent vapor, Vector2 dir, float speed, EntityCoordinates target, float aliveTime)
+        public void Start(VaporComponent vapor, Vector2 dir, float speed, MapCoordinates target, float aliveTime)
         {
             vapor.Active = true;
             vapor.Target = target;
@@ -112,8 +112,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Check if we've reached our target.
             if (!vapor.Reached &&
-                vapor.Target.TryDistance(EntityManager, xform.Coordinates, out var distance) &&
-                distance <= 0.5f)
+                (vapor.Target.Position - xform.MapPosition.Position).LengthSquared <= 0.25f)
             {
                 vapor.Reached = true;
             }

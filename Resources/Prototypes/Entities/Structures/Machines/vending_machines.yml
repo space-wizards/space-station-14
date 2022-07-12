@@ -9,6 +9,7 @@
   - type: AmbientSound
     volume: -9
     range: 3
+    enabled: false
     sound:
       path: /Audio/Ambience/Objects/vending_machine_hum.ogg
   - type: Sprite
@@ -336,6 +337,38 @@
     radius: 1.5
     energy: 1.6
     color: "#4b93ad"
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMagivend
+  name: MagiVend
+  description: A magic vending machine.
+  components:
+  - type: VendingMachine
+    pack: MagiVendInventory
+  - type: Advertise
+    pack: MagiVendAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/magivend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Structures/Machines/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      ejectUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9a18d6"
 
 - type: entity
   parent: VendingMachine

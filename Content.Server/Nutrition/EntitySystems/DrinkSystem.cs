@@ -13,6 +13,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
@@ -249,8 +250,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (forceDrink)
             {
-                EntityManager.TryGetComponent(user, out MetaDataComponent? meta);
-                var userName = meta?.EntityName ?? string.Empty;
+                var userName = Identity.Name(user, EntityManager);
 
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)),
                     user, Filter.Entities(target));
@@ -315,20 +315,27 @@ namespace Content.Server.Nutrition.EntitySystems
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
-                    uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough"),
+                    uid, Filter.Entities(uid));
 
-                _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
+                if (forceDrink)
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-had-enough-other"),
+                        uid, Filter.Entities(args.User));
+                    _spillableSystem.SpillAt(uid, drained, "PuddleSmear");
+                }
+                else
+                {
+                    _solutionContainerSystem.TryAddSolution(args.Drink.Owner, args.DrinkSolution, drained);
+                }
+
                 return;
             }
 
             if (forceDrink)
             {
-                EntityManager.TryGetComponent(uid, out MetaDataComponent? targetMeta);
-                var targetName = targetMeta?.EntityName ?? string.Empty;
-
-                EntityManager.TryGetComponent(args.User, out MetaDataComponent? userMeta);
-                var userName = userMeta?.EntityName ?? string.Empty;
+                var targetName = Identity.Name(uid, EntityManager);
+                var userName = Identity.Name(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success", ("user", userName)), uid, Filter.Entities(uid));

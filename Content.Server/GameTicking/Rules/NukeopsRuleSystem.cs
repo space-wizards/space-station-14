@@ -56,7 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-    	if (!Enabled)
+    	if (!RuleAdded)
             return;
 
         _opsWon = true;
@@ -65,7 +65,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
@@ -78,7 +78,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
@@ -93,7 +93,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         _aliveNukeops.Clear();
@@ -292,7 +292,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.NukeopsMinPlayers);
@@ -311,11 +311,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _opsWon = false;
     }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 }

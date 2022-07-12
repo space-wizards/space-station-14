@@ -55,6 +55,7 @@
       effects:
       - !type:PopupMessage
         type: Local
+        visualType: MediumCaution
         messages:
         - "buzzochloricbees-effect-oh-god-bees"
         - "buzzochloricbees-effect-its-the-bees"
@@ -71,6 +72,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-histamine-bee-allergy"
           - "buzzochloricbees-effect-histamine-swells"
@@ -87,6 +89,7 @@
           tag: Bee
       - !type:PopupMessage
         type: Local
+        visualType: Medium
         messages:
           - "buzzochloricbees-effect-licoxide-electrifying"
           - "buzzochloricbees-effect-licoxide-shocked-by-bee-facts"
