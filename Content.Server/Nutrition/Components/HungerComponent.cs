@@ -13,8 +13,6 @@ namespace Content.Server.Nutrition.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private float _accumulatedFrameTime;
-
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
