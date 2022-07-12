@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Buckle.Strap
 {
@@ -11,6 +10,17 @@ namespace Content.Client.Buckle.Strap
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (curState is not StrapComponentState state) return;
+            Position = state.Position;
+            BuckleOffsetUnclamped = state.BuckleOffsetClamped;
+            BuckledEntities.Clear();
+            BuckledEntities.UnionWith(state.BuckledEntities);
+            MaxBuckleDistance = state.MaxBuckleDistance;
         }
     }
 }

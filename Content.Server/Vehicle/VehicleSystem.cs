@@ -36,31 +36,10 @@ namespace Content.Server.Vehicle
 
             InitializeRider();
 
-            SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
-            SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
             SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-        }
-
-        // TODO: Shitcode
-        private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
-        {
-            // This first check is just for safety
-            if (!HasComp<InputMoverComponent>(uid))
-            {
-                UpdateAutoAnimate(uid, false);
-                return;
-            }
-
-            UpdateBuckleOffset(args.Component, component);
-            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
-        }
-
-        private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
-        {
-            _modifier.RefreshMovementSpeedModifiers(uid);
         }
 
         /// <summary>
@@ -188,80 +167,6 @@ namespace Content.Server.Vehicle
             _ambientSound.SetAmbience(uid, false);
             _tagSystem.RemoveTag(uid, "DoorBumpOpener");
             _modifier.RefreshMovementSpeedModifiers(uid);
-        }
-
-        /// <summary>
-        /// Depending on which direction the vehicle is facing,
-        /// change its draw depth. Vehicles can choose between special drawdetph
-        /// when facing north or south. East and west are easy.
-        /// </summary>
-        private int GetDrawDepth(TransformComponent xform, bool northOnly)
-        {
-            // TODO: I can't even
-            if (northOnly)
-            {
-                return xform.LocalRotation.Degrees switch
-                {
-                    < 135f => (int) DrawDepth.Doors,
-                    <= 225f => (int) DrawDepth.WallMountedItems,
-                    _ => 5
-                };
-            }
-            return xform.LocalRotation.Degrees switch
-            {
-                < 45f =>  (int) DrawDepth.Doors,
-                <= 315f =>  (int) DrawDepth.WallMountedItems,
-                _ =>  (int) DrawDepth.Doors,
-            };
-        }
-
-        /// <summary>
-        /// Change the buckle offset based on what direction the vehicle is facing and
-        /// teleport any buckled entities to it. This is the most crucial part of making
-        /// buckled vehicles work.
-        /// </summary>
-        private void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
-        {
-            if (!TryComp<StrapComponent>(component.Owner, out var strap))
-                return;
-
-            strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
-            {
-                < 45f => (0, component.SouthOverride),
-                <= 135f => component.BaseBuckleOffset,
-                < 225f  => (0, component.NorthOverride),
-                <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
-                _ => (0, component.SouthOverride)
-            };
-
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                var buckleXform = Transform(buckledEntity);
-                buckleXform.LocalPosition = strap.BuckleOffset;
-            }
-
-        }
-
-        /// <summary>
-        /// Set the draw depth for the sprite.
-        /// </summary>
-        private void UpdateDrawDepth(EntityUid uid, int drawDepth)
-        {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
-        }
-
-        /// <summary>
-        /// Set whether the vehicle's base layer is animating or not.
-        /// </summary>
-        private void UpdateAutoAnimate(EntityUid uid, bool autoAnimate)
-        {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            appearance.SetData(VehicleVisuals.AutoAnimate, autoAnimate);
         }
     }
 }

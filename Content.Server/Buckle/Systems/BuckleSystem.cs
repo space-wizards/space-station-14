@@ -22,8 +22,6 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<BuckleComponent, MoveEvent>(MoveEvent);
 
-            SubscribeLocalEvent<StrapComponent, RotateEvent>(RotateEvent);
-
             SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(ContainerModifiedStrap);
 
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
@@ -78,21 +76,6 @@ namespace Content.Server.Buckle.Systems
             }
 
             buckle.TryUnbuckle(buckle.Owner, true);
-        }
-
-        private void RotateEvent(EntityUid uid, StrapComponent strap, ref RotateEvent ev)
-        {
-            // On rotation of a strap, reattach all buckled entities.
-            // This fixes buckle offsets and draw depths.
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))
-                {
-                    continue;
-                }
-                buckled.ReAttach(strap);
-                Dirty(buckled);
-            }
         }
 
         private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
