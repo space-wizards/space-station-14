@@ -18,6 +18,7 @@ namespace Content.Shared.Vehicle;
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -115,7 +116,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         foreach (var buckledEntity in strap.BuckledEntities)
         {
             var buckleXform = Transform(buckledEntity);
-            buckleXform.LocalPosition = strap.BuckleOffset;
+            _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
         }
     }
 
