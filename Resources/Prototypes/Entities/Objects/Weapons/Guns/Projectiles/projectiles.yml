@@ -177,7 +177,7 @@
       - Impassable
       - Opaque
   - type: Projectile
-    soundHit:
+    soundHit: null
     damage:
       types:
         Heat: 14
