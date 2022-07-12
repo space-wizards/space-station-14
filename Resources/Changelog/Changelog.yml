@@ -1,9 +1,4 @@
 Entries:
-- author: Ripmorld
-  changes:
-  - {message: Different Laser guns now uses different powercells, type: Add}
-  id: 1429
-  time: '2022-04-30T21:25:39.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: A certain sealed small asteroid will no longer contain plasmafire or
@@ -2948,3 +2943,9 @@ Entries:
   - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
   id: 1928
   time: '2022-07-12T06:03:35.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'Corrected Phalanximine description. It''s not "Anti-Toxin", actually
+      it''s mildly radioactive!', type: Fix}
+  id: 1929
+  time: '2022-07-12T06:05:55.0000000+00:00'
