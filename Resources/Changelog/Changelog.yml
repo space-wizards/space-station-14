@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Addes MREs, military rations that can be found in emergency closets
-      and ordered from cargo.', type: Add}
-  id: 1428
-  time: '2022-04-30T21:24:37.0000000+00:00'
 - author: Ripmorld
   changes:
   - {message: Different Laser guns now uses different powercells, type: Add}
@@ -2949,3 +2943,8 @@ Entries:
   - {message: 'Added a rare, funny salvage item.', type: Add}
   id: 1927
   time: '2022-07-12T05:55:04.0000000+00:00'
+- author: Delete
+  changes:
+  - {message: 'Adds extra warning line decal, and fixed up existing ones.', type: Add}
+  id: 1928
+  time: '2022-07-12T06:03:35.0000000+00:00'
