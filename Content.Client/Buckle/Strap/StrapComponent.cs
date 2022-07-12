@@ -11,16 +11,5 @@ namespace Content.Client.Buckle.Strap
         {
             return false;
         }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not StrapComponentState state) return;
-            Position = state.Position;
-            BuckleOffsetUnclamped = state.BuckleOffsetClamped;
-            BuckledEntities.Clear();
-            BuckledEntities.UnionWith(state.BuckledEntities);
-            MaxBuckleDistance = state.MaxBuckleDistance;
-        }
     }
 }

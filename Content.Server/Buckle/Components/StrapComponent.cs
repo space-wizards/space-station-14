@@ -165,11 +165,6 @@ namespace Content.Server.Buckle.Components
             Dirty();
         }
 
-        public override ComponentState GetComponentState()
-        {
-            return new StrapComponentState(Position, BuckleOffset, BuckledEntities, MaxBuckleDistance);
-        }
-
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();

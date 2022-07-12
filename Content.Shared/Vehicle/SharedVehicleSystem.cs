@@ -6,6 +6,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Vehicle;
 
@@ -16,7 +17,7 @@ namespace Content.Shared.Vehicle;
 /// </summary>
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
-    [Dependency] protected readonly MovementSpeedModifierSystem Modifier = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
 
     public override void Initialize()
     {
@@ -61,7 +62,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
     {
-        Modifier.RefreshMovementSpeedModifiers(uid);
+        _modifier.RefreshMovementSpeedModifiers(uid);
     }
 
     /// <summary>

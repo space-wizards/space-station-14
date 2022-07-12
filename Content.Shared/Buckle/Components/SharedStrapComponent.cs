@@ -30,7 +30,7 @@ namespace Content.Shared.Buckle.Components
         /// The change in position to the strapped mob
         /// </summary>
         [DataField("position")]
-        public StrapPosition Position { get; protected set; } = StrapPosition.None;
+        public StrapPosition Position { get; set; } = StrapPosition.None;
 
 
         /// <summary>
