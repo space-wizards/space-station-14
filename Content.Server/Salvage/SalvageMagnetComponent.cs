@@ -1,3 +1,7 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Radio;
+
 namespace Content.Server.Salvage
 {
     /// <summary>
@@ -28,6 +32,11 @@ namespace Content.Server.Salvage
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
+
+        [ViewVariables]
+        [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+        public string SalvageChannel = "Supply";
+
     }
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {

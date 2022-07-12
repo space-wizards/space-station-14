@@ -1,10 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.GameTicking.Events;
+using Content.Server.Labels.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
+using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -14,7 +15,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
-using Robust.Server.GameObjects;
+
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -232,8 +233,7 @@ public sealed partial class CargoSystem
 
             if (cappedAmount < order.Amount)
             {
-                var reducedOrder = new CargoOrderData(order.OrderNumber, order.Requester, order.Reason, order.ProductId,
-                    cappedAmount);
+                var reducedOrder = new CargoOrderData(order.OrderNumber, order.ProductId, cappedAmount, order.Requester, order.Reason);
 
                 orders.Add(reducedOrder);
                 break;
@@ -293,14 +293,13 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, gridId) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
-        var shuttleUid = _mapManager.GetGridEuid(gridId!.Value);
-        var xform = Transform(shuttleUid);
-        MetaData(shuttleUid).EntityName = name;
+        var (_, shuttleUid) = _loader.LoadBlueprint(CargoMap.Value, prototype.Path.ToString());
+        var xform = Transform(shuttleUid!.Value);
+        MetaData(shuttleUid!.Value).EntityName = name;
 
         // TODO: Something better like a bounds check.
         xform.LocalPosition += 100 * _index;
-        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
+        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid!.Value);
         comp.Station = component.Owner;
         comp.Coordinates = xform.Coordinates;
 
@@ -308,7 +307,7 @@ public sealed partial class CargoSystem
         comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
         UpdateShuttleCargoConsoles(comp);
         _index++;
-        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
+        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid!.Value)}");
     }
 
     private void SellPallets(CargoShuttleComponent component, StationBankAccountComponent bank)
@@ -416,8 +415,10 @@ public sealed partial class CargoSystem
         {
             var order = orders[i];
 
-            Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product,
-                new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition));
+            var coordinates = new EntityCoordinates(component.Owner, xformQuery.GetComponent(_random.PickAndTake(pads).Owner).LocalPosition);
+
+            var item = Spawn(_protoMan.Index<CargoProductPrototype>(order.ProductId).Product, coordinates);
+            SpawnAndAttachOrderManifest(item, order, coordinates, component);
             order.Amount--;
 
             if (order.Amount == 0)
@@ -430,6 +431,41 @@ public sealed partial class CargoSystem
             {
                 orderDatabase.Orders[order.OrderNumber] = order;
             }
+        }
+    }
+
+    /// <summary>
+    /// In this method we are printing and attaching order manifests to the orders.
+    /// </summary>
+    private void SpawnAndAttachOrderManifest(EntityUid item, CargoOrderData order, EntityCoordinates coordinates, CargoShuttleComponent component)
+    {
+        if (!_protoMan.TryIndex(order.ProductId, out CargoProductPrototype? prototype))
+            return;
+
+        // spawn a piece of paper.
+        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+
+        if (!TryComp<PaperComponent>(printed, out var paper))
+            return;
+
+        // fill in the order data
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderNumber));
+
+        MetaData(printed).EntityName = val;
+
+        _paperSystem.SetContent(printed, Loc.GetString(
+            "cargo-console-paper-print-text",
+            ("orderNumber", order.OrderNumber),
+            ("itemName", prototype.Name),
+            ("requester", order.Requester),
+            ("reason", order.Reason),
+            ("approver", order.Approver ?? string.Empty)),
+            paper);
+
+        // attempt to attach the label
+        if (TryComp<PaperLabelComponent>(item, out var label))
+        {
+            _slots.TryInsert(item, label.LabelSlot, printed, null);
         }
     }
 

@@ -24,10 +24,8 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<StrapComponent, RotateEvent>(RotateEvent);
 
-            SubscribeLocalEvent<BuckleComponent, EntInsertedIntoContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntInsertedIntoContainerMessage>(ContainerModifiedStrap);
 
-            SubscribeLocalEvent<BuckleComponent, EntRemovedFromContainerMessage>(ContainerModifiedBuckle);
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
@@ -97,10 +95,6 @@ namespace Content.Server.Buckle.Systems
             }
         }
 
-        private void ContainerModifiedBuckle(EntityUid uid, BuckleComponent buckle, ContainerModifiedMessage message)
-        {
-            ContainerModifiedReAttach(buckle, buckle.BuckledTo);
-        }
         private void ContainerModifiedStrap(EntityUid uid, StrapComponent strap, ContainerModifiedMessage message)
         {
             foreach (var buckledEntity in strap.BuckledEntities)

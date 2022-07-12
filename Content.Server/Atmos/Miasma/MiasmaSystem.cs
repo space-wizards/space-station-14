@@ -5,20 +5,83 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
+using Robust.Server.GameObjects;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.Miasma
 {
     public sealed class MiasmaSystem : EntitySystem
     {
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        /// Feel free to weak this if there are perf concerns
-        private float UpdateRate = 5f;
+
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        /// System Variables
+
+        /// Rotting
+
+        /// <summary>
+        /// How often the rotting ticks.
+        /// Feel free to weak this if there are perf concerns.
+        /// </summary>
+        private float _rotUpdateRate = 5f;
+
+        /// Miasma Disease Pool
+        /// Miasma outbreaks are not per-entity,
+        /// so this ensures that each entity in the same incident
+        /// receives the same disease.
+
+        public readonly IReadOnlyList<string> MiasmaDiseasePool = new[]
+        {
+            "VentCough",
+            "AMIV",
+            "SpaceCold",
+            "SpaceFlu",
+            "BirdFlew",
+            "VanAusdallsRobovirus",
+            "BleedersBite",
+            "Plague",
+            "TongueTwister"
+        };
+
+        /// <summary>
+        /// The current pool disease.
+        /// </summary>
+        private string _poolDisease = "";
+
+        /// <summary>
+        /// The list of diseases in the pool.
+        /// </summary>
+
+        /// <summary>
+        /// This ticks up to PoolRepickTime.
+        /// After that, it resets to 0.
+        /// Any infection will also reset it to 0.
+        /// </summary>
+        private float _poolAccumulator = 0f;
+
+        /// <summmary>
+        /// How long without an infection before we pick a new disease.
+        /// </summary>
+        private TimeSpan _poolRepickTime = TimeSpan.FromMinutes(5);
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            // Disease pool
+            _poolAccumulator += frameTime;
+
+            if (_poolAccumulator > _poolRepickTime.TotalSeconds)
+            {
+                _poolAccumulator = 0f;
+                _poolDisease = _random.Pick(MiasmaDiseasePool);
+            }
+
+            // Rotting
             foreach (var (rotting, perishable) in EntityQuery<RottingComponent, PerishableComponent>())
             {
                 if (!perishable.Progressing)
@@ -29,10 +92,10 @@ namespace Content.Server.Atmos.Miasma
                     continue;
 
                 perishable.RotAccumulator += frameTime;
-                if (perishable.RotAccumulator < UpdateRate) // This is where it starts to get noticable on larger animals, no need to run every second
+                if (perishable.RotAccumulator < _rotUpdateRate) // This is where it starts to get noticable on larger animals, no need to run every second
                     continue;
 
-                perishable.RotAccumulator -= UpdateRate;
+                perishable.RotAccumulator -= _rotUpdateRate;
 
                 EnsureComp<FliesComponent>(perishable.Owner);
 
@@ -46,11 +109,13 @@ namespace Content.Server.Atmos.Miasma
                     continue;
                 // We need a way to get the mass of the mob alone without armor etc in the future
 
-                float molRate = perishable.MolsPerSecondPerUnitMass * UpdateRate;
+                float molRate = perishable.MolsPerSecondPerUnitMass * _rotUpdateRate;
 
-                var tileMix = _atmosphereSystem.GetTileMixture(Transform(perishable.Owner).Coordinates);
-                if (tileMix != null)
-                    tileMix.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
+                var transform = Transform(perishable.Owner);
+                var indices = _transformSystem.GetGridOrMapTilePosition(perishable.Owner);
+
+                var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+                tileMix?.AdjustMoles(Gas.Miasma, molRate * physics.FixturesMass);
             }
         }
 
@@ -69,6 +134,9 @@ namespace Content.Server.Atmos.Miasma
             // Fly audiovisual stuff
             SubscribeLocalEvent<FliesComponent, ComponentInit>(OnFliesInit);
             SubscribeLocalEvent<FliesComponent, ComponentShutdown>(OnFliesShutdown);
+
+            // Init disease pool
+            _poolDisease = _random.Pick(MiasmaDiseasePool);
         }
 
         private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
@@ -83,6 +151,8 @@ namespace Content.Server.Atmos.Miasma
 
         private void OnTempChange(EntityUid uid, RottingComponent component, OnTemperatureChangeEvent args)
         {
+            if (HasComp<BodyPreservedComponent>(uid))
+                return;
             bool decompose = (args.CurrentTemperature > 274f);
             ToggleDecomposition(uid, decompose);
         }
@@ -102,9 +172,10 @@ namespace Content.Server.Atmos.Miasma
                 return;
 
             var molsToDump = (component.MolsPerSecondPerUnitMass * physics.FixturesMass) * component.DeathAccumulator;
-            var tileMix = _atmosphereSystem.GetTileMixture(Transform(uid).Coordinates);
-            if (tileMix != null)
-                tileMix.AdjustMoles(Gas.Miasma, molsToDump);
+            var transform = Transform(uid);
+            var indices = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+            var tileMix = _atmosphereSystem.GetTileMixture(transform.GridUid, null, indices, true);
+            tileMix?.AdjustMoles(Gas.Miasma, molsToDump);
 
             // Waste of entities to let these through
             foreach (var part in args.GibbedParts)
@@ -122,12 +193,18 @@ namespace Content.Server.Atmos.Miasma
         private void OnEntInserted(EntityUid uid, AntiRottingContainerComponent component, EntInsertedIntoContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
+                ModifyPreservationSource(args.Entity, true);
                 ToggleDecomposition(args.Entity, false, perishable);
+            }
         }
         private void OnEntRemoved(EntityUid uid, AntiRottingContainerComponent component, EntRemovedFromContainerMessage args)
         {
             if (TryComp<PerishableComponent>(args.Entity, out var perishable))
+            {
+                ModifyPreservationSource(args.Entity, false);
                 ToggleDecomposition(args.Entity, true, perishable);
+            }
         }
 
 
@@ -154,21 +231,46 @@ namespace Content.Server.Atmos.Miasma
             if (decompose == perishable.Progressing) // Saved a few cycles
                 return;
 
-            if (!HasComp<RottingComponent>(uid))
-                return;
+            perishable.Progressing = decompose;
 
             if (!perishable.Rotting)
                 return;
 
             if (decompose)
             {
-                perishable.Progressing = true;
                 EnsureComp<FliesComponent>(uid);
                 return;
             }
 
-            perishable.Progressing = false;
             RemComp<FliesComponent>(uid);
+        }
+
+        /// <summary>
+        /// Add or remove a preservation source.
+        /// Remove is just "add = false"
+        /// If we have 0 we remove the whole component.
+        /// </summary>
+        public void ModifyPreservationSource(EntityUid uid, bool add)
+        {
+            var component = EnsureComp<BodyPreservedComponent>(uid);
+
+            if (add)
+            {
+                component.PreservationSources++;
+                return;
+            }
+
+            component.PreservationSources--;
+
+            if (component.PreservationSources == 0)
+                RemCompDeferred(uid, component);
+        }
+
+        public string RequestPoolDisease()
+        {
+            // We reset the current time on this outbreak so people don't get unlucky at the transition time
+            _poolAccumulator = 0f;
+            return _poolDisease;
         }
     }
 }

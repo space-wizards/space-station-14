@@ -28,6 +28,7 @@
         Overhydrated,
         Thirsty,
         Parched,
+        Stamina,
         Pulled,
         Pulling,
         Magboots,

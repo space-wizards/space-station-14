@@ -16,11 +16,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Content.Shared.Tools.Components;
+using Content.Server.Station.Systems;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Disease
 {
+    /// <summary>
     /// Everything that's about disease diangosis and machines is in here
-
+    /// </summary>
     public sealed class DiseaseDiagnosisSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -29,6 +32,8 @@ namespace Content.Server.Disease
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PaperSystem _paperSystem = default!;
 
+        [Dependency] private readonly StationSystem _stationSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,9 +41,9 @@ namespace Content.Server.Disease
             SubscribeLocalEvent<DiseaseSwabComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DiseaseDiagnoserComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, AfterInteractUsingEvent>(OnAfterInteractUsingVaccine);
-            /// Visuals
+            // Visuals
             SubscribeLocalEvent<DiseaseMachineComponent, PowerChangedEvent>(OnPowerChanged);
-            /// Private Events
+            // Private Events
             SubscribeLocalEvent<DiseaseDiagnoserComponent, DiseaseMachineFinishedEvent>(OnDiagnoserFinished);
             SubscribeLocalEvent<DiseaseVaccineCreatorComponent, DiseaseMachineFinishedEvent>(OnVaccinatorFinished);
             SubscribeLocalEvent<TargetSwabSuccessfulEvent>(OnTargetSwabSuccessful);
@@ -55,26 +60,29 @@ namespace Content.Server.Disease
         public override void Update(float frameTime)
         {
             foreach (var uid in AddQueue)
+            {
                 EnsureComp<DiseaseMachineRunningComponent>(uid);
+            }
 
             AddQueue.Clear();
             foreach (var uid in RemoveQueue)
+            {
                 RemComp<DiseaseMachineRunningComponent>(uid);
+            }
 
             RemoveQueue.Clear();
 
-            foreach (var (runningComp, diseaseMachine) in EntityQuery<DiseaseMachineRunningComponent, DiseaseMachineComponent>(false))
+            foreach (var (_, diseaseMachine) in EntityQuery<DiseaseMachineRunningComponent, DiseaseMachineComponent>())
             {
-                if (diseaseMachine.Accumulator < diseaseMachine.Delay)
-                {
-                    diseaseMachine.Accumulator += frameTime;
-                    return;
-                }
+                diseaseMachine.Accumulator += frameTime;
 
-                diseaseMachine.Accumulator = 0;
-                var ev = new DiseaseMachineFinishedEvent(diseaseMachine);
-                RaiseLocalEvent(diseaseMachine.Owner, ev, false);
-                RemoveQueue.Enqueue(diseaseMachine.Owner);
+                while (diseaseMachine.Accumulator >= diseaseMachine.Delay)
+                {
+                    diseaseMachine.Accumulator -= diseaseMachine.Delay;
+                    var ev = new DiseaseMachineFinishedEvent(diseaseMachine);
+                    RaiseLocalEvent(diseaseMachine.Owner, ev);
+                    RemoveQueue.Enqueue(diseaseMachine.Owner);
+                }
             }
         }
 
@@ -113,7 +121,7 @@ namespace Content.Server.Disease
                 EntityManager.TryGetComponent<IngestionBlockerComponent>(maskUid, out var blocker) &&
                 blocker.Enabled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("swab-mask-blocked", ("target", args.Target), ("mask", maskUid)), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("swab-mask-blocked", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("mask", maskUid)), args.User, Filter.Entities(args.User));
                 return;
             }
 
@@ -245,7 +253,7 @@ namespace Content.Server.Disease
             report.AddMarkup(cureResistLine);
             report.PushNewline();
 
-            /// Add Cures
+            // Add Cures
             if (disease.Cures.Count == 0)
             {
                 report.AddMarkup(Loc.GetString("diagnoser-no-cures"));
@@ -264,6 +272,17 @@ namespace Content.Server.Disease
             }
 
             return report;
+        }
+
+        public bool ServerHasDisease(DiseaseServerComponent server, DiseasePrototype disease)
+        {
+            bool has = false;
+            foreach (var serverDisease in server.Diseases)
+            {
+                if (serverDisease.ID == disease.ID)
+                    has = true;
+            }
+            return has;
         }
         ///
         /// Appearance stuff
@@ -302,7 +321,7 @@ namespace Content.Server.Disease
                 return;
 
             args.Swab.Used = true;
-            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", args.Target)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("swab-swabbed", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, Filter.Entities(args.User));
 
             if (args.Swab.Disease != null || args.Carrier.Diseases.Count == 0)
                 return;
@@ -327,18 +346,41 @@ namespace Content.Server.Disease
             var isPowered = this.IsPowered(uid, EntityManager);
             UpdateAppearance(uid, isPowered, false);
             // spawn a piece of paper.
-            var printed = EntityManager.SpawnEntity(args.Machine.MachineOutput, Transform(uid).Coordinates);
+            var printed = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
             if (!TryComp<PaperComponent>(printed, out var paper))
                 return;
 
-            var reportTitle = string.Empty;
+            string reportTitle;
             FormattedMessage contents = new();
             if (args.Machine.Disease != null)
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report", ("disease", args.Machine.Disease.Name));
                 contents = AssembleDiseaseReport(args.Machine.Disease);
-            } else
+
+                var known = false;
+
+                foreach (var server in EntityQuery<DiseaseServerComponent>(true))
+                {
+                    if (_stationSystem.GetOwningStation(server.Owner) != _stationSystem.GetOwningStation(uid))
+                        continue;
+
+                    if (ServerHasDisease(server, args.Machine.Disease))
+                    {
+                       known = true;
+                    }
+                    else
+                    {
+                        server.Diseases.Add(args.Machine.Disease);
+                    }
+                }
+
+                if (!known)
+                {
+                    Spawn("ResearchDisk5000", Transform(uid).Coordinates);
+                }
+            }
+            else
             {
                 reportTitle = Loc.GetString("diagnoser-disease-report-none");
                 contents.AddMarkup(Loc.GetString("diagnoser-disease-report-none-contents"));
@@ -351,13 +393,13 @@ namespace Content.Server.Disease
         /// <summary>
         /// Prints a vaccine that will vaccinate
         /// against the disease on the inserted swab.
-        /// <summary>
+        /// </summary>
         private void OnVaccinatorFinished(EntityUid uid, DiseaseVaccineCreatorComponent component, DiseaseMachineFinishedEvent args)
         {
             UpdateAppearance(uid, this.IsPowered(uid, EntityManager), false);
 
             // spawn a vaccine
-            var vaxx = EntityManager.SpawnEntity(args.Machine.MachineOutput, Transform(uid).Coordinates);
+            var vaxx = Spawn(args.Machine.MachineOutput, Transform(uid).Coordinates);
 
             if (!TryComp<DiseaseVaccineComponent>(vaxx, out var vaxxComp))
                 return;

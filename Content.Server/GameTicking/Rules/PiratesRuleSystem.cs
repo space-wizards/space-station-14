@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -57,7 +57,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
     private void OnRoundEndTextEvent(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         if (Deleted(_pirateShip))
@@ -120,14 +120,14 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration _) { }
+    public override void Started() { }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 
     private void OnPlayerSpawningEvent(RulePlayerSpawningEvent ev)
     {
         // Forgive me for copy-pasting nukies.
-        if (!Enabled)
+        if (!RuleAdded)
         {
             return;
         }
@@ -171,7 +171,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
             return;
         }
 
-        _pirateShip = _mapManager.GetGridEuid(gridId.Value);
+        _pirateShip = gridId.Value;
 
         // TODO: Loot table or something
         var pirateGear = _prototypeManager.Index<StartingGearPrototype>("PirateGear"); // YARRR
@@ -225,7 +225,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.PiratesMinPlayers);

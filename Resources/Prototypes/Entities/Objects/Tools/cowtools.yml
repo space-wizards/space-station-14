@@ -43,7 +43,7 @@
   - type: Tool
     qualities:
     - Screwing
-    useSound: 
+    useSound:
       collection: Screwdriver
     speed: 0.05
 
@@ -138,17 +138,14 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Cowtools/milkalyzer.rsi
-    state: milkalyzer
+    layers:
+    - state: milkalyzer
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: GasAnalyzerVisualizer
-      state_off: milkalyzer
-      state_working: milkalyzer
 
 - type: entity
   name: cow toolbox

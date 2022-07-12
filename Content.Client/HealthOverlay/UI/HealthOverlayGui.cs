@@ -1,4 +1,5 @@
 using Content.Client.IoC;
+using Content.Client.MobState;
 using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -86,11 +87,12 @@ namespace Content.Client.HealthOverlay.UI
                 return;
             }
 
+            var mobStateSystem = _entities.EntitySysManager.GetEntitySystem<MobStateSystem>();
             FixedPoint2 threshold;
 
             if (mobState.IsAlive())
             {
-                if (!mobState.TryGetEarliestCriticalState(damageable.TotalDamage, out _, out threshold))
+                if (!mobStateSystem.TryGetEarliestCriticalState(mobState, damageable.TotalDamage, out _, out threshold))
                 {
                     CritBar.Visible = false;
                     HealthBar.Visible = false;
@@ -107,8 +109,8 @@ namespace Content.Client.HealthOverlay.UI
                 HealthBar.Ratio = 0;
                 HealthBar.Visible = false;
 
-                if (!mobState.TryGetPreviousCriticalState(damageable.TotalDamage, out _, out var critThreshold) ||
-                    !mobState.TryGetEarliestDeadState(damageable.TotalDamage, out _, out var deadThreshold))
+                if (!mobStateSystem.TryGetPreviousCriticalState(mobState, damageable.TotalDamage, out _, out var critThreshold) ||
+                    !mobStateSystem.TryGetEarliestDeadState(mobState, damageable.TotalDamage, out _, out var deadThreshold))
                 {
                     CritBar.Visible = false;
                     return;
