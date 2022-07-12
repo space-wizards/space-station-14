@@ -84,7 +84,7 @@ public sealed class SpraySystem : EntitySystem
         var diffNorm = diffPos.Normalized;
         var diffAngle = diffNorm.ToAngle();
 
-        // Vectors to determine the spawn position of the vapor clouds.
+        // Vectors to determine the spawn offset of the vapor clouds.
         var threeQuarters = diffNorm * 0.75f;
         var quarter = diffNorm * 0.25f;
 
@@ -96,6 +96,7 @@ public sealed class SpraySystem : EntitySystem
             var rotation = new Angle(diffAngle + Angle.FromDegrees(spread * i) -
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
 
+            // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
             var target = userMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
 
@@ -108,7 +109,7 @@ public sealed class SpraySystem : EntitySystem
             if (newSolution.TotalVolume <= FixedPoint2.Zero)
                 break;
 
-            // Spawn the vapor cloud local to the spray user, then reattach to the grid underneath.
+            // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
             var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
             var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(vaporSpawnEntityUid, gridMapInvMatrix.Transform(vaporPos)));
             Transform(vapor).WorldRotation = rotation;
@@ -127,6 +128,7 @@ public sealed class SpraySystem : EntitySystem
             var impulseDirection = rotation.ToVec();
             _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime);
 
+            // Apply the reaction force to the user.
             if (component.Impulse > 0f && TryComp(args.User, out PhysicsComponent? body))
                 body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
         }
