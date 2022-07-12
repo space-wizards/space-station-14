@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: You can now hang trashbags off your toolbelt slot. Janitors rejoice.,
-    type: Tweak}
-  id: 1426
-  time: '2022-04-30T21:19:06.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Zombies are now weaker and the zombie infection now progresses slower.,
@@ -2953,3 +2947,8 @@ Entries:
   - {message: 'Drop the bad anime act, you can now leave again', type: Fix}
   id: 1925
   time: '2022-07-11T21:25:36.0000000+00:00'
+- author: Duddino
+  changes:
+  - {message: Fixed PDA not spawning with the correct light, type: Fix}
+  id: 1926
+  time: '2022-07-12T00:30:03.0000000+00:00'
