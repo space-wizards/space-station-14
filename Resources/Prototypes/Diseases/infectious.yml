@@ -118,6 +118,10 @@
   id: AMIV
   name: AMIV
   cureResist: 0.10
+  stages:
+    - 0
+    - 120
+    - 780
   effects:
     - !type:DiseasePopUp
       probability: 0.015
@@ -198,10 +202,6 @@
         - 0
         - 1
         - 2
-  stages:
-    - 0
-    - 120
-    - 780
 
 - type: disease
   id: BleedersBite
