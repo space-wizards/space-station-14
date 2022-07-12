@@ -16,6 +16,7 @@
   - type: InteractionOutline
   - type: Vehicle
   - type: MovementSpeedModifier
+    weightlessModifier: 0
     acceleration: 2
     friction: 2
     baseWalkSpeed : 4.5
@@ -281,12 +282,6 @@
       southOverride: 0.1
       hornSound:
         path: /Audio/Effects/Vehicle/policesiren.ogg
-      hornAction:
-        name: action-name-siren
-        description: action-desc-siren
-        icon: Objects/Fun/bikehorn.rsi/icon.png
-        iconOn: Objects/Fun/bikehorn.rsi/icon.png
-        event: !type:ToggleActionEvent
     - type: Sprite
       sprite: Objects/Vehicles/syndicatesegway.rsi
       layers:

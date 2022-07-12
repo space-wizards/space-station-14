@@ -113,12 +113,25 @@ namespace Content.Shared.Movement.Systems
             component.LastGridAngle = Transform(xform.ParentUid).WorldRotation;
         }
 
-        private void HandleRunChange(ICommonSession? session, ushort subTick, bool walking)
+        private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
         {
-            if (!TryComp<InputMoverComponent>(session?.AttachedEntity, out var moverComp))
+            TryComp<InputMoverComponent>(uid, out var moverComp);
+
+            if (TryComp<RelayInputMoverComponent>(uid, out var relayMover))
             {
+                // if we swap to relay then stop our existing input if we ever change back.
+                if (moverComp != null)
+                {
+                    SetMoveInput(moverComp, MoveButtons.None);
+                }
+
+                if (relayMover.RelayEntity == null) return;
+
+                HandleRunChange(relayMover.RelayEntity.Value, subTick, walking);
                 return;
             }
+
+            if (moverComp == null) return;
 
             SetSprinting(moverComp, subTick, walking);
         }
@@ -302,9 +315,9 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
 
-                _controller.HandleRunChange(session, full.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleRunChange(session.AttachedEntity.Value, full.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
         }
