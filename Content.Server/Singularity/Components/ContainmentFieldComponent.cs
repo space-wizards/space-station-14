@@ -5,8 +5,6 @@ namespace Content.Server.Singularity.Components;
 [ComponentReference(typeof(SharedContainmentFieldComponent))]
 public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
 {
-    public ContainmentFieldConnection? Parent; //dont know if needed
-
     /// <summary>
     /// How far should this field check before giving up?
     /// </summary>

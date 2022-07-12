@@ -90,6 +90,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
+    //TODO: put into its own PA system?
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
     {
         if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
@@ -116,12 +117,10 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
+    //TODO: Get rid of this
     private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
     {
-        if (component.Parent == null)
-        {
-            //EntityManager.QueueDeleteEntity(uid);
-        }
+
     }
 
     public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
@@ -139,7 +138,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
         {
-            bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);
+            bool hasAnyConnection = component.Connection1 != null || component.Connection2 != null;
             pointLightComponent.Enabled = hasAnyConnection;
         }
     }
@@ -168,15 +167,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (propertyFieldTuple != null) return false;
         if (!component.Enabled) return false; //don't gen a field unless it's on
-        if (EntityManager.TryGetComponent<TransformComponent>(component.Owner, out var xform) && !xform.Anchored) return false;
         var gen1XForm = Transform(component.Owner);
+        if (!gen1XForm.Anchored) return false;
         var gen1CardinalDirAngle = gen1XForm.WorldRotation;
         var south = Direction.South.ToAngle() + gen1CardinalDirAngle;
         var west = Direction.West.ToAngle() + gen1CardinalDirAngle;
         var north = Direction.North.ToAngle() + gen1CardinalDirAngle;
         var east = Direction.East.ToAngle() + gen1CardinalDirAngle;
 
-
+        //TODO: Finding the generators seems fine, need to prevent it from going through a wall, however.
+        //TODO: There is still an issue with x2 fields spawning on the generator that has null generators, but has connections
+        //Though I just double checked with a 1x1 and there were no field gens
+        //TODO: Also extra issue with the last node (D) despawning the connection between A-B.
+        //TODO: Maybe change from the spawn each to the singular spawn with texture wrapper.
         foreach (var direction in new[] { south, west, north, east })
         {
             if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
@@ -199,19 +202,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
             var ent = closestResult.Value.HitEntity;
 
-            //Something could be wrong with this
-            if (!EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
+            //TODO: Something could be wrong with this
+            if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var fieldGeneratorComponent) ||
                 fieldGeneratorComponent.Owner == component.Owner ||
                 !HasFreeConnections(fieldGeneratorComponent) ||
                 IsConnectedWith(component, fieldGeneratorComponent) ||
-                !EntityManager.TryGetComponent<PhysicsComponent?>(ent, out var collidableComponent) ||
+                !TryComp<PhysicsComponent?>(ent, out var collidableComponent) ||
                 collidableComponent.BodyType != BodyType.Static)
             {
                 continue;
             }
 
             //rework this I don't think it will work out
-            //One gen always appears with no connections
+            //TODO: One gen always appears with no connections
             component.Generator1 = component.Owner;
             if (component.Generator2 == fieldGeneratorComponent.Owner) //new addition, come back to this
                 continue;
@@ -220,8 +223,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
             //The spawning works fine
             GenerateConnection(component);
-            //Really need to reapproach the tuple approach
-            //Something about this has to not be working.
+            //TODO: Really need to reapproach the tuple approach
             propertyFieldTuple = new Tuple<Angle, List<EntityUid>>(direction, component.Fields);
             if (fieldGeneratorComponent.Connection1 == null)
             {
@@ -270,7 +272,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
             var fieldXForm = Transform(newField);
             fieldXForm.AttachParent(component.Generator1.Value);
-            if (dirVec.ToWorldAngle().ToWorldVec().GetDir() == Direction.East || dirVec.ToWorldAngle().ToWorldVec().GetDir() == Direction.West)
+            if (dirVec.GetDir() == Direction.East || dirVec.GetDir() == Direction.West)
                 fieldXForm.LocalRotation = 90;
 
             component.Fields.Add(newField);

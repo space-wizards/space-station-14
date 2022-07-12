@@ -56,7 +56,7 @@ namespace Content.Server.Singularity.Components
                     continue;
                 }
 
-                containmentFieldComponent.Parent = this;
+                //containmentFieldComponent.Parent = this;
                 IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(newEnt).WorldRotation = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(generator1.Owner).WorldRotation + dirVec.ToWorldAngle();
 
                 _fields.Add(newEnt);
