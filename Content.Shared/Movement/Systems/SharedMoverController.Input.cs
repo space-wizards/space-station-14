@@ -1,9 +1,6 @@
 using Content.Shared.CCVar;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.Vehicle.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -47,13 +44,11 @@ namespace Content.Shared.Movement.Systems
 
         private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is InputMoverComponentState state)
-            {
-                component.HeldMoveButtons = state.Buttons;
-                component.LastInputTick = GameTick.Zero;
-                component.LastInputSubTick = 0;
-                component.CanMove = state.CanMove;
-            }
+            if (args.Current is not InputMoverComponentState state) return;
+            component.HeldMoveButtons = state.Buttons;
+            component.LastInputTick = GameTick.Zero;
+            component.LastInputSubTick = 0;
+            component.CanMove = state.CanMove;
         }
 
         private void OnInputGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)

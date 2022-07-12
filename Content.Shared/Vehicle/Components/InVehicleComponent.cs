@@ -1,10 +1,12 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Vehicle.Components
 {
     /// <summary>
     /// Added to objects inside a vehicle to stop people besides the rider from
     /// removing them.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class InVehicleComponent : Component
     {
         /// <summary>

@@ -1,5 +1,5 @@
 - type: entity
-  id: VehicleBase
+  id: BaseVehicle
   save: false
   abstract: true
   name: Vehicle
@@ -10,13 +10,16 @@
   - type: AmbientSound
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
-    volume: -1
+    volume: -5
+    enabled: false
   - type: InputMover
   - type: InteractionOutline
   - type: Vehicle
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
+    acceleration: 2
+    friction: 2
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 6
   - type: Eye
   - type: Tag
   - type: Pullable
@@ -68,7 +71,7 @@
 
 - type: entity
   id: VehiclePussyWagon
-  parent: VehicleBase
+  parent: BaseVehicle
   name: janicart
   description: The janitor's trusty steed.
   components:
@@ -155,7 +158,7 @@
 
 - type: entity
   id: VehicleSecway
-  parent: VehicleBase
+  parent: BaseVehicle
   name: secway
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
@@ -189,8 +192,8 @@
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
   - type: MovementSpeedModifier
-    baseWalkSpeed : 8
-    baseSprintSpeed : 8
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 7
   - type: Armor
     modifiers:
       coeffecients:
@@ -209,7 +212,7 @@
         insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
 
 - type: entity
-  parent: VehicleBase
+  parent: BaseVehicle
   id: VehicleATV
   name: ATV
   description: All-Tile Vehicle.
@@ -231,8 +234,8 @@
   - type: RandomMetadata
     descriptionSet: ATVDescriptions
   - type: MovementSpeedModifier
-    baseWalkSpeed : 8
-    baseSprintSpeed : 8
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 7
   - type: Strap
     buckleOffset: "0.1, -0.05"
     maxBuckleDistance: 1
@@ -262,7 +265,7 @@
 
 - type: entity
   id: VehicleSyndicateSegway
-  parent: VehicleBase
+  parent: BaseVehicle
   name: syndicate segway
   description: Be an enemy of the corporation, in style.
   components:
@@ -294,8 +297,8 @@
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
     - type: MovementSpeedModifier
-      baseWalkSpeed : 8
-      baseSprintSpeed : 8
+      baseWalkSpeed : 4.5
+      baseSprintSpeed : 6
     - type: Armor
       modifiers:
         coeffecients:
