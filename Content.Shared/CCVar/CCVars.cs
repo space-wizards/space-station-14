@@ -421,13 +421,13 @@ namespace Content.Shared.CCVar
         /// The acceleration applied to mobs when moving.
         /// </summary>
         public static readonly CVarDef<float> MobAcceleration =
-            CVarDef.Create("physics.mob_acceleration", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.mob_acceleration", 20f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
         public static readonly CVarDef<float> MobFriction =
-            CVarDef.Create("physics.mob_friction", 14f, CVar.ARCHIVE | CVar.REPLICATED);
+            CVarDef.Create("physics.mob_friction", 20f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// The acceleration applied to mobs when moving and weightless.

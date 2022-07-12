@@ -15,6 +15,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement.Systems
@@ -26,6 +27,7 @@ namespace Content.Shared.Movement.Systems
     public abstract partial class SharedMoverController : VirtualController
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -90,6 +92,7 @@ namespace Content.Shared.Movement.Systems
         {
             base.Initialize();
             InitializeInput();
+            InitializeMob();
             InitializePushing();
             // Hello
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
@@ -136,7 +139,7 @@ namespace Content.Shared.Movement.Systems
             UsedMobMovement.Clear();
         }
 
-        protected Angle GetParentGridAngle(TransformComponent xform, IMoverComponent mover)
+        protected Angle GetParentGridAngle(TransformComponent xform, InputMoverComponent mover)
         {
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return mover.LastGridAngle;
@@ -147,9 +150,9 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     A generic kinematic mover for entities.
         /// </summary>
-        protected void HandleKinematicMovement(IMoverComponent mover, PhysicsComponent physicsComponent)
+        protected void HandleKinematicMovement(InputMoverComponent mover, PhysicsComponent physicsComponent)
         {
-            var (walkDir, sprintDir) = mover.VelocityDir;
+            var (walkDir, sprintDir) = GetVelocityInput(mover);
 
             var transform = EntityManager.GetComponent<TransformComponent>(mover.Owner);
             var parentRotation = GetParentGridAngle(transform, mover);
@@ -178,9 +181,9 @@ namespace Content.Shared.Movement.Systems
         ///     Movement while considering actionblockers, weightlessness, etc.
         /// </summary>
         protected void HandleMobMovement(
-            IMoverComponent mover,
+            InputMoverComponent mover,
             PhysicsComponent physicsComponent,
-            IMobMoverComponent mobMover,
+            MobMoverComponent mobMover,
             TransformComponent xform,
             float frameTime)
         {
@@ -194,7 +197,7 @@ namespace Content.Shared.Movement.Systems
 
             UsedMobMovement[mover.Owner] = true;
             var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
-            var (walkDir, sprintDir) = mover.VelocityDir;
+            var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 
             // Handle wall-pushes.
@@ -340,7 +343,7 @@ namespace Content.Shared.Movement.Systems
             return UsedMobMovement.TryGetValue(uid, out var used) && used;
         }
 
-        protected bool UseMobMovement(IMoverComponent mover, PhysicsComponent body)
+        protected bool UseMobMovement(InputMoverComponent mover, PhysicsComponent body)
         {
             return mover.CanMove &&
                    body.BodyStatus == BodyStatus.OnGround &&
@@ -352,9 +355,9 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, IPhysBody collider)
         {
-            var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
+            var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRangeVV);
 
             foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
             {
@@ -381,7 +384,7 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(IMoverComponent mover, IMobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetSound(InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
         {
             sound = null;
             variation = 0f;

@@ -7,8 +7,8 @@ namespace Content.Shared.Movement.Components
     [NetworkedComponent, Access(typeof(MovementSpeedModifierSystem))]
     public sealed class MovementSpeedModifierComponent : Component
     {
-        public const float DefaultBaseWalkSpeed = 3.0f;
-        public const float DefaultBaseSprintSpeed = 5.0f;
+        public const float DefaultBaseWalkSpeed = 2.5f;
+        public const float DefaultBaseSprintSpeed = 4.5f;
 
         [ViewVariables]
         public float WalkSpeedModifier = 1.0f;

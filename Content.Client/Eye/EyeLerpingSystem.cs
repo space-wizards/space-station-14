@@ -94,7 +94,7 @@ public sealed class EyeLerpingSystem : EntitySystem
             return;
 
         // We can't lerp if the mob can't move!
-        if (!TryComp(mob, out IMoverComponent? mover))
+        if (!TryComp(mob, out InputMoverComponent? mover))
             return;
 
         LerpEye(_eyeManager.CurrentEye, frameTime, mover.LastGridAngle, _playerActiveEye);

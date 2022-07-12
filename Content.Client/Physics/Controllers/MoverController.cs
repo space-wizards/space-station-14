@@ -21,7 +21,7 @@ namespace Content.Client.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
 
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player ||
-                !TryComp(player, out IMoverComponent? mover) ||
+                !TryComp(player, out InputMoverComponent? mover) ||
                 !TryComp(player, out PhysicsComponent? body) ||
                 !TryComp(player, out TransformComponent? xform))
             {
@@ -65,7 +65,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            if (TryComp(player, out IMobMoverComponent? mobMover))
+            if (TryComp(player, out MobMoverComponent? mobMover))
             {
                 HandleMobMovement(mover, body, mobMover, xform, frameTime);
                 return;

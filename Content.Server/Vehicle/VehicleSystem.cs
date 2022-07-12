@@ -11,6 +11,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared.Tag;
 using Content.Server.Mind.Components;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -19,13 +20,15 @@ namespace Content.Server.Vehicle
 {
     public sealed class VehicleSystem : EntitySystem
     {
-        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly RiderSystem _riderSystem = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,9 +43,9 @@ namespace Content.Server.Vehicle
         /// </summary>
         public override void Update(float frameTime)
         {
-            foreach (var (vehicle, mover) in EntityQuery<VehicleComponent, SharedPlayerInputMoverComponent>())
+            foreach (var (vehicle, mover) in EntityQuery<VehicleComponent, InputMoverComponent>())
             {
-                if (mover.VelocityDir.sprinting == Vector2.Zero)
+                if (_mover.GetVelocityInput(mover).Sprinting == Vector2.Zero)
                 {
                     UpdateAutoAnimate(vehicle.Owner, false);
                     continue;
@@ -82,7 +85,7 @@ namespace Content.Server.Vehicle
                     return;
                 }
                 // Set up the rider and vehicle with each other
-                EnsureComp<SharedPlayerInputMoverComponent>(uid);
+                EnsureComp<InputMoverComponent>(uid);
                 var rider = EnsureComp<RiderComponent>(args.BuckledEntity);
                 component.Rider = args.BuckledEntity;
                 rider.Vehicle = component;
@@ -134,7 +137,7 @@ namespace Content.Server.Vehicle
         private void OnMove(EntityUid uid, VehicleComponent component, ref MoveEvent args)
         {
             // This first check is just for safety
-            if (!HasComp<SharedPlayerInputMoverComponent>(uid))
+            if (!HasComp<InputMoverComponent>(uid))
             {
                 UpdateAutoAnimate(uid, false);
                 return;
@@ -142,7 +145,7 @@ namespace Content.Server.Vehicle
             // The random check means the vehicle will stop after a few tiles without a key or without a rider
             if ((!component.HasRider || !component.HasKey) && _random.Prob(0.015f))
             {
-                RemComp<SharedPlayerInputMoverComponent>(uid);
+                RemComp<InputMoverComponent>(uid);
                 UpdateAutoAnimate(uid, false);
             }
             UpdateBuckleOffset(args.Component, component);
@@ -168,7 +171,7 @@ namespace Content.Server.Vehicle
                 }
 
                 // This lets the vehicle move
-                EnsureComp<SharedPlayerInputMoverComponent>(uid);
+                EnsureComp<InputMoverComponent>(uid);
                 // This lets the vehicle open doors
                 if (component.HasRider)
                     _tagSystem.AddTag(uid, "DoorBumpOpener");

@@ -16,7 +16,7 @@
   - type: DoAfter
   - type: CombatMode
   - type: Actions
-  - type: PlayerInputMover
+  - type: InputMover
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
