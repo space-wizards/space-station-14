@@ -1,4 +1,5 @@
 using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -31,7 +32,7 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ToiletComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ToiletComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand, new []{typeof(StrapSystem)});
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<ToiletComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ToiletPryFinished>(OnToiletPried);
@@ -184,11 +185,8 @@ namespace Content.Server.Toilet
             UpdateSprite(uid, component);
         }
 
-        private void UpdateSprite(EntityUid uid, ToiletComponent? component = null)
+        private void UpdateSprite(EntityUid uid, ToiletComponent component)
         {
-            if (!Resolve(uid, ref component))
-                return;
-
             if (!EntityManager.TryGetComponent(uid,out AppearanceComponent? appearance))
                 return;
 

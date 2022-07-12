@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 using Content.Shared.Tools;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Toilet
+namespace Content.Shared.Toilet
 {
     [RegisterComponent]
     public sealed class ToiletComponent : Component
