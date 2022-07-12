@@ -2,7 +2,7 @@
 
 namespace Content.Server.Disposal.Mailing;
 
-[Friend(typeof(MailingUnitSystem))]
+[Access(typeof(MailingUnitSystem))]
 [RegisterComponent]
 public sealed class MailingUnitComponent : Component
 {
