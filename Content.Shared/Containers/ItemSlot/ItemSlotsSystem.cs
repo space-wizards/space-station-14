@@ -234,7 +234,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             if (sound == null || !_gameTiming.IsFirstTimePredicted)
                 return;
-            
+
             var filter = Filter.Pvs(uid, entityManager: EntityManager);
 
             if (excluded != null && _netMan.IsServer)

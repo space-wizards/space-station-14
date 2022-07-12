@@ -65,7 +65,10 @@
           requireAll: true
           tags:
           - VehicleKey
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
