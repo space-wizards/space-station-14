@@ -82,7 +82,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
                 return false;
 
             case RoleTimeRequirement roleRequirement:
-                roleTimes ??= GetRolePlaytime(id, job.ID);
+                roleTimes ??= GetRolePlaytimes(id, job.ID);
                 roleTimes.TryGetValue(roleRequirement.Role, out var roleTime);
                 var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
 
@@ -99,5 +99,6 @@ public abstract class SharedRoleTimerSystem : EntitySystem
     }
 
     protected abstract TimeSpan GetOverallPlaytime(NetUserId id);
-    protected abstract Dictionary<string, TimeSpan> GetRolePlaytime(NetUserId id, string role);
+    protected abstract Dictionary<string, TimeSpan> GetRolePlaytimes(NetUserId id);
+    protected abstract TimeSpan GetRolePlaytime(NetUserId id, string role);
 }

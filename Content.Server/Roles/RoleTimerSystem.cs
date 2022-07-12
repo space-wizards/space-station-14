@@ -251,7 +251,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         return _roleTimers.GetOverallPlaytime(id).Result;
     }
 
-    protected override Dictionary<string, TimeSpan> GetRolePlaytime(NetUserId id, string role)
+    protected override Dictionary<string, TimeSpan> GetRolePlaytimes(NetUserId id)
     {
         return _roleTimers.GetRolePlaytimes(id).Result;
     }
