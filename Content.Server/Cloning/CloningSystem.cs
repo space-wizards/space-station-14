@@ -135,7 +135,7 @@ namespace Content.Server.Cloning.Systems
 
             var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
             var mob = Spawn(speciesProto, transform.MapPosition);
-            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance, humanoid.Sex, humanoid.Gender, humanoid.Species);
+            _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
 
             // set name if they have it
             if (TryComp<MetaDataComponent>(mob, out var meta) && TryComp<MetaDataComponent>(bodyToClone, out var bodyMeta))
