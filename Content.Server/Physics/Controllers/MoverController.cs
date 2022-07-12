@@ -1,14 +1,11 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -17,13 +14,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
-        /// <summary>
-        /// These mobs will get skipped over when checking which mobs
-        /// should be moved. Prediction is handled elsewhere by
-        /// cancelling the movement attempt in the shared and
-        /// client namespace.
-        /// </summary>
-        private HashSet<EntityUid> _excludedMobs = new();
+
         private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
 
         protected override Filter GetSoundPlayers(EntityUid mover)
@@ -39,23 +30,32 @@ namespace Content.Server.Physics.Controllers
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<MobMoverComponent, InputMoverComponent, PhysicsComponent, TransformComponent>())
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
+
+            foreach (var (mover, xform) in EntityQuery<InputMoverComponent, TransformComponent>())
             {
-                _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover, xform, frameTime);
+                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed != null)
+                {
+                    continue;
+                }
+
+                PhysicsComponent? body = null;
+
+                if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
+                {
+                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body)) continue;
+                }
+                else if (!bodyQuery.TryGetComponent(mover.Owner, out body))
+                {
+                    continue;
+                }
+
+                HandleMobMovement(mover, body, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
-            HandleVehicleMovement();
-
-            foreach (var (mover, physics) in EntityManager.EntityQuery<InputMoverComponent, PhysicsComponent>(true))
-            {
-                if (_excludedMobs.Contains(mover.Owner)) continue;
-
-                HandleKinematicMovement(mover, physics);
-            }
         }
 
         private void HandleShuttleMovement(float frameTime)
@@ -74,8 +74,6 @@ namespace Content.Server.Physics.Controllers
                 }
 
                 if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
-
-                _excludedMobs.Add(mover.Owner);
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
@@ -253,27 +251,6 @@ namespace Content.Server.Physics.Controllers
 
                     _thruster.SetAngularThrust(shuttle, true);
                 }
-            }
-        }
-        /// <summary>
-        /// Add mobs riding vehicles to the list of mobs whose input
-        /// should be ignored.
-        /// </summary>
-        private void HandleVehicleMovement()
-        {
-            // TODO: Nuke this code. It's on my list.
-            foreach (var (rider, mover) in EntityQuery<RiderComponent, InputMoverComponent>())
-            {
-                if (rider.Vehicle == null) continue;
-                _excludedMobs.Add(mover.Owner);
-
-                if (!_excludedMobs.Add(rider.Vehicle.Owner)) continue;
-
-                if (!TryComp<InputMoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
-                    !TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
-                    rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
-
-                HandleKinematicMovement(vehicleMover, vehicleBody);
             }
         }
     }

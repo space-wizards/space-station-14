@@ -8,10 +8,10 @@ namespace Content.Shared.Movement.Events;
 [ByRefEvent]
 public readonly struct MoveInputEvent
 {
-    public readonly ICommonSession Session;
+    public readonly EntityUid Entity;
 
-    public MoveInputEvent(ICommonSession session)
+    public MoveInputEvent(EntityUid entity)
     {
-        Session = session;
+        Entity = entity;
     }
 }

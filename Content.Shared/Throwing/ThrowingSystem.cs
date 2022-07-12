@@ -33,7 +33,7 @@ public sealed class ThrowingSystem : EntitySystem
         Vector2 direction,
         float strength = 1.0f,
         EntityUid? user = null,
-        float pushbackRatio = 10.0f,
+        float pushbackRatio = 5.0f,
         PhysicsComponent? physics = null,
         TransformComponent? transform = null,
         EntityQuery<PhysicsComponent>? physicsQuery = null,

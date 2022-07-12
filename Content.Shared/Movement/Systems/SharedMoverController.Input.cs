@@ -38,6 +38,13 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnInputHandleState);
         }
 
+        private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        {
+            if (component.HeldMoveButtons == buttons) return;
+            component.HeldMoveButtons = buttons;
+            Dirty(component);
+        }
+
         private void OnInputHandleState(EntityUid uid, InputMoverComponent component, ref ComponentHandleState args)
         {
             if (args.Current is InputMoverComponentState state)
@@ -61,13 +68,31 @@ namespace Content.Shared.Movement.Systems
 
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
 
-        private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
+        private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
-            if (!TryComp<InputMoverComponent>(session?.AttachedEntity, out var moverComp))
+            TryComp<InputMoverComponent>(entity, out var moverComp);
+
+            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            {
+                // if we swap to relay then stop our existing input if we ever change back.
+                if (moverComp != null)
+                {
+                    SetMoveInput(moverComp, MoveButtons.None);
+                }
+
+                if (relayMover.RelayEntity == null) return;
+
+                HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+                return;
+            }
+
+            if (moverComp == null)
                 return;
 
+            // Relay the fact we had any movement event.
+            // TODO: Ideally we'd do these in a tick instead of out of sim.
             var owner = moverComp.Owner;
-            var moveEvent = new MoveInputEvent(session);
+            var moveEvent = new MoveInputEvent(entity);
             RaiseLocalEvent(owner, ref moveEvent);
 
             // For stuff like "Moving out of locker" or the likes
@@ -79,15 +104,6 @@ namespace Content.Shared.Movement.Systems
             {
                 var relayMoveEvent = new ContainerRelayMovementEntityEvent(owner);
                 RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
-            }
-
-            // Pass the rider's inputs to the vehicle (the rider itself is on the ignored list in C.S/MoverController.cs)
-            if (TryComp<RiderComponent>(owner, out var rider) && rider.Vehicle is { HasKey: true })
-            {
-                if (TryComp<InputMoverComponent>(rider.Vehicle.Owner, out var vehicleMover))
-                {
-                    SetVelocityDirection(vehicleMover, dir, subTick, state);
-                }
             }
 
             SetVelocityDirection(moverComp, dir, subTick, state);
@@ -192,16 +208,18 @@ namespace Content.Shared.Movement.Systems
                 component.LastInputSubTick = subTick;
             }
 
+            var buttons = component.HeldMoveButtons;
+
             if (enabled)
             {
-                component.HeldMoveButtons |= bit;
+                buttons |= bit;
             }
             else
             {
-                component.HeldMoveButtons &= ~bit;
+                buttons &= ~bit;
             }
 
-            Dirty(component);
+            SetMoveInput(component, buttons);
         }
 
         private void ResetSubtick(InputMoverComponent component)
@@ -271,9 +289,9 @@ namespace Content.Shared.Movement.Systems
 
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full) return false;
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
 
-                _controller.HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleDirChange(session.AttachedEntity.Value, _dir, message.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
         }
