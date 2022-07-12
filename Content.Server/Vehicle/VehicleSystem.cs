@@ -1,3 +1,4 @@
+using Content.Server.Buckle.Components;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Buckle.Components;
@@ -20,6 +21,7 @@ namespace Content.Server.Vehicle
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly MetaDataSystem _metadata = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
@@ -33,10 +35,31 @@ namespace Content.Server.Vehicle
 
             InitializeRider();
 
+            SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
+            SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
             SubscribeLocalEvent<VehicleComponent, HonkActionEvent>(OnHonk);
             SubscribeLocalEvent<VehicleComponent, BuckleChangeEvent>(OnBuckleChange);
             SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
             SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        }
+
+        // TODO: Shitcode
+        private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
+        {
+            // This first check is just for safety
+            if (!HasComp<InputMoverComponent>(uid))
+            {
+                UpdateAutoAnimate(uid, false);
+                return;
+            }
+
+            UpdateBuckleOffset(args.Component, component);
+            UpdateDrawDepth(uid, GetDrawDepth(args.Component, component.NorthOnly));
+        }
+
+        private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
+        {
+            _modifier.RefreshMovementSpeedModifiers(uid);
         }
 
         /// <summary>
@@ -96,11 +119,9 @@ namespace Content.Server.Vehicle
                 rider.Vehicle = uid;
                 component.HasRider = true;
 
-                // Let this open doors if it has the key in it
-                if (component.HasKey)
-                {
-                    _tagSystem.AddTag(uid, "DoorBumpOpener");
-                }
+                // Update appearance stuff, add actions
+                UpdateBuckleOffset(Transform(uid), component);
+                UpdateDrawDepth(uid, GetDrawDepth(Transform(uid), component.NorthOnly));
 
                 if (TryComp<ActionsComponent>(args.BuckledEntity, out var actions) && TryComp<UnpoweredFlashlightComponent>(uid, out var flashlight))
                 {
@@ -121,9 +142,6 @@ namespace Content.Server.Vehicle
             // Clean up actions and virtual items
             _actionsSystem.RemoveProvidedActions(args.BuckledEntity, uid);
             _virtualItemSystem.DeleteInHandsMatching(args.BuckledEntity, uid);
-
-            // Go back to old pullable behavior
-            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
 
             // Entity is no longer riding
             RemComp<RiderComponent>(args.BuckledEntity);
@@ -153,6 +171,8 @@ namespace Content.Server.Vehicle
 
             // Audiovisual feedback
             _ambientSound.SetAmbience(uid, true);
+            _tagSystem.AddTag(uid, "DoorBumpOpener");
+            _modifier.RefreshMovementSpeedModifiers(uid);
         }
 
         /// <summary>
@@ -165,6 +185,72 @@ namespace Content.Server.Vehicle
             // Disable vehicle
             component.HasKey = false;
             _ambientSound.SetAmbience(uid, false);
+            _tagSystem.RemoveTag(uid, "DoorBumpOpener");
+            _modifier.RefreshMovementSpeedModifiers(uid);
+        }
+
+        /// <summary>
+        /// Depending on which direction the vehicle is facing,
+        /// change its draw depth. Vehicles can choose between special drawdetph
+        /// when facing north or south. East and west are easy.
+        /// </summary>
+        private int GetDrawDepth(TransformComponent xform, bool northOnly)
+        {
+            // TODO: These drawdepths are long since incorrect so hell if I know what they're supposed to be now.
+            // everything below this line in the class is pretty bad.
+            if (northOnly)
+            {
+                return xform.LocalRotation.Degrees switch
+                {
+                    < 135f => 5,
+                    <= 225f => 2,
+                    _ => 5
+                };
+            }
+            return xform.LocalRotation.Degrees switch
+            {
+                < 45f => 5,
+                <= 315f => 2,
+                _ => 5
+            };
+        }
+
+        /// <summary>
+        /// Change the buckle offset based on what direction the vehicle is facing and
+        /// teleport any buckled entities to it. This is the most crucial part of making
+        /// buckled vehicles work.
+        /// </summary>
+        private void UpdateBuckleOffset(TransformComponent xform, VehicleComponent component)
+        {
+            if (!TryComp<StrapComponent>(component.Owner, out var strap))
+                return;
+
+            strap.BuckleOffsetUnclamped = xform.LocalRotation.Degrees switch
+            {
+                < 45f => (0, component.SouthOverride),
+                <= 135f => component.BaseBuckleOffset,
+                < 225f  => (0, component.NorthOverride),
+                <= 315f => (component.BaseBuckleOffset.X * -1, component.BaseBuckleOffset.Y),
+                _ => (0, component.SouthOverride)
+            };
+
+            foreach (var buckledEntity in strap.BuckledEntities)
+            {
+                var buckleXform = Transform(buckledEntity);
+                buckleXform.LocalPosition = strap.BuckleOffset;
+            }
+
+        }
+
+        /// <summary>
+        /// Set the draw depth for the sprite.
+        /// </summary>
+        private void UpdateDrawDepth(EntityUid uid, int drawDepth)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(VehicleVisuals.DrawDepth, drawDepth);
         }
 
         /// <summary>

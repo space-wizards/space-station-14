@@ -63,5 +63,24 @@ namespace Content.Shared.Vehicle.Components
         /// Whether the vehicle has a key currently inside it or not.
         /// </summary>
         public bool HasKey = false;
+
+        // TODO: Fix this
+        /// <summary>
+        /// Whether the vehicle should treat north as its unique direction in its visualizer
+        /// </summary>
+        [DataField("northOnly")]
+        public bool NorthOnly = false;
+
+        /// <summary>
+        /// What the y buckle offset should be in north / south
+        /// </summary>
+        [DataField("northOverride")]
+        public float NorthOverride = 0f;
+
+        /// <summary>
+        /// What the y buckle offset should be in north / south
+        /// </summary>
+        [DataField("southOverride")]
+        public float SouthOverride = 0f;
     }
 }
