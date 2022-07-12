@@ -30,10 +30,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Movement\Components\SharedDummyInputMoverComponent.cs" />
-    <Compile Remove="Movement\Components\IMoverComponent.cs" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>
