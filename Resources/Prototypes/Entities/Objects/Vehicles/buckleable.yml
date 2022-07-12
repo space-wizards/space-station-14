@@ -174,7 +174,6 @@
       icon: Objects/Fun/bikehorn.rsi/icon.png
       iconOn: Objects/Fun/bikehorn.rsi/icon.png
       event: !type:ToggleActionEvent
-    hornIsSiren: true
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     layers:
@@ -285,7 +284,6 @@
         icon: Objects/Fun/bikehorn.rsi/icon.png
         iconOn: Objects/Fun/bikehorn.rsi/icon.png
         event: !type:ToggleActionEvent
-      hornIsSiren: true
     - type: Sprite
       sprite: Objects/Vehicles/syndicatesegway.rsi
       layers:

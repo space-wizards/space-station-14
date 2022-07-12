@@ -25,7 +25,7 @@ namespace Content.Shared.Buckle
 
         private void OnStrapRotate(EntityUid uid, SharedStrapComponent component, ref RotateEvent args)
         {
-            // TODO: This looks jank.
+            // TODO: This looks dirty af.
             // On rotation of a strap, reattach all buckled entities.
             // This fixes buckle offsets and draw depths.
             foreach (var buckledEntity in component.BuckledEntities)
