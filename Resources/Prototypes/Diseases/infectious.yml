@@ -123,6 +123,7 @@
     - 120
     - 780
   effects:
+    # compulsion pop ups
     - !type:DiseasePopUp
       probability: 0.015
       type: Pvs
@@ -140,6 +141,7 @@
         - 0
         - 1
         - 2
+    # Screeches - spreads disease
     - !type:DiseaseSnough
       probability: 0.01
       snoughMessage: disease-screech
@@ -161,6 +163,7 @@
         collection: MonkeyScreeches
       stages:
         - 2
+    # monkey accent chance when speaking
     - !type:DiseaseGenericStatusEffect
       probability: 0.2
       key: Stutter
@@ -173,6 +176,7 @@
       component: MonkeyAccent
       stages:
         - 2
+    # asphyx damage, probably from all the screeching
     - !type:DiseaseHealthChange
       probability: 0.53
       damage:
@@ -181,6 +185,7 @@
       stages:
         - 1
         - 2
+    # possible monkefication if ignored too long
     - !type:DiseasePolymorph
       probability: 0.000427 ## ~5% chance over 120 secs
       polymorphId: AMIVMorph
