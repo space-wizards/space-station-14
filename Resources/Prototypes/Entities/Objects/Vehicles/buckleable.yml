@@ -192,6 +192,8 @@
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
   - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 1
     baseWalkSpeed : 4.5
     baseSprintSpeed : 7
   - type: Armor
@@ -234,6 +236,8 @@
   - type: RandomMetadata
     descriptionSet: ATVDescriptions
   - type: MovementSpeedModifier
+    acceleration: 1
+    friction: 1
     baseWalkSpeed : 4.5
     baseSprintSpeed : 7
   - type: Strap
@@ -296,9 +300,6 @@
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
-    - type: MovementSpeedModifier
-      baseWalkSpeed : 4.5
-      baseSprintSpeed : 6
     - type: Armor
       modifiers:
         coeffecients:

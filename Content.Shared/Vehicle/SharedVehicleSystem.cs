@@ -1,6 +1,8 @@
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Serialization;
 
@@ -18,6 +20,15 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<InVehicleComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
         SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnRiderPull);
+        SubscribeLocalEvent<VehicleComponent, RefreshMovementSpeedModifiersEvent>(OnVehicleModifier);
+    }
+
+    private void OnVehicleModifier(EntityUid uid, VehicleComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        if (!component.HasKey)
+        {
+            args.ModifySpeed(0f, 0f);
+        }
     }
 
     private void OnPickupAttempt(EntityUid uid, InVehicleComponent component, GettingPickedUpAttemptEvent args)

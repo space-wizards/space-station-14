@@ -2,6 +2,7 @@ using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Vehicle
@@ -9,13 +10,21 @@ namespace Content.Client.Vehicle
     public sealed class VehicleSystem : SharedVehicleSystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<RiderComponent, ComponentShutdown>(OnRiderShutdown);
             SubscribeLocalEvent<RiderComponent, ComponentHandleState>(OnRiderHandleState);
             SubscribeLocalEvent<RiderComponent, PlayerAttachedEvent>(OnRiderAttached);
             SubscribeLocalEvent<RiderComponent, PlayerDetachedEvent>(OnRiderDetached);
+        }
+
+        private void OnRiderShutdown(EntityUid uid, RiderComponent component, ComponentShutdown args)
+        {
+            component.Vehicle = null;
+            UpdateEye(component);
         }
 
         private void OnRiderAttached(EntityUid uid, RiderComponent component, PlayerAttachedEvent args)
@@ -30,9 +39,14 @@ namespace Content.Client.Vehicle
 
         private void UpdateEye(RiderComponent component)
         {
-            if (!TryComp<EyeComponent>(component.Vehicle, out var vehicleEye) || vehicleEye.Eye == null) return;
+            if (!TryComp(component.Vehicle, out EyeComponent? eyeComponent))
+            {
+                TryComp(_playerManager.LocalPlayer?.ControlledEntity, out eyeComponent);
+            }
 
-            _eyeManager.CurrentEye = vehicleEye.Eye;
+            if (eyeComponent?.Eye == null) return;
+
+            _eyeManager.CurrentEye = eyeComponent.Eye;
         }
 
         private void OnRiderHandleState(EntityUid uid, RiderComponent component, ref ComponentHandleState args)
