@@ -47,3 +47,16 @@
   icon:
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
+
+- type: construction
+  name: blindfold
+  id: blindfold
+  graph: Blindfold
+  startNode: start
+  targetNode: blindfold
+  category: Tools
+  objectType: Item
+  description: Better hope everyone turns a blind eye to you crafting this sussy item...
+  icon:
+    sprite: Clothing/Eyes/Misc/blindfold.rsi
+    state: icon
