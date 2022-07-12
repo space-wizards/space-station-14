@@ -39,6 +39,14 @@ namespace Content.Server.Dragon
         [DataField("spawnAction")]
         public InstantAction? SpawnAction;
 
+        [DataField("breathFireActionId", customTypeSerializer: typeof(PrototypeIdSerializer<WorldTargetActionPrototype>))]
+        public string BreathFireActionId = "DragonBreathFire";
+
+        [DataField("breathFireAction")]
+        public WorldTargetAction? BreathFireAction;
+
+
+
         /// <summary>
         /// The amount of time it takes to devour something
         /// <remarks>
@@ -105,4 +113,6 @@ namespace Content.Server.Dragon
     public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
     public sealed class DragonSpawnActionEvent : InstantActionEvent {}
+
+    public sealed class DragonBreathFireActionEvent : WorldTargetActionEvent {}
 }

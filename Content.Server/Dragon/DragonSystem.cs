@@ -30,6 +30,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
+            SubscribeLocalEvent<DragonComponent, DragonBreathFireActionEvent>(OnDragonBreathFire);
 
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
@@ -101,6 +102,9 @@ namespace Content.Server.Dragon
 
             if (component.SpawnAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnAction, null);
+
+            if(component.BreathFireAction != null)
+                _actionsSystem.AddAction(uid, component.BreathFireAction, null);
 
             if (component.SoundRoar != null)
                 SoundSystem.Play(component.SoundRoar.GetSound(), Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);
@@ -174,6 +178,12 @@ namespace Content.Server.Dragon
             }
 
             _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
+        }
+
+        private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
+            DragonBreathFireActionEvent args)
+        {
+            Logger.Debug("SIZZLE MORTALS!");
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs
