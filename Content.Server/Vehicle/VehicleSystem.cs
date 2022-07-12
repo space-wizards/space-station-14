@@ -13,6 +13,7 @@ using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Vehicle
 {
@@ -196,22 +197,21 @@ namespace Content.Server.Vehicle
         /// </summary>
         private int GetDrawDepth(TransformComponent xform, bool northOnly)
         {
-            // TODO: These drawdepths are long since incorrect so hell if I know what they're supposed to be now.
-            // everything below this line in the class is pretty bad.
+            // TODO: I can't even
             if (northOnly)
             {
                 return xform.LocalRotation.Degrees switch
                 {
-                    < 135f => 5,
-                    <= 225f => 2,
+                    < 135f => (int) DrawDepth.Doors,
+                    <= 225f => (int) DrawDepth.WallMountedItems,
                     _ => 5
                 };
             }
             return xform.LocalRotation.Degrees switch
             {
-                < 45f => 5,
-                <= 315f => 2,
-                _ => 5
+                < 45f =>  (int) DrawDepth.Doors,
+                <= 315f =>  (int) DrawDepth.WallMountedItems,
+                _ =>  (int) DrawDepth.Doors,
             };
         }
 
