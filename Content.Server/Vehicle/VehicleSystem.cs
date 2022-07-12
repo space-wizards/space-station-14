@@ -113,7 +113,6 @@ namespace Content.Server.Vehicle
                     _actionsSystem.AddAction(args.BuckledEntity, component.HornAction, uid, actions);
                 }
 
-                _itemSlotsSystem.SetLock(uid, KeySlot, true);
                 return;
             }
 
@@ -130,8 +129,6 @@ namespace Content.Server.Vehicle
             // Reset component
             component.HasRider = false;
             component.Rider = null;
-            _itemSlotsSystem.SetLock(uid, KeySlot, false);
-
         }
 
         /// <summary>
