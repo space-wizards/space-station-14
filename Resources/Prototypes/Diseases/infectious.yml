@@ -176,7 +176,7 @@
       component: MonkeyAccent
       stages:
         - 2
-    # asphyx damage, probably from all the screeching
+    # asphyxiation damage, probably from all the screeching
     - !type:DiseaseHealthChange
       probability: 0.53
       damage:
