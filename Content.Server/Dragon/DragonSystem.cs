@@ -11,6 +11,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.Maps;
+using Robust.Shared.Map;
 
 namespace Content.Server.Dragon
 {
@@ -21,6 +23,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {
@@ -180,10 +183,82 @@ namespace Content.Server.Dragon
             _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
         }
 
+
+        /// <summary>
+        /// Determines the list of tiles that the breath attack should affects.
+        /// </summary>
+        /// <param name="breathDirection">Normalized vector representing the direction.</param>
+        /// <param name="distance">The number of tiles to propogate the attack over.</param>
+        /// <param name="start">The position to start from.</param>
+        /// <param name="referenceGrid">The grid to use as the basis for tile coordinates.</param>
+        /// <returns>List of tile coordinates to apply the breath effect to, starting from the origin position.</returns>
+        private List<Vector2i> CalculateBreathTiles(Vector2 breathDirection, int distance, MapCoordinates start, IMapGrid referenceGrid)
+        {
+            var points = new List<Vector2i>();
+            var startTile = referenceGrid.TileIndicesFor(start);
+            var lastFreeTile = startTile;
+
+            int offset = 0; //
+            int curDistance = 0;
+            while (curDistance < distance)
+            {
+                var tilePos = start.Offset(breathDirection * ((curDistance + offset) * referenceGrid.TileSize));
+                var tile = referenceGrid.TileIndicesFor(tilePos); //
+
+                if (tile == lastFreeTile)
+                {
+                    offset++;
+                    continue;
+                }
+
+                points.Add(tile);
+                lastFreeTile = tile;
+                curDistance++;
+            }
+
+            return points;
+        }
+
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
             DragonBreathFireActionEvent args)
         {
-            Logger.Debug("SIZZLE MORTALS!");
+            if (component.BreathFireAction == null)
+                return;
+
+            var dragonXform = Transform(dragonuid);
+            var dragonPos = dragonXform.MapPosition;
+
+            if (dragonXform.GridUid == null)
+                return; // TODO: Support fire breath from outside of grids
+
+            var breathDirection = (args.Target.Position - dragonPos.Position).Normalized;
+            Vector2i breathInitialTile;
+
+            var grid = _mapManager.GetGrid(dragonXform.GridUid.Value);
+
+            // Get a list of points to apply the fire breath to.
+            var points = CalculateBreathTiles(breathDirection, (int) component.BreathFireAction.Range, dragonPos, grid);
+
+            // TODO: Spawn fire effects and apply damage to entities within the tile space.
+            // TODO: Fire effects and hit check should propagate over time.
+            // TODO: Figure out why cooldown does not activate.
+
+            foreach(var p in points)
+            {
+                var tileRef = grid.GetTileRef(p);
+
+                // TODO: Fix fire sometimes traversing through airlock doors.
+                if (tileRef.IsBlockedTurf(false))
+                    break; // Blocked by an obstruction.
+
+
+
+                var coords = grid.GridTileToLocal(p);
+                Spawn(component.BreathEffectPrototype, coords);
+            }
+
+            if(component.SoundBreathFire != null)
+                SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs

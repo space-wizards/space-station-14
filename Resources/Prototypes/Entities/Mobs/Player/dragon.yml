@@ -114,4 +114,23 @@
       description: action-description-breath-fire
       useDelay: 5
       range: 20
+      breathEffectPrototype: FireBreathEffect
 
+
+- type: entity
+  id: FireBreathEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: [ "enum.EffectLayers.Unshaded" ]
+        sprite: Effects/fire.rsi
+        state: 1
+      - type: EffectVisuals
+      - type: AnimationPlayer
