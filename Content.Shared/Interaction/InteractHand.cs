@@ -36,4 +36,23 @@ namespace Content.Shared.Interaction
             Target = target;
         }
     }
+
+    public sealed class InteractNoHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    {
+        /// <summary>
+        ///     Entity that triggered the interaction.
+        /// </summary>
+        public EntityUid User { get; }
+
+        /// <summary>
+        ///     Entity that was interacted on.
+        /// </summary>
+        public EntityUid Target { get; }
+
+        public InteractNoHandEvent(EntityUid user, EntityUid target)
+        {
+            User = user;
+            Target = target;
+        }
+    }
 }

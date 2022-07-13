@@ -1,0 +1,5 @@
+﻿- type: alert
+  id: Corporeal
+  icon: { sprite: "/Textures/Mobs/Ghosts/revenant.rsi", state: "icon" }
+  name: "Corporeal"
+  description: You have manifested physically. People around you can see and hurt you.

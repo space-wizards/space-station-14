@@ -230,7 +230,14 @@ namespace Content.Shared.Interaction
 
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                if (target != null)
+                {
+                    var ev = new InteractNoHandEvent(user, target.Value);
+                    RaiseLocalEvent(user, ev, true);
+                }
                 return;
+            }
 
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
@@ -718,6 +725,8 @@ namespace Content.Shared.Interaction
 
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used, activateMsg, true);
+            var userActivateMsg = new ActivateInWorldEvent(user, used);
+            RaiseLocalEvent(user, userActivateMsg, true);
             if (activateMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
