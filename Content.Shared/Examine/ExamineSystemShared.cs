@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
-using Content.Shared.Eye.Blinding;
 using Content.Shared.MobState.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -99,7 +98,7 @@ namespace Content.Shared.Examine
             {
                 if (MobStateSystem.IsDead(examiner, mobState))
                     return DeadExamineRange;
-                else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
+                else if (MobStateSystem.IsCritical(examiner, mobState))
                     return CritExamineRange;
             }
             return ExamineRange;
