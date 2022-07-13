@@ -175,12 +175,6 @@
     southOverride: 0.1
     hornSound:
       path: /Audio/Effects/Vehicle/policesiren.ogg
-    hornAction:
-      name: action-name-siren
-      description: action-desc-siren
-      icon: Objects/Fun/bikehorn.rsi/icon.png
-      iconOn: Objects/Fun/bikehorn.rsi/icon.png
-      event: !type:ToggleActionEvent
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     layers:

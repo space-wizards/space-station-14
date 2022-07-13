@@ -1,12 +1,15 @@
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using Robust.Client.Input;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IInputManager _input = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -21,6 +24,7 @@ namespace Content.Client.Shuttles.Systems
             if (!console.IsValid())
             {
                 component.Console = null;
+                _input.Contexts.SetActiveContext("human");
                 return;
             }
 
@@ -32,6 +36,7 @@ namespace Content.Client.Shuttles.Systems
 
             component.Console = shuttleConsoleComponent;
             ActionBlockerSystem.UpdateCanMove(uid);
+            _input.Contexts.SetActiveContext("shuttle");
         }
     }
 }

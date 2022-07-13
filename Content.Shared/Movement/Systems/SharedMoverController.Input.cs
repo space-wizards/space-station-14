@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.GameStates;
@@ -22,12 +23,22 @@ namespace Content.Shared.Movement.Systems
             var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
             var moveDownCmdHandler = new MoverDirInputCmdHandler(this, Direction.South);
 
+            var pilotCmdHandler = new MoverDirInputCmdHandler();
+
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
+                // TODO: Relay
+                // Shuttle
+                .Bind(ContentKeyFunctions.ShuttleStrafeUp)
+                .Bind(ContentKeyFunctions.ShuttleRotateLeft)
+                .Bind(ContentKeyFunctions.ShuttleStrafeRight)
+                .Bind(ContentKeyFunctions.ShuttleStrafeDown)
+                .Bind(ContentKeyFunctions.ShuttleRotateLeft)
+                .Bind(ContentKeyFunctions.ShuttleStrafeRight)
                 .Register<SharedMoverController>();
 
             SubscribeLocalEvent<InputMoverComponent, ComponentInit>(OnInputInit);

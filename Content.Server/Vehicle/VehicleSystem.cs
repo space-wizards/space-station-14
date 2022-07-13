@@ -20,7 +20,6 @@ namespace Content.Server.Vehicle
     public sealed partial class VehicleSystem : SharedVehicleSystem
     {
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly MetaDataSystem _metadata = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
