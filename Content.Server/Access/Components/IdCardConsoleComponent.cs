@@ -78,7 +78,7 @@ namespace Content.Server.Access.Components
                 return;
             }
 
-            var accessSystem = EntitySystem.Get<AccessSystem>();
+            var accessSystem = EntitySystem.Get<SharedAccessSystem>();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
         }
 
