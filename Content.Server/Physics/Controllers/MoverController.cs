@@ -58,6 +58,132 @@ namespace Content.Server.Physics.Controllers
             HandleShuttleMovement(frameTime);
         }
 
+        public (Vector2 Strafe, float Rotation, float Brakes) GetPilotVelocityInput(PilotComponent component)
+        {
+            if (!Timing.InSimulation)
+            {
+                // Outside of simulation we'll be running client predicted movement per-frame.
+                // So return a full-length vector as if it's a full tick.
+                // Physics system will have the correct time step anyways.
+                ResetSubtick(component);
+                ApplyTick(component, 1f);
+                return (component.CurTickStrafeMovement, component.CurTickRotationMovement, component.CurTickBraking);
+            }
+
+            float remainingFraction;
+
+            if (Timing.CurTick > component.LastInputTick)
+            {
+                component.CurTickStrafeMovement = Vector2.Zero;
+                component.CurTickRotationMovement = 0f;
+                component.CurTickBraking = 0f;
+                remainingFraction = 1;
+            }
+            else
+            {
+                remainingFraction = (ushort.MaxValue - component.LastInputSubTick) / (float) ushort.MaxValue;
+            }
+
+            ApplyTick(component, remainingFraction);
+
+            // Logger.Info($"{curDir}{walk}{sprint}");
+            return (component.CurTickStrafeMovement, component.CurTickRotationMovement, component.CurTickBraking);
+        }
+
+        private void ResetSubtick(PilotComponent component)
+        {
+            if (Timing.CurTick <= component.LastInputTick) return;
+
+            component.CurTickStrafeMovement = Vector2.Zero;
+            component.CurTickRotationMovement = 0f;
+            component.CurTickBraking = 0f;
+            component.LastInputTick = Timing.CurTick;
+            component.LastInputSubTick = 0;
+        }
+
+        protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
+        {
+            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null) return;
+
+            ResetSubtick(pilot);
+
+            if (subTick >= pilot.LastInputSubTick)
+            {
+                var fraction = (subTick - pilot.LastInputSubTick) / (float) ushort.MaxValue;
+
+                ApplyTick(pilot, fraction);
+                pilot.LastInputSubTick = subTick;
+            }
+
+            var buttons = pilot.HeldButtons;
+
+            if (state)
+            {
+                buttons |= button;
+            }
+            else
+            {
+                buttons &= ~button;
+            }
+
+            pilot.HeldButtons = buttons;
+        }
+
+        private void ApplyTick(PilotComponent component, float fraction)
+        {
+            var x = 0;
+            var y = 0;
+            var rot = 0;
+            int brake;
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeLeft) != 0x0)
+            {
+                x -= 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeRight) != 0x0)
+            {
+                x += 1;
+            }
+
+            component.CurTickStrafeMovement.X += x * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeUp) != 0x0)
+            {
+                y += 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeDown) != 0x0)
+            {
+                y -= 1;
+            }
+
+            component.CurTickStrafeMovement.Y += y * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.RotateLeft) != 0x0)
+            {
+                rot -= 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.RotateRight) != 0x0)
+            {
+                rot += 1;
+            }
+
+            component.CurTickRotationMovement += rot * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.Brake) != 0x0)
+            {
+                brake = 1;
+            }
+            else
+            {
+                brake = 0;
+            }
+
+            component.CurTickBraking += brake * fraction;
+        }
+
         private void HandleShuttleMovement(float frameTime)
         {
             var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>>();
@@ -110,37 +236,20 @@ namespace Content.Server.Physics.Controllers
                 var linearInput = Vector2.Zero;
                 var angularInput = 0f;
 
-                switch (shuttle.Mode)
+                foreach (var (pilot, _, consoleXform) in pilots)
                 {
-                    case ShuttleMode.Cruise:
-                        foreach (var (pilot, mover, consoleXform) in pilots)
-                        {
-                            var sprint = GetVelocityInput(mover).Sprinting;
+                    var pilotInput = GetPilotVelocityInput(pilot);
 
-                            if (sprint.Equals(Vector2.Zero)) continue;
+                    if (pilotInput.Strafe.Length > 0f)
+                    {
+                        var offsetRotation = consoleXform.LocalRotation;
+                        linearInput += offsetRotation.RotateVec(pilotInput.Strafe);
+                    }
 
-                            var offsetRotation = consoleXform.LocalRotation;
-
-                            linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
-                            angularInput += sprint.X;
-                        }
-                        break;
-                    case ShuttleMode.Strafing:
-                        // No angular input possible
-                        foreach (var (pilot, mover, consoleXform) in pilots)
-                        {
-                            var sprint = GetVelocityInput(mover).Sprinting;
-
-                            if (sprint.Equals(Vector2.Zero)) continue;
-
-                            var offsetRotation = consoleXform.LocalRotation;
-                            sprint = offsetRotation.RotateVec(sprint);
-
-                            linearInput += sprint;
-                        }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    if (pilotInput.Rotation != 0f)
+                    {
+                        angularInput += pilotInput.Rotation;
+                    }
                 }
 
                 var count = pilots.Count;

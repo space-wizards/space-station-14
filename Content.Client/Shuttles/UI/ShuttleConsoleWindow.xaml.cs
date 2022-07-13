@@ -30,7 +30,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
 
-    public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
     public Action<EntityUid>? StartAutodockPressed;
     public Action<EntityUid>? StopAutodockPressed;
@@ -49,19 +48,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.OnToggled += OnDockTogglePressed;
         DockToggle.Pressed = RadarScreen.ShowDocks;
 
-        ShuttleModeDisplay.OnToggled += OnShuttleModePressed;
-
         UndockButton.OnPressed += OnUndockPressed;
     }
 
     private void OnRadarRangeChange(float value)
     {
         RadarRange.Text = $"{value:0}";
-    }
-
-    private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
-    {
-        ShuttleModePressed?.Invoke(obj.Button.Pressed ? ShuttleMode.Strafing : ShuttleMode.Cruise);
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
@@ -93,7 +85,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UpdateDocks(scc.Docks);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
-        ShuttleModeDisplay.Pressed = scc.Mode == ShuttleMode.Strafing;
     }
 
     #region Docking

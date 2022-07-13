@@ -89,7 +89,7 @@ namespace Content.Client.Input
             aghost.AddFunction(ContentKeyFunctions.Drop);
             aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
 
-            var ghost = contexts.New("ghost", "common");
+            var ghost = contexts.New("ghost", "human");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);

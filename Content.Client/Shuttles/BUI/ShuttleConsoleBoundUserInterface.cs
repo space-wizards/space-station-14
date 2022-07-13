@@ -18,7 +18,6 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window = new ShuttleConsoleWindow();
-        _window.ShuttleModePressed += OnShuttleModePressed;
         _window.UndockPressed += OnUndockPressed;
         _window.StartAutodockPressed += OnAutodockPressed;
         _window.StopAutodockPressed += OnStopAutodockPressed;
@@ -54,11 +53,6 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     private void OnUndockPressed(EntityUid obj)
     {
         SendMessage(new UndockRequestMessage() {DockEntity = obj});
-    }
-
-    private void OnShuttleModePressed(ShuttleMode obj)
-    {
-        SendMessage(new ShuttleModeRequestMessage() {Mode = obj});
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

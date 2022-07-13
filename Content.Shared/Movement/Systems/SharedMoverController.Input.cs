@@ -2,6 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -23,8 +24,6 @@ namespace Content.Shared.Movement.Systems
             var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
             var moveDownCmdHandler = new MoverDirInputCmdHandler(this, Direction.South);
 
-            var pilotCmdHandler = new MoverDirInputCmdHandler();
-
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
@@ -33,12 +32,13 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
                 // TODO: Relay
                 // Shuttle
-                .Bind(ContentKeyFunctions.ShuttleStrafeUp)
-                .Bind(ContentKeyFunctions.ShuttleRotateLeft)
-                .Bind(ContentKeyFunctions.ShuttleStrafeRight)
-                .Bind(ContentKeyFunctions.ShuttleStrafeDown)
-                .Bind(ContentKeyFunctions.ShuttleRotateLeft)
-                .Bind(ContentKeyFunctions.ShuttleStrafeRight)
+                .Bind(ContentKeyFunctions.ShuttleStrafeUp, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeUp))
+                .Bind(ContentKeyFunctions.ShuttleStrafeLeft, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeLeft))
+                .Bind(ContentKeyFunctions.ShuttleStrafeRight, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeRight))
+                .Bind(ContentKeyFunctions.ShuttleStrafeDown, new ShuttleInputCmdHandler(this, ShuttleButtons.StrafeDown))
+                .Bind(ContentKeyFunctions.ShuttleRotateLeft, new ShuttleInputCmdHandler(this, ShuttleButtons.RotateLeft))
+                .Bind(ContentKeyFunctions.ShuttleRotateRight, new ShuttleInputCmdHandler(this, ShuttleButtons.RotateRight))
+                .Bind(ContentKeyFunctions.ShuttleBrake, new ShuttleInputCmdHandler(this, ShuttleButtons.Brake))
                 .Register<SharedMoverController>();
 
             SubscribeLocalEvent<InputMoverComponent, ComponentInit>(OnInputInit);
@@ -73,6 +73,8 @@ namespace Content.Shared.Movement.Systems
         }
 
         public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
+
+        protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
@@ -149,7 +151,7 @@ namespace Content.Shared.Movement.Systems
 
         public (Vector2 Walking, Vector2 Sprinting) GetVelocityInput(InputMoverComponent mover)
         {
-            if (!_timing.InSimulation)
+            if (!Timing.InSimulation)
             {
                 // Outside of simulation we'll be running client predicted movement per-frame.
                 // So return a full-length vector as if it's a full tick.
@@ -162,7 +164,7 @@ namespace Content.Shared.Movement.Systems
             Vector2 sprint;
             float remainingFraction;
 
-            if (_timing.CurTick > mover.LastInputTick)
+            if (Timing.CurTick > mover.LastInputTick)
             {
                 walk = Vector2.Zero;
                 sprint = Vector2.Zero;
@@ -243,11 +245,11 @@ namespace Content.Shared.Movement.Systems
 
         private void ResetSubtick(InputMoverComponent component)
         {
-            if (_timing.CurTick <= component.LastInputTick) return;
+            if (Timing.CurTick <= component.LastInputTick) return;
 
             component.CurTickWalkMovement = Vector2.Zero;
             component.CurTickSprintMovement = Vector2.Zero;
-            component.LastInputTick = _timing.CurTick;
+            component.LastInputTick = Timing.CurTick;
             component.LastInputSubTick = 0;
         }
 
@@ -345,6 +347,26 @@ namespace Content.Shared.Movement.Systems
                 CanMove = canMove;
             }
         }
+
+        private sealed class ShuttleInputCmdHandler : InputCmdHandler
+        {
+            private SharedMoverController _controller;
+            private ShuttleButtons _button;
+
+            public ShuttleInputCmdHandler(SharedMoverController controller, ShuttleButtons button)
+            {
+                _controller = controller;
+                _button = button;
+            }
+
+            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            {
+                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+
+                _controller.HandleShuttleInput(session.AttachedEntity.Value, _button, full.SubTick, full.State == BoundKeyState.Down);
+                return false;
+            }
+        }
     }
 }
 
@@ -357,4 +379,17 @@ public enum MoveButtons : byte
     Left = 4,
     Right = 8,
     Walk = 16,
+}
+
+[Flags]
+public enum ShuttleButtons : byte
+{
+    None = 0,
+    StrafeUp = 1 << 0,
+    StrafeDown = 1 << 1,
+    StrafeLeft = 1 << 2,
+    StrafeRight = 1 << 3,
+    RotateLeft = 1 << 4,
+    RotateRight = 1 << 5,
+    Brake = 1 << 6,
 }
