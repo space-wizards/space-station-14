@@ -1,10 +1,4 @@
 Entries:
-- author: hubismal
-  changes:
-  - {message: Players properly slide forward when slipping on things. Some liquids
-      or objects are more slippery than others., type: Fix}
-  id: 1432
-  time: '2022-05-01T06:02:29.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Knightship is officially deceased., type: Remove}
@@ -2948,3 +2942,8 @@ Entries:
       shuttle)., type: Fix}
   id: 1931
   time: '2022-07-12T17:46:12.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Robot showcase statue is now anchorable, type: Tweak}
+  id: 1932
+  time: '2022-07-13T02:01:24.0000000+00:00'
