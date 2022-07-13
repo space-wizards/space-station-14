@@ -172,6 +172,15 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.Loadout8);
             AddButton(ContentKeyFunctions.Loadout9);
 
+            AddHeader("ui-options-header-shuttle");
+            AddButton(ContentKeyFunctions.ShuttleStrafeUp);
+            AddButton(ContentKeyFunctions.ShuttleStrafeRight);
+            AddButton(ContentKeyFunctions.ShuttleStrafeLeft);
+            AddButton(ContentKeyFunctions.ShuttleStrafeDown);
+            AddButton(ContentKeyFunctions.ShuttleRotateLeft);
+            AddButton(ContentKeyFunctions.ShuttleRotateRight);
+            AddButton(ContentKeyFunctions.ShuttleBrake);
+
             AddHeader("ui-options-header-map-editor");
             AddButton(EngineKeyFunctions.EditorPlaceObject);
             AddButton(EngineKeyFunctions.EditorCancelPlace);
