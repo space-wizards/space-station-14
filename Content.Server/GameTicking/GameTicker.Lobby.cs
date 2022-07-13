@@ -40,12 +40,13 @@ namespace Content.Server.GameTicking
                 return string.Empty;
             }
 
+
             var playerCount = $"{_playerManager.PlayerCount}";
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
             var gmTitle = Loc.GetString(Preset.ModeTitle);
             var desc = Loc.GetString(Preset.Description);
-            var roundTime = _gameTiming.RealTime.ToString("hh\\:mm");
+            var roundTime = RoundDuration().ToString("hh\\:mm");
             return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName), ("roundTime", roundTime), ("gmTitle", gmTitle),("desc", desc));
         }
 
