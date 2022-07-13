@@ -247,7 +247,7 @@ namespace Content.Server.Dragon
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
             DragonBreatheFireActionEvent args)
         {
-            if (component.BreatheFireAction == null)
+            if (args.Handled || component.BreatheFireAction == null)
                 return;
 
             var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
@@ -276,7 +276,6 @@ namespace Content.Server.Dragon
             processed.Add(dragonuid); // Ignore the creator of the fire breath.
 
             // TODO: Fire effects and hit check should propagate over time.
-            // TODO: Figure out why cooldown does not activate.
             // TODO: Optimize with usage of entity queries and lookup systems.
             foreach(var p in points)
             {
@@ -315,6 +314,8 @@ namespace Content.Server.Dragon
                 var coords = grid.GridTileToLocal(p);
                 Spawn(component.BreathEffectPrototype, coords);
             }
+
+            args.Handled = true;
 
             if(component.SoundBreathFire != null)
                 SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
