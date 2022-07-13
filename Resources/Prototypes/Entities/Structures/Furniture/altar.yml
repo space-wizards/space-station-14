@@ -1,7 +1,7 @@
 - type: entity
   id: AltarBase
   parent: BaseStructure
-  name: Altar
+  name: altar
   description: Altar of the Gods.
   abstract: true
   components:
@@ -67,7 +67,7 @@
 - type: entity
   id: AltarChaos
   parent: AltarNanotrasen
-  name: Chaos altar
+  name: chaos altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/chaos.rsi
@@ -77,7 +77,7 @@
 - type: entity
   id: AltarDruid
   parent: AltarNanotrasen
-  name: Druid altar
+  name: druid altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/druid.rsi
@@ -87,7 +87,7 @@
 - type: entity
   id: AltarToolbox
   parent: AltarNanotrasen
-  name: Toolbox altar
+  name: toolbox altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/toolbox.rsi
@@ -97,7 +97,7 @@
 - type: entity
   id: AltarSpaceChristian
   parent: AltarNanotrasen
-  name: Space-Christian altar
+  name: space-Christian altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/space-christian.rsi
@@ -111,7 +111,7 @@
 - type: entity
   id: AltarSatana
   parent: AltarNanotrasen
-  name: Satanic altar
+  name: satanic altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/satana.rsi
@@ -125,7 +125,7 @@
 - type: entity
   id: AltarTechnology
   parent: AltarNanotrasen
-  name: Technology altar
+  name: technology altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/technology.rsi
@@ -140,7 +140,7 @@
 - type: entity
   id: AltarConvertFestival
   parent: AltarBase
-  name: Festival altar
+  name: festival altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/festival.rsi
@@ -182,7 +182,7 @@
 - type: entity
   id: AltarConvertMaint
   parent: AltarConvertFestival
-  name: Maint altar
+  name: maint altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/maint.rsi
@@ -196,7 +196,7 @@
 - type: entity
   id: AltarConvertBlue
   parent: AltarConvertFestival
-  name: Blue altar
+  name: blue altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/blue.rsi
@@ -210,7 +210,7 @@
 - type: entity
   id: AltarConvertBurden
   parent: AltarConvertFestival
-  name: Burden altar
+  name: burden altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/burden.rsi
@@ -224,7 +224,7 @@
 - type: entity
   id: AltarConvert
   parent: AltarConvertFestival
-  name: Convert altar
+  name: convert altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
@@ -238,7 +238,7 @@
 - type: entity
   id: AltarConvertOrange
   parent: AltarConvertFestival
-  name: Orange altar
+  name: orange altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/orange.rsi
@@ -252,7 +252,7 @@
 - type: entity
   id: AltarConvertRed
   parent: AltarConvertFestival
-  name: Red altar
+  name: red altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/red.rsi
@@ -266,7 +266,7 @@
 - type: entity
   id: AltarConvertWhite
   parent: AltarConvertFestival
-  name: White altar
+  name: white altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/white.rsi
@@ -280,7 +280,7 @@
 - type: entity
   id: AltarConvertYellow
   parent: AltarConvertFestival
-  name: Yellow altar
+  name: yellow altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/yellow.rsi
@@ -294,7 +294,7 @@
 - type: entity
   id: AltarHeaven
   parent: AltarBase
-  name: Heaven altar
+  name: heaven altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/heaven.rsi
@@ -325,7 +325,7 @@
 - type: entity
   id: AltarFangs
   parent: AltarHeaven
-  name: Fanged altar
+  name: fanged altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
