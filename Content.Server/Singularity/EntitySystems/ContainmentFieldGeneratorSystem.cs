@@ -1,6 +1,5 @@
 ﻿using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
-using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -167,20 +166,21 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (propertyFieldTuple != null) return false;
         if (!component.Enabled) return false; //don't gen a field unless it's on
+
         var gen1XForm = Transform(component.Owner);
         if (!gen1XForm.Anchored) return false;
         var gen1CardinalDirAngle = gen1XForm.WorldRotation;
-        var south = Direction.South.ToAngle() + gen1CardinalDirAngle;
-        var west = Direction.West.ToAngle() + gen1CardinalDirAngle;
-        var north = Direction.North.ToAngle() + gen1CardinalDirAngle;
-        var east = Direction.East.ToAngle() + gen1CardinalDirAngle;
+        var rad1 = Direction.South.ToAngle() + gen1CardinalDirAngle; //This fires east
+        var rad2 = Direction.West.ToAngle() + gen1CardinalDirAngle; //This fires south
+        var rad3 = Direction.North.ToAngle() + gen1CardinalDirAngle; //This fires west
+        var rad4 = Direction.East.ToAngle() + gen1CardinalDirAngle; //This fires north
 
         //TODO: Finding the generators seems fine, need to prevent it from going through a wall, however.
         //TODO: There is still an issue with x2 fields spawning on the generator that has null generators, but has connections
         //Though I just double checked with a 1x1 and there were no field gens
         //TODO: Also extra issue with the last node (D) despawning the connection between A-B.
         //TODO: Maybe change from the spawn each to the singular spawn with texture wrapper.
-        foreach (var direction in new[] { south, west, north, east })
+        foreach (var direction in new[] { rad1, rad2, rad3, rad4 })
         {
             if (component.Connection1?.Item1 == direction || component.Connection2?.Item1 == direction) continue;
 
