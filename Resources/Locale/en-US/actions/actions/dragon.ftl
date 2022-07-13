@@ -11,5 +11,5 @@ action-description-devour = Attempt to break a structure with your jaws or swall
 action-name-carp-summon = Summon carp
 action-description-carp-summon = Summon a carp to aid you at seizing the station!
 
-action-name-breath-fire = [color=orange]Breath fire[/color]
-action-description-breath-fire = Breath a line of fire
+action-name-breathe-fire = [color=orange]Breathe fire[/color]
+action-description-breathe-fire = Breathe a line of fire

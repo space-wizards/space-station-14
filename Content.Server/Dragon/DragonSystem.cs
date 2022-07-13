@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -29,6 +30,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -111,8 +113,8 @@ namespace Content.Server.Dragon
             if (component.SpawnAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnAction, null);
 
-            if(component.BreathFireAction != null)
-                _actionsSystem.AddAction(uid, component.BreathFireAction, null);
+            if(component.BreatheFireAction != null)
+                _actionsSystem.AddAction(uid, component.BreatheFireAction, null);
 
             if (component.SoundRoar != null)
                 SoundSystem.Play(component.SoundRoar.GetSound(), Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);
@@ -245,7 +247,7 @@ namespace Content.Server.Dragon
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
             DragonBreathFireActionEvent args)
         {
-            if (component.BreathFireAction == null)
+            if (component.BreatheFireAction == null)
                 return;
 
             var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
@@ -264,7 +266,7 @@ namespace Content.Server.Dragon
             var grid = _mapManager.GetGrid(dragonXform.GridUid.Value);
 
             // Get a list of points to apply the fire breath to.
-            var points = CalculateBreathTiles(breathDirection, (int) component.BreathFireAction.Range, dragonPos, grid);
+            var points = CalculateBreathTiles(breathDirection, (int) component.BreatheFireAction.Range, dragonPos, grid);
 
 
             var lookup = Comp<EntityLookupComponent>(grid.GridEntityId);
@@ -286,6 +288,7 @@ namespace Content.Server.Dragon
                 var state = (list, processed, xformQuery);
                 lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
 
+                // TODO: Move damage spec into prototype.
                 var damageSpec = new DamageSpecifier();
                 damageSpec.DamageDict.Add("Heat", 50f);
 
@@ -320,7 +323,7 @@ namespace Content.Server.Dragon
                 if (tileBlocked)
                     break; // Blocked by an obstruction.
 
-                // TODO: Create temperature hotspot.
+                _atmosphereSystem.HotspotExpose(grid.GridEntityId, p, 700f, 50f, true);
 
                 var coords = grid.GridTileToLocal(p);
                 Spawn(component.BreathEffectPrototype, coords);

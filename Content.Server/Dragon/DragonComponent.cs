@@ -42,11 +42,11 @@ namespace Content.Server.Dragon
         [DataField("spawnAction")]
         public InstantAction? SpawnAction;
 
-        [DataField("breathFireActionId", customTypeSerializer: typeof(PrototypeIdSerializer<WorldTargetActionPrototype>))]
-        public string BreathFireActionId = "DragonBreathFire";
+        [DataField("breatheFireActionId", customTypeSerializer: typeof(PrototypeIdSerializer<WorldTargetActionPrototype>))]
+        public string BreathFireActionId = "DragonBreatheFire";
 
-        [DataField("breathFireAction")]
-        public WorldTargetAction? BreathFireAction;
+        [DataField("breatheFireAction")]
+        public WorldTargetAction? BreatheFireAction;
 
 
 
