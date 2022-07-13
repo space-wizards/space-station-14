@@ -116,6 +116,9 @@
       useDelay: 5
       range: 20
     breathEffectPrototype: FireBreathEffect
+    breathDamage:
+      types:
+        Heat: 30
 
 
 - type: entity

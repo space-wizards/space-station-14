@@ -40,7 +40,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
-            SubscribeLocalEvent<DragonComponent, DragonBreathFireActionEvent>(OnDragonBreathFire);
+            SubscribeLocalEvent<DragonComponent, DragonBreatheFireActionEvent>(OnDragonBreathFire);
 
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
@@ -245,7 +245,7 @@ namespace Content.Server.Dragon
         }
 
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
-            DragonBreathFireActionEvent args)
+            DragonBreatheFireActionEvent args)
         {
             if (component.BreatheFireAction == null)
                 return;
@@ -288,15 +288,11 @@ namespace Content.Server.Dragon
                 var state = (list, processed, xformQuery);
                 lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
 
-                // TODO: Move damage spec into prototype.
-                var damageSpec = new DamageSpecifier();
-                damageSpec.DamageDict.Add("Heat", 50f);
-
                 // process the entities
                 foreach (var xform in list)
                 {
                     Logger.Debug("Hit {0}", MetaData(xform.Owner).EntityName);
-                    ProcessEntity(xform.Owner, damageSpec, damageableQuery);
+                    ProcessEntity(xform.Owner, component.BreathDamage, damageableQuery);
                 }
 
                 // process anchored entities
@@ -305,7 +301,7 @@ namespace Content.Server.Dragon
                 foreach (var anchored in anchoredEntities)
                 {
                     processed.Add(anchored);
-                    ProcessEntity(anchored, damageSpec, damageableQuery);
+                    ProcessEntity(anchored, component.BreathDamage, damageableQuery);
                 }
 
                 // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for

@@ -3,6 +3,8 @@ using Robust.Shared.Containers;
 using System.Threading;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
@@ -69,6 +71,8 @@ namespace Content.Server.Dragon
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? SpawnPrototype = "MobCarpDragon";
 
+        [DataField("breathDamage")] public DamageSpecifier BreathDamage = default!;
+
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
@@ -123,5 +127,5 @@ namespace Content.Server.Dragon
 
     public sealed class DragonSpawnActionEvent : InstantActionEvent {}
 
-    public sealed class DragonBreathFireActionEvent : WorldTargetActionEvent {}
+    public sealed class DragonBreatheFireActionEvent : WorldTargetActionEvent {}
 }
