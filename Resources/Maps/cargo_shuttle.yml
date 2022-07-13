@@ -393,13 +393,13 @@ entities:
       -3,3: 1
       -3,4: 1
       -3,5: 1
-      -3,6: 1
+      -3,6: 6
       -3,7: 1
       -3,8: 1
-      -3,9: 6
+      -3,9: 7
       -3,10: 1
       -3,11: 1
-      -2,6: 1
+      -2,6: 8
       -2,11: 1
       -2,12: 1
       -2,13: 1
@@ -480,7 +480,7 @@ entities:
       -5,8: 1
       -5,9: 1
       -4,5: 1
-      -4,6: 1
+      -4,6: 9
       -6,-4: 1
       -6,-3: 1
       -6,-2: 1
@@ -558,10 +558,43 @@ entities:
       - 0
       - 0
     - volume: 2500
+      temperature: 268.94583
+      moles:
+      - 20.00614
+      - 75.26119
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
       temperature: 265.9203
       moles:
       - 19.778797
       - 74.40595
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 285.08194
+      moles:
+      - 21.218632
+      - 79.82248
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 196.33333
+      moles:
+      - 14.549919
+      - 54.735413
       - 0
       - 0
       - 0
@@ -1801,65 +1834,60 @@ entities:
     parent: 0
     type: Transform
 - uid: 133
-  type: CableHV
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 134
-  type: GeneratorUranium
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-- uid: 135
-  type: CableTerminal
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 136
-  type: CableHV
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 137
-  type: CableTerminal
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 138
-  type: GeneratorUranium
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-- uid: 139
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -3.5,6.5
-    parent: 0
-    type: Transform
-- uid: 140
   type: Gyroscope
   components:
-  - pos: -3.5,-1.5
+  - pos: -3.5,-2.5
     parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
+- uid: 134
+  type: GasPipeBend
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 135
+  type: GasPort
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 136
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,0.5
+    parent: 0
+    type: Transform
+- uid: 137
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,1.5
+    parent: 0
+    type: Transform
+- uid: 138
+  type: GasVentPump
+  components:
+  - pos: -2.5,2.5
+    parent: 0
+    type: Transform
+- uid: 139
+  type: WindoorCargoLocked
+  components:
+  - pos: -2.5,7.5
+    parent: 0
+    type: Transform
+- uid: 140
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-0.5
+    parent: 0
+    type: Transform
 - uid: 141
   type: ChairPilotSeat
   components:
@@ -1870,8 +1898,7 @@ entities:
 - uid: 142
   type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: -1.5,6.5
+  - pos: -1.5,7.5
     parent: 0
     type: Transform
 - uid: 143
@@ -1887,10 +1914,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 145
-  type: WindoorSecureCargoLocked
+  type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,6.5
+  - pos: -3.5,7.5
     parent: 0
     type: Transform
 - uid: 146
@@ -2085,6 +2111,40 @@ entities:
   type: PlasticFlapsAirtightClear
   components:
   - pos: 0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 168
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -5.5,1.5
+    parent: 0
+    type: Transform
+- uid: 169
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -5.5,3.5
+    parent: 0
+    type: Transform
+- uid: 170
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 171
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 172
+  type: AirCanister
+  components:
+  - pos: -3.5,-1.5
     parent: 0
     type: Transform
 ...
