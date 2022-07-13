@@ -127,8 +127,8 @@ namespace Content.IntegrationTests.Tests
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                entStorage.Insert(dummy, containerA);
-                entStorage.Insert(dummy, containerA);
+                entStorage.Insert(containerB, containerA);
+                entStorage.Insert(dummy, containerB);
             });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
