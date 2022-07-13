@@ -4,6 +4,8 @@ using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
+using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Events;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
@@ -21,6 +23,7 @@ public sealed partial class ShuttleSystem
      */
 
     [Dependency] private readonly DoorSystem _doors = default!;
+    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
 
     private MapId? _hyperSpaceMap;
@@ -45,6 +48,22 @@ public sealed partial class ShuttleSystem
     private const float Buffer = 5f;
 
     /// <summary>
+    /// Adds a target for hyperspace to every shuttle console.
+    /// </summary>
+    /// <param name="uid">The target entityuid for the destination</param>
+    /// <param name="dockable">Whether the target is available to be docked at or whether we warp-in nearby</param>
+    /// <param name="available">Is the destination button visible</param>
+    public void AddHyperspaceDestination(EntityUid uid, bool dockable, bool available)
+    {
+
+    }
+
+    public void RemoveHyperspaceDestination(EntityUid uid, bool dockable)
+    {
+
+    }
+
+    /// <summary>
     /// Moves a shuttle from its current position to the target one. Goes through the hyperspace map while the timer is running.
     /// </summary>
     public void Hyperspace(ShuttleComponent component,
@@ -59,6 +78,8 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetCoordinates = coordinates;
+
+        _console.RefreshShuttleConsoles();
     }
 
     /// <summary>
@@ -76,6 +97,7 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetUid = target;
+        _console.RefreshShuttleConsoles();
     }
 
     private bool TrySetupHyperspace(EntityUid uid, [NotNullWhen(true)] out HyperspaceComponent? component)
@@ -160,6 +182,7 @@ public sealed partial class ShuttleSystem
                     SoundSystem.Play(_arrivalSound.GetSound(),
                         Filter.Pvs(comp.Owner, GetSoundRange(comp.Owner), entityManager: EntityManager));
                     RemComp<HyperspaceComponent>(comp.Owner);
+                    _console.RefreshShuttleConsoles();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

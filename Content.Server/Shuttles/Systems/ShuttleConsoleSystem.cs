@@ -6,7 +6,6 @@ using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.Light;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
@@ -24,6 +23,7 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -36,12 +36,42 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
             SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleModeRequestMessage>(OnModeRequest);
+            SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleConsoleDestinationMessage>(OnDestinationMessage);
             SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
+
             SubscribeLocalEvent<DockEvent>(OnDock);
             SubscribeLocalEvent<UndockEvent>(OnUndock);
 
             SubscribeLocalEvent<PilotComponent, MoveEvent>(HandlePilotMove);
             SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleDestinationMessage args)
+        {
+            var found = false;
+
+            foreach (var dest in component.Destinations)
+            {
+                if (dest.Enabled && dest.Destination.Equals(args.Destination))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) return;
+
+            // TODO: Hyperspace
+            if (!TryComp<TransformComponent>(uid, out var xform) ||
+                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
+
+            if (HasComp<HyperspaceComponent>(xform.GridUid))
+            {
+                // TODO: Popup that they're in hyperspace.
+                return;
+            }
+
+            _shuttle.Hyperspace(shuttle, EntityCoordinates.Invalid);
         }
 
         private void OnDock(DockEvent ev)
@@ -239,11 +269,22 @@ namespace Content.Server.Shuttles.Systems
             component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
+            // TODO: Need some way to lock out shit already in hyperspace.
+            var locked = HasComp<HyperspaceComponent>(consoleXform?.GridUid);
+
+            for (var i = 0; i < component.Destinations.Count; i++)
+            {
+                var dest = component.Destinations[i];
+                dest.Enabled = locked;
+                component.Destinations[i] = dest;
+            }
+
             docks ??= GetAllDocks();
 
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
+                    component.Destinations,
                     range,
                     consoleXform?.Coordinates,
                     consoleXform?.LocalRotation,

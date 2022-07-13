@@ -4,7 +4,8 @@
                            xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
                            Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
-                  HorizontalAlignment="Stretch">
+                  HorizontalAlignment="Stretch"
+                  Margin="5 5 5 5">
         <BoxContainer Name="LeftDisplay"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Left"
@@ -16,6 +17,14 @@
                     <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
                 </ui1:StripeBack>
                 <BoxContainer Name="DockPorts"
+                              Orientation="Vertical">
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical">
+                <ui1:StripeBack>
+                    <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
+                </ui1:StripeBack>
+                <BoxContainer Name="HyperspaceDestinations"
                               Orientation="Vertical">
                 </BoxContainer>
             </BoxContainer>

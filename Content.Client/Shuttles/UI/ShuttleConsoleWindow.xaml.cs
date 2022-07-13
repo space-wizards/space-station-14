@@ -34,6 +34,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public Action<EntityUid>? UndockPressed;
     public Action<EntityUid>? StartAutodockPressed;
     public Action<EntityUid>? StopAutodockPressed;
+    public Action<string>? DestinationPressed;
 
     public ShuttleConsoleWindow()
     {
@@ -91,9 +92,43 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         UpdateDocks(scc.Docks);
+        UpdateHyperspace(scc.Destinations);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
         ShuttleModeDisplay.Pressed = scc.Mode == ShuttleMode.Strafing;
+    }
+
+    private void UpdateHyperspace(List<(string Destination, bool Enabled)> destinations)
+    {
+        HyperspaceDestinations.DisposeAllChildren();
+
+        if (destinations.Count == 0)
+        {
+            HyperspaceDestinations.AddChild(new Label()
+            {
+                Text = Loc.GetString("shuttle-console-hyperspace-none"),
+                HorizontalAlignment = HAlignment.Center,
+            });
+        }
+
+        foreach (var destination in destinations)
+        {
+            var button = new Button()
+            {
+                Disabled = !destination.Enabled,
+                Text = destination.Destination,
+            };
+
+            button.OnPressed += OnHyperspacePressed;
+            HyperspaceDestinations.AddChild(button);
+        }
+    }
+
+    private void OnHyperspacePressed(BaseButton.ButtonEventArgs obj)
+    {
+        var text = ((Button) obj.Button).Text;
+        if (text == null) return;
+        DestinationPressed?.Invoke(text);
     }
 
     #region Docking

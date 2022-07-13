@@ -41,5 +41,11 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables]
         public DirectionFlag ThrustDirections = DirectionFlag.None;
+
+        /// <summary>
+        /// Identifier as a hyperspace destination. Any consoles with this destination can travel there.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("hyperspaceIdentifier")]
+        public string? HyperspaceIdentifier;
     }
 }
