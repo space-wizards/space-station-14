@@ -69,16 +69,16 @@ public sealed class ZombieRuleSystem : GameRuleSystem
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = Math.Round(GetInfectedPercentage(out var livingHumans), 2);
+        var percent = GetInfectedPercentage(out var livingHumans);
 
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
         else if (percent <= 0.25)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
         else if (percent <= 0.5)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", (percent * 100).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString())));
         else if (percent < 1)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", (percent * 100).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString())));
         else
             ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
