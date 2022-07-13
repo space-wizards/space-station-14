@@ -273,7 +273,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             var fieldXForm = Transform(newField);
             fieldXForm.AttachParent(component.Generator1.Value);
             if (dirVec.GetDir() == Direction.East || dirVec.GetDir() == Direction.West)
-                fieldXForm.LocalRotation = 90;
+            {
+                var angle = fieldXForm.LocalPosition.ToAngle();
+                var rotateBy90 = angle.Degrees + 90;
+                var rotatedAngle = Angle.FromDegrees(rotateBy90);
+
+                fieldXForm.LocalRotation = rotatedAngle;
+            }
 
             component.Fields.Add(newField);
             currentOffset += dirVec;
