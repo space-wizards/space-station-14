@@ -492,7 +492,7 @@
   parent: BaseComputer
   id: ComputerCloningConsole
   name: cloning console computer
-  description: Used to scan and clone some very unfortunate people.
+  description: The centerpiece of the cloning system, medicine's greatest accomplishment. It has lots of ports and wires.
   components:
   - type: CloningConsole
   - type: DeviceList
@@ -504,8 +504,8 @@
       key: generic_key
       screen: dna
   - type: ApcPowerReceiver
-    powerLoad: 500
-  - type: ExtensionCableProvider #Eliminate strange edge cases with this one weird trick!
+    powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
+  - type: ExtensionCableProvider #See above
     transferRange: 4
   - type: Computer
     board: CloningConsoleComputerCircuitboard

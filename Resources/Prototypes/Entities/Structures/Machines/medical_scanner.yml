@@ -51,3 +51,5 @@
     visuals:
     - type: MedicalScannerVisualizer
   - type: Climbable
+  - type: ApcPowerReceiver
+    powerLoad: 200 #Receives most of its power from the console
