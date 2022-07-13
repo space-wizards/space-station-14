@@ -505,6 +505,8 @@
       screen: dna
   - type: ApcPowerReceiver
     powerLoad: 500
+  - type: ExtensionCableProvider #Eliminate strange edge cases with this one weird trick!
+    transferRange: 4
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
