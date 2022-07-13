@@ -280,7 +280,6 @@ namespace Content.Server.Dragon
             // TODO: Optimize with usage of entity queries and lookup systems.
             foreach(var p in points)
             {
-                var tileRef = grid.GetTileRef(p);
                 var tileBox = new Box2(p * grid.TileSize, (p + 1) * grid.TileSize);
 
                 // Get the entities on the tile.
@@ -310,6 +309,7 @@ namespace Content.Server.Dragon
                 if (tileBlocked)
                     break; // Blocked by an obstruction.
 
+                // Attempt to ignite the tile.
                 _atmosphereSystem.HotspotExpose(grid.GridEntityId, p, 700f, 50f, true);
 
                 var coords = grid.GridTileToLocal(p);
@@ -331,7 +331,6 @@ namespace Content.Server.Dragon
             if (damage == null || !damageableQuery.HasComponent(uid))
                 return;
 
-            // TODO: Determine what types of entities should be damaged.
             _damageableSystem.TryChangeDamage(uid, damage);
         }
 
@@ -346,8 +345,12 @@ namespace Content.Server.Dragon
             in EntityUid uid)
         {
             // Add entities with transform components to the list of entities to process.
-            if(state.Processed.Add(uid) && state.mobStateQuery.HasComponent(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+            if (state.Processed.Add(uid) &&
+                state.mobStateQuery.HasComponent(uid) &&
+                state.XformQuery.TryGetComponent(uid, out var xform))
+            {
                 state.List.Add(xform);
+            }
 
             return true;
         }
