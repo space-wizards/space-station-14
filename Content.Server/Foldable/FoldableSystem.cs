@@ -19,7 +19,7 @@ namespace Content.Server.Foldable
 
             SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
             SubscribeLocalEvent<FoldableComponent, GetVerbsEvent<AlternativeVerb>>(AddFoldVerb);
-            SubscribeLocalEvent<FoldableComponent, StoreThisAttemptEvent>(OnStoreThisAttempt);
+            SubscribeLocalEvent<FoldableComponent, StoreMobInItemContainerAttemptEvent>(OnStoreThisAttempt);
 
         }
 
@@ -88,8 +88,10 @@ namespace Content.Server.Foldable
                 strap.Enabled = !component.IsFolded;
         }
 
-        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreThisAttemptEvent args)
+        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)
         {
+            args.Handled = true;
+
             if (comp.IsFolded)
                 args.Cancel();
         }
