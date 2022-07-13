@@ -5,7 +5,7 @@
   components:
     - type: Sprite
       layers:
-        - state: full
+        - state: red
         - texture: Structures/Furniture/Altars/Gods/nanotrasen.rsi/full.png
     - type: RandomSpawner
       prototypes:
@@ -25,7 +25,7 @@
   components:
     - type: Sprite
       layers:
-        - state: full
+        - state: red
         - texture: Structures/Furniture/Altars/Gods/convertaltar.rsi/full.png
     - type: RandomSpawner
       prototypes:
@@ -47,7 +47,7 @@
   components:
     - type: Sprite
       layers:
-        - state: full
+        - state: red
         - texture: Structures/Furniture/Altars/Cults/fangs.rsi/full.png
     - type: RandomSpawner
       prototypes:
