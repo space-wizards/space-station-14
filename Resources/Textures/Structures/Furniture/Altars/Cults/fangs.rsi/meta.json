@@ -8,20 +8,10 @@
   "copyright": "Taken from https://github.com/tgstation/tgstation/commit/a5de76df72587ae5f367d72523777530d9b1a028",
   "states": [
     {
-      "name": "full",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "full"
     },
     {
-        "name": "blood",
-        "delays": [
-          [
-            0.1
-          ]
-      ]
+      "name": "blood"
     }
   ]
 }

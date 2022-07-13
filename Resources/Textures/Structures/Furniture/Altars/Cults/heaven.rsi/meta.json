@@ -8,19 +8,14 @@
   "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/commit/b69b08ce43b8e6ea52d9f4f356cc27a7042f7b22",
   "states": [
     {
-      "name": "full",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "full"
     },
     {
-        "name": "blood",
-        "delays": [
-          [
-            0.2, 0.2, 0.2, 0.2
-          ]
+      "name": "blood",
+      "delays": [
+        [
+          0.2, 0.2, 0.2, 0.2
+        ]
       ]
     }
   ]
