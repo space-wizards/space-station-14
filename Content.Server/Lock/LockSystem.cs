@@ -82,7 +82,7 @@ namespace Content.Server.Lock
 
             if(lockComp.LockSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                SoundSystem.Play(lockComp.LockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
@@ -90,7 +90,7 @@ namespace Content.Server.Lock
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
 
-            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true), true);
 
             return true;
         }
@@ -105,7 +105,7 @@ namespace Content.Server.Lock
 
             if (lockComp.UnlockSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                SoundSystem.Play(lockComp.UnlockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
@@ -113,7 +113,7 @@ namespace Content.Server.Lock
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }
 
-            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false));
+            RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false), true);
         }
 
         public bool TryUnlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
@@ -156,7 +156,7 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!_accessReader.IsAllowed(reader, user))
+            if (!_accessReader.IsAllowed(user, reader))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
@@ -186,7 +186,7 @@ namespace Content.Server.Lock
             {
                 if (component.UnlockSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(component.Owner), component.UnlockSound.GetSound(), component.Owner, AudioParams.Default.WithVolume(-5));
+                    SoundSystem.Play(component.UnlockSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-5));
                 }
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))

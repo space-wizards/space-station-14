@@ -11,7 +11,43 @@
             "name": "base"
         },
         {
-            "name": "spent"
+            "name": "base-spent"
+        },
+        {
+            "name": "beanbag"
+        },
+        {
+            "name": "beanbag-spent"
+        },
+        {
+            "name": "blank"
+        },
+        {
+            "name": "blank-spent"
+        },
+        {
+            "name": "flare"
+        },
+        {
+            "name": "flare-spent"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "incendiary-spent"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "practice-spent"
+        },
+        {
+            "name": "slug"
+        },
+        {
+            "name": "slug-spent"
         }
     ]
 }

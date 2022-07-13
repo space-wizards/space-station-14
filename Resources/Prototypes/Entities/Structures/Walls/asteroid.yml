@@ -2,14 +2,15 @@
   id: AsteroidRock
   parent: BaseStructure
   name: asteroid rock
-  description: An asteroid.
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
   components:
   - type: Gatherable
     whitelist:
       tags:
         - Pickaxe
     loot:
-      Pickaxe: MiningLootTable
+      Pickaxe: MiningLootTableLowYield
   - type: Sprite
     sprite: Structures/Walls/asteroid_rock.rsi
     state: full
@@ -41,3 +42,17 @@
   - type: IconSmooth
     key: walls
     base: rock_
+
+- type: entity
+  id: AsteroidRockMining
+  parent: AsteroidRock
+  name: asteroid rock
+  suffix: higher ore yield
+  description: An asteroid.
+  components:
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Pickaxe
+    loot:
+      Pickaxe: MiningLootTable

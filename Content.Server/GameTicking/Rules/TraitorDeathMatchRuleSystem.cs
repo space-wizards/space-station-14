@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
 using Content.Server.PDA;
 using Content.Server.Players;
@@ -18,6 +19,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -35,6 +37,8 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MaxTimeRestartRuleSystem _restarter = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     public override string Prototype => "TraitorDeathMatch";
 
@@ -196,14 +200,14 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         ev.AddLine(string.Join('\n', lines));
     }
 
-    public override void Started()
+    public override void Started(GameRuleConfiguration _)
     {
         _restarter.RoundMaxTime = TimeSpan.FromMinutes(30);
         _restarter.RestartTimer();
         _safeToEndRound = true;
     }
 
-    public override void Ended()
+    public override void Ended(GameRuleConfiguration _)
     {
     }
 
@@ -242,10 +246,17 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
         _robustRandom.Shuffle(ents);
         var foundATarget = false;
         bestTarget = EntityCoordinates.Invalid;
-        var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
         foreach (var entity in ents)
         {
-            if (!atmosphereSystem.IsTileMixtureProbablySafe(Transform(entity).Coordinates))
+            var transform = Transform(entity);
+
+            if (transform.GridUid == null || transform.MapUid == null)
+                continue;
+
+            var position = _transformSystem.GetGridOrMapTilePosition(entity, transform);
+
+            if (!_atmosphereSystem.IsTileMixtureProbablySafe(transform.GridUid.Value, transform.MapUid.Value, position))
                 continue;
 
             var distanceFromNearest = float.PositiveInfinity;

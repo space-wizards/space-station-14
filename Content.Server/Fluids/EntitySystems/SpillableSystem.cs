@@ -33,6 +33,17 @@ public sealed class SpillableSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
+    }
+
+    private void OnSpikeOverflow(EntityUid uid, SpillableComponent component, SolutionSpikeOverflowEvent args)
+    {
+        if (!args.Handled)
+        {
+            SpillAt(args.Overflow, Transform(uid).Coordinates, "PuddleSmear");
+        }
+
+        args.Handled = true;
     }
 
     private void OnGotEquipped(EntityUid uid, SpillableComponent component, GotEquippedEvent args)
@@ -132,7 +143,7 @@ public sealed class SpillableSystem : EntitySystem
         if (solution.TotalVolume == 0) return null;
 
 
-        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var mapGrid))
+        if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
             return null; // Let's not spill to space.
 
         return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound,
@@ -162,7 +173,7 @@ public sealed class SpillableSystem : EntitySystem
         // If space return early, let that spill go out into the void
         if (tileRef.Tile.IsEmpty) return null;
 
-        var gridId = tileRef.GridIndex;
+        var gridId = tileRef.GridUid;
         if (!_mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
 
         if (!noTileReact)

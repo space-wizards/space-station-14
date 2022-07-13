@@ -6,13 +6,14 @@ using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Prototypes;
 using Content.Shared.MachineLinking;
+using System.Threading;
 
 namespace Content.Server.Light.Components
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    [RegisterComponent, Friend(typeof(PoweredLightSystem))]
+    [RegisterComponent, Access(typeof(PoweredLightSystem))]
     public sealed class PoweredLightComponent : Component
     {
         [DataField("burnHandSound")]
@@ -66,5 +67,13 @@ namespace Content.Server.Light.Components
 
         [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string TogglePort = "Toggle";
+
+        public CancellationTokenSource? CancelToken;
+
+        /// <summary>
+        /// How long it takes to eject a bulb from this
+        /// </summary>
+        [DataField("ejectBulbDelay")]
+        public float EjectBulbDelay = 2;
     }
 }

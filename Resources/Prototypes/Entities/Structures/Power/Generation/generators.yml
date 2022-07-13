@@ -16,7 +16,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -45,6 +44,9 @@
     supplyRampTolerance: 500
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -166,6 +168,10 @@
     LayoutId: GeneratorPlasma
   - type: Machine
     board: GeneratorPlasmaMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_parts: !type:Container
+      machine_board: !type:Container
 
 - type: entity
   parent: BaseGenerator
@@ -185,7 +191,10 @@
     LayoutId: GeneratorUranium
   - type: Machine
     board: GeneratorUraniumMachineCircuitboard
-
+  - type: ContainerContainer
+    containers:
+      machine_parts: !type:Container
+      machine_board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount

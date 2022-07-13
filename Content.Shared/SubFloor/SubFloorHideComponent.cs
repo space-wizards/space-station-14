@@ -10,7 +10,7 @@ namespace Content.Shared.SubFloor
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
-    [Friend(typeof(SharedSubFloorHideSystem))]
+    [Access(typeof(SharedSubFloorHideSystem))]
     public sealed class SubFloorHideComponent : Component
     {
         /// <summary>
@@ -47,6 +47,7 @@ namespace Content.Shared.SubFloor
         ///     The entities this subfloor is revealed by.
         /// </summary>
         [ViewVariables]
+        [Access(typeof(SharedSubFloorHideSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public HashSet<EntityUid> RevealedBy { get; set; } = new();
     }
 }

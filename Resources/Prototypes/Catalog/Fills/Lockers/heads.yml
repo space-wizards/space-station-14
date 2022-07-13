@@ -39,7 +39,7 @@
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
-      - id: TaserGun
+      - id: WeaponTaser
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
       - id: SpaceCash1000
@@ -55,7 +55,8 @@
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
       - id: RubberStampCaptain
-      - id: AntiqueLaserGun
+      - id: WeaponAntiqueLaser
+      - id: JetpackCaptainFilled
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -72,7 +73,7 @@
       - id: BoxPDA
       - id: BoxID
       - id: IDComputerCircuitboard
-      - id: TaserGun
+      - id: WeaponTaser
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -94,6 +95,7 @@
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
@@ -104,6 +106,7 @@
         prob: 0.15
       - id: DoorRemoteEngineering
       - id: RubberStampCE
+      - id: JetpackVoidFilled
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -155,7 +158,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TaserGun
+      - id: WeaponTaser
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
@@ -187,3 +190,4 @@
       - id: ClothingUniformJumpsuitHosFormal
       - id: RubberStampHos
       - id: SecurityTechFabCircuitboard
+      - id: JetpackSecurityFilled

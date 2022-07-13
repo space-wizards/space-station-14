@@ -140,6 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (barotrauma, damageable, transform) in EntityManager.EntityQuery<BarotraumaComponent, DamageableComponent, TransformComponent>())
             {
+                var uid = barotrauma.Owner;
                 var totalDamage = FixedPoint2.Zero;
                 foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
                 {
@@ -152,7 +153,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var pressure = 1f;
 
-                if (_atmosphereSystem.GetTileMixture(transform.Coordinates) is { } mixture)
+                if (_atmosphereSystem.GetContainingMixture(uid) is {} mixture)
                 {
                     pressure = MathF.Max(mixture.Pressure, 1f);
                 }

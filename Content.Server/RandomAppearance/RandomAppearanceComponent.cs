@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.RandomAppearance;
 
 [RegisterComponent]
-[Friend(typeof(RandomAppearanceSystem))]
+[Access(typeof(RandomAppearanceSystem))]
 public sealed class RandomAppearanceComponent : Component, ISerializationHooks
 {
     [DataField("spriteStates")]

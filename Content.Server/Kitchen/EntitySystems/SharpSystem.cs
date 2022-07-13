@@ -110,7 +110,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, SharedButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife)
+        if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
 
         bool disabled = false;

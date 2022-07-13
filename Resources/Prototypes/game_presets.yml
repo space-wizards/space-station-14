@@ -4,7 +4,7 @@
     - extended
     - shittersafari
   name: extended-title
-  showInVote: true
+  showInVote: false #2boring2vote
   description: extended-description
 
 - type: gamePreset
@@ -24,7 +24,8 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: false
+  showInVote: true
+  maxPlayers: 5
   rules:
     - Sandbox
 
@@ -78,3 +79,27 @@
   showInVote: false
   rules:
     - Nukeops
+
+- type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+    - Zombies
+    - zz14
+    - zomber
+  name: zombie-title
+  description: zombie-description
+  showInVote: false
+  rules:
+    - Zombie
+
+- type: gamePreset
+  id: Pirates
+  alias:
+    - pirates
+  name: pirates-title
+  description: pirates-description
+  showInVote: false
+  rules:
+    - Pirates

@@ -1,4 +1,4 @@
-﻿using Content.Client.Atmos.EntitySystems;
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.Graphics;
@@ -41,7 +41,7 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
-                if (!_atmosDebugOverlaySystem.HasData(mapGrid.Index))
+                if (!_atmosDebugOverlaySystem.HasData(mapGrid.GridEntityId))
                     continue;
 
                 drawHandle.SetTransform(mapGrid.WorldMatrix);
@@ -50,7 +50,7 @@ namespace Content.Client.Atmos.Overlays
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                     {
-                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Index, tile.GridIndices);
+                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.GridEntityId, tile.GridIndices);
                         if (dataMaybeNull != null)
                         {
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
@@ -141,16 +141,27 @@ namespace Content.Client.Atmos.Overlays
                                     DrawPressureDirection(drawHandle, data.LastPressureDirection, tile, Color.LightGray);
                                 }
 
+                                var tilePos = new Vector2(tile.X, tile.Y);
+
                                 // -- Excited Groups --
-                                if (data.InExcitedGroup)
+                                if (data.InExcitedGroup != 0)
                                 {
-                                    var tilePos = new Vector2(tile.X, tile.Y);
                                     var basisA = tilePos;
                                     var basisB = tilePos + new Vector2(1.0f, 1.0f);
                                     var basisC = tilePos + new Vector2(0.0f, 1.0f);
                                     var basisD = tilePos + new Vector2(1.0f, 0.0f);
-                                    drawHandle.DrawLine(basisA, basisB, Color.Cyan);
-                                    drawHandle.DrawLine(basisC, basisD, Color.Cyan);
+                                    var color = Color.White // Use first three nibbles for an unique color... Good enough?
+                                        .WithRed(   data.InExcitedGroup & 0x000F)
+                                        .WithGreen((data.InExcitedGroup & 0x00F0) >>4)
+                                        .WithBlue( (data.InExcitedGroup & 0x0F00) >>8);
+                                    drawHandle.DrawLine(basisA, basisB, color);
+                                    drawHandle.DrawLine(basisC, basisD, color);
+                                }
+
+                                // -- Space Tiles --
+                                if (data.IsSpace)
+                                {
+                                    drawHandle.DrawCircle(tilePos + Vector2.One/2, 0.125f, Color.Orange);
                                 }
                             }
                         }

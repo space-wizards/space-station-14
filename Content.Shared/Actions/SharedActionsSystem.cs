@@ -333,7 +333,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
 
         if (action.Sound != null)
-            SoundSystem.Play(filter, action.Sound.GetSound(), performer, action.AudioParams);
+            SoundSystem.Play(action.Sound.GetSound(), filter, performer, action.AudioParams);
 
         if (string.IsNullOrWhiteSpace(action.Popup))
             return true;
@@ -409,7 +409,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var provided = comp.Actions.Where(act => act.Provider == provider).ToList();
 
-        RemoveActions(uid, provided, comp);
+        if (provided.Count > 0)
+            RemoveActions(uid, provided, comp);
     }
 
     public virtual void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)

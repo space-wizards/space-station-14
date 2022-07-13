@@ -1,0 +1,86 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aed9cbddbf9039dae1e4f02bab592248b0539431/icons/obj/ammo_speed.dmi",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "base-1"
+        },
+        {
+            "name": "base-2"
+        },
+        {
+            "name": "base-3"
+        },
+        {
+            "name": "base-4"
+        },
+        {
+            "name": "base-5"
+        },
+        {
+            "name": "base-6"
+        },
+        {
+            "name": "high-velocity-1"
+        },
+        {
+            "name": "high-velocity-2"
+        },
+        {
+            "name": "high-velocity-3"
+        },
+        {
+            "name": "high-velocity-4"
+        },
+        {
+            "name": "high-velocity-5"
+        },
+        {
+            "name": "high-velocity-6"
+        },
+        {
+            "name": "practice-1"
+        },
+        {
+            "name": "practice-2"
+        },
+        {
+            "name": "practice-3"
+        },
+        {
+            "name": "practice-4"
+        },
+        {
+            "name": "practice-5"
+        },
+        {
+            "name": "practice-6"
+        },
+        {
+            "name": "rubber-1"
+        },
+        {
+            "name": "rubber-2"
+        },
+        {
+            "name": "rubber-3"
+        },
+        {
+            "name": "rubber-4"
+        },
+        {
+            "name": "rubber-5"
+        },
+        {
+            "name": "rubber-6"
+        }
+    ]
+}

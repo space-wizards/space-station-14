@@ -1,6 +1,6 @@
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent, Friend(typeof(FlashSystem))]
+    [RegisterComponent, Access(typeof(FlashSystem))]
     public sealed class FlashImmunityComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

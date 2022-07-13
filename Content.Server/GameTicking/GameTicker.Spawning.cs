@@ -157,8 +157,9 @@ namespace Content.Server.GameTicking
 
             if (lateJoin)
             {
-                _chatManager.DispatchStationAnnouncement(Loc.GetString(
-                    "latejoin-arrival-announcement",
+                _chatSystem.DispatchStationAnnouncement(station,
+                    Loc.GetString(
+                        "latejoin-arrival-announcement",
                     ("character", character.Name),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
@@ -193,7 +194,7 @@ namespace Content.Server.GameTicking
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
-            RaiseLocalEvent(mob, aev);
+            RaiseLocalEvent(mob, aev, true);
         }
 
         public void Respawn(IPlayerSession player)
