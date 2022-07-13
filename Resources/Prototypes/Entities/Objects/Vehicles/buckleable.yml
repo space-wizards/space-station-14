@@ -132,7 +132,10 @@
           tags:
           - VehicleKey
           - PussyWagonKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
       trashbag_slot:
         name: Bag
         whitelist:
@@ -214,7 +217,10 @@
           tags:
           - VehicleKey
           - SecwayKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
 
 - type: entity
   parent: BaseVehicle
@@ -268,7 +274,10 @@
           tags:
           - VehicleKey
           - ATVKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
 
 - type: entity
   id: VehicleSyndicateSegway
@@ -311,4 +320,7 @@
             tags:
               - VehicleKey
               - SyndicateSegwayKeys
-          insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          insertSound:
+            path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+            params:
+              volume: -3
