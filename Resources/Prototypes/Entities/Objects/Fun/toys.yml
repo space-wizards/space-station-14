@@ -76,6 +76,19 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieLamp
+  name: lamp plushie
+  description: A light emitting friend!
+  components:
+  - type: Sprite
+    state: plushie_lamp
+  - type: PointLight
+    netsync: false
+    radius: 1.5
+    energy: 2
+
+- type: entity
+  parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
@@ -502,9 +515,8 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: 24
     sprite: Objects/Fun/toys.rsi
-    state: base
+    HeldPrefix: capgun
   - type: Gun
     selectedMode: SemiAuto
     availableModes:

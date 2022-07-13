@@ -350,7 +350,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Amatoxin
+        - ReagentId: Mold
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1

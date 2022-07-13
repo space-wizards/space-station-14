@@ -165,13 +165,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     #region Announcements
 
     /// <summary>
-    /// Dispatches an announcement to all stations
+    /// Dispatches an announcement to all.
     /// </summary>
     /// <param name="message">The contents of the message</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
-    public void DispatchGlobalStationAnnouncement(string message, string sender = "Central Command",
+    public void DispatchGlobalAnnouncement(string message, string sender = "Central Command",
         bool playDefaultSound = true, Color? colorOverride = null)
     {
         var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
@@ -195,7 +195,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var messageWrap = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender));
         var station = _stationSystem.GetOwningStation(source);
-        var filter = Filter.Empty();
 
         if (station == null)
         {
@@ -205,10 +204,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
 
-        foreach (var gridEnt in stationDataComp.Grids)
-        {
-            filter.AddInGrid(gridEnt);
-        }
+        var filter = _stationSystem.GetInStation(stationDataComp);
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, messageWrap, source, false, colorOverride);
 
@@ -422,7 +418,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
         return Filter.Empty()
-            .AddWhereAttachedEntity(uid => HasComp<GhostComponent>(uid))
+            .AddWhereAttachedEntity(HasComp<GhostComponent>)
             .Recipients
             .Union(_adminManager.ActiveAdmins)
             .Select(p => p.ConnectedClient);

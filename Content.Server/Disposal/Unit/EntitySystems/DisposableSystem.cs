@@ -70,7 +70,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _disposalUnitSystem.TryEjectContents(duc);
             }
 
-            if (_atmosphereSystem.GetTileMixture(holderTransform.Coordinates, true) is {} environment)
+            if (_atmosphereSystem.GetContainingMixture(uid, false, true) is {} environment)
             {
                 _atmosphereSystem.Merge(environment, holder.Air);
                 holder.Air.Clear();

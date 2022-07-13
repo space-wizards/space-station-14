@@ -35,6 +35,8 @@ namespace Content.Server.Entry
             "GraphicToggles",
             "AMEControllerVisuals",
             "AMEShieldingVisuals",
+            "PipeColorVisuals",
+            "FireVisuals",
         };
     }
 }

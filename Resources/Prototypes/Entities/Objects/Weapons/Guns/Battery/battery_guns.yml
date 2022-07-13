@@ -34,7 +34,7 @@
 
 - type: entity
   name: retro laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -59,7 +59,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:
@@ -247,10 +247,48 @@
   - type: Appearance
 
 - type: entity
+  name: disabler
+  parent: BaseWeaponBattery
+  id: WeaponDisabler
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  components:
+    - type: Tag
+      tags:
+        - Taser
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Clothing
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+      size: 10
+      quickEquip: false
+      Slots:
+        - Belt
+    - type: Gun
+      fireRate: 2
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+    - type: ProjectileBatteryAmmoProvider
+      proto: BulletDisabler
+      fireCost: 100
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: true
+    - type: Appearance
+
+- type: entity
   name: taser
   parent: BaseWeaponBattery
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  # Use Disabler
+  suffix: Obsolete
   components:
   - type: Tag
     tags:
@@ -274,11 +312,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletTaser
-    fireCost: 50
-  - type: Battery
-    maxCharge: 100
-    startingCharge: 100
+    proto: BulletDisabler
+    fireCost: 100
   - type: MagazineVisuals
     magState: mag
     steps: 5

@@ -42,3 +42,5 @@
       radius: 5
       energy: 10
       color: "#FFC458"
+    - type: Flash
+      uses: 15

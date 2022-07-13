@@ -16,7 +16,6 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public sealed class ThirstComponent : Component
     {
-
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("baseDecayRate")]
@@ -48,6 +47,7 @@ namespace Content.Server.Nutrition.Components
             {ThirstThreshold.OverHydrated, AlertType.Overhydrated},
             {ThirstThreshold.Thirsty, AlertType.Thirsty},
             {ThirstThreshold.Parched, AlertType.Parched},
+            {ThirstThreshold.Dead, AlertType.Parched},
         };
     }
 }

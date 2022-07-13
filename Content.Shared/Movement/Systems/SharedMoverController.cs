@@ -36,7 +36,8 @@ namespace Content.Shared.Movement.Systems
         private const float StepSoundMoveDistanceWalking = 1.5f;
 
         private const float FootstepVariation = 0f;
-        private const float FootstepVolume = 1f;
+        private const float FootstepVolume = 3f;
+        private const float FootstepWalkingAddedVolumeMultiplier = 0f;
 
         /// <summary>
         /// <see cref="CCVars.MinimumFrictionSpeed"/>
@@ -155,7 +156,10 @@ namespace Content.Shared.Movement.Systems
 
             // Regular movement.
             // Target velocity.
-            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
@@ -217,7 +221,11 @@ namespace Content.Shared.Movement.Systems
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+            var moveSpeedComponent = CompOrNull<MovementSpeedModifierComponent>(mover.Owner);
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
+
             var parentRotation = GetParentGridAngle(xform, mover);
             var worldTotal = _relativeMovement ? parentRotation.RotateVec(total) : total;
 
@@ -275,11 +283,12 @@ namespace Content.Shared.Movement.Systems
                     : worldTotal.ToWorldAngle();
                 xform.DeferUpdates = false;
 
-                if (TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                if (!weightless && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
                 {
+                    var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
                     SoundSystem.Play(sound,
                         GetSoundPlayers(mover.Owner),
-                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume));
+                        mover.Owner, AudioHelpers.WithVariation(variation).WithVolume(FootstepVolume * soundModifier));
                 }
             }
 

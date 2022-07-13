@@ -73,6 +73,7 @@
         time: 1
         type: Remove
       - !type:PopupMessage
+        visualType: Medium
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
         type: Local
         probability: 0.05

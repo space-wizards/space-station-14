@@ -209,7 +209,7 @@ namespace Content.Server.MachineLinking.System
             if (!TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User));
+                    Filter.Entities(args.User), PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -235,7 +235,7 @@ namespace Content.Server.MachineLinking.System
             if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User));
+                    Filter.Entities(args.User), PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -324,7 +324,7 @@ namespace Content.Server.MachineLinking.System
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-linked-port",
                     ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                     ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
-                    Filter.Entities(user));
+                    Filter.Entities(user), PopupType.Medium);
 
             return true;
         }
@@ -351,7 +351,7 @@ namespace Content.Server.MachineLinking.System
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-unlinked-port",
                         ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                         ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
-                        Filter.Entities(attached));
+                        Filter.Entities(attached), PopupType.Medium);
                 }
                 else
                 { // something weird happened

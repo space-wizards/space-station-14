@@ -7,6 +7,8 @@
   suffix: Empty
   description: A fuel tank. It's used to store high amounts of fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: fueltank
@@ -29,6 +31,8 @@
   suffix: Full
   description: A storage tank containing welding fuel.
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -45,6 +49,8 @@
   suffix: Empty
   description: "A water tank. It's used to store high amounts of water."
   components:
+  - type: StaticPrice
+    price: 1200
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     state: watertank
@@ -54,6 +60,8 @@
   id: WaterTankFull
   suffix: Full
   components:
+  - type: StaticPrice
+    price: 1200
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -99,3 +107,26 @@
   - type: ReagentTank
     transferAmount: 100
 
+# Kvass
+- type: entity
+  id: KvassTank
+  parent: StorageTank
+  name: КВАС
+  suffix: Empty
+  description: A cool refreshing drink with a taste of socialism.
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/kvass.rsi
+      state: kvass
+
+- type: entity
+  parent: KvassTank
+  id: KvassTankFull
+  suffix: Full
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Kvass
+              Quantity: 1500
