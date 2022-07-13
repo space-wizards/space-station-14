@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
@@ -11,8 +12,11 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.Damage;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Dragon
 {
@@ -24,6 +28,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -219,11 +224,33 @@ namespace Content.Server.Dragon
             return points;
         }
 
+        /// <summary>
+        ///     Determines whether an entity is blocking a tile or not. (whether it should prevent the line from continuing).
+        /// </summary>
+        /// <remarks>
+        ///     Used for a variation of <see cref="TurfHelpers.IsBlockedTurf()"/> that makes use of the fact that we have
+        ///     already done an entity lookup on a tile, and don't need to do so again.
+        /// </remarks>
+        private bool IsBlockingTurf(EntityUid uid, EntityQuery<PhysicsComponent> physicsQuery)
+        {
+            if (EntityManager.IsQueuedForDeletion(uid))
+                return false;
+
+            if (!physicsQuery.TryGetComponent(uid, out var physics))
+                return false;
+
+            return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int)CollisionGroup.HumanoidBlockLayer) != 0;
+        }
+
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
             DragonBreathFireActionEvent args)
         {
             if (component.BreathFireAction == null)
                 return;
+
+            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+            var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
+            var damageableQuery = EntityManager.GetEntityQuery<DamageableComponent>();
 
             var dragonXform = Transform(dragonuid);
             var dragonPos = dragonXform.MapPosition;
@@ -239,19 +266,61 @@ namespace Content.Server.Dragon
             // Get a list of points to apply the fire breath to.
             var points = CalculateBreathTiles(breathDirection, (int) component.BreathFireAction.Range, dragonPos, grid);
 
-            // TODO: Spawn fire effects and apply damage to entities within the tile space.
+
+            var lookup = Comp<EntityLookupComponent>(grid.GridEntityId);
+
+            HashSet<EntityUid> processed = new(); // Entities that have previously been processed.
+            processed.Add(dragonuid); // Ignore the creator of the fire breath.
+
             // TODO: Fire effects and hit check should propagate over time.
             // TODO: Figure out why cooldown does not activate.
-
+            // TODO: Optimize with usage of entity queries and lookup systems.
             foreach(var p in points)
             {
                 var tileRef = grid.GetTileRef(p);
+                var tileBox = new Box2(p * grid.TileSize, (p + 1) * grid.TileSize);
 
-                // TODO: Fix fire sometimes traversing through airlock doors.
-                if (tileRef.IsBlockedTurf(false))
+                // Get the entities on the tile.
+                List<TransformComponent> list = new();
+
+                var state = (list, processed, xformQuery);
+                lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
+
+                var damageSpec = new DamageSpecifier();
+                damageSpec.DamageDict.Add("Heat", 50f);
+
+                // process the entities
+                foreach (var xform in list)
+                {
+                    Logger.Debug("Hit {0}", MetaData(xform.Owner).EntityName);
+                    ProcessEntity(xform.Owner, damageSpec, damageableQuery);
+                }
+
+                // process anchored entities
+                var tileBlocked = false;
+                var anchoredEntities = grid.GetAnchoredEntities(p).ToList();
+                foreach (var anchored in anchoredEntities)
+                {
+                    processed.Add(anchored);
+                    ProcessEntity(anchored, damageSpec, damageableQuery);
+                }
+
+                // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
+                // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
+                // information about the entities that were spawned as a result, but without that information we just have to
+                // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
+                if (anchoredEntities.Count > 0)
+                {
+                    foreach (var entity in grid.GetAnchoredEntities(p))
+                    {
+                        tileBlocked |= IsBlockingTurf(entity, physicsQuery);
+                    }
+                }
+
+                if (tileBlocked)
                     break; // Blocked by an obstruction.
 
-
+                // TODO: Create temperature hotspot.
 
                 var coords = grid.GridTileToLocal(p);
                 Spawn(component.BreathEffectPrototype, coords);
@@ -259,6 +328,32 @@ namespace Content.Server.Dragon
 
             if(component.SoundBreathFire != null)
                 SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
+        }
+
+        /// <summary>
+        /// Apply damage to the entity
+        /// </summary>
+        private void ProcessEntity(
+            EntityUid uid,
+            DamageSpecifier? damage,
+            EntityQuery<DamageableComponent> damageableQuery)
+        {
+            if (damage == null || !damageableQuery.HasComponent(uid))
+                return;
+
+            // TODO: Determine what types of entities should be damaged.
+            _damageableSystem.TryChangeDamage(uid, damage);
+        }
+
+        private bool GridQueryCallback(
+            ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+            in EntityUid uid)
+        {
+            // Add entities with transform components to the list of entities to process.
+            if(state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+                state.List.Add(xform);
+
+            return true;
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs

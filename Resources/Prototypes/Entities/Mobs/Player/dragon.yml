@@ -114,7 +114,7 @@
       description: action-description-breath-fire
       useDelay: 5
       range: 20
-      breathEffectPrototype: FireBreathEffect
+    breathEffectPrototype: FireBreathEffect
 
 
 - type: entity
@@ -134,3 +134,7 @@
         state: 1
       - type: EffectVisuals
       - type: AnimationPlayer
+  - type: PointLight
+  - type: Tag
+    tags:
+      - HideContextMenu
