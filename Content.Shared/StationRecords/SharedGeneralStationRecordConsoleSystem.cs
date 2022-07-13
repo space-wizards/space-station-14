@@ -38,6 +38,8 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
         Record = record;
         RecordListing = recordListing;
     }
+
+    public bool IsEmpty() => SelectedKey == null && Record == null && RecordListing == null;
 }
 
 [Serializable, NetSerializable]
