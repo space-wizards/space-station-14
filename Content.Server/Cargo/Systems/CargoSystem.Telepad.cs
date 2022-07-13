@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Paper;
@@ -149,15 +148,16 @@ public sealed partial class CargoSystem
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
             ("orderNumber", data.OrderNumber),
+            ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),
-            ("approver", data.Approver)),
+            ("approver", data.Approver ?? string.Empty)),
             paper);
 
         // attempt to attach the label
         if (TryComp<PaperLabelComponent>(product, out var label))
         {
-            _slots.TryInsert(component.Owner, label.LabelSlot, printed, null);
+            _slots.TryInsert(product, label.LabelSlot, printed, null);
         }
     }
 }

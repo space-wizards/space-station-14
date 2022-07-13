@@ -141,6 +141,24 @@ namespace Content.Server.Administration.Systems
                     Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
                     Impact = LogImpact.Low
                 });
+
+                // Respawn
+                if (HasComp<ActorComponent>(args.Target))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-respawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
+
+                            _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
+                        },
+                        ConfirmationPopup = true,
+                        // No logimpact as the command does it internally.
+                    });
+                }
             }
         }
 

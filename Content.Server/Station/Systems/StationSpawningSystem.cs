@@ -3,10 +3,11 @@ using Content.Server.CharacterAppearance.Systems;
 using Content.Server.DetailExaminable;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.IdentityManagement;
 using Content.Server.PDA;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
-using Content.Shared.Access.Components;
+using Content.Server.Mind.Commands;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
@@ -19,6 +20,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+
 
 namespace Content.Server.Station.Systems;
 
@@ -37,6 +39,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
     [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly IdentitySystem _identity = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -92,6 +95,16 @@ public sealed class StationSpawningSystem : EntitySystem
         HumanoidCharacterProfile? profile,
         EntityUid? station)
     {
+        // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
+        if (job?.JobEntity != null)
+        {
+            var jobEntity = EntityManager.SpawnEntity(job.JobEntity, coordinates);
+            MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
+            DoJobSpecials(job, jobEntity);
+            _identity.QueueIdentityUpdate(jobEntity);
+            return jobEntity;
+        }
+
         var entity = EntityManager.SpawnEntity(
             _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? SpeciesManager.DefaultSpecies).Prototype,
             coordinates);
@@ -114,12 +127,17 @@ public sealed class StationSpawningSystem : EntitySystem
             }
         }
 
+        DoJobSpecials(job, entity);
+        _identity.QueueIdentityUpdate(entity);
+        return entity;
+    }
+
+    private void DoJobSpecials(Job? job, EntityUid entity)
+    {
         foreach (var jobSpecial in job?.Prototype.Special ?? Array.Empty<JobSpecial>())
         {
             jobSpecial.AfterEquip(entity);
         }
-
-        return entity;
     }
 
     /// <summary>

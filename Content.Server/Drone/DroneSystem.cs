@@ -20,6 +20,7 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -111,7 +112,8 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
+                Filter.Pvs(uid), PopupType.Large);
 
             if (drone.AlreadyAwoken == false)
             {

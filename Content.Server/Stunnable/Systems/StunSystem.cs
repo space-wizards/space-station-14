@@ -3,6 +3,7 @@ using Content.Server.CombatMode;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -38,9 +39,11 @@ namespace Content.Server.Stunnable
             var knock = EntityManager.GetComponent<KnockedDownComponent>(uid);
             SoundSystem.Play(knock.StunAttemptSound.GetSound(), Filter.Pvs(source), source, AudioHelpers.WithVariation(0.025f));
 
+            var targetEnt = Identity.Entity(target, EntityManager);
+            var sourceEnt = Identity.Entity(source, EntityManager);
             // TODO: Use PopupSystem
-            source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", Name(source)), ("target", Name(target))));
-            source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", Name(target))));
+            source.PopupMessageOtherClients(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)));
+            source.PopupMessageCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)));
 
             _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 

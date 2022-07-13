@@ -3,6 +3,7 @@ using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Flash;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
@@ -130,7 +131,7 @@ namespace Content.Server.Flash
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
                 user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
-                    ("user", user.Value)));
+                    ("user", Identity.Entity(user.Value, EntityManager))));
             }
         }
 

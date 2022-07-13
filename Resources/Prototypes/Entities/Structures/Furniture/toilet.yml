@@ -22,13 +22,12 @@
     solutions:
       toilet:
         maxVol: 250
+  - type: Transform
+    anchored: true
   - type: Construction
     graph: Toilet
     node: toilet
   - type: Appearance
-    visuals:
-    - type: ToiletVisualizer
-
 - type: entity
   id: ToiletDirtyWater
   parent: ToiletEmpty

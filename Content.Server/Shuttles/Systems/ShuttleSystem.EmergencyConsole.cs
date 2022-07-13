@@ -8,6 +8,7 @@ using Content.Server.Station.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
@@ -149,7 +150,7 @@ public sealed partial class ShuttleSystem
 
         if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
@@ -168,7 +169,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
@@ -189,7 +190,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value));
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
             return;
         }
 
