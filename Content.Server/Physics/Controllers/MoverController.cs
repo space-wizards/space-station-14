@@ -240,6 +240,43 @@ namespace Content.Server.Physics.Controllers
                 {
                     var pilotInput = GetPilotVelocityInput(pilot);
 
+                    // On the one hand we could just make it relay inputs to brake
+                    // but uhh may be disorienting? n
+                    if (pilotInput.Brakes > 0f)
+                    {
+                        if (body.LinearVelocity.Length > 0f)
+                        {
+                            var force = body.LinearVelocity.Normalized * pilotInput.Brakes / body.InvMass * 3f;
+                            var impulse = force * body.InvMass * frameTime;
+
+                            if (impulse.Length > body.LinearVelocity.Length)
+                            {
+                                body.LinearVelocity = Vector2.Zero;
+                            }
+                            else
+                            {
+                                body.ApplyLinearImpulse(-force * frameTime);
+                            }
+                        }
+
+                        if (body.AngularVelocity != 0f)
+                        {
+                            var force = body.AngularVelocity * pilotInput.Brakes / body.InvI * 2f;
+                            var impulse = force * body.InvI * frameTime;
+
+                            if (MathF.Abs(impulse) > MathF.Abs(body.AngularVelocity))
+                            {
+                                body.AngularVelocity = 0f;
+                            }
+                            else
+                            {
+                                body.ApplyAngularImpulse(-force * frameTime);
+                            }
+                        }
+
+                        continue;
+                    }
+
                     if (pilotInput.Strafe.Length > 0f)
                     {
                         var offsetRotation = consoleXform.LocalRotation;
@@ -330,8 +367,7 @@ namespace Content.Server.Physics.Controllers
                         totalForce += force;
                     }
 
-                    var dragForce = body.LinearVelocity * (totalForce.Length / _shuttle.ShuttleMaxLinearSpeed);
-                    body.ApplyLinearImpulse((totalForce - dragForce) * frameTime);
+                    body.ApplyLinearImpulse(totalForce * frameTime);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
