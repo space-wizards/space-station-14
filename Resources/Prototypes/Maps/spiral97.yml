@@ -1,0 +1,51 @@
+- type: gameMap
+  id: spiralstation
+  mapName: 'Spiral Station'
+  mapPath: /Maps/spiral97.yml
+  minPlayers: 40
+  stations:
+    Spiral:
+      mapNameTemplate: '{0} Spiral Station {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        Passenger: [ -1, -1 ]
+        Bartender: [ 3, 3 ]
+        Botanist: [ 4, 6 ]
+        #Boxer: [ 1, 2 ]
+        Chef: [ 5, 7 ]
+        Clown: [ 3, 3 ]
+        Janitor: [ 5, 5 ]
+        Mime: [ 2, 2 ]
+        Chaplain: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Musician: [ 1, 3 ]
+        ServiceWorker: [ 5, 5 ]
+        Captain: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 6, 8 ]
+        AtmosphericTechnician: [ 1, 2 ]
+        TechnicalAssistant: [ 9, 9 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 3, 8 ]
+        Chemist: [ 3, 3 ]
+        MedicalIntern: [ 2, 2 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 4, 6 ]
+        HeadOfSecurity: [ 1, 1 ]
+        Detective: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        SecurityOfficer: [ 9, 11 ]
+        SecurityCadet: [ 4, 4 ]
+        Lawyer: [ 1, 2 ]
+        Quartermaster: [ 1, 1 ]
+        CargoTechnician: [ 3, 6 ]
+        SalvageSpecialist: [ 4, 6 ]
+        #Reporter: [ 2, 2 ]
+        #Psychologist: [ 1, 1 ]
+        #MailCarrier: [ 1, 2 ]
+        #Paramedic: [ 1, 1 ]
