@@ -11,6 +11,7 @@
   - type: Sprite
     netsync: false
     visible: false
+  - type: Appearance
   - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline
@@ -67,7 +68,9 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: pipe-b
+    layers:
+    - map: [ "pipe" ]
+      state: pipe-b
   - type: Construction
     graph: DisposalPipe
     node: broken
@@ -81,13 +84,16 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-s
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-s
   - type: DisposalTransit
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-s
-      state_anchored: pipe-s
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-s }
+          Anchored: { state: pipe-s }
   - type: Construction
     graph: DisposalPipe
     node: pipe
@@ -101,13 +107,16 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-tagger
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-tagger
   - type: DisposalTagger
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-tagger
-      state_anchored: pipe-tagger
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-tagger }
+          Anchored: { state: pipe-tagger }
   - type: ActivatableUI
     key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
@@ -127,13 +136,16 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-t
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-t
   - type: DisposalEntry
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-t
-      state_anchored: pipe-t
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-t }
+          Anchored: { state: pipe-t }
   - type: Fixtures
     fixtures:
     - shape:
@@ -154,17 +166,20 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-j1s
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-j1s
   - type: DisposalRouter
     degrees:
     - 0
     - -90
     - 180
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-j1s
-      state_anchored: pipe-j1s
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-j1s }
+          Anchored: { state: pipe-j1s }
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
   - type: ActivatableUI
@@ -192,17 +207,20 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-j2s
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-j2s
   - type: DisposalRouter
     degrees:
     - 0
     - 90
     - 180
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-j2s
-      state_anchored: pipe-j2s
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-j2s }
+          Anchored: { state: pipe-j2s }
   - type: Flippable
     mirrorEntity: DisposalRouter
   - type: Fixtures
@@ -222,17 +240,21 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-j1
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-j1
+    visible: true
   - type: DisposalJunction
     degrees:
     - 0
     - -90
     - 180
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-j1
-      state_anchored: pipe-j1
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-j1 }
+          Anchored: { state: pipe-j1 }
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
   - type: Fixtures
@@ -254,17 +276,20 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-j2
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-j2
   - type: DisposalJunction
     degrees:
     - 0
     - 90
     - 180
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-j2
-      state_anchored: pipe-j2
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-j2 }
+          Anchored: { state: pipe-j2 }
   - type: Flippable
     mirrorEntity: DisposalJunction
   - type: Fixtures
@@ -284,17 +309,20 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-y
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-y
   - type: DisposalJunction
     degrees:
     - 0
     - 90
     - -90
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-y
-      state_anchored: pipe-y
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-y }
+          Anchored: { state: pipe-y }
   - type: Fixtures
     fixtures:
     - shape:
@@ -315,13 +343,16 @@
   - type: Sprite
     drawdepth: ThickPipe
     sprite: Structures/Piping/disposal.rsi
-    state: conpipe-c
+    layers:
+    - map: [ "pipe" ]
+      state: conpipe-c
   - type: DisposalBend
-  - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: DisposalVisualizer
-      state_free: conpipe-c
-      state_anchored: pipe-c
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: conpipe-c }
+          Anchored: { state: pipe-c }
   - type: Fixtures
     fixtures:
     - shape:
