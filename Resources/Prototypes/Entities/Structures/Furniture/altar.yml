@@ -28,15 +28,15 @@
   - type: Clickable
 
 - type: entity
-  id: AltarNanotransen
+  id: AltarNanotrasen
   parent: AltarBase
-  name: Nanotransen altar
+  name: nanotrasen altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/nanotransen.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: full
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/nanotransen.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: full
   - type: Destructible
     thresholds:
@@ -66,7 +66,7 @@
 
 - type: entity
   id: AltarChaos
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Chaos altar
   components:
   - type: Sprite
@@ -76,7 +76,7 @@
 
 - type: entity
   id: AltarDruid
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Druid altar
   components:
   - type: Sprite
@@ -84,20 +84,9 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/druid.rsi
 
-
-- type: entity
-  id: AltarImperium
-  parent: AltarNanotransen
-  name: Imperium altar
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/imperium.rsi
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/imperium.rsi
-
 - type: entity
   id: AltarToolbox
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Toolbox altar
   components:
   - type: Sprite
@@ -107,7 +96,7 @@
 
 - type: entity
   id: AltarSpaceChristian
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Space-Christian altar
   components:
   - type: Sprite
@@ -121,7 +110,7 @@
 
 - type: entity
   id: AltarSatana
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Satanic altar
   components:
   - type: Sprite
@@ -135,7 +124,7 @@
 
 - type: entity
   id: AltarTechnology
-  parent: AltarNanotransen
+  parent: AltarNanotrasen
   name: Technology altar
   components:
   - type: Sprite
@@ -301,21 +290,6 @@
       shader: unshaded
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/yellow.rsi
-
-- type: entity
-  id: AltarNeoTheology
-  parent: AltarBase
-  name: NeoTheology altar
-  components:
-  - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/neotheology.rsi
-    layers:
-    - state: full
-    - state: lightning
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/neotheology.rsi
-    state: full
 
 - type: entity
   id: AltarHeaven
