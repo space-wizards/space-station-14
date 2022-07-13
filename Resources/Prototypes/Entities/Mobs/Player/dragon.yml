@@ -112,6 +112,7 @@
       icon: Interface/Actions/fire_breath.png
       name: action-name-breathe-fire
       description: action-description-breathe-fire
+      checkCanAccess: false
       useDelay: 5
       range: 20
     breathEffectPrototype: FireBreathEffect
