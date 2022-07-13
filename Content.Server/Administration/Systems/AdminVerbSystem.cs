@@ -155,6 +155,7 @@ namespace Content.Server.Administration.Systems
 
                             _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
                         },
+                        ConfirmationPopup = true,
                         // No logimpact as the command does it internally.
                     });
                 }
