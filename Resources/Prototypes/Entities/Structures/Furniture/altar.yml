@@ -18,7 +18,7 @@
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.45"
       mass: 50
-      mask: # tables should collide with other tables
+      mask: #mouse can pass under, but I think this is can understandable by logic
       - TableMask
       layer:
       - TableLayer
@@ -43,7 +43,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -166,7 +166,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
