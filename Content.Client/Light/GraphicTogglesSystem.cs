@@ -15,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
-using Content.Shared.MobState.State;
 using Content.Shared.Doors.Components;
 using Content.Shared.Light.Component;
 
