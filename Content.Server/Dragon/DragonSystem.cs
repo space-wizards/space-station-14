@@ -251,6 +251,7 @@ namespace Content.Server.Dragon
                 return;
 
             var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+            var mobStateQuery = EntityManager.GetEntityQuery<MobStateComponent>();
             var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
             var damageableQuery = EntityManager.GetEntityQuery<DamageableComponent>();
 
@@ -285,7 +286,7 @@ namespace Content.Server.Dragon
                 // Get the entities on the tile.
                 List<TransformComponent> list = new();
 
-                var state = (list, processed, xformQuery);
+                var state = (list, processed, xformQuery, mobStateQuery);
                 lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
 
                 // process the entities
@@ -301,19 +302,9 @@ namespace Content.Server.Dragon
                 foreach (var anchored in anchoredEntities)
                 {
                     processed.Add(anchored);
-                    ProcessEntity(anchored, component.BreathDamage, damageableQuery);
-                }
-
-                // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
-                // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
-                // information about the entities that were spawned as a result, but without that information we just have to
-                // re-check for new anchored entities. Compared to entity spawning & deleting, this should still be relatively minor.
-                if (anchoredEntities.Count > 0)
-                {
-                    foreach (var entity in grid.GetAnchoredEntities(p))
-                    {
-                        tileBlocked |= IsBlockingTurf(entity, physicsQuery);
-                    }
+                    // TODO: Can entities with mob state be anchored?
+                    // ProcessEntity(anchored, component.BreathDamage, damageableQuery);
+                    tileBlocked |= IsBlockingTurf(anchored, physicsQuery);
                 }
 
                 if (tileBlocked)
@@ -344,12 +335,18 @@ namespace Content.Server.Dragon
             _damageableSystem.TryChangeDamage(uid, damage);
         }
 
+        /// <summary>
+        /// Callback function to check if an entity should have further processing performed.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="uid"></param>
+        /// <returns></returns>
         private bool GridQueryCallback(
-            ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+            ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery, EntityQuery<MobStateComponent> mobStateQuery) state,
             in EntityUid uid)
         {
             // Add entities with transform components to the list of entities to process.
-            if(state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+            if(state.Processed.Add(uid) && state.mobStateQuery.HasComponent(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
                 state.List.Add(xform);
 
             return true;
