@@ -45,3 +45,7 @@
     baseSprintSpeed: 8
     baseWalkSpeed: 5
   - type: MovementIgnoreGravity
+  - type: GraphicToggles
+    foVAction: true
+    shadowsAction: true
+    lightingAction: true

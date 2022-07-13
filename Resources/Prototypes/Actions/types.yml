@@ -50,6 +50,46 @@
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
+  id: ToggleFoV
+  name: action-name-toggle-fov
+  description: action-description-toggle-fov
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
+  userPopup: action-popup-toggle-fov
+  popupToggleSuffix: -disabling
+  event: !type:ToggleFoVActionEvent
+
+- type: instantAction
+  id: ToggleShadows
+  name: action-name-toggle-shadows
+  description: action-description-toggle-shadows
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
+  userPopup: action-popup-toggle-shadows
+  popupToggleSuffix: -disabling
+  event: !type:ToggleShadowsActionEvent
+
+- type: instantAction
+  id: ToggleLighting
+  name: action-name-toggle-lighting
+  description: action-description-toggle-lighting
+  icon: Interface/Actions/harmOff.png
+  iconOn: Interface/Actions/harm.png
+  userPopup: action-popup-toggle-lighting
+  popupToggleSuffix: -disabling
+  event: !type:ToggleLightingActionEvent
+
+# - type: instantAction
+#   id: ToggleGhosts
+#   name: action-name-toggle-ghosts
+#   description: action-description-toggle-ghosts
+#   icon: Interface/Actions/harmOff.png
+#   iconOn: Interface/Actions/harm.png
+#   userPopup: action-popup-toggle-ghosts
+#   popupToggleSuffix: -disabling
+#   event: !type:ToggleGhostsActionEvent
+
+- type: instantAction
   id: VendingThrow
   name: vending-machine-action-name
   description: vending-machine-action-description
