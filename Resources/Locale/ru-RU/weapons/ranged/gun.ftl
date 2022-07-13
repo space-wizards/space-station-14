@@ -16,8 +16,8 @@ gun-battery-examine = Заряда хватит на [color={ $color }]{ $count 
 # MagazineAmmoProvider
 gun-magazine-examine = Осталось [color={ $color }]{ $count }[/color] выстрелов.
 # RevolverAmmoProvider
-gun-revolver-empty = Револьвер полностью разряжен
+gun-revolver-empty = Разрядить револьвер
 gun-revolver-full = Револьвер полностью заряжен
 gun-revolver-insert = Вставить
-gun-revolver-spin = Крутить револьвер
+gun-revolver-spin = Крутануть барабан
 gun-revolver-spun = Повернуть
