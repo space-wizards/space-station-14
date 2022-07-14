@@ -1,16 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Bolas and tiles now break after 3 and 4 throws respectively. Reduced
-      tile damage from 10 to 5. No more tile abuse., type: Tweak}
-  id: 1434
-  time: '2022-05-02T20:49:47.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: To deconstruct vents and scrubbers you now need to use the screwdriver
-      before welding., type: Tweak}
-  id: 1435
-  time: '2022-05-02T20:49:53.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The ATV now has many possible descriptions., type: Tweak}
@@ -2950,3 +2938,17 @@ Entries:
   - {message: Fixed visual issues regarding body bags being perpetually open., type: Fix}
   id: 1933
   time: '2022-07-13T23:11:59.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Emotes and LOOC no longer reveal your identity., type: Tweak}
+  - {message: Pulling down/up your mask will now properly affect your identity., type: Fix}
+  id: 1934
+  time: '2022-07-14T05:23:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You now heal yourself much slower than you heal other people when using
+      healing items., type: Tweak}
+  - {message: You can no longer attempt to heal targets that are already at full health.,
+    type: Tweak}
+  id: 1935
+  time: '2022-07-14T05:24:36.0000000+00:00'
