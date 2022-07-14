@@ -13340,7 +13340,7 @@ entities:
       14,10: 0
       14,11: 0
       14,12: 0
-      14,13: 1
+      14,13: 0
       14,14: 0
       14,15: 0
       15,0: 0
@@ -14162,7 +14162,7 @@ entities:
       18,21: 0
       18,22: 0
       18,23: 0
-      18,24: 1
+      18,24: 0
       19,16: 0
       19,17: 0
       19,18: 0
@@ -15895,11 +15895,11 @@ entities:
       24,-18: 0
       24,-17: 0
       25,-32: 0
-      25,-31: 2
+      25,-31: 1
       25,-30: 0
-      25,-29: 1
+      25,-29: 2
       25,-28: 0
-      25,-27: 1
+      25,-27: 2
       25,-26: 0
       25,-25: 3
       25,-24: 0
@@ -15911,11 +15911,11 @@ entities:
       25,-18: 0
       25,-17: 0
       26,-32: 0
-      26,-31: 2
+      26,-31: 1
       26,-30: 0
-      26,-29: 1
+      26,-29: 2
       26,-28: 0
-      26,-27: 1
+      26,-27: 2
       26,-26: 0
       26,-25: 3
       26,-24: 0
@@ -15927,11 +15927,11 @@ entities:
       26,-18: 0
       26,-17: 0
       27,-32: 0
-      27,-31: 2
+      27,-31: 1
       27,-30: 0
-      27,-29: 1
+      27,-29: 2
       27,-28: 0
-      27,-27: 1
+      27,-27: 2
       27,-26: 0
       27,-25: 3
       27,-24: 0
@@ -16223,17 +16223,17 @@ entities:
       24,-34: 0
       24,-33: 0
       25,-36: 0
-      25,-35: 1
+      25,-35: 2
       25,-34: 0
-      25,-33: 1
+      25,-33: 2
       26,-36: 0
-      26,-35: 1
+      26,-35: 2
       26,-34: 0
-      26,-33: 1
+      26,-33: 2
       27,-36: 0
-      27,-35: 1
+      27,-35: 2
       27,-34: 0
-      27,-33: 1
+      27,-33: 2
       28,-36: 0
       28,-35: 0
       28,-34: 0
@@ -19197,7 +19197,7 @@ entities:
       -61,54: 0
       -61,55: 0
       -61,56: 0
-      -61,57: 2
+      -61,57: 1
       -61,58: 0
       -61,59: 0
       -61,60: 0
@@ -22002,15 +22002,15 @@ entities:
       36,-61: 0
       36,-60: 0
       36,-59: 0
-      36,-58: 1
+      36,-58: 2
       36,-57: 0
       36,-56: 0
       36,-55: 0
       37,-64: 0
       37,-63: 0
       37,-62: 0
-      37,-61: 1
-      37,-60: 1
+      37,-61: 2
+      37,-60: 2
       37,-59: 0
       37,-58: 0
       37,-57: 0
@@ -22030,9 +22030,9 @@ entities:
       38,-54: 0
       38,-53: 0
       39,-64: 0
-      39,-63: 1
-      39,-62: 1
-      39,-61: 1
+      39,-63: 2
+      39,-62: 2
+      39,-61: 2
       39,-60: 0
       39,-59: 0
       39,-58: 0
@@ -22041,7 +22041,7 @@ entities:
       39,-55: 0
       39,-54: 0
       39,-53: 0
-      40,-64: 1
+      40,-64: 2
       40,-63: 0
       40,-62: 0
       40,-61: 0
@@ -22077,7 +22077,7 @@ entities:
       43,-64: 0
       43,-63: 0
       43,-62: 0
-      43,-61: 1
+      43,-61: 2
       43,-60: 0
       43,-59: 0
       43,-58: 0
@@ -22181,8 +22181,8 @@ entities:
       35,-70: 0
       35,-69: 0
       35,-68: 0
-      35,-67: 1
-      35,-66: 1
+      35,-67: 2
+      35,-66: 2
       35,-65: 0
       36,-76: 0
       36,-75: 0
@@ -22192,9 +22192,9 @@ entities:
       36,-71: 0
       36,-70: 0
       36,-69: 0
-      36,-68: 1
-      36,-67: 1
-      36,-66: 1
+      36,-68: 2
+      36,-67: 2
+      36,-66: 2
       36,-65: 0
       37,-77: 0
       37,-76: 0
@@ -22205,20 +22205,20 @@ entities:
       37,-71: 0
       37,-70: 0
       37,-69: 0
-      37,-68: 1
-      37,-67: 1
+      37,-68: 2
+      37,-67: 2
       37,-66: 0
       37,-65: 0
       38,-77: 0
       38,-76: 0
       38,-75: 0
-      38,-74: 1
+      38,-74: 2
       38,-73: 0
       38,-72: 0
       38,-71: 0
       38,-70: 0
-      38,-69: 1
-      38,-68: 1
+      38,-69: 2
+      38,-68: 2
       38,-67: 0
       38,-66: 0
       38,-65: 0
@@ -22227,7 +22227,7 @@ entities:
       39,-75: 0
       39,-74: 0
       39,-73: 0
-      39,-72: 1
+      39,-72: 2
       39,-71: 0
       39,-70: 0
       39,-69: 0
@@ -22238,7 +22238,7 @@ entities:
       40,-77: 0
       40,-76: 0
       40,-75: 0
-      40,-74: 1
+      40,-74: 2
       40,-73: 0
       40,-72: 0
       40,-71: 0
@@ -22251,7 +22251,7 @@ entities:
       41,-77: 0
       41,-76: 0
       41,-75: 0
-      41,-74: 1
+      41,-74: 2
       41,-73: 0
       41,-72: 0
       41,-71: 0
@@ -22263,12 +22263,12 @@ entities:
       41,-65: 0
       42,-77: 0
       42,-76: 0
-      42,-75: 1
+      42,-75: 2
       42,-74: 0
       42,-73: 0
       42,-72: 0
       42,-71: 0
-      42,-70: 1
+      42,-70: 2
       42,-69: 0
       42,-68: 0
       42,-67: 0
@@ -22281,8 +22281,8 @@ entities:
       43,-73: 0
       43,-72: 0
       43,-71: 0
-      43,-70: 1
-      43,-69: 1
+      43,-70: 2
+      43,-69: 2
       43,-68: 0
       43,-67: 0
       43,-66: 0
@@ -22292,10 +22292,10 @@ entities:
       44,-74: 0
       44,-73: 0
       44,-72: 0
-      44,-71: 1
-      44,-70: 1
-      44,-69: 1
-      44,-68: 1
+      44,-71: 2
+      44,-70: 2
+      44,-69: 2
+      44,-68: 2
       44,-67: 0
       44,-66: 0
       44,-65: 0
@@ -22304,12 +22304,12 @@ entities:
       45,-73: 0
       45,-72: 0
       45,-71: 0
-      45,-70: 1
+      45,-70: 2
       45,-69: 0
       45,-68: 0
       45,-67: 0
       45,-66: 0
-      45,-65: 1
+      45,-65: 2
       46,-73: 0
       46,-72: 0
       46,-71: 0
@@ -22703,30 +22703,30 @@ entities:
       77,32: 0
       56,15: 0
       57,15: 0
-      30,-23: 1
-      30,-18: 1
-      31,-23: 1
-      31,-18: 1
-      32,-25: 1
-      32,-24: 1
-      32,-23: 1
-      32,-22: 1
-      33,-23: 1
-      33,-18: 1
-      33,-17: 1
-      34,-26: 1
-      34,-25: 1
-      34,-24: 1
-      34,-23: 1
-      34,-22: 1
-      35,-23: 1
-      35,-18: 1
-      35,-17: 1
-      36,-25: 1
-      36,-24: 1
-      36,-23: 1
-      36,-22: 1
-      37,-23: 1
+      30,-23: 2
+      30,-18: 2
+      31,-23: 2
+      31,-18: 2
+      32,-25: 2
+      32,-24: 2
+      32,-23: 2
+      32,-22: 2
+      33,-23: 2
+      33,-18: 2
+      33,-17: 2
+      34,-26: 2
+      34,-25: 2
+      34,-24: 2
+      34,-23: 2
+      34,-22: 2
+      35,-23: 2
+      35,-18: 2
+      35,-17: 2
+      36,-25: 2
+      36,-24: 2
+      36,-23: 2
+      36,-22: 2
+      37,-23: 2
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -22745,7 +22745,7 @@ entities:
       - 0
       - 0
       - 0
-      - 0
+      - 6666.982
       - 0
       - 0
       - 0
@@ -22756,7 +22756,7 @@ entities:
       - 0
       - 0
       - 0
-      - 6666.982
+      - 0
       - 0
       - 0
       - 0
@@ -72479,15 +72479,9 @@ entities:
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
-    pos: -25.5,-4.5
+    pos: -25.5,-1.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6913
-    type: ContainerContainer
 - uid: 6878
   type: AirlockMedicalLocked
   components:
@@ -72711,15 +72705,9 @@ entities:
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
-    pos: -25.5,-3.5
+    pos: -25.5,-4.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6914
-    type: ContainerContainer
 - uid: 6907
   type: Morgue
   components:
@@ -72727,24 +72715,15 @@ entities:
     pos: -25.5,-2.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6915
-    type: ContainerContainer
 - uid: 6908
-  type: Morgue
+  type: Crematorium
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -25.5,-1.5
+  - pos: -77.5,-38.5
     parent: 30
     type: Transform
   - containers:
       entity_storage: !type:Container
         ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6916
     type: ContainerContainer
 - uid: 6909
   type: GasPipeStraight
@@ -72781,33 +72760,33 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6913
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6877
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-1.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6914
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6906
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-2.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6915
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6907
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-3.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6916
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6908
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-4.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6917
   type: VendingMachineViroDrobe
   components:
@@ -152112,16 +152091,12 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 17631
-  type: Crematorium
+  type: Morgue
   components:
-  - pos: -77.5,-38.5
+  - rot: 1.5707963267948966 rad
+    pos: -23.5,-2.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 17632
   type: ChairWood
   components:
@@ -177610,57 +177585,29 @@ entities:
 - uid: 21242
   type: Morgue
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-4.5
+  - rot: 1.5707963267948966 rad
+    pos: -23.5,-3.5
     parent: 30
     type: Transform
 - uid: 21243
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-3.5
-    parent: 30
-    type: Transform
-- uid: 21244
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-2.5
-    parent: 30
-    type: Transform
-- uid: 21245
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-1.5
-    parent: 30
-    type: Transform
-- uid: 21246
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.5,-4.5
     parent: 30
     type: Transform
-- uid: 21247
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-3.5
-    parent: 30
-    type: Transform
-- uid: 21248
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-2.5
-    parent: 30
-    type: Transform
-- uid: 21249
+- uid: 21244
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.5,-1.5
+    parent: 30
+    type: Transform
+- uid: 21245
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-3.5
     parent: 30
     type: Transform
 - uid: 21250
@@ -179589,34 +179536,6 @@ entities:
   - pos: -32.5,-2.5
     parent: 30
     type: Transform
-- uid: 21502
-  type: MorgueTray
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6908
-    type: Transform
-- uid: 21503
-  type: MorgueTray
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6907
-    type: Transform
-- uid: 21504
-  type: MorgueTray
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6906
-    type: Transform
-- uid: 21505
-  type: MorgueTray
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6877
-    type: Transform
 - uid: 21506
   type: PaintingCafeTerraceAtNight
   components:
@@ -180159,6 +180078,12 @@ entities:
   type: ReinforcedWindow
   components:
   - pos: -48.5,7.5
+    parent: 30
+    type: Transform
+- uid: 21583
+  type: WallSolid
+  components:
+  - pos: -43.5,2.5
     parent: 30
     type: Transform
 - uid: 21588
