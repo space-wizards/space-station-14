@@ -11,6 +11,7 @@
       map: ["enum.MorgueVisualLayers.Base"]
     - state: morgue_tray
       offset: 0, -1
+      visible: false
       map: ["enum.StorageVisualLayers.Door"]
     - state: morgue_nomob_light
       visible: false
@@ -46,15 +47,24 @@
       entity_storage: !type:Container
       morgue_tray: !type:ContainerSlot
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: StorageVisualizer
-      state: morgue_closed
-      state_alt: morgue_open
-      state_open: morgue_tray
-  - type: MorgueVisuals
-    lightContents: morgue_nomob_light
-    lightMob: morgue_nosoul_light
-    lightSoul: morgue_soul_light
+      enum.StorageVisuals.Open:
+        # basic open.close layer:
+        enum.MorgueVisualLayers.Base:
+          True: { state: morgue_open}
+          False: { state: morgue_closed}
+        # show/hide morgue tray:
+        enum.StorageVisualLayers.Door:
+          True: { visible: true}
+          False: { visible: false}
+      enum.MorgueVisuals.Contents:
+        # toggle contents light indicator:
+        enum.MorgueVisualLayers.Light:
+          Empty: {visible: false}
+          HasContents: {visible: true, state: morgue_nomob_light}
+          HasMob: {visible: true, state: morgue_nosoul_light}
+          HasSoul: {visible: true, state: morgue_soul_light}
   - type: Transform
     anchored: true
   - type: AntiRottingContainer

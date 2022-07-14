@@ -3,14 +3,22 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Morgue;
 
 [Serializable, NetSerializable]
-public enum MorgueVisuals
+public enum MorgueVisuals : byte
 {
-    HasMob,
-    HasSoul,
+    Contents
 }
 
 [Serializable, NetSerializable]
-public enum CrematoriumVisuals
+public enum MorgueContents : byte
+{
+    Empty,
+    HasMob,
+    HasSoul,
+    HasContents,
+}
+
+[Serializable, NetSerializable]
+public enum CrematoriumVisuals : byte
 {
     Burning,
 }
