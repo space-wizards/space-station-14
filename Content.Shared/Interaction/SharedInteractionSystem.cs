@@ -623,16 +623,6 @@ namespace Content.Shared.Interaction
             if (interactUsingEvent.Handled)
                 return;
 
-            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
-            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
-
-            foreach (var interactUsing in interactUsings)
-            {
-                // If an InteractUsing returns a status completion we finish our interaction
-                if (await interactUsing.InteractUsing(interactUsingEventArgs))
-                    return;
-            }
-
             InteractDoAfter(user, used, target, clickLocation, canReach: true);
         }
 
