@@ -1,0 +1,13 @@
+- type: entity
+  name: nullrod
+  parent: BaseItem
+  id: Nullrod
+  description: A rod of pure obsidian; its very presence disrupts and dampens 'magical forces'. That's what the guidebook says, anyway.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/nullrod.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10 # less than baseball bat, ofc
