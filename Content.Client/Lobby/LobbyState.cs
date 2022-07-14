@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Content.Client.Message;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu.UI;
@@ -45,6 +44,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+
         [ViewVariables] private CharacterSetupGui? _characterSetup;
         [ViewVariables] private LobbyGui? _lobby;
 
