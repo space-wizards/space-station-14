@@ -417,6 +417,9 @@ public sealed partial class ShuttleSystem
        {
            var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/centcomm.yml");
            _centcomm = centcomm;
+
+           if (_centcomm != null)
+               AddFTLDestination(_centcomm.Value, false);
        }
        else
        {

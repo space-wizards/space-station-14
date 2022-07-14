@@ -4,8 +4,6 @@ using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Stunnable;
-using Content.Shared.Shuttles.Components;
-using Content.Shared.Shuttles.Events;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
@@ -80,7 +78,7 @@ public sealed partial class ShuttleSystem
         float startupTime = DefaultStartupTime,
         float hyperspaceTime = DefaultTravelTime)
     {
-        if (!TrySetupHyperspace(component.Owner, out var hyperspace))
+        if (!TrySetupFTL(component, out var hyperspace))
            return;
 
         hyperspace.StartupTime = startupTime;
@@ -98,7 +96,7 @@ public sealed partial class ShuttleSystem
         float startupTime = DefaultStartupTime,
         float hyperspaceTime = DefaultTravelTime)
     {
-        if (!TrySetupHyperspace(component.Owner, out var hyperspace))
+        if (!TrySetupFTL(component, out var hyperspace))
             return;
 
         hyperspace.StartupTime = startupTime;
@@ -108,8 +106,9 @@ public sealed partial class ShuttleSystem
         _console.RefreshShuttleConsoles();
     }
 
-    private bool TrySetupHyperspace(EntityUid uid, [NotNullWhen(true)] out FTLComponent? component)
+    private bool TrySetupFTL(ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)
     {
+        var uid = shuttle.Owner;
         component = null;
 
         if (HasComp<FTLComponent>(uid))
@@ -123,6 +122,7 @@ public sealed partial class ShuttleSystem
             dest.Enabled = false;
         }
 
+        SetPilotable(shuttle, false);
         // TODO: Maybe move this to docking instead?
         SetDocks(uid, false);
 
@@ -183,7 +183,12 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = ShuttleIdleAngularDamping;
                     }
 
-                    if (comp.TargetUid != null && TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
+                    if (TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
+                    {
+                        SetPilotable(shuttle, true);
+                    }
+
+                    if (comp.TargetUid != null && shuttle != null)
                     {
                         TryHyperspaceDock(shuttle, comp.TargetUid.Value);
                     }

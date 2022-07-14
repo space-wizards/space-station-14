@@ -65,7 +65,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _shuttle.FTLTravel(shuttle, args.Destination);
+            _shuttle.FTLTravel(shuttle, args.Destination, _shuttle.TransitTime);
         }
 
         private void OnDock(DockEvent ev)

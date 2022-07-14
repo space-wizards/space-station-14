@@ -52,7 +52,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
     /// </summary>
-    private float _transitTime;
+    public float TransitTime { get; private set; }
 
     /// <summary>
     /// <see cref="CCVars.EmergencyShuttleAuthorizeTime"/>
@@ -86,7 +86,7 @@ public sealed partial class ShuttleSystem
 
     private void SetTransitTime(float obj)
     {
-        _transitTime = obj;
+        TransitTime = obj;
     }
 
     private void ShutdownEmergencyConsole()
@@ -123,12 +123,12 @@ public sealed partial class ShuttleSystem
                         FTLTravel(shuttle,
                             new EntityCoordinates(
                                 _mapManager.GetMapEntityId(_centcommMap.Value),
-                                Vector2.One * 1000f), _consoleAccumulator, _transitTime);
+                                Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
                         FTLTravel(shuttle,
-                            _centcomm.Value, _consoleAccumulator, _transitTime);
+                            _centcomm.Value, _consoleAccumulator, TransitTime);
                     }
                 }
             }
@@ -138,10 +138,10 @@ public sealed partial class ShuttleSystem
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
-            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{_transitTime:0}")));
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
             _roundEndCancelToken = new CancellationTokenSource();
-            Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+            Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             if (_centcomm != null)
             {
