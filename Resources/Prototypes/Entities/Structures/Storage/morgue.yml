@@ -32,9 +32,9 @@
       layer:
       - WallLayer
   - type: EntityStorage
-    IsCollidableWhenOpen: true
+    isCollidableWhenOpen: true
     showContents: false
-    Capacity: 1
+    capacity: 1
     enteringOffset: 0, -1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
@@ -124,9 +124,9 @@
       layer:
       - MachineLayer
   - type: EntityStorage
-    IsCollidableWhenOpen: true
+    isCollidableWhenOpen: true
     showContents: false
-    Capacity: 1
+    capacity: 1
     enteringOffset: 0, -1
     closeSound:
       path: /Audio/Items/deconstruct.ogg
