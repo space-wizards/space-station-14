@@ -18,6 +18,7 @@ namespace Content.Client.Clothing
         public string? InSlot;
     }
 
+    [RegisterComponent, NetworkedComponent]
     public sealed class NewClothingComponent : NewSharedClothingComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]

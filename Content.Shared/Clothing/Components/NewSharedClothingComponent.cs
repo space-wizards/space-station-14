@@ -7,7 +7,6 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     This handles entities which can be equipped.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
 public abstract class NewSharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
@@ -16,13 +15,15 @@ public abstract class NewSharedClothingComponent : Component
     [DataField("quickEquip")]
     public bool QuickEquip = true;
 
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slots", required: true)]
     public SlotFlags Slots = SlotFlags.NONE;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("equipSound")]
     public SoundSpecifier? EquipSound = default!;
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("unequipSound")]
     public SoundSpecifier? UnequipSound = default!;
 }

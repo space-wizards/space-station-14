@@ -10,14 +10,14 @@ namespace Content.Shared.Item;
 [RegisterComponent]
 public sealed class NewItemComponent : Component
 {
-    // TODO needs API
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
     public int Size = 5;
 
     [DataField("inhandVisuals")]
     public Dictionary<HandLocation, List<SharedSpriteComponent.PrototypeLayerData>> InhandVisuals = new();
 
-    // TODO needs API
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("heldPrefix")]
     public string? HeldPrefix;
 

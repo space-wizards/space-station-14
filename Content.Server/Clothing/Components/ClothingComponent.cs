@@ -17,6 +17,7 @@ namespace Content.Server.Clothing.Components
     }
 
     // Needed for client-side clothing component.
+    [RegisterComponent, NetworkedComponent]
     public sealed class NewClothingComponent : NewSharedClothingComponent
     {
     }
