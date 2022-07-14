@@ -138,17 +138,18 @@ public sealed class EntityStorageSystem : EntitySystem
 
     public void CloseStorage(EntityUid uid, EntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        var xform = Transform(uid);
+        if (!Resolve(uid, ref component) || xform.GridUid is not { } grid)
             return;
         component.Open = false;
 
-        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
-
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+        var translation = xform.WorldMatrix.Transform(component.EnteringOffset) - xform.WorldPosition;
+        var reduced = _lookup.GetWorldAABB(uid).Translated(translation).Enlarged(component.EnteringRange);
+        var entities = _lookup.GetEntitiesIntersecting(grid, reduced, LookupFlags.Approximate);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
-        
+
         var count = 0;
         foreach (var entity in ev.Contents)
         {
@@ -361,6 +362,6 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
         }
-            
+
     }
 }
