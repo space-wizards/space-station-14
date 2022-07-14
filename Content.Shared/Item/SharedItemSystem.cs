@@ -43,7 +43,7 @@ public abstract class SharedItemSystem : EntitySystem
 
         component.HeldPrefix = heldPrefix;
         Dirty(component);
-        VisualsChanged(uid, component);
+        VisualsChanged(uid);
     }
 
     #endregion
@@ -114,7 +114,11 @@ public abstract class SharedItemSystem : EntitySystem
     /// <summary>
     ///     Notifies any entity that is holding or wearing this item that they may need to update their sprite.
     /// </summary>
-    public virtual void VisualsChanged(EntityUid owner, ItemComponent? item = null)
+    /// <remarks>
+    ///     This is used for updating both inhand sprites and clothing sprites, but it's here just cause it needs to
+    ///     be in one place.
+    /// </remarks>
+    public virtual void VisualsChanged(EntityUid owner)
     {
     }
 }

@@ -27,11 +27,8 @@ public sealed class ItemSystem : SharedItemSystem
     /// <summary>
     ///     When an items visual state changes, notify and entities that are holding this item that their sprite may need updating.
     /// </summary>
-    public override void VisualsChanged(EntityUid uid, ItemComponent? item = null)
+    public override void VisualsChanged(EntityUid uid)
     {
-        if (!Resolve(uid, ref item, false))
-            return;
-
         // if the item is in a container, it might be equipped to hands or inventory slots --> update visuals.
         if (_containerSystem.TryGetContainingContainer(uid, out var container))
             RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID), true);
