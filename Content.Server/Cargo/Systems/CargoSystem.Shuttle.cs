@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Server.Paper;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -40,15 +41,9 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
 
     public MapId? CargoMap { get; private set; }
-
-    private const float ShuttleRecallRange = 100f;
-
-    /// <summary>
-    /// Minimum mass a grid needs to be to block a shuttle recall.
-    /// </summary>
-    private const float ShuttleCallMassThreshold = 300f;
 
     private const float CallOffset = 50f;
 
@@ -167,7 +162,7 @@ public sealed partial class CargoSystem
             new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
                 string.IsNullOrEmpty(shuttleName) ? Loc.GetString("cargo-shuttle-console-shuttle-not-found") : shuttleName,
-                CanRecallShuttle(shuttle?.Owner, out _),
+                _shuttle.CanFTL(shuttle?.Owner, out _),
                 shuttle?.NextCall,
                 orders));
     }
@@ -194,7 +189,7 @@ public sealed partial class CargoSystem
         var oldCanRecall = component.CanRecall;
 
         // Check if we can update the recall status.
-        var canRecall = CanRecallShuttle(uid, out _, args.Component);
+        var canRecall = _shuttle.CanFTL(uid, out _, args.Component);
         if (oldCanRecall == canRecall) return;
 
         component.CanRecall = canRecall;
@@ -370,6 +365,7 @@ public sealed partial class CargoSystem
         shuttle.NextCall = null;
 
         // Find a valid free area nearby to spawn in on
+        // TODO: Make this use hyperspace now.
         var center = new Vector2();
         var minRadius = 0f;
         Box2? aabb = null;
@@ -469,29 +465,6 @@ public sealed partial class CargoSystem
         }
     }
 
-    public bool CanRecallShuttle(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
-    {
-        reason = null;
-
-        if (!TryComp<IMapGridComponent>(uid, out var grid) ||
-            !Resolve(uid.Value, ref xform)) return true;
-
-        var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleRecallRange);
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-        foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
-        {
-            if (grid.GridIndex == other.Index ||
-                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
-                body.Mass < ShuttleCallMassThreshold) continue;
-
-            reason = Loc.GetString("cargo-shuttle-console-proximity");
-            return false;
-        }
-
-        return true;
-    }
-
     private void RecallCargoShuttle(EntityUid uid, CargoShuttleConsoleComponent component, CargoRecallShuttleMessage args)
     {
         var player = args.Session.AttachedEntity;
@@ -505,11 +478,11 @@ public sealed partial class CargoSystem
 
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
         {
-            _popup.PopupEntity($"No cargo shuttle found!", args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, Filter.Entities(args.Entity));
             return;
         }
 
-        if (!CanRecallShuttle(shuttle.Owner, out var reason))
+        if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
         {
             _popup.PopupEntity(reason, args.Entity, Filter.Entities(args.Entity));
             return;

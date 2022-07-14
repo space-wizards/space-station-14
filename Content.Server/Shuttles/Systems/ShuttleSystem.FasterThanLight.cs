@@ -5,6 +5,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
+using Content.Shared.Shuttles.Systems;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
@@ -29,6 +30,14 @@ public sealed partial class ShuttleSystem
 
     private const float DefaultStartupTime = 5.5f;
     private const float DefaultTravelTime = 30f;
+    private const float FTLCooldown = 30f;
+
+    private const float ShuttleFTLRange = 100f;
+
+    /// <summary>
+    /// Minimum mass a grid needs to be to block a shuttle recall.
+    /// </summary>
+    private const float ShuttleFTLMassThreshold = 300f;
 
     // I'm too lazy to make CVars.
 
@@ -63,6 +72,29 @@ public sealed partial class ShuttleSystem
         {
             AddFTLDestination(ev.GridId, true);
         }
+    }
+
+    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason, TransformComponent? xform = null)
+    {
+        reason = null;
+
+        if (!TryComp<IMapGridComponent>(uid, out var grid) ||
+            !Resolve(uid.Value, ref xform)) return true;
+
+        var bounds = grid.Grid.WorldAABB.Enlarged(ShuttleFTLRange);
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+
+        foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
+        {
+            if (grid.GridIndex == other.Index ||
+                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
+                body.Mass < ShuttleFTLMassThreshold) continue;
+
+            reason = Loc.GetString("shuttle-console-proximity");
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -121,6 +153,7 @@ public sealed partial class ShuttleSystem
         if (!TrySetupFTL(component, out var hyperspace))
             return;
 
+        hyperspace.State = FTLState.Starting;
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
@@ -196,7 +229,7 @@ public sealed partial class ShuttleSystem
                     }
 
                     SetDockBolts(comp.Owner, true);
-
+                    _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 // Arrive.
                 case FTLState.Travelling:
@@ -237,14 +270,19 @@ public sealed partial class ShuttleSystem
 
                     SoundSystem.Play(_arrivalSound.GetSound(),
                         Filter.Pvs(comp.Owner, GetSoundRange(comp.Owner), entityManager: EntityManager));
-                    RemComp<FTLComponent>(comp.Owner);
 
                     if (TryComp<FTLDestinationComponent>(comp.Owner, out var dest))
                     {
                         dest.Enabled = true;
                     }
 
-                    _console.RefreshShuttleConsoles();
+                    comp.State = FTLState.Cooldown;
+                    comp.Accumulator += FTLCooldown;
+                    _console.RefreshShuttleConsoles(comp.Owner);
+                    break;
+                case FTLState.Cooldown:
+                    RemComp<FTLComponent>(comp.Owner);
+                    _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

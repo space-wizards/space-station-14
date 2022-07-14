@@ -49,6 +49,14 @@
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top">
+                    <Label Text="{Loc 'shuttle-console-ftl-state'}"/>
+                    <Label Name="FTLState"
+                           Text="{Loc 'ftl-shuttle-console-available'}"
+                           HorizontalAlignment="Right"/>
+                    <Label Text="{Loc 'shuttle-console-ftl-timer'}"/>
+                    <Label Name="FTLTimer"
+                           Text="0.0"
+                           HorizontalAlignment="Right"/>
                     <Label Text="{Loc 'shuttle-console-max-radar'}"/>
                     <Label Name="MaxRadarRange"
                            Text="0.0"

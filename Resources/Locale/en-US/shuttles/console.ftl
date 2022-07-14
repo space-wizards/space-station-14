@@ -1,8 +1,19 @@
 shuttle-pilot-start = Piloting ship
 shuttle-pilot-end = Stopped piloting
 
+shuttle-console-in-ftl = Can't FTL while in FTL!
+shuttle-console-proximity = Too close to nearby objects
+
 # Display
 shuttle-console-display-label = Display
+
+shuttle-console-ftl-state = FTL State
+shuttle-console-ftl-available = Available
+shuttle-console-ftl-starting = Starting
+shuttle-console-ftl-travelling = Travelling
+shuttle-console-ftl-cooldown = Cooldown
+
+shuttle-console-ftl-timer = FTL Time
 
 shuttle-console-max-radar = Max radar range:
 shuttle-console-radar = Radar range:

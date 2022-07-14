@@ -1,3 +1,4 @@
+using Content.Shared.Shuttles.Systems;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -11,7 +12,7 @@ namespace Content.Server.Shuttles.Components;
 public sealed class FTLComponent : Component
 {
     [ViewVariables]
-    public FTLState State = FTLState.Starting;
+    public FTLState State = FTLState.Available;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
@@ -48,10 +49,4 @@ public sealed class FTLComponent : Component
     };
 
     public IPlayingAudioStream? TravelStream;
-}
-
-public enum FTLState : byte
-{
-    Starting,
-    Travelling,
 }

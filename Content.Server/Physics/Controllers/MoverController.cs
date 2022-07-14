@@ -6,6 +6,7 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -106,7 +107,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || HasComp<FTLComponent>(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || (TryComp<FTLComponent>(shuttle.Owner, out var ftl) && (ftl.State & (FTLState.Starting | FTLState.Travelling)) != 0x0) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;

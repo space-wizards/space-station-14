@@ -14,6 +14,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -22,6 +23,7 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -59,7 +61,17 @@ namespace Content.Server.Shuttles.Systems
 
             if (HasComp<FTLComponent>(xform.GridUid))
             {
-                // TODO: Popup that they're in hyperspace.
+                if (args.Session.AttachedEntity != null)
+                    _popup.PopupCursor(Loc.GetString("shuttle-console-in-ftl"), Filter.Entities(args.Session.AttachedEntity.Value));
+
+                return;
+            }
+
+            if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
+            {
+                if (args.Session.AttachedEntity != null)
+                    _popup.PopupCursor(reason, Filter.Entities(args.Session.AttachedEntity.Value));
+
                 return;
             }
 
@@ -76,12 +88,17 @@ namespace Content.Server.Shuttles.Systems
             RefreshShuttleConsoles();
         }
 
+        public void RefreshShuttleConsoles(EntityUid uid)
+        {
+            // TODO: Should really call this per shuttle in some instances.
+            RefreshShuttleConsoles();
+        }
+
         /// <summary>
         /// Refreshes all of the data for shuttle consoles.
         /// </summary>
         public void RefreshShuttleConsoles()
         {
-            // TODO: Should really call this per shuttle in some instances.
             var docks = GetAllDocks();
 
             foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
@@ -261,6 +278,14 @@ namespace Content.Server.Shuttles.Systems
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             var destinations = new List<(EntityUid, string, bool)>();
+            var ftlState = FTLState.Available;
+            var ftlTime = 0f;
+
+            if (TryComp<FTLComponent>(shuttle?.Owner, out var shuttleFtl))
+            {
+                ftlState = shuttleFtl.State;
+                ftlTime = shuttleFtl.Accumulator;
+            }
 
             // Mass too large
             if (!TryComp<PhysicsComponent>(shuttle?.Owner, out var shuttleBody) ||
@@ -269,7 +294,7 @@ namespace Content.Server.Shuttles.Systems
                 var metaQuery = GetEntityQuery<MetaDataComponent>();
 
                 // Can't go anywhere when in FTL.
-                var locked = HasComp<FTLComponent>(shuttle?.Owner);
+                var locked = shuttleFtl != null;
 
                 // Can't cache it because it may have a whitelist for the particular console.
                 // Include paused as we still want to show centcomm.
@@ -285,7 +310,10 @@ namespace Content.Server.Shuttles.Systems
                     if (string.IsNullOrEmpty(name))
                         name = Loc.GetString("shuttle-console-unknown");
 
-                    var canTravel = !locked && comp.Enabled && !Paused(comp.Owner, meta);
+                    var canTravel = !locked &&
+                                    comp.Enabled &&
+                                    !Paused(comp.Owner, meta) &&
+                                    (!TryComp<FTLComponent>(comp.Owner, out var ftl) || ftl.State == FTLState.Cooldown);
 
                     // Can't travel to same map.
                     if (canTravel && consoleXform?.MapUid == Transform(comp.Owner).MapUid)
@@ -301,6 +329,8 @@ namespace Content.Server.Shuttles.Systems
 
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
+                    ftlState,
+                    ftlTime,
                     mode,
                     destinations,
                     range,
