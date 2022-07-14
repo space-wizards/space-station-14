@@ -119,5 +119,5 @@
     node: bot
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: Honkbot
+    name: honkbot
     description: An artificial being of pure evil.
