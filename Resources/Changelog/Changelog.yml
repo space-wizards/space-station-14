@@ -1,9 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: Requires a little more effort strip something off of someone., type: Tweak}
-  id: 1439
-  time: '2022-05-02T22:47:19.0000000+00:00'
 - author: Macoron
   changes:
   - {message: You can't unstick C4 from great distance or while your character in
@@ -2951,3 +2946,8 @@ Entries:
   - {message: Added hospital curtains, type: Add}
   id: 1938
   time: '2022-07-14T11:53:17.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed blinding., type: Fix}
+  id: 1939
+  time: '2022-07-14T11:58:24.0000000+00:00'
