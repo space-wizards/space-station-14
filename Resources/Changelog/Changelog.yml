@@ -1,44 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added metal and wooden counters to be used in bars and shops for that
-      new look. Construction available too!, type: Add}
-  id: 1431
-  time: '2022-04-30T21:28:04.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: Players properly slide forward when slipping on things. Some liquids
-      or objects are more slippery than others., type: Fix}
-  id: 1432
-  time: '2022-05-01T06:02:29.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Knightship is officially deceased., type: Remove}
-  id: 1433
-  time: '2022-05-02T14:50:37.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Bolas and tiles now break after 3 and 4 throws respectively. Reduced
-      tile damage from 10 to 5. No more tile abuse., type: Tweak}
-  id: 1434
-  time: '2022-05-02T20:49:47.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: To deconstruct vents and scrubbers you now need to use the screwdriver
-      before welding., type: Tweak}
-  id: 1435
-  time: '2022-05-02T20:49:53.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The ATV now has many possible descriptions., type: Tweak}
-  id: 1436
-  time: '2022-05-02T20:51:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added three new wall types for secret vaults. Expect to find them in
-      some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
-  id: 1437
-  time: '2022-05-02T22:38:07.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Delta Station now has an ore processor, and may or may not have some
@@ -2948,3 +2908,47 @@ Entries:
   - {message: 'Added kvass, you can order it in the cargo!', type: Add}
   id: 1930
   time: '2022-07-12T06:11:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Interaction outlines won't be so jank at high speeds anymore (e.g. emergency
+      shuttle)., type: Fix}
+  id: 1931
+  time: '2022-07-12T17:46:12.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: Robot showcase statue is now anchorable, type: Tweak}
+  id: 1932
+  time: '2022-07-13T02:01:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Pizza boxes can no longer swallow players. (for realsies), type: Fix}
+  - {message: Fixed visual issues regarding trays with morgues and crematoriums.,
+    type: Fix}
+  - {message: Fixed visual issues regarding body bags being perpetually open., type: Fix}
+  id: 1933
+  time: '2022-07-13T23:11:59.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Emotes and LOOC no longer reveal your identity., type: Tweak}
+  - {message: Pulling down/up your mask will now properly affect your identity., type: Fix}
+  id: 1934
+  time: '2022-07-14T05:23:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: You now heal yourself much slower than you heal other people when using
+      healing items., type: Tweak}
+  - {message: You can no longer attempt to heal targets that are already at full health.,
+    type: Tweak}
+  id: 1935
+  time: '2022-07-14T05:24:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Common radio now matches announcement colour., type: Tweak}
+  id: 1936
+  time: '2022-07-14T11:38:55.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Refining reinforced glass shards now gives metal rods instead of steel
+      sheets., type: Fix}
+  id: 1937
+  time: '2022-07-14T11:42:47.0000000+00:00'

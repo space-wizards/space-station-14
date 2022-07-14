@@ -5,7 +5,6 @@ using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
-using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
 using Content.Client.HUD;
