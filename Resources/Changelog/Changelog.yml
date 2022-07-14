@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added three new wall types for secret vaults. Expect to find them in
-      some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
-  id: 1437
-  time: '2022-05-02T22:38:07.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: 'Delta Station now has an ore processor, and may or may not have some
@@ -2952,3 +2946,9 @@ Entries:
   - {message: Common radio now matches announcement colour., type: Tweak}
   id: 1936
   time: '2022-07-14T11:38:55.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Refining reinforced glass shards now gives metal rods instead of steel
+      sheets., type: Fix}
+  id: 1937
+  time: '2022-07-14T11:42:47.0000000+00:00'
