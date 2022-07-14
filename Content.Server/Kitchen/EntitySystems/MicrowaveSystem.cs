@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Popups;
+using Content.Server.Hands.Systems;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -19,6 +20,8 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class MicrowaveSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly HandsSystem _handsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -114,8 +117,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             args.Handled = true;
-
-            component.Storage.Insert(args.Used);
+            _handsSystem.TryDropIntoContainer(args.User, args.Used, component.Storage);
             component.DirtyUi();
         }
 

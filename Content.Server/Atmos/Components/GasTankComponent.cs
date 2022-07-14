@@ -91,6 +91,10 @@ namespace Content.Server.Atmos.Components
         [DataField("toggleAction", required: true)]
         public InstantAction ToggleAction = new();
 
+        public EntityUid? User;
+
+        public bool CheckUser;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -154,6 +158,7 @@ namespace Content.Server.Atmos.Components
             if (_connectSound != null)
                 _connectStream = SoundSystem.Play(_connectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _connectSound.Params);
 
+            User = internals.Owner;
             UpdateUserInterface();
         }
 
@@ -169,6 +174,7 @@ namespace Content.Server.Atmos.Components
             if (_disconnectSound != null)
                 _disconnectStream = SoundSystem.Play(_disconnectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _disconnectSound.Params);
 
+            User = null;
             UpdateUserInterface();
         }
 

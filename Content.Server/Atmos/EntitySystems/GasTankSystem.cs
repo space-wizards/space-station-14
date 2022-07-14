@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
-            SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
         }
 
         private void BeforeUiOpen(EntityUid uid, GasTankComponent component, BeforeActivatableUIOpenEvent args)
@@ -32,9 +32,12 @@ namespace Content.Server.Atmos.EntitySystems
             component.UpdateUserInterface(true);
         }
 
-        private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
+        private void OnParentChange(EntityUid uid, GasTankComponent component, ref EntParentChangedMessage args)
         {
-            component.DisconnectFromInternals(args.User);
+            // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
+            // So this is a shitty fix, where the parent check is just delayed. But this really needs to get fixed
+            // properly at some point. 
+            component.CheckUser = true;
         }
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
@@ -71,6 +74,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
+                if (gasTank.CheckUser)
+                {
+                    gasTank.CheckUser = false;
+                    if (Transform(gasTank.Owner).ParentUid != gasTank.User)
+                    {
+                        gasTank.DisconnectFromInternals(gasTank.User);
+                        continue;
+                    }
+                }
+
                 _atmosphereSystem.React(gasTank.Air, gasTank);
                 gasTank.CheckStatus(_atmosphereSystem);
 
