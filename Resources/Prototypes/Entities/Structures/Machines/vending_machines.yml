@@ -919,7 +919,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#e687cc"
+    color: "#d4ab33"
 
 # job clothing
 
