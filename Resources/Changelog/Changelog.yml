@@ -1,29 +1,6 @@
 Entries:
 - author: Peptide90
   changes:
-  - {message: Added three new wall types for secret vaults. Expect to find them in
-      some hidden areas of asteroids in future and containing ancient dangers!, type: Add}
-  id: 1437
-  time: '2022-05-02T22:38:07.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: 'Delta Station now has an ore processor, and may or may not have some
-      decals.', type: Add}
-  id: 1438
-  time: '2022-05-02T22:43:33.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Requires a little more effort strip something off of someone., type: Tweak}
-  id: 1439
-  time: '2022-05-02T22:47:19.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: You can't unstick C4 from great distance or while your character in
-      handcuffs., type: Fix}
-  id: 1440
-  time: '2022-05-02T22:50:11.0000000+00:00'
-- author: Peptide90
-  changes:
   - {message: Added the industrial welder and advanced industrial welders to the game.
       Larger capacity and the advanced is faster at welding., type: Add}
   id: 1441
@@ -2952,3 +2929,24 @@ Entries:
   - {message: Common radio now matches announcement colour., type: Tweak}
   id: 1936
   time: '2022-07-14T11:38:55.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Refining reinforced glass shards now gives metal rods instead of steel
+      sheets., type: Fix}
+  id: 1937
+  time: '2022-07-14T11:42:47.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added hospital curtains, type: Add}
+  id: 1938
+  time: '2022-07-14T11:53:17.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed blinding., type: Fix}
+  id: 1939
+  time: '2022-07-14T11:58:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Recoil has been added back in., type: Tweak}
+  id: 1940
+  time: '2022-07-14T12:01:25.0000000+00:00'

@@ -5,43 +5,6 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Interaction
 {
-    /// <summary>
-    /// This interface gives components a behavior when their entity is in the active hand, when
-    /// clicking on another object and no interaction occurs, at any range. This includes
-    /// clicking on an object in the world as well as clicking on an object in inventory.
-    /// </summary>
-    [RequiresExplicitImplementation]
-    public interface IAfterInteract
-    {
-        /// <summary>
-        /// The interaction priority. Higher numbers get called first.
-        /// </summary>
-        /// <value>Priority defaults to 0</value>
-        int Priority => 0;
-
-        /// <summary>
-        /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
-        /// </summary>
-        [Obsolete("Use AfterInteractMessage instead")]
-        Task<bool> AfterInteract(AfterInteractEventArgs eventArgs);
-    }
-
-    public sealed class AfterInteractEventArgs : EventArgs
-    {
-        public EntityUid User { get; }
-        public EntityCoordinates ClickLocation { get; }
-        public EntityUid? Target { get; }
-        public bool CanReach { get; }
-
-        public AfterInteractEventArgs(EntityUid user, EntityCoordinates clickLocation, EntityUid? target, bool canReach)
-        {
-            User = user;
-            ClickLocation = clickLocation;
-            Target = target;
-            CanReach = canReach;
-        }
-    }
-
     [PublicAPI]
     public abstract class InteractEvent : HandledEntityEventArgs
     {
