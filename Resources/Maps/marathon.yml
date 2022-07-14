@@ -36568,9 +36568,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 2029
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -43.536865,49.58343
+  - pos: -43.562447,49.514965
     parent: 30
     type: Transform
   - canCollide: False
