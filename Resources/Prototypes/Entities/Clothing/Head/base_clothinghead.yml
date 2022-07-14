@@ -4,7 +4,7 @@
   id: ClothingHeadBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - HEAD
   - type: Sprite
     state: icon
@@ -18,7 +18,7 @@
   id: HatBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - HEAD
   - type: Sprite
     state: icon
@@ -94,7 +94,7 @@
       visible: false
       map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    heldPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
     netsync: false

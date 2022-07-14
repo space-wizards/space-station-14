@@ -29,7 +29,7 @@
     size: 150
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Tool
     qualities:
@@ -51,5 +51,5 @@
     size: 20
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back

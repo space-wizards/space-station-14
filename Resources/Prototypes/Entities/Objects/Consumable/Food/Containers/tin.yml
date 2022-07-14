@@ -16,7 +16,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     color: gray
   - type: DamageOnLand
     damage:
@@ -41,7 +41,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     color: gray
 
 # Tins

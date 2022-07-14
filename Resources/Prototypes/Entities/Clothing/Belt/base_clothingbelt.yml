@@ -6,7 +6,7 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots: [belt]
+    slots: [belt]
     size: 50
     quickEquip: false
     equipSound:

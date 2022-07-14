@@ -8,10 +8,10 @@
   - type: Sprite
     sprite: Objects/Misc/id_cards.rsi
   - type: Clothing
-    Slots:
+    slots:
     - idcard
     sprite: Objects/Misc/id_cards.rsi
-    HeldPrefix: default
+    heldPrefix: default
   - type: Access
   - type: IdCard
   - type: Tag
@@ -90,7 +90,7 @@
     - state: gold
     - state: idcaptain
   - type: Clothing
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: PresetIdCard
     job: Captain
 
@@ -320,7 +320,7 @@
     - state: silver
     - state: idheadofpersonnel
   - type: Clothing
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
 
@@ -334,7 +334,7 @@
     - state: silver
     - state: idchiefengineer
   - type: Clothing
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefEngineer
 
@@ -348,7 +348,7 @@
     - state: silver
     - state: idchiefmedicalofficer
   - type: Clothing
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: PresetIdCard
     job: ChiefMedicalOfficer
 
@@ -362,7 +362,7 @@
     - state: silver
     - state: idresearchdirector
   - type: Clothing
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: PresetIdCard
     job: ResearchDirector
 
@@ -376,7 +376,7 @@
     - state: silver
     - state: idheadofsecurity
   - type: Clothing
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfSecurity
 
@@ -390,7 +390,7 @@
     - state: gold
     - state: idcentcom
   - type: Clothing
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -407,7 +407,7 @@
     - state: gold
     - state: ert_commander # we have the sprites but don't need individual ID entities for now.
   - type: Clothing
-    HeldPrefix: gold
+    heldPrefix: gold
 
 - type: entity
   parent: IDCardStandard
@@ -418,7 +418,7 @@
     layers:
     - state: centcom
   - type: Clothing
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
@@ -446,7 +446,7 @@
     layers:
     - state: centcom
   - type: Clothing
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: IdCard
     jobTitle: Centcom Agent
 

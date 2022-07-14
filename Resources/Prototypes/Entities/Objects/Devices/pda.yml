@@ -18,7 +18,7 @@
   - type: Clothing
     quickEquip: false
     size: 10
-    Slots:
+    slots:
     - idcard
     - Belt
   - type: UnpoweredFlashlight
@@ -178,7 +178,7 @@
   - type: PDA
     id: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # no pink crayon?!? 
+      startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
       ejectSound: /Audio/Items/bikehorn.ogg
       priority: -1

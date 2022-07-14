@@ -58,7 +58,7 @@
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     size: 20
-    Slots:
+    slots:
     - back
 
 - type: entity
@@ -119,7 +119,7 @@
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     quickEquip: false
-    Slots:
+    slots:
     - belt
     size: 200
   - type: Storage

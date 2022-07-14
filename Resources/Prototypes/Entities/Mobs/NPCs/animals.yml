@@ -760,8 +760,8 @@
     size: 5
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    heldPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -859,7 +859,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    heldPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -885,7 +885,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    heldPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:

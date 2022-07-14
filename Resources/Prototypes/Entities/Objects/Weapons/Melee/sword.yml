@@ -81,6 +81,6 @@
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/claymore.rsi
-    Slots:
+    slots:
     - back
   - type: DisarmMalus

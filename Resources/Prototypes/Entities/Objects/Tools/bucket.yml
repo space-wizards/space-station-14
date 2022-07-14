@@ -14,7 +14,7 @@
   - type: Clothing
     size: 100
     sprite: Objects/Tools/bucket.rsi
-    Slots:
+    slots:
     - HEAD
   - type: SolutionContainerManager
     solutions:

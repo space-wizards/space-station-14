@@ -58,7 +58,7 @@
   - type: Sprite
     state: spoon
   - type: Item
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -76,7 +76,7 @@
     state: plastic_spoon
   - type: Item
     color: white
-    HeldPrefix: spoon
+    heldPrefix: spoon
   - type: Utensil
     types:
     - Spoon

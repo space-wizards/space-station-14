@@ -61,7 +61,7 @@
   - type: Clothing
     size: 24
     quickEquip: false
-    Slots:
+    slots:
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
 
@@ -267,7 +267,7 @@
       "Soprano": {64: 0}
       "Alto": {65: 0}
       "Tenor": {66: 0}
-      "Baritone": {67: 0} 
+      "Baritone": {67: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
@@ -338,7 +338,7 @@
   - type: Clothing
     size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi
-    Slots: [Belt]
+    slots: [Belt]
     quickEquip: false
 
 - type: entity

@@ -18,7 +18,7 @@
           Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 3
 # Snacks
 
@@ -75,7 +75,7 @@
     state: chocolatebar
     netsync: false
   - type: Item
-    HeldPrefix: chocolatebar
+    heldPrefix: chocolatebar
     size: 3
   - type: SpawnItemsOnUse
     items:
@@ -141,7 +141,7 @@
   - type: Sprite
     state: popcorn
   - type: Item
-    HeldPrefix: popcorn
+    heldPrefix: popcorn
   - type: Food
     trash: FoodPacketPopcornTrash
 
@@ -183,7 +183,7 @@
     color: white
   - type: Food
     trash: FoodPacketSyndiTrash
-    
+
 - type: entity
   name: chow mein
   parent: FoodSnackBase
@@ -205,7 +205,7 @@
           Quantity: 2
   - type: Food
     trash: FoodPacketChowMeinTrash
-          
+
 - type: entity
   name: dan dan noodles
   parent: FoodSnackBase
@@ -246,7 +246,7 @@
           Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
     size: 1
   - type: Food
     trash: FoodCookieFortune
@@ -291,7 +291,7 @@
 
 - type: entity
   id: FoodSnackMREBrownie
-  parent: BaseItem  
+  parent: BaseItem
   name: brownie
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
@@ -305,7 +305,7 @@
       - id: FoodSnackMREBrownieOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
-  
+
 
 - type: entity
   id: FoodSnackMREBrownieOpen
@@ -339,7 +339,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
+    heldPrefix: packet
   - type: Tag
     tags:
     - Trash
@@ -477,7 +477,7 @@
     state: chinese1
   - type: Item
     color: red
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
@@ -488,7 +488,7 @@
     state: chinese2
   - type: Item
     color: white
-    
+
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash

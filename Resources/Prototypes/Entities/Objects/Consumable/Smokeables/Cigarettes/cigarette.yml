@@ -19,8 +19,8 @@
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
+    slots: [ mask ]
+    heldPrefix: unlit
     size: 1
   - type: Construction
     graph: smokeableCigarette

@@ -27,7 +27,7 @@
     size: 15
     sprite: Objects/Specific/Chapel/bible.rsi
     prefix: inhand
-    Slots:
+    slots:
     - Belt
   - type: Storage
     capacity: 10
@@ -68,5 +68,5 @@
     size: 15
     sprite: Objects/Specific/Chapel/necronomicon.rsi
     prefix: inhand
-    Slots:
+    slots:
     - Belt

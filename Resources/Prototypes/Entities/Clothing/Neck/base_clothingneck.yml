@@ -6,7 +6,7 @@
   - type: Clothing
     size: 10
     quickEquip: true
-    Slots:
+    slots:
     - neck
   - type: Sprite
     state: icon

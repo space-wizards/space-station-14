@@ -17,8 +17,8 @@
       - Trash
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
+    slots: [ mask ]
+    heldPrefix: unlit
     size: 1
 
 - type: entity
@@ -33,6 +33,6 @@
     state: unlit-icon
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
+    slots: [ mask ]
+    heldPrefix: unlit
     size: 1

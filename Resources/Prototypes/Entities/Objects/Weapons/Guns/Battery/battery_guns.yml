@@ -267,7 +267,7 @@
       sprite: Objects/Weapons/Guns/Battery/disabler.rsi
       size: 10
       quickEquip: false
-      Slots:
+      slots:
         - Belt
     - type: Gun
       fireRate: 2
@@ -305,9 +305,9 @@
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     size: 10
     quickEquip: false
-    Slots:
+    slots:
     - Belt
-    HeldPrefix: taser4
+    heldPrefix: taser4
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg

@@ -14,7 +14,7 @@
   - type: Clothing
     size: 15
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
-    Slots:
+    slots:
     - back
   - type: Construction
     graph: WoodenBat

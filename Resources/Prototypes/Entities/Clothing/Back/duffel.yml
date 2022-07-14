@@ -11,7 +11,7 @@
     sprite: Clothing/Back/Duffels/duffel.rsi
     size: 9999
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Storage
     capacity: 120
@@ -102,9 +102,9 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
     storageOpenSound:
-      collection: null    
+      collection: null
     storageInsertSound:
-      collection: null      
+      collection: null
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -138,7 +138,7 @@
     state: icon-ammo
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: ammo
+    heldPrefix: ammo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -150,7 +150,7 @@
     state: icon-med
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: med
+    heldPrefix: med
 
 - type: entity
   parent: ClothingBackpackDuffel

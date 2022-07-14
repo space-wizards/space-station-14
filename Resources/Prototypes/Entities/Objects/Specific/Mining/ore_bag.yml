@@ -11,7 +11,7 @@
   - type: Clothing
     sprite: Objects/Specific/Mining/ore_bag.rsi
     QuickEquip: false
-    Slots:
+    slots:
     - belt
     size: 175
   - type: Storage

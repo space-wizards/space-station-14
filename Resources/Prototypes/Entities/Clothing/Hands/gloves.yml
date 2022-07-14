@@ -24,7 +24,7 @@
     state: icon-blue
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
@@ -41,7 +41,7 @@
     state: icon-green
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: green
+    heldPrefix: green
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-green
@@ -58,7 +58,7 @@
     state: icon-yellow
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow

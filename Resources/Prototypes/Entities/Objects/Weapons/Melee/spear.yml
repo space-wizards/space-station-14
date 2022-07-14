@@ -26,7 +26,7 @@
     size: 40
     sprite: Objects/Weapons/Melee/spear.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Construction
     graph: Spear

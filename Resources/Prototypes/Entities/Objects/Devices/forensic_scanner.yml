@@ -12,7 +12,7 @@
     size: 5
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Belt
   - type: ActivatableUI
     key: enum.ForensicScannerUiKey.Key

@@ -4,7 +4,7 @@
   id: ClothingOuterBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - outerClothing
   - type: Sprite
     state: icon

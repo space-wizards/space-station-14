@@ -42,7 +42,7 @@
       temperature: 293.15
   - type: Clothing
     sprite: Objects/Tanks/oxygen.rsi
-    Slots:
+    slots:
     - Back
     - suitStorage
 
@@ -56,7 +56,7 @@
     sprite: Objects/Tanks/yellow.rsi
   - type: Clothing
     sprite: Objects/Tanks/yellow.rsi
-    Slots:
+    slots:
     - Back
     - suitStorage
 
@@ -70,7 +70,7 @@
     sprite: Objects/Tanks/red.rsi
   - type: Clothing
     sprite: Objects/Tanks/red.rsi
-    Slots:
+    slots:
     - Back
     - suitStorage
 
@@ -90,7 +90,7 @@
   - type: Clothing
     size: 10
     sprite: Objects/Tanks/emergency.rsi
-    Slots:
+    slots:
     - Pocket
     - Belt
     - suitStorage
@@ -112,7 +112,7 @@
   - type: Clothing
     size: 10
     sprite: Objects/Tanks/emergency_yellow.rsi
-    Slots:
+    slots:
     - Pocket
     - Belt
     - suitStorage
@@ -132,7 +132,7 @@
   - type: Clothing
     size: 10
     sprite: Objects/Tanks/emergency_double.rsi
-    Slots:
+    slots:
     - Pocket
     - Belt
     - suitStorage
@@ -152,7 +152,7 @@
         temperature: 293.15
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
-      Slots:
+      slots:
         - Back
         - suitStorage
 
@@ -172,6 +172,6 @@
     - type: Clothing
       size: 10
       sprite: Objects/Tanks/plasma.rsi
-      Slots:
+      slots:
         - Belt
         - suitStorage

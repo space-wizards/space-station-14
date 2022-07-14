@@ -26,10 +26,10 @@
   - type: ItemCooldown
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
-    HeldPrefix: off
+    heldPrefix: off
     quickEquip: false
     size: 20
-    Slots:
+    slots:
     - Belt
   - type: DisarmMalus
     malus: 0.225

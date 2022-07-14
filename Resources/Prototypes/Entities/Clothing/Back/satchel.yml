@@ -10,7 +10,7 @@
   - type: Clothing
     size: 9999
     quickEquip: false
-    Slots:
+    slots:
     - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage

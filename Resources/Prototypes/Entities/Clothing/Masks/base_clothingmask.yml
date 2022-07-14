@@ -6,7 +6,7 @@
   - type: Sprite
     state: icon
   - type: Clothing
-    Slots: [mask]
+    slots: [mask]
 
 - type: entity
   abstract: true

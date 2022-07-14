@@ -23,7 +23,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 6
-    HeldPrefix: box
+    heldPrefix: box
   - type: StorageFill
     contents:
     - id: FoodDonutPink
@@ -159,7 +159,7 @@
       - Pizza
   - type: Item
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    HeldPrefix: box
+    heldPrefix: box
   - type: Appearance
     visuals:
     - type: StorageVisualizer
@@ -224,7 +224,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     size: 6
-    HeldPrefix: box
+    heldPrefix: box
   - type: StorageFill
     contents:
     - id: FoodBakedNugget
