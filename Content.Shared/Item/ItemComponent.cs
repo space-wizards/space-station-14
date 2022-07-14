@@ -8,7 +8,7 @@ namespace Content.Shared.Item;
 ///     like backpacks.
 /// </summary>
 [RegisterComponent]
-public sealed class NewItemComponent : Component
+public sealed class ItemComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]

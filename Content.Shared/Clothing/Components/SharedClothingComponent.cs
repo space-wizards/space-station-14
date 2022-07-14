@@ -7,7 +7,7 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     This handles entities which can be equipped.
 /// </summary>
-public abstract class NewSharedClothingComponent : Component
+public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
     public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
