@@ -45550,7 +45550,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3411
-  type: RightHandDrone
+  type: RightArmBorg
   components:
   - pos: -10.454098,-16.275398
     parent: 100
@@ -45562,7 +45562,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 3412
-  type: LeftHandDrone
+  type: LeftArmBorg
   components:
   - pos: -10.563473,-16.494148
     parent: 100
