@@ -17,7 +17,7 @@ namespace Content.Client.Atmos.Overlays
         private readonly GasTileOverlaySystem _system;
         private readonly IMapManager _mapManager;
         
-        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
         private readonly ShaderInstance _shader;
 
         public readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> TileData = new();
@@ -41,7 +41,7 @@ namespace Content.Client.Atmos.Overlays
 
         private int _gasCount;
 
-        public const int GasOverlayZIndex = 1;
+        public const int GasOverlayZIndex = (int) Content.Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
 
         public GasTileOverlay(GasTileOverlaySystem system, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys)
         {

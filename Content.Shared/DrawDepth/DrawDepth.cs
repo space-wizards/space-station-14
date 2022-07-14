@@ -86,7 +86,7 @@ namespace Content.Shared.DrawDepth
         /// </summary>
         Effects = DrawDepthTag.Default + 7,
 
-        Ghosts = DrawDepthTag.Default + 8,
+        Ghosts = DrawDepthTag.Default + 9,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
