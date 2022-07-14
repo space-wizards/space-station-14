@@ -12,6 +12,8 @@ using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Systems;
 using Content.Server.Cloning.Components;
+using Content.Server.MobState;
+using Robust.Server.Containers;
 
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...
 
@@ -23,6 +25,8 @@ namespace Content.Server.Medical
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly ClimbSystem _climbSystem = default!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -44,7 +48,7 @@ namespace Content.Server.Medical
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
         {
             base.Initialize();
-            scannerComponent.BodyContainer = scannerComponent.Owner.EnsureContainer<ContainerSlot>($"{scannerComponent.Name}-bodyContainer");
+            scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"{scannerComponent.Name}-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, scannerComponent.ScannerPort);
         }
 
@@ -145,7 +149,7 @@ namespace Content.Server.Medical
                     return MedicalScannerStatus.Open;
                 }
 
-                return GetStatusFromDamageState(state);
+                return GetStatusFromDamageState(body.Value, state);
             }
             return MedicalScannerStatus.Off;
         }
@@ -155,15 +159,15 @@ namespace Content.Server.Medical
             return scannerComponent.BodyContainer.ContainedEntity != null;
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(MobStateComponent state)
+        private MedicalScannerStatus GetStatusFromDamageState(EntityUid uid, MobStateComponent state)
         {
-            if (state.IsAlive())
+            if (_mobStateSystem.IsAlive(uid, state))
                 return MedicalScannerStatus.Green;
 
-            if (state.IsCritical())
+            if (_mobStateSystem.IsCritical(uid, state))
                 return MedicalScannerStatus.Red;
 
-            if (state.IsDead())
+            if (_mobStateSystem.IsDead(uid, state))
                 return MedicalScannerStatus.Death;
 
             return MedicalScannerStatus.Yellow;

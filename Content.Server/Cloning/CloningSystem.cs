@@ -4,15 +4,16 @@ using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.CharacterAppearance.Components;
-using Content.Shared.MobState.Components;
 using Content.Shared.Species;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.EUI;
 using Robust.Shared.Containers;
+using Robust.Server.Containers;
 using Content.Shared.Cloning;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MobState;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -24,6 +25,8 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly EuiManager _euiManager = null!;
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly ContainerSystem _containerSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -39,7 +42,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
-            clonePod.BodyContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
+            clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
             _signalSystem.EnsureReceiverPorts(uid, clonePod.PodPort);
         }
 
@@ -109,8 +112,7 @@ namespace Content.Server.Cloning.Systems
             if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
             {
                 if (EntityManager.EntityExists(clone) &&
-                    TryComp<MobStateComponent>(clone, out var cloneState) &&
-                    !cloneState.IsDead() &&
+                    !_mobStateSystem.IsDead(clone) &&
                     TryComp<MindComponent>(clone, out var cloneMindComp) &&
                     (cloneMindComp.Mind == null || cloneMindComp.Mind == mind))
                     return false; // Mind already has clone
@@ -118,28 +120,21 @@ namespace Content.Server.Cloning.Systems
                 ClonesWaitingForMind.Remove(mind);
             }
 
-            if (mind.OwnedEntity != null &&
-                TryComp<MobStateComponent?>(mind.OwnedEntity.Value, out var state) &&
-                !state.IsDead())
+            if (mind.OwnedEntity != null && !_mobStateSystem.IsDead(uid))
                 return false; // Body controlled by mind is not dead
 
             // Yes, we still need to track down the client because we need to open the Eui
             if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
                 return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
 
-            if (!TryComp<TransformComponent>(clonePod.Owner, out var transform))
-                return false;
-
             if (!TryComp<HumanoidAppearanceComponent>(bodyToClone, out var humanoid))
                 return false; // whatever body was to be cloned, was not a humanoid
 
             var speciesProto = _prototype.Index<SpeciesPrototype>(humanoid.Species).Prototype;
-            var mob = Spawn(speciesProto, transform.MapPosition);
+            var mob = Spawn(speciesProto, Transform(clonePod.Owner).MapPosition);
             _appearanceSystem.UpdateAppearance(mob, humanoid.Appearance);
 
-            // set name if they have it
-            if (TryComp<MetaDataComponent>(mob, out var meta) && TryComp<MetaDataComponent>(bodyToClone, out var bodyMeta))
-                meta.EntityName = bodyMeta.EntityName;
+            MetaData(mob).EntityName = MetaData(bodyToClone).EntityName;
 
             var cloneMindReturn = EntityManager.AddComponent<BeingClonedComponent>(mob);
             cloneMindReturn.Mind = mind;

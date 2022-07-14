@@ -8,6 +8,7 @@ using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
 using Content.Shared.MobState.Components;
+using Content.Server.MobState;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
@@ -24,6 +25,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -188,18 +190,16 @@ namespace Content.Server.Cloning.Systems
                 scannerConnected = true;
                 EntityUid? scanBody = scanner.BodyContainer.ContainedEntity;
 
-                // GET NAME
-                if (TryComp<MetaDataComponent>(scanBody, out var scanMetaData))
-                    scanBodyInfo = scanMetaData.EntityName;
-
                 // GET STATE
-                if (scanBody == null)
+                if (scanBody == null || !HasComp<MobStateComponent>(scanBody))
                     clonerStatus = ClonerStatus.ScannerEmpty;
-                else if (TryComp<MobStateComponent>(scanBody, out var mobState))
+                else
                 {
+                    scanBodyInfo = MetaData((EntityUid) scanBody).EntityName;
+
                     TryComp<MindComponent>(scanBody, out var mindComp);
 
-                    if (!mobState.IsDead())
+                    if (!_mobStateSystem.IsDead((EntityUid) scanBody))
                     {
                         clonerStatus = ClonerStatus.ScannerOccupantAlive;
                     }
@@ -226,8 +226,6 @@ namespace Content.Server.Cloning.Systems
             {
                 clonerConnected = true;
                 EntityUid? cloneBody = clonePod.BodyContainer.ContainedEntity;
-                if (TryComp<MetaDataComponent>(cloneBody, out var cloneMetaData))
-                    cloneBodyInfo = cloneMetaData.EntityName;
 
                 cloningProgress = clonePod.CloningProgress;
                 cloningTime = clonePod.CloningTime;
@@ -235,6 +233,7 @@ namespace Content.Server.Cloning.Systems
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {
+                    cloneBodyInfo = MetaData((EntityUid) cloneBody).EntityName;
                     clonerStatus = ClonerStatus.ClonerOccupied;
                 }
             }
