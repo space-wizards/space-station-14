@@ -65,6 +65,7 @@
                     <!-- Server info -->
                     <hudUi:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
                     <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3" MaxWidth="400"  HorizontalAlignment="Left"/>
+                    <Label Name="StationTime" Access="Public" FontColorOverride="{x:Static maths:Color.LightGray}" Margin="3 3 3 3" HorizontalAlignment="Left"/>
                     <ui:HSpacer Spacing="5"/>
                     <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public"></lobbyUi:LobbyCharacterPreviewPanel>
                     <ui:HSpacer Spacing="5"/>

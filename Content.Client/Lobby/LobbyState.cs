@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Client.Message;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu.UI;
@@ -44,7 +45,6 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
         [ViewVariables] private CharacterSetupGui? _characterSetup;
         [ViewVariables] private LobbyGui? _lobby;
 
@@ -136,6 +136,7 @@ namespace Content.Client.Lobby
             if (gameTicker.IsGameStarted)
             {
                 _lobby.StartTime.Text = string.Empty;
+                _lobby.StationTime.Text = Loc.GetString("lobby-state-player-status-station-time", ("stationTime", _gameTiming.RealTime.Subtract(_gameTicker.StartTime).ToString("hh\\:mm")));
                 return;
             }
 
@@ -159,6 +160,7 @@ namespace Content.Client.Lobby
                 }
             }
 
+            _lobby.StationTime.Text =  Loc.GetString("lobby-state-player-status-station-time", ("stationTime", TimeSpan.Zero.ToString("hh\\:mm")));
             _lobby.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
