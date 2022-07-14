@@ -28,8 +28,8 @@ namespace Content.Server.Abilities.Boxer
 
         private void OnInit(EntityUid uid, BoxerComponent boxer, ComponentInit args)
         {
-            var meleeComp = EnsureComp<MeleeWeaponComponent>(uid);
-            meleeComp.Range *= boxer.RangeBonus;
+            if (TryComp<MeleeWeaponComponent>(uid, out var meleeComp))
+                meleeComp.Range *= boxer.RangeBonus;
         }
         private void ApplyBoxerModifiers(EntityUid uid, BoxerComponent component, MeleeHitEvent args)
         {

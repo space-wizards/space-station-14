@@ -153,7 +153,7 @@ public sealed class StaminaSystem : EntitySystem
             if (component.StaminaDamage >= component.CritThreshold)
             {
                 if (knockdownSound != null)
-                    SoundSystem.Play(knockdownSound.GetSound(), Filter.Pvs(uid), uid);
+                    SoundSystem.Play(knockdownSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid, knockdownSound.Params);
                 EnterStamCrit(uid, component);
             }
         }
