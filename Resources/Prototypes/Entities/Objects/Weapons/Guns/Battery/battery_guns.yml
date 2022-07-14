@@ -34,7 +34,7 @@
 
 - type: entity
   name: retro laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -59,7 +59,7 @@
 
 - type: entity
   name: makeshift laser gun
-  parent: BaseWeaponBattery
+  parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
   components:

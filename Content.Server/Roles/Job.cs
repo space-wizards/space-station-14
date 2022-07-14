@@ -18,6 +18,9 @@ namespace Content.Server.Roles
         public string? StartingGear => Prototype.StartingGear;
 
         [ViewVariables]
+        public string? JobEntity => Prototype.JobEntity;
+
+        [ViewVariables]
         public bool CanBeAntag;
 
         public Job(Mind.Mind mind, JobPrototype jobPrototype) : base(mind)

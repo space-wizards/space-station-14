@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Content.Shared.Verbs;
@@ -176,7 +177,7 @@ namespace Content.Server.Body.Systems
                 EntityManager.DeleteEntity(entity);
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
+            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", Identity.Entity(mob, EntityManager))), mob, Filter.Entities(mob));
         }
 
         /// <summary>

@@ -30,6 +30,7 @@
     - !type:DiseasePopUp
       probability: 0.025
       message: generic-reagent-effect-burning-insides
+      visualType: Medium
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-cough
@@ -122,9 +123,11 @@
       probability: 0.015
       type: Pvs
       message: disease-beat-chest-compulsion
+      visualType: Medium
     - !type:DiseasePopUp
       probability: 0.03
       message: disease-banana-compulsion
+      visualType: Medium
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-screech
@@ -160,6 +163,7 @@
     - !type:DiseasePopUp
       probability: 0.05
       message: disease-eaten-inside
+      visualType: Medium
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900
