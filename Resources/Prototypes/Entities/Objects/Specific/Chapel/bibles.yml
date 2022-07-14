@@ -26,7 +26,7 @@
   - type: Item
     size: 15
     sprite: Objects/Specific/Chapel/bible.rsi
-    prefix: inhand
+  - type: Clothing
     slots:
     - Belt
   - type: Storage

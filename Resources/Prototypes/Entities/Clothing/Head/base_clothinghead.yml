@@ -94,6 +94,7 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     quickEquip: false
+    slots: [ HEAD ]
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000

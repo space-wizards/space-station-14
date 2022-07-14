@@ -17,7 +17,6 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    color: gray
   - type: DamageOnLand
     damage:
       types:
@@ -42,7 +41,6 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
-    color: gray
 
 # Tins
 

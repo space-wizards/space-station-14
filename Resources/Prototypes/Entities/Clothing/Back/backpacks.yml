@@ -91,10 +91,8 @@
   - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
   - type: Storage
-    storageOpenSound:
-      collection: null
-    storageInsertSound:
-      collection: null
+    storageOpenSound: null
+    storageInsertSound: null
 
 - type: entity
   parent: ClothingBackpack

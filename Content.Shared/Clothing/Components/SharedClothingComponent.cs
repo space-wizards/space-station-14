@@ -9,6 +9,7 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     This handles entities which can be equipped.
 /// </summary>
+[NetworkedComponent]
 public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]

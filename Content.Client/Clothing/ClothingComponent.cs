@@ -3,7 +3,8 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Clothing
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedClothingComponent))]
     public sealed class ClothingComponent : SharedClothingComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]

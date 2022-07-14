@@ -34,7 +34,6 @@
   - type: Sprite
     state: boritos
   - type: Item
-    color: blue
   - type: Food
     trash: FoodPacketBoritosTrash
 
@@ -47,7 +46,6 @@
   - type: Sprite
     state: cheesiehonkers
   - type: Item
-    color: orange
   - type: Food
     trash: FoodPacketCheesieTrash
 
@@ -60,7 +58,6 @@
   - type: Sprite
     state: chips
   - type: Item
-    color: green
   - type: Food
     trash: FoodPacketChipsTrash
 
@@ -93,7 +90,6 @@
   - type: Sprite
     state: chocolatebar-open
   - type: Item
-    color: brown
   - type: SolutionContainerManager
     solutions:
       food:
@@ -113,7 +109,6 @@
   - type: Sprite
     state: energybar
   - type: Item
-    color: lime
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketEnergyTrash
@@ -130,7 +125,6 @@
   - type: Sprite
     state: energybar-open
   - type: Item
-    color: yellow
 
 - type: entity
   name: popcorn
@@ -154,7 +148,6 @@
   - type: Sprite
     state: raisins
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketRaisinsTrash
 
@@ -167,7 +160,6 @@
   - type: Sprite
     state: susjerky
   - type: Item
-    color: red
   - type: Food
     trash: FoodPacketSusTrash
 
@@ -180,7 +172,6 @@
   - type: Sprite
     state: syndicakes
   - type: Item
-    color: white
   - type: Food
     trash: FoodPacketSyndiTrash
 
@@ -193,7 +184,6 @@
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
   - type: SolutionContainerManager
     solutions:
       food:
@@ -355,7 +345,6 @@
   - type: Sprite
     state: boritos-trash
   - type: Item
-    color: blue
 
 - type: entity
   noSpawn: true
@@ -366,7 +355,6 @@
   - type: Sprite
     state: cheesiehonkers-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -377,7 +365,6 @@
   - type: Sprite
     state: chips-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -388,7 +375,6 @@
   - type: Sprite
     state: chocolatebar-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -399,7 +385,6 @@
   - type: Sprite
     state: energybar-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -410,7 +395,6 @@
   - type: Sprite
     state: pistachio-trash
   - type: Item
-    color: green
 
 - type: entity
   noSpawn: true
@@ -421,7 +405,6 @@
   - type: Sprite
     state: popcorn-trash
   - type: Item
-    state: blue
 
 - type: entity
   noSpawn: true
@@ -432,7 +415,6 @@
   - type: Sprite
     state: raisins-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -443,7 +425,6 @@
   - type: Sprite
     state: semki-trash
   - type: Item
-    color: orange
 
 - type: entity
   noSpawn: true
@@ -454,7 +435,6 @@
   - type: Sprite
     state: susjerky-trash
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -465,7 +445,6 @@
   - type: Sprite
     state: syndicakes-trash
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true
@@ -476,7 +455,6 @@
   - type: Sprite
     state: chinese1
   - type: Item
-    color: red
 
 - type: entity
   noSpawn: true
@@ -487,7 +465,6 @@
   - type: Sprite
     state: chinese2
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true
@@ -499,7 +476,6 @@
   - type: Sprite
     state: fortune
   - type: Item
-    color: white
 
 - type: entity
   noSpawn: true

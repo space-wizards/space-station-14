@@ -66,7 +66,6 @@
       - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    state: box-closed
     size: 12
   - type: StorageFill
     contents:
@@ -266,7 +265,6 @@
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     size: 6
-    color: red
   - type: StorageFill
     contents:
     - id: FoodDonkpocket
