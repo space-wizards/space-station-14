@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Pneumatic cannons now properly fire and eject their contents., type: Fix}
-  id: 1442
-  time: '2022-05-03T02:53:03.0000000+00:00'
 - author: Mirino97
   changes:
   - {message: Items failed to insert in containers should no longer drop to the ground!,
@@ -2952,3 +2947,8 @@ Entries:
     type: Tweak}
   id: 1941
   time: '2022-07-14T12:43:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Muzzle flashes now emit a point light., type: Tweak}
+  id: 1942
+  time: '2022-07-14T13:03:49.0000000+00:00'
