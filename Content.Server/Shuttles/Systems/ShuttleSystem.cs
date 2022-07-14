@@ -1,8 +1,7 @@
-using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -12,7 +11,7 @@ using Robust.Shared.Physics;
 namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
-    public sealed partial class ShuttleSystem : EntitySystem
+    public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;

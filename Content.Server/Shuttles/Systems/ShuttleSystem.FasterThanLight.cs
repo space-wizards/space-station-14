@@ -25,6 +25,7 @@ public sealed partial class ShuttleSystem
     [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
+    [Dependency] private readonly ThrusterSystem _thruster = default!;
 
     private MapId? _hyperSpaceMap;
 
@@ -179,6 +180,9 @@ public sealed partial class ShuttleSystem
             dest.Enabled = false;
         }
 
+        _thruster.DisableLinearThrusters(shuttle);
+        _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
+        _thruster.SetAngularThrust(shuttle, false);
         // TODO: Maybe move this to docking instead?
         SetDocks(uid, false);
 
@@ -198,6 +202,7 @@ public sealed partial class ShuttleSystem
 
             var xform = Transform(comp.Owner);
             PhysicsComponent? body;
+            ShuttleComponent? shuttle;
 
             switch (comp.State)
             {
@@ -237,6 +242,13 @@ public sealed partial class ShuttleSystem
                     comp.State = FTLState.Arriving;
                     // TODO: Arrival effects
                     // For now we'll just use the ss13 bubbles but we can do fancier.
+
+                    if (TryComp(comp.Owner, out shuttle))
+                    {
+                        _thruster.DisableLinearThrusters(shuttle);
+                        _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
+                    }
+
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 // Arrived
@@ -253,7 +265,7 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = ShuttleIdleAngularDamping;
                     }
 
-                    TryComp<ShuttleComponent>(comp.Owner, out var shuttle);
+                    TryComp(comp.Owner, out shuttle);
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
@@ -265,6 +277,11 @@ public sealed partial class ShuttleSystem
                     else
                     {
                         xform.Coordinates = comp.TargetCoordinates;
+                    }
+
+                    if (shuttle != null)
+                    {
+                        _thruster.DisableLinearThrusters(shuttle);
                     }
 
                     if (comp.TravelStream != null)
