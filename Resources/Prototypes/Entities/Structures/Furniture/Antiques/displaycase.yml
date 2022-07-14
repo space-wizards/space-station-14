@@ -1,0 +1,76 @@
+- type: entity
+  id: DisplayCase
+  parent: BaseStructure
+  name: display case
+  description: A display case for prized possessions. It taunts you to kick it.
+  abstract: true
+  components:
+  - type: Transform
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 100
+      mask:
+      - TableMask
+      layer:
+      - MachineLayer
+  - type: Sprite
+    netsync: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_break3.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+
+- type: entity
+  id: DisplayCaseLaser
+  parent: DisplayCase
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/antiques.rsi
+    state: displaycase_laser
+  - type: Icon
+    sprite: Structures/Furniture/antiques.rsi
+    state: displaycase_laser
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_break3.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 1
+            max: 1
+          WeaponAntiqueLaser:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
