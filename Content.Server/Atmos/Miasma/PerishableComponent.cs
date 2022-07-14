@@ -38,6 +38,6 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("molsPerSecondPerUnitMass")]
-        public float MolsPerSecondPerUnitMass = 0.0035f;
+        public float MolsPerSecondPerUnitMass = 0.0025f;
     }
 }

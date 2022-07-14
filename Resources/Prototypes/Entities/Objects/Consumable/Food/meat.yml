@@ -16,7 +16,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: Item
     size: 5
@@ -97,7 +97,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 2
 
 - type: entity
@@ -115,7 +115,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -136,7 +136,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -157,7 +157,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -178,7 +178,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -219,7 +219,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -237,7 +237,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 5
 
 - type: entity
@@ -281,7 +281,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -311,7 +311,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 20
 
 - type: entity
@@ -329,7 +329,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -350,7 +350,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 10
 
 - type: entity
@@ -368,7 +368,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 1
 
 - type: entity
@@ -695,7 +695,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - reagentId: Protein
+        - ReagentId: Protein
           Quantity: 5
 
 - type: entity
@@ -789,7 +789,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -811,7 +811,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -831,7 +831,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -851,7 +851,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -871,7 +871,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -894,7 +894,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity
@@ -917,7 +917,7 @@
     solutions:
       food:
         reagents:
-        - reagentId: UncookedAnimalProteins
+        - ReagentId: UncookedAnimalProteins
           Quantity: 3
 
 - type: entity

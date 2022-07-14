@@ -216,11 +216,11 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                SoundSystem.Play(cuff.StartBreakoutSound.GetSound(), Filter.Pvs(Owner), Owner);
+                SoundSystem.Play(cuff.StartBreakoutSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
             else
             {
-                SoundSystem.Play(cuff.StartUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
+                SoundSystem.Play(cuff.StartUncuffSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;

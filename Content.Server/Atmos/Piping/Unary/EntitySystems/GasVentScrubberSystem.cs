@@ -15,6 +15,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -26,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -54,19 +56,24 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!scrubber.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
-            {
                 return;
-            }
 
             var xform = Transform(uid);
-            var environment = _atmosphereSystem.GetTileMixture(xform.Coordinates, true);
+
+            if (xform.GridUid == null)
+                return;
+
+            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
+
+            var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             Scrub(timeDelta, scrubber, environment, outlet);
 
-            if (!scrubber.WideNet) return;
+            if (!scrubber.WideNet)
+                return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
             {
                 Scrub(timeDelta, scrubber, adjacent, outlet);
             }

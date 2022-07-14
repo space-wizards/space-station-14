@@ -8,6 +8,10 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -21,6 +25,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: blue
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-blue
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -34,6 +42,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: green
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-green
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -47,6 +59,10 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
     HeldPrefix: yellow
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-yellow
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -60,6 +76,10 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
     HeatResistance: 1400
   - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-blue
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -71,6 +91,10 @@
     sprite: Clothing/Hands/Gloves/ihscombat.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/ihscombat.rsi
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+  - type: FingerprintMask
+
 #### Medical
 - type: entity
   parent: ClothingHandsBase
@@ -84,6 +108,9 @@
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: DiseaseProtection
     protection: 0.1
+  - type: Fiber
+    fiberMaterial: fibers-latex
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -97,29 +124,39 @@
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: DiseaseProtection
     protection: 0.15
+  - type: Fiber
+    fiberMaterial: fibers-nitrile
+  - type: FingerprintMask
 ####
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesLeather
-  name: "botanist's leather gloves"
-  description: "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm."
+  name: botanist's leather gloves
+  description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
     HeatResistance: 1400
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-brown
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesPowerglove
   name: power gloves
-  description: Now I'm playin' with power! Wait, they are turned off. # Use "Now I'm playin' with power! BAM!" for when they're turned on
+  description: Now I'm playin' with power! Wait, they are turned off. # Use Now I'm playin' with power! BAM! for when they're turned on
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/powerglove.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -131,6 +168,10 @@
     sprite: Clothing/Hands/Gloves/robohands.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/robohands.rsi
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-black
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -144,6 +185,12 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
     HeatResistance: 1400
   - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+  - type: FingerprintMask
+  - type: Thieving
+    stealTime: 1
+    stealthy: true
 
 - type: entity
   parent: ClothingHandsBase
@@ -157,6 +204,10 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
     HeatResistance: 1400
   - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-black
+  - type: FingerprintMask
 
 - type: entity
   parent: ClothingHandsBase
@@ -168,4 +219,20 @@
     sprite: Clothing/Hands/Gloves/fingerless.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/fingerless.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
 
+- type: entity
+  parent: ClothingHandsBase
+  id: ThievingGloves
+  name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
+  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Color/black.rsi
+    - type: Thieving
+      stealTime: 1.5
+      stealthy: true

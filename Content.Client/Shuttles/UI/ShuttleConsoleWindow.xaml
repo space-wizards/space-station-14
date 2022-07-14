@@ -1,7 +1,8 @@
 <userInterface:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
                            xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-               Title="{Loc 'shuttle-console-window-title'}">
+                           xmlns:ui1="clr-namespace:Content.Client.HUD.UI"
+                           Title="{Loc 'shuttle-console-window-title'}">
     <GridContainer Columns="3"
                   HorizontalAlignment="Stretch">
         <BoxContainer Name="LeftDisplay"
@@ -10,11 +11,14 @@
                       MinWidth="256"
                       Align="Center"
                       Orientation="Vertical">
-            <PanelContainer StyleClasses="BorderedWindowPanel">
+            <BoxContainer Orientation="Vertical">
+                <ui1:StripeBack>
+                    <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
+                </ui1:StripeBack>
                 <BoxContainer Name="DockPorts"
                               Orientation="Vertical">
                 </BoxContainer>
-            </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
         <PanelContainer>
             <ui:RadarControl Name="RadarScreen"
@@ -29,8 +33,10 @@
                       MinWidth="256"
                       Align="Center"
                       Orientation="Vertical">
-            <PanelContainer Name="ReadonlyDisplay"
-                            StyleClasses="BorderedWindowPanel">
+            <ui1:StripeBack>
+                <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
+            </ui1:StripeBack>
+            <BoxContainer Name="ReadonlyDisplay">
                 <GridContainer Columns="2"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Top">
@@ -59,7 +65,7 @@
                            Text="0.0"
                            Align="Right"/>
                 </GridContainer>
-            </PanelContainer>
+            </BoxContainer>
             <Button Name="ShuttleModeDisplay"
                     Text="{Loc 'shuttle-console-strafing'}"
                     TextAlign="Center"

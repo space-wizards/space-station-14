@@ -29,14 +29,6 @@
     proto: BulletCaselessRifle
 
 - type: entity
-  id: CartridgeCaselessRifleFlash
-  name: cartridge (.25 caseless flash)
-  parent: BaseCartridgeCaselessRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletCaselessRifleFlash
-
-- type: entity
   id: CartridgeCaselessRifleHighVelocity
   name: cartridge (.25 caseless high-velocity)
   parent: BaseCartridgeCaselessRifle

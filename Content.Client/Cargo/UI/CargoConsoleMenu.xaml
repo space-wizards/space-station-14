@@ -14,7 +14,7 @@
             <Label Text="{Loc 'cargo-console-menu-points-label'}"
                    StyleClasses="LabelKeyText" />
             <Label Name="PointsLabel"
-                   Text="0$" />
+                   Text="$0" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"

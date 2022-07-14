@@ -139,6 +139,10 @@
   name: mining headset
   description: Headset used by shaft miners.
   components:
+  - type: Headset
+    channels:
+      - Common
+      - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/mining.rsi
 
@@ -148,6 +152,10 @@
   name: robotics headset
   description: Made specifically for the roboticists, who cannot decide between departments.
   components:
+  - type: Headset
+    channels:
+      - Common
+      - Science
   - type: Sprite
     sprite: Clothing/Ears/Headsets/robotics.rsi
 

@@ -24,12 +24,12 @@ namespace Content.Server.Announcements
 
             if (args.Length == 1)
             {
-                chat.DispatchGlobalStationAnnouncement(args[0], colorOverride: Color.Gold);
+                chat.DispatchGlobalAnnouncement(args[0], colorOverride: Color.Gold);
             }
             else
             {
                 var message = string.Join(' ', new ArraySegment<string>(args, 1, args.Length-1));
-                chat.DispatchGlobalStationAnnouncement(message, args[0], colorOverride: Color.Gold);
+                chat.DispatchGlobalAnnouncement(message, args[0], colorOverride: Color.Gold);
             }
             shell.WriteLine("Sent!");
         }

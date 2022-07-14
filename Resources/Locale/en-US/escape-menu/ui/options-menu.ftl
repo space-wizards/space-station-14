@@ -16,6 +16,7 @@ ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
 ui-options-lobby-music = Lobby & Round-end Music
+ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-station-ambience = Station Ambience
 ui-options-space-ambience = Space Ambience

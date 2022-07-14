@@ -2,3 +2,8 @@
   id: Greyscale
   kind: source
   path: "/Textures/Shaders/greyscale.swsl"
+
+- type: shader
+  id: GreyscaleFullscreen
+  kind: source
+  path: "/Textures/Shaders/greyscale_fullscreen.swsl"

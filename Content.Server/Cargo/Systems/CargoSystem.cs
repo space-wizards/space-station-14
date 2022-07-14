@@ -27,7 +27,8 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        Cleanup();
+        ShutdownShuttle();
+        CleanupShuttle();
     }
 
     private void OnStationInit(StationInitializedEvent ev)
@@ -41,5 +42,10 @@ public sealed partial class CargoSystem : SharedCargoSystem
         base.Update(frameTime);
         UpdateConsole(frameTime);
         UpdateTelepad(frameTime);
+    }
+
+    public void UpdateBankAccount(StationBankAccountComponent component, int BalanceAdded)
+    {
+        component.Balance += BalanceAdded;
     }
 }

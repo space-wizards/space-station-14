@@ -11,4 +11,5 @@ public sealed class JetpackUserComponent : Component
     public float Acceleration = 1f;
     public float Friction = 0.3f;
     public float WeightlessModifier = 1.2f;
+    public EntityUid Jetpack;
 }

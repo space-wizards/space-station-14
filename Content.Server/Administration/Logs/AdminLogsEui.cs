@@ -108,6 +108,7 @@ public sealed class AdminLogsEui : BaseEui
                 {
                     CancellationToken = _logSendCancellation.Token,
                     Round = request.RoundId,
+                    Search = request.Search,
                     Types = request.Types,
                     Impacts = request.Impacts,
                     Before = request.Before,
@@ -161,7 +162,7 @@ public sealed class AdminLogsEui : BaseEui
             _filter.LastLogId = logs[largestId].Id;
         }
 
-        var message = new NewLogs(logs, replace);
+        var message = new NewLogs(logs, replace, logs.Count >= _filter.Limit);
 
         SendMessage(message);
 

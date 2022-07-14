@@ -27,11 +27,11 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask #this is so they can go under plastic flaps
       layer:
       - MachineLayer
   - type: EntityStorage
-    Capacity: 500
+    capacity: 500
   - type: Weldable
   - type: PlaceableSurface
   - type: Damageable
@@ -90,11 +90,11 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       mass: 25
       mask:
-      - MachineMask
+      - SmallMobMask
       layer:
       - MachineLayer
   - type: EntityStorage
-    Capacity: 500
+    capacity: 500
   - type: Weldable
   - type: PlaceableSurface
   - type: Damageable

@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -51,6 +52,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         }
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
@@ -264,6 +266,11 @@ namespace Content.Server.Ghost
             players.Remove(except);
 
             return players;
+        }
+
+        public void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        {
+            args.Cancel();
         }
     }
 }

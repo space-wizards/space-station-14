@@ -16,7 +16,7 @@
         Piercing: 0.5
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
     
 - type: entity
   parent: ClothingOuterStorageBase
@@ -36,7 +36,7 @@
         Piercing: 0.3
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -56,7 +56,7 @@
         Piercing: 0.4
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -76,7 +76,7 @@
         Piercing: 0.75
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase

@@ -1,11 +1,11 @@
 - type: job
   id: Psychologist
-  name: "psychologist"
+  name: job-name-psychologist
   startingGear: PsychologistGear
   departments:
   - Medical
   icon: "Psychologist"
-  supervisors: "the chief medical officer"
+  supervisors: job-supervisors-cmo
   access:
   - Medical
   - Maintenance

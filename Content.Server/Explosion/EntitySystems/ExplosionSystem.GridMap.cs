@@ -21,7 +21,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var grid = _mapManager.GetGrid(ev.GridId);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
-        _gridEdges[ev.GridId] = edges;
+        _gridEdges[ev.EntityUid] = edges;
 
         foreach (var tileRef in grid.GetAllTiles())
         {
@@ -32,8 +32,8 @@ public sealed partial class ExplosionSystem : EntitySystem
 
     private void OnGridRemoved(GridRemovalEvent ev)
     {
-        _airtightMap.Remove(ev.GridId);
-        _gridEdges.Remove(ev.GridId);
+        _airtightMap.Remove(ev.EntityUid);
+        _gridEdges.Remove(ev.EntityUid);
     }
 
     /// <summary>

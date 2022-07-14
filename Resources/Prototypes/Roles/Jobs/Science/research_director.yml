@@ -1,6 +1,6 @@
 - type: job
   id: ResearchDirector
-  name: "research director"
+  name: job-name-rd
   weight: 10
   startingGear: ResearchDirectorGear
   departments:
@@ -8,7 +8,7 @@
   - Science
   icon: "ResearchDirector"
   requireAdminNotify: true
-  supervisors: "the captain"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Research

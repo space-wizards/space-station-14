@@ -1,15 +1,24 @@
+using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
+using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
 namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
-    public sealed class ShuttleSystem : EntitySystem
+    public sealed partial class ShuttleSystem : EntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
+        private ISawmill _sawmill = default!;
 
         public const float TileMassMultiplier = 0.5f;
 
@@ -25,9 +34,16 @@ namespace Content.Server.Shuttles.Systems
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("shuttles");
+
+            InitializeEmergencyConsole();
+            InitializeEscape();
+
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
             SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
@@ -41,6 +57,20 @@ namespace Content.Server.Shuttles.Systems
             configManager.OnValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum, true);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateEmergencyConsole(frameTime);
+            UpdateHyperspace(frameTime);
+        }
+
+        private void OnRoundRestart(RoundRestartCleanupEvent ev)
+        {
+            CleanupEmergencyConsole();
+            CleanupEmergencyShuttle();
+            CleanupHyperspace();
+        }
+
         private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
         private void SetShuttleMaxAngularSpeed(float value) => ShuttleMaxAngularSpeed = value;
         private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
@@ -51,12 +81,13 @@ namespace Content.Server.Shuttles.Systems
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
-            configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
-            configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
-            configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum);
+            ShutdownEscape();
+            ShutdownEmergencyConsole();
+            _configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
+            _configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
+            _configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
+            _configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
+            _configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
@@ -104,6 +135,24 @@ namespace Content.Server.Shuttles.Systems
             if (component.Enabled)
             {
                 Enable(physicsComponent);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables a shuttle's piloting controls.
+        /// </summary>
+        public void SetPilotable(ShuttleComponent component, bool value)
+        {
+            if (component.CanPilot == value) return;
+            component.CanPilot = value;
+
+            foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
+            {
+                comp.CanPilot = value;
+
+                // I'm gonna pray if the UI is force closed and we block UI opens that BUI handles it.
+                if (!value)
+                    _uiSystem.GetUiOrNull(comp.Owner, ShuttleConsoleUiKey.Key)?.CloseAll();
             }
         }
 

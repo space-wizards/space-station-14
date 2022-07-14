@@ -67,7 +67,7 @@ namespace Content.Server.Access.Systems
             _accessSystem.SetAccessToJob(uid, job, extended);
 
             // and also change job title on a card id
-            _cardSystem.TryChangeJobTitle(uid, job.Name);
+            _cardSystem.TryChangeJobTitle(uid, job.LocalizedName);
         }
     }
 }

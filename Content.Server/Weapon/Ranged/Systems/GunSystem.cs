@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Damage.Systems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Melee;
 using Content.Server.Weapon.Ranged.Components;
@@ -6,7 +7,6 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Sound;
-using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -15,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
@@ -23,7 +22,7 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly EffectSystem _effects = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
 
@@ -116,6 +115,9 @@ public sealed partial class GunSystem : SharedGunSystem
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, entityDirection.ToAngle(), hitscan, result.HitEntity);
 
+                        if (hitscan.StaminaDamage > 0f)
+                            _stamina.TakeStaminaDamage(result.HitEntity, hitscan.StaminaDamage);
+
                         var dmg = hitscan.Damage;
 
                         if (dmg != null)
@@ -163,7 +165,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (user != null)
         {
             var projectile = EnsureComp<ProjectileComponent>(uid);
-            projectile.IgnoreEntity(user.Value);
+            Projectiles.SetShooter(projectile, user.Value);
         }
 
         Transform(uid).WorldRotation = direction.ToWorldAngle();
@@ -212,17 +214,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}
 
-    protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        // TODO: Fucking bad
+        var filter = Filter.Pvs(uid, entityManager: EntityManager);
+
         if (TryComp<ActorComponent>(user, out var actor))
-        {
-            _effects.CreateParticle(message, actor.PlayerSession);
-        }
-        else
-        {
-            _effects.CreateParticle(message);
-        }
+            filter.RemovePlayer(actor.PlayerSession);
+
+        RaiseNetworkEvent(message, filter);
     }
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)

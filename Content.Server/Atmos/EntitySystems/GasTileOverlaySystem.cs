@@ -109,10 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_overlay.ContainsKey(ev.GridId))
-            {
-                _overlay.Remove(ev.GridId);
-            }
+            _overlay.Remove(ev.EntityUid);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -143,9 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>true if updated</returns>
         private bool TryRefreshTile(GridAtmosphereComponent gridAtmosphere, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = _atmosphereSystem.GetTileAtmosphere(gridAtmosphere, indices);
-
-            if (tile == null)
+            if (!gridAtmosphere.Tiles.TryGetValue(indices, out var tile))
             {
                 overlayData = default;
                 return false;

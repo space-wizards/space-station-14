@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -56,7 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnNukeExploded(NukeExplodedEvent ev)
     {
-    	if (!Enabled)
+    	if (!RuleAdded)
             return;
 
         _opsWon = true;
@@ -65,7 +65,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
@@ -78,7 +78,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
@@ -93,7 +93,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawning(RulePlayerSpawningEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         _aliveNukeops.Clear();
@@ -193,9 +193,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         foreach (var uid in _stationSystem.Stations)
         {
-            var grid = Comp<IMapGridComponent>(uid).Grid;
-
-            aabb = aabb?.Union(grid.WorldAABB) ?? grid.WorldAABB;
+            if (TryComp<StationDataComponent>(uid, out var stationData))
+            {
+                foreach (var grid in stationData.Grids)
+                {
+                    if (TryComp<IMapGridComponent>(grid, out var gridComp))
+                        aabb = aabb?.Union(gridComp.Grid.WorldAABB) ?? gridComp.Grid.WorldAABB;
+                }
+            }
         }
 
         if (aabb != null)
@@ -204,12 +209,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
         }
 
-        var (_, gridId) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
+        var (_, gridUid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
         {
             Offset = center + MathF.Max(minRadius, minRadius) + 1000f,
         });
 
-        if (!gridId.HasValue)
+        if (!gridUid.HasValue)
         {
             Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
             foreach (var session in operatives)
@@ -219,7 +224,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        var gridUid = _mapManager.GetGridEuid(gridId.Value);
         // TODO: Loot table or something
         var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
         var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
@@ -239,7 +243,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid.Value).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 
@@ -288,7 +292,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.NukeopsMinPlayers);
@@ -307,11 +311,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
     }
 
-
-    public override void Started(GameRuleConfiguration _)
+    public override void Started()
     {
         _opsWon = false;
     }
 
-    public override void Ended(GameRuleConfiguration _) { }
+    public override void Ended() { }
 }

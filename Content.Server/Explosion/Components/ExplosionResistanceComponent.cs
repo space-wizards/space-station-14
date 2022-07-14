@@ -16,10 +16,10 @@ namespace Content.Server.Explosion.Components;
 public sealed class ExplosionResistanceComponent : Component
 {
     /// <summary>
-    ///     The resistance values for this component, This fraction is added to the total resistance.
+    ///     The explosive resistance coefficient, This fraction is multiplied into the total resistance.
     /// </summary>
-    [DataField("resistance")]
-    public float GlobalResistance = 0;
+    [DataField("damageCoefficient")]
+    public float DamageCoefficient = 1;
 
     /// <summary>
     ///     Like <see cref="GlobalResistance"/>, but specified specific to each explosion type for more customizability.

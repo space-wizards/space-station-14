@@ -29,7 +29,7 @@ namespace Content.Server.Headset
                 args.PushMarkup(Loc.GetString("examine-headset-channel",
                     ("color", proto.Color),
                     ("key", proto.KeyCode),
-                    ("id", proto.Name),
+                    ("id", proto.LocalizedName),
                     ("freq", proto.Frequency)));
             }
 

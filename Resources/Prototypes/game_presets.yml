@@ -6,6 +6,8 @@
   name: extended-title
   showInVote: false #2boring2vote
   description: extended-description
+  rules:
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Secret
@@ -38,6 +40,7 @@
   showInVote: false
   rules:
     - Traitor
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Suspicion
@@ -79,6 +82,22 @@
   showInVote: false
   rules:
     - Nukeops
+    - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Zombie
+  alias:
+    - zombie
+    - zombies
+    - Zombies
+    - zz14
+    - zomber
+  name: zombie-title
+  description: zombie-description
+  showInVote: false
+  rules:
+    - Zombie
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Pirates
@@ -89,3 +108,4 @@
   showInVote: false
   rules:
     - Pirates
+    - BasicStationEventScheduler
