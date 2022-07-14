@@ -40,7 +40,9 @@
       state: artifact_container_icon
     - type: EntityStorage
       Capacity: 1
-    - type: ArtifactStorage 
+      whitelist:
+        components:
+        - Artifact
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: PlaceableSurface

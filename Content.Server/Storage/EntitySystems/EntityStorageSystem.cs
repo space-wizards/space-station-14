@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -143,16 +144,20 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate));
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+
+        var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
         
         var count = 0;
         foreach (var entity in ev.Contents)
         {
-            if (!ev.ContentsWhitelist.Contains(entity))
-                if (!CanFit(entity, uid))
+            if (!ev.BypassChecks.Contains(entity))
+            {
+                if (!CanFit(entity, uid, component.Whitelist))
                     continue;
-            
+            }
+
             if (!AddToContents(entity, uid, component))
                 continue;
 
@@ -279,7 +284,7 @@ public sealed class EntityStorageSystem : EntitySystem
         return Insert(toAdd, container, component);
     }
 
-    public bool CanFit(EntityUid toInsert, EntityUid container)
+    public bool CanFit(EntityUid toInsert, EntityUid container, EntityWhitelist? whitelist)
     {
         // conditions are complicated because of pizzabox-related issues, so follow this guide
         // 0. Accomplish your goals at all costs.
@@ -296,13 +301,12 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        // checks
-        // TODO: Make the others sub to it.
-        var targetIsItem = HasComp<SharedItemComponent>(toInsert);
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
         var storageIsItem = HasComp<SharedItemComponent>(container);
 
-        var allowedToEat = targetIsItem;
+        var allowedToEat = whitelist == null
+            ? HasComp<SharedItemComponent>(toInsert)
+            : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
