@@ -15,5 +15,5 @@ public sealed class FTLDestinationComponent : Component
     /// Is this destination visible but available to be warped to?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
-    public bool Enabled;
+    public bool Enabled = true;
 }

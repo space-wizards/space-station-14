@@ -3,6 +3,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
@@ -45,6 +46,25 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private const float Buffer = 5f;
 
+    private void InitializeFTL()
+    {
+        SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
+        SubscribeLocalEvent<FTLDestinationComponent, EntityPausedEvent>(OnDestinationPause);
+    }
+
+    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, EntityPausedEvent args)
+    {
+        _console.RefreshShuttleConsoles();
+    }
+
+    private void OnStationGridAdd(StationGridAddedEvent ev)
+    {
+        if (TryComp<PhysicsComponent>(ev.GridId, out var body) && body.Mass > 500f)
+        {
+            AddFTLDestination(ev.GridId, true);
+        }
+    }
+
     /// <summary>
     /// Adds a target for hyperspace to every shuttle console.
     /// </summary>
@@ -85,6 +105,7 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetCoordinates = coordinates;
+        hyperspace.Dock = false;
         _console.RefreshShuttleConsoles();
     }
 
@@ -94,7 +115,8 @@ public sealed partial class ShuttleSystem
     public void FTLTravel(ShuttleComponent component,
         EntityUid target,
         float startupTime = DefaultStartupTime,
-        float hyperspaceTime = DefaultTravelTime)
+        float hyperspaceTime = DefaultTravelTime,
+        bool dock = false)
     {
         if (!TrySetupFTL(component, out var hyperspace))
             return;
@@ -103,6 +125,7 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetUid = target;
+        hyperspace.Dock = dock;
         _console.RefreshShuttleConsoles();
     }
 
@@ -166,6 +189,12 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = 0f;
                     }
 
+                    if (comp.TravelSound != null)
+                    {
+                        comp.TravelStream = SoundSystem.Play(comp.TravelSound.GetSound(),
+                            Filter.Pvs(comp.Owner, 4f, entityManager: EntityManager), comp.TravelSound.Params);
+                    }
+
                     SetDockBolts(comp.Owner, true);
 
                     break;
@@ -190,11 +219,20 @@ public sealed partial class ShuttleSystem
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
-                        TryHyperspaceDock(shuttle, comp.TargetUid.Value);
+                        if (comp.Dock)
+                            TryHyperspaceDock(shuttle, comp.TargetUid.Value);
+                        else
+                            TryHyperspaceProximity(shuttle, comp.TargetUid.Value);
                     }
                     else
                     {
                         xform.Coordinates = comp.TargetCoordinates;
+                    }
+
+                    if (comp.TravelStream != null)
+                    {
+                        comp.TravelStream?.Stop();
+                        comp.TravelStream = null;
                     }
 
                     SoundSystem.Play(_arrivalSound.GetSound(),
@@ -295,6 +333,9 @@ public sealed partial class ShuttleSystem
         }
     }
 
+    /// <summary>
+    /// Tries to dock with the target grid, otherwise falls back to proximity.
+    /// </summary>
     private bool TryHyperspaceDock(ShuttleComponent component, EntityUid targetUid)
     {
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
@@ -318,6 +359,17 @@ public sealed partial class ShuttleSystem
            return true;
         }
 
+        TryHyperspaceProximity(component, targetUid, xform, targetXform);
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to arrive nearby without overlapping with other grids.
+    /// </summary>
+    private bool TryHyperspaceProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
+    {
+        if (!Resolve(targetUid, ref targetXform) || targetXform.MapUid == null || !Resolve(component.Owner, ref xform)) return false;
+
         var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.WorldAABB;
         Box2? aabb = null;
 
@@ -331,7 +383,7 @@ public sealed partial class ShuttleSystem
         aabb ??= new Box2();
 
         var minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height);
-        var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 10f);
+        var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 256f);
 
         if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
         {

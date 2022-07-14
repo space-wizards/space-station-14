@@ -145,7 +145,7 @@ public sealed partial class ShuttleSystem
 
             if (_centcomm != null)
             {
-                AddFTLDestination(_centcomm.Value, true);
+                AddFTLDestination(_centcomm.Value, false);
             }
         }
     }

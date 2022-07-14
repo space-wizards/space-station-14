@@ -185,42 +185,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // TODO: Make this a prototype
-        var map = "/Maps/infiltrator.yml";
+        // so true PAUL!
+        var path = "/Maps/nukieplanet.yml";
 
-        var center = new Vector2();
-        var minRadius = 0f;
-        Box2? aabb = null;
+        var (_, grids) = _mapLoader.LoadMap(_mapManager.CreateMap(), "/Maps/nukieplanet.yml");
 
-        foreach (var uid in _stationSystem.Stations)
+        if (grids.Count == 0)
         {
-            if (TryComp<StationDataComponent>(uid, out var stationData))
-            {
-                foreach (var grid in stationData.Grids)
-                {
-                    if (TryComp<IMapGridComponent>(grid, out var gridComp))
-                        aabb = aabb?.Union(gridComp.Grid.WorldAABB) ?? gridComp.Grid.WorldAABB;
-                }
-            }
-        }
-
-        if (aabb != null)
-        {
-            center = aabb.Value.Center;
-            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
-        }
-
-        var (_, gridUid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
-        {
-            Offset = center + MathF.Max(minRadius, minRadius) + 1000f,
-        });
-
-        if (!gridUid.HasValue)
-        {
-            Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
-            foreach (var session in operatives)
-            {
-                ev.PlayerPool.Add(session);
-            }
+            Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return;
         }
 
@@ -236,14 +208,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // Forgive me for hardcoding prototypes
         foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
+            if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
 
-            spawns.Add(xform.Coordinates);
+            foreach (var grid in grids)
+            {
+                if (xform.ParentUid == grid)
+                {
+                    spawns.Add(xform.Coordinates);
+                    break;
+                }
+            }
         }
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid.Value).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(grids[0]).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 

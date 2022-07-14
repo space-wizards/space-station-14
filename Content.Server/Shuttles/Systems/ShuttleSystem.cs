@@ -38,6 +38,7 @@ namespace Content.Server.Shuttles.Systems
 
             InitializeEmergencyConsole();
             InitializeEscape();
+            InitializeFTL();
 
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -143,17 +144,7 @@ namespace Content.Server.Shuttles.Systems
         /// </summary>
         public void SetPilotable(ShuttleComponent component, bool value)
         {
-            if (component.CanPilot == value) return;
             component.CanPilot = value;
-
-            foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
-            {
-                comp.CanPilot = value;
-
-                // I'm gonna pray if the UI is force closed and we block UI opens that BUI handles it.
-                if (!value)
-                    _uiSystem.GetUiOrNull(comp.Owner, ShuttleConsoleUiKey.Key)?.CloseAll();
-            }
         }
 
         public void Toggle(ShuttleComponent component)
@@ -176,7 +167,6 @@ namespace Content.Server.Shuttles.Systems
         {
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
-            //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
             component.LinearDamping = ShuttleIdleLinearDamping;
             component.AngularDamping = ShuttleIdleAngularDamping;

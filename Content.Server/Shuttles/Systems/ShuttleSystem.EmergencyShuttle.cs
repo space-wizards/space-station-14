@@ -132,7 +132,6 @@ public sealed partial class ShuttleSystem
        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
-       SetPilotable(component, false);
 
        if (shuttleDocks.Count > 0)
        {
@@ -254,6 +253,8 @@ public sealed partial class ShuttleSystem
            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
            return;
        }
+
+       SetPilotable(shuttle, false);
 
        if (TryHyperspaceDock(shuttle, targetGrid.Value))
        {

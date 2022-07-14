@@ -1,3 +1,5 @@
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 
 namespace Content.Server.Shuttles.Components;
@@ -28,6 +30,24 @@ public sealed class FTLComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("targetCoordinates")]
     public EntityCoordinates TargetCoordinates;
+
+    /// <summary>
+    /// Should we dock with the target when arriving or show up nearby.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("dock")]
+    public bool Dock;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundTravel")]
+    public SoundSpecifier? TravelSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_progress.ogg")
+    {
+        Params =
+        {
+            Volume = -10,
+            Loop = true,
+        }
+    };
+
+    public IPlayingAudioStream? TravelStream;
 }
 
 public enum FTLState : byte

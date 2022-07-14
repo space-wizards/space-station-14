@@ -3,7 +3,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -15,7 +14,6 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
@@ -65,7 +63,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _shuttle.FTLTravel(shuttle, args.Destination, _shuttle.TransitTime);
+            _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
         }
 
         private void OnDock(DockEvent ev)
@@ -111,7 +109,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
         {
-            if (!component.CanPilot || !TryPilot(args.User, uid))
+            if (!TryPilot(args.User, uid))
                 args.Cancel();
         }
 
@@ -260,7 +258,6 @@ namespace Content.Server.Shuttles.Systems
             var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
-            component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             var destinations = new List<(EntityUid, string, bool)>();
@@ -275,15 +272,28 @@ namespace Content.Server.Shuttles.Systems
                 var locked = HasComp<FTLComponent>(shuttle?.Owner);
 
                 // Can't cache it because it may have a whitelist for the particular console.
+                // Include paused as we still want to show centcomm.
                 foreach (var comp in EntityQuery<FTLDestinationComponent>(true))
                 {
-                    if (comp.Whitelist?.IsValid(component.Owner) == false) continue;
-                    var name = metaQuery.GetComponent(comp.Owner).EntityName;
+                    // Can't warp to itself or if it's not on the whitelist.
+                    if (comp.Owner == shuttle?.Owner ||
+                        comp.Whitelist?.IsValid(component.Owner) == false) continue;
+
+                    var meta = metaQuery.GetComponent(comp.Owner);
+                    var name = meta.EntityName;
 
                     if (string.IsNullOrEmpty(name))
-                        name = Loc.GetString("unknown");
+                        name = Loc.GetString("shuttle-console-unknown");
 
-                    destinations.Add((comp.Owner, name, !locked && comp.Enabled));
+                    var canTravel = !locked && comp.Enabled && !Paused(comp.Owner, meta);
+
+                    // Can't travel to same map.
+                    if (canTravel && consoleXform?.MapUid == Transform(comp.Owner).MapUid)
+                    {
+                        canTravel = false;
+                    }
+
+                    destinations.Add((comp.Owner, name, canTravel));
                 }
             }
 

@@ -106,7 +106,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || HasComp<FTLComponent>(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
