@@ -38,7 +38,7 @@
         </PanelContainer>
         <BoxContainer Name="RightDisplay"
                       VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
+                      HorizontalAlignment="Right"
                       MinWidth="256"
                       Align="Center"
                       Orientation="Vertical">

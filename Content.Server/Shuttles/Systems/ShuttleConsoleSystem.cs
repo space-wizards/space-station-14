@@ -51,12 +51,21 @@ namespace Content.Server.Shuttles.Systems
         {
             if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest)) return;
 
-            if (dest.Whitelist?.IsValid(uid, EntityManager) == false) return;
-
             if (!dest.Enabled) return;
 
-            // TODO: Hyperspace
-            if (!TryComp<TransformComponent>(uid, out var xform) ||
+            EntityUid? entity = component.Owner;
+
+            var getShuttleEv = new ConsoleShuttleEvent
+            {
+                Console = uid,
+            };
+
+            RaiseLocalEvent(entity.Value, ref getShuttleEv);
+            entity = getShuttleEv.Console;
+
+            if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false) return;
+
+            if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
 
             if (HasComp<FTLComponent>(xform.GridUid))
@@ -213,7 +222,7 @@ namespace Content.Server.Shuttles.Systems
             if (!this.IsPowered(consoleComponent.Owner, EntityManager) ||
                 !Resolve(consoleComponent.Owner, ref consoleXform) ||
                 !consoleXform.Anchored ||
-                consoleXform.GridID != Transform(shuttleComponent.Owner).GridID)
+                consoleXform.GridUid != Transform(shuttleComponent.Owner).GridUid)
             {
                 return;
             }
@@ -267,7 +276,7 @@ namespace Content.Server.Shuttles.Systems
                 Console = entity,
             };
 
-            RaiseLocalEvent(entity.Value, ref getShuttleEv, false);
+            RaiseLocalEvent(entity.Value, ref getShuttleEv);
             entity = getShuttleEv.Console;
 
             TryComp<TransformComponent>(entity, out var consoleXform);
@@ -288,13 +297,13 @@ namespace Content.Server.Shuttles.Systems
             }
 
             // Mass too large
-            if (!TryComp<PhysicsComponent>(shuttle?.Owner, out var shuttleBody) ||
-                shuttleBody.Mass < 1000f)
+            if (entity != null && shuttle?.Owner != null && (!TryComp<PhysicsComponent>(shuttle?.Owner, out var shuttleBody) ||
+                shuttleBody.Mass < 1000f))
             {
                 var metaQuery = GetEntityQuery<MetaDataComponent>();
 
                 // Can't go anywhere when in FTL.
-                var locked = shuttleFtl != null;
+                var locked = shuttleFtl != null || Paused(shuttle!.Owner);
 
                 // Can't cache it because it may have a whitelist for the particular console.
                 // Include paused as we still want to show centcomm.
@@ -302,7 +311,7 @@ namespace Content.Server.Shuttles.Systems
                 {
                     // Can't warp to itself or if it's not on the whitelist.
                     if (comp.Owner == shuttle?.Owner ||
-                        comp.Whitelist?.IsValid(component.Owner) == false) continue;
+                        comp.Whitelist?.IsValid(entity.Value) == false) continue;
 
                     var meta = metaQuery.GetComponent(comp.Owner);
                     var name = meta.EntityName;

@@ -119,18 +119,22 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 HorizontalAlignment = HAlignment.Center,
             });
         }
-
-        foreach (var destination in destinations)
+        else
         {
-            var button = new Button()
-            {
-                Disabled = !destination.Enabled,
-                Text = destination.Destination,
-            };
+            destinations.Sort((x, y) => string.Compare(x.Destination, y.Destination, StringComparison.Ordinal));
 
-            _destinations[button] = destination.Entity;
-            button.OnPressed += OnHyperspacePressed;
-            HyperspaceDestinations.AddChild(button);
+            foreach (var destination in destinations)
+            {
+                var button = new Button()
+                {
+                    Disabled = !destination.Enabled,
+                    Text = destination.Destination,
+                };
+
+                _destinations[button] = destination.Entity;
+                button.OnPressed += OnHyperspacePressed;
+                HyperspaceDestinations.AddChild(button);
+            }
         }
 
         string stateText;

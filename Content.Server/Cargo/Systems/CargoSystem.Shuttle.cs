@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
@@ -16,7 +15,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState.Components;
-
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -41,6 +39,7 @@ public sealed partial class CargoSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
+    [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
 
     public MapId? CargoMap { get; private set; }
@@ -157,7 +156,6 @@ public sealed partial class CargoSystem
         var orders = GetProjectedOrders(orderDatabase, shuttle);
         var shuttleName = orderDatabase?.Shuttle != null ? MetaData(orderDatabase.Shuttle.Value).EntityName : string.Empty;
 
-        // TODO: Loc
         _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Shuttle)?.SetState(
             new CargoShuttleConsoleBoundUserInterfaceState(
                 station != null ? MetaData(station.Value).EntityName : Loc.GetString("cargo-shuttle-console-station-unknown"),
@@ -395,6 +393,7 @@ public sealed partial class CargoSystem
         AddCargoContents(shuttle, orderDatabase);
         UpdateOrders(orderDatabase);
         UpdateShuttleCargoConsoles(shuttle);
+        _console.RefreshShuttleConsoles();
 
         _sawmill.Info($"Retrieved cargo shuttle {ToPrettyString(shuttle.Owner)} from {ToPrettyString(orderDatabase.Owner)}");
     }
@@ -496,7 +495,7 @@ public sealed partial class CargoSystem
         };
 
         SellPallets(shuttle, bank);
-
+        _console.RefreshShuttleConsoles();
         SendToCargoMap(orderDatabase.Shuttle.Value);
     }
 

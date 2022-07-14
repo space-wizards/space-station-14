@@ -69,6 +69,11 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private bool _launchedShuttles;
 
+    /// <summary>
+    /// Have we announced the launch?
+    /// </summary>
+    private bool _announced;
+
     private void InitializeEmergencyConsole()
     {
         _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime, true);
@@ -106,6 +111,13 @@ public sealed partial class ShuttleSystem
 
         _consoleAccumulator -= frameTime;
 
+        // No early launch but we're under the timer.
+        if (!_launchedShuttles && _consoleAccumulator <= _authorizeTime)
+        {
+            if (!EarlyLaunchAuthorized)
+                AnnounceLaunch();
+        }
+
         // Imminent departure
         if (!_launchedShuttles && _consoleAccumulator <= DefaultStartupTime)
         {
@@ -131,8 +143,6 @@ public sealed partial class ShuttleSystem
                             _centcomm.Value, _consoleAccumulator, TransitTime);
                     }
                 }
-
-                AnnounceLaunch();
             }
         }
 
@@ -145,9 +155,10 @@ public sealed partial class ShuttleSystem
             _roundEndCancelToken = new CancellationTokenSource();
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
+            // Guarantees that emergency shuttle arrives first before anyone else can FTL.
             if (_centcomm != null)
                 AddFTLDestination(_centcomm.Value, true);
-            
+
         }
     }
 
@@ -221,6 +232,7 @@ public sealed partial class ShuttleSystem
 
     private void CleanupEmergencyConsole()
     {
+        _announced = false;
         _roundEndCancelToken = null;
         _launchedShuttles = false;
         _consoleAccumulator = 0f;
@@ -267,10 +279,10 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= DefaultStartupTime) return false;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= _authorizeTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
-        _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
+        _consoleAccumulator =_authorizeTime;
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
         AnnounceLaunch();
@@ -280,6 +292,9 @@ public sealed partial class ShuttleSystem
 
     private void AnnounceLaunch()
     {
+        if (_announced) return;
+
+        _announced = true;
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
             playDefaultSound: false,
