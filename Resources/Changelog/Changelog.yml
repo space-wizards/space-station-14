@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: You can't unstick C4 from great distance or while your character in
-      handcuffs., type: Fix}
-  id: 1440
-  time: '2022-05-02T22:50:11.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added the industrial welder and advanced industrial welders to the game.
@@ -2951,3 +2945,8 @@ Entries:
   - {message: Fixed blinding., type: Fix}
   id: 1939
   time: '2022-07-14T11:58:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Recoil has been added back in., type: Tweak}
+  id: 1940
+  time: '2022-07-14T12:01:25.0000000+00:00'
