@@ -144,7 +144,7 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Open = false;
 
         var translation = xform.WorldMatrix.Transform(component.EnteringOffset) - xform.WorldPosition;
-        var reduced = _lookup.GetWorldAABB(uid).Translated(translation).Enlarged(component.EnteringRange);
+        var reduced = _lookup.GetWorldAABB(uid, xform).Translated(translation).Enlarged(component.EnteringRange);
         var entities = _lookup.GetEntitiesIntersecting(grid, reduced, LookupFlags.Approximate);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
