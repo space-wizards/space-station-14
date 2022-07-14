@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Shared.Roles;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.Map;
@@ -20,8 +19,6 @@ namespace Content.Server.Traitor.Uplink.Account
         private readonly UplinkListingSytem _listingSystem = default!;
         [Dependency]
         private readonly SharedStackSystem _stackSystem = default!;
-
-        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         private readonly HashSet<UplinkAccount> _accounts = new();
 
