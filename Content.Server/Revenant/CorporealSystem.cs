@@ -51,7 +51,7 @@ public sealed class CorporealSystem : EntitySystem
         }
         if (TryComp<EyeComponent>(uid, out var eye))
         {
-            eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
+            eye.DrawFov = true;
         }
 
         Dirty(MetaData(uid));
@@ -80,7 +80,7 @@ public sealed class CorporealSystem : EntitySystem
         }
         if (TryComp<EyeComponent>(uid, out var eye))
         {
-            eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
+            eye.DrawFov = false;
         }
 
         Dirty(MetaData(uid));

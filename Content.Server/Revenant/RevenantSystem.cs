@@ -200,12 +200,19 @@ public sealed class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Target)),
             args.Target, Filter.Pvs(args.Target), PopupType.LargeCaution);
 
-        var dspec = new DamageSpecifier();
-        dspec.DamageDict.Add("Cellular", 500);
-        _damage.TryChangeDamage(args.Target, dspec, true);
-
         if (_mobState.IsAlive(args.Target))
             component.MaxEssence += 5;
+
+        if (TryComp<MobStateComponent>(args.Target, out var mobstate))
+        {
+            var damage = _mobState.GetEarliestDeadState(mobstate, 0)?.threshold;
+            if (damage != null)
+            {
+                DamageSpecifier dspec = new();
+                dspec.DamageDict.Add("Cellular", damage.Value);
+                _damage.TryChangeDamage(args.Target, dspec, true);
+            }
+        }
 
         essence.Harvested = true;
         component.Essence = Math.Min(component.Essence + essence.EssenceAmount, component.MaxEssence);
@@ -241,10 +248,10 @@ public sealed class RevenantSystem : EntitySystem
                 continue;
             rev.Accumulator -= 10f;
 
-            if (rev.Essence < rev.EssenceEquilibrium)
+            if (rev.Essence < rev.MaxEssence)
             {
                 rev.Essence += rev.EssencePerSecond;
-                rev.Essence = Math.Min(rev.Essence, rev.EssenceEquilibrium); //you're not squeaking out any extra essence
+                rev.Essence = Math.Min(rev.Essence, rev.MaxEssence); //you're not squeaking out any extra essence
             }
         }
     }

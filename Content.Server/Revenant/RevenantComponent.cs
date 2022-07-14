@@ -15,19 +15,19 @@ public sealed class RevenantComponent : Component
     /// The total amount of Essence the revenant has. Functions
     /// as health and is regenerated.
     /// </summary>
-    [ViewVariables, DataField("essence")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public float Essence = 75;
 
-    [DataField("maxEssence")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxEssence")]
     public float MaxEssence = 75;
 
-    [DataField("essenceEquilibrium")]
-    public float EssenceEquilibrium = 75;
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
+    public float MaxEssenceUpgradeAmount = 10;
 
     [DataField("damageToEssenceCoefficient")]
     public float DamageToEssenceCoefficient = 0.75f;
 
-    [DataField("essencePerSecond")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
     public float EssencePerSecond = 0.5f;
 
     [DataField("soulSearchDuration")]
