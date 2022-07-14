@@ -5,12 +5,6 @@ namespace Content.Server.Shuttles.Components
     [RegisterComponent]
     public sealed class ShuttleComponent : Component
     {
-        /// <summary>
-        /// Should controls be enabled or disabled on this shuttle.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanPilot = true;
-
         [ViewVariables]
         public bool Enabled = true;
 
@@ -41,11 +35,5 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables]
         public DirectionFlag ThrustDirections = DirectionFlag.None;
-
-        /// <summary>
-        /// Identifier as a hyperspace destination. Any consoles with this destination can travel there.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("hyperspaceIdentifier")]
-        public string? HyperspaceIdentifier;
     }
 }

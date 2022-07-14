@@ -218,17 +218,18 @@ public sealed class RadarControl : Control
                     label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
+                        FontColorOverride = Color.Aquamarine,
                     };
 
                     control = new PanelContainer()
                     {
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Top,
+                        HorizontalAlignment = HAlignment.Center,
+                        VerticalAlignment = VAlignment.Center,
                         Children =
                         {
                             label
                         },
-                        StyleClasses  = { StyleNano.StyleClassTooltipPanel },
+                        StyleClasses  = { StyleNano.StyleClassBorderedWindowPanel },
                     };
 
                     _iffControls[grid.GridEntityId] = control;

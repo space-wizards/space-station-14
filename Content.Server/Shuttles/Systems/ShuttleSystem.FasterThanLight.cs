@@ -178,7 +178,6 @@ public sealed partial class ShuttleSystem
             dest.Enabled = false;
         }
 
-        SetPilotable(shuttle, false);
         // TODO: Maybe move this to docking instead?
         SetDocks(uid, false);
 
@@ -245,10 +244,7 @@ public sealed partial class ShuttleSystem
                         body.AngularDamping = ShuttleIdleAngularDamping;
                     }
 
-                    if (TryComp<ShuttleComponent>(comp.Owner, out var shuttle))
-                    {
-                        SetPilotable(shuttle, true);
-                    }
+                    TryComp<ShuttleComponent>(comp.Owner, out var shuttle);
 
                     if (comp.TargetUid != null && shuttle != null)
                     {

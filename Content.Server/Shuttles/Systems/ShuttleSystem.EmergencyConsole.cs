@@ -131,6 +131,8 @@ public sealed partial class ShuttleSystem
                             _centcomm.Value, _consoleAccumulator, TransitTime);
                     }
                 }
+
+                AnnounceLaunch();
             }
         }
 
@@ -144,9 +146,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             if (_centcomm != null)
-            {
-                AddFTLDestination(_centcomm.Value, false);
-            }
+                AddFTLDestination(_centcomm.Value, true);
+            
         }
     }
 
@@ -266,20 +267,25 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived) return false;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= DefaultStartupTime) return false;
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = MathF.Max(1f, MathF.Min(_consoleAccumulator, _authorizeTime));
         EarlyLaunchAuthorized = true;
         RaiseLocalEvent(new EmergencyShuttleAuthorizedEvent());
+        AnnounceLaunch();
+        UpdateAllEmergencyConsoles();
+        return true;
+    }
+
+    private void AnnounceLaunch()
+    {
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
             playDefaultSound: false,
             colorOverride: DangerColor);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
-        UpdateAllEmergencyConsoles();
-        return true;
     }
 
     public bool DelayEmergencyRoundEnd()

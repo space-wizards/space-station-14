@@ -139,14 +139,6 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        /// <summary>
-        /// Enables or disables a shuttle's piloting controls.
-        /// </summary>
-        public void SetPilotable(ShuttleComponent component, bool value)
-        {
-            component.CanPilot = value;
-        }
-
         public void Toggle(ShuttleComponent component)
         {
             if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
