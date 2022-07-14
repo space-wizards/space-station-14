@@ -139,6 +139,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     Text = Loc.GetString("shuttle-console-dock-button", ("suffix", suffix)),
                     ToggleMode = true,
                     Pressed = pressed,
+                    Margin = new Thickness(0f, 1f),
                 };
 
                 if (pressed)

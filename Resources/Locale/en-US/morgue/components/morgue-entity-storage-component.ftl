@@ -1,4 +1,3 @@
-morgue-entity-storage-component-cannot-open-no-space = There's no room for the tray to extend!
 morgue-entity-storage-component-on-examine-details-body-has-soul = The content light is [color=green]green[/color], this body might still be saved!
 morgue-entity-storage-component-on-examine-details-body-has-no-soul = The content light is [color=red]red[/color], there's a dead body in here! Oh wait...
 morgue-entity-storage-component-on-examine-details-has-contents = The content light is [color=yellow]yellow[/color], there's something in here.

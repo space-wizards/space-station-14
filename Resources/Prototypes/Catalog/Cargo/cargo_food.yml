@@ -33,4 +33,16 @@
   cost: 5000
   category: Food
   group: market
-  
+
+- type: cargoProduct
+  name: kvass tank crate
+  id: FoodCrateKvassTank
+  description: A tank with refreshing kvass, which helps so much in the heat.
+  icon:
+    sprite: Structures/Storage/kvass.rsi
+    state: kvass
+  product: CrateFoodKvassTank
+  cost: 2000
+  category: Food
+  group: market
+

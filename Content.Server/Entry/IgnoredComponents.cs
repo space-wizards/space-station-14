@@ -35,6 +35,8 @@ namespace Content.Server.Entry
             "AMEControllerVisuals",
             "AMEShieldingVisuals",
             "PipeColorVisuals",
+            "FireVisuals",
+            "CrematoriumVisuals",
         };
     }
 }

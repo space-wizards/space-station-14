@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Strip;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -28,7 +29,8 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title",("ownerName", IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName))}");
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
             _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCentered();

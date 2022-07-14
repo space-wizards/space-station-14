@@ -293,7 +293,7 @@ public sealed class RadarControl : Control
 
                 if (uiPosition.Length > RadarRange - DockScale) continue;
 
-                var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
+                var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
 
                 uiPosition.Y = -uiPosition.Y;
 

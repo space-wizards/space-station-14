@@ -104,7 +104,7 @@
       - state: practice
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgun
+    proto: PelletShotgunPractice
   - type: SpentAmmoVisuals
     state: "practice"
 

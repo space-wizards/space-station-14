@@ -317,3 +317,12 @@
   physicalDesc: strong-smelling
   color: "#485000"
   spritePath: rewriter.rsi
+
+- type: reagent
+  id: Kvass
+  name: reagent-name-kvass
+  parent: BaseDrink
+  desc: reagent-desc-kvass
+  physicalDesc: reagent-physical-desc-bubbly
+  color: "#381600"
+  spritePath: kvass.rsi

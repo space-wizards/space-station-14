@@ -5,16 +5,6 @@ namespace Content.Shared.Movement.Components
     public interface IMoverComponent : IComponent
     {
         /// <summary>
-        ///     Movement speed (m/s) that the entity walks.
-        /// </summary>
-        float CurrentWalkSpeed { get; }
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints.
-        /// </summary>
-        float CurrentSprintSpeed { get; }
-
-        /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>
         bool Sprinting { get; }

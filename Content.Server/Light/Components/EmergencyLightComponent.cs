@@ -12,6 +12,12 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         public EmergencyLightState State;
 
+        /// <summary>
+        ///     Is this emergency light forced on for some reason and cannot be disabled through normal means
+        ///     (i.e. delta alert level?)
+        /// </summary>
+        public bool ForciblyEnabled = false;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("wattage")]
         public float Wattage = 5;
