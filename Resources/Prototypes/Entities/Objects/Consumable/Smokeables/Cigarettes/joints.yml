@@ -17,7 +17,8 @@
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     slots: [ mask ]
-    heldPrefix: unlit
+    equippedPrefix: unlit
+  - type: Item
     size: 1
   - type: Construction
     graph: smokeableJoint
@@ -49,7 +50,8 @@
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
     slots: [ mask ]
-    heldPrefix: unlit
+    equippedPrefix: unlit
+  - type: Item
     size: 1
   - type: Construction
     graph: smokeableBlunt

@@ -5,9 +5,10 @@
   components:
   - type: Sprite
     state: icon
+  - type: Item
+    size: 50
   - type: Clothing
     slots: [belt]
-    size: 50
     quickEquip: false
     equipSound:
       path: /Audio/Items/belt_equip.ogg

@@ -756,8 +756,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
     heldPrefix: 0
@@ -859,7 +860,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    heldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -885,7 +886,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    heldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:

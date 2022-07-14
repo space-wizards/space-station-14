@@ -58,8 +58,10 @@
   - type: Tag
     tags:
     - StringInstrument
-  - type: Clothing
+  - type: Item
+    sprite: Objects/Fun/Instruments/guitar.rsi
     size: 24
+  - type: Clothing
     quickEquip: false
     slots:
     - back
@@ -335,8 +337,10 @@
   - type: Tag
     tags:
     - BrassInstrument #Go figure.
-  - type: Clothing
+  - type: Item
+    sprite: Objects/Fun/Instruments/bike_horn.rsi
     size: 24
+  - type: Clothing
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]
     quickEquip: false

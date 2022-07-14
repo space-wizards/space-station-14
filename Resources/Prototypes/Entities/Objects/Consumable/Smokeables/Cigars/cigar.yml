@@ -18,7 +18,8 @@
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     slots: [ mask ]
-    heldPrefix: unlit
+    equippedPrefix: unlit
+  - type: Item
     size: 1
 
 - type: entity
@@ -34,5 +35,6 @@
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
     slots: [ mask ]
-    heldPrefix: unlit
+    equippedPrefix: unlit
+  - type: Item
     size: 1

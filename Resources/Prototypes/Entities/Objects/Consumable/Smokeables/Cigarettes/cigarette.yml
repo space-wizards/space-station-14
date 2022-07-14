@@ -20,7 +20,8 @@
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
     slots: [ mask ]
-    heldPrefix: unlit
+    equippedPrefix: unlit
+  - type: Item
     size: 1
   - type: Construction
     graph: smokeableCigarette
