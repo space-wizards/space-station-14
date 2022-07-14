@@ -45,7 +45,7 @@ public sealed class EntityStorageComponent : Component
 
     [ViewVariables]
     [DataField("EnteringRange")]
-    public float EnteringRange = -0.18f;
+    public float EnteringRange = 0.18f;
 
     [DataField("showContents")]
     public bool ShowContents;
