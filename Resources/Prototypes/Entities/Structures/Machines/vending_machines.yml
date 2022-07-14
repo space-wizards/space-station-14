@@ -916,6 +916,10 @@
       normalUnshaded: true
       broken: true
     - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#e687cc"
 
 # job clothing
 
