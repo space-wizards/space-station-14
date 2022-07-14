@@ -1,10 +1,4 @@
 Entries:
-- author: freeman2651
-  changes:
-  - {message: the health HUD icon for 100% health now only shows if you are actually
-      undamaged and at 100% health, type: Tweak}
-  id: 1445
-  time: '2022-05-03T09:53:06.0000000+00:00'
 - author: Putnam
   changes:
   - {message: Gas pumps now stop if overpressurized, type: Fix}
@@ -2953,3 +2947,9 @@ Entries:
     type: Tweak}
   id: 1944
   time: '2022-07-14T16:06:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that sometimes made it impossible to (un)weld an entity.,
+    type: Fix}
+  id: 1945
+  time: '2022-07-14T21:03:17.0000000+00:00'
