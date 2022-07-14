@@ -10,17 +10,17 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// <summary>
     ///     Maximum rate of magnitude restore towards 0 kick.
     /// </summary>
-    // private const float RestoreRateMax = 30f;
+    private const float RestoreRateMax = 120f;
 
     /// <summary>
     ///     Minimum rate of magnitude restore towards 0 kick.
     /// </summary>
-    // private const float RestoreRateMin = 2f;
+    private const float RestoreRateMin = 1f;
 
     /// <summary>
     ///     Time in seconds since the last kick that lerps RestoreRateMin and RestoreRateMax
     /// </summary>
-    // private const float RestoreRateRamp = 30f;
+    private const float RestoreRateRamp = 120f;
 
     /// <summary>
     ///     The maximum magnitude of the kick applied to the camera at any point.
@@ -48,10 +48,6 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        var restoreRateMax = 120f;
-        var restoreRateMin = 1f;
-        var restoreRateRamp = 120f;
-
         foreach (var entity in EntityManager.EntityQuery<SharedEyeComponent, CameraRecoilComponent>(true))
         {
             var recoil = entity.Item2;
@@ -66,7 +62,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
             {
                 var normalized = recoil.CurrentKick.Normalized;
                 recoil.LastKickTime += frameTime;
-                var restoreRate = MathHelper.Lerp(restoreRateMin, restoreRateMax, Math.Min(1, recoil.LastKickTime / restoreRateRamp));
+                var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, recoil.LastKickTime / RestoreRateRamp));
                 var restore = normalized * restoreRate * frameTime;
                 var (x, y) = recoil.CurrentKick - restore;
                 if (Math.Sign(x) != Math.Sign(recoil.CurrentKick.X)) x = 0;
