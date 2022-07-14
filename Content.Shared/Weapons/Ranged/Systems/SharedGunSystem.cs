@@ -49,13 +49,11 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected ISawmill Sawmill = default!;
 
-    private const float MuzzleFlashLifetime = 1f;
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
     protected const string AmmoExamineColor = "yellow";
     protected const string FireRateExamineColor = "yellow";
-    protected const string SafetyExamineColor = "lightgreen";
     protected const string ModeExamineColor = "cyan";
 
     public override void Initialize()
@@ -345,36 +343,17 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
-        var sprite = component.MuzzleFlash?.ToString();
+        var sprite = component.MuzzleFlash;
 
-        // TODO: AAAAA THIS MUZZLE FLASH CODE IS BAD
-        // NEEDS EFFECTS TO NOT BE BAD!
         if (sprite == null)
             return;
 
-        var time = Timing.CurTime;
-        var deathTime = time + TimeSpan.FromSeconds(MuzzleFlashLifetime);
-        // Offset the sprite so it actually looks like it's coming from the gun
-        var offset = new Vector2(0.0f, -0.5f);
+        var ev = new MuzzleFlashEvent(sprite);
 
-        var message = new EffectSystemMessage
-        {
-            EffectSprite = sprite,
-            Born = time,
-            DeathTime = deathTime,
-            AttachedEntityUid = gun,
-            AttachedOffset = offset,
-            //Rotated from east facing
-            Rotation = -MathF.PI / 2f,
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false
-        };
-
-        CreateEffect(message, user);
+        CreateEffect(gun, ev, user);
     }
 
-    protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
+    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
     protected sealed class GunComponentState : ComponentState
