@@ -649,15 +649,6 @@ namespace Content.Shared.Interaction
             if (afterInteractEvent.Handled)
                 return;
 
-            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                    return;
-            }
-
             if (target == null)
                 return;
 
