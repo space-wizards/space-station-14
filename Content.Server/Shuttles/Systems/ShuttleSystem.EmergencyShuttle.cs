@@ -165,7 +165,7 @@ public sealed partial class ShuttleSystem
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
                            dockedBounds).Any(o => o.GridEntityId != targetGrid))
                    {
-                       break;
+                       continue;
                    }
 
                    // Alright well the spawn is valid now to check how many we can connect

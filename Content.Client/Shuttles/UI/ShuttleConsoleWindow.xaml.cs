@@ -28,13 +28,15 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Stored by grid entityid then by states
     /// </summary>
-    private Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+    private readonly Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+
+    private readonly Dictionary<BaseButton, EntityUid> _destinations = new();
 
     public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
     public Action<EntityUid>? StartAutodockPressed;
     public Action<EntityUid>? StopAutodockPressed;
-    public Action<string>? DestinationPressed;
+    public Action<EntityUid>? DestinationPressed;
 
     public ShuttleConsoleWindow()
     {
@@ -92,15 +94,16 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         UpdateDocks(scc.Docks);
-        UpdateHyperspace(scc.Destinations);
+        UpdateFTL(scc.Destinations);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
         ShuttleModeDisplay.Pressed = scc.Mode == ShuttleMode.Strafing;
     }
 
-    private void UpdateHyperspace(List<(string Destination, bool Enabled)> destinations)
+    private void UpdateFTL(List<(EntityUid Entity, string Destination, bool Enabled)> destinations)
     {
         HyperspaceDestinations.DisposeAllChildren();
+        _destinations.Clear();
 
         if (destinations.Count == 0)
         {
@@ -119,6 +122,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                 Text = destination.Destination,
             };
 
+            _destinations[button] = destination.Entity;
             button.OnPressed += OnHyperspacePressed;
             HyperspaceDestinations.AddChild(button);
         }
@@ -126,9 +130,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnHyperspacePressed(BaseButton.ButtonEventArgs obj)
     {
-        var text = ((Button) obj.Button).Text;
-        if (text == null) return;
-        DestinationPressed?.Invoke(text);
+        var ent = _destinations[obj.Button];
+        DestinationPressed?.Invoke(ent);
     }
 
     #region Docking
@@ -148,8 +151,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockPorts.DisposeAllChildren();
         DockingScreen.Docks = _docks;
 
-
-        // TODO: Show Placeholder
         if (_shuttleUid != null && _docks.TryGetValue(_shuttleUid.Value, out var gridDocks))
         {
             var index = 1;

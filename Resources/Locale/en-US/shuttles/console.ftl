@@ -15,7 +15,7 @@ shuttle-console-dock-label = Docking ports
 shuttle-console-docked = {$index} (Docked)
 shuttle-console-dock-button = Dock {$suffix}
 
-shuttle-console-hyperspace-label = Hyperspace destinations
+shuttle-console-hyperspace-label = FTL destinations
 shuttle-console-hyperspace-none = No destinations found
 
 shuttle-console-unknown = Unknown

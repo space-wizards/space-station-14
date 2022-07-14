@@ -27,7 +27,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.OnClose += OnClose;
     }
 
-    private void OnDestinationPressed(string obj)
+    private void OnDestinationPressed(EntityUid obj)
     {
         SendMessage(new ShuttleConsoleDestinationMessage()
         {

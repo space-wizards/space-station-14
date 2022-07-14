@@ -50,23 +50,32 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Adds a target for hyperspace to every shuttle console.
     /// </summary>
-    /// <param name="uid">The target entityuid for the destination</param>
-    /// <param name="dockable">Whether the target is available to be docked at or whether we warp-in nearby</param>
-    /// <param name="available">Is the destination button visible</param>
-    public void AddHyperspaceDestination(EntityUid uid, bool dockable, bool available)
+    public FTLDestinationComponent AddFTLDestination(EntityUid uid, bool enabled)
     {
+        if (TryComp<FTLDestinationComponent>(uid, out var destination) && destination.Enabled == enabled) return destination;
 
+        destination = EnsureComp<FTLDestinationComponent>(uid);
+
+        if (HasComp<FTLComponent>(uid))
+        {
+            enabled = false;
+        }
+
+        destination.Enabled = enabled;
+        _console.RefreshShuttleConsoles();
+        return destination;
     }
 
-    public void RemoveHyperspaceDestination(EntityUid uid, bool dockable)
+    public void RemoveFTLDestination(EntityUid uid)
     {
-
+        if (!RemComp<FTLDestinationComponent>(uid)) return;
+        _console.RefreshShuttleConsoles();
     }
 
     /// <summary>
     /// Moves a shuttle from its current position to the target one. Goes through the hyperspace map while the timer is running.
     /// </summary>
-    public void Hyperspace(ShuttleComponent component,
+    public void FTLTravel(ShuttleComponent component,
         EntityCoordinates coordinates,
         float startupTime = DefaultStartupTime,
         float hyperspaceTime = DefaultTravelTime)
@@ -78,14 +87,13 @@ public sealed partial class ShuttleSystem
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
         hyperspace.TargetCoordinates = coordinates;
-
         _console.RefreshShuttleConsoles();
     }
 
     /// <summary>
     /// Moves a shuttle from its current position to docked on the target one. Goes through the hyperspace map while the timer is running.
     /// </summary>
-    public void Hyperspace(ShuttleComponent component,
+    public void FTLTravel(ShuttleComponent component,
         EntityUid target,
         float startupTime = DefaultStartupTime,
         float hyperspaceTime = DefaultTravelTime)
@@ -100,20 +108,25 @@ public sealed partial class ShuttleSystem
         _console.RefreshShuttleConsoles();
     }
 
-    private bool TrySetupHyperspace(EntityUid uid, [NotNullWhen(true)] out HyperspaceComponent? component)
+    private bool TrySetupHyperspace(EntityUid uid, [NotNullWhen(true)] out FTLComponent? component)
     {
         component = null;
 
-        if (HasComp<HyperspaceComponent>(uid))
+        if (HasComp<FTLComponent>(uid))
         {
             _sawmill.Warning($"Tried queuing {ToPrettyString(uid)} which already has HyperspaceComponent?");
             return false;
         }
 
+        if (TryComp<FTLDestinationComponent>(uid, out var dest))
+        {
+            dest.Enabled = false;
+        }
+
         // TODO: Maybe move this to docking instead?
         SetDocks(uid, false);
 
-        component = AddComp<HyperspaceComponent>(uid);
+        component = AddComp<FTLComponent>(uid);
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Pvs(component.Owner, GetSoundRange(component.Owner), entityManager: EntityManager), _startupSound.Params);
         return true;
@@ -121,7 +134,7 @@ public sealed partial class ShuttleSystem
 
     private void UpdateHyperspace(float frameTime)
     {
-        foreach (var comp in EntityQuery<HyperspaceComponent>())
+        foreach (var comp in EntityQuery<FTLComponent>())
         {
             comp.Accumulator -= frameTime;
 
@@ -133,10 +146,10 @@ public sealed partial class ShuttleSystem
             switch (comp.State)
             {
                 // Startup time has elapsed and in hyperspace.
-                case HyperspaceState.Starting:
+                case FTLState.Starting:
                     DoTheDinosaur(xform);
 
-                    comp.State = HyperspaceState.Travelling;
+                    comp.State = FTLState.Travelling;
                     SetupHyperspace();
 
                     var width = Comp<IMapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
@@ -157,7 +170,7 @@ public sealed partial class ShuttleSystem
 
                     break;
                 // Arrive.
-                case HyperspaceState.Travelling:
+                case FTLState.Travelling:
                     DoTheDinosaur(xform);
                     SetDockBolts(comp.Owner, false);
                     SetDocks(comp.Owner, true);
@@ -181,7 +194,13 @@ public sealed partial class ShuttleSystem
 
                     SoundSystem.Play(_arrivalSound.GetSound(),
                         Filter.Pvs(comp.Owner, GetSoundRange(comp.Owner), entityManager: EntityManager));
-                    RemComp<HyperspaceComponent>(comp.Owner);
+                    RemComp<FTLComponent>(comp.Owner);
+
+                    if (TryComp<FTLDestinationComponent>(comp.Owner, out var dest))
+                    {
+                        dest.Enabled = true;
+                    }
+
                     _console.RefreshShuttleConsoles();
                     break;
                 default:

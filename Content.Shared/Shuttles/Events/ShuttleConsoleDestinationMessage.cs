@@ -8,5 +8,5 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class ShuttleConsoleDestinationMessage : BoundUserInterfaceMessage
 {
-    public string Destination = string.Empty;
+    public EntityUid Destination;
 }

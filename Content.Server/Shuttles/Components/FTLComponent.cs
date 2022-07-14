@@ -3,13 +3,13 @@ using Robust.Shared.Map;
 namespace Content.Server.Shuttles.Components;
 
 /// <summary>
-/// Added to a component when it is queued or is travelling through hyperspace
+/// Added to a component when it is queued or is travelling via FTL.
 /// </summary>
 [RegisterComponent]
-public sealed class HyperspaceComponent : Component
+public sealed class FTLComponent : Component
 {
     [ViewVariables]
-    public HyperspaceState State = HyperspaceState.Starting;
+    public FTLState State = FTLState.Starting;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float StartupTime = 0f;
@@ -21,7 +21,7 @@ public sealed class HyperspaceComponent : Component
     public float Accumulator = 0f;
 
     /// <summary>
-    /// Target Uid to dock with at the end of hyperspace.
+    /// Target Uid to dock with at the end of FTL.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("targetUid")]
     public EntityUid? TargetUid;
@@ -30,7 +30,7 @@ public sealed class HyperspaceComponent : Component
     public EntityCoordinates TargetCoordinates;
 }
 
-public enum HyperspaceState : byte
+public enum FTLState : byte
 {
     Starting,
     Travelling,

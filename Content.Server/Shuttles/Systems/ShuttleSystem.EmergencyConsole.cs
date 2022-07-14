@@ -106,6 +106,7 @@ public sealed partial class ShuttleSystem
 
         _consoleAccumulator -= frameTime;
 
+        // Imminent departure
         if (!_launchedShuttles && _consoleAccumulator <= DefaultStartupTime)
         {
             _launchedShuttles = true;
@@ -119,20 +120,21 @@ public sealed partial class ShuttleSystem
                     if (Deleted(_centcomm))
                     {
                         // TODO: Need to get non-overlapping positions.
-                        Hyperspace(shuttle,
+                        FTLTravel(shuttle,
                             new EntityCoordinates(
                                 _mapManager.GetMapEntityId(_centcommMap.Value),
                                 Vector2.One * 1000f), _consoleAccumulator, _transitTime);
                     }
                     else
                     {
-                        Hyperspace(shuttle,
+                        FTLTravel(shuttle,
                             _centcomm.Value, _consoleAccumulator, _transitTime);
                     }
                 }
             }
         }
 
+        // Departed
         if (_consoleAccumulator <= 0f)
         {
             _launchedShuttles = true;
@@ -140,6 +142,11 @@ public sealed partial class ShuttleSystem
 
             _roundEndCancelToken = new CancellationTokenSource();
             Timer.Spawn((int) (_transitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
+
+            if (_centcomm != null)
+            {
+                AddFTLDestination(_centcomm.Value, true);
+            }
         }
     }
 

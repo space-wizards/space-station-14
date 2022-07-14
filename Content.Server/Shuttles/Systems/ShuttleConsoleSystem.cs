@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server.Station.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -48,30 +49,23 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component, ShuttleConsoleDestinationMessage args)
         {
-            var found = false;
+            if (!TryComp<FTLDestinationComponent>(args.Destination, out var dest)) return;
 
-            foreach (var dest in component.Destinations)
-            {
-                if (dest.Enabled && dest.Destination.Equals(args.Destination))
-                {
-                    found = true;
-                    break;
-                }
-            }
+            if (dest.Whitelist?.IsValid(uid, EntityManager) == false) return;
 
-            if (!found) return;
+            if (!dest.Enabled) return;
 
             // TODO: Hyperspace
             if (!TryComp<TransformComponent>(uid, out var xform) ||
                 !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
 
-            if (HasComp<HyperspaceComponent>(xform.GridUid))
+            if (HasComp<FTLComponent>(xform.GridUid))
             {
                 // TODO: Popup that they're in hyperspace.
                 return;
             }
 
-            _shuttle.Hyperspace(shuttle, EntityCoordinates.Invalid);
+            _shuttle.FTLTravel(shuttle, args.Destination);
         }
 
         private void OnDock(DockEvent ev)
@@ -269,14 +263,28 @@ namespace Content.Server.Shuttles.Systems
             component.CanPilot = shuttle is { CanPilot: true };
             var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
-            // TODO: Need some way to lock out shit already in hyperspace.
-            var locked = HasComp<HyperspaceComponent>(consoleXform?.GridUid);
+            var destinations = new List<(EntityUid, string, bool)>();
 
-            for (var i = 0; i < component.Destinations.Count; i++)
+            // Mass too large
+            if (!TryComp<PhysicsComponent>(shuttle?.Owner, out var shuttleBody) ||
+                shuttleBody.Mass < 1000f)
             {
-                var dest = component.Destinations[i];
-                dest.Enabled = locked;
-                component.Destinations[i] = dest;
+                var metaQuery = GetEntityQuery<MetaDataComponent>();
+
+                // Can't go anywhere when in FTL.
+                var locked = HasComp<FTLComponent>(shuttle?.Owner);
+
+                // Can't cache it because it may have a whitelist for the particular console.
+                foreach (var comp in EntityQuery<FTLDestinationComponent>(true))
+                {
+                    if (comp.Whitelist?.IsValid(component.Owner) == false) continue;
+                    var name = metaQuery.GetComponent(comp.Owner).EntityName;
+
+                    if (string.IsNullOrEmpty(name))
+                        name = Loc.GetString("unknown");
+
+                    destinations.Add((comp.Owner, name, !locked && comp.Enabled));
+                }
             }
 
             docks ??= GetAllDocks();
@@ -284,7 +292,7 @@ namespace Content.Server.Shuttles.Systems
             _ui.GetUiOrNull(component.Owner, ShuttleConsoleUiKey.Key)
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     mode,
-                    component.Destinations,
+                    destinations,
                     range,
                     consoleXform?.Coordinates,
                     consoleXform?.LocalRotation,

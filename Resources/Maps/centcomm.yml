@@ -447,6 +447,8 @@ entities:
   - pos: -1.5406153,-0.3539288
     parent: null
     type: Transform
+  - name: Central Command
+    type: MetaData
   - index: 0
     type: MapGrid
   - angularDamping: 100

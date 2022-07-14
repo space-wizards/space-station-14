@@ -8,11 +8,11 @@ namespace Content.Shared.Shuttles.BUIStates;
 public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfaceState
 {
     public readonly ShuttleMode Mode;
-    public List<(string Destination, bool Enabled)> Destinations;
+    public List<(EntityUid Entity, string Destination, bool Enabled)> Destinations;
 
     public ShuttleConsoleBoundInterfaceState(
         ShuttleMode mode,
-        List<(string Destination, bool Enabled)> destinations,
+        List<(EntityUid Entity, string Destination, bool Enabled)> destinations,
         float maxRange,
         EntityCoordinates? coordinates,
         Angle? angle,
