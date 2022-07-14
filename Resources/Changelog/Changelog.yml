@@ -1,10 +1,4 @@
 Entries:
-- author: Mirino97
-  changes:
-  - {message: Items failed to insert in containers should no longer drop to the ground!,
-    type: Fix}
-  id: 1443
-  time: '2022-05-03T03:05:23.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: NPCs can open doors to avoid pathfinder issues in the interim., type: Tweak}
@@ -2952,3 +2946,9 @@ Entries:
   - {message: Muzzle flashes now emit a point light., type: Tweak}
   id: 1942
   time: '2022-07-14T13:03:49.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed disposal junctions & other flip-able entities from becoming invisible
+      after flipping., type: Fix}
+  id: 1943
+  time: '2022-07-14T16:04:24.0000000+00:00'
