@@ -1,10 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: 'Delta Station now has an ore processor, and may or may not have some
-      decals.', type: Add}
-  id: 1438
-  time: '2022-05-02T22:43:33.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Requires a little more effort strip something off of someone., type: Tweak}
@@ -2952,3 +2946,8 @@ Entries:
       sheets., type: Fix}
   id: 1937
   time: '2022-07-14T11:42:47.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added hospital curtains, type: Add}
+  id: 1938
+  time: '2022-07-14T11:53:17.0000000+00:00'
