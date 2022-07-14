@@ -1,19 +1,16 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.Morgue
+namespace Content.Shared.Morgue;
+
+[Serializable, NetSerializable]
+public enum MorgueVisuals
 {
-    [Serializable, NetSerializable]
-    public enum MorgueVisuals
-    {
-        Open,
-        HasContents,
-        HasMob,
-        HasSoul,
-    }
+    HasMob,
+    HasSoul,
+}
 
-    [Serializable, NetSerializable]
-    public enum CrematoriumVisuals
-    {
-        Burning,
-    }
+[Serializable, NetSerializable]
+public enum CrematoriumVisuals
+{
+    Burning,
 }

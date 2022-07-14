@@ -1,9 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Knightship is officially deceased., type: Remove}
-  id: 1433
-  time: '2022-05-02T14:50:37.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Bolas and tiles now break after 3 and 4 throws respectively. Reduced
@@ -2947,3 +2942,11 @@ Entries:
   - {message: Robot showcase statue is now anchorable, type: Tweak}
   id: 1932
   time: '2022-07-13T02:01:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Pizza boxes can no longer swallow players. (for realsies), type: Fix}
+  - {message: Fixed visual issues regarding trays with morgues and crematoriums.,
+    type: Fix}
+  - {message: Fixed visual issues regarding body bags being perpetually open., type: Fix}
+  id: 1933
+  time: '2022-07-13T23:11:59.0000000+00:00'
