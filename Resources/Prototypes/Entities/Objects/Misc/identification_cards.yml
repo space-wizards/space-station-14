@@ -11,6 +11,7 @@
     slots:
     - idcard
     sprite: Objects/Misc/id_cards.rsi
+  - type: Item
     heldPrefix: default
   - type: Access
   - type: IdCard
@@ -89,7 +90,7 @@
     layers:
     - state: gold
     - state: idcaptain
-  - type: Clothing
+  - type: Item
     heldPrefix: gold
   - type: PresetIdCard
     job: Captain
@@ -319,7 +320,7 @@
     layers:
     - state: silver
     - state: idheadofpersonnel
-  - type: Clothing
+  - type: Item
     heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
@@ -333,7 +334,7 @@
     layers:
     - state: silver
     - state: idchiefengineer
-  - type: Clothing
+  - type: Item
     heldPrefix: silver
   - type: PresetIdCard
     job: ChiefEngineer
@@ -347,7 +348,7 @@
     layers:
     - state: silver
     - state: idchiefmedicalofficer
-  - type: Clothing
+  - type: Item
     heldPrefix: silver
   - type: PresetIdCard
     job: ChiefMedicalOfficer
@@ -361,7 +362,7 @@
     layers:
     - state: silver
     - state: idresearchdirector
-  - type: Clothing
+  - type: Item
     heldPrefix: silver
   - type: PresetIdCard
     job: ResearchDirector
@@ -375,7 +376,7 @@
     layers:
     - state: silver
     - state: idheadofsecurity
-  - type: Clothing
+  - type: Item
     heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfSecurity
@@ -389,7 +390,7 @@
     layers:
     - state: gold
     - state: idcentcom
-  - type: Clothing
+  - type: Item
     heldPrefix: gold
   - type: IdCard
     jobTitle: Central Commander
@@ -406,7 +407,7 @@
     layers:
     - state: gold
     - state: ert_commander # we have the sprites but don't need individual ID entities for now.
-  - type: Clothing
+  - type: Item
     heldPrefix: gold
 
 - type: entity
@@ -417,7 +418,7 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
+  - type: Item
     heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
@@ -445,7 +446,7 @@
   - type: Sprite
     layers:
     - state: centcom
-  - type: Clothing
+  - type: Item
     heldPrefix: blue
   - type: IdCard
     jobTitle: Centcom Agent

@@ -171,8 +171,9 @@
     - state: icon
     - state: green-unlit
       shader: unshaded
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     sprite: Objects/Tools/multitool.rsi
     quickEquip: false
     slots:
@@ -248,8 +249,9 @@
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Tools/rcd.rsi
     quickEquip: false
     slots:

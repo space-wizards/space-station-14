@@ -22,9 +22,9 @@
     damage:
       types:
         Piercing: 15
-  - type: Clothing
+  - type: Item
     size: 40
-    sprite: Objects/Weapons/Melee/spear.rsi
+  - type: Clothing
     quickEquip: false
     slots:
     - back

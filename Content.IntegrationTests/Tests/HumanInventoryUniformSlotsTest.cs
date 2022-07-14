@@ -27,6 +27,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Clothing
     slots: [innerclothing]
+  - type: Item
     size: 5
 
 - type: entity
@@ -36,6 +37,7 @@ namespace Content.IntegrationTests.Tests
   - type: Clothing
     slots:
     - idcard
+  - type: Item
     size: 5
   - type: IdCard
 

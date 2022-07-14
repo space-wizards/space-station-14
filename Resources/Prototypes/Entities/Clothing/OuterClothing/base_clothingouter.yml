@@ -35,7 +35,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.4
     sprintModifier: 0.6
-  - type: Clothing
+  - type: Item
     size: 50
   - type: Armor
     modifiers:
@@ -63,7 +63,7 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: Clothing
+  - type: Item
     size: 30
   - type: DiseaseProtection
     protection: 0.05

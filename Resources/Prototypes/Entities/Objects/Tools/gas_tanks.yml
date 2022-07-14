@@ -12,10 +12,9 @@
     interfaces:
     - key: enum.SharedGasTankUiKey.Key
       type: GasTankBoundUserInterface
-  - type: Clothing
+  - type: Item
     size: 15
     sprite: Objects/Tanks/generic.rsi
-    quickEquip: false
   - type: GasTank
     toggleAction:
       name: action-name-internals-toggle
@@ -87,8 +86,9 @@
     air:
       volume: 3
       temperature: 293.15
-  - type: Clothing
+  - type: Item
     size: 10
+  - type: Clothing
     sprite: Objects/Tanks/emergency.rsi
     slots:
     - Pocket
@@ -109,8 +109,9 @@
     air:
       volume: 6
       temperature: 293.15
-  - type: Clothing
+  - type: Item
     size: 10
+  - type: Clothing
     sprite: Objects/Tanks/emergency_yellow.rsi
     slots:
     - Pocket
@@ -129,8 +130,9 @@
     air:
       volume: 12
       temperature: 293.15
-  - type: Clothing
+  - type: Item
     size: 10
+  - type: Clothing
     sprite: Objects/Tanks/emergency_double.rsi
     slots:
     - Pocket
@@ -169,8 +171,9 @@
       air:
         volume: 70
         temperature: 293.15
-    - type: Clothing
+    - type: Item
       size: 10
+    - type: Clothing
       sprite: Objects/Tanks/plasma.rsi
       slots:
         - Belt

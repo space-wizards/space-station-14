@@ -8,8 +8,9 @@
     netsync: false
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
     slots:

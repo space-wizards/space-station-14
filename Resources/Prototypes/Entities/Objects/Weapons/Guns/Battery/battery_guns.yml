@@ -263,9 +263,9 @@
         - state: mag-unshaded-0
           map: ["enum.GunVisualLayers.MagUnshaded"]
           shader: unshaded
-    - type: Clothing
-      sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    - type: Item
       size: 10
+    - type: Clothing
       quickEquip: false
       slots:
         - Belt
@@ -301,9 +301,9 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+  - type: Item
     size: 10
+  - type: Clothing
     quickEquip: false
     slots:
     - Belt

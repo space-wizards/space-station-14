@@ -33,6 +33,7 @@
   - type: Clothing
     slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Item
     size: 125
 
 - type: entity

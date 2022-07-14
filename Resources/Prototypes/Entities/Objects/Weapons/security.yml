@@ -24,11 +24,12 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: ItemCooldown
+  - type: Item
+    size: 20`
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     heldPrefix: off
     quickEquip: false
-    size: 20
     slots:
     - Belt
   - type: DisarmMalus

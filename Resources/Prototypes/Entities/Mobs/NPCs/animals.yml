@@ -761,7 +761,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    heldPrefix: 0
+    equippedPrefix: 0
     slots:
     - HEAD
   - type: Physics
