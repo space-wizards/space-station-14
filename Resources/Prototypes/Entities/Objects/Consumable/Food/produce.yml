@@ -118,7 +118,6 @@
   - type: Item
     size: 10
     sprite: Objects/Specific/Hydroponics/nettle.rsi
-    prefix: inhand
   - type: MeleeWeapon
     damage:
       types:

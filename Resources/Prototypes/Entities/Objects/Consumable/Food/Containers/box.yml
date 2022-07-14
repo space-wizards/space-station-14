@@ -307,7 +307,6 @@
     state: pizza-box
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    color: white
   - type: StorageFill
     contents:
     - id: FoodDonkpocketPizza
@@ -322,7 +321,6 @@
     state: gondola-box
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    color: brown
   - type: StorageFill
     contents:
     - id: FoodDonkpocketGondola
@@ -351,7 +349,6 @@
     state: banana-box
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    color: yellow
   - type: StorageFill
     contents:
     - id: FoodDonkpocketHonk
@@ -367,7 +364,6 @@
     state: dink-box
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-    color: green
   - type: StorageFill
     contents:
     - id: FoodDonkpocketDink

@@ -67,6 +67,6 @@
   - type: Item
     size: 15
     sprite: Objects/Specific/Chapel/necronomicon.rsi
-    prefix: inhand
+  - type: Clothing
     slots:
     - Belt

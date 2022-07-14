@@ -37,7 +37,6 @@
     state: icon
   - type: Item
     sprite: Objects/Misc/flare.rsi
-    color: "#FF0000"
     heldPrefix: unlit
   - type: Appearance
     visuals:

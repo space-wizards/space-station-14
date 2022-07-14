@@ -63,7 +63,6 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
-    prefix: inhand
 
 - type: entity
   name: combat knife
@@ -86,7 +85,6 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
-    prefix: inhand
   - type: DisarmMalus
     malus: 0.225
 
@@ -103,4 +101,3 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-    prefix: inhand

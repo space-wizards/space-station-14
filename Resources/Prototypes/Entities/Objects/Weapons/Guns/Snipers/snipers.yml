@@ -85,7 +85,6 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: Item
-      icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
     - type: BallisticAmmoProvider
       whitelist:
         tags:
