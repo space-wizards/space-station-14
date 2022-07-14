@@ -2,7 +2,7 @@
   id: OperatingTable
   parent: BaseStructure
   name: operating table
-  description: Special medical table for surgery.
+  description: Special medical table for surgery. This one just seems to be a useless prop, though.
   components:
   - type: Strap
     position: Down
