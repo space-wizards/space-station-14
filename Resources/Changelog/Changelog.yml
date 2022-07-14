@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NPCs can open doors to avoid pathfinder issues in the interim., type: Tweak}
-  id: 1444
-  time: '2022-05-03T08:25:01.0000000+00:00'
 - author: freeman2651
   changes:
   - {message: the health HUD icon for 100% health now only shows if you are actually
@@ -2952,3 +2947,9 @@ Entries:
       after flipping., type: Fix}
   id: 1943
   time: '2022-07-14T16:04:24.0000000+00:00'
+- author: themias
+  changes:
+  - {message: AMIV now has stages. The final stage has a small chance of monkefication.,
+    type: Tweak}
+  id: 1944
+  time: '2022-07-14T16:06:54.0000000+00:00'
