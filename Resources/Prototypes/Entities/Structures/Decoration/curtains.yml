@@ -35,6 +35,7 @@
   - type: Appearance
     visuals:
       - type: AirlockVisualizer
+        simpleVisuals: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
