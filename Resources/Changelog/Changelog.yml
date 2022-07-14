@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: The ATV now has many possible descriptions., type: Tweak}
-  id: 1436
-  time: '2022-05-02T20:51:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added three new wall types for secret vaults. Expect to find them in
@@ -2952,3 +2947,8 @@ Entries:
     type: Tweak}
   id: 1935
   time: '2022-07-14T05:24:36.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Common radio now matches announcement colour., type: Tweak}
+  id: 1936
+  time: '2022-07-14T11:38:55.0000000+00:00'
