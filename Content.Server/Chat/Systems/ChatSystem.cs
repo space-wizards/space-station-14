@@ -14,6 +14,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -301,8 +302,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (!_actionBlocker.CanEmote(source)) return;
 
+        // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
         var messageWrap = Loc.GetString("chat-manager-entity-me-wrap-message",
-            ("entityName", Name(source)));
+            ("entityName", Identity.Name(source, EntityManager)));
 
         SendInVoiceRange(ChatChannel.Emotes, action, messageWrap, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
@@ -317,7 +319,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
         else if (!_loocEnabled) return;
         var messageWrap = Loc.GetString("chat-manager-entity-looc-wrap-message",
-            ("entityName", Name(source)));
+            ("entityName", Identity.Name(source, EntityManager)));
 
         SendInVoiceRange(ChatChannel.LOOC, message, messageWrap, source, hideChat);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
