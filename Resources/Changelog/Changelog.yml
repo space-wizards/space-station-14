@@ -1,9 +1,4 @@
 Entries:
-- author: Putnam
-  changes:
-  - {message: Gas pumps now stop if overpressurized, type: Fix}
-  id: 1446
-  time: '2022-05-03T20:24:30.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Ghosts can now face in four directions., type: Tweak}
@@ -2953,3 +2948,8 @@ Entries:
     type: Fix}
   id: 1945
   time: '2022-07-14T21:03:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Lockers/morgues/etc should now properly take items., type: Fix}
+  id: 1946
+  time: '2022-07-14T21:55:36.0000000+00:00'
