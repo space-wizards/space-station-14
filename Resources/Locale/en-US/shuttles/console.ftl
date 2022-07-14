@@ -11,6 +11,7 @@ shuttle-console-ftl-state = FTL State
 shuttle-console-ftl-available = Available
 shuttle-console-ftl-starting = Starting
 shuttle-console-ftl-travelling = Travelling
+shuttle-console-ftl-arriving = Arriving
 shuttle-console-ftl-cooldown = Cooldown
 
 shuttle-console-ftl-timer = FTL Time

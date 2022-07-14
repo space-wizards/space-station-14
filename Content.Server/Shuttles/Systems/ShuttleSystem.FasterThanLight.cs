@@ -30,6 +30,7 @@ public sealed partial class ShuttleSystem
 
     private const float DefaultStartupTime = 5.5f;
     private const float DefaultTravelTime = 30f;
+    private const float DefaultArrivalTime = 5f;
     private const float FTLCooldown = 30f;
 
     private const float ShuttleFTLRange = 100f;
@@ -211,7 +212,7 @@ public sealed partial class ShuttleSystem
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
-                    comp.Accumulator += comp.TravelTime;
+                    comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 
                     if (TryComp(comp.Owner, out body))
                     {
@@ -230,8 +231,16 @@ public sealed partial class ShuttleSystem
                     SetDockBolts(comp.Owner, true);
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
-                // Arrive.
+                // Arriving, play effects
                 case FTLState.Travelling:
+                    comp.Accumulator += DefaultArrivalTime;
+                    comp.State = FTLState.Arriving;
+                    // TODO: Arrival effects
+                    // For now we'll just use the ss13 bubbles but we can do fancier.
+                    _console.RefreshShuttleConsoles(comp.Owner);
+                    break;
+                // Arrived
+                case FTLState.Arriving:
                     DoTheDinosaur(xform);
                     SetDockBolts(comp.Owner, false);
                     SetDocks(comp.Owner, true);

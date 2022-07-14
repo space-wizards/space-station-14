@@ -156,11 +156,16 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             case Shared.Shuttles.Systems.FTLState.Cooldown:
                 stateText = Loc.GetString("shuttle-console-ftl-cooldown");
                 break;
+            case Shared.Shuttles.Systems.FTLState.Arriving:
+                stateText = Loc.GetString("shuttle-console-ftl-arriving");
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
 
         FTLState.Text = stateText;
+        // Add a buffer due to lag or whatever
+        time += TimeSpan.FromSeconds(0.3);
         FTLTime = time;
         FTLTimer.Text = GetFTLText();
     }
