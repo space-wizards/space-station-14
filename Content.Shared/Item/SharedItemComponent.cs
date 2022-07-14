@@ -80,7 +80,7 @@ namespace Content.Shared.Item
 
         [DataField("unequipSound")]
         public SoundSpecifier? UnequipSound = default!;
-        
+
         /// <summary>
         ///     Rsi of the sprite shown on the player when this item is in their hands. Used to generate a default entry for <see cref="InhandVisuals"/>
         /// </summary>
@@ -101,47 +101,5 @@ namespace Content.Shared.Item
         }
     }
 
-    [Serializable, NetSerializable]
-    public sealed class ItemComponentState : ComponentState
-    {
-        public int Size { get; }
-        public string? EquippedPrefix { get; }
 
-        public ItemComponentState(int size, string? equippedPrefix)
-        {
-            Size = size;
-            EquippedPrefix = equippedPrefix;
-        }
-    }
-
-    /// <summary>
-    ///     Raised when an item's visual state is changed. The event is directed at the entity that contains this item, so
-    ///     that it can properly update its hands or inventory sprites and GUI.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class VisualsChangedEvent : EntityEventArgs
-    {
-        public readonly EntityUid Item;
-        public readonly string ContainerId;
-
-        public VisualsChangedEvent(EntityUid item, string containerId)
-        {
-            Item = item;
-            ContainerId = containerId;
-        }
-    }
-
-    /// <summary>
-    ///     Reference sizes for common containers and items.
-    /// </summary>
-    public enum ReferenceSizes
-    {
-        Wallet = 4,
-        Pocket = 12,
-        Box = 24,
-        Belt = 30,
-        Toolbox = 60,
-        Backpack = 100,
-        NoStoring = 9999
-    }
 }

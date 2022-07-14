@@ -38,7 +38,7 @@ namespace Content.Shared.Item
                 return;
 
             component.Size = state.Size;
-            component.EquippedPrefix = state.EquippedPrefix;
+            component.EquippedPrefix = state.HeldPrefix;
         }
 
         private void OnGetState(EntityUid uid, SharedItemComponent component, ref ComponentGetState args)

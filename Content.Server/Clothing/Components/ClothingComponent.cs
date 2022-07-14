@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
@@ -13,10 +14,10 @@ namespace Content.Server.Clothing.Components
     [ComponentReference(typeof(SharedItemComponent))]
     public sealed class ClothingComponent : ItemComponent
     {
-        [DataField("HeatResistance")]
-        private int _heatResistance = 323;
+    }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int HeatResistance => _heatResistance;
+    // Needed for client-side clothing component.
+    public sealed class NewClothingComponent : NewSharedClothingComponent
+    {
     }
 }

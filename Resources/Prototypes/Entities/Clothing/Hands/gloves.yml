@@ -74,7 +74,8 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
@@ -138,7 +139,8 @@
     sprite: Clothing/Hands/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-brown
@@ -183,7 +185,8 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
@@ -202,7 +205,8 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
