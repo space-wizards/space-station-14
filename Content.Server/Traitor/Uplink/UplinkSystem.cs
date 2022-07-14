@@ -188,6 +188,11 @@ namespace Content.Server.Traitor.Uplink
             var uplink = uplinkEntity.Value.EnsureComponent<UplinkComponent>();
             SetAccount(uplink, account);
 
+            if (!HasComp<PDAComponent>(uplinkEntity.Value))
+                uplink.ActivatesInHands = true;
+
+            // TODO add BUI. Currently can't be done outside of yaml -_-
+
             return true;
         }
 
