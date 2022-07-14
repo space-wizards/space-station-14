@@ -305,7 +305,7 @@ public sealed class EntityStorageSystem : EntitySystem
         var storageIsItem = HasComp<ItemComponent>(container);
 
         var allowedToEat = whitelist == null
-            ? HasComp<SharedItemComponent>(toInsert)
+            ? HasComp<ItemComponent>(toInsert)
             : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
