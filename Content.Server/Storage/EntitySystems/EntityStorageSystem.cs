@@ -145,14 +145,14 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate));
         RaiseLocalEvent(uid, ev, true);
-        
+
         var count = 0;
         foreach (var entity in ev.Contents)
         {
             if (!ev.ContentsWhitelist.Contains(entity))
                 if (!CanFit(entity, uid))
                     continue;
-            
+
             if (!AddToContents(entity, uid, component))
                 continue;
 
@@ -298,9 +298,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
         // checks
         // TODO: Make the others sub to it.
-        var targetIsItem = HasComp<SharedItemComponent>(toInsert);
+        var targetIsItem = HasComp<ItemComponent>(toInsert);
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
-        var storageIsItem = HasComp<SharedItemComponent>(container);
+        var storageIsItem = HasComp<ItemComponent>(container);
 
         var allowedToEat = targetIsItem;
 
@@ -357,6 +357,6 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
         }
-            
+
     }
 }

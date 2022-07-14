@@ -10,6 +10,7 @@ namespace Content.Shared.Item;
 [RegisterComponent]
 public sealed class ItemComponent : Component
 {
+    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
     public int Size = 5;
@@ -17,6 +18,7 @@ public sealed class ItemComponent : Component
     [DataField("inhandVisuals")]
     public Dictionary<HandLocation, List<SharedSpriteComponent.PrototypeLayerData>> InhandVisuals = new();
 
+    [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("heldPrefix")]
     public string? HeldPrefix;

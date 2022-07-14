@@ -33,7 +33,7 @@ public partial class InventorySystem
         }
 
         // If this doesn't have an item component, then we can't do anything with it.
-        if (!HasComp<SharedItemComponent>(item))
+        if (!HasComp<ItemComponent>(item))
             return DeleteItem();
 
         // We finally try to equip the item, otherwise we delete it.

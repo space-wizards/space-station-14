@@ -23,6 +23,8 @@ namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly SharedItemSystem _item = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -89,9 +91,9 @@ namespace Content.Server.Stunnable.Systems
 
             // TODO stunbaton visualizer
             if (TryComp<SpriteComponent>(comp.Owner, out var sprite) &&
-                TryComp<SharedItemComponent>(comp.Owner, out var item))
+                TryComp<ItemComponent>(comp.Owner, out var item))
             {
-                item.EquippedPrefix = "off";
+                _item.SetHeldPrefix(comp.Owner, "off", item);
                 sprite.LayerSetState(0, "stunbaton_off");
             }
 
@@ -114,9 +116,9 @@ namespace Content.Server.Stunnable.Systems
             }
 
             if (EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) &&
-                EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
+                EntityManager.TryGetComponent<ItemComponent?>(comp.Owner, out var item))
             {
-                item.EquippedPrefix = "on";
+                _item.SetHeldPrefix(comp.Owner, "on", item);
                 sprite.LayerSetState(0, "stunbaton_on");
             }
 

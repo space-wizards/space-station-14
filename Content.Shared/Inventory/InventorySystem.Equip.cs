@@ -38,7 +38,7 @@ public abstract partial class InventorySystem
         SubscribeAllEvent<UseSlotNetworkMessage>(OnUseSlot);
     }
 
-    protected void QuickEquip(EntityUid uid, SharedItemComponent component, UseInHandEvent args)
+    protected void QuickEquip(EntityUid uid, SharedClothingComponent component, UseInHandEvent args)
     {
         if (!TryComp(args.User, out InventoryComponent? inv)
             || !TryComp(args.User, out SharedHandsComponent? hands)
@@ -53,7 +53,7 @@ public abstract partial class InventorySystem
             if (TryGetSlotEntity(args.User, slotDef.Name, out var slotEntity, inv))
             {
                 // Item in slot has to be quick equipable as well
-                if (TryComp(slotEntity, out SharedItemComponent? item) && !item.QuickEquip)
+                if (TryComp(slotEntity, out SharedClothingComponent? item) && !item.QuickEquip)
                     continue;
 
                 if (!TryUnequip(args.User, slotDef.Name, true, inventory: inv))
@@ -157,11 +157,11 @@ public abstract partial class InventorySystem
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
+        InventoryComponent? inventory = null, SharedClothingComponent? item = null) =>
         TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, item);
 
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null)
+        InventoryComponent? inventory = null, SharedClothingComponent? item = null)
     {
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
         {
@@ -245,10 +245,10 @@ public abstract partial class InventorySystem
 
     public bool CanEquip(EntityUid uid, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason,
         SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null,
-        SharedItemComponent? item = null) =>
+        SharedClothingComponent? item = null) =>
         CanEquip(uid, uid, itemUid, slot, out reason, slotDefinition, inventory, item);
 
-    public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+    public bool CanEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, [NotNullWhen(false)] out string? reason, SlotDefinition? slotDefinition = null, InventoryComponent? inventory = null, SharedClothingComponent? item = null)
     {
         reason = "inventory-component-can-equip-cannot";
         if (!Resolve(target, ref inventory, false) || !Resolve(itemUid, ref item, false))
@@ -260,7 +260,8 @@ public abstract partial class InventorySystem
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
 
-        if(!item.SlotFlags.HasFlag(slotDefinition.SlotFlags) && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
+        // TODO ITEM CLOTHING POCKETS
+        if(!item.Slots.HasFlag(slotDefinition.SlotFlags))// && (!slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) || item.Size > (int) ReferenceSizes.Pocket))
         {
             reason = "inventory-component-can-equip-does-not-fit";
             return false;
@@ -304,17 +305,17 @@ public abstract partial class InventorySystem
     }
 
     public bool TryUnequip(EntityUid uid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null) => TryUnequip(uid, uid, slot, silent, force, predicted, inventory, item);
+        InventoryComponent? inventory = null, SharedClothingComponent? item = null) => TryUnequip(uid, uid, slot, silent, force, predicted, inventory, item);
 
     public bool TryUnequip(EntityUid actor, EntityUid target, string slot, bool silent = false,
-        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedItemComponent? item = null) =>
+        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedClothingComponent? item = null) =>
         TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, item);
 
     public bool TryUnequip(EntityUid uid, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, SharedItemComponent? item = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, item);
+        InventoryComponent? inventory = null, SharedClothingComponent? item = null) => TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, item);
 
     public bool TryUnequip(EntityUid actor, EntityUid target, string slot, [NotNullWhen(true)] out EntityUid? removedItem, bool silent = false,
-        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedItemComponent? item = null)
+        bool force = false, bool predicted = false, InventoryComponent? inventory = null, SharedClothingComponent? item = null)
     {
         removedItem = null;
         if (!Resolve(target, ref inventory, false))

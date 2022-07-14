@@ -30,10 +30,9 @@ public sealed class HandheldLightSystem : EntitySystem
 
         // really hand-held lights should be using a separate unshaded layer. (see FlashlightVisualizer)
         // this prefix stuff is largely for backwards compatibility with RSIs/yamls that have not been updated.
-        if (component.AddPrefix && TryComp(uid, out SharedItemComponent? item))
+        if (component.AddPrefix && TryComp(uid, out ItemComponent? item))
         {
-            item.EquippedPrefix = state.Activated ? "on" : "off";
-            _itemSys.VisualsChanged(uid);
+            _itemSys.SetHeldPrefix(uid, state.Activated ? "on" : "off", item);
         }
     }
 }

@@ -1,6 +1,8 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -17,6 +19,7 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
+    [Dependency] private readonly SharedClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -61,8 +64,8 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
             _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
             UpdateMagbootEffects(container.Owner, component.Owner, true, component);
 
-        if (TryComp<SharedItemComponent>(component.Owner, out var item))
-            item.EquippedPrefix = component.On ? "on" : null;
+        if (TryComp<ClothingComponent>(component.Owner, out var item))
+            _clothing.SetEquippedPrefix(uid, component.On ? "on" : null, item);
 
         if (TryComp<SpriteComponent>(component.Owner, out var sprite))
             sprite.LayerSetState(0, component.On ? "icon-on" : "icon");

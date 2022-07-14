@@ -236,13 +236,13 @@ namespace Content.Server.Storage.EntitySystems
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<SharedItemComponent>(eventArgs.Target.Value)))
+            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<ItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
                     if (entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity)
+                        || !HasComp<ItemComponent>(entity)
                         || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
                         continue;
 
@@ -272,7 +272,7 @@ namespace Content.Server.Storage.EntitySystems
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (_containerSystem.IsEntityInContainer(entity)
                         || entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity))
+                        || !HasComp<ItemComponent>(entity))
                         continue;
 
                     if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(entity, out var transformEnt))
@@ -304,7 +304,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (_containerSystem.IsEntityInContainer(target)
                     || target == eventArgs.User
-                    || !HasComp<SharedItemComponent>(target))
+                    || !HasComp<ItemComponent>(target))
                     return;
 
                 if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
@@ -432,7 +432,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
@@ -491,7 +491,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
+            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
                 reason = "comp-storage-insufficient-capacity";
