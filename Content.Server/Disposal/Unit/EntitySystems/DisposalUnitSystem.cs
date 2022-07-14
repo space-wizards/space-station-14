@@ -181,8 +181,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (_handsSystem.TryDropIntoContainer(ev.User, ev.ToInsert, unit.Container))
-                AfterInsert(unit, toInsert);
+            if (ev.User != null && !_handsSystem.TryDropIntoContainer(ev.User.Value, ev.ToInsert, unit.Container))
+                return;
+            else
+                unit.Container.Insert(toInsert);
+            
+            AfterInsert(unit, toInsert);
         }
 
         public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
@@ -462,7 +466,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
-        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
+        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
         {
             if (!Resolve(unitId, ref unit))
                 return false;
@@ -473,7 +477,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
             var ev = new DoInsertDisposalUnitEvent(userId, toInsertId, unitId);
 
-            if (delay <= 0)
+            if (delay <= 0 || userId == null)
             {
                 DoInsertDisposalUnit(ev);
                 return true;
