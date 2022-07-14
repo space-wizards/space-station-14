@@ -11,21 +11,9 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
-    public sealed class PowerGridCheck : StationEvent
+    public sealed class PowerGridCheck : StationEventSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "PowerGridCheck";
-        public override float Weight => WeightNormal;
-        public override int? MaxOccurrences => 3;
-        public override string StartAnnouncement => Loc.GetString("station-event-power-grid-check-start-announcement");
-        protected override string EndAnnouncement => Loc.GetString("station-event-power-grid-check-end-announcement");
-        public override SoundSpecifier? StartAudio => new SoundPathSpecifier("/Audio/Announcements/power_off.ogg");
-
-        // If you need EndAudio it's down below. Not set here because we can't play it at the normal time without spamming sounds.
-
-        protected override float StartAfter => 12.0f;
+        public override string Prototype => "PowerGridCheck";
 
         private CancellationTokenSource? _announceCancelToken;
 
@@ -37,34 +25,44 @@ namespace Content.Server.StationEvents.Events
         private int _numberPerSecond = 0;
         private float UpdateRate => 1.0f / _numberPerSecond;
         private float _frameTimeAccumulator = 0.0f;
+        private float _endAfter = 0.0f;
 
-        public override void Announce()
+        public override void Added()
         {
-            base.Announce();
-            EndAfter = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
+            base.Added();
+            _endAfter = RobustRandom.Next(60, 120);
         }
 
-        public override void Startup()
+        public override void Started()
         {
-            foreach (var component in _entityManager.EntityQuery<ApcPowerReceiverComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
                 if (!component.PowerDisabled)
                     _powered.Add(component.Owner);
             }
 
-            _random.Shuffle(_powered);
+            RobustRandom.Shuffle(_powered);
 
             _numberPerSecond = Math.Max(1, (int)(_powered.Count / SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
 
-            base.Startup();
+            base.Started();
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            _frameTimeAccumulator += frameTime;
+
+            if (!RuleStarted)
+                return;
+
+            if (Elapsed > _endAfter)
+            {
+                ForceEndSelf();
+                return;
+            }
 
             var updates = 0;
+            _frameTimeAccumulator += frameTime;
             if (_frameTimeAccumulator > UpdateRate)
             {
                 updates = (int) (_frameTimeAccumulator / UpdateRate);
@@ -77,8 +75,8 @@ namespace Content.Server.StationEvents.Events
                     break;
 
                 var selected = _powered.Pop();
-                if (_entityManager.Deleted(selected)) continue;
-                if (_entityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
+                if (EntityManager.Deleted(selected)) continue;
+                if (EntityManager.TryGetComponent<ApcPowerReceiverComponent>(selected, out var powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = true;
                 }
@@ -86,13 +84,13 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        public override void Shutdown()
+        public override void Ended()
         {
             foreach (var entity in _unpowered)
             {
-                if (_entityManager.Deleted(entity)) continue;
+                if (EntityManager.Deleted(entity)) continue;
 
-                if (_entityManager.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
+                if (EntityManager.TryGetComponent(entity, out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }
@@ -103,11 +101,11 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                SoundSystem.Play("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams);
+                SoundSystem.Play("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams.Default);
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 
-            base.Shutdown();
+            base.Ended();
         }
     }
 }

@@ -24,17 +24,15 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         public EntityUid? Grid { get; private set; }
 
-        public override void Initialize(Node sourceNode, IEntityManager? entMan = null)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            IoCManager.Resolve(ref entMan);
-
             base.Initialize(sourceNode, entMan);
 
             Grid = entMan.GetComponent<TransformComponent>(sourceNode.Owner).GridUid;
 
             if (Grid == null)
             {
-                Logger.Error($"Created a pipe network without an associated grid. Pipe networks currently need to be tied to a grid for amtos to work. Source entity: {entMan.ToPrettyString(sourceNode.Owner)}");
+                // This is probably due to a cannister or something like that being spawned in space.
                 return;
             }
 
@@ -82,13 +80,11 @@ namespace Content.Server.NodeContainer.NodeGroups
                     newAir.Add(newPipeNet.Air);
             }
 
-            _atmosphereSystem!.DivideInto(Air, newAir);
+            _atmosphereSystem?.DivideInto(Air, newAir);
         }
 
         private void RemoveFromGridAtmos()
         {
-            DebugTools.AssertNotNull(_atmosphereSystem);
-
             if (Grid == null)
                 return;
 

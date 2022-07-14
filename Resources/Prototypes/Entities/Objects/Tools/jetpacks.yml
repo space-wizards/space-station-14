@@ -54,7 +54,7 @@
           state: icon-on
         name: action-name-jetpack-toggle
         description: action-description-jetpack-toggle
-        itemIconStyle: NoItem
+        useDelay: 1.0
         event: !type:ToggleJetpackEvent
     - type: Appearance
 

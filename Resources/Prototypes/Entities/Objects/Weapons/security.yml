@@ -16,8 +16,10 @@
     range: 1.5
     arcwidth: 60
     arc: default
-  - type: UseDelay
-    delay: 4
+    cooldownTime: 1.5
+    arcCooldownTime: 1.5
+  - type: StaminaDamageOnHit
+    damage: 55
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
@@ -50,7 +52,7 @@
       arcWidth: 10
       arc: default
     - type: Item
-      size: 2
+      size: 5
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
 

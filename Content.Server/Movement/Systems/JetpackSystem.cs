@@ -11,7 +11,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     protected override bool CanEnable(JetpackComponent component)
     {
-        return TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
+        return base.CanEnable(component) &&  TryComp<GasTankComponent>(component.Owner, out var gasTank) && !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)

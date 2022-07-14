@@ -170,14 +170,3 @@
     Plastic: 15
     Steel: 10
     Glass: 5
-
-- type: latheRecipe
-  id: ShellShotgunFlash
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: flash
-  result: ShellShotgunFlash
-  completetime: 2
-  materials:
-    Plastic: 20
-    Steel: 5

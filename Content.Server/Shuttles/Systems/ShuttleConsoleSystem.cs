@@ -22,7 +22,6 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -211,6 +210,8 @@ namespace Content.Server.Shuttles.Systems
                     Angle = xform.LocalRotation,
                     Entity = comp.Owner,
                     Connected = comp.Docked,
+                    Color = comp.RadarColor,
+                    HighlightedColor = comp.HighlightedRadarColor,
                 };
                 result.Add(state);
             }

@@ -47,7 +47,7 @@
     # Note that the personal AI never "dies".
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

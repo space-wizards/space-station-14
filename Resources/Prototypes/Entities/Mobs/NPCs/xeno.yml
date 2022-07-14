@@ -50,8 +50,8 @@
       - MobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      200: Dead
   - type: Bloodstream
     bloodReagent: FluorosulfuricAcid
     bloodlossDamage:
@@ -121,8 +121,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      300: !type:DeadMobState {}
+      0: Alive
+      300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.7
@@ -151,8 +151,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      200: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.0
     baseSprintSpeed : 5.5
@@ -184,8 +184,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      1500: !type:DeadMobState {}
+      0: Alive
+      1500: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.8
     baseSprintSpeed : 3.8
@@ -222,8 +222,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      550: !type:DeadMobState {}
+      0: Alive
+      550: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.3
     baseSprintSpeed : 4.2
@@ -260,8 +260,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      250: !type:DeadMobState {}
+      0: Alive
+      250: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 6.0
@@ -308,8 +308,8 @@
       state: running
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      300: !type:DeadMobState {}
+      0: Alive
+      300: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       250: 0.4

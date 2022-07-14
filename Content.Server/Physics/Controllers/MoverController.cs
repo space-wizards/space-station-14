@@ -24,7 +24,7 @@ namespace Content.Server.Physics.Controllers
         /// client namespace.
         /// </summary>
         private HashSet<EntityUid> _excludedMobs = new();
-        private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>> _shuttlePilots = new();
+        private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent, TransformComponent)>> _shuttlePilots = new();
 
         protected override Filter GetSoundPlayers(EntityUid mover)
         {
@@ -60,7 +60,7 @@ namespace Content.Server.Physics.Controllers
 
         private void HandleShuttleMovement(float frameTime)
         {
-            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent)>>();
+            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent Pilot, IMoverComponent Mover, TransformComponent ConsoleXform)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
             foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
@@ -85,11 +85,11 @@ namespace Content.Server.Physics.Controllers
 
                 if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
                 {
-                    pilots = new List<(PilotComponent, IMoverComponent)>();
+                    pilots = new List<(PilotComponent, IMoverComponent, TransformComponent)>();
                     newPilots[shuttleComponent] = pilots;
                 }
 
-                pilots.Add((pilot, mover));
+                pilots.Add((pilot, mover, xform));
             }
 
             // Reset inputs for non-piloted shuttles.
@@ -115,21 +115,13 @@ namespace Content.Server.Physics.Controllers
                 switch (shuttle.Mode)
                 {
                     case ShuttleMode.Cruise:
-                        foreach (var (pilot, mover) in pilots)
+                        foreach (var (pilot, mover, consoleXform) in pilots)
                         {
-                            var console = pilot.Console;
-
-                            if (console == null)
-                            {
-                                DebugTools.Assert(false);
-                                continue;
-                            }
-
                             var sprint = mover.VelocityDir.sprinting;
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>(console.Owner).LocalRotation;
+                            var offsetRotation = consoleXform.LocalRotation;
 
                             linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
                             angularInput += sprint.X;
@@ -137,21 +129,13 @@ namespace Content.Server.Physics.Controllers
                         break;
                     case ShuttleMode.Strafing:
                         // No angular input possible
-                        foreach (var (pilot, mover) in pilots)
+                        foreach (var (pilot, mover, consoleXform) in pilots)
                         {
-                            var console = pilot.Console;
-
-                            if (console == null)
-                            {
-                                DebugTools.Assert(false);
-                                continue;
-                            }
-
                             var sprint = mover.VelocityDir.sprinting;
 
                             if (sprint.Equals(Vector2.Zero)) continue;
 
-                            var offsetRotation = EntityManager.GetComponent<TransformComponent>((console).Owner).LocalRotation;
+                            var offsetRotation = consoleXform.LocalRotation;
                             sprint = offsetRotation.RotateVec(sprint);
 
                             linearInput += sprint;

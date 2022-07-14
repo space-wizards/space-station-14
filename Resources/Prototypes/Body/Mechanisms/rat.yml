@@ -13,3 +13,5 @@
   components:
   - type: Stomach
     maxVolume: 50 # they're hungry
+  - type: Sprite
+    state: stomach

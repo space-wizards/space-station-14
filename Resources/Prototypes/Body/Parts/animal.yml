@@ -71,6 +71,9 @@
   abstract: true
   components:
   - type: Mechanism
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
 
 - type: entity
   id: OrganAnimalLungs

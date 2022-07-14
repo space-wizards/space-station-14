@@ -1,8 +1,9 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Follower;
 
@@ -100,7 +101,13 @@ public sealed class FollowerSystem : EntitySystem
             RemComp<FollowedComponent>(target);
         RemComp<FollowerComponent>(uid);
 
-        Transform(uid).AttachToGridOrMap();
+        var xform = Transform(uid);
+        xform.AttachToGridOrMap();
+        if (xform.MapID == MapId.Nullspace)
+        {
+            Del(uid);
+            return;
+        }
 
         RemComp<OrbitVisualsComponent>(uid);
 

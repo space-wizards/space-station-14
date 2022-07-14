@@ -495,6 +495,7 @@
   - type: Sprite
     layers:
     - state: idpsychologist
+    - state: default
   - type: PresetIdCard
     job: Psychologist
 
@@ -506,6 +507,7 @@
   - type: Sprite
     layers:
     - state: idreporter
+    - state: default
   - type: PresetIdCard
     job: Reporter
 

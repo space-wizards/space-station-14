@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Content.Client.MobState;
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -25,9 +26,9 @@ namespace Content.IntegrationTests.Tests.Commands
     damageContainer: Biological
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      100: !type:CriticalMobState {}
-      200: !type:DeadMobState {}
+      0: Alive
+      100: Critical
+      200: Dead
 ";
 
         [Test]
@@ -35,22 +36,19 @@ namespace Content.IntegrationTests.Tests.Commands
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
+            var entManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
+                var human = entManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
                 // Sanity check
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out DamageableComponent damageable));
-                Assert.True(IoCManager.Resolve<IEntityManager>().TryGetComponent(human, out MobStateComponent mobState));
-                mobState.UpdateState(0);
+                Assert.True(entManager.TryGetComponent(human, out DamageableComponent damageable));
+                Assert.True(entManager.TryGetComponent(human, out MobStateComponent mobState));
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
