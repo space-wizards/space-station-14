@@ -12,7 +12,6 @@
   - type: Item
     size: 12
     sprite: Objects/Misc/nukedisk.rsi
-    state: icon
   - type: StaticPrice
     price: 2000
 
@@ -30,6 +29,5 @@
   - type: Item
     size: 12
     sprite: Objects/Misc/nukedisk.rsi
-    state: icon
   - type: StaticPrice
     price: 1 # it's worth even less than normal items. Perfection.

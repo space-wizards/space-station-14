@@ -128,7 +128,6 @@
           color: "#FF00FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF00FF"
       heldPrefix: off
     - type: PointLight
       enabled: false
@@ -164,7 +163,6 @@
           color: "#FFFF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FFFF00"
       heldPrefix: off
     - type: PointLight
       enabled: false
@@ -200,7 +198,6 @@
           color: "#0000FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#0000FF"
       heldPrefix: off
     - type: PointLight
       enabled: false

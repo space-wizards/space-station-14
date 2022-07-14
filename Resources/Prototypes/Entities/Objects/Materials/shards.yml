@@ -78,8 +78,6 @@
   components:
   - type: Sprite
     color: "#bbeeff"
-  - type: Item
-    color: "#bbeeff"
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -95,8 +93,6 @@
   description: A small piece of reinforced glass.
   components:
   - type: Sprite
-    color: "#96cdef"
-  - type: Item
     color: "#96cdef"
   - type: WelderRefinable
     refineResult:
@@ -114,8 +110,6 @@
   description: A small piece of plasma glass.
   components:
   - type: Sprite
-    color: "#f3b489"
-  - type: Item
     color: "#f3b489"
   - type: WelderRefinable
     refineResult:

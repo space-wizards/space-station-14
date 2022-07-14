@@ -42,8 +42,6 @@
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-    prefix: inhand
-
 
 - type: entity
   name: butcher's cleaver
