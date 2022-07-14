@@ -25234,7 +25234,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2984
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
   - pos: 27.485548,43.777584
     parent: 55
@@ -25251,7 +25251,7 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2986
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
   - pos: 27.485548,43.183834
     parent: 55
