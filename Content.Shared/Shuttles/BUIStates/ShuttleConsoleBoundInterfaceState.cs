@@ -8,14 +8,21 @@ namespace Content.Shared.Shuttles.BUIStates;
 [Serializable, NetSerializable]
 public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfaceState
 {
+    /// <summary>
+    /// The current FTL state.
+    /// </summary>
     public readonly FTLState FTLState;
-    public readonly float FTLAccumulator;
+
+    /// <summary>
+    ///  When the next FTL state change happens.
+    /// </summary>
+    public readonly TimeSpan FTLTime;
     public readonly ShuttleMode Mode;
     public List<(EntityUid Entity, string Destination, bool Enabled)> Destinations;
 
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
-        float ftlAccumulator,
+        TimeSpan ftlTime,
         ShuttleMode mode,
         List<(EntityUid Entity, string Destination, bool Enabled)> destinations,
         float maxRange,
@@ -24,7 +31,7 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
         List<DockingInterfaceState> docks) : base(maxRange, coordinates, angle, docks)
     {
         FTLState = ftlState;
-        FTLAccumulator = ftlAccumulator;
+        FTLTime = ftlTime;
         Destinations = destinations;
         Mode = mode;
     }

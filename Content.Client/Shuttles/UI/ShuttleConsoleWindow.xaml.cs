@@ -35,7 +35,10 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private readonly Dictionary<BaseButton, EntityUid> _destinations = new();
 
-    public float FTLAccumulator;
+    /// <summary>
+    /// Next FTL state change.
+    /// </summary>
+    public TimeSpan FTLTime;
 
     public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
@@ -100,13 +103,13 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     public void UpdateState(ShuttleConsoleBoundInterfaceState scc)
     {
         UpdateDocks(scc.Docks);
-        UpdateFTL(scc.Destinations, scc.FTLState, scc.FTLAccumulator);
+        UpdateFTL(scc.Destinations, scc.FTLState, scc.FTLTime);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
         ShuttleModeDisplay.Pressed = scc.Mode == ShuttleMode.Strafing;
     }
 
-    private void UpdateFTL(List<(EntityUid Entity, string Destination, bool Enabled)> destinations, FTLState state, float accumulator)
+    private void UpdateFTL(List<(EntityUid Entity, string Destination, bool Enabled)> destinations, FTLState state, TimeSpan time)
     {
         HyperspaceDestinations.DisposeAllChildren();
         _destinations.Clear();
@@ -158,12 +161,13 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         }
 
         FTLState.Text = stateText;
-        // Add some buffer time for lag or rounding
-        if (accumulator > 0f)
-            accumulator += 0.1f;
+        FTLTime = time;
+        FTLTimer.Text = GetFTLText();
+    }
 
-        FTLAccumulator = accumulator;
-        FTLTimer.Text = $"{accumulator:0.0}";
+    private string GetFTLText()
+    {
+        return $"{Math.Max(0, (FTLTime - _timing.CurTime).TotalSeconds):0.0}";
     }
 
     private void OnHyperspacePressed(BaseButton.ButtonEventArgs obj)
@@ -315,11 +319,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             return;
         }
 
-        if (_entManager.TryGetComponent<MetaDataComponent>(_shuttleUid, out var metadata) && !metadata.EntityPaused && FTLAccumulator > 0f)
+        if (_entManager.TryGetComponent<MetaDataComponent>(_shuttleUid, out var metadata) && metadata.EntityPaused)
         {
-            FTLAccumulator = MathF.Max(0f, FTLAccumulator - (float) _timing.FrameTime.TotalSeconds);
-            FTLTimer.Text = $"{FTLAccumulator:0.0}";
+            FTLTime += _timing.FrameTime;
         }
+
+        FTLTimer.Text = GetFTLText();
 
         var (_, worldRot, worldMatrix) = gridXform.GetWorldPositionRotationMatrix();
         var worldPos = worldMatrix.Transform(gridBody.LocalCenter);

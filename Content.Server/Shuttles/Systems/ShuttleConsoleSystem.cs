@@ -15,12 +15,14 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
     public sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -288,12 +290,12 @@ namespace Content.Server.Shuttles.Systems
 
             var destinations = new List<(EntityUid, string, bool)>();
             var ftlState = FTLState.Available;
-            var ftlTime = 0f;
+            var ftlTime = TimeSpan.Zero;
 
             if (TryComp<FTLComponent>(shuttle?.Owner, out var shuttleFtl))
             {
                 ftlState = shuttleFtl.State;
-                ftlTime = shuttleFtl.Accumulator;
+                ftlTime = _timing.CurTime + TimeSpan.FromSeconds(shuttleFtl.Accumulator);
             }
 
             // Mass too large
