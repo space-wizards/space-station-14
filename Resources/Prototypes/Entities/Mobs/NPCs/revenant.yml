@@ -5,12 +5,12 @@
   components:
   - type: Mind
   - type: PlayerInputMover
-  #- type: PlayerMobMover
+  - type: PlayerMobMover
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 3
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
   - type: Sprite
     noRot: true
     drawdepth: Ghosts

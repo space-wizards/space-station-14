@@ -108,7 +108,7 @@ public sealed class RevenantSystem : EntitySystem
         if (target == args.User)
             return;
 
-        if (!HasComp<MobStateComponent>(args.Target))
+        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         if (!_interact.InRangeUnobstructed(uid, target))
