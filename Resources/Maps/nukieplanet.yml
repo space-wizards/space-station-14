@@ -5660,7 +5660,7 @@ entities:
   - dockJointId: docking12396
     dockedWith: 1369
     type: Docking
-  - SecondsUntilStateChange: -36.302105
+  - SecondsUntilStateChange: -32.027687
     changeAirtight: False
     state: Opening
     type: Door
@@ -12553,7 +12553,7 @@ entities:
   - dockJointId: docking12396
     dockedWith: 516
     type: Docking
-  - SecondsUntilStateChange: -36.302105
+  - SecondsUntilStateChange: -32.027687
     changeAirtight: False
     state: Opening
     type: Door
@@ -14267,6 +14267,18 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 1635
+  type: BoxMagazinePistolCaselessRiflePractice
+  components:
+  - pos: 5.4970627,10.597828
+    parent: 104
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1648
   type: MagazinePistolSubMachineGunPractice
   components:
@@ -14489,20 +14501,6 @@ entities:
   - pos: -5.5,6.5
     parent: 104
     type: Transform
-- uid: 1686
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
-- uid: 1687
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
 - uid: 1688
   type: WallRiveted
   components:
@@ -14547,40 +14545,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 1695
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
-- uid: 1696
-  type: BoxMagazinePistolCaselessRiflePractice
-  components:
-  - pos: 5.3886337,10.617651
-    parent: 104
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents:
-        - 1686
-        - 1687
-        - 1697
-        - 1703
-        - 1695
-        - 1702
-    type: ContainerContainer
-- uid: 1697
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 1698
   type: WallRiveted
   components:
@@ -14605,24 +14569,6 @@ entities:
   - pos: -4.5,-6.5
     parent: 104
     type: Transform
-- uid: 1702
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
-- uid: 1703
-  type: MagazinePistolCaselessRiflePractice
-  components:
-  - parent: 1696
-    type: Transform
-  - unspawnedCount: 10
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 1704
   type: WeaponSubMachineGunC20r
   components:
