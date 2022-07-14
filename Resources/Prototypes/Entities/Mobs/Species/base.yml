@@ -250,15 +250,15 @@
       60: 0.7
       80: 0.5
   - type: HeatResistance
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+    alternateState: Standing
+    fireStackAlternateState: 3
   - type: Appearance
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
-      alternateState: Standing
-      fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: DamageVisualizer
