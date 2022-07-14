@@ -1,0 +1,15 @@
+{
+    "version":1,
+    "size":{
+      "x":32,
+      "y":32
+  },
+    "copyright":"https://cdn.discordapp.com/attachments/277256016045932544/710024287435751429/unknown.png",
+    "states":[
+        {
+          "name":"error",
+          "directions":1,
+          "delays":[[0.1,0.1,0.1,0.1]]
+        }
+    ]
+}
