@@ -1,0 +1,7 @@
+- type: advertisementsPack
+  id: DonutAds
+  advertisements:
+    - advertisement-donut-1
+    - advertisement-donut-2
+    - advertisement-donut-3
+    - advertisement-donut-4
