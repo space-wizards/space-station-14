@@ -104,6 +104,9 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
             return false;
 
+        if (targetDamage.TotalDamage == 0)
+            return false;
+
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
             return false;
 
