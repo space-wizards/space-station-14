@@ -86,25 +86,6 @@ namespace Content.Server.Traitor.Uplink.Account
                 return false;
             }
 
-            if (component.JobWhitelist != null && listing.JobWhitelist != null)
-            {
-                var found = false;
-                foreach (var job in component.JobWhitelist)
-                {
-                    if (listing.JobWhitelist.Contains(job.ID))
-                    {
-                        found = true;
-                        continue;
-                    }
-                }
-                if (!found)
-                {
-                    var meta = MetaData(acc.AccountHolder.Value);
-                    Logger.InfoS("security", $"{meta.EntityName} attempted to purchase an unavailable syndicate shop item.");
-                    return false;
-                }
-            }
-
             if (acc.Balance < listing.Price)
             {
                 return false;

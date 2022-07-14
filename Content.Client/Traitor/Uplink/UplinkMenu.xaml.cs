@@ -114,21 +114,6 @@ namespace Content.Client.Traitor.Uplink
                 return;
             }
 
-            if (listing.JobWhitelist != null && _loggedInUplinkAccount != null && _loggedInUplinkAccount.JobWhitelist != null)
-            {
-                var found = false;
-                foreach (var job in _loggedInUplinkAccount.JobWhitelist)
-                {
-                    if (listing.JobWhitelist.Contains(job.ID))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                    return;
-            }
-
             var listingName = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName;
             var listingDesc = listing.Description == string.Empty ? prototype.Description : listing.Description;
             var listingPrice = listing.Price;

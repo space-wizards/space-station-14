@@ -8,12 +8,10 @@ namespace Content.Shared.Traitor.Uplink
     {
         public EntityUid? DataAccountHolder;
         public int DataBalance;
-        public HashSet<JobPrototype>? JobWhitelist;
-        public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance, HashSet<JobPrototype>? jobWhitelist = null)
+        public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance)
         {
             DataAccountHolder = dataAccountHolder;
             DataBalance = dataBalance;
-            JobWhitelist = jobWhitelist;
         }
     }
 }

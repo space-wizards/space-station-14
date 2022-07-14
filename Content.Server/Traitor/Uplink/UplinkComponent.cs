@@ -1,6 +1,7 @@
 using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Traitor.Uplink.Components
 {
@@ -23,7 +24,8 @@ namespace Content.Server.Traitor.Uplink.Components
 
         [ViewVariables] public UplinkAccount? UplinkAccount;
 
-        [ViewVariables] public HashSet<JobPrototype>? JobWhitelist = null;
+        [ViewVariables, DataField("jobWhiteList", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
+        public HashSet<string>? JobWhitelist = null;
 
         [Serializable]
         [DataDefinition]

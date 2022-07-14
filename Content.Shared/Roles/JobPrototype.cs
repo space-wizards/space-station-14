@@ -9,7 +9,6 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype("job")]
-    [Serializable]
     public sealed class JobPrototype : IPrototype
     {
         private string _name = string.Empty;
