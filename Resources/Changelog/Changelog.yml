@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added the industrial welder and advanced industrial welders to the game.
-      Larger capacity and the advanced is faster at welding., type: Add}
-  id: 1441
-  time: '2022-05-02T22:51:24.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Pneumatic cannons now properly fire and eject their contents., type: Fix}
@@ -2950,3 +2944,11 @@ Entries:
   - {message: Recoil has been added back in., type: Tweak}
   id: 1940
   time: '2022-07-14T12:01:25.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Hardsuits and outer clothing are now larger and harder to fit in bags.,
+    type: Tweak}
+  - {message: Some outer clothing suits and armour will slow you down slightly now.,
+    type: Tweak}
+  id: 1941
+  time: '2022-07-14T12:43:54.0000000+00:00'
