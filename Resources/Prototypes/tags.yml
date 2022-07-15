@@ -52,6 +52,9 @@
   id: CaptainSabre
 
 - type: Tag
+  id: Carp
+
+- type: Tag
   id: Cartridge
 
 - type: Tag
@@ -425,6 +428,12 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter

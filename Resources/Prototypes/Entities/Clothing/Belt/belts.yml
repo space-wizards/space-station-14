@@ -503,3 +503,19 @@
   - type: Clothing
     sprite: Clothing/Belt/suspenders.rsi
     quickEquip: true
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltWand
+  name: wand belt
+  description: A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/wand.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/wand.rsi
+  - type: Storage
+    capacity: 120
+    whitelist:
+      tags:
+      - WizardWand
