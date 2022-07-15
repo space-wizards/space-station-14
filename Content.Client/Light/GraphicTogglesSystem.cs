@@ -1,9 +1,5 @@
 using Content.Client.Light.Components;
 using Content.Client.HUD;
-using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Client.Player;
-using Robust.Client.Graphics;
 using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Chemistry.Components;
@@ -11,18 +7,25 @@ using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Tag;
+using Content.Shared.Light;
+using Content.Shared.Doors.Components;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Robust.Client.GameObjects;
+using Robust.Client.Player;
+using Robust.Client.Graphics;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using System.Threading;
-using Content.Shared.Doors.Components;
-using Content.Shared.Light.Component;
+using Robust.Shared.Prototypes;
+using JetBrains.Annotations;
 
 namespace Content.Client.Light;
 
 [UsedImplicitly]
 public sealed class GraphicTogglesSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly ILightManager _lightingManager = default!;
@@ -41,13 +44,25 @@ public sealed class GraphicTogglesSystem : EntitySystem
     }
     private void OnComponentStartup(EntityUid uid, GraphicTogglesComponent component, ComponentStartup args)
     {
-        if (component.ToggleFoV != null && component.FoVAction == true)
+        if (component.ToggleFoV == null
+            && _protoMan.TryIndex(component.ToggleFoVActionId, out InstantActionPrototype? toggleFoVProto))
+            component.ToggleFoV = new(toggleFoVProto);
+
+        if (component.ToggleFoV != null)
             _actionsSystem.AddAction(uid, component.ToggleFoV, null);
 
-        if (component.ToggleShadows != null && component.ShadowsAction == true)
+        if (component.ToggleShadows == null
+            && _protoMan.TryIndex(component.ToggleShadowsActionId, out InstantActionPrototype? toggleShadowsProto))
+            component.ToggleShadows = new(toggleShadowsProto);
+
+        if (component.ToggleShadows != null)
             _actionsSystem.AddAction(uid, component.ToggleShadows, null);
 
-        if (component.ToggleLighting != null && component.LightingAction == true)
+        if (component.ToggleLighting == null
+            && _protoMan.TryIndex(component.ToggleLightingActionId, out InstantActionPrototype? toggleLightingProto))
+            component.ToggleLighting = new(toggleLightingProto);
+
+        if (component.ToggleLighting != null)
             _actionsSystem.AddAction(uid, component.ToggleLighting, null);
     }
     private void OnComponentShutdown(EntityUid uid, GraphicTogglesComponent component, ComponentShutdown args)

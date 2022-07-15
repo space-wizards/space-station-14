@@ -13,7 +13,7 @@ namespace Content.Client.Atmos.Overlays
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
         private readonly ShaderInstance _shader;
 
         public FireTileOverlay()
@@ -52,7 +52,6 @@ namespace Content.Client.Atmos.Overlays
             }
 
             drawHandle.SetTransform(Matrix3.Identity);
-            drawHandle.UseShader(null);
         }
     }
 }

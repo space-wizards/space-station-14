@@ -14,7 +14,7 @@ namespace Content.Client.Atmos.Overlays
 
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
         public GasTileOverlay()
         {

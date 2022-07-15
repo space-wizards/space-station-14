@@ -1,7 +1,6 @@
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -34,7 +33,7 @@ namespace Content.Client.Atmos.EntitySystems
         private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
 
-        public const int GasOverlayZIndex = (int)DrawDepth.Overdoors;
+        public const int GasOverlayZIndex = 1;
 
         public override void Initialize()
         {

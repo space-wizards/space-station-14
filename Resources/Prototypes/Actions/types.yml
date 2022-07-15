@@ -66,6 +66,7 @@
   event: !type:ToggleFoVActionEvent
   checkCanInteract: False
   clientExclusive: True
+  temporary: True
 
 - type: instantAction
   id: ToggleShadows
@@ -78,6 +79,7 @@
   event: !type:ToggleShadowsActionEvent
   checkCanInteract: False
   clientExclusive: True
+  temporary: True
 
 - type: instantAction
   id: ToggleLighting
@@ -90,6 +92,7 @@
   event: !type:ToggleLightingActionEvent
   checkCanInteract: False
   clientExclusive: True
+  temporary: True
 
 # - type: instantAction
 #   id: ToggleGhosts
@@ -102,6 +105,7 @@
 #   event: !type:ToggleGhostsActionEvent
 #   checkCanInteract: False
   # clientExclusive: True
+  # temporary: True
 
 - type: instantAction
   id: VendingThrow

@@ -1,12 +1,6 @@
 ghost-gui-return-to-body-button = Return to body
 ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
-ghost-gui-toggleghosts = Turn Off Ghosts: {$switch}
-ghost-gui-togglefov = Turn Off FoV: {$switch}
-ghost-gui-toggleshadows = Turn Off Shadows: {$switch}
-ghost-gui-togglelight = Turn Off Lighting: {$switch}
-ghost-gui-yes = Yes
-ghost-gui-no = No
 
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
