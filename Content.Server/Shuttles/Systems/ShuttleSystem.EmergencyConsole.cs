@@ -222,7 +222,7 @@ public sealed partial class ShuttleSystem
         if (remaining > 0)
             _chatSystem.DispatchGlobalAnnouncement(
                 Loc.GetString("emergency-shuttle-console-auth-left", ("remaining", remaining)),
-                playDefaultSound: false, colorOverride: DangerColor);
+                playSound: false, colorOverride: DangerColor);
 
         if (!CheckForLaunch(component))
             SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
@@ -297,7 +297,7 @@ public sealed partial class ShuttleSystem
         _announced = true;
         _chatSystem.DispatchGlobalAnnouncement(
             Loc.GetString("emergency-shuttle-launch-time", ("consoleAccumulator", $"{_consoleAccumulator:0}")),
-            playDefaultSound: false,
+            playSound: false,
             colorOverride: DangerColor);
 
         SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
