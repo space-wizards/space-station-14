@@ -126,7 +126,7 @@
     visuals:
     - type: BuckleVisualizer
   - type: FireVisuals
-    sprite: Effects/fire.rsi
+    sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
   - type: Actions
   - type: DoAfter

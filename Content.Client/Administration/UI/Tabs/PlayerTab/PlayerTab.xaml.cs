@@ -100,6 +100,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             {
                 var entry = new PlayerTabEntry(player.Username,
                     player.CharacterName,
+                    player.IdentityName,
                     player.StartingJob,
                     player.Antag ? "YES" : "NO",
                     new StyleBoxFlat(useAltColor ? _altColor : _defaultColor),

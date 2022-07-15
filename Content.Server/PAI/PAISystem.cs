@@ -70,6 +70,12 @@ namespace Content.Server.PAI
 
             // Ownership tag
             string val = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+
+            // TODO Identity? People shouldn't dox-themselves by carrying around a PAI.
+            // But having the pda's name permanently be "old lady's PAI" is weird.
+            // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
+            // Cause then you could remotely figure out information about the owner's equipped items.
+            
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);

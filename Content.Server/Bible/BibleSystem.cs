@@ -10,6 +10,9 @@ using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.MobState;
 using Content.Server.Popups;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
@@ -38,6 +41,7 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, GetItemActionsEvent>(GetSummonAction);
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
+            SubscribeLocalEvent<FamiliarComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
         }
 
         private readonly Queue<EntityUid> _addQueue = new();
@@ -121,10 +125,10 @@ namespace Content.Server.Bible
             {
                 if (_random.Prob(component.FailChance))
                 {
-                    var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", args.User),("target", args.Target),("bible", uid));
+                    var othersFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-others", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                     _popupSystem.PopupEntity(othersFailMessage, args.User, Filter.PvsExcept(args.User), PopupType.SmallCaution);
 
-                    var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", args.Target),("bible", uid));
+                    var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, Filter.Entities(args.User), PopupType.MediumCaution);
 
                     SoundSystem.Play("/Audio/Effects/hit_kick.ogg", Filter.Pvs(args.Target.Value), args.User);
@@ -133,10 +137,10 @@ namespace Content.Server.Bible
                 }
             }
 
-            var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", args.User),("target", args.Target),("bible", uid));
+            var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
             _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), PopupType.Medium);
 
-            var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", args.Target),("bible", uid));
+            var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)),("bible", uid));
             _popupSystem.PopupEntity(selfMessage, args.User, Filter.Entities(args.User), PopupType.Large);
 
             SoundSystem.Play(component.HealSoundPath.GetSound(), Filter.Pvs(args.Target.Value), args.User);
@@ -193,6 +197,17 @@ namespace Content.Server.Bible
             }
         }
 
+        /// <summary>
+        /// When the familiar spawns, set its source to the bible.
+        /// </summary>
+        private void OnSpawned(EntityUid uid, FamiliarComponent component, GhostRoleSpawnerUsedEvent args)
+        {
+            if (!TryComp<SummonableComponent>(Transform(args.Spawner).ParentUid, out var summonable))
+                return;
+
+            component.Source = summonable.Owner;
+            summonable.Summon = uid;
+        }
 
         private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
@@ -211,12 +226,11 @@ namespace Content.Server.Bible
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
                             component.Summon = familiar;
 
-            // We only want to add the familiar component to mobs
-            if (HasComp<MobStateComponent>(familiar))
+            // If this is going to use a ghost role mob spawner, attach it to the bible.
+            if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                // Make this Summon the familiar's source
-                var familiarComp = EnsureComp<FamiliarComponent>(familiar);
-                familiarComp.Source = component.Owner;
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user), PopupType.Medium);
+                Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonAction);
