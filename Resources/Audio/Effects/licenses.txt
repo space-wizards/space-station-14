@@ -40,4 +40,6 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
 pop.ogg licensed under CC0 1.0 by mirrorcult
 
-icarus_alarm.ogg, sunbeam_fire.ogg, sunbeam_loop.ogg taken at https://github.com/Skyrat-SS13/Skyrat-tg/commit/e2a68d3b15f0daff453ff14a1745f68eeb76b765
+icarus_alarm.ogg, sunbeam_loop.ogg taken at https://github.com/Skyrat-SS13/Skyrat-tg/commit/e2a68d3b15f0daff453ff14a1745f68eeb76b765
+
+sunbeam_fire.ogg taken from https://freesound.org/people/tjcason/sounds/390475/ and edited - CC0-1.0
