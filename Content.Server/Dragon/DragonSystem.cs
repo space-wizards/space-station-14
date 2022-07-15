@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.Intrinsics.X86;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
@@ -8,7 +7,6 @@ using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -20,8 +18,7 @@ using Content.Shared.Damage;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Dragon
 {
@@ -36,6 +33,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly FlammableSystem _flammableSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
         ///     Tracks breath attacks performed per-entity.
@@ -203,7 +201,14 @@ namespace Content.Server.Dragon
         public override void Update(float frameTime)
         {
             foreach (var entry in _breathAttacks)
-                entry.Value.Update(frameTime);
+            {
+                if (entry.Value.Finished)
+                    // TODO: Cleanup finished break attacks.
+                    continue;
+
+                entry.Value.Update(frameTime, _gameTiming);
+            }
+
         }
 
         /// <summary>
@@ -332,25 +337,44 @@ internal sealed class BreathAttack
     /// </summary>
     private readonly List<Vector2i> _tileProcessedList = new();
 
+
+    /// <summary>
+    ///     The current tile position awaiting processing or being processed.
+    /// </summary>
+    private Vector2i _currentTile = default!;
+
+    /// <summary>
+    ///     Track the point offset within the tile, relative to the tile's center.
+    /// </summary>
+    private Vector2 _currentOffset = Vector2.Zero;
+
+    private IEnumerator<Vector2i> _tileMover;
+
+    /// <summary>
+    ///     Delay between each tile propagation.
+    /// </summary>
+    private readonly TimeSpan _delay;
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns></returns>
+    private TimeSpan _lastTimeProcessed;
+
     /// <summary>
     ///     The range of the breath attack in "tiles".
     /// </summary>
     private readonly int _range;
 
     /// <summary>
+    ///     The direction the attack should go, as a normalized vector.
+    /// </summary>
+    private readonly Vector2 _direction;
+
+    /// <summary>
     ///
     /// </summary>
     private readonly DamageSpecifier _damageSpecifier;
-
-    /// <summary>
-    ///     Point used for tracking the propagation of the breath attack per tick.
-    /// </summary>
-    private Vector2 _pointPos;
-
-    /// <summary>
-    ///     The velocity of the point.
-    /// </summary>
-    private Vector2 _pointVel;
 
     /// <summary>
     ///     The current grid that is being processed.
@@ -393,6 +417,7 @@ internal sealed class BreathAttack
         _mobStateQuery = _entMan.GetEntityQuery<MobStateComponent>();
         _flammableQuery = _entMan.GetEntityQuery<FlammableComponent>();
 
+        _delay = delay;
         _range = range;
         _damageSpecifier = damageSpec;
 
@@ -410,22 +435,17 @@ internal sealed class BreathAttack
         // Check if the attack is starting from a grid.
         var tileSize = grid?.TileSize ?? DefaultTileSize;
 
-        // Setup the breath attack particle.
-        _pointPos = grid?.WorldToLocal(origin.Position) ?? Vector2.NaN;
-        _pointVel = Vector2.NaN;
-
-        var originTile = new Vector2i((int) Math.Floor(_pointPos.X / tileSize),
-            (int) Math.Floor(_pointPos.Y / tileSize));
-
-        // TODO: Move the origin position instead of doing this.
-        _tileProcessedList.Add(originTile);
-
         if (grid != null)
         {
             var angle = dir - grid.WorldRotation;
-            _pointVel = angle.ToWorldVec() *
-                       (grid.TileSize / (float) delay.TotalSeconds); // TODO: Divide by zero
+            _direction = angle.ToWorldVec();
         }
+
+        var originTile = _currentGrid?.CoordinatesToTile(creatorXform.Coordinates) ?? Vector2i.Zero;
+
+        _tileMover = TileMover(originTile, _direction).GetEnumerator();
+        _tileMover.MoveNext();
+        _currentTile = _tileMover.Current;
     }
 
     /// <summary>
@@ -470,29 +490,22 @@ internal sealed class BreathAttack
         return true;
     }
 
-    public void Update(float frameTime)
+    public void Update(float frameTime, IGameTiming gameTiming)
     {
-        if (_currentGrid == null || _tileProcessedList.Count >= _range || _pointVel == Vector2.NaN)
+        if (_currentGrid == null || _tileProcessedList.Count >= _range)
         {
             Finished = true;
             return;
         }
 
-        var lastTile = _tileProcessedList.Last();
-
-        // Advance the point forward.
-        _pointPos += _pointVel * frameTime; // TODO: Check for tiles intersected with a line segment for faster propagations.
-
-        // var previousTilePos = new Vector2i((int)Math.Floor(previousPos.X / _currentGrid.TileSize),
-        //     (int)Math.Floor(previousPos.Y / _currentGrid.TileSize));
-        var tilePos = new Vector2i((int)Math.Floor(_pointPos.X / _currentGrid.TileSize),
-            (int)Math.Floor(_pointPos.Y / _currentGrid.TileSize));
-
-        if (_tileProcessedList.Contains(tilePos))
-            return; // Already added this tile.
+        if (_tileProcessedList.Contains(_currentTile))
+        {
+            Finished = true;
+            return; // Already added this tile. Something went wrong.
+        }
 
         // Check if this movement has intersected with any collidable.
-        var anchored = _currentGrid.GetAnchoredEntities(tilePos).ToList();
+        var anchored = _currentGrid.GetAnchoredEntities(_currentTile).ToList();
 
         var blocked = false;
         foreach (var a in anchored)
@@ -502,18 +515,59 @@ internal sealed class BreathAttack
         }
 
         if (blocked)
-            _pointVel = Vector2.NaN;
-
-        if (!blocked && lastTile != tilePos && !_tileProcessedList.Contains(tilePos))
         {
-            // Exited a tile, go ahead and process it.
-            ProcessTile(tilePos, _currentGrid);
-            _tileProcessedList.Add(tilePos);
-            lastTile = tilePos;
+            Finished = true;
+            return;
         }
 
-        // Check if the tile has changed, if it has, check if the grid has been left.
-        if (!_currentGrid.LocalAABB.Contains(_pointPos))
-            _currentGrid = null;
+        // Check if it's time to process the tile.
+        if (gameTiming.CurTime < _lastTimeProcessed + _delay)
+            return;
+
+        _lastTimeProcessed = gameTiming.CurTime;
+
+        ProcessTile(_currentTile, _currentGrid);
+        _tileProcessedList.Add(_currentTile);
+
+        // Proceed to the next tile.
+        if (!_tileMover.MoveNext())
+        {
+            Finished = true;
+            return;
+        }
+
+        _currentTile = _tileMover.Current;
+    }
+
+    /// <summary>
+    /// Produces tile coordinates to form a line following a direction vector.
+    /// </summary>
+    /// <param name="start">The starting tile</param>
+    /// <param name="dir">The direction to move in.</param>
+    /// <returns></returns>
+    private static IEnumerable<Vector2i> TileMover(Vector2i start, Vector2 dir)
+    {
+        var current = start;
+        var nx = Math.Abs(dir.X);
+        var ny = Math.Abs(dir.Y);
+        var signX = dir.X > 0 ? 1 : -1;
+        var signY = dir.Y > 0 ? 1 : -1;
+
+        int ix = 0, iy = 0;
+        while(true)
+        {
+            if ((1 + 2 * ix) * ny < (1 + 2 * iy) * nx)
+            {
+                current.X += signX;
+                ix++;
+            }
+            else
+            {
+                current.Y += signY;
+                iy++;
+            }
+
+            yield return current;
+        }
     }
 }
