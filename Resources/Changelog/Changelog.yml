@@ -1,18 +1,4 @@
 Entries:
-- author: Lizzer lover
-  changes:
-  - {message: 'Reptilians now have two more frills (Big, Divinity) and one horn marking
-      (doublehorn)', type: Add}
-  - {message: Humans now have tattoos markings, type: Add}
-  - {message: SlimePeople now have limb gradients markings, type: Add}
-  id: 1463
-  time: '2022-05-06T08:50:00.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Trying to insert items into storage will no longer cause those items
-      to be used on the tile below you., type: Fix}
-  id: 1464
-  time: '2022-05-06T10:59:03.0000000+00:00'
 - author: juliangiebel
   changes:
   - {message: Added a new medipen variant to survival boxes that buys you some time
@@ -2955,3 +2941,13 @@ Entries:
     type: Tweak}
   id: 1962
   time: '2022-07-15T09:01:55.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added nuke ops sound declaration of war, type: Add}
+  id: 1963
+  time: '2022-07-15T09:16:41.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Altars added, type: Add}
+  id: 1964
+  time: '2022-07-15T09:17:26.0000000+00:00'
