@@ -9,6 +9,7 @@ namespace Content.Shared.Atmos.Visuals
     public enum PortableScrubberVisuals : byte
     {
         IsFull,
-        IsRunning
+        IsRunning,
+        IsDraining
     }
 }

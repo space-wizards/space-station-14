@@ -28,6 +28,10 @@
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: draining
+      shader: unshaded
+      visible: false
+      map: ["enum.PortableScrubberVisualLayers.IsDraining"]
   - type: Pullable
   - type: AtmosDevice
     joinSystem: true
@@ -49,8 +53,6 @@
         nodeGroupID: Pipe
         rotationsEnabled: false
         volume: 1
-  - type: GasPortable
-    blockAnchor: false
   - type: ApcPowerReceiver
     powerLoad: 2000
   - type: ExtensionCableReceiver

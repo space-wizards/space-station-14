@@ -34,6 +34,7 @@ namespace Content.Server.Atmos.Portable
         {
             base.Initialize();
             SubscribeLocalEvent<PortableScrubberComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
+            SubscribeLocalEvent<PortableScrubberComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PortableScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PortableScrubberComponent, DestructionEventArgs>(OnDestroyed);
@@ -87,6 +88,21 @@ namespace Content.Server.Atmos.Portable
             }
         }
 
+        /// <summary>
+        /// If there is a port under us, let us connect with adjacent atmos pipes.
+        /// </summary>
+        private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
+                return;
+
+            if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
+                return;
+
+            portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
+
+            UpdateDrainingAppearance(uid, portableNode.ConnectionsEnabled);
+        }
         private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, PowerChangedEvent args)
         {
             UpdateAppearance(uid, component.Full, args.Powered);
@@ -131,6 +147,14 @@ namespace Content.Server.Atmos.Portable
 
             appearance.SetData(PortableScrubberVisuals.IsFull, isFull);
             appearance.SetData(PortableScrubberVisuals.IsRunning, isRunning);
+        }
+
+        private void UpdateDrainingAppearance(EntityUid uid, bool isDraining)
+        {
+            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+                return;
+
+            appearance.SetData(PortableScrubberVisuals.IsDraining, isDraining);
         }
     }
 }

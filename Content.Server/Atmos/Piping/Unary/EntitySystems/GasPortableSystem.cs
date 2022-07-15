@@ -26,9 +26,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
         {
-            if (!component.BlockAnchor)
-                return;
-
             if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 

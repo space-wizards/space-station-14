@@ -23,10 +23,17 @@ namespace Content.Client.Atmos.Visualizers
                 var fullState = isFull ? component.FullState : component.ReadyState;
                 args.Sprite.LayerSetState(PowerDeviceVisualLayers.Powered, fullState);
             }
+
+            if (args.Component.TryGetData(PortableScrubberVisuals.IsDraining, out bool isDraining))
+            {
+                args.Sprite.LayerSetVisible(PortableScrubberVisualLayers.IsDraining, isDraining);
+            }
         }
     }
 }
 public enum PortableScrubberVisualLayers : byte
 {
-    IsRunning
+    IsRunning,
+
+    IsDraining
 }
