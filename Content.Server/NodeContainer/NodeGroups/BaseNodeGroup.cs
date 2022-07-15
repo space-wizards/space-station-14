@@ -20,7 +20,7 @@ namespace Content.Server.NodeContainer.NodeGroups
 
         void Create(NodeGroupID groupId);
 
-        void Initialize(Node sourceNode, IEntityManager? entMan = null);
+        void Initialize(Node sourceNode, IEntityManager entMan);
 
         void RemoveNode(Node node);
 
@@ -70,7 +70,7 @@ namespace Content.Server.NodeContainer.NodeGroups
             GroupId = groupId;
         }
 
-        public virtual void Initialize(Node sourceNode, IEntityManager? entMan = null)
+        public virtual void Initialize(Node sourceNode, IEntityManager entMan)
         {
         }
 

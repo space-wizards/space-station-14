@@ -13,8 +13,6 @@ namespace Content.Server.Nutrition.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private float _accumulatedFrameTime;
-
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -64,6 +62,7 @@ namespace Content.Server.Nutrition.Components
             { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
+            { HungerThreshold.Dead, AlertType.Starving },
         };
 
         public void HungerThresholdEffect(bool force = false)

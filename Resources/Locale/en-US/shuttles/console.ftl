@@ -2,6 +2,8 @@ shuttle-pilot-start = Piloting ship
 shuttle-pilot-end = Stopped piloting
 
 # Display
+shuttle-console-display-label = Display
+
 shuttle-console-max-radar = Max radar range:
 shuttle-console-radar = Radar range:
 shuttle-console-position = Position:
@@ -9,6 +11,7 @@ shuttle-console-orientation = Orientation:
 shuttle-console-linear-velocity = Linear velocity:
 shuttle-console-angular-velocity = Angular velocity:
 
+shuttle-console-dock-label = Docking ports
 shuttle-console-docked = {$index} (Docked)
 shuttle-console-dock-button = Dock {$suffix}
 

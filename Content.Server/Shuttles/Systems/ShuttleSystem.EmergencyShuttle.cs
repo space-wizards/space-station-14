@@ -16,6 +16,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -256,8 +257,26 @@ public sealed partial class ShuttleSystem
 
        if (TryHyperspaceDock(shuttle, targetGrid.Value))
        {
+           var xformQuery = GetEntityQuery<TransformComponent>();
+
+           if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+           {
+               var (shuttlePos, shuttleRot) = xform.GetWorldPositionRotation(xformQuery);
+               var (targetPos, targetRot) = targetXform.GetWorldPositionRotation(xformQuery);
+
+               var shuttleCOM = Robust.Shared.Physics.Transform.Mul(new Transform(shuttlePos, shuttleRot),
+                   Comp<PhysicsComponent>(shuttle.Owner).LocalCenter);
+               var targetCOM = Robust.Shared.Physics.Transform.Mul(new Transform(targetPos, targetRot),
+                   Comp<PhysicsComponent>(targetGrid.Value).LocalCenter);
+
+               var mapDiff = shuttleCOM - targetCOM;
+               var targetRotation = targetRot;
+               var angle = mapDiff.ToWorldAngle();
+               angle -= targetRotation;
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
+           }
+
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} docked with stations");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}")), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Announcements/shuttle_dock.ogg", Filter.Broadcast());
        }

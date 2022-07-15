@@ -36,6 +36,9 @@
         },
         {
             "name": "ratKingDomain"
+        },
+        {
+            "name": "zombie-turn"
         }
     ]
 }

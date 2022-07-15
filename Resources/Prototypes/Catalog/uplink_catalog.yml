@@ -346,7 +346,7 @@
 - type: uplinkListing
   id: UplinkEVASyndie
   category: Armor
-  itemId: BoxSyndicateEVA
+  itemId: ClothingBackpackDuffelSyndicateEVABundle
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 

@@ -29,7 +29,7 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
@@ -135,7 +135,7 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.TryGetComponent<SharedItemComponent?>(args.Used, out var item)
                 && EntityManager.TryGetComponent<ServerStorageComponent?>(component.Owner, out var storage))
             {
-                if (_storageSystem.CanInsert(component.Owner, args.Used, storage))
+                if (_storageSystem.CanInsert(component.Owner, args.Used, out _, storage))
                 {
                     _storageSystem.Insert(component.Owner, args.Used, storage);
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",
@@ -231,7 +231,7 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
             {
                 var kick = Vector2.One * data.Strength;
-                _cameraRecoil.KickCamera(data.User, kick);
+                _sharedCameraRecoil.KickCamera(data.User, kick);
             }
 
             _throwingSystem.TryThrow(ent, data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));

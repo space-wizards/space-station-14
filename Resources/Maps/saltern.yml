@@ -80,7 +80,7 @@ grids:
   - ind: -2,0
     tiles: NwAAADUAAAA1AAAANQAAADUAAAA1AAAAMQAAADEAAAAxAAAAMQAAADcAAAAlAAAAIQAAACEAAAAhAAAAJQAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAAxAAAAMQAAADcAAAA3AAAAJQAAACUAAAAlAAAAJQAAACUAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAAMQAAADEAAAAxAAAANwAAADcAAAAxAAAAMQAAADcAAAA3AAAAHgAAAB4AAAA3AAAANwAAADcAAAAzAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAHgAAAB4AAAAeAAAANwAAADIAAAAyAAAAMwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAyAAAAMgAAADMAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAeAAAAHgAAAB4AAAA3AAAAMgAAADIAAAAzAAAANwAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAA3AAAANwAAAB4AAAA3AAAANwAAADIAAAAyAAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAAzAAAAMwAAADcAAAA3AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
   - ind: 1,-1
-    tiles: NAAAADQAAAA0AAAANAAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADcAAAA0AAAANAAAADQAAAA0AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAA3AAAANAAAADQAAAA0AAAANwAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAANwAAADQAAAA0AAAANAAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADIAAAAyAAAANAAAADQAAAA0AAAANAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADIAAAA3AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADQAAAA0AAAANAAAADQAAAA3AAAANAAAADQAAAA0AAAANAAAADcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAAMwAAADcAAAA3AAAAMQAAADEAAAAxAAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADEAAAAxAAAAMQAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAAxAAAAMQAAADEAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAAzAAAAMwAAADMAAAA3AAAAMwAAADcAAAA3AAAAMQAAADEAAAAxAAAANAAAADQAAAA0AAAANAAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAA==
+    tiles: NAAAADQAAAA0AAAANAAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADcAAAA0AAAANAAAADQAAAA0AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAA3AAAANAAAADQAAAA0AAAANwAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAANwAAADQAAAA0AAAANAAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADIAAAAyAAAANAAAADQAAAA0AAAANAAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADIAAAA3AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADQAAAA0AAAANAAAADQAAAA3AAAANAAAADQAAAA0AAAANAAAADcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADQAAAA0AAAANwAAADQAAAA0AAAANAAAADQAAAA3AAAAMwAAADcAAAA3AAAAMQAAADEAAAAxAAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADEAAAAxAAAAMQAAADQAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAAxAAAAMQAAADEAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAAzAAAAMwAAADMAAAA3AAAAMwAAADcAAAA3AAAAMQAAADEAAAAxAAAANAAAADQAAAA0AAAANAAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAA==
   - ind: 0,-2
     tiles: KAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAoAAAAKAAAADcAAAA3AAAANwAAACgAAAA3AAAAMQAAADEAAAAxAAAANwAAADUAAAA1AAAANQAAADUAAAA1AAAAKAAAACgAAAA3AAAANwAAADcAAAAoAAAAKAAAADEAAAAxAAAAMQAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAACgAAAAoAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAAMQAAADEAAAAxAAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADcAAAAzAAAANwAAADEAAAAxAAAAMQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAAMwAAADcAAAAxAAAAMQAAADEAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAANwAAADMAAAA3AAAAMQAAADEAAAAxAAAANwAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADMAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAAzAAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAANwAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAAMwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAAeAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAAHgAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAzAAAAMwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAANAAAADQAAAA0AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADQAAAA0AAAANAAAADcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAA==
   - ind: 1,-2
@@ -100,7 +100,7 @@ grids:
   - ind: 3,0
     tiles: HgAAADEAAAAeAAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADcAAAAAAAAAAAAAAB4AAAAxAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAxAAAAMwAAADMAAAAzAAAAMwAAADEAAAA3AAAAAAAAAAAAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADMAAAAzAAAANwAAADMAAAAxAAAANwAAADYAAAA2AAAAMQAAADEAAAAxAAAAHgAAAB4AAAAeAAAANwAAADEAAAAzAAAAMwAAADMAAAAzAAAAMQAAADcAAAAAAAAAAAAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAAAAAAAAAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAB4AAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA3AAAAHgAAAB4AAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAANwAAAB4AAAAeAAAANwAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAeAAAAHgAAADcAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAHgAAAB4AAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAAAAAAAAAAAANwAAAB4AAAAeAAAANwAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAADcAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANgAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: 2,-1
-    tiles: AAAAADYAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADMAAAA3AAAANwAAADcAAAAzAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAzAAAANwAAADcAAAA3AAAAMwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAAMwAAADcAAAA3AAAANwAAADMAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADIAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAANwAAADcAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAA3AAAANgAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADYAAAA3AAAANwAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA2AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADMAAAA3AAAANgAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAAzAAAANwAAADYAAAA2AAAANwAAAA==
+    tiles: AAAAADYAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADMAAAA3AAAANwAAADcAAAAzAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAzAAAANwAAADcAAAA3AAAAMwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAAMwAAADcAAAA3AAAANwAAADMAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADIAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAANwAAADcAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADUAAAA1AAAANQAAADUAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAAA==
   - ind: -1,-2
     tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAACgAAAAoAAAAKAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAANgAAADcAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAzAAAAMwAAADMAAAA3AAAANgAAADYAAAA3AAAAKAAAACgAAAAoAAAANgAAADYAAAA2AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADMAAAAzAAAAMwAAADMAAAAzAAAANwAAADMAAAAzAAAAMwAAADMAAAArAAAAKwAAACsAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAACsAAAArAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAArAAAAKwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA1AAAANQAAADUAAAA1AAAANwAAADcAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAAcAAAAHAAAABwAAAA3AAAANQAAADUAAAA1AAAANQAAADcAAAA3AAAAHgAAAB4AAAAeAAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAAB4AAAAeAAAAHgAAAB4AAAA3AAAANwAAAB4AAAAeAAAAHgAAADcAAAA3AAAANwAAADcAAAA0AAAANwAAADcAAAA3AAAANwAAAB4AAAA3AAAANwAAADcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAADcAAAA3AAAANwAAAB4AAAA3AAAANwAAADcAAAAeAAAAHgAAAB4AAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAA3AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAAA==
   - ind: -2,-2
@@ -243,15 +243,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 11
-  type: VendingMachineCoffee
+  type: CableHV
   components:
-  - name: Hot drinks machine
-    type: MetaData
-  - pos: -11.5,-17.5
+  - pos: -12.5,-19.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 12
   type: ToolboxElectricalFilled
   components:
@@ -278,6 +274,11 @@ entities:
   - pos: -13.5,18.5
     parent: 852
     type: Transform
+  - materialWhiteList:
+    - Glass
+    - Plastic
+    - Steel
+    type: Lathe
   - containers:
     - machine_parts
     - machine_board
@@ -363,13 +364,17 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 25
-  type: ShellShotgunBeanbag
+  type: BoxShotgunIncendiary
   components:
-  - pos: -11.418642,18.704296
+  - pos: -11.462591,18.639452
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 26
   type: WallSolid
   components:
@@ -416,9 +421,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 33
-  type: ShellShotgunBeanbag
+  type: WeaponLaserCarbine
   components:
-  - pos: -11.387392,18.344921
+  - pos: -14.437499,19.983202
     parent: 852
     type: Transform
   - canCollide: False
@@ -483,7 +488,7 @@ entities:
 - uid: 42
   type: WeaponShotgunKammerer
   components:
-  - pos: -11.525684,19.694025
+  - pos: -11.415716,19.405077
     parent: 852
     type: Transform
   - unspawnedCount: 4
@@ -495,9 +500,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 43
-  type: ShellShotgunSlug
+  type: SheetSteel
   components:
-  - pos: -11.153017,18.298046
+  - pos: -11.556341,19.655077
     parent: 852
     type: Transform
   - canCollide: False
@@ -532,13 +537,17 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 46
-  type: ShellShotgunBeanbag
+  type: BoxBeanbag
   components:
-  - pos: -11.418642,18.548046
+  - pos: -11.415716,18.436327
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 47
   type: Grille
   components:
@@ -589,9 +598,9 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 54
-  type: ShellShotgunSlug
+  type: WeaponSubMachineGunVector
   components:
-  - pos: -11.153017,18.423046
+  - pos: -14.406249,21.639452
     parent: 852
     type: Transform
   - canCollide: False
@@ -678,15 +687,22 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 66
-  type: MagazineMagnumSubMachineGunRubber
+  type: ConveyorBelt
   components:
-  - pos: -13.668642,21.563671
+  - pos: 20.5,22.5
     parent: 852
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 7550
+      Forward:
+      - port: Left
+        uid: 7550
+      Off:
+      - port: Middle
+        uid: 7550
+    type: SignalReceiver
 - uid: 67
   type: ToyRubberDuck
   components:
@@ -756,13 +772,11 @@ entities:
     id: HoP Office
     type: SurveillanceCamera
 - uid: 76
-  type: ShellShotgunSlug
+  type: WallSolidRust
   components:
-  - pos: -11.153017,18.626171
+  - pos: -26.5,-13.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 77
   type: BoxFlashbang
   components:
@@ -782,13 +796,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 79
-  type: ShellShotgunSlug
+  type: WallSolidRust
   components:
-  - pos: -11.153017,18.532421
+  - pos: -20.5,-15.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 80
   type: ClothingUnderSocksCoder
   components:
@@ -827,13 +839,13 @@ entities:
       entity_storage: !type:Container
         ents:
         - 7797
-        - 4294
         - 5153
+        - 4294
     type: ContainerContainer
 - uid: 85
-  type: ShellShotgunBeanbag
+  type: WeaponLaserCarbine
   components:
-  - pos: -11.387392,18.266796
+  - pos: -14.421874,20.186327
     parent: 852
     type: Transform
   - canCollide: False
@@ -1001,8 +1013,6 @@ entities:
   - pos: -2.5,1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 109
   type: GasPipeStraight
   components:
@@ -1136,13 +1146,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 128
-  type: WeaponSubMachineGunVectorRubber
+  type: CableHV
   components:
-  - pos: -14.340517,21.391796
+  - pos: -25.5,18.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 129
   type: GasPipeBend
   components:
@@ -1179,8 +1187,6 @@ entities:
   - pos: -22.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 134
   type: ClothingBackpackDuffel
   components:
@@ -1240,9 +1246,9 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 140
-  type: Grille
+  type: CableHV
   components:
-  - pos: 20.5,22.5
+  - pos: -22.5,21.5
     parent: 852
     type: Transform
 - uid: 141
@@ -1335,8 +1341,6 @@ entities:
   - pos: 10.5,21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 154
   type: APCBasic
   components:
@@ -1733,8 +1737,6 @@ entities:
     pos: -28.5,11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 195
   type: DisposalUnit
   components:
@@ -4045,10 +4047,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 412
-  type: WallSolid
+  type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,-12.5
+  - pos: -21.5,22.5
     parent: 852
     type: Transform
 - uid: 413
@@ -4090,9 +4091,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 419
-  type: WallSolid
+  type: WallSolidRust
   components:
-  - pos: -20.5,-15.5
+  - pos: 28.5,-9.5
     parent: 852
     type: Transform
 - uid: 420
@@ -4162,6 +4163,11 @@ entities:
   - pos: -5.5,-13.5
     parent: 852
     type: Transform
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Gold
+    type: Lathe
   - containers:
     - machine_parts
     - machine_board
@@ -4287,15 +4293,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 446
-  type: MagazineMagnumSubMachineGunRubber
+  type: AirlockArmoryGlassLocked
   components:
-  - pos: -13.840517,21.563671
+  - pos: -12.5,17.5
     parent: 852
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 447
   type: WallReinforced
   components:
@@ -4462,16 +4464,12 @@ entities:
   - pos: 14.5,21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 474
   type: VendingMachineSecDrobe
   components:
   - pos: -9.5,17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 475
   type: WallReinforced
   components:
@@ -4912,13 +4910,11 @@ entities:
   - location: bridge
     type: WarpPoint
 - uid: 539
-  type: ShellShotgunBeanbag
+  type: WallSolidRust
   components:
-  - pos: -11.403017,18.407421
+  - pos: 32.5,-8.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 540
   type: SurveillanceCameraCommand
   components:
@@ -4938,13 +4934,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 542
-  type: ShellShotgunSlug
+  type: WallSolidRust
   components:
-  - pos: -11.153017,18.704296
+  - pos: 28.5,-18.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 543
   type: AirlockMaintLocked
   components:
@@ -4952,21 +4946,17 @@ entities:
     parent: 852
     type: Transform
 - uid: 544
-  type: ShellShotgunIncendiary
+  type: CableHV
   components:
-  - pos: -11.809267,18.641796
+  - pos: -24.5,19.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 545
-  type: ShellShotgunIncendiary
+  type: WallSolidRust
   components:
-  - pos: -11.778017,18.344921
+  - pos: -10.5,-28.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 546
   type: Lamp
   components:
@@ -4994,13 +4984,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 550
-  type: ShellShotgunSlug
+  type: ClosetMaintenanceFilledRandom
   components:
-  - pos: -11.153017,18.469921
+  - pos: 46.5,-0.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 551
   type: WallSolid
   components:
@@ -5068,8 +5056,6 @@ entities:
     pos: 15.5,-16.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -5106,11 +5092,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 563
-  type: WallSolid
+  type: WeaponPistolMk58
   components:
-  - pos: 32.5,-8.5
+  - pos: -14.499999,20.873827
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 564
   type: AirlockMaintCargoLocked
   components:
@@ -5222,8 +5210,6 @@ entities:
   - pos: 17.5,1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 579
   type: WarpPoint
   components:
@@ -5573,9 +5559,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 629
-  type: AirlockArmoryGlassLocked
+  type: Chair
   components:
-  - pos: -12.5,17.5
+  - pos: 45.5,-1.5
     parent: 852
     type: Transform
 - uid: 630
@@ -5994,9 +5980,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 689
-  type: WallSolid
+  type: Chair
   components:
-  - pos: 33.5,-8.5
+  - pos: 44.5,-1.5
     parent: 852
     type: Transform
 - uid: 690
@@ -6205,8 +6191,6 @@ entities:
   - pos: 27.5,10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -6483,8 +6467,6 @@ entities:
   - pos: -30.5,-7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 761
   type: ClosetEmergencyFilledRandom
   components:
@@ -6750,8 +6732,6 @@ entities:
     type: Transform
   - sprite: Structures/Machines/VendingMachines/cigs.rsi
     type: Sprite
-  - enabled: False
-    type: AmbientSound
 - uid: 793
   type: ToiletEmpty
   components:
@@ -6818,8 +6798,6 @@ entities:
   - pos: -19.5,10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 801
   type: ChairOfficeDark
   components:
@@ -6853,8 +6831,6 @@ entities:
   - pos: -14.5,13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 806
   type: AtmosFixNitrogenMarker
   components:
@@ -13566,6 +13542,18 @@ entities:
       -17,-36: 0
       -17,-34: 0
       -17,-33: 0
+      -26,-25: 0
+      -26,-24: 0
+      -26,-23: 0
+      -26,-22: 0
+      -25,-25: 0
+      -25,-24: 0
+      -25,-23: 0
+      -25,-22: 0
+      -24,-25: 0
+      -24,-24: 0
+      -24,-23: 0
+      -24,-22: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -13815,507 +13803,502 @@ entities:
           id: BotRight
           coordinates: 19,17
         61:
-          color: '#FFFFFFFF'
-          id: Arrows
-          coordinates: 22,17
-        62:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 26,15
+        62:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 26,17
         63:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
-          coordinates: 26,17
+          coordinates: 27,15
         64:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
-          coordinates: 27,15
-        65:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
           coordinates: 24,17
-        66:
+        65:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 27,16
-        67:
+        66:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 28,15
-        68:
+        67:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 26,17
-        69:
+        68:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 23,17
-        70:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 22,17
-        71:
+        69:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 21,18
-        72:
+        70:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 24,16
-        73:
+        71:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 22,15
-        74:
+        72:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 15,7
-        75:
+        73:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 14,7
-        76:
+        74:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,9
-        77:
+        75:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 15,9
-        78:
+        76:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 16,10
-        79:
+        77:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,13
-        80:
+        78:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 21,13
-        81:
+        79:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,14
-        82:
+        80:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 20,15
-        83:
+        81:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 19,13
-        84:
+        82:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 18,11
+        83:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 29,5
+        84:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 29,6
         85:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 29,5
-        86:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
-          coordinates: 29,6
-        87:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 27,3
-        97:
+        95:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 7,5
-        142:
+        140:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: 0,10
-        179:
+        177:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,0
-        180:
+        178:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,1
-        186:
+        184:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 19,1
-        187:
+        185:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 18,1
-        188:
+        186:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 17,1
-        189:
+        187:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 16,1
-        190:
+        188:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 15,1
-        191:
+        189:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale
           coordinates: 14,1
-        192:
+        190:
           color: '#FFD886FF'
           id: QuarterTileOverlayGreyscale270
           coordinates: 14,1
-        193:
+        191:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,0
-        197:
+        195:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 6,1
-        198:
+        196:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 7,1
-        199:
+        197:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 8,1
-        200:
+        198:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 9,1
-        201:
+        199:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 10,1
-        202:
+        200:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 11,1
-        203:
+        201:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale
           coordinates: 12,1
-        242:
+        240:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 0,28
-        243:
+        241:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 6,28
-        244:
+        242:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 0,29
-        245:
+        243:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,29
-        246:
+        244:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale180
           coordinates: 0,30
-        247:
+        245:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale270
           coordinates: 6,30
-        248:
+        246:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: 5,30
-        249:
+        247:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: 4,30
-        250:
+        248:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: 3,30
-        251:
+        249:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: 2,30
-        252:
+        250:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: 1,30
-        253:
+        251:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 4,23
-        254:
+        252:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 0,5
-        272:
+        270:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: 1,5
-        275:
+        273:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 12,6
-        276:
+        274:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: 12,7
-        277:
+        275:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 16,7
-        278:
+        276:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 16,6
-        279:
+        277:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,13
-        280:
+        278:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,12
-        281:
+        279:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,11
-        282:
+        280:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,10
-        283:
+        281:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,9
-        284:
+        282:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: 24,8
-        293:
+        291:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,6
-        336:
+        334:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 29,3
-        337:
+        335:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 29,4
-        338:
+        336:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 29,5
-        339:
+        337:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 29,6
-        340:
+        338:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 28,6
-        341:
+        339:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 27,6
-        342:
+        340:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,6
-        343:
+        341:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 25,6
-        356:
+        354:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,16
-        357:
+        355:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,17
-        358:
+        356:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,18
-        359:
+        357:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,19
-        360:
+        358:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,20
-        361:
+        359:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 5,21
-        362:
+        360:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,16
-        363:
+        361:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,17
-        364:
+        362:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,18
-        365:
+        363:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,19
-        366:
+        364:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,20
-        367:
+        365:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 1,21
-        368:
+        366:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,7
-        369:
+        367:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,8
-        370:
+        368:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,9
-        371:
+        369:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,10
-        372:
+        370:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,11
-        373:
+        371:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,7
-        374:
+        372:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,8
-        375:
+        373:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,9
-        376:
+        374:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,10
-        377:
+        375:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale90
           coordinates: 10,11
-        378:
+        376:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 8,7
-        379:
+        377:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 8,11
-        380:
+        378:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLineCorner
           coordinates: 9,11
-        381:
+        379:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: 7,11
-        382:
+        380:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 7,7
-        383:
+        381:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 9,7
-        384:
+        382:
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: 10,7
-        385:
+        383:
           color: '#FFFFFFFF'
           id: WarningLineCorner
           coordinates: 6,7
-        392:
+        390:
           color: '#EFB34196'
           id: FullTileOverlayGreyscale
           coordinates: 30,3
-        509:
+        507:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 16,5
-        510:
+        508:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 17,5
-        511:
+        509:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 18,5
-        512:
+        510:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 19,5
-        513:
+        511:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 20,5
-        514:
+        512:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 21,5
-        515:
+        513:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 22,5
-        516:
+        514:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: 23,5
+        625:
+          color: '#FFFFFFFF'
+          id: Arrows
+          coordinates: 20,17
       -1,0:
         9:
           color: '#334E6DC8'
@@ -14329,365 +14312,365 @@ entities:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale180
           coordinates: -1,28
-        98:
+        96:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -15,18
-        99:
+        97:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -14,18
-        100:
+        98:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -13,18
-        101:
+        99:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -12,18
-        102:
+        100:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,7
-        103:
+        101:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,8
-        104:
+        102:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,6
-        105:
+        103:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,9
-        106:
+        104:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -5,6
-        107:
+        105:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -5,7
-        108:
+        106:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -5,8
-        109:
+        107:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -5,9
-        110:
+        108:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -6,10
-        111:
+        109:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -7,10
-        112:
+        110:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -8,10
-        113:
+        111:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -9,10
-        114:
+        112:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -10,10
-        115:
+        113:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -11,10
-        116:
+        114:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -12,10
-        117:
+        115:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -13,10
-        118:
+        116:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -14,10
-        119:
+        117:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -3,11
-        120:
+        118:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -3,12
-        121:
+        119:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -3,13
-        122:
+        120:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -3,14
-        123:
+        121:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,12
-        124:
+        122:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,13
-        125:
+        123:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,14
-        126:
+        124:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,15
-        127:
+        125:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,16
-        128:
+        126:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: -10,17
-        129:
+        127:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -10,11
-        130:
+        128:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -11,11
-        131:
+        129:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -12,11
-        132:
+        130:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -13,11
-        133:
+        131:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -14,11
-        134:
+        132:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -14,10
-        135:
+        133:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -14,11
-        136:
+        134:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale180
           coordinates: -5,10
-        137:
+        135:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -4,10
-        138:
+        136:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -3,10
-        139:
+        137:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -3,10
-        140:
+        138:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: -2,10
-        141:
+        139:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: -1,10
-        143:
+        141:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -20,7
-        144:
+        142:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -20,8
-        145:
+        143:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -20,9
-        146:
+        144:
           color: '#9FED5896'
           id: HalfTileOverlayGreyscale90
           coordinates: -20,10
-        255:
+        253:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -1,5
-        256:
+        254:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -2,5
-        257:
+        255:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -4,5
-        258:
+        256:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -3,5
-        259:
+        257:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -7,5
-        260:
+        258:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -8,5
-        261:
+        259:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -9,5
-        262:
+        260:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -10,5
-        263:
+        261:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -11,5
-        264:
+        262:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -12,5
-        265:
+        263:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -13,5
-        266:
+        264:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -14,5
-        267:
+        265:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -15,5
-        268:
+        266:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -16,5
-        269:
+        267:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -17,5
-        270:
+        268:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: -18,5
-        271:
+        269:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -19,5
-        273:
+        271:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -6,5
-        274:
+        272:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale90
           coordinates: -5,5
-        285:
+        283:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,13
-        286:
+        284:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,14
-        287:
+        285:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,15
-        288:
+        286:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: -12,16
-        289:
+        287:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -13,13
-        290:
+        288:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -14,13
-        291:
+        289:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -15,13
-        292:
+        290:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale270
           coordinates: -12,13
-        386:
+        384:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -16,10
-        387:
+        385:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -17,11
-        388:
+        386:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -17,10
-        389:
+        387:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -18,8
-        390:
+        388:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -18,10
-        391:
+        389:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -17,9
-        464:
+        462:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -1,16
-        465:
+        463:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -1,17
-        466:
+        464:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -1,18
-        479:
+        477:
           color: '#FFFFFFFF'
           id: WarnBox
           coordinates: -26,24
-        612:
+        610:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -24,3
-        613:
+        611:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -25,2
-        614:
+        612:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -7,3
-        619:
+        617:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -30,11
@@ -14724,437 +14707,437 @@ entities:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-1
-        93:
+        91:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 29,-5
-        94:
+        92:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 30,-5
-        162:
+        160:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 19,-5
-        163:
+        161:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 18,-5
-        164:
+        162:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 17,-5
-        165:
+        163:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 16,-5
-        166:
+        164:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 15,-5
-        167:
+        165:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 14,-5
-        168:
+        166:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 14,-5
-        169:
+        167:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-6
-        170:
+        168:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-7
-        171:
+        169:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 13,-7
-        172:
+        170:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-7
-        173:
+        171:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-6
-        174:
+        172:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-5
-        175:
+        173:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-4
-        176:
+        174:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-3
-        177:
+        175:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-2
-        178:
+        176:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-1
-        181:
+        179:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 7,-18
-        182:
+        180:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 7,-17
-        183:
+        181:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 7,-16
-        184:
+        182:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 7,-15
-        185:
+        183:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 7,-14
-        194:
+        192:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-1
-        195:
+        193:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-2
-        196:
+        194:
           color: '#FFD886FF'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-3
-        211:
+        209:
           color: '#D381C996'
           id: FullTileOverlayGreyscale
           coordinates: 0,-21
-        212:
+        210:
           color: '#D381C996'
           id: FullTileOverlayGreyscale
           coordinates: 0,-20
-        235:
+        233:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale180
           coordinates: 29,-5
-        240:
+        238:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 31,-5
-        241:
+        239:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 30,-5
-        485:
+        483:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 19,-19
-        486:
+        484:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 21,-8
-        487:
+        485:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 21,-7
-        488:
+        486:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 21,-6
-        489:
+        487:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 21,-5
-        490:
+        488:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 22,-8
-        491:
+        489:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 22,-7
-        492:
+        490:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 22,-6
-        493:
+        491:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 22,-5
-        494:
+        492:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 23,-8
-        495:
+        493:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 23,-7
-        496:
+        494:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 23,-6
-        497:
+        495:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 23,-5
-        498:
+        496:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 24,-8
-        499:
+        497:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 24,-7
-        500:
+        498:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 24,-6
-        501:
+        499:
           color: '#52B4E996'
           id: CheckerNWSE
           coordinates: 24,-5
-        502:
+        500:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-18
-        503:
+        501:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-17
-        504:
+        502:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-16
-        505:
+        503:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-15
-        506:
+        504:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-14
-        507:
+        505:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-13
-        508:
+        506:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-12
-        517:
+        515:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 12,-6
-        518:
+        516:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 11,-6
-        519:
+        517:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 10,-6
-        520:
+        518:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 9,-6
-        521:
+        519:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 8,-6
-        522:
+        520:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 7,-6
-        523:
+        521:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 6,-6
-        524:
+        522:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 10,-7
-        525:
+        523:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 9,-7
-        526:
+        524:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 9,-8
-        527:
+        525:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 10,-8
-        528:
+        526:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 11,-8
-        529:
+        527:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 12,-8
-        530:
+        528:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-9
-        531:
+        529:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-10
-        532:
+        530:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-11
-        533:
+        531:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 12,-12
-        534:
+        532:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 11,-12
-        535:
+        533:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 10,-12
-        536:
+        534:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 9,-12
-        537:
+        535:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,-12
-        538:
+        536:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,-11
-        539:
+        537:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,-9
-        540:
+        538:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 6,-8
-        541:
+        539:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 10,-10
-        542:
+        540:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 10,-9
-        543:
+        541:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 9,-10
-        544:
+        542:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 10,-11
-        545:
+        543:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 11,-10
-        546:
+        544:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 9,-2
-        547:
+        545:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 9,-3
-        548:
+        546:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 10,-2
-        549:
+        547:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 9,-1
-        550:
+        548:
           color: '#52B4E996'
           id: FullTileOverlayGreyscale
           coordinates: 8,-2
-        551:
+        549:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-8
-        552:
+        550:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-9
-        553:
+        551:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-10
-        554:
+        552:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 14,-11
-        555:
+        553:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 14,-12
-        556:
+        554:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 15,-12
-        557:
+        555:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 16,-12
-        558:
+        556:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-12
-        559:
+        557:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-13
-        560:
+        558:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-14
-        561:
+        559:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-15
-        562:
+        560:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-16
-        563:
+        561:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-17
-        564:
+        562:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale270
           coordinates: 17,-18
-        565:
+        563:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-11
-        566:
+        564:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-10
-        567:
+        565:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-9
-        568:
+        566:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-8
@@ -15179,325 +15162,325 @@ entities:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,-1
-        95:
+        93:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 34,-5
-        151:
+        149:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 50,-1
-        152:
+        150:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 49,-1
-        153:
+        151:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 48,-1
-        236:
+        234:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale270
           coordinates: 35,-5
-        237:
+        235:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 34,-5
-        238:
+        236:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 33,-5
-        239:
+        237:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 32,-5
-        354:
+        352:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,-1
-        393:
+        391:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 50.628635,-26.192293
-        394:
+        392:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 46.58176,-24.504793
-        395:
+        393:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 47.034885,-25.473543
-        396:
+        394:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 50.01926,-22.832918
-        397:
+        395:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 50.48801,-23.114168
-        398:
+        396:
           color: '#FFFFFFFF'
           id: Grassd1
           coordinates: 48.503635,-27.504793
-        399:
+        397:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 49.222385,-27.411043
-        400:
+        398:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 48.11301,-26.239168
-        401:
+        399:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 47.08176,-23.395418
-        402:
+        400:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 51.36301,-24.379793
-        403:
+        401:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 50.86301,-24.786043
-        404:
+        402:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 51.222385,-25.645418
-        405:
+        403:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 47.14426,-26.770418
-        406:
+        404:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 46.20676,-25.754793
-        407:
+        405:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 47.034885,-24.598543
-        408:
+        406:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 51.48801,-25.051668
-        409:
+        407:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 50.45676,-26.801668
-        410:
+        408:
           color: '#FFFFFFFF'
           id: Grasse1
           coordinates: 49.64426,-25.004793
-        411:
+        409:
           color: '#FFFFFFFF'
           id: Grassd3
           coordinates: 50.253635,-25.504793
-        412:
+        410:
           color: '#FFFFFFFF'
           id: Grassd3
           coordinates: 49.89426,-27.926668
-        413:
+        411:
           color: '#FFFFFFFF'
           id: Grassd3
           coordinates: 52.159885,-24.020418
-        414:
+        412:
           color: '#FFFFFFFF'
           id: Grassb2
           coordinates: 51.11301,-24.739168
-        415:
+        413:
           color: '#FFFFFFFF'
           id: Grassb2
           coordinates: 46.409885,-25.489168
-        416:
+        414:
           color: '#FFFFFFFF'
           id: Grassb1
           coordinates: 47.034885,-26.332918
-        417:
+        415:
           color: '#FFFFFFFF'
           id: Grassb1
           coordinates: 48.159885,-27.364168
-        418:
+        416:
           color: '#FFFFFFFF'
           id: Grassb1
           coordinates: 51.01926,-23.629793
-        419:
+        417:
           color: '#FFFFFFFF'
           id: Grassb3
           coordinates: 50.98801,-27.020418
-        420:
+        418:
           color: '#FFFFFFFF'
           id: Grassb3
           coordinates: 49.972385,-26.176668
-        421:
+        419:
           color: '#FFFFFFFF'
           id: Grassb4
           coordinates: 47.23801,-23.957918
-        422:
+        420:
           color: '#FFFFFFFF'
           id: Grassb4
           coordinates: 46.409885,-24.301668
-        423:
+        421:
           color: '#FFFFFFFF'
           id: Grassb5
           coordinates: 48.347385,-26.270418
-        424:
+        422:
           color: '#FFFFFFFF'
           id: Grassb2
           coordinates: 49.409885,-27.004793
-        425:
+        423:
           color: '#FFFFFFFF'
           id: Bushi4
           coordinates: 47.61301,-25.629793
-        426:
+        424:
           color: '#FFFFFFFF'
           id: Bushi4
           coordinates: 48.08176,-27.989168
-        427:
+        425:
           color: '#FFFFFFFF'
           id: Bushi4
           coordinates: 51.878635,-25.864168
-        428:
+        426:
           color: '#FFFFFFFF'
           id: Bushi3
           coordinates: 49.941135,-27.348543
-        429:
+        427:
           color: '#FFFFFFFF'
           id: Bushi3
           coordinates: 46.05051,-23.989168
-        430:
+        428:
           color: '#FFFFFFFF'
           id: Bushi2
           coordinates: 46.11301,-26.098543
-        431:
+        429:
           color: '#FFFFFFFF'
           id: Bushi2
           coordinates: 47.73801,-24.957918
-        432:
+        430:
           color: '#FFFFFFFF'
           id: Bushi1
           coordinates: 50.61301,-24.082918
-        433:
+        431:
           color: '#FFFFFFFF'
           id: Bushf1
           coordinates: 49.70676,-26.348543
-        434:
+        432:
           color: '#FFFFFFFF'
           id: Bushf1
           coordinates: 45.878635,-24.817293
-        435:
+        433:
           color: '#FFFFFFFF'
           id: Bushf1
           coordinates: 47.878635,-24.286043
-        436:
+        434:
           color: '#FFFFFFFF'
           id: Bushf1
           coordinates: 47.98801,-22.239168
-        437:
+        435:
           color: '#FFFFFFFF'
           id: Bushf1
           coordinates: 50.01926,-24.348543
-        438:
+        436:
           color: '#FFFFFFFF'
           id: Bushf2
           coordinates: 48.534885,-26.832918
-        439:
+        437:
           color: '#FFFFFFFF'
           id: Flowersbr2
           coordinates: 48.80051,-27.911043
-        440:
+        438:
           color: '#FFFFFFFF'
           id: Flowersbr2
           coordinates: 48.159885,-27.239168
-        441:
+        439:
           color: '#FFFFFFFF'
           id: Flowersbr2
           coordinates: 51.597385,-24.270418
-        442:
+        440:
           color: '#FFFFFFFF'
           id: Flowersbr2
           coordinates: 51.86301,-24.895418
-        443:
+        441:
           color: '#FFFFFFFF'
           id: Flowersbr2
           coordinates: 47.159885,-23.098543
-        444:
+        442:
           color: '#FFFFFFFF'
           id: Flowerspv1
           coordinates: 46.566135,-25.036043
-        445:
+        443:
           color: '#FFFFFFFF'
           id: Flowerspv1
           coordinates: 47.11301,-25.645418
-        446:
+        444:
           color: '#FFFFFFFF'
           id: Flowerspv1
           coordinates: 50.80051,-23.317293
-        447:
+        445:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 50.80051,-26.098543
-        448:
+        446:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 50.097385,-26.239168
-        449:
+        447:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 47.753635,-26.489168
-        450:
+        448:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 49.95676,-22.848543
-        451:
+        449:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 47.628635,-23.707918
-        452:
+        450:
           color: '#FFFFFFFF'
           id: Flowersy1
           coordinates: 50.503635,-26.739168
-        453:
+        451:
           color: '#FFFFFFFF'
           id: Bushm2
           coordinates: 50.503635,-26.161043
-        454:
+        452:
           color: '#FFFFFFFF'
           id: Bushm2
           coordinates: 46.36301,-25.192293
-        455:
+        453:
           color: '#FFFFFFFF'
           id: Bushm3
           coordinates: 48.941135,-27.754793
-        456:
+        454:
           color: '#FFFFFFFF'
           id: Bushm3
           coordinates: 48.05051,-25.379793
-        457:
+        455:
           color: '#FFFFFFFF'
           id: Bushm4
           coordinates: 49.89426,-25.567293
-        458:
+        456:
           color: '#FFFFFFFF'
           id: Bushm4
           coordinates: 51.23801,-23.036043
-        459:
+        457:
           color: '#FFFFFFFF'
           id: Bushk1
           coordinates: 51.01926,-26.036043
-        460:
+        458:
           color: '#FFFFFFFF'
           id: Bushk1
           coordinates: 46.972385,-23.754793
-        461:
+        459:
           color: '#FFFFFFFF'
           id: Bushk1
           coordinates: 48.61301,-26.082918
-        462:
+        460:
           color: '#FFFFFFFF'
           id: Rock01
           coordinates: 49.003635,-25.832918
-        463:
+        461:
           color: '#FFFFFFFF'
           id: Grassd2
           coordinates: 48.45676,-24.942293
@@ -15506,733 +15489,733 @@ entities:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,0
-        88:
+        86:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 50,1
-        89:
+        87:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 42,9
+        88:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtLight
+          coordinates: 46,7
+        89:
+          cleanable: True
+          color: '#FFFFFFFF'
+          id: DirtMedium
+          coordinates: 37,6
         90:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
-          coordinates: 46,7
-        91:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtMedium
-          coordinates: 37,6
-        92:
-          cleanable: True
-          color: '#FFFFFFFF'
-          id: DirtLight
           coordinates: 36,5
-        96:
+        94:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 33,0
+        145:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 53,1
+        146:
+          angle: 1.5707963267948966 rad
+          color: '#FFFFFFFF'
+          id: WarningLine
+          coordinates: 53,2
         147:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
-          coordinates: 53,1
-        148:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
-          coordinates: 53,2
-        149:
-          angle: 1.5707963267948966 rad
-          color: '#FFFFFFFF'
-          id: WarningLine
           coordinates: 53,3
-        150:
+        148:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Caution
           coordinates: 53,2
-        154:
+        152:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 53,1
-        155:
+        153:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 55,4
-        156:
+        154:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 52,1
-        157:
+        155:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 53,3
-        158:
+        156:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 55,3
-        159:
+        157:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 57,4
-        160:
+        158:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 45,5
-        161:
+        159:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: 35,2
-        294:
+        292:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,2
-        295:
+        293:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,3
-        296:
+        294:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,4
-        297:
+        295:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,5
-        298:
+        296:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 35,6
-        299:
+        297:
           color: '#EFB34196'
           id: FullTileOverlayGreyscale
           coordinates: 36,3
-        300:
+        298:
           color: '#EFB34196'
           id: FullTileOverlayGreyscale
           coordinates: 36,4
-        301:
+        299:
           color: '#EFB34196'
           id: FullTileOverlayGreyscale
           coordinates: 36,5
-        302:
+        300:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 37,2
-        303:
+        301:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 37,3
-        304:
+        302:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 37,4
-        305:
+        303:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 37,5
-        306:
+        304:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 37,6
-        307:
+        305:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 55,0
-        308:
+        306:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 55,1
-        309:
+        307:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 55,2
-        310:
+        308:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 55,3
-        311:
+        309:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 55,4
-        312:
+        310:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 50,5
-        313:
+        311:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 50,5
-        314:
+        312:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 49,5
-        315:
+        313:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 48,5
-        316:
+        314:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 47,5
-        317:
+        315:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 46,5
-        318:
+        316:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 45,5
-        319:
+        317:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 44,5
-        320:
+        318:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 44,6
-        321:
+        319:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale180
           coordinates: 44,7
-        322:
+        320:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
+          coordinates: 44,9
+        321:
+          color: '#EFB34196'
+          id: HalfTileOverlayGreyscale
+          coordinates: 43,9
+        322:
+          color: '#EFB34196'
+          id: QuarterTileOverlayGreyscale
           coordinates: 44,9
         323:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
-          coordinates: 43,9
-        324:
-          color: '#EFB34196'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 44,9
-        325:
-          color: '#EFB34196'
-          id: HalfTileOverlayGreyscale
           coordinates: 42,9
-        326:
+        324:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale270
           coordinates: 42,9
-        327:
+        325:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,8
-        328:
+        326:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,7
-        329:
+        327:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 42,6
-        330:
+        328:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 41,6
-        331:
+        329:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 40,6
-        332:
+        330:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 39,6
-        333:
+        331:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 38,6
-        334:
+        332:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 37,6
-        335:
+        333:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale90
           coordinates: 50,4
-        344:
+        342:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 46,7
-        345:
+        343:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 47,7
-        346:
+        344:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 48,7
-        347:
+        345:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 49,7
-        348:
+        346:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 50,7
-        349:
+        347:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,0
-        350:
+        348:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,1
-        351:
+        349:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,2
-        352:
+        350:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,3
-        353:
+        351:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 60,4
-        355:
+        353:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: 60,2
       -1,-1:
-        204:
+        202:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-18
-        205:
+        203:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-17
-        206:
+        204:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-16
-        207:
+        205:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-15
-        208:
+        206:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-14
-        209:
+        207:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-21
-        210:
+        208:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-20
-        213:
+        211:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -8,-18
-        214:
+        212:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -9,-18
-        215:
+        213:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -10,-18
-        216:
+        214:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -11,-18
-        217:
+        215:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -12,-18
-        218:
+        216:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale270
           coordinates: -12,-18
-        219:
+        217:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,-19
-        220:
+        218:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,-20
-        221:
+        219:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -12,-21
-        222:
+        220:
           color: '#D381C996'
           id: FullTileOverlayGreyscale
           coordinates: -13,-21
-        223:
+        221:
           color: '#D381C996'
           id: FullTileOverlayGreyscale
           coordinates: -13,-20
-        224:
+        222:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-23
-        225:
+        223:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-22
-        226:
+        224:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-21
-        227:
+        225:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-20
-        228:
+        226:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-19
-        229:
+        227:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -14,-18
-        230:
+        228:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: -14,-18
-        231:
+        229:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -15,-18
-        232:
+        230:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -16,-18
-        233:
+        231:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -17,-18
-        234:
+        232:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -18,-18
-        467:
+        465:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: -1,-14
-        468:
+        466:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -2,-14
-        469:
+        467:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -3,-14
-        470:
+        468:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale90
           coordinates: -4,-14
-        471:
+        469:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: -4,-13
-        472:
+        470:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -6,-13
-        473:
+        471:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: -5,-13
-        474:
+        472:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,-18
-        475:
+        473:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,-17
-        476:
+        474:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,-16
-        477:
+        475:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,-15
-        478:
+        476:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: -6,-14
-        480:
+        478:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -22,-15
-        481:
+        479:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -23,-15
-        482:
+        480:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -24,-15
-        483:
+        481:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -25,-15
-        484:
+        482:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -26,-15
-        569:
+        567:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -3,-23
-        570:
+        568:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -4,-23
-        571:
+        569:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -5,-23
-        572:
+        570:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -6,-23
-        573:
+        571:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: -4,-22
-        611:
+        609:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -24,-9
       -2,0:
-        574:
+        572:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,0
-        575:
+        573:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,1
-        576:
+        574:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,2
-        577:
+        575:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,8
-        578:
+        576:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,9
-        579:
+        577:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: -40,10
-        580:
+        578:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCorner
           coordinates: -40,3
-        581:
+        579:
           angle: -1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLineCornerFlipped
           coordinates: -40,7
-        582:
+        580:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -40,4
-        583:
+        581:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -40,5
-        584:
+        582:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -40,6
-        585:
+        583:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -36,4
-        586:
+        584:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -36,5
-        587:
+        585:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -36,6
-        588:
+        586:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -37,7
-        589:
+        587:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -38,7
-        590:
+        588:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -39,7
-        591:
+        589:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -40,7
-        592:
+        590:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale180
           coordinates: -36,7
-        593:
+        591:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -36,3
-        594:
+        592:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -37,3
-        595:
+        593:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -38,3
-        596:
+        594:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -39,3
-        597:
+        595:
           color: '#D4D4D428'
           id: QuarterTileOverlayGreyscale
           coordinates: -40,3
-        598:
+        596:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,0
-        599:
+        597:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,1
-        600:
+        598:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,2
-        601:
+        599:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,8
-        602:
+        600:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,9
-        603:
+        601:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,10
-        604:
+        602:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -40,0
-        605:
+        603:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -36,1
-        606:
+        604:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -38,7
-        607:
+        605:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -40,8
-        615:
+        613:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -35,8
-        616:
+        614:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -36,8
-        617:
+        615:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -38,9
-        618:
+        616:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -35,6
       -2,-1:
-        608:
+        606:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -38,-4
-        609:
+        607:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -37,-10
-        610:
+        608:
           cleanable: True
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -36,-8
-        620:
+        618:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-11
-        621:
+        619:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-10
-        622:
+        620:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-9
-        623:
+        621:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-8
-        624:
+        622:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-7
-        625:
+        623:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-6
-        626:
+        624:
           color: '#D4D4D428'
           id: CheckerNWSE
           coordinates: -37,-5
@@ -16384,6 +16367,12 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Steel
+    - Plastic
+    - Wood
+    - Glass
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -16406,6 +16395,13 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Plastic
+    - Wood
+    - Gold
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -16576,9 +16572,10 @@ entities:
     parent: 852
     type: Transform
 - uid: 896
-  type: WallReinforced
+  type: Chair
   components:
-  - pos: 28.5,-19.5
+  - rot: 3.141592653589793 rad
+    pos: 45.5,-3.5
     parent: 852
     type: Transform
 - uid: 897
@@ -16738,8 +16735,6 @@ entities:
   - pos: -15.5,1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 919
   type: WallSolid
   components:
@@ -17090,8 +17085,6 @@ entities:
   - pos: -6.5,-6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 971
   type: CableApcExtension
   components:
@@ -17189,8 +17182,6 @@ entities:
     pos: 0.5,23.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 984
   type: VendingMachineCola
   components:
@@ -17198,8 +17189,6 @@ entities:
     pos: 1.5,21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 985
   type: CarpetOrange
   components:
@@ -17219,13 +17208,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 988
-  type: ShellShotgunFlash
+  type: Chair
   components:
-  - pos: -11.606142,18.735546
+  - rot: 3.141592653589793 rad
+    pos: 44.5,-3.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 989
   type: CarpetBlue
   components:
@@ -17240,8 +17228,6 @@ entities:
   - pos: -13.5,1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 991
   type: GasPipeStraight
   components:
@@ -17406,8 +17392,6 @@ entities:
   - pos: -7.5,19.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1015
   type: Firelock
   components:
@@ -17629,6 +17613,12 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Steel
+    - Plastic
+    - Wood
+    - Glass
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -17645,6 +17635,13 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Steel
+    - Glass
+    - Plastic
+    - Wood
+    - Gold
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -17837,8 +17834,6 @@ entities:
     pos: -31.5,7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -18019,9 +18014,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1084
-  type: WallSolid
+  type: ReinforcedWindow
   components:
-  - pos: -10.5,-28.5
+  - pos: 22.5,19.5
     parent: 852
     type: Transform
 - uid: 1085
@@ -18341,10 +18336,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 1130
-  type: PowerCellSmall
+  type: WeaponDisabler
   components:
-  - parent: 1549
+  - pos: -13.556441,16.285408
+    parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1131
   type: Grille
   components:
@@ -18447,8 +18445,6 @@ entities:
   - pos: 24.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1144
   type: SheetGlass
   components:
@@ -18482,8 +18478,6 @@ entities:
   - pos: 14.5,-11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1149
   type: LockerMedicalFilled
   components:
@@ -18742,11 +18736,22 @@ entities:
     parent: 852
     type: Transform
 - uid: 1185
-  type: WallReinforced
+  type: ConveyorBelt
   components:
-  - pos: 44.5,-0.5
+  - pos: 20.5,21.5
     parent: 852
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 7550
+      Forward:
+      - port: Left
+        uid: 7550
+      Off:
+      - port: Middle
+        uid: 7550
+    type: SignalReceiver
 - uid: 1186
   type: Poweredlight
   components:
@@ -18840,8 +18845,6 @@ entities:
     pos: -0.5,-11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -18942,8 +18945,6 @@ entities:
   - pos: 8.5,17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -19084,8 +19085,6 @@ entities:
     pos: 23.5,-0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -19155,8 +19154,6 @@ entities:
     pos: -34.5,2.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1230
   type: GasVentPump
   components:
@@ -19284,8 +19281,6 @@ entities:
     pos: 11.5,-29.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -19379,8 +19374,6 @@ entities:
     pos: 31.5,-0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1257
   type: WallReinforced
   components:
@@ -19533,15 +19526,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1273
-  type: MagazineRifleRubber
+  type: CableHV
   components:
-  - pos: -14.356142,20.594921
+  - pos: 43.5,-0.5
     parent: 852
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 1274
   type: Poweredlight
   components:
@@ -19788,8 +19777,6 @@ entities:
     pos: 12.5,18.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -19835,8 +19822,6 @@ entities:
   - pos: 39.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -19998,8 +19983,6 @@ entities:
   - pos: 12.5,-13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -20118,9 +20101,9 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1326
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: 44.5,-1.5
+  - pos: 33.5,-8.5
     parent: 852
     type: Transform
 - uid: 1327
@@ -20646,21 +20629,21 @@ entities:
     parent: 852
     type: Transform
 - uid: 1384
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: 44.5,-2.5
+  - pos: 25.5,-25.5
     parent: 852
     type: Transform
 - uid: 1385
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: 44.5,-3.5
+  - pos: 25.5,-21.5
     parent: 852
     type: Transform
 - uid: 1386
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: 44.5,-4.5
+  - pos: -22.5,18.5
     parent: 852
     type: Transform
 - uid: 1387
@@ -21555,8 +21538,6 @@ entities:
     pos: 31.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 1522
   type: Grille
   components:
@@ -21761,9 +21742,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1549
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -13.508065,16.49532
+  - pos: -13.540816,16.691658
     parent: 852
     type: Transform
   - canCollide: False
@@ -21793,8 +21774,6 @@ entities:
   - pos: -8.5,21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -21957,8 +21936,6 @@ entities:
   - pos: 39.5,9.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -22040,50 +22017,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 1587
-  type: TwoWayLever
+  type: WallSolid
   components:
-  - pos: 23.5,17.5
+  - pos: -27.5,17.5
     parent: 852
     type: Transform
-  - outputs:
-      Middle:
-      - port: Off
-        uid: 3911
-      - port: Off
-        uid: 3910
-      - port: Off
-        uid: 3903
-      - port: Off
-        uid: 3912
-      - port: Off
-        uid: 3901
-      Right:
-      - port: Reverse
-        uid: 3911
-      - port: Reverse
-        uid: 3910
-      - port: Reverse
-        uid: 3903
-      - port: Reverse
-        uid: 3912
-      - port: Reverse
-        uid: 3901
-      Left:
-      - port: Forward
-        uid: 3911
-      - port: Forward
-        uid: 3910
-      - port: Forward
-        uid: 3903
-      - port: Forward
-        uid: 3912
-      - port: Forward
-        uid: 3901
-    type: SignalTransmitter
 - uid: 1588
-  type: ReinforcedWindow
+  type: WallSolid
   components:
-  - pos: 20.5,22.5
+  - pos: -26.5,15.5
     parent: 852
     type: Transform
 - uid: 1589
@@ -22380,9 +22322,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1634
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: 42.5,0.5
+  - pos: -32.5,15.5
     parent: 852
     type: Transform
 - uid: 1635
@@ -22406,7 +22348,7 @@ entities:
 - uid: 1638
   type: WallSolid
   components:
-  - pos: 28.5,-9.5
+  - pos: -28.5,15.5
     parent: 852
     type: Transform
 - uid: 1639
@@ -22496,7 +22438,7 @@ entities:
 - uid: 1653
   type: WallSolid
   components:
-  - pos: 23.5,-22.5
+  - pos: -19.5,25.5
     parent: 852
     type: Transform
 - uid: 1654
@@ -22506,9 +22448,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1655
-  type: WallSolid
+  type: WallSolidRust
   components:
-  - pos: 23.5,-23.5
+  - pos: -20.5,21.5
     parent: 852
     type: Transform
 - uid: 1656
@@ -22600,7 +22542,7 @@ entities:
 - uid: 1670
   type: WallSolid
   components:
-  - pos: -21.5,15.5
+  - pos: -19.5,24.5
     parent: 852
     type: Transform
 - uid: 1671
@@ -22634,25 +22576,25 @@ entities:
     parent: 852
     type: Transform
 - uid: 1676
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -26.5,15.5
+  - pos: -19.5,22.5
     parent: 852
     type: Transform
 - uid: 1677
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -27.5,15.5
+  - pos: -19.5,21.5
     parent: 852
     type: Transform
 - uid: 1678
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -28.5,15.5
+  - pos: -19.5,23.5
     parent: 852
     type: Transform
 - uid: 1679
-  type: WallReinforced
+  type: WallSolid
   components:
   - pos: -29.5,15.5
     parent: 852
@@ -22664,9 +22606,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1681
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -19.5,25.5
+  - pos: -30.5,15.5
     parent: 852
     type: Transform
 - uid: 1682
@@ -22678,21 +22620,21 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1683
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -19.5,24.5
+  - pos: -20.5,-17.5
     parent: 852
     type: Transform
 - uid: 1684
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -19.5,23.5
+  - pos: -27.5,-12.5
     parent: 852
     type: Transform
 - uid: 1685
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -19.5,22.5
+  - pos: -25.5,-12.5
     parent: 852
     type: Transform
 - uid: 1686
@@ -22724,15 +22666,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 1690
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -19.5,21.5
+  - pos: -33.5,13.5
     parent: 852
     type: Transform
 - uid: 1691
   type: WallReinforced
   components:
-  - pos: -20.5,20.5
+  - pos: 10.5,12.5
     parent: 852
     type: Transform
 - uid: 1692
@@ -22760,15 +22702,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 1696
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -30.5,15.5
+  - pos: 8.5,13.5
     parent: 852
     type: Transform
 - uid: 1697
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -31.5,15.5
+  - pos: -38.5,11.5
     parent: 852
     type: Transform
 - uid: 1698
@@ -23222,9 +23164,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1765
-  type: WallSolid
+  type: ReinforcedWindow
   components:
-  - pos: -20.5,-17.5
+  - pos: -10.5,13.5
     parent: 852
     type: Transform
 - uid: 1766
@@ -23308,21 +23250,21 @@ entities:
     parent: 852
     type: Transform
 - uid: 1773
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -25.5,-12.5
+  - pos: -23.5,-12.5
     parent: 852
     type: Transform
 - uid: 1774
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -26.5,-12.5
+  - pos: -33.5,12.5
     parent: 852
     type: Transform
 - uid: 1775
-  type: WallReinforced
+  type: WallSolid
   components:
-  - pos: -34.5,11.5
+  - pos: -33.5,11.5
     parent: 852
     type: Transform
 - uid: 1776
@@ -23375,10 +23317,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1784
-  type: WallReinforced
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,12.5
+  - pos: -34.5,11.5
     parent: 852
     type: Transform
 - uid: 1785
@@ -23459,10 +23400,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1796
-  type: WallReinforced
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 11.5,11.5
+  - pos: -31.5,15.5
     parent: 852
     type: Transform
 - uid: 1797
@@ -23528,9 +23468,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1806
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -38.5,11.5
+  - pos: -22.5,12.5
     parent: 852
     type: Transform
 - uid: 1807
@@ -23627,18 +23567,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 1822
-  type: Poweredlight
+  type: WallSolidRust
   components:
-  - pos: -4.5,14.5
+  - pos: -23.5,18.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1823
   type: WallSolid
   components:
@@ -24666,9 +24599,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 1973
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -10.5,13.5
+  - pos: -15.5,-19.5
     parent: 852
     type: Transform
 - uid: 1974
@@ -24930,8 +24863,6 @@ entities:
   - pos: -29.5,14.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -25005,8 +24936,6 @@ entities:
   - pos: -23.5,20.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -25208,25 +25137,25 @@ entities:
 - uid: 2049
   type: WallReinforced
   components:
-  - pos: -27.5,-12.5
+  - pos: 42.5,0.5
     parent: 852
     type: Transform
 - uid: 2050
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -33.5,11.5
+  - pos: -16.5,-18.5
     parent: 852
     type: Transform
 - uid: 2051
-  type: WallReinforced
+  type: WallSolidRust
   components:
-  - pos: -33.5,12.5
+  - pos: 23.5,-9.5
     parent: 852
     type: Transform
 - uid: 2052
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -33.5,13.5
+  - pos: -16.5,-17.5
     parent: 852
     type: Transform
 - uid: 2053
@@ -25242,9 +25171,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 2055
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -32.5,15.5
+  - pos: -16.5,-15.5
     parent: 852
     type: Transform
 - uid: 2056
@@ -25425,10 +25354,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 2082
-  type: WallSolid
+  type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -22.5,12.5
+  - pos: -13.5,-19.5
     parent: 852
     type: Transform
 - uid: 2083
@@ -25744,13 +25672,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 2130
-  type: ShellShotgunFlare
+  type: Morgue
   components:
-  - pos: -10.463902,-6.2962875
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-13.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2131
   type: ComfyChair
   components:
@@ -25988,13 +25915,16 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2160
-  type: ShellShotgunBeanbag
+  type: Crematorium
   components:
-  - pos: -10.698277,-6.4212875
+  - rot: 3.141592653589793 rad
+    pos: 15.5,-17.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - containers:
+      entity_storage: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2161
   type: WallSolid
   components:
@@ -26188,9 +26118,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 2190
-  type: WallSolid
+  type: VendingMachineCoffee
   components:
-  - pos: -23.5,18.5
+  - name: Hot drinks machine
+    type: MetaData
+  - pos: -11.5,-17.5
     parent: 852
     type: Transform
 - uid: 2191
@@ -26322,7 +26254,7 @@ entities:
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
-    pos: 11.5,-13.5
+    pos: 11.5,-16.5
     parent: 852
     type: Transform
 - uid: 2212
@@ -26370,16 +26302,16 @@ entities:
     parent: 852
     type: Transform
 - uid: 2219
-  type: Crematorium
+  type: BoxShotgunFlare
   components:
-  - rot: 3.141592653589793 rad
-    pos: 15.515028,-17.468315
+  - pos: -10.5,-6.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
-      entity_storage: !type:Container
+      storagebase: !type:Container
         ents: []
-      morgue_tray: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 2220
   type: TableGlass
@@ -26394,12 +26326,17 @@ entities:
     parent: 852
     type: Transform
 - uid: 2222
-  type: Morgue
+  type: BoxBeanbag
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 11.5,-16.5
+  - pos: -10.5,-6.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2223
   type: ReinforcedWindow
   components:
@@ -27211,10 +27148,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 2344
-  type: WallSolid
+  type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-16.5
+  - pos: -14.5,-19.5
     parent: 852
     type: Transform
 - uid: 2345
@@ -27346,8 +27282,6 @@ entities:
     pos: 5.5,-13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2363
   type: SurveillanceCameraRouterSecurity
   components:
@@ -27539,13 +27473,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 2390
-  type: ShellShotgunBeanbag
+  type: Morgue
   components:
-  - pos: -10.713902,-6.2806625
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,-16.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2391
   type: ChairWood
   components:
@@ -27755,8 +27688,6 @@ entities:
   - pos: -12.5,-6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2421
   type: TableWood
   components:
@@ -28001,13 +27932,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 2456
-  type: ShellShotgunBeanbag
+  type: Morgue
   components:
-  - pos: -10.682652,-6.5462875
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,-15.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2457
   type: hydroponicsTray
   components:
@@ -28770,8 +28700,6 @@ entities:
     pos: -26.5,17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -31206,8 +31134,6 @@ entities:
   - pos: 23.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 2911
   type: CableApcExtension
   components:
@@ -33802,10 +33728,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 3278
-  type: CableHV
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 42.5,0.5
+  - pos: -11.5,-16.5
     parent: 852
     type: Transform
 - uid: 3279
@@ -33842,8 +33767,6 @@ entities:
   - pos: 35.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 3284
   type: CableHV
   components:
@@ -34055,31 +33978,27 @@ entities:
     parent: 852
     type: Transform
 - uid: 3314
-  type: CableHV
+  type: WallReinforced
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,-9.5
+  - pos: 11.5,11.5
     parent: 852
     type: Transform
 - uid: 3315
   type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,-9.5
+  - pos: 6.5,13.5
     parent: 852
     type: Transform
 - uid: 3316
   type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-9.5
+  - pos: 9.5,13.5
     parent: 852
     type: Transform
 - uid: 3317
   type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 22.5,-9.5
+  - pos: 7.5,13.5
     parent: 852
     type: Transform
 - uid: 3318
@@ -34544,31 +34463,45 @@ entities:
 - uid: 3384
   type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-18.5
+  - pos: -16.5,-16.5
     parent: 852
     type: Transform
 - uid: 3385
-  type: CableHV
+  type: WallReinforced
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-17.5
+  - pos: 45.5,-5.5
     parent: 852
     type: Transform
 - uid: 3386
-  type: CableHV
+  type: Poweredlight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-16.5
+  - pos: -3.5,14.5
     parent: 852
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 3387
-  type: CableHV
+  type: ConveyorBelt
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-15.5
+  - pos: 20.5,18.5
     parent: 852
     type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 7550
+      Forward:
+      - port: Left
+        uid: 7550
+      Off:
+      - port: Middle
+        uid: 7550
+    type: SignalReceiver
 - uid: 3388
   type: CableHV
   components:
@@ -35682,33 +35615,45 @@ entities:
     parent: 852
     type: Transform
 - uid: 3548
-  type: CableHV
+  type: BlastDoor
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,12.5
+  - pos: 20.5,19.5
     parent: 852
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 3906
+    type: SignalReceiver
 - uid: 3549
-  type: CableHV
+  type: Grille
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,11.5
+  - pos: 22.5,22.5
     parent: 852
     type: Transform
 - uid: 3550
-  type: CableHV
+  type: BlastDoor
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 11.5,11.5
+  - pos: 20.5,22.5
     parent: 852
     type: Transform
+  - inputs:
+      Open: []
+      Close: []
+      Toggle:
+      - port: Pressed
+        uid: 3905
+    type: SignalReceiver
 - uid: 3551
-  type: CableHV
+  type: WeaponPistolMk58
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 12.5,11.5
+  - pos: -14.499999,20.873827
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3552
   type: CableHV
   components:
@@ -35954,8 +35899,6 @@ entities:
   - pos: 11.5,24.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37808,10 +37751,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 3851
-  type: WallSolid
+  type: CableHV
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,-9.5
+  - pos: -21.5,19.5
     parent: 852
     type: Transform
 - uid: 3852
@@ -37861,8 +37803,6 @@ entities:
     pos: -18.5,22.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37889,7 +37829,7 @@ entities:
 - uid: 3859
   type: ClothingNeckScarfStripedRed
   components:
-  - pos: 24.464396,-9.604094
+  - pos: 24.51451,-9.514836
     parent: 852
     type: Transform
   - canCollide: False
@@ -37915,8 +37855,6 @@ entities:
     pos: -13.5,8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37934,8 +37872,6 @@ entities:
     pos: -15.5,16.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37953,8 +37889,6 @@ entities:
     pos: -14.5,20.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37972,8 +37906,6 @@ entities:
     pos: -11.5,19.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37990,8 +37922,6 @@ entities:
   - pos: -14.5,25.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38008,8 +37938,6 @@ entities:
   - pos: -7.5,25.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38027,8 +37955,6 @@ entities:
     pos: -1.5,20.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38045,8 +37971,6 @@ entities:
   - pos: 25.5,-1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38070,8 +37994,6 @@ entities:
     pos: 0.5,13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38089,8 +38011,6 @@ entities:
     pos: -7.5,8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38107,8 +38027,6 @@ entities:
   - pos: 8.5,14.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38131,8 +38049,6 @@ entities:
   - pos: 14.5,21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38157,8 +38073,6 @@ entities:
     pos: 26.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38175,8 +38089,6 @@ entities:
   - pos: 30.5,-6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38200,8 +38112,6 @@ entities:
   - pos: 35.5,-6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38218,8 +38128,6 @@ entities:
   - pos: 38.5,-3.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38231,24 +38139,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 3881
-  type: PoweredSmallLight
+  type: WallSolidRust
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 43.5,-1.5
+  - pos: 37.5,-13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3882
   type: FirelockEdge
   components:
@@ -38312,19 +38207,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 3890
-  type: Poweredlight
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,16.5
+  - pos: -16.5,-19.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 3891
   type: CableApcExtension
   components:
@@ -38350,8 +38237,6 @@ entities:
     pos: 27.5,-10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38378,8 +38263,6 @@ entities:
     pos: 27.5,-15.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38397,8 +38280,6 @@ entities:
     pos: 24.5,-23.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38416,8 +38297,6 @@ entities:
     pos: 27.5,-24.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38435,8 +38314,6 @@ entities:
     pos: 25.5,-18.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38455,22 +38332,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 3901
-  type: ConveyorBelt
+  type: WallSolidRust
   components:
-  - pos: 22.5,22.5
+  - pos: 23.5,-23.5
     parent: 852
     type: Transform
-  - inputs:
-      Off:
-      - port: Middle
-        uid: 1587
-      Forward:
-      - port: Left
-        uid: 1587
-      Reverse:
-      - port: Right
-        uid: 1587
-    type: SignalReceiver
 - uid: 3902
   type: Poweredlight
   components:
@@ -38486,22 +38352,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 3903
-  type: ConveyorBelt
+  type: WallSolidRust
   components:
-  - pos: 22.5,20.5
+  - pos: 23.5,-22.5
     parent: 852
     type: Transform
-  - inputs:
-      Off:
-      - port: Middle
-        uid: 1587
-      Forward:
-      - port: Left
-        uid: 1587
-      Reverse:
-      - port: Right
-        uid: 1587
-    type: SignalReceiver
 - uid: 3904
   type: Autolathe
   components:
@@ -38512,6 +38367,12 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Steel
+    - Plastic
+    - Wood
+    - Glass
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -38529,7 +38390,7 @@ entities:
   - outputs:
       Pressed:
       - port: Toggle
-        uid: 9000
+        uid: 3550
     type: SignalTransmitter
 - uid: 3906
   type: SignalButton
@@ -38542,7 +38403,7 @@ entities:
   - outputs:
       Pressed:
       - port: Toggle
-        uid: 8999
+        uid: 3548
     type: SignalTransmitter
 - uid: 3907
   type: Chair
@@ -38564,56 +38425,23 @@ entities:
     parent: 852
     type: Transform
 - uid: 3910
-  type: ConveyorBelt
+  type: WallSolidRust
   components:
-  - pos: 22.5,18.5
+  - pos: -27.5,15.5
     parent: 852
     type: Transform
-  - inputs:
-      Off:
-      - port: Middle
-        uid: 1587
-      Forward:
-      - port: Left
-        uid: 1587
-      Reverse:
-      - port: Right
-        uid: 1587
-    type: SignalReceiver
 - uid: 3911
-  type: ConveyorBelt
+  type: WallSolidRust
   components:
-  - pos: 22.5,19.5
+  - pos: -21.5,15.5
     parent: 852
     type: Transform
-  - inputs:
-      Off:
-      - port: Middle
-        uid: 1587
-      Forward:
-      - port: Left
-        uid: 1587
-      Reverse:
-      - port: Right
-        uid: 1587
-    type: SignalReceiver
 - uid: 3912
-  type: ConveyorBelt
+  type: CableHV
   components:
-  - pos: 22.5,21.5
+  - pos: -21.5,23.5
     parent: 852
     type: Transform
-  - inputs:
-      Off:
-      - port: Middle
-        uid: 1587
-      Forward:
-      - port: Left
-        uid: 1587
-      Reverse:
-      - port: Right
-        uid: 1587
-    type: SignalReceiver
 - uid: 3913
   type: Poweredlight
   components:
@@ -38836,8 +38664,6 @@ entities:
   - pos: 25.5,-20.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38854,8 +38680,6 @@ entities:
   - pos: 22.5,-9.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39261,8 +39085,6 @@ entities:
   - pos: -13.5,-3.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 3987
   type: FirelockGlass
   components:
@@ -39437,19 +39259,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 4006
-  type: Poweredlight
+  type: WallSolidRust
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -9.5,13.5
+  - pos: -20.5,20.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 4007
   type: ComfyChair
   components:
@@ -39494,8 +39308,6 @@ entities:
   - pos: -13.5,11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 4013
   type: LockerEvidence
   components:
@@ -39557,8 +39369,6 @@ entities:
     pos: -19.5,15.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39588,9 +39398,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4024
-  type: AcousticGuitarInstrument
+  type: WeaponDisabler
   components:
-  - pos: -2.5,7.5
+  - pos: -13.525191,16.519783
     parent: 852
     type: Transform
   - canCollide: False
@@ -39662,13 +39472,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 4033
-  type: ShellShotgunFlare
+  type: Morgue
   components:
-  - pos: -10.448277,-6.5619125
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,-14.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4034
   type: GasOutletInjector
   components:
@@ -39690,8 +39499,8 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 4213
         - 4203
+        - 4213
     type: ContainerContainer
 - uid: 4037
   type: CableApcExtension
@@ -39849,8 +39658,6 @@ entities:
   - pos: 12.5,-19.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -40102,8 +39909,6 @@ entities:
     pos: 0.5,-24.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -40165,8 +39970,6 @@ entities:
   - pos: -6.5,-26.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -40414,16 +40217,12 @@ entities:
   - pos: -14.5,-6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 4127
   type: VendingMachineSeeds
   components:
   - pos: -17.5,-2.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 4128
   type: Table
   components:
@@ -40570,8 +40369,6 @@ entities:
     pos: -7.5,-23.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -40628,8 +40425,6 @@ entities:
     pos: -7.5,-12.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -41244,13 +41039,11 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4233
-  type: WeaponSubMachineGunVectorRubber
+  type: CableHV
   components:
-  - pos: -14.356142,21.563671
+  - pos: -21.5,24.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4234
   type: TableReinforced
   components:
@@ -41407,13 +41200,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4255
-  type: ShellShotgunFlash
+  type: CableHV
   components:
-  - pos: -11.590517,18.485546
+  - pos: -22.5,22.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4256
   type: SurveillanceCameraCommand
   components:
@@ -41704,8 +41495,6 @@ entities:
     pos: -11.5,-10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -42992,9 +42781,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4479
-  type: WallSolid
+  type: CableHV
   components:
-  - pos: 37.5,-13.5
+  - pos: -25.5,17.5
     parent: 852
     type: Transform
 - uid: 4480
@@ -43042,8 +42831,6 @@ entities:
   - pos: 59.5,7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -43214,8 +43001,6 @@ entities:
     pos: 36.5,-13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -43423,9 +43208,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4534
-  type: WallSolid
+  type: CableHV
   components:
-  - pos: 35.5,-16.5
+  - pos: -25.5,16.5
     parent: 852
     type: Transform
 - uid: 4535
@@ -43927,8 +43712,6 @@ entities:
     pos: 52.5,6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -44343,8 +44126,6 @@ entities:
   - pos: 31.5,-17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -44619,14 +44400,6 @@ entities:
     pos: -9.5,22.5
     parent: 852
     type: Transform
-- uid: 4699
-  type: ShellShotgunFlare
-  components:
-  - pos: -10.463902,-6.4056625
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4700
   type: Carpet
   components:
@@ -44679,14 +44452,6 @@ entities:
   - containers:
       cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 4706
-  type: WeaponTaser
-  components:
-  - pos: -13.55494,16.74532
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4707
   type: SurveillanceCameraCommand
   components:
@@ -44699,22 +44464,12 @@ entities:
     nameSet: True
     id: Bridge West
     type: SurveillanceCamera
-- uid: 4708
-  type: WeaponTaser
-  components:
-  - pos: -13.508065,16.58907
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4709
   type: PoweredSmallLight
   components:
   - pos: 28.5,13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45067,8 +44822,6 @@ entities:
     pos: -14.5,-15.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45574,8 +45327,6 @@ entities:
   - pos: -25.5,-10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45607,8 +45358,6 @@ entities:
     pos: -29.5,-8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45831,8 +45580,6 @@ entities:
     pos: -30.5,-5.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46362,8 +46109,6 @@ entities:
   - pos: 28.5,16.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 4933
   type: ReinforcedWindow
   components:
@@ -46453,9 +46198,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4947
-  type: WallSolid
+  type: CableHV
   components:
-  - pos: 25.5,-25.5
+  - pos: -22.5,19.5
     parent: 852
     type: Transform
 - uid: 4948
@@ -46465,11 +46210,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 4949
-  type: WallSolid
+  type: MagazineMagnumSubMachineGun
   components:
-  - pos: 25.5,-21.5
+  - pos: -13.671874,21.561327
     parent: 852
     type: Transform
+  - unspawnedCount: 25
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 4950
   type: WallSolid
   components:
@@ -46519,8 +46268,6 @@ entities:
     pos: -30.5,-2.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46538,8 +46285,6 @@ entities:
     pos: -30.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46557,8 +46302,6 @@ entities:
     pos: -33.5,-0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46679,11 +46422,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 4977
-  type: WallReinforced
+  type: WeaponPistolMk58
   components:
-  - pos: -27.5,17.5
+  - pos: -14.374999,20.748827
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4978
   type: WallReinforced
   components:
@@ -46717,11 +46462,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 4983
-  type: WallSolid
+  type: MagazineMagnumSubMachineGun
   components:
-  - pos: -22.5,18.5
+  - pos: -13.828124,21.561327
     parent: 852
     type: Transform
+  - unspawnedCount: 25
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 4984
   type: WallSolid
   components:
@@ -46771,9 +46520,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4992
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -23.5,21.5
+  - pos: -22.5,20.5
     parent: 852
     type: Transform
 - uid: 4993
@@ -46783,15 +46532,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 4994
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -21.5,21.5
+  - pos: -25.5,15.5
     parent: 852
     type: Transform
 - uid: 4995
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -20.5,21.5
+  - pos: -25.5,19.5
     parent: 852
     type: Transform
 - uid: 4996
@@ -46855,8 +46604,6 @@ entities:
   - pos: -18.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46891,8 +46638,6 @@ entities:
     pos: -15.5,-5.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46910,8 +46655,6 @@ entities:
     pos: -12.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46929,8 +46672,6 @@ entities:
     pos: -12.5,-7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -47760,8 +47501,6 @@ entities:
   - pos: 10.5,26.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -47904,105 +47643,101 @@ entities:
     parent: 852
     type: Transform
 - uid: 5141
-  type: ShellShotgunBeanbag
+  type: WeaponSubMachineGunVector
   components:
-  - pos: -11.418642,18.641796
+  - pos: -14.406249,21.498827
     parent: 852
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 5142
-  type: ShellShotgunBeanbag
+  type: WallSolid
   components:
-  - pos: -11.403017,18.501171
+  - pos: -23.5,21.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5143
-  type: ShellShotgunFlash
+  type: WallSolid
   components:
-  - pos: -11.590517,18.594921
+  - pos: -21.5,21.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5144
-  type: ShellShotgunFlash
+  type: ConveyorBelt
   components:
-  - pos: -11.590517,18.548046
+  - pos: 20.5,19.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 7550
+      Forward:
+      - port: Left
+        uid: 7550
+      Off:
+      - port: Middle
+        uid: 7550
+    type: SignalReceiver
 - uid: 5145
-  type: ShellShotgunFlash
+  type: WallSolidRust
   components:
-  - pos: -11.590517,18.423046
+  - pos: 37.5,-14.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5146
-  type: MagazineRifle
+  type: WallSolidRust
   components:
-  - pos: -14.2021265,20.661888
+  - pos: 37.5,-12.5
     parent: 852
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 5147
-  type: MagazineRifleRubber
+  type: WallSolidRust
   components:
-  - pos: -14.590517,20.594921
+  - pos: 35.5,-16.5
     parent: 852
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-  - canCollide: False
-    type: Physics
 - uid: 5148
-  type: WeaponRifleLecter
+  type: WallSolidRust
   components:
-  - pos: -14.387392,20.923046
+  - pos: 28.5,-19.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5149
-  type: ShellShotgunFlash
+  type: MaintenanceFluffSpawner
   components:
-  - pos: -11.590517,18.344921
+  - pos: 45.5,-2.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5150
-  type: ShellShotgunIncendiary
+  type: ConveyorBelt
   components:
-  - pos: -11.793642,18.485546
+  - pos: 20.5,20.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 7550
+      Forward:
+      - port: Left
+        uid: 7550
+      Off:
+      - port: Middle
+        uid: 7550
+    type: SignalReceiver
 - uid: 5151
-  type: ShellShotgunFlash
+  type: WindoorArmoryLocked
   components:
-  - pos: -11.606142,18.673046
+  - pos: -12.5,18.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5152
-  type: ShellShotgunSlug
+  type: WallSolid
   components:
-  - pos: -11.153017,18.360546
+  - pos: -26.5,-12.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5153
   type: ClothingOuterHardsuitSecurity
   components:
@@ -48057,17 +47792,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5158
-  type: ClusterBangFull
+  type: Dresser
   components:
-  - pos: -14.496767,20.173046
+  - pos: -22.5,-21.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      cluster-flash: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5159
   type: SolarPanel
   components:
@@ -48264,8 +47993,6 @@ entities:
   - pos: -22.5,25.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -48415,15 +48142,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 5214
-  type: CableHV
+  type: WallSolidRust
   components:
-  - pos: -20.5,25.5
+  - pos: -31.5,-10.5
     parent: 852
     type: Transform
 - uid: 5215
-  type: CableHV
+  type: Grille
   components:
-  - pos: -19.5,25.5
+  - pos: -10.5,13.5
     parent: 852
     type: Transform
 - uid: 5216
@@ -48553,8 +48280,6 @@ entities:
     pos: -30.5,16.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -48909,8 +48634,6 @@ entities:
     pos: 16.5,-28.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -57797,8 +57520,6 @@ entities:
   - pos: 44.5,13.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 6342
   type: CableApcExtension
   components:
@@ -60198,8 +59919,6 @@ entities:
   - pos: -13.5,-17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 6693
   type: FoodNoodles
   components:
@@ -60232,8 +59951,6 @@ entities:
   - pos: 5.5,-16.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 6697
   type: WallSolid
   components:
@@ -61516,9 +61233,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 6894
-  type: ReinforcedWindow
+  type: Catwalk
   components:
-  - pos: 20.5,19.5
+  - pos: 42.5,-0.5
     parent: 852
     type: Transform
 - uid: 6895
@@ -62034,9 +61751,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 6966
-  type: WallSolid
+  type: Catwalk
   components:
-  - pos: 37.5,-12.5
+  - pos: 42.5,-1.5
     parent: 852
     type: Transform
 - uid: 6967
@@ -62046,9 +61763,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 6968
-  type: WallSolid
+  type: Catwalk
   components:
-  - pos: 37.5,-14.5
+  - pos: 42.5,-2.5
     parent: 852
     type: Transform
 - uid: 6969
@@ -62450,15 +62167,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 7035
-  type: FirelockGlass
+  type: Catwalk
   components:
-  - pos: 38.5,-16.5
+  - pos: 42.5,-3.5
     parent: 852
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
 - uid: 7036
   type: AirlockGlass
   components:
@@ -62528,9 +62241,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 7045
-  type: WallReinforced
+  type: Catwalk
   components:
-  - pos: 28.5,-18.5
+  - pos: 42.5,-4.5
     parent: 852
     type: Transform
 - uid: 7046
@@ -62586,16 +62299,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7053
-  type: FirelockEdge
+  type: PottedPlant27
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 38.5,-25.5
+  - pos: 45.5,-4.5
     parent: 852
     type: Transform
-  - airBlocked: False
-    type: Airtight
-  - canCollide: False
-    type: Physics
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 7054
   type: CableApcExtension
   components:
@@ -62668,8 +62379,6 @@ entities:
   - pos: 31.5,-9.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -62819,11 +62528,21 @@ entities:
     parent: 852
     type: Transform
 - uid: 7082
-  type: Grille
+  type: PoweredSmallLight
   components:
-  - pos: 20.5,19.5
+  - pos: 45.5,-0.5
     parent: 852
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 7083
   type: Poweredlight
   components:
@@ -63029,27 +62748,6 @@ entities:
         - 7098
         - 7108
     type: ContainerContainer
-- uid: 7111
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 13.5,-14.5
-    parent: 852
-    type: Transform
-- uid: 7112
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 13.5,-15.5
-    parent: 852
-    type: Transform
-- uid: 7113
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 13.5,-16.5
-    parent: 852
-    type: Transform
 - uid: 7114
   type: Table
   components:
@@ -63178,8 +62876,6 @@ entities:
   - pos: 12.5,12.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7131
   type: GasPipeStraight
   components:
@@ -63809,9 +63505,9 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 7219
-  type: WindoorArmoryLocked
+  type: Grille
   components:
-  - pos: -12.5,18.5
+  - pos: 22.5,19.5
     parent: 852
     type: Transform
 - uid: 7220
@@ -64246,8 +63942,6 @@ entities:
   - pos: 12.5,-7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7278
   type: AirlockMedicalGlassLocked
   components:
@@ -64636,8 +64330,6 @@ entities:
   - pos: -19.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -64654,8 +64346,6 @@ entities:
   - pos: -20.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -64705,8 +64395,6 @@ entities:
   - pos: -19.5,-7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7340
   type: Table
   components:
@@ -65418,8 +65106,6 @@ entities:
   - pos: -15.5,-8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7437
   type: Carpet
   components:
@@ -65628,8 +65314,6 @@ entities:
   - pos: -2.5,-29.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7464
   type: CarpetBlack
   components:
@@ -66332,11 +66016,46 @@ entities:
     parent: 852
     type: Transform
 - uid: 7550
-  type: WallReinforced
+  type: TwoWayLever
   components:
-  - pos: -26.5,-13.5
+  - pos: 22.5,18.5
     parent: 852
     type: Transform
+  - outputs:
+      Left:
+      - port: Forward
+        uid: 66
+      - port: Forward
+        uid: 5144
+      - port: Forward
+        uid: 3387
+      - port: Forward
+        uid: 5150
+      - port: Forward
+        uid: 1185
+      Right:
+      - port: Reverse
+        uid: 66
+      - port: Reverse
+        uid: 5144
+      - port: Reverse
+        uid: 3387
+      - port: Reverse
+        uid: 5150
+      - port: Reverse
+        uid: 1185
+      Middle:
+      - port: Off
+        uid: 66
+      - port: Off
+        uid: 5144
+      - port: Off
+        uid: 3387
+      - port: Off
+        uid: 5150
+      - port: Off
+        uid: 1185
+    type: SignalTransmitter
 - uid: 7551
   type: SignalButton
   components:
@@ -66420,8 +66139,6 @@ entities:
   - pos: -11.5,-9.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7562
   type: BoozeDispenser
   components:
@@ -66585,9 +66302,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 7584
-  type: MaintenanceWeaponSpawner
+  type: WallSolidRust
   components:
-  - pos: -0.5,-11.5
+  - pos: -21.5,-24.5
     parent: 852
     type: Transform
 - uid: 7585
@@ -66719,11 +66436,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 7605
-  type: WallSolid
+  type: MaterialCloth
   components:
-  - pos: -31.5,-10.5
+  - pos: 9.311571,18.704794
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 7606
   type: ClosetMaintenanceFilledRandom
   components:
@@ -67008,8 +66727,6 @@ entities:
   - pos: -29.5,-7.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7648
   type: CableApcExtension
   components:
@@ -67035,19 +66752,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 7652
-  type: Poweredlight
+  type: MaterialDurathread
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -11.5,13.5
+  - pos: 9.655321,18.439169
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
+  - canCollide: False
+    type: Physics
 - uid: 7653
   type: Poweredlight
   components:
@@ -67348,8 +67059,6 @@ entities:
     type: Transform
   - sprite: Structures/Machines/VendingMachines/chapel.rsi
     type: Sprite
-  - enabled: False
-    type: AmbientSound
 - uid: 7698
   type: WardrobeChapelFilled
   components:
@@ -67512,8 +67221,6 @@ entities:
   - pos: -38.5,17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -69054,35 +68761,43 @@ entities:
     parent: 852
     type: Transform
 - uid: 7943
-  type: Catwalk
+  type: ReinforcedWindow
   components:
-  - pos: 42.5,-4.5
+  - pos: 22.5,22.5
     parent: 852
     type: Transform
 - uid: 7944
-  type: Catwalk
+  type: PlasticFlapsAirtightClear
   components:
-  - pos: 42.5,-3.5
+  - pos: 20.5,19.5
     parent: 852
     type: Transform
 - uid: 7945
-  type: Catwalk
+  type: PlasticFlapsAirtightClear
   components:
-  - pos: 42.5,-2.5
+  - pos: 20.5,22.5
     parent: 852
     type: Transform
 - uid: 7946
-  type: Catwalk
+  type: DrinkWhiskeyBottleFull
   components:
-  - pos: 42.5,-1.5
+  - pos: -23.917706,-23.088701
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
 - uid: 7947
-  type: Catwalk
+  type: DrinkShotGlass
   components:
-  - pos: 42.5,-0.5
+  - pos: -23.448956,-23.260576
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
+  - solution: drink
+    type: DrainableSolution
 - uid: 7948
   type: ClosetMaintenanceFilledRandom
   components:
@@ -69098,7 +68813,7 @@ entities:
 - uid: 7950
   type: DoubleEmergencyOxygenTankFilled
   components:
-  - pos: 46.497593,-0.5324049
+  - pos: 52.51837,-0.3993065
     parent: 852
     type: Transform
   - canCollide: False
@@ -69153,16 +68868,12 @@ entities:
   - pos: 25.5,6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7959
   type: VendingMachineSnack
   components:
   - pos: 26.5,6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 7960
   type: Chair
   components:
@@ -70814,16 +70525,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 8203
-  type: FirelockEdge
+  type: DrinkShotGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 38.5,-23.5
+  - pos: -23.261456,-23.119951
     parent: 852
     type: Transform
-  - airBlocked: False
-    type: Airtight
   - canCollide: False
     type: Physics
+  - solution: drink
+    type: DrainableSolution
 - uid: 8204
   type: Bucket
   components:
@@ -70865,14 +70575,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 8210
-  type: FirelockEdge
+  type: MagazinePistol
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 38.5,-24.5
+  - pos: -14.468749,20.780077
     parent: 852
     type: Transform
-  - airBlocked: False
-    type: Airtight
+  - unspawnedCount: 10
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
 - uid: 8211
@@ -72295,6 +72004,10 @@ entities:
   - pos: 8.5,21.5
     parent: 852
     type: Transform
+  - materialWhiteList:
+    - Cloth
+    - Durathread
+    type: Lathe
   - containers:
     - machine_parts
     - machine_board
@@ -72405,8 +72118,6 @@ entities:
   - pos: -3.5,1.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 8423
   type: CarpetGreen
   components:
@@ -73090,8 +72801,6 @@ entities:
     pos: -19.5,-24.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73109,8 +72818,6 @@ entities:
     pos: -19.5,-29.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -74208,8 +73915,6 @@ entities:
   - pos: -32.5,-29.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 8706
   type: ChairOfficeDark
   components:
@@ -74394,8 +74099,6 @@ entities:
     pos: -36.5,-27.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -74413,8 +74116,6 @@ entities:
     pos: -32.5,-27.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -74444,8 +74145,6 @@ entities:
   - pos: -32.5,-31.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -74479,8 +74178,6 @@ entities:
   - pos: -36.5,-23.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 8739
   type: Rack
   components:
@@ -74801,8 +74498,6 @@ entities:
   - pos: -16.5,11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -75904,8 +75599,6 @@ entities:
   - pos: -14.5,-17.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 8909
   type: WallReinforced
   components:
@@ -76522,31 +76215,21 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 8999
-  type: BlastDoor
+  type: MagazinePistol
   components:
-  - pos: 22.5,19.5
+  - pos: -14.281249,20.780077
     parent: 852
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 3906
-    type: SignalReceiver
+  - unspawnedCount: 10
+    type: BallisticAmmoProvider
+  - canCollide: False
+    type: Physics
 - uid: 9000
-  type: BlastDoor
+  type: CableHV
   components:
-  - pos: 22.5,22.5
+  - pos: -23.5,19.5
     parent: 852
     type: Transform
-  - inputs:
-      Open: []
-      Close: []
-      Toggle:
-      - port: Pressed
-        uid: 3905
-    type: SignalReceiver
 - uid: 9001
   type: ReinforcedPlasmaWindow
   components:
@@ -76613,8 +76296,6 @@ entities:
   - pos: -29.5,-26.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -76631,8 +76312,6 @@ entities:
   - pos: -23.5,-26.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -76866,8 +76545,6 @@ entities:
   - pos: 35.5,6.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9040
   type: PottedPlantRandomPlastic
   components:
@@ -77341,6 +77018,13 @@ entities:
     - machine_parts
     - machine_board
     type: Construction
+  - materialWhiteList:
+    - Glass
+    - Steel
+    - Plastic
+    - Durathread
+    - Cloth
+    type: Lathe
   - containers:
       machine_board: !type:Container
         ents: []
@@ -77580,8 +77264,6 @@ entities:
   - pos: 8.5,8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9136
   type: Table
   components:
@@ -77596,8 +77278,6 @@ entities:
   - pos: 37.5,11.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9138
   type: Table
   components:
@@ -77663,8 +77343,6 @@ entities:
     type: Transform
   - sprite: Structures/Machines/VendingMachines/cigs.rsi
     type: Sprite
-  - enabled: False
-    type: AmbientSound
 - uid: 9146
   type: SurveillanceCameraCommand
   components:
@@ -77885,9 +77563,9 @@ entities:
   - fixtures: []
     type: Fixtures
 - uid: 9166
-  type: WallSolid
+  type: CableHV
   components:
-  - pos: -21.5,-24.5
+  - pos: 5.5,13.5
     parent: 852
     type: Transform
 - uid: 9167
@@ -78406,8 +78084,6 @@ entities:
   - pos: -42.5,0.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -78425,8 +78101,6 @@ entities:
     pos: -42.5,2.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -78444,8 +78118,6 @@ entities:
     pos: -42.5,10.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -78462,8 +78134,6 @@ entities:
   - pos: -42.5,8.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -79037,8 +78707,6 @@ entities:
   - pos: -38.5,-4.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9328
   type: VendingMachineCoffee
   components:
@@ -79047,8 +78715,6 @@ entities:
   - pos: -38.5,-5.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9329
   type: SurveillanceCameraMedical
   components:
@@ -79374,8 +79040,6 @@ entities:
   - pos: -24.5,-21.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 9370
   type: ChairOfficeDark
   components:
@@ -79557,6 +79221,12 @@ entities:
   - pos: -21.5,-22.5
     parent: 852
     type: Transform
+- uid: 9390
+  type: CableHV
+  components:
+  - pos: 4.5,13.5
+    parent: 852
+    type: Transform
 - uid: 9391
   type: AirlockExternalGlassShuttleEmergencyLocked
   components:
@@ -79623,6 +79293,18 @@ entities:
       hard: False
       id: docking
     type: Fixtures
+- uid: 9393
+  type: CableHV
+  components:
+  - pos: 13.5,10.5
+    parent: 852
+    type: Transform
+- uid: 9394
+  type: CableHV
+  components:
+  - pos: 13.5,9.5
+    parent: 852
+    type: Transform
 - uid: 9395
   type: SignSecurearea
   components:
@@ -79963,8 +79645,6 @@ entities:
     pos: -23.5,-32.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -79981,8 +79661,6 @@ entities:
   - pos: -12.5,-31.5
     parent: 852
     type: Transform
-  - enabled: False
-    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -80133,6 +79811,12 @@ entities:
   - pos: -21.5,-31.5
     parent: 852
     type: Transform
+- uid: 9474
+  type: CableHV
+  components:
+  - pos: 13.5,8.5
+    parent: 852
+    type: Transform
 - uid: 9475
   type: RandomPosterContraband
   components:
@@ -80171,4 +79855,200 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 9481
+  type: CableHV
+  components:
+  - pos: 13.5,7.5
+    parent: 852
+    type: Transform
+- uid: 9482
+  type: CableHV
+  components:
+  - pos: 13.5,6.5
+    parent: 852
+    type: Transform
+- uid: 9483
+  type: CableHV
+  components:
+  - pos: 13.5,5.5
+    parent: 852
+    type: Transform
+- uid: 9484
+  type: CableHV
+  components:
+  - pos: 13.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9485
+  type: CableHV
+  components:
+  - pos: 12.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9486
+  type: CableHV
+  components:
+  - pos: 11.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9487
+  type: CableHV
+  components:
+  - pos: 10.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9488
+  type: CableHV
+  components:
+  - pos: 9.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9489
+  type: CableHV
+  components:
+  - pos: 8.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9490
+  type: CableHV
+  components:
+  - pos: 7.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9491
+  type: CableHV
+  components:
+  - pos: 6.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9492
+  type: CableHV
+  components:
+  - pos: 5.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9493
+  type: CableHV
+  components:
+  - pos: 4.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9494
+  type: CableHV
+  components:
+  - pos: 3.5,4.5
+    parent: 852
+    type: Transform
+- uid: 9495
+  type: CableHV
+  components:
+  - pos: 3.5,5.5
+    parent: 852
+    type: Transform
+- uid: 9496
+  type: CableHV
+  components:
+  - pos: 3.5,6.5
+    parent: 852
+    type: Transform
+- uid: 9497
+  type: CableHV
+  components:
+  - pos: 3.5,7.5
+    parent: 852
+    type: Transform
+- uid: 9498
+  type: CableHV
+  components:
+  - pos: 3.5,8.5
+    parent: 852
+    type: Transform
+- uid: 9499
+  type: CableHV
+  components:
+  - pos: 3.5,9.5
+    parent: 852
+    type: Transform
+- uid: 9500
+  type: CableHV
+  components:
+  - pos: 3.5,10.5
+    parent: 852
+    type: Transform
+- uid: 9501
+  type: CableHV
+  components:
+  - pos: 3.5,11.5
+    parent: 852
+    type: Transform
+- uid: 9502
+  type: CableHV
+  components:
+  - pos: 3.5,12.5
+    parent: 852
+    type: Transform
+- uid: 9503
+  type: CableHV
+  components:
+  - pos: 3.5,13.5
+    parent: 852
+    type: Transform
+- uid: 9504
+  type: CableHV
+  components:
+  - pos: 25.5,-10.5
+    parent: 852
+    type: Transform
+- uid: 9505
+  type: CableHV
+  components:
+  - pos: 24.5,-10.5
+    parent: 852
+    type: Transform
+- uid: 9506
+  type: CableHV
+  components:
+  - pos: 23.5,-10.5
+    parent: 852
+    type: Transform
+- uid: 9507
+  type: CableHV
+  components:
+  - pos: 22.5,-10.5
+    parent: 852
+    type: Transform
+- uid: 9508
+  type: CableHV
+  components:
+  - pos: 21.5,-10.5
+    parent: 852
+    type: Transform
+- uid: 9509
+  type: CableHV
+  components:
+  - pos: 43.5,0.5
+    parent: 852
+    type: Transform
+- uid: 9510
+  type: Table
+  components:
+  - pos: 45.5,-2.5
+    parent: 852
+    type: Transform
+- uid: 9511
+  type: Table
+  components:
+  - pos: 44.5,-2.5
+    parent: 852
+    type: Transform
+- uid: 9512
+  type: WallmountTelescreen
+  components:
+  - pos: 11.5,25.5
+    parent: 852
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 ...

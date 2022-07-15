@@ -40,21 +40,6 @@
 
 - type: entity
   parent: BaseMagazineBoxMagnum
-  id: MagazineBoxMagnumFlash
-  name: ammunition box (.40 magnum flash)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumFlash
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: flash
-
-- type: entity
-  parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumHighVelocity
   name: ammunition box (.40 magnum high-velocity)
   components:

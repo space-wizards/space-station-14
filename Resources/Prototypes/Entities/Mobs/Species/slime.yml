@@ -140,6 +140,7 @@
             Heat: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
   - type: Butcherable

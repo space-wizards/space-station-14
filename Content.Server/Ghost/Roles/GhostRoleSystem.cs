@@ -4,7 +4,6 @@ using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Components;
-using Content.Server.MobState.States;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -57,14 +56,14 @@ namespace Content.Server.Ghost.Roles
         {
             switch (args.CurrentMobState)
             {
-                case NormalMobState:
+                case DamageState.Alive:
                 {
                     if (!component.Taken)
                         RegisterGhostRole(component);
                     break;
                 }
-                case CriticalMobState:
-                case DeadMobState:
+                case DamageState.Critical:
+                case DamageState.Dead:
                     UnregisterGhostRole(component);
                     break;
             }

@@ -34,6 +34,8 @@ namespace Content.Client.Ghost.Roles.UI
         public void SetEntity(EntityUid uid)
         {
             EntityUid = uid;
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            RoleName.Text = entManager.GetComponent<MetaDataComponent>(uid).EntityName;
             RoleEntity.Text = $"{uid}";
         }
 

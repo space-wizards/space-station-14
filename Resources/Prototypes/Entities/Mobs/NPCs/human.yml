@@ -35,6 +35,20 @@
     - Spirate
 
 - type: entity
+  parent: MobHuman
+  id: MobCBURNUnit
+  name: CBURN Agent
+  description: A miserable pile of secrets
+  components:
+  - type: RandomHumanoidAppearance
+  - type: Loadout
+    prototype: CBURNGear
+  - type: GhostTakeoverAvailable
+    makeSentient: false
+    name: CBURN Agent
+    description: A highly trained Centcomm agent, capable of dealing with various threats.
+
+- type: entity
   parent: MobHumanBase
   suffix: Dead
   save: true

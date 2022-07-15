@@ -36,8 +36,8 @@
       - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      15: !type:DeadMobState {}
+      0: Alive
+      15: Dead
   - type: MovementIgnoreGravity
   - type: Appearance
   - type: DamageStateVisuals
