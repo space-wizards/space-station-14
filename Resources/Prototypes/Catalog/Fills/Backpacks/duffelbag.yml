@@ -194,6 +194,17 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateEVABundle
+  name: syndicate EVA bundle
+  description: "Contains the Syndicate approved EVA suit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: ClothingOuterHardsuitSyndicate
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."
@@ -227,6 +238,7 @@
       - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: BaseUplinkRadio40TC
+      - id: PinpointerNuclear
 
 
 - type: entity
@@ -247,3 +259,4 @@
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
+      - id: PinpointerNuclear

@@ -162,7 +162,7 @@ public sealed class EntityStorageSystem : EntitySystem
                 continue;
 
             count++;
-            if (count >= component.StorageCapacityMax)
+            if (count >= component.Capacity)
                 break;
         }
 
@@ -202,7 +202,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Open)
             return true;
 
-        if (component.Contents.ContainedEntities.Count >= component.StorageCapacityMax)
+        if (component.Contents.ContainedEntities.Count >= component.Capacity)
             return false;
 
         return true;

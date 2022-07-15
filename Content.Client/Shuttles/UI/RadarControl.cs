@@ -35,6 +35,11 @@ public sealed class RadarControl : Control
     private float _radarMaxRange = 256f;
     public float RadarRange { get; private set; } = 256f;
 
+    /// <summary>
+    /// Controls the maximum distance that IFF labels will display.
+    /// </summary>
+    public float MaxRadarRange { get; private set; } = 256f * 10f;
+
     private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
@@ -182,7 +187,7 @@ public sealed class RadarControl : Control
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - RadarRange, mapPosition.Position + RadarRange)))
+                     new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
             if (grid.GridEntityId == ourGridId) continue;
 
@@ -206,19 +211,25 @@ public sealed class RadarControl : Control
 
             if (ShowIFF)
             {
+                Label label;
+
                 if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
                 {
-                    var label = new Label()
+                    label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
+                        FontColorOverride = Color.Aquamarine,
                     };
 
                     control = new PanelContainer()
                     {
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Top,
-                        Children = { label },
-                        StyleClasses  = { StyleNano.StyleClassTooltipPanel },
+                        HorizontalAlignment = HAlignment.Center,
+                        VerticalAlignment = VAlignment.Center,
+                        Children =
+                        {
+                            label
+                        },
+                        StyleClasses  = { StyleNano.StyleClassBorderedWindowPanel },
                     };
 
                     _iffControls[grid.GridEntityId] = control;
@@ -227,20 +238,17 @@ public sealed class RadarControl : Control
 
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
+                var distance = gridCentre.Length;
 
-                // TODO: When we get IFF or whatever we can show controls at a further distance; for now
-                // we don't do that because it would immediately reveal nukies.
-                if (gridCentre.Length < RadarRange)
+                if (gridCentre.Length > RadarRange)
                 {
-                    control.Visible = true;
-                    var label = (Label) control.GetChild(0);
-                    label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{gridCentre.Length:0.0}"));
-                    LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
+                    gridCentre = gridCentre.Normalized * RadarRange;
                 }
-                else
-                {
-                    control.Visible = false;
-                }
+
+                control.Visible = true;
+                label = (Label) control.GetChild(0);
+                label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{distance:0.0}"));
+                LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
             }
             else
             {

@@ -81,6 +81,9 @@
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
   components:
+  - type: Tag
+    tags:
+    - Syndicate
   - type: Appearance
     visuals:
     - type: ComputerVisualizer

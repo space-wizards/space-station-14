@@ -844,6 +844,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
+    naturalImmunities:
+      - AMIV
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50

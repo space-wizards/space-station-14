@@ -1,5 +1,4 @@
 using Content.Client.ContextMenu.UI;
-using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;

@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Server.Mind.Components;
+using Content.Server.Roles;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
@@ -106,10 +108,10 @@ namespace Content.Server.Traitor.Uplink
 
         private void OnBuy(EntityUid uid, UplinkComponent uplink, UplinkBuyListingMessage message)
         {
-            if (message.Session.AttachedEntity is not {Valid: true} player) return;
+            if (message.Session.AttachedEntity is not { Valid: true } player) return;
             if (uplink.UplinkAccount == null) return;
 
-            if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
+            if (!_accounts.TryPurchaseItem(uplink, message.ItemId,
                 EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
                 SoundSystem.Play(uplink.InsufficientFundsSound.GetSound(),
@@ -132,7 +134,7 @@ namespace Content.Server.Traitor.Uplink
             if (acc == null)
                 return;
 
-            if (args.Session.AttachedEntity is not {Valid: true} player) return;
+            if (args.Session.AttachedEntity is not { Valid: true } player) return;
             var cords = EntityManager.GetComponent<TransformComponent>(player).Coordinates;
 
             // try to withdraw TCs from account
@@ -163,16 +165,60 @@ namespace Content.Server.Traitor.Uplink
             if (ui == null)
                 return;
 
-            var listings = _listing.GetListings().Values.ToArray();
+            var listings = _listing.GetListings().Values.ToList();
             var acc = component.UplinkAccount;
 
             UplinkAccountData accData;
             if (acc != null)
-                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
-            else
-                accData = new UplinkAccountData(null, 0);
+            {
+                // if we don't have a jobwhitelist stored, get a new one
+                if (component.JobWhitelist == null &&
+                    acc.AccountHolder != null &&
+                    TryComp<MindComponent>(acc.AccountHolder, out var mind) &&
+                    mind.Mind != null)
+                {
+                    HashSet<string>? jobList = new();
+                    foreach (var role in mind.Mind.AllRoles.ToList())
+                    {
+                        if (role.GetType() == typeof(Job))
+                        {
+                            var job = (Job) role;
+                            jobList.Add(job.Prototype.ID);
+                        }
+                    }
+                    component.JobWhitelist = jobList;
+                }
 
-            ui.SetState(new UplinkUpdateState(accData, listings));
+                // filter out items not on the whitelist
+                if (component.JobWhitelist != null)
+                {
+                    for (var i = 0; i < listings.Count; i++)
+                    {
+                        var entry = listings[i];
+                        if (entry.JobWhitelist != null)
+                        {
+                            var found = false;
+                            foreach (var job in component.JobWhitelist)
+                            {
+                                if (entry.JobWhitelist.Contains(job))
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found)
+                                listings.Remove(entry);
+                        }
+                    }
+                }
+                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
+            }
+            else
+            {
+                accData = new UplinkAccountData(null, 0);
+            }
+
+            ui.SetState(new UplinkUpdateState(accData, listings.ToArray()));
         }
 
         public bool AddUplink(EntityUid user, UplinkAccount account, EntityUid? uplinkEntity = null)
@@ -188,6 +234,11 @@ namespace Content.Server.Traitor.Uplink
             var uplink = uplinkEntity.Value.EnsureComponent<UplinkComponent>();
             SetAccount(uplink, account);
 
+            if (!HasComp<PDAComponent>(uplinkEntity.Value))
+                uplink.ActivatesInHands = true;
+
+            // TODO add BUI. Currently can't be done outside of yaml -_-
+
             return true;
         }
 
@@ -199,9 +250,9 @@ namespace Content.Server.Traitor.Uplink
             {
                 while (containerSlotEnumerator.MoveNext(out var pdaUid))
                 {
-                    if(!pdaUid.ContainedEntity.HasValue) continue;
+                    if (!pdaUid.ContainedEntity.HasValue) continue;
 
-                    if(HasComp<PDAComponent>(pdaUid.ContainedEntity.Value))
+                    if (HasComp<PDAComponent>(pdaUid.ContainedEntity.Value))
                         return pdaUid.ContainedEntity.Value;
                 }
             }
