@@ -40,7 +40,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnPickupAttempt(EntityUid uid, InVehicleComponent component, GettingPickedUpAttemptEvent args)
     {
-        if (component.Vehicle == null || component.Vehicle.Rider != args.User)
+        if (component.Vehicle == null || component.Vehicle.Rider != null && component.Vehicle.Rider != args.User)
             args.Cancel();
     }
 
