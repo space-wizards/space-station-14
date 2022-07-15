@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
@@ -26,6 +26,8 @@ public sealed class SlotDefinition
     [DataField("uiContainer")] public SlotUIContainer UIContainer { get; } = SlotUIContainer.None;
 
     [DataField("uiWindowPos", required: true)] public Vector2i UIWindowPosition { get; }
+
+    [DataField("strippingWindowPos", required: true)] public Vector2i StrippingWindowPos { get; }
 
     //todo this is supreme shit and ideally slots should be stored in a given equipmentslotscomponent on each equipment
     [DataField("dependsOn")] public string? DependsOn { get; }

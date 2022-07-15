@@ -33,8 +33,10 @@ namespace Content.Client.Hands
         private readonly HandsSystem _handsSystem;
         private readonly HandsComponent _handsComponent;
 
-        private string StorageTexture => "back.png";
-        private Texture BlockedTexture => _resourceCache.GetTexture("/Textures/Interface/Inventory/blocked.png");
+        private string StorageTexture => ClientInventorySystem.StorageTexture;
+
+        public const string BlockedTexturePath = "/Textures/Interface/Inventory/blocked.png";
+        private Texture BlockedTexture => _resourceCache.GetTexture(BlockedTexturePath);
 
         private ItemStatusPanel StatusPanel { get; }
 

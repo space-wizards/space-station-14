@@ -1,4 +1,6 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Strip.Components
 {
@@ -8,10 +10,14 @@ namespace Content.Shared.Strip.Components
     [RegisterComponent]
     public sealed class SharedStrippingComponent : Component, IDragDropOn
     {
-        bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
+        bool IDragDropOn.CanDragDropOn(DragDropEvent args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(eventArgs.Dragged, out SharedStrippableComponent? strippable)) return false;
-            return strippable.CanBeStripped(Owner);
+            var ent = IoCManager.Resolve<IEntityManager>();
+            return args.Target != args.Dragged &&
+                args.Target == args.User &&
+                ent.HasComponent<SharedStrippableComponent>(args.Dragged) &&
+                ent.HasComponent<SharedHandsComponent>(args.User) &&
+                ent.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().CanInteract(args.User, args.Dragged);
         }
 
         bool IDragDropOn.DragDropOn(DragDropEvent eventArgs)

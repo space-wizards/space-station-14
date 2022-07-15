@@ -1,11 +1,31 @@
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cuffs.Components
 {
+    [ByRefEvent]
+    public readonly struct CuffedStateChangeEvent { }
+
     [NetworkedComponent()]
     public abstract class SharedCuffableComponent : Component
     {
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+
+        /// <summary>
+        ///     Container of various handcuffs currently applied to the entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public Container Container { get; set; } = default!;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            Container = _sysMan.GetEntitySystem<SharedContainerSystem>().EnsureContainer<Container>(Owner, _componentFactory.GetComponentName(GetType()));
+        }
+
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;
 

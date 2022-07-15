@@ -1,11 +1,14 @@
 using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -15,16 +18,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Cuffs.Components
 {
-    [ByRefEvent]
-    public readonly struct CuffedStateChangeEvent {}
-
     [RegisterComponent]
     [ComponentReference(typeof(SharedCuffableComponent))]
     public sealed class CuffableComponent : SharedCuffableComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -36,18 +34,12 @@ namespace Content.Server.Cuffs.Components
 
         public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
-        /// <summary>
-        ///     Container of various handcuffs currently applied to the entity.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
-        public Container Container { get; set; } = default!;
-
         private bool _uncuffing;
 
         protected override void Initialize()
         {
             base.Initialize();
-            Container = _sysMan.GetEntitySystem<ContainerSystem>().EnsureContainer<Container>(Owner, _componentFactory.GetComponentName(GetType()));
+
             Owner.EnsureComponentWarn<HandsComponent>();
         }
 
@@ -98,19 +90,19 @@ namespace Content.Server.Cuffs.Components
                 return true;
             }
 
-            var sys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+            var sys = _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
 
             // Success!
             sys.TryDrop(user, handcuff);
 
             Container.Insert(handcuff);
             CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
-            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
+            _entMan.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             var ev = new CuffedStateChangeEvent();
             _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
             UpdateAlert();
-            UpdateHeldItems();
+            UpdateHeldItems(handcuff);
             Dirty(_entMan);
             return true;
         }
@@ -123,29 +115,43 @@ namespace Content.Server.Cuffs.Components
         }
 
         /// <summary>
-        /// Check how many items the user is holding and if it's more than the number of cuffed hands, drop some items.
+        ///     Adds virtual cuff items to the user's hands.
         /// </summary>
-        public void UpdateHeldItems()
+        public void UpdateHeldItems(EntityUid handcuff)
         {
+            // TODO when ecs-ing this, we probably don't just want to use the generic virtual-item entity, and instead
+            // want to add our own item, so that use-in-hand triggers an uncuff attempt and the like.
+
             if (!_entMan.TryGetComponent(Owner, out HandsComponent? handsComponent)) return;
 
-            var sys = _sysMan.GetEntitySystem<SharedHandsSystem>();
+            var handSys = _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
 
-            var freeHandCount = handsComponent.Hands.Count() - CuffedHandCount;
-
-            foreach (var hand in handsComponent.Hands.Values)
+            var freeHands = 0;
+            foreach (var hand in handSys.EnumerateHands(Owner, handsComponent))
             {
-                if (hand.IsEmpty)
-                    continue;
-
-                if (freeHandCount > 0)
+                if (hand.HeldEntity == null)
                 {
-                    freeHandCount--;
+                    freeHands++;
                     continue;
                 }
 
-                sys.TryDrop(Owner, hand, checkActionBlocker: false, handsComp: handsComponent);
+                // Is this entity removable? (it might be an existing handcuff blocker)
+                if (_entMan.HasComponent<UnremoveableComponent>(hand.HeldEntity))
+                    continue;
+
+                handSys.DoDrop(Owner, hand, true, handsComponent);
+                freeHands++;
+                if (freeHands == 2)
+                    break;
             }
+
+            var virtSys = _entMan.EntitySysManager.GetEntitySystem<HandVirtualItemSystem>();
+
+            if (virtSys.TrySpawnVirtualItemInHand(handcuff, Owner, out var virtItem1))
+                _entMan.EnsureComponent<UnremoveableComponent>(virtItem1.Value);
+
+            if (virtSys.TrySpawnVirtualItemInHand(handcuff, Owner, out var virtItem2))
+                _entMan.EnsureComponent<UnremoveableComponent>(virtItem2.Value);
         }
 
         /// <summary>
@@ -244,7 +250,7 @@ namespace Content.Server.Cuffs.Components
             {
                 SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
-                Container.ForceRemove(cuffsToRemove.Value);
+                _entMan.EntitySysManager.GetEntitySystem<HandVirtualItemSystem>().DeleteInHandsMatching(user, cuffsToRemove.Value);
                 _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);
 
                 if (cuff.BreakOnRemove)
@@ -262,7 +268,7 @@ namespace Content.Server.Cuffs.Components
                 }
 
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
-                _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
+                _entMan.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 var ev = new CuffedStateChangeEvent();
                 _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
                 UpdateAlert();

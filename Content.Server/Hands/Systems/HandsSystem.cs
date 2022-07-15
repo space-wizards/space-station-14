@@ -110,21 +110,9 @@ namespace Content.Server.Hands.Systems
         {
             base.DoDrop(uid, hand,doDropInteraction, hands);
 
-            // update gui of anyone stripping this entity.
-            _strippableSystem.SendUpdate(uid);
-
             if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
-
-        public override void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
-        {
-            base.DoPickup(uid, hand, entity, hands);
-
-            // update gui of anyone stripping this entity.
-            _strippableSystem.SendUpdate(uid);
-        }
-
 
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)

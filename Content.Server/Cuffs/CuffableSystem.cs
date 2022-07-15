@@ -11,6 +11,8 @@ using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+using Content.Server.Hands.Systems;
 
 namespace Content.Server.Cuffs
 {
@@ -19,6 +21,7 @@ namespace Content.Server.Cuffs
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualSystem = default!;
 
         public override void Initialize()
         {
@@ -28,6 +31,13 @@ namespace Content.Server.Cuffs
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
+            SubscribeLocalEvent<CuffableComponent, EntRemovedFromContainerMessage>(OnCuffsRemoved);
+        }
+
+        private void OnCuffsRemoved(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
+        {
+            if (args.Container.ID == component.Container.ID)
+                _virtualSystem.DeleteInHandsMatching(uid, args.Entity);
         }
 
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)

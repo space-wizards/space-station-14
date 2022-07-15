@@ -42,6 +42,8 @@ namespace Content.Client.Inventory
         private const int ButtonSeparation = 4;
         private const int RightSeparation = 2;
 
+        public const string StorageTexture = "back.png";
+
         /// <summary>
         /// Stores delegates used to create controls for a given <see cref="InventoryTemplatePrototype"/>.
         /// </summary>
@@ -283,7 +285,7 @@ namespace Content.Client.Inventory
 
                     void AddButton(SlotDefinition definition, Vector2i position)
                     {
-                        var button = GetButton(definition, "back.png");
+                        var button = GetButton(definition, StorageTexture);
                         LayoutContainer.SetPosition(button, position);
                         windowContents.AddChild(button);
                         if (!list.ContainsKey(definition.Name))
@@ -293,7 +295,7 @@ namespace Content.Client.Inventory
 
                     void AddHUDButton(BoxContainer container, SlotDefinition definition)
                     {
-                        var button = GetButton(definition, "back.png");
+                        var button = GetButton(definition, StorageTexture);
                         container.AddChild(button);
                         if (!list.ContainsKey(definition.Name))
                             list[definition.Name] = new();

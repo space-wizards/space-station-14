@@ -6,4 +6,5 @@
     slotFlags: HEAD
     uiContainer: BottomLeft
     uiWindowPos: 0,0
+    strippingWindowPos: 0,0
     displayName: Head

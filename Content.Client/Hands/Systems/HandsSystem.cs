@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.HUD;
+using Content.Client.Strip;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -23,6 +24,7 @@ namespace Content.Client.Hands
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly StrippableSystem _stripSys = default!;
 
         public override void Initialize()
         {
@@ -72,6 +74,8 @@ namespace Content.Client.Hands
 
             if (uid == _playerManager.LocalPlayer?.ControlledEntity)
                 UpdateGui();
+
+            _stripSys.UpdateUi(uid);
         }
         #endregion
 

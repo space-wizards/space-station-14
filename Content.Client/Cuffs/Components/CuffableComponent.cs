@@ -52,6 +52,9 @@ namespace Content.Client.Cuffs.Components
                     }
                 }
             }
+
+            var ev = new CuffedStateChangeEvent();
+            _entityManager.EventBus.RaiseLocalEvent(Owner, ref ev);
         }
 
         protected override void OnRemove()
