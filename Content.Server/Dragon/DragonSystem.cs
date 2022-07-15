@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
@@ -12,11 +13,14 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Dragon;
 using Content.Shared.Damage;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Dragon
@@ -31,6 +35,11 @@ namespace Content.Server.Dragon
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
+        /// <summary>
+        ///     Tracks breath attacks performed per-entity.
+        /// </summary>
+        private readonly Dictionary<EntityUid, BreathAttack> _breathAttacks = new();
 
         public override void Initialize()
         {
@@ -190,40 +199,10 @@ namespace Content.Server.Dragon
             _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
         }
 
-
-        /// <summary>
-        /// Determines the list of tiles that the breath attack should affects.
-        /// </summary>
-        /// <param name="breathDirection">Normalized vector representing the direction.</param>
-        /// <param name="distance">The number of tiles to propogate the attack over.</param>
-        /// <param name="start">The position to start from.</param>
-        /// <param name="referenceGrid">The grid to use as the basis for tile coordinates.</param>
-        /// <returns>List of tile coordinates to apply the breath effect to, starting from the origin position.</returns>
-        private List<Vector2i> CalculateBreathTiles(Vector2 breathDirection, int distance, MapCoordinates start, IMapGrid referenceGrid)
+        public override void Update(float frameTime)
         {
-            var points = new List<Vector2i>();
-            var startTile = referenceGrid.TileIndicesFor(start);
-            var lastFreeTile = startTile;
-
-            int offset = 0; //
-            int curDistance = 0;
-            while (curDistance < distance)
-            {
-                var tilePos = start.Offset(breathDirection * ((curDistance + offset) * referenceGrid.TileSize));
-                var tile = referenceGrid.TileIndicesFor(tilePos); //
-
-                if (tile == lastFreeTile)
-                {
-                    offset++;
-                    continue;
-                }
-
-                points.Add(tile);
-                lastFreeTile = tile;
-                curDistance++;
-            }
-
-            return points;
+            foreach (var entry in _breathAttacks)
+                entry.Value.Update(frameTime);
         }
 
         /// <summary>
@@ -233,7 +212,7 @@ namespace Content.Server.Dragon
         ///     Used for a variation of <see cref="TurfHelpers.IsBlockedTurf()"/> that makes use of the fact that we have
         ///     already done an entity lookup on a tile, and don't need to do so again.
         /// </remarks>
-        private bool IsBlockingTurf(EntityUid uid, EntityQuery<PhysicsComponent> physicsQuery)
+        public bool IsBlockingTurf(EntityUid uid, EntityQuery<PhysicsComponent> physicsQuery)
         {
             if (EntityManager.IsQueuedForDeletion(uid))
                 return false;
@@ -241,7 +220,7 @@ namespace Content.Server.Dragon
             if (!physicsQuery.TryGetComponent(uid, out var physics))
                 return false;
 
-            return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int)CollisionGroup.HumanoidBlockLayer) != 0;
+            return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int)CollisionGroup.BulletImpassable) != 0;
         }
 
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
@@ -250,71 +229,32 @@ namespace Content.Server.Dragon
             if (args.Handled || component.BreatheFireAction == null)
                 return;
 
-            var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
-            var mobStateQuery = EntityManager.GetEntityQuery<MobStateComponent>();
-            var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
-            var damageableQuery = EntityManager.GetEntityQuery<DamageableComponent>();
+            // Check if dragon has a breath attack currently processing.
+            if (_breathAttacks.TryGetValue(dragonuid, out var breathAttack) && !breathAttack.Finished)
+                return;
+
+            if (breathAttack != null)
+                _breathAttacks.Remove(dragonuid);
 
             var dragonXform = Transform(dragonuid);
             var dragonPos = dragonXform.MapPosition;
 
             if (dragonXform.GridUid == null)
-                return; // TODO: Support fire breath from outside of grids
+                return; // TODO: Support firing from outside of grids.
 
             var breathDirection = (args.Target.Position - dragonPos.Position).Normalized;
-            Vector2i breathInitialTile;
 
-            var grid = _mapManager.GetGrid(dragonXform.GridUid.Value);
+            _breathAttacks.Add(dragonuid, new BreathAttack(this,
+                dragonuid,
+                dragonPos,
+                (int)component.BreatheFireAction.Range,
+                breathDirection.ToWorldAngle(),
+                TimeSpan.FromMilliseconds(150),
+                component.BreathDamage,
+                EntityManager,
+                _mapManager));
 
-            // Get a list of points to apply the fire breath to.
-            var points = CalculateBreathTiles(breathDirection, (int) component.BreatheFireAction.Range, dragonPos, grid);
-
-
-            var lookup = Comp<EntityLookupComponent>(grid.GridEntityId);
-
-            HashSet<EntityUid> processed = new(); // Entities that have previously been processed.
-            processed.Add(dragonuid); // Ignore the creator of the fire breath.
-
-            // TODO: Fire effects and hit check should propagate over time.
-            // TODO: Optimize with usage of entity queries and lookup systems.
-            foreach(var p in points)
-            {
-                var tileBox = new Box2(p * grid.TileSize, (p + 1) * grid.TileSize);
-
-                // Get the entities on the tile.
-                List<TransformComponent> list = new();
-
-                var state = (list, processed, xformQuery, mobStateQuery);
-                lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
-
-                // process the entities
-                foreach (var xform in list)
-                {
-                    Logger.Debug("Hit {0}", MetaData(xform.Owner).EntityName);
-                    ProcessEntity(xform.Owner, component.BreathDamage, damageableQuery);
-                }
-
-                // process anchored entities
-                var tileBlocked = false;
-                var anchoredEntities = grid.GetAnchoredEntities(p).ToList();
-                foreach (var anchored in anchoredEntities)
-                {
-                    processed.Add(anchored);
-                    // TODO: Can entities with mob state be anchored?
-                    // ProcessEntity(anchored, component.BreathDamage, damageableQuery);
-                    tileBlocked |= IsBlockingTurf(anchored, physicsQuery);
-                }
-
-                if (tileBlocked)
-                    break; // Blocked by an obstruction.
-
-                // Attempt to ignite the tile.
-                _atmosphereSystem.HotspotExpose(grid.GridEntityId, p, 700f, 50f, true);
-
-                var coords = grid.GridTileToLocal(p);
-                Spawn(component.BreathEffectPrototype, coords);
-            }
-
+            // // TODO: Optimize with usage of entity queries and lookup systems.
             args.Handled = true;
 
             if(component.SoundBreathFire != null)
@@ -324,7 +264,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// Apply damage to the entity
         /// </summary>
-        private void ProcessEntity(
+        public void ProcessEntity(
             EntityUid uid,
             DamageSpecifier? damage,
             EntityQuery<DamageableComponent> damageableQuery)
@@ -333,27 +273,16 @@ namespace Content.Server.Dragon
                 return;
 
             _damageableSystem.TryChangeDamage(uid, damage);
+
+            // TODO: Ignite flammable entities that were hit?
         }
 
-        /// <summary>
-        /// Callback function to check if an entity should have further processing performed.
-        /// </summary>
-        /// <param name="state"></param>
-        /// <param name="uid"></param>
-        /// <returns></returns>
-        private bool GridQueryCallback(
-            ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery, EntityQuery<MobStateComponent> mobStateQuery) state,
-            in EntityUid uid)
+        public void ProcessTile(Vector2i tile, IMapGrid grid, string effectPrototype)
         {
-            // Add entities with transform components to the list of entities to process.
-            if (state.Processed.Add(uid) &&
-                state.mobStateQuery.HasComponent(uid) &&
-                state.XformQuery.TryGetComponent(uid, out var xform))
-            {
-                state.List.Add(xform);
-            }
+            _atmosphereSystem.HotspotExpose(grid.GridEntityId, tile, 700f, 50f, true);
 
-            return true;
+            var coords = grid.GridTileToLocal(tile);
+            Spawn(effectPrototype, coords);
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs
@@ -381,5 +310,201 @@ namespace Content.Server.Dragon
         }
 
         private sealed class DragonDevourCancelledEvent : EntityEventArgs {}
+    }
+}
+
+internal sealed class BreathAttack
+{
+    /// <summary>
+    ///     Used to avoid applying damage to the same entity multiple times.
+    /// </summary>
+    private readonly HashSet<EntityUid> _processedEntities = new();
+
+    /// <summary>
+    ///     Tiles that have been processed.
+    /// </summary>
+    private readonly List<Vector2i> _tileProcessedList = new();
+
+    /// <summary>
+    ///     The range of the breath attack in "tiles".
+    /// </summary>
+    private readonly int _range;
+
+    /// <summary>
+    ///
+    /// </summary>
+    private readonly DamageSpecifier _damageSpecifier;
+
+    /// <summary>
+    ///     Point used for tracking the propagation of the breath attack per tick.
+    /// </summary>
+    private Vector2 _pointPos;
+
+    /// <summary>
+    ///     The velocity of the point.
+    /// </summary>
+    private Vector2 _pointVel;
+
+    /// <summary>
+    ///     The current grid that is being processed.
+    /// </summary>
+    private IMapGrid? _currentGrid;
+
+    /// <summary>
+    ///     "Tile-size" for space when there are no nearby grids to use as a reference.
+    /// </summary>
+    private const ushort DefaultTileSize = 1;
+
+    public bool Finished { get; private set; }
+
+    // Entity Queries
+    private readonly EntityQuery<TransformComponent> _xformQuery;
+    private readonly EntityQuery<PhysicsComponent> _physicsQuery;
+    private readonly EntityQuery<DamageableComponent> _damageQuery;
+    private readonly EntityQuery<MobStateComponent> _mobStateQuery;
+
+    private readonly IEntityManager _entMan;
+    private readonly DragonSystem _system;
+
+    public BreathAttack(DragonSystem system,
+        EntityUid creator,
+        MapCoordinates origin,
+        int range,
+        Angle dir,
+        TimeSpan delay,
+        DamageSpecifier damageSpec,
+        IEntityManager entMan,
+        IMapManager mapMan)
+    {
+        _system = system;
+        _entMan = entMan;
+
+        _xformQuery = _entMan.GetEntityQuery<TransformComponent>();
+        _physicsQuery = _entMan.GetEntityQuery<PhysicsComponent>();
+        _damageQuery = _entMan.GetEntityQuery<DamageableComponent>();
+        _mobStateQuery = _entMan.GetEntityQuery<MobStateComponent>();
+
+        _range = range;
+        _damageSpecifier = damageSpec;
+
+        Finished = false;
+
+        // Add the initiator of the breath attack to processed entities to prevent self-attacking.
+        if(creator.Valid)
+            _processedEntities.Add(creator);
+
+        var creatorXform = _xformQuery.GetComponent(creator);
+
+        if (mapMan.TryFindGridAt(origin, out var grid))
+            _currentGrid = grid;
+
+        // Check if the attack is starting from a grid.
+        var tileSize = grid?.TileSize ?? DefaultTileSize;
+
+        // Setup the breath attack particle.
+        _pointPos = grid?.WorldToLocal(origin.Position) ?? Vector2.NaN;
+        _pointVel = Vector2.NaN;
+
+        var originTile = new Vector2i((int) Math.Floor(_pointPos.X / tileSize),
+            (int) Math.Floor(_pointPos.Y / tileSize));
+
+        // TODO: Move the origin position instead of doing this.
+        _tileProcessedList.Add(originTile);
+
+        if (grid != null)
+        {
+            var angle = dir - grid.WorldRotation;
+            _pointVel = angle.ToWorldVec() *
+                       (grid.TileSize / (float) delay.TotalSeconds); // TODO: Divide by zero
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void ProcessTile(Vector2i tile, IMapGrid grid)
+    {
+        var tileBox = new Box2(tile * grid.TileSize, (tile + 1) * grid.TileSize);
+        var lookup = _entMan.GetComponent<EntityLookupComponent>(grid.GridEntityId);
+
+        // Get the entities on the tile.
+        List<TransformComponent> list = new();
+
+        var state = (list, ProcessedEntities: _processedEntities, _xformQuery, _mobStateQuery);
+        lookup.Tree.QueryAabb(ref state, GridQueryCallback, tileBox);
+
+        // Process the entities in the tile.
+        foreach(var xform in list)
+            _system.ProcessEntity(xform.Owner, _damageSpecifier, _damageQuery);
+
+        _system.ProcessTile(tile, grid, "FireBreathEffect");
+    }
+
+    /// <summary>
+    /// Callback function to check if an entity should have further processing performed.
+    /// </summary>
+    /// <param name="state"></param>
+    /// <param name="uid"></param>
+    /// <returns></returns>
+    private static bool GridQueryCallback(
+        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery, EntityQuery<MobStateComponent> mobStateQuery) state,
+        in EntityUid uid)
+    {
+        // Add entities with transform components to the list of entities to process.
+        if (state.Processed.Add(uid) &&
+            state.mobStateQuery.HasComponent(uid) &&
+            state.XformQuery.TryGetComponent(uid, out var xform))
+        {
+            state.List.Add(xform);
+        }
+
+        return true;
+    }
+
+    public void Update(float frameTime)
+    {
+        if (_currentGrid == null || _tileProcessedList.Count >= _range || _pointVel == Vector2.NaN)
+        {
+            Finished = true;
+            return;
+        }
+
+        var lastTile = _tileProcessedList.Last();
+
+        // Advance the point forward.
+        _pointPos += _pointVel * frameTime; // TODO: Check for tiles intersected with a line segment for faster propagations.
+
+        // var previousTilePos = new Vector2i((int)Math.Floor(previousPos.X / _currentGrid.TileSize),
+        //     (int)Math.Floor(previousPos.Y / _currentGrid.TileSize));
+        var tilePos = new Vector2i((int)Math.Floor(_pointPos.X / _currentGrid.TileSize),
+            (int)Math.Floor(_pointPos.Y / _currentGrid.TileSize));
+
+        if (_tileProcessedList.Contains(tilePos))
+            return; // Already added this tile.
+
+        // Check if this movement has intersected with any collidable.
+        var anchored = _currentGrid.GetAnchoredEntities(tilePos).ToList();
+
+        var blocked = false;
+        foreach (var a in anchored)
+        {
+            _processedEntities.Add(a);
+            blocked |= _system.IsBlockingTurf(a, _physicsQuery);
+        }
+
+        if (blocked)
+            _pointVel = Vector2.NaN;
+
+        if (!blocked && lastTile != tilePos && !_tileProcessedList.Contains(tilePos))
+        {
+            // Exited a tile, go ahead and process it.
+            ProcessTile(tilePos, _currentGrid);
+            _tileProcessedList.Add(tilePos);
+            lastTile = tilePos;
+        }
+
+        // Check if the tile has changed, if it has, check if the grid has been left.
+        if (!_currentGrid.LocalAABB.Contains(_pointPos))
+            _currentGrid = null;
     }
 }

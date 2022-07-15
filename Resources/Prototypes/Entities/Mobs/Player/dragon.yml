@@ -126,7 +126,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 2
+    lifetime: 0.45
   - type: Sprite
     netsync: false
     drawdepth: Effects
