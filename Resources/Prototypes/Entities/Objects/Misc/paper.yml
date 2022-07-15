@@ -16,9 +16,6 @@
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
-    - state: paper_plane
-      map: ["enum.PaperVisualLayers.Plane"]
-      visible: false
   - type: Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
@@ -33,6 +30,15 @@
     - Document
   - type: Appearance
   - type: PaperVisuals
+  - type: Fixtures # needed for paper planes
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.25
+      mass: 5
+      restitution: 0.0
+      mask:
+       - ItemMask
 
 - type: entity
   parent: Paper

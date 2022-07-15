@@ -14,8 +14,7 @@ public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
         if (args.Component.TryGetData(PaperVisuals.Status, out PaperStatus writingStatus))
         {
             args.Sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
-            args.Sprite.LayerSetVisible(PaperVisualLayers.Paper, writingStatus != PaperStatus.Plane);
-            args.Sprite.LayerSetVisible(PaperVisualLayers.Plane, writingStatus == PaperStatus.Plane);
+            args.Sprite.LayerSetState(PaperVisualLayers.Paper, (writingStatus == PaperStatus.Plane? "paper_plane" : "paper"));
         }
 
         if (args.Component.TryGetData(PaperVisuals.Stamp, out string stampState))
@@ -26,10 +25,9 @@ public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
     }
 }
 
-public enum PaperVisualLayers
+public enum PaperVisualLayers : byte
 {
     Paper,
     Stamp,
-    Writing,
-    Plane
+    Writing
 }

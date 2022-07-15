@@ -1,10 +1,10 @@
 using Content.Server.DoAfter;
 using Content.Server.UserInterface;
 using Content.Shared.Movement.Components;
+using Content.Shared.Physics;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Utility;
 using System.Threading;
@@ -15,7 +15,6 @@ namespace Content.Server.Paper.Plane
     public sealed class PaperPlaneSystem : EntitySystem
     {
         [Dependency] private DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public override void Initialize()
@@ -57,7 +56,7 @@ namespace Content.Server.Paper.Plane
 
             plane.CancelToken = new CancellationTokenSource();
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, plane.FoldDelay, plane.CancelToken.Token, plane.Owner)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, plane.UnfoldDelay, plane.CancelToken.Token, plane.Owner)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,
@@ -80,7 +79,7 @@ namespace Content.Server.Paper.Plane
 
             _tagSystem.RemoveTags(plane.Owner, plane.Tags);
 
-            _entityManager.RemoveComponent<PaperPlaneComponent>(plane.Owner);
+            EntityManager.RemoveComponent<PaperPlaneComponent>(plane.Owner);
         }
 
         private void OnAltVerbPaper(EntityUid uid, PaperComponent paper, GetVerbsEvent<AlternativeVerb> args)
@@ -122,7 +121,7 @@ namespace Content.Server.Paper.Plane
         {
             args.Paper.CancelToken = null;
 
-            var plane = _entityManager.AddComponent<PaperPlaneComponent>(paper.Owner);
+            var plane = EntityManager.AddComponent<PaperPlaneComponent>(paper.Owner);
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Plane);
@@ -132,16 +131,13 @@ namespace Content.Server.Paper.Plane
 
         private void OnCollideEvent(EntityUid uid, PaperPlaneComponent plane, StartCollideEvent args)
         {
-            //ignore mobs
-            if (args.OtherFixture.Body.BodyType == Robust.Shared.Physics.BodyType.KinematicController)
+            //unlike most thrown items, we want to ignore mobs
+            if ((args.OtherFixture.CollisionLayer & (int) plane.CollisionMask) == 0)
                 return;
 
-            // avoid bouncing off of walls, unless weightless
-            if (TryComp<PhysicsComponent>(plane.Owner, out var physics) && !plane.Owner.IsWeightless(physics, entityManager: EntityManager))
-            {
-                physics.Momentum = Vector2.Zero;
+            //need to set back to ground on collide for friction to kick in again
+            if (TryComp<PhysicsComponent>(uid, out var physics))
                 physics.BodyStatus = BodyStatus.OnGround;
-            }
         }
 
         public void OnLand(EntityUid uid, PaperPlaneComponent plane, LandEvent args)

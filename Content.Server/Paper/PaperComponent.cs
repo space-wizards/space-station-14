@@ -23,6 +23,11 @@ namespace Content.Server.Paper
 
         public CancellationTokenSource? CancelToken = null;
 
+        /// <summary>
+        ///     Delay for folding into a paper plane
+        /// </summary>
+        [ViewVariables]
+        [DataField("foldDelay")]
         public float FoldDelay = 1.0f;
     }
 }
