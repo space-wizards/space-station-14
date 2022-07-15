@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Your camera now follows the vehicle rather than you when you are riding
-      one., type: Tweak}
-  - {message: Vehicles no longer render above kudzu., type: Fix}
-  id: 1457
-  time: '2022-05-04T18:21:39.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Delta Station now has filing cabinets., type: Add}
@@ -2954,3 +2947,10 @@ Entries:
       having very low range, and a low recharge rate.', type: Add}
   id: 1956
   time: '2022-07-15T04:28:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Space carp and space ticks now only have a 33% chance to be inhabitable
+      by a ghost., type: Tweak}
+  - {message: Space bears now have a 5% chance to be inhabitable by a ghost., type: Tweak}
+  id: 1957
+  time: '2022-07-15T05:20:38.0000000+00:00'
