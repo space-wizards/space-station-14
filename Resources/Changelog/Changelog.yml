@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'Nanotrasen has finally kicked the old board vendor square in the ass,
-      and told them to actually make their boards more maintainable. Expect more functionality
-      when you pulse, cut, and mend wires in some electronics.', type: Tweak}
-  id: 1461
-  time: '2022-05-06T02:35:06.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'The admin help and rules buttons have swapped positions in the in-game
@@ -2954,3 +2947,9 @@ Entries:
   - {message: Modular mines now require a proximity sensor., type: Tweak}
   id: 1960
   time: '2022-07-15T07:54:35.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed some pop-ups that revealed a disguised entity''s name. If there
+      are more, report them.', type: Fix}
+  id: 1961
+  time: '2022-07-15T08:10:52.0000000+00:00'
