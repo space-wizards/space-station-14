@@ -16,6 +16,12 @@ public sealed class GeneralStationRecord
     public string Name = string.Empty;
 
     /// <summary>
+    ///     Age of the person that this station record represents.
+    /// </summary>
+    [ViewVariables]
+    public int Age;
+
+    /// <summary>
     ///     Job title tied to this station record.
     /// </summary>
     [ViewVariables]

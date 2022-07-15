@@ -71,7 +71,7 @@ public sealed class StationRecordsSystem : EntitySystem
             return;
         }
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Species, profile.Gender, jobId, profile, records);
+        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, profile, records);
     }
 
 
@@ -99,7 +99,7 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records"></param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, string species, Gender gender, string? jobId, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string? jobId, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records)
@@ -112,6 +112,7 @@ public sealed class StationRecordsSystem : EntitySystem
         var record = new GeneralStationRecord()
         {
             Name = name,
+            Age = age,
             JobTitle = jobPrototype.Name,
             JobIcon = jobPrototype.Icon,
             Species = species,
