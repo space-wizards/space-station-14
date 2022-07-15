@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
@@ -16,6 +17,7 @@ namespace Content.Client.Shuttles.UI;
 public sealed class RadarControl : Control
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     private const float ScrollSensitivity = 8f;
@@ -34,6 +36,11 @@ public sealed class RadarControl : Control
     private float _radarMinRange = 64f;
     private float _radarMaxRange = 256f;
     public float RadarRange { get; private set; } = 256f;
+
+    /// <summary>
+    /// We'll lerp between the radarrange and actual range
+    /// </summary>
+    private float _actualRadarRange = 256f;
 
     /// <summary>
     /// Controls the maximum distance that IFF labels will display.
@@ -80,8 +87,7 @@ public sealed class RadarControl : Control
 
         if (_radarMaxRange < RadarRange)
         {
-            RadarRange = _radarMaxRange;
-            OnRadarRangeChanged?.Invoke(RadarRange);
+            _actualRadarRange = _radarMaxRange;
         }
 
         if (_radarMaxRange < _radarMinRange)
@@ -100,21 +106,25 @@ public sealed class RadarControl : Control
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
     {
         base.MouseWheel(args);
-        AddRadarRange(-args.Delta.Y * ScrollSensitivity);
+        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * RadarRange);
     }
 
     public void AddRadarRange(float value)
     {
-        var oldValue = RadarRange;
-        RadarRange = MathF.Max(0f, MathF.Max(_radarMinRange, MathF.Min(RadarRange + value, _radarMaxRange)));
-
-        if (oldValue.Equals(RadarRange)) return;
-
-        OnRadarRangeChanged?.Invoke(RadarRange);
+        _actualRadarRange = Math.Clamp(_actualRadarRange + value, _radarMinRange, _radarMaxRange);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        if (!_actualRadarRange.Equals(RadarRange))
+        {
+            var diff = _actualRadarRange - RadarRange;
+            var lerpRate = 10f;
+
+            RadarRange += (float) Math.Clamp(diff, -lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds, lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds);
+            OnRadarRangeChanged?.Invoke(RadarRange);
+        }
+
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
