@@ -20,7 +20,7 @@ public sealed class RadarControl : Control
 
     private const float ScrollSensitivity = 8f;
 
-    private const int MinimapRadius = 384;
+    private const int MinimapRadius = 320;
     private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
