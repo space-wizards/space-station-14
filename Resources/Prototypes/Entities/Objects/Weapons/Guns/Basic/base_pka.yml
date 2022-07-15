@@ -9,10 +9,12 @@
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     size: 30
   - type: Gun
-    fireRate: 0.5
+    fireRate: 1
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
   - type: AmmoCounter
   - type: Appearance
   - type: GenericVisualizer
@@ -24,6 +26,8 @@
   - type: RechargeBasicEntityAmmo
     minRechargeCooldown: 3
     maxRechargeCooldown: 5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
     proto: BulletKinetic
     capacity: 1

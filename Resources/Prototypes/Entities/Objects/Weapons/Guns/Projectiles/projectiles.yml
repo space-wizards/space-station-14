@@ -201,9 +201,13 @@
     - state: chronobolt
       shader: unshaded
   - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
     damage:
       types:
         Blunt: 10
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.5
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
