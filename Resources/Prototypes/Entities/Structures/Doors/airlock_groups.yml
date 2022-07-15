@@ -9,7 +9,6 @@
     freezer:     Structures/Doors/Airlocks/Standard/freezer.rsi
     maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
     medical:     Structures/Doors/Airlocks/Standard/medical.rsi
-    research:    Structures/Doors/Airlocks/Standard/research.rsi
     science:     Structures/Doors/Airlocks/Standard/science.rsi
     security:    Structures/Doors/Airlocks/Standard/security.rsi
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
@@ -25,7 +24,6 @@
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
-    research:    Structures/Doors/Airlocks/Glass/research.rsi
     security:    Structures/Doors/Airlocks/Glass/security.rsi
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
 

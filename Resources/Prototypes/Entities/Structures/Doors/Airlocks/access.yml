@@ -168,22 +168,6 @@
     access: [["Research"], ["Medical"]]
 
 - type: entity
-  parent: AirlockResearch
-  id: AirlockResearchLocked
-  suffix: Research, Locked
-  components:
-  - type: AccessReader
-    access: [["Research"]]
-
-- type: entity
-  parent: AirlockResearch
-  id: AirlockMedicalResearchLocked
-  suffix: Medical/Research, Locked
-  components:
-  - type: AccessReader
-    access: [["Research"], ["Medical"]]
-
-- type: entity
   parent: AirlockCommand
   id: AirlockCommandLocked
   suffix: Command, Locked
@@ -404,22 +388,6 @@
   parent: AirlockScienceGlass
   id: AirlockMedicalScienceGlassLocked
   suffix: Medical/Science, Locked
-  components:
-  - type: AccessReader
-    access: [["Research"], ["Medical"]]
-
-- type: entity
-  parent: AirlockResearchGlass
-  id: AirlockResearchGlassLocked
-  suffix: Research, Locked
-  components:
-  - type: AccessReader
-    access: [["Research"]]
-
-- type: entity
-  parent: AirlockResearchGlass
-  id: AirlockMedicalResearchGlassLocked
-  suffix: Medical/Research, Locked
   components:
   - type: AccessReader
     access: [["Research"], ["Medical"]]

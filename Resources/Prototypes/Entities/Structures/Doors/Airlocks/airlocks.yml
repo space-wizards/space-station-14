@@ -64,14 +64,6 @@
 
 - type: entity
   parent: Airlock
-  id: AirlockResearch
-  suffix: Research
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/research.rsi
-
-- type: entity
-  parent: Airlock
   id: AirlockCommand
   suffix: Command
   components:
@@ -195,16 +187,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science.rsi
-  - type: PaintableAirlock
-    group: Glass
-
-- type: entity
-  parent: AirlockGlass
-  id: AirlockResearchGlass
-  suffix: Research
-  components:
-  - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/research.rsi
   - type: PaintableAirlock
     group: Glass
 
