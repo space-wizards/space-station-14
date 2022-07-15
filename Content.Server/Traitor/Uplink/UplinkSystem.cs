@@ -208,7 +208,10 @@ namespace Content.Server.Traitor.Uplink
                             }
                         }
                         if (!found)
-                            listings.Remove(entry);
+                        {
+                            listings.RemoveSwap(i);
+                            i--;
+                        }
                     }
                 }
                 accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
