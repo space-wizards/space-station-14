@@ -19,6 +19,7 @@ using Robust.Shared.Serialization.Manager;
 using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Disease
 {
@@ -441,7 +442,7 @@ namespace Content.Server.Disease
             if (!Resolve(uid, ref xform)) return;
 
             if (!string.IsNullOrEmpty(snoughMessage))
-                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", uid)), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
             if (disease is not { Infectious: true } || !airTransmit)
                 return;

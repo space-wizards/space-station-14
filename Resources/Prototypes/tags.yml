@@ -22,6 +22,9 @@
   id: BodyBag
 
 - type: Tag
+  id: BorgArm
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -50,6 +53,9 @@
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: Carp
 
 - type: Tag
   id: Cartridge
@@ -357,6 +363,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
 
 - type: Tag
@@ -403,6 +412,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: Syndicate
+
+- type: Tag
   id: SyndicateSegwayKeys
 
 - type: Tag
@@ -425,6 +437,12 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter

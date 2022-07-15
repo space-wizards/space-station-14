@@ -1,0 +1,12 @@
+- type: construction
+  name: honkbot
+  id: honkbot
+  graph: HonkBot
+  startNode: start
+  targetNode: bot
+  category: Utilities
+  objectType: Item
+  description: This bot honks and slips people.
+  icon:
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot

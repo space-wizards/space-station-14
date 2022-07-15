@@ -21,7 +21,7 @@ namespace Content.Server.Traitor.Uplink
             foreach (var item in _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>())
             {
                 var newListing = new UplinkListingData(item.ListingName, item.ItemId,
-                    item.Price, item.Category, item.Description, item.Icon);
+                    item.Price, item.Category, item.Description, item.Icon, item.JobWhitelist);
 
                 RegisterUplinkListing(newListing);
             }

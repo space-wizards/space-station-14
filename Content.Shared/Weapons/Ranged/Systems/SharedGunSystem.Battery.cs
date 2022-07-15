@@ -83,6 +83,7 @@ public abstract partial class SharedGunSystem
     protected void UpdateBatteryAppearance(EntityUid uid, BatteryAmmoProviderComponent component)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
+        appearance.SetData(AmmoVisuals.HasAmmo, component.Shots != 0);
         appearance.SetData(AmmoVisuals.AmmoCount, component.Shots);
         appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity);
     }
