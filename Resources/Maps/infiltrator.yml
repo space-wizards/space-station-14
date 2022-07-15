@@ -4768,6 +4768,8 @@ entities:
   - pos: 2.501164,-17.480259
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 570
   type: YellowOxygenTankFilled
   components:
@@ -5676,12 +5678,12 @@ entities:
         ents:
         - 876
         - 751
-        - 701
-        - 702
-        - 703
-        - 711
-        - 714
         - 720
+        - 714
+        - 711
+        - 703
+        - 702
+        - 701
     type: ContainerContainer
 - uid: 693
   type: TableWood
@@ -5712,9 +5714,9 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
+        - 559
         - 809
         - 808
-        - 559
         - 752
         - 727
         - 724
@@ -5732,9 +5734,9 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
+        - 561
         - 860
         - 859
-        - 561
         - 841
         - 731
         - 718
@@ -5752,10 +5754,10 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 845
-        - 842
         - 875
         - 874
+        - 845
+        - 842
         - 732
         - 721
         - 707
@@ -7146,6 +7148,8 @@ entities:
   - pos: -3.2310624,-17.464586
     parent: 73
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 881
   type: NitrogenTankFilled
   components:
@@ -7158,6 +7162,20 @@ entities:
   type: NitrogenTankFilled
   components:
   - pos: 2.673039,-17.402134
+    parent: 73
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 883
+  type: VendingMachineClothing
+  components:
+  - pos: -1.5,-15.5
+    parent: 73
+    type: Transform
+- uid: 884
+  type: Mirror
+  components:
+  - pos: 4.5011373,-3.5794609
     parent: 73
     type: Transform
 ...

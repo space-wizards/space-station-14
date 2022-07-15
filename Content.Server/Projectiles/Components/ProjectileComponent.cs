@@ -15,6 +15,9 @@ namespace Content.Server.Projectiles.Components
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;
 
+        [DataField("ignoreResistances")]
+        public bool IgnoreResistances { get; } = false;
+
         // Get that juicy FPS hit sound
         [DataField("soundHit")] public SoundSpecifier? SoundHit;
 

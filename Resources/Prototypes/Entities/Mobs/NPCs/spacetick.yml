@@ -78,6 +78,7 @@
   - type: SolutionTransfer
     maxTransferAmount: 5
   - type: GhostTakeoverAvailable
+    prob: 0.33
     makeSentient: true
     name: space tick
     description: |
