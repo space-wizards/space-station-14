@@ -21,6 +21,7 @@ namespace Content.Server.Atmos.Portable
         /// Unlike fixed scrubbers controlled by an air alarm,
         /// this can't be changed in game.
         /// </summary>
+        [DataField("filterGases")]
         public HashSet<Gas> FilterGases = new()
         {
             Gas.CarbonDioxide,

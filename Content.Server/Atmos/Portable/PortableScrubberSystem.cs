@@ -134,10 +134,12 @@ namespace Content.Server.Atmos.Portable
             _adminLogger.Add(LogType.CanisterPurged, LogImpact.Medium, $"Portable scrubber {ToPrettyString(uid):canister} purged its contents of {component.Air:gas} into the environment.");
             component.Air.Clear();
         }
+
         private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
             return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
         }
+
         private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)
         {
             if (!TryComp<AppearanceComponent>(uid, out var appearance))
