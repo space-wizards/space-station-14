@@ -42,7 +42,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
-        PopulateRecordListing(state.RecordListing!);
+        PopulateRecordListing(state.RecordListing!, state.SelectedKey);
 
         RecordContainerStatus.Visible = state.Record == null;
 
@@ -54,9 +54,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 : Loc.GetString("general-station-record-console-select-record-info");
             PopulateRecordContainer(state.Record);
         }
+        else
+        {
+            RecordContainer.DisposeAllChildren();
+            RecordContainer.RemoveAllChildren();
+        }
     }
 
-    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing)
+    private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing, StationRecordKey? selected)
     {
         RecordListing.Clear();
         RecordListing.ClearSelected();
@@ -65,7 +70,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         {
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
+
+            if (selected != null && key.ID == selected.Value.ID)
+            {
+                item.Selected = true;
+            }
         }
+
+        RecordListing.SortItemsByText();
     }
 
     private void PopulateRecordContainer(GeneralStationRecord record)
@@ -81,7 +93,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = record.JobTitle
+                Text = Loc.GetString(record.JobTitle)
             },
             new Label()
             {
