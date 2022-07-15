@@ -9,6 +9,15 @@
   "states": [
     {
       "name": "displaycase_laser"
+    },
+    {
+      "name": "displaywindow"
+    },
+    {
+      "name": "displaypart"
+    },
+    {
+      "name": "laser"
     }
   ]
 }
