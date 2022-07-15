@@ -205,7 +205,7 @@ namespace Content.Server.Bible
             if (!TryComp<SummonableComponent>(Transform(args.Spawner).ParentUid, out var summonable))
                 return;
 
-            component.Source = (EntityUid) summonable.Owner;
+            component.Source = summonable.Owner;
             summonable.Summon = uid;
         }
 
