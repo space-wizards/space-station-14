@@ -7,3 +7,6 @@
   - type: Sprite
     sprite: Objects/Misc/proximity_sensor.rsi
     state: icon
+  - type: Tag
+    tags:
+      - ProximitySensor

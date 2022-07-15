@@ -360,6 +360,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
 
 - type: Tag

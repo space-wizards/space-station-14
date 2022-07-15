@@ -23,7 +23,7 @@
             state: icon
         name: bike horn
         doAfter: 2
-      - prototype: ProximitySensor
+      - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon

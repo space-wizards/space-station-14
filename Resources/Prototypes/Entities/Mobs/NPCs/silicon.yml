@@ -73,11 +73,18 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-  - type: DeleteOnDeath
   - type: MobState
     thresholds:
       0: Alive
       120: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Input
     context: "human"
   - type: PlayerInputMover
