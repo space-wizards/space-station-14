@@ -207,7 +207,7 @@
         Blunt: 10
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 0.5
+    lifetime: 0.4
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
