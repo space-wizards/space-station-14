@@ -170,7 +170,7 @@ namespace Content.Server.Buckle.Components
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-already-buckled-message"
-                    : "buckle-component-other-already-buckled-message", ("owner", Identity.Name(Owner, _entMan)));
+                    : "buckle-component-other-already-buckled-message", ("owner", Identity.Entity(Owner, _entMan)));
                 popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                 return false;
@@ -183,7 +183,7 @@ namespace Content.Server.Buckle.Components
                 {
                     var message = Loc.GetString(Owner == user
                         ? "buckle-component-cannot-buckle-message"
-                        : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Name(Owner, _entMan)));
+                        : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(Owner, _entMan)));
                     popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                     return false;
@@ -196,7 +196,7 @@ namespace Content.Server.Buckle.Components
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-fit-message"
-                    : "buckle-component-other-cannot-fit-message", ("owner", Identity.Name(Owner, _entMan)));
+                    : "buckle-component-other-cannot-fit-message", ("owner", Identity.Entity(Owner, _entMan)));
                 popupSystem.PopupEntity(message, user, Filter.Entities(user));
 
                 return false;
@@ -219,7 +219,7 @@ namespace Content.Server.Buckle.Components
             {
                 var message = Loc.GetString(Owner == user
                     ? "buckle-component-cannot-buckle-message"
-                    : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Name(Owner, _entMan)));
+                    : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(Owner, _entMan)));
                 popupSystem.PopupEntity(message, user, Filter.Entities(user));
                 return false;
             }

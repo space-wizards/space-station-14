@@ -442,7 +442,7 @@ namespace Content.Server.Disease
             if (!Resolve(uid, ref xform)) return;
 
             if (!string.IsNullOrEmpty(snoughMessage))
-                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Name(uid, EntityManager))), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
             if (disease is not { Infectious: true } || !airTransmit)
                 return;

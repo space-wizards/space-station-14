@@ -32,7 +32,7 @@ public sealed class PriceGunSystem : EntitySystem
 
         var price = _pricingSystem.GetPrice(args.Target.Value);
 
-        _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Name(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, Filter.Entities(args.User));
+        _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, Filter.Entities(args.User));
         _useDelay.BeginDelay(uid, useDelay);
     }
 }

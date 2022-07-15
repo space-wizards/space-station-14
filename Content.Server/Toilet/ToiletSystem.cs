@@ -49,7 +49,7 @@ namespace Content.Server.Toilet
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
-                    ("victim", Identity.Name(args.Victim, EntityManager)), ("owner", uid));
+                    ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));
                 _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(args.Victim), PopupType.MediumCaution);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
@@ -61,7 +61,7 @@ namespace Content.Server.Toilet
             else
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
-                    ("victim", Identity.Name(args.Victim, EntityManager)), ("owner", uid));
+                    ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));
                 _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), PopupType.MediumCaution);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-message",

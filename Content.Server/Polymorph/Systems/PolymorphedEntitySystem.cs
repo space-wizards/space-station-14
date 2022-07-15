@@ -98,8 +98,8 @@ namespace Content.Server.Polymorph.Systems
             }
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
-                ("parent", Identity.Name(uid, EntityManager)),
-                ("child", Identity.Name(component.Parent, EntityManager))),
+                ("parent", Identity.Entity(uid, EntityManager)),
+                ("child", Identity.Entity(component.Parent, EntityManager))),
                 component.Parent,
                 Filter.Pvs(component.Parent));
             QueueDel(uid);

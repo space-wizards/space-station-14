@@ -185,7 +185,7 @@ namespace Content.Server.Drone
                     if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Name(entity, EntityManager))), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
                     return true;
                 }
             }

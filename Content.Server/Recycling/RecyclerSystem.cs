@@ -52,7 +52,7 @@ namespace Content.Server.Recycling
                 }
             }
 
-            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Name(victim, EntityManager))),
+            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Entity(victim, EntityManager))),
                 victim,
                 Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 

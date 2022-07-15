@@ -145,7 +145,7 @@ public sealed class CrematoriumSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
-            ("victim", Identity.Name(victim, EntityManager))),
+            ("victim", Identity.Entity(victim, EntityManager))),
             victim, Filter.PvsExcept(victim), PopupType.LargeCaution);
 
         if (_entityStorage.CanInsert(uid))

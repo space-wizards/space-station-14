@@ -30,7 +30,7 @@ namespace Content.Server.Disease.Effects
             if (Type == PopupRecipients.Local)
                 popupSys.PopupEntity(Loc.GetString(Message), args.DiseasedEntity, Filter.Entities(args.DiseasedEntity), VisualType);
             else if (Type == PopupRecipients.Pvs)
-                popupSys.PopupEntity(Loc.GetString(Message, ("person", Identity.Name(args.DiseasedEntity, args.EntityManager))), args.DiseasedEntity, Filter.Pvs(args.DiseasedEntity), VisualType);
+                popupSys.PopupEntity(Loc.GetString(Message, ("person", Identity.Entity(args.DiseasedEntity, args.EntityManager))), args.DiseasedEntity, Filter.Pvs(args.DiseasedEntity), VisualType);
         }
 
     }
