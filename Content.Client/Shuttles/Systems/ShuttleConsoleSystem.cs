@@ -26,6 +26,12 @@ namespace Content.Client.Shuttles.Systems
             shuttle.AddFunction(ContentKeyFunctions.ShuttleBrake);
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _input.Contexts.Remove("shuttle");
+        }
+
         protected override void HandlePilotShutdown(EntityUid uid, PilotComponent component, ComponentShutdown args)
         {
             base.HandlePilotShutdown(uid, component, args);
