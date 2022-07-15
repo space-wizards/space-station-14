@@ -43,7 +43,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
         PopulateRecordListing(state.RecordListing!);
-        RecordListing.ClearSelected();
 
         RecordContainerStatus.Visible = state.Record == null;
 
@@ -59,6 +58,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private void PopulateRecordListing(Dictionary<StationRecordKey, string> listing)
     {
+        RecordListing.Clear();
+        RecordListing.ClearSelected();
+
         foreach (var (key, name) in listing)
         {
             var item = RecordListing.AddItem(name);
@@ -68,6 +70,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private void PopulateRecordContainer(GeneralStationRecord record)
     {
+        RecordContainer.DisposeAllChildren();
+        RecordContainer.RemoveAllChildren();
         // sure
         var recordControls = new Control[]
         {
