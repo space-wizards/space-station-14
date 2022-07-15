@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'The trash bag and plant bag can now be directly emptied into disposal
-      units, onto tables, or on the ground with an alternative verb.', type: Add}
-  id: 1454
-  time: '2022-05-04T03:00:22.0000000+00:00'
 - author: Fishfish458
   changes:
   - {message: Found where Poly hid the CE's stamp and it is now returned., type: Fix}
@@ -2953,3 +2947,8 @@ Entries:
   - {message: Added operating table, type: Add}
   id: 1953
   time: '2022-07-15T02:50:59.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Steal objectives now tell you who or what to steal from., type: Add}
+  id: 1954
+  time: '2022-07-15T03:09:11.0000000+00:00'
