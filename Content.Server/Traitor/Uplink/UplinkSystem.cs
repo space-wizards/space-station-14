@@ -209,7 +209,7 @@ namespace Content.Server.Traitor.Uplink
                         }
                         if (!found)
                         {
-                            listings.Remove(i);
+                            listings.Remove(entry);
                             i--;
                         }
                     }
