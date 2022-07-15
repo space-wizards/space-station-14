@@ -1,11 +1,4 @@
 Entries:
-- author: juliangiebel
-  changes:
-  - {message: Added a new medipen variant to survival boxes that buys you some time
-      when you get spaced., type: Add}
-  - {message: Some emergency lockers now contain an emergency suit., type: Tweak}
-  id: 1465
-  time: '2022-05-06T21:44:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Syndicate Zombie Bundle price increase from 40TC to 50TC, type: Tweak}
@@ -2951,3 +2944,8 @@ Entries:
   - {message: Altars added, type: Add}
   id: 1964
   time: '2022-07-15T09:17:26.0000000+00:00'
+- author: Kimpes
+  changes:
+  - {message: Updated alarm sound effect, type: Tweak}
+  id: 1965
+  time: '2022-07-15T10:20:04.0000000+00:00'
