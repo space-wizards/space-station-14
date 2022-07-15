@@ -1,18 +1,6 @@
 Entries:
 - author: vulppine
   changes:
-  - {message: Certain crewmembers may find themselves afflicted with mysterious patterns
-      or extrusions on their bodies. Nanotrasen is not responsible for this incident.
-      (You can now add body markings onto your character.), type: Add}
-  id: 1459
-  time: '2022-05-05T08:07:42.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Drones no longer have combat mode or disarms again., type: Fix}
-  id: 1460
-  time: '2022-05-06T01:12:26.0000000+00:00'
-- author: vulppine
-  changes:
   - {message: 'Nanotrasen has finally kicked the old board vendor square in the ass,
       and told them to actually make their boards more maintainable. Expect more functionality
       when you pulse, cut, and mend wires in some electronics.', type: Tweak}
@@ -2954,3 +2942,15 @@ Entries:
   - {message: Radar zooming is now smooth, type: Tweak}
   id: 1958
   time: '2022-07-15T05:32:49.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Familiars now only spawn when a ghost requests them., type: Tweak}
+  id: 1959
+  time: '2022-07-15T07:53:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Ported honkbots and robotics technology from Nyanotrasen MRP., type: Add}
+  - {message: Avionics technology now requires robotics technology., type: Tweak}
+  - {message: Modular mines now require a proximity sensor., type: Tweak}
+  id: 1960
+  time: '2022-07-15T07:54:35.0000000+00:00'
