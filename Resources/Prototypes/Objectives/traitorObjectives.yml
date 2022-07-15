@@ -11,6 +11,7 @@
   conditions:
     - !type:StealCondition
       prototype: CaptainIDCard
+      owner: job-name-captain
 
 - type: objective
   id: KillRandomObjective
@@ -74,6 +75,7 @@
   conditions:
     - !type:StealCondition
       prototype: Hypospray
+      owner: job-name-cmo
 
 - type: objective
   id: RDHardsuitStealObjective
@@ -88,6 +90,7 @@
   conditions:
     - !type:StealCondition
       prototype: ClothingOuterHardsuitRd
+      owner: job-name-rd
 
 - type: objective
   id: NukeDiskStealObjective
@@ -101,6 +104,7 @@
   conditions:
     - !type:StealCondition
       prototype: NukeDisk
+      owner: objective-condition-steal-station
 
 - type: objective
   id: IDComputerBoardStealObjective
@@ -114,6 +118,7 @@
   conditions:
     - !type:StealCondition
       prototype: IDComputerCircuitboard
+      owner: job-name-hop
 
 - type: objective
   id: MagbootsStealObjective
@@ -128,6 +133,7 @@
   conditions:
     - !type:StealCondition
       prototype: ClothingShoesBootsMagAdv
+      owner: job-name-ce
 
 - type: objective
   id: SupplyConsoleBoardStealObjective
@@ -141,6 +147,7 @@
   conditions:
     - !type:StealCondition
       prototype: SupplyComputerCircuitboard
+      owner: job-name-qm
 
 - type: objective
   id: CorgiMeatStealObjective
@@ -154,6 +161,7 @@
   conditions:
     - !type:StealCondition
       prototype: FoodMeatCorgi
+      owner: objective-condition-steal-Ian
 
 - type: objective
   id: CaptainGunStealObjective
@@ -168,6 +176,7 @@
   conditions:
     - !type:StealCondition
       prototype: WeaponAntiqueLaser
+      owner: job-name-captain
 
 - type: objective
   id: CaptainJetpackStealObjective
@@ -182,3 +191,4 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
+      owner: job-name-captain
