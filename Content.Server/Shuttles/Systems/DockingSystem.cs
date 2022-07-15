@@ -461,10 +461,17 @@ namespace Content.Server.Shuttles.Systems
                 _doorSystem.TryClose(doorB.Owner, doorB);
             }
 
-            var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
-            recentlyDocked.LastDocked = dock.DockedWith.Value;
-            recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
-            recentlyDocked.LastDocked = dock.DockedWith.Value;
+            if (!Deleted(dock.Owner))
+            {
+                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.Owner);
+                recentlyDocked.LastDocked = dock.DockedWith.Value;
+            }
+
+            if (!Deleted(dock.DockedWith.Value))
+            {
+                var recentlyDocked = EnsureComp<RecentlyDockedComponent>(dock.DockedWith.Value);
+                recentlyDocked.LastDocked = dock.DockedWith.Value;
+            }
 
             Cleanup(dock);
         }

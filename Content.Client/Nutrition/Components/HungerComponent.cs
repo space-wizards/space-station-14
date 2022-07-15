@@ -22,8 +22,6 @@ namespace Content.Client.Nutrition.Components
             }
 
             _currentHungerThreshold = hunger.CurrentThreshold;
-
-            EntitySystem.Get<MovementSpeedModifierSystem>().RefreshMovementSpeedModifiers(Owner);
         }
     }
 }
