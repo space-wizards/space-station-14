@@ -1,9 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Delta Station now has filing cabinets., type: Add}
-  id: 1458
-  time: '2022-05-04T22:25:16.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Certain crewmembers may find themselves afflicted with mysterious patterns
@@ -2954,3 +2949,8 @@ Entries:
   - {message: Space bears now have a 5% chance to be inhabitable by a ghost., type: Tweak}
   id: 1957
   time: '2022-07-15T05:20:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Radar zooming is now smooth, type: Tweak}
+  id: 1958
+  time: '2022-07-15T05:32:49.0000000+00:00'
