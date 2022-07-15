@@ -19,8 +19,9 @@
     weightlessModifier: 0
     acceleration: 2
     friction: 2
-    baseWalkSpeed : 4.5
-    baseSprintSpeed : 6
+    frictionNoInput: 8
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
   - type: Eye
   - type: Tag
   - type: Pullable
@@ -194,8 +195,8 @@
   - type: MovementSpeedModifier
     acceleration: 1
     friction: 1
-    baseWalkSpeed : 4.5
-    baseSprintSpeed : 7
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
   - type: Armor
     modifiers:
       coeffecients:
@@ -241,8 +242,8 @@
   - type: MovementSpeedModifier
     acceleration: 1
     friction: 1
-    baseWalkSpeed : 4.5
-    baseSprintSpeed : 7
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 7
   - type: Strap
     buckleOffset: "0.1, -0.05"
     maxBuckleDistance: 1

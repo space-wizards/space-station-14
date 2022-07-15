@@ -173,7 +173,15 @@ namespace Content.Shared.Movement.Systems
             }
             else
             {
-                friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                if (worldTotal != Vector2.Zero || moveSpeedComponent?.FrictionNoInput == null)
+                {
+                    friction = moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                }
+                else
+                {
+                    friction = moveSpeedComponent.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                }
+
                 weightlessModifier = 1f;
                 accel = moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
             }

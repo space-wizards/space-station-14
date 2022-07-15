@@ -20,6 +20,7 @@ namespace Content.Shared.Movement.Components
 
         public const float DefaultAcceleration = 20f;
         public const float DefaultFriction = 20f;
+        public const float DefaultFrictionNoInput = 20f;
 
         public const float DefaultBaseWalkSpeed = 2.5f;
         public const float DefaultBaseSprintSpeed = 4.5f;
@@ -94,6 +95,11 @@ namespace Content.Shared.Movement.Components
         /// </summary>
         [DataField("friction")]
         public float Friction = DefaultFriction;
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        [DataField("frictionNoInput")] public float? FrictionNoInput = null;
 
         [DataField("baseWalkSpeed")]
         public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
