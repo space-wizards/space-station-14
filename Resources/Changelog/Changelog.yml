@@ -1,21 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Drones will no longer be blocked from acting near dead ghost roles.,
-    type: Fix}
-  id: 1449
-  time: '2022-05-04T02:41:15.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Margherita pizza now actually resembles margherita pizza in its recipe
-      and description., type: Fix}
-  id: 1450
-  time: '2022-05-04T02:41:36.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Fixed a bug where lathe queues could get stuck., type: Fix}
-  id: 1451
-  time: '2022-05-04T02:43:25.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The health status now looks fancier!, type: Tweak}
@@ -2953,3 +2936,20 @@ Entries:
   - {message: Fixed a bug that caused decals to sometimes disappear., type: Fix}
   id: 1948
   time: '2022-07-15T02:33:11.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Pill maximum volume is back at 50 units!, type: Tweak}
+  id: 1949
+  time: '2022-07-15T02:40:47.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: Nuclear Operatives now start with a pinpointer in their bag, type: Tweak}
+  id: 1950
+  time: '2022-07-15T02:41:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Disease outbreak has been nerfed: its weight is reduced to half, its
+      earliest start is now 15 minutes, and it can no longer occur more than 3 times.',
+    type: Tweak}
+  id: 1951
+  time: '2022-07-15T02:42:00.0000000+00:00'
