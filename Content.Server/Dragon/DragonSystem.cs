@@ -35,6 +35,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private readonly FlammableSystem _flammableSystem = default!;
 
         /// <summary>
         ///     Tracks breath attacks performed per-entity.
@@ -267,14 +268,20 @@ namespace Content.Server.Dragon
         public void ProcessEntity(
             EntityUid uid,
             DamageSpecifier? damage,
-            EntityQuery<DamageableComponent> damageableQuery)
+            EntityQuery<DamageableComponent> damageableQuery,
+            EntityQuery<FlammableComponent> flammableQuery)
         {
             if (damage == null || !damageableQuery.HasComponent(uid))
                 return;
 
             _damageableSystem.TryChangeDamage(uid, damage);
 
-            // TODO: Ignite flammable entities that were hit?
+            // Ignite flammable entities that were hit?
+            if (flammableQuery.TryGetComponent(uid, out var flammable))
+            {
+                _flammableSystem.AdjustFireStacks(uid, 2, flammable);
+                _flammableSystem.Ignite(uid, flammable);
+            }
         }
 
         public void ProcessTile(Vector2i tile, IMapGrid grid, string effectPrototype)
@@ -365,6 +372,7 @@ internal sealed class BreathAttack
 
     private readonly IEntityManager _entMan;
     private readonly DragonSystem _system;
+    private readonly EntityQuery<FlammableComponent> _flammableQuery;
 
     public BreathAttack(DragonSystem system,
         EntityUid creator,
@@ -383,6 +391,7 @@ internal sealed class BreathAttack
         _physicsQuery = _entMan.GetEntityQuery<PhysicsComponent>();
         _damageQuery = _entMan.GetEntityQuery<DamageableComponent>();
         _mobStateQuery = _entMan.GetEntityQuery<MobStateComponent>();
+        _flammableQuery = _entMan.GetEntityQuery<FlammableComponent>();
 
         _range = range;
         _damageSpecifier = damageSpec;
@@ -435,7 +444,7 @@ internal sealed class BreathAttack
 
         // Process the entities in the tile.
         foreach(var xform in list)
-            _system.ProcessEntity(xform.Owner, _damageSpecifier, _damageQuery);
+            _system.ProcessEntity(xform.Owner, _damageSpecifier, _damageQuery, _flammableQuery);
 
         _system.ProcessTile(tile, grid, "FireBreathEffect");
     }
