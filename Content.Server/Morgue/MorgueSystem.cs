@@ -31,40 +31,48 @@ public sealed partial class MorgueSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-soul"));
-        else if (appearance.TryGetData(MorgueVisuals.HasMob, out bool hasMob) && hasMob)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-body-has-no-soul"));
-        else if (appearance.TryGetData(StorageVisuals.HasContents, out bool hasContents) && hasContents)
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
-        else
-            args.PushMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
+        appearance.TryGetData(MorgueVisuals.Contents, out MorgueContents contents);
+        
+        var text = contents switch
+        {
+            MorgueContents.HasSoul => "morgue-entity-storage-component-on-examine-details-body-has-soul",
+            MorgueContents.HasContents => "morgue-entity-storage-component-on-examine-details-has-contents",
+            MorgueContents.HasMob => "morgue-entity-storage-component-on-examine-details-body-has-no-soul",
+            _ => "morgue-entity-storage-component-on-examine-details-empty"
+        };
+
+        args.PushMarkup(Loc.GetString(text));
     }
 
     /// <summary>
     ///     Updates data periodically in case something died/got deleted in the morgue.
     /// </summary>
-    private void CheckContents(EntityUid uid, MorgueComponent? morgue = null, EntityStorageComponent? storage = null)
+    private void CheckContents(EntityUid uid, MorgueComponent? morgue = null, EntityStorageComponent? storage = null, AppearanceComponent? app = null)
     {
-        if (!Resolve(uid, ref morgue, ref storage))
+        if (!Resolve(uid, ref morgue, ref storage, ref app))
             return;
 
-        var hasMob = false;
-        var hasSoul = false;
+        if (storage.Contents.ContainedEntities.Count == 0)
+        {
+            app.SetData(MorgueVisuals.Contents, MorgueContents.Empty);
+            return;
+        }
 
+        var hasMob = false;
+        
         foreach (var ent in storage.Contents.ContainedEntities)
         {
             if (!hasMob && HasComp<SharedBodyComponent>(ent))
                 hasMob = true;
-            if (!hasSoul && TryComp<ActorComponent?>(ent, out var actor) && actor.PlayerSession != null)
-                hasSoul = true;
+
+            if (TryComp<ActorComponent?>(ent, out var actor) && actor.PlayerSession != null)
+            {
+                app.SetData(MorgueVisuals.Contents, MorgueContents.HasSoul);
+                return;
+            }
         }
 
-        if (TryComp<AppearanceComponent>(uid, out var app))
-        {
-            app.SetData(MorgueVisuals.HasMob, hasMob);
-            app.SetData(MorgueVisuals.HasSoul, hasSoul);
-        }
+        app.SetData(MorgueVisuals.Contents, hasMob ? MorgueContents.HasMob : MorgueContents.HasContents);
     }
 
     /// <summary>
@@ -74,18 +82,18 @@ public sealed partial class MorgueSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var comp in EntityQuery<MorgueComponent>())
+        foreach (var (comp, storage, appearance) in EntityQuery<MorgueComponent, EntityStorageComponent, AppearanceComponent>())
         {
             comp.AccumulatedFrameTime += frameTime;
 
-            CheckContents(comp.Owner, comp);
+            CheckContents(comp.Owner, comp, storage, appearance);
 
             if (comp.AccumulatedFrameTime < comp.BeepTime)
                 continue;
+
             comp.AccumulatedFrameTime -= comp.BeepTime;
 
-            if (comp.DoSoulBeep && TryComp<AppearanceComponent>(comp.Owner, out var appearance) &&
-                appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            if (comp.DoSoulBeep && appearance.TryGetData(MorgueVisuals.Contents, out MorgueContents contents) && contents == MorgueContents.HasSoul)
             {
                 SoundSystem.Play(comp.OccupantHasSoulAlarmSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner);
             }

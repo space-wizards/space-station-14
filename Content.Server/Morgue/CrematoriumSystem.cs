@@ -15,6 +15,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Morgue;
 
@@ -143,7 +144,8 @@ public sealed class CrematoriumSystem : EntitySystem
             }
         }
 
-        _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others", ("victim", victim)),
+        _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
+            ("victim", Identity.Entity(victim, EntityManager))),
             victim, Filter.PvsExcept(victim), PopupType.LargeCaution);
 
         if (_entityStorage.CanInsert(uid))

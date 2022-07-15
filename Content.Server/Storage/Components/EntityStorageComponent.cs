@@ -1,5 +1,6 @@
 using Content.Shared.Physics;
 using Content.Shared.Sound;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.Components;
@@ -27,11 +28,11 @@ public sealed class EntityStorageComponent : Component
     public int RemovedMasks;
 
     [ViewVariables]
-    [DataField("Capacity")]
-    public int StorageCapacityMax = 30;
+    [DataField("capacity")]
+    public int Capacity = 30;
 
     [ViewVariables]
-    [DataField("IsCollidableWhenOpen")]
+    [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage. 
@@ -43,8 +44,8 @@ public sealed class EntityStorageComponent : Component
     public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     [ViewVariables]
-    [DataField("EnteringRange")]
-    public float EnteringRange = -0.18f;
+    [DataField("enteringRange")]
+    public float EnteringRange = 0.18f;
 
     [DataField("showContents")]
     public bool ShowContents;
@@ -63,6 +64,13 @@ public sealed class EntityStorageComponent : Component
 
     [DataField("openSound")]
     public SoundSpecifier OpenSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
+
+    /// <summary>
+    ///     Whitelist for what entities are allowed to be inserted into this container. If this is not null, the
+    ///     standard requirement that the entity must be an item or mob is waived.
+    /// </summary>
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
     [ViewVariables]
     public Container Contents = default!;
@@ -93,7 +101,10 @@ public sealed class StorageBeforeCloseEvent : EventArgs
 
     public HashSet<EntityUid> Contents;
 
-    public HashSet<EntityUid> ContentsWhitelist = new();
+    /// <summary>
+    ///     Entities that will get inserted, regardless of any insertion or whitelist checks.
+    /// </summary>
+    public HashSet<EntityUid> BypassChecks = new();
 
     public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
     {
