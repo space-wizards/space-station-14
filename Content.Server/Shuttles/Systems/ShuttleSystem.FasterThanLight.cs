@@ -270,9 +270,9 @@ public sealed partial class ShuttleSystem
                     if (comp.TargetUid != null && shuttle != null)
                     {
                         if (comp.Dock)
-                            TryHyperspaceDock(shuttle, comp.TargetUid.Value);
+                            TryFTLDock(shuttle, comp.TargetUid.Value);
                         else
-                            TryHyperspaceProximity(shuttle, comp.TargetUid.Value);
+                            TryFTLProximity(shuttle, comp.TargetUid.Value);
                     }
                     else
                     {
@@ -395,7 +395,7 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Tries to dock with the target grid, otherwise falls back to proximity.
     /// </summary>
-    private bool TryHyperspaceDock(ShuttleComponent component, EntityUid targetUid)
+    public bool TryFTLDock(ShuttleComponent component, EntityUid targetUid)
     {
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
             !TryComp<TransformComponent>(targetUid, out var targetXform) ||
@@ -418,14 +418,14 @@ public sealed partial class ShuttleSystem
            return true;
         }
 
-        TryHyperspaceProximity(component, targetUid, xform, targetXform);
+        TryFTLProximity(component, targetUid, xform, targetXform);
         return false;
     }
 
     /// <summary>
     /// Tries to arrive nearby without overlapping with other grids.
     /// </summary>
-    private bool TryHyperspaceProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
+    public bool TryFTLProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
         if (!Resolve(targetUid, ref targetXform) || targetXform.MapUid == null || !Resolve(component.Owner, ref xform)) return false;
 

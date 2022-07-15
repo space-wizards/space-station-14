@@ -6,6 +6,8 @@ using Content.Server.Nuke;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -187,13 +189,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // TODO: Make this a prototype
         // so true PAUL!
         var path = "/Maps/nukieplanet.yml";
+        var shuttlePath = "/Maps/infiltrator.yml";
+        var mapId = _mapManager.CreateMap();
 
-        var (_, grids) = _mapLoader.LoadMap(_mapManager.CreateMap(), "/Maps/nukieplanet.yml");
+        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
 
-        if (grids.Count == 0)
+        if (outpost == null)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return;
+        }
+
+        // Listen I just don't want it to overlap.
+        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
+        {
+            Offset = Vector2.One * 1000f,
+        });
+
+        if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
+        {
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
         }
 
         // TODO: Loot table or something
@@ -210,19 +225,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
 
-            foreach (var grid in grids)
+            if (xform.ParentUid == outpost)
             {
-                if (xform.ParentUid == grid)
-                {
-                    spawns.Add(xform.Coordinates);
-                    break;
-                }
+                spawns.Add(xform.Coordinates);
+                break;
             }
         }
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(grids[0]).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(outpost.Value).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 

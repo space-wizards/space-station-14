@@ -254,7 +254,7 @@ public sealed partial class ShuttleSystem
            return;
        }
 
-       if (TryHyperspaceDock(shuttle, targetGrid.Value))
+       if (TryFTLDock(shuttle, targetGrid.Value))
        {
            var xformQuery = GetEntityQuery<TransformComponent>();
 
