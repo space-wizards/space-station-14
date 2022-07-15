@@ -20,8 +20,6 @@ public sealed class ParallaxControl : Control
 
     [ViewVariables(VVAccess.ReadWrite)] public Vector2 Offset { get; set; }
 
-    private Vector2 _anchor;
-
     public ParallaxControl()
     {
         IoCManager.InjectDependencies(this);
