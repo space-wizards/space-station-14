@@ -379,7 +379,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -428,6 +428,7 @@ namespace Content.Server.GameTicking
             ClearGameRules();
 
             _addedGameRules.Clear();
+            _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
@@ -486,7 +487,7 @@ namespace Content.Server.GameTicking
                 if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
                 if (proto.Sound != null)
                     SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());

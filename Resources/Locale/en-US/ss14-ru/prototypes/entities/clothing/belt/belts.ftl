@@ -46,3 +46,6 @@ ent-ClothingBeltMilitaryWebbingMed = medical chest rig
 ent-ClothingBeltSuspenders = suspenders
     .desc = For holding your pants up.
     .suffix = { "" }
+ent-ClothingBeltWand = wand belt
+    .desc = A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
+    .suffix = { "" }

@@ -7,3 +7,6 @@ ent-CrateFoodMRE = MRE crate
 ent-CrateFoodCooking = kitchen supplies crate
     .desc = Extra kitchen supplies, in case the botanists are absent.
     .suffix = { "" }
+ent-CrateFoodKvassTank = kvass tank crate
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

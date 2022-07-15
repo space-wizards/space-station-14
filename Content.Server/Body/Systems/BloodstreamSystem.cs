@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
@@ -174,18 +175,18 @@ public sealed class BloodstreamSystem : EntitySystem
         if (component.BleedAmount > 10)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
         else if (component.BleedAmount > 0)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
 
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", Identity.Entity(uid, EntityManager))));
         }
     }
 

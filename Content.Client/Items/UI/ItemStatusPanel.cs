@@ -4,6 +4,7 @@ using Content.Client.Items.Components;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -159,11 +160,12 @@ namespace Content.Client.Items.UI
             if (_entityManager.TryGetComponent(_entity, out HandVirtualItemComponent? virtualItem)
                 && _entityManager.EntityExists(virtualItem.BlockingEntity))
             {
-                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(virtualItem.BlockingEntity).EntityName;
+                // Uses identity because we can be blocked by pulling someone
+                _itemNameLabel.Text = Identity.Name(virtualItem.BlockingEntity, _entityManager);
             }
             else
             {
-                _itemNameLabel.Text = _entityManager.GetComponent<MetaDataComponent>(_entity.Value).EntityName;
+                _itemNameLabel.Text = Identity.Name(_entity.Value, _entityManager);
             }
         }
 

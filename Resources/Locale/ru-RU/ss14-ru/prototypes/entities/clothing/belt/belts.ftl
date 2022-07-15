@@ -46,3 +46,6 @@ ent-ClothingBeltMilitaryWebbingMed = армейская РПС медика
 ent-ClothingBeltSuspenders = подтяжки
     .desc = Для поддержания штанов.
     .suffix = { "" }
+ent-ClothingBeltWand = wand belt
+    .desc = A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
+    .suffix = { "" }

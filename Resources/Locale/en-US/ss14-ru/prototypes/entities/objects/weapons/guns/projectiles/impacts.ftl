@@ -4,3 +4,6 @@ ent-BulletImpactEffect = { "" }
 ent-BulletImpactEffectDisabler = { "" }
     .desc = { "" }
     .suffix = { "" }
+ent-BulletImpactEffectKinetic = { "" }
+    .desc = { "" }
+    .suffix = { "" }

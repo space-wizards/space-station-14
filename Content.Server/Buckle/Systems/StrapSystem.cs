@@ -35,6 +35,8 @@ namespace Content.Server.Buckle.Systems
 
         private void OnInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
         {
+            if (args.Handled) return;
+
             if (!TryComp<BuckleComponent>(args.User, out var buckle))
                 return;
 

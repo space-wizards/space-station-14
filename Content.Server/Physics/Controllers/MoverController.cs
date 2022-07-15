@@ -6,6 +6,7 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -95,7 +96,7 @@ namespace Content.Server.Physics.Controllers
             // Reset inputs for non-piloted shuttles.
             foreach (var (shuttle, _) in _shuttlePilots)
             {
-                if (newPilots.ContainsKey(shuttle)) continue;
+                if (newPilots.ContainsKey(shuttle) || FTLLocked(shuttle)) continue;
 
                 _thruster.DisableLinearThrusters(shuttle);
             }
@@ -106,7 +107,7 @@ namespace Content.Server.Physics.Controllers
             // then do the movement input once for it.
             foreach (var (shuttle, pilots) in _shuttlePilots)
             {
-                if (Paused(shuttle.Owner) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
+                if (Paused(shuttle.Owner) || FTLLocked(shuttle) || !TryComp(shuttle.Owner, out PhysicsComponent? body)) continue;
 
                 // Collate movement linear and angular inputs together
                 var linearInput = Vector2.Zero;
@@ -255,6 +256,13 @@ namespace Content.Server.Physics.Controllers
                 }
             }
         }
+
+        private bool FTLLocked(ShuttleComponent shuttle)
+        {
+            return (TryComp<FTLComponent>(shuttle.Owner, out var ftl) &&
+                    (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0);
+        }
+
         /// <summary>
         /// Add mobs riding vehicles to the list of mobs whose input
         /// should be ignored.

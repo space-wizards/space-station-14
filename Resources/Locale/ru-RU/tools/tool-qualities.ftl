@@ -12,3 +12,5 @@ tool-quality-pulsing-name = Пульсирование
 tool-quality-pulsing-tool-name = Мультитул
 tool-quality-slicing-name = Нарезка
 tool-quality-slicing-tool-name = Нож
+tool-quality-sawing-name = Sawing
+tool-quality-sawing-tool-name = Saw

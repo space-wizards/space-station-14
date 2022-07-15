@@ -11,6 +11,7 @@ namespace Content.Server.Entry
             "MeleeWeaponArcAnimation",
             "EffectVisuals",
             "DamageStateVisuals",
+            "PortableScrubberVisuals",
             "AnimationsTest",
             "ItemStatus",
             "VehicleVisuals",
@@ -36,6 +37,7 @@ namespace Content.Server.Entry
             "AMEShieldingVisuals",
             "PipeColorVisuals",
             "FireVisuals",
+            "CrematoriumVisuals",
         };
     }
 }

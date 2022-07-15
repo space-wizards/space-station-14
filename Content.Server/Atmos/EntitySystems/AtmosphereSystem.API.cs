@@ -124,6 +124,9 @@ public partial class AtmosphereSystem
     public bool IsTileAirBlocked(EntityUid gridUid, Vector2i tile, AtmosDirection directions = AtmosDirection.All, IMapGridComponent? mapGridComp = null)
     {
         var ev = new IsTileAirBlockedMethodEvent(gridUid, tile, directions, mapGridComp);
+        RaiseLocalEvent(gridUid, ref ev);
+
+        // If nothing handled the event, it'll default to true.
         return ev.Result;
     }
 

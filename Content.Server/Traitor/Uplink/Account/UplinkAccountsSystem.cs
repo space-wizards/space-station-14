@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink.Account
 {
@@ -68,9 +70,13 @@ namespace Content.Server.Traitor.Uplink.Account
 
         }
 
-        public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
+        public bool TryPurchaseItem(UplinkComponent component, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? purchasedItem)
         {
+            var acc = component.UplinkAccount;
             purchasedItem = null;
+
+            if (acc == null) return false;
+            if (acc.AccountHolder == null) return false;
 
             if (!_listingSystem.TryGetListing(itemId, out var listing))
             {
