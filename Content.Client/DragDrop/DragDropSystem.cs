@@ -80,6 +80,7 @@ namespace Content.Client.DragDrop
         public override void Initialize()
         {
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
             _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
             _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
