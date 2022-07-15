@@ -5,7 +5,7 @@
   description: Hmmmm. Something went wrong.
   components:
   - type: Sprite
-    sprite: /EngineResources/Textures/error.rsi 
+    sprite: /EngineResources/Textures/error.rsi
     state: error
   - type: Food
   - type: SolutionContainerManager
