@@ -90,6 +90,8 @@ public sealed class ParallaxOverlay : Overlay
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
+
+        screenHandle.UseShader(null);
     }
 }
 
