@@ -3,7 +3,7 @@
         <!-- Record listing -->
         <BoxContainer Margin="5 5 5 5" MaxWidth="250" VerticalExpand="True">
             <Label Name="RecordListingStatus" Visible="False" />
-            <ItemList Name="RecordListing" VerticalExpand="True" />
+            <ItemList Name="RecordListing" HorizontalExpand="True" VerticalExpand="True" />
         </BoxContainer>
         <BoxContainer Margin="5 5 5 5">
             <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>

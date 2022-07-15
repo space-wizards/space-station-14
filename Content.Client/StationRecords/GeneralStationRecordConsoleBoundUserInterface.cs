@@ -16,6 +16,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window = new();
         _window.OnKeySelected += OnKeySelected;
+        _window.OnClose += Close;
 
         _window.OpenCentered();
     }
