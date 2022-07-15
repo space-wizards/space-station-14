@@ -37,41 +37,42 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var owningStation = _stationSystem.GetOwningStation(uid);
 
+
+
         if (owningStation == null || !TryComp<StationRecordsComponent>(uid, out var stationRecordsComponent))
         {
             _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
             return;
         }
 
-        if (console.ActiveKey != null)
-        {
-            var key = console.ActiveKey;
-            if (_stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out GeneralStationRecord? record))
-            {
-                _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(key, record, null));
-            }
-        }
-        else
-        {
-            var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value);
+        var enumerator = _stationRecordsSystem.GetRecordsOfType<GeneralStationRecord>(owningStation.Value, stationRecordsComponent);
 
-            if (enumerator == null)
+        if (enumerator == null)
+        {
+            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, null));
+            return;
+        }
+
+        var listing = new Dictionary<StationRecordKey, string>();
+        foreach (var pair in enumerator)
+        {
+            if (pair == null)
             {
                 return;
             }
 
-            var result = new Dictionary<StationRecordKey, string>();
-            foreach (var pair in enumerator)
-            {
-                if (pair == null)
-                {
-                    return;
-                }
-
-                result.Add(pair.Value.Item1, pair.Value.Item2.Name);
-            }
-
-            _userInterface.GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?.SetState(new GeneralStationRecordConsoleState(null, null, result));
+            listing.Add(pair.Value.Item1, pair.Value.Item2.Name);
         }
+
+        GeneralStationRecord? record = null;
+        if (console.ActiveKey != null)
+        {
+            _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out record,
+                stationRecordsComponent);
+        }
+
+        _userInterface
+            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)?
+            .SetState(new GeneralStationRecordConsoleState(console.ActiveKey, record, listing));
     }
 }

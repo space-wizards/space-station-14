@@ -1,12 +1,12 @@
 <DefaultWindow xmlns="https://spacestation14.io">
     <BoxContainer>
+        <!-- Record listing -->
         <BoxContainer Margin="5 5 5 5" MaxWidth="250" VerticalExpand="True">
             <Label Name="RecordListingStatus" Visible="False" />
             <ItemList Name="RecordListing" VerticalExpand="True" />
         </BoxContainer>
-        <!-- Record listing -->
         <BoxContainer Margin="5 5 5 5">
-            <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record'}"/>
+            <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>
             <BoxContainer Name="RecordContainer" />
         </BoxContainer>
     </BoxContainer>

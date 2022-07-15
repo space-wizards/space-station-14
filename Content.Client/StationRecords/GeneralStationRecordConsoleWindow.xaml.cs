@@ -40,6 +40,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             return;
         }
 
+        RecordListingStatus.Visible = false;
         RecordListing.Visible = true;
         PopulateRecordListing(state.RecordListing!);
         RecordListing.ClearSelected();
@@ -48,6 +49,10 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         if (state.Record != null)
         {
+            RecordContainerStatus.Visible = state.SelectedKey == null;
+            RecordContainerStatus.Text = state.SelectedKey == null
+                ? Loc.GetString("general-station-record-console-no-record-found")
+                : Loc.GetString("general-station-record-console-select-record-info");
             PopulateRecordContainer(state.Record);
         }
     }

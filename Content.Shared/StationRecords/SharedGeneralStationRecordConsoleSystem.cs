@@ -15,9 +15,9 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     - SelectedKey null, Record null, RecordListing non-null
 ///         - Records are populated in the database, or at least the station has
 ///           the correct component.
-///     - SelectedKey non-null, Record null, RecordListing null
+///     - SelectedKey non-null, Record null, RecordListing non-null
 ///         - The selected key does not have a record tied to it.
-///     - SelectedKey non-null, Record non-null, RecordListing null
+///     - SelectedKey non-null, Record non-null, RecordListing non-null
 ///         - The selected key has a record tied to it, and the record has been sent.
 ///
 ///     Other states are erroneous.
