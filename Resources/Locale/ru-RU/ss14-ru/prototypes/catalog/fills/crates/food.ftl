@@ -7,3 +7,6 @@ ent-CrateFoodMRE = ящик ИРП
 ent-CrateFoodCooking = ящик кухонных припасов
     .desc = Дополнительные кухонные припасы на случай отсутствия ботаников.
     .suffix = { "" }
+ent-CrateFoodKvassTank = kvass tank crate
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

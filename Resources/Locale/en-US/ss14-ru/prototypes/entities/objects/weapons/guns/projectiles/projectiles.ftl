@@ -1,3 +1,6 @@
+ent-MuzzleFlashEffect = { "" }
+    .desc = { "" }
+    .suffix = { "" }
 ent-BaseBullet = BaseBullet
     .desc = If you can see this you're probably dead!
     .suffix = { "" }
@@ -18,6 +21,9 @@ ent-BulletDisabler = disabler bolt
     .suffix = { "" }
 ent-EmitterBolt = emitter bolt
     .desc = { ent-BaseBullet.desc }
+    .suffix = { "" }
+ent-BulletKinetic = kinetic bolt
+    .desc = Not too bad, but you still don't want to get hit by it.
     .suffix = { "" }
 ent-BulletRocket = rocket
     .desc = { ent-BaseBulletTrigger.desc }

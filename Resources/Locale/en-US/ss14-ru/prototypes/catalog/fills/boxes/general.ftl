@@ -43,6 +43,3 @@ ent-BoxFlare = flare box
 ent-BoxTrashbag = trashbag box
     .desc = A box of trashbags. Happy janitor noises.
     .suffix = { "" }
-ent-BoxSyndicateEVA = syndicate EVA box
-    .desc = A box containing one Syndicate approved EVA suit.
-    .suffix = { "" }

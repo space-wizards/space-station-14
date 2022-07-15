@@ -1,3 +1,6 @@
+ent-BaseShowcaseRobot = security robot showcase
+    .desc = A non-functional replica of an old security robot.
+    .suffix = { "" }
 ent-ShowcaseRobot = демонстрация охранного робота
     .desc = Это неработающая копия старинного робота-охранника.
     .suffix = { "" }

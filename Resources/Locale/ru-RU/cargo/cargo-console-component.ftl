@@ -40,4 +40,5 @@ cargo-shuttle-console-menu-title = Консоль грузового шаттл�
 cargo-shuttle-console-station-unknown = Неизвестно
 cargo-shuttle-console-shuttle-not-found = Не найден
 cargo-shuttle-console-proximity = Слишком близко к окружающим объектам
+cargo-no-shuttle = No cargo shuttle found!
 cargo-shuttle-console-organics = На шаттле обнаружены органические формы жизни

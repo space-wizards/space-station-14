@@ -382,3 +382,6 @@ ent-DrinkRamen = cup ramen
 ent-DrinkHellRamen = hell ramen
     .desc = Just add 10ml water, self heats! Super spicy flavor.
     .suffix = { "" }
+ent-DrinkKvassGlass = kvass glass
+    .desc = A cool refreshing drink with a taste of socialism.
+    .suffix = { "" }
