@@ -202,11 +202,10 @@ namespace Content.Server.Dragon
         {
             foreach (var entry in _breathAttacks)
             {
-                if (entry.Value.Finished)
-                    // TODO: Cleanup finished break attacks.
-                    continue;
-
-                entry.Value.Update(frameTime, _gameTiming);
+                if (!entry.Value.Finished)
+                    _breathAttacks.Remove(entry.Key);
+                else
+                    entry.Value.Update(frameTime, _gameTiming);
             }
 
         }
@@ -348,7 +347,7 @@ internal sealed class BreathAttack
     /// </summary>
     private Vector2 _currentOffset = Vector2.Zero;
 
-    private IEnumerator<Vector2i> _tileMover;
+    private readonly IEnumerator<Vector2i> _tileMover;
 
     /// <summary>
     ///     Delay between each tile propagation.
@@ -379,7 +378,7 @@ internal sealed class BreathAttack
     /// <summary>
     ///     The current grid that is being processed.
     /// </summary>
-    private IMapGrid? _currentGrid;
+    private readonly IMapGrid? _currentGrid;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -449,7 +448,7 @@ internal sealed class BreathAttack
     }
 
     /// <summary>
-    ///
+    ///    Handle the tile and any entities inside of it.
     /// </summary>
     private void ProcessTile(Vector2i tile, IMapGrid grid)
     {
