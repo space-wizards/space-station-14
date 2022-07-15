@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Syndicate Zombie Bundle price increase from 40TC to 50TC, type: Tweak}
-  - {message: Syndicate Zombie Bundle contents have been reduced., type: Tweak}
-  - {message: Zombie Infection now does (slightly) less damage., type: Tweak}
-  - {message: Removed fun. (ha), type: Remove}
-  id: 1466
-  time: '2022-05-07T02:52:49.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Added a new sound chip to the vox announcer that will warn you about
@@ -2949,3 +2941,8 @@ Entries:
   - {message: Updated alarm sound effect, type: Tweak}
   id: 1965
   time: '2022-07-15T10:20:04.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added portable scrubbers., type: Add}
+  id: 1966
+  time: '2022-07-15T12:46:31.0000000+00:00'
