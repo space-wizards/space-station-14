@@ -6,7 +6,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Furniture/Altars/Gods/nanotrasen.rsi/full.png
+        - texture: Structures/Furniture/Altars/Gods/nanotrasen.rsi/nanotrasen.png
     - type: RandomSpawner
       prototypes:
         - AltarNanotrasen
@@ -26,7 +26,7 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Structures/Furniture/Altars/Gods/convertaltar.rsi/full.png
+        - texture: Structures/Furniture/Altars/Gods/convertaltar.rsi/convertaltar.png
     - type: RandomSpawner
       prototypes:
         - AltarConvert

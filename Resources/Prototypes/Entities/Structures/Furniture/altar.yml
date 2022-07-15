@@ -34,10 +34,10 @@
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: full
+    state: nanotrasen
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
-    state: full
+    state: nanotrasen
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,9 +70,11 @@
   name: chaos altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/chaos.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/chaos.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: chaos
 
 - type: entity
   id: AltarDruid
@@ -80,9 +82,11 @@
   name: druid altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/druid.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/druid.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: druid
 
 - type: entity
   id: AltarToolbox
@@ -90,9 +94,11 @@
   name: toolbox altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/toolbox.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/toolbox.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: toolbox
 
 - type: entity
   id: AltarSpaceChristian
@@ -100,13 +106,14 @@
   name: space-Christian altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/space-christian.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
-    - state: full
-    - state: lightning
+    - state: space-christian
+    - state: space-christian_lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/space-christian.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: space-christian
 
 - type: entity
   id: AltarSatana
@@ -114,13 +121,14 @@
   name: satanic altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/satana.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
-    - state: full
-    - state: lightning
+    - state: satana
+    - state: satana_lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/satana.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: satana
 
 - type: entity
   id: AltarTechnology
@@ -128,13 +136,14 @@
   name: technology altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/technology.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     layers:
-    - state: full
-    - state: lightning
+    - state: technology
+    - state: technology_lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/technology.rsi
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
 
 
 - type: entity
@@ -143,11 +152,11 @@
   name: festival altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/festival.rsi
-    state: full
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/festival.rsi
-    state: full
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible
@@ -185,13 +194,14 @@
   name: maint altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/maint.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: maint
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/maint.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: maint
 
 - type: entity
   id: AltarConvertBlue
@@ -199,13 +209,14 @@
   name: blue altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/blue.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: blue
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/blue.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: blue
 
 - type: entity
   id: AltarConvertBurden
@@ -213,13 +224,14 @@
   name: burden altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/burden.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: convertaltar
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/burden.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: convertaltar
 
 - type: entity
   id: AltarConvert
@@ -229,11 +241,12 @@
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: convertaltar
     - state: lightning
       shader: unshaded
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: convertaltar
 
 - type: entity
   id: AltarConvertOrange
@@ -241,13 +254,14 @@
   name: orange altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/orange.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: orange
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/orange.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: orange
 
 - type: entity
   id: AltarConvertRed
@@ -255,13 +269,14 @@
   name: red altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/red.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: red
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/red.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: red
 
 - type: entity
   id: AltarConvertWhite
@@ -269,13 +284,14 @@
   name: white altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/white.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: white
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/white.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: white
 
 - type: entity
   id: AltarConvertYellow
@@ -283,13 +299,14 @@
   name: yellow altar
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Gods/yellow.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     layers:
-    - state: full
+    - state: yellow
     - state: lightning
       shader: unshaded
   - type: Icon
-    sprite: Structures/Furniture/Altars/Gods/yellow.rsi
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: yellow
 
 - type: entity
   id: AltarHeaven
