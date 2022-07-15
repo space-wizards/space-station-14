@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Added a new sound chip to the vox announcer that will warn you about
-      meteors and aliens instead of playing an obnoxious alarm., type: Tweak}
-  id: 1467
-  time: '2022-05-07T05:09:30.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added new default sound for events., type: Add}
@@ -2946,3 +2940,9 @@ Entries:
   - {message: Added portable scrubbers., type: Add}
   id: 1966
   time: '2022-07-15T12:46:31.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nukie uplinks now purchase items correctly., type: Fix}
+  - {message: Nukie uplinks can no longer access job-specific items., type: Fix}
+  id: 1967
+  time: '2022-07-15T19:06:05.0000000+00:00'
