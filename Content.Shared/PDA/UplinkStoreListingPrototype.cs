@@ -1,5 +1,7 @@
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.PDA
@@ -28,6 +30,9 @@ namespace Content.Shared.PDA
 
         [DataField("icon")]
         public SpriteSpecifier? Icon { get; } = null;
+
+        [DataField("jobWhitelist", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
+        public HashSet<string>? JobWhitelist;
 
         [DataField("surplus")]
         public bool CanSurplus = true;
