@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Ghosts can now face in four directions., type: Tweak}
-  id: 1447
-  time: '2022-05-03T23:03:24.0000000+00:00'
 - author: Lizard Master
   changes:
   - {message: Lizards (animal) now look like Komodos instead of worms., type: Tweak}
@@ -2953,3 +2948,9 @@ Entries:
   - {message: Lockers/morgues/etc should now properly take items., type: Fix}
   id: 1946
   time: '2022-07-14T21:55:36.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Multiple portions of the same recipe can be cooked simultaneously in
+      the microwave by multiplying the ingredients and cooking time., type: Tweak}
+  id: 1947
+  time: '2022-07-15T02:25:16.0000000+00:00'
