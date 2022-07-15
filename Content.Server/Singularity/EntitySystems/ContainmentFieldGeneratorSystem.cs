@@ -195,8 +195,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 if (HasComp<ContainmentFieldGeneratorComponent>(res.HitEntity))
                 {
                     closestResult = res;
-                    break;
                 }
+                break;
             }
             if (closestResult == null) continue;
 

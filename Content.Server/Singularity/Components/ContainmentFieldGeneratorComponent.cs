@@ -9,6 +9,9 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [ViewVariables]
     private int _powerBuffer;
 
+    /// <summary>
+    /// Store power with a cap. Decrease over time if not being powered from source.
+    /// </summary>
     [ViewVariables]
     public int PowerBuffer
     {
@@ -39,9 +42,17 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [DataField("power")]
     public int Power = 6;
 
+    /// <summary>
+    /// The first connection this generator made
+    /// Stored on the original generator and also stored on the generator it connected to
+    /// </summary>
     [ViewVariables]
     public Tuple<Angle, List<EntityUid>>? Connection1;
 
+    /// <summary>
+    /// The second connection this generator made
+    /// Stored on the original generator and also stored on the generator it connected to
+    /// </summary>
     [ViewVariables]
     public Tuple<Angle, List<EntityUid>>? Connection2;
 
@@ -59,7 +70,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
 
     [ViewVariables]
     [DataField("collisionMask")]
-    public int CollisionMask = (int) CollisionGroup.MobMask;
+    public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask);
 
     /// <summary>
     /// The fields connected to a generator
@@ -76,12 +87,14 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
 
     /// <summary>
     /// The first generator this field is connected to
+    /// Used to spawn fields from First Generator to Second Generator
     /// </summary>
     [ViewVariables]
     public EntityUid? Generator1;
 
     /// <summary>
     /// The second generator this field is connected to
+    /// Used to spawn fields from First Generator to Second Generator
     /// </summary>
     [ViewVariables]
     public EntityUid? Generator2;
