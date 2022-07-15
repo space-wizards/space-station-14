@@ -406,6 +406,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: Syndicate
+
+- type: Tag
   id: SyndicateSegwayKeys
 
 - type: Tag
