@@ -34,7 +34,6 @@ namespace Content.Server.Atmos.Portable
         {
             base.Initialize();
             SubscribeLocalEvent<PortableScrubberComponent, AtmosDeviceUpdateEvent>(OnDeviceUpdated);
-            SubscribeLocalEvent<PortableScrubberComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PortableScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<PortableScrubberComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PortableScrubberComponent, DestructionEventArgs>(OnDestroyed);
@@ -86,20 +85,6 @@ namespace Content.Server.Atmos.Portable
             {
                 Scrub(timeDelta, component, environment);
             }
-        }
-
-        /// <summary>
-        /// If there is a port under us, let us connect with adjacent atmos pipes.
-        /// </summary>
-        private void OnAnchorChanged(EntityUid uid, PortableScrubberComponent component, ref AnchorStateChangedEvent args)
-        {
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
-                return;
-
-            portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
         }
 
         private void OnPowerChanged(EntityUid uid, PortableScrubberComponent component, PowerChangedEvent args)

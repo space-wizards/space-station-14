@@ -38,7 +38,9 @@ namespace Content.Server.Atmos.Portable
         /// <summary>
         /// Maximum internal pressure before it refuses to take more.
         /// </summary>
+        [DataField("maxPressure")]
         public float MaxPressure = 3000f;
+        [DataField("transferRate")]
         public float TransferRate = 1000f;
         public bool Enabled = true;
     }

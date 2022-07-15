@@ -13,8 +13,8 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.1
-      mass: 130
+        radius: 0.4
+      mass: 50
       mask:
       - MachineMask
       layer:
@@ -49,6 +49,8 @@
         nodeGroupID: Pipe
         rotationsEnabled: false
         volume: 1
+  - type: GasPortable
+    blockAnchor: false
   - type: ApcPowerReceiver
     powerLoad: 2000
   - type: ExtensionCableReceiver
@@ -62,7 +64,7 @@
     fullState: unlit-full
   - type: AmbientSound
     enabled: false
-    volume: -2
+    volume: -5
     range: 5
     sound:
       path: /Audio/Ambience/Objects/portable_scrubber.ogg
