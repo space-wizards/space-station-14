@@ -4,9 +4,9 @@
   parent: BaseItem
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Magic/staves.rsi
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Magic/staves.rsi
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
     HeldPrefix: staff
     size: 60
   - type: Gun
