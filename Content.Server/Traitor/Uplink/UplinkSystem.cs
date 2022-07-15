@@ -13,7 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -210,7 +209,7 @@ namespace Content.Server.Traitor.Uplink
                         }
                         if (!found)
                         {
-                            listings.RemoveSwap(i);
+                            listings.Remove(i);
                             i--;
                         }
                     }
