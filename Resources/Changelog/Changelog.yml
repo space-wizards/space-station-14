@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The health status now looks fancier!, type: Tweak}
-  id: 1452
-  time: '2022-05-04T02:49:48.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'NSS Pillar Update! Added vehicle spawns, drains, watercoolers and other
@@ -2953,3 +2948,9 @@ Entries:
     type: Tweak}
   id: 1951
   time: '2022-07-15T02:42:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Magic staves & wands! You can find them in the fireball, polymorph,
+      death, healing, or door variety.', type: Add}
+  id: 1952
+  time: '2022-07-15T02:45:28.0000000+00:00'
