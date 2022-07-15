@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Power Monitoring Consoles now show some power details on high-voltage
-      networks., type: Add}
-  id: 1456
-  time: '2022-05-04T17:59:40.0000000+00:00'
 - author: Rane
   changes:
   - {message: Your camera now follows the vehicle rather than you when you are riding
@@ -2953,3 +2947,10 @@ Entries:
     type: Tweak}
   id: 1955
   time: '2022-07-15T04:26:06.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Proto-kinetic accelerators are now available. These are recharging
+      ranged weapons for salvage specialists, but with the cost of doing low damage,
+      having very low range, and a low recharge rate.', type: Add}
+  id: 1956
+  time: '2022-07-15T04:28:14.0000000+00:00'
