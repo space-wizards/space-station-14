@@ -238,6 +238,7 @@
       - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: BaseUplinkRadio40TC
+      - id: PinpointerNuclear
 
 
 - type: entity
@@ -258,3 +259,4 @@
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
+      - id: PinpointerNuclear
