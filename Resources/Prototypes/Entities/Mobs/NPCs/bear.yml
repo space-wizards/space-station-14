@@ -69,6 +69,11 @@
         Brute: 15
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+    name: space bear
+    description: |
+      You're a bear! Do bear things.
 
 - type: entity
   id: MobBearSpaceSalvage
