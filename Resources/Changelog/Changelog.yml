@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'The admin help and rules buttons have swapped positions in the in-game
-      interface (rules now in escape menu, etc.)', type: Tweak}
-  id: 1462
-  time: '2022-05-06T03:46:33.0000000+00:00'
 - author: Lizzer lover
   changes:
   - {message: 'Reptilians now have two more frills (Big, Divinity) and one horn marking
@@ -2953,3 +2947,11 @@ Entries:
       are more, report them.', type: Fix}
   id: 1961
   time: '2022-07-15T08:10:52.0000000+00:00'
+- author: ZeroDayDaemon
+  changes:
+  - {message: Added craftable Sawn Off shotgun., type: Add}
+  - {message: Tweaked bartender to spawn with regular double barreled shotgun., type: Tweak}
+  - {message: Tweaked bardrobe to have enough items for maps with two bartenders.,
+    type: Tweak}
+  id: 1962
+  time: '2022-07-15T09:01:55.0000000+00:00'
