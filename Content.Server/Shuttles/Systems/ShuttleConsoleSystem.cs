@@ -8,6 +8,7 @@ using Content.Shared.Alert;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -36,7 +37,6 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ShuttleConsoleComponent, PowerChangedEvent>(OnConsolePowerChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, AnchorStateChangedEvent>(OnConsoleAnchorChange);
             SubscribeLocalEvent<ShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnConsoleUIOpenAttempt);
-            SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleModeRequestMessage>(OnModeRequest);
             SubscribeLocalEvent<ShuttleConsoleComponent, ShuttleConsoleDestinationMessage>(OnDestinationMessage);
             SubscribeLocalEvent<ShuttleConsoleComponent, BoundUIClosedEvent>(OnConsoleUIClose);
 
@@ -233,7 +233,6 @@ namespace Content.Server.Shuttles.Systems
             var range = radar?.MaxRange ?? 0f;
 
             TryComp<ShuttleComponent>(consoleXform?.GridUid, out var shuttle);
-            var mode = shuttle?.Mode ?? ShuttleMode.Cruise;
 
             var destinations = new List<(EntityUid, string, bool)>();
             var ftlState = FTLState.Available;
@@ -289,7 +288,6 @@ namespace Content.Server.Shuttles.Systems
                 ?.SetState(new ShuttleConsoleBoundInterfaceState(
                     ftlState,
                     ftlTime,
-                    mode,
                     destinations,
                     range,
                     consoleXform?.Coordinates,
