@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Added new default sound for events., type: Add}
-  id: 1468
-  time: '2022-05-07T05:41:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Removed the background from alerts., type: Tweak}
   id: 1469
   time: '2022-05-08T00:34:42.0000000+00:00'
@@ -2946,3 +2941,8 @@ Entries:
   - {message: Nukie uplinks can no longer access job-specific items., type: Fix}
   id: 1967
   time: '2022-07-15T19:06:05.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
+  id: 1968
+  time: '2022-07-16T00:46:20.0000000+00:00'
