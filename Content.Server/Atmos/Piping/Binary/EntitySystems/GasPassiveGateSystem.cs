@@ -46,8 +46,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             float dt = 1/_atmosphereSystem.AtmosTickRate;
             float dV = 0;
+            var denom = (T1*V2 + T2*V1);
 
-            if (pressureDelta > 0 && n1 > 0 && T1 > 0)
+            if (pressureDelta > 0 && P1 > 0 && denom > 0)
             {
                 // Calculate the number of moles to transfer to equalize the final pressure of
                 // both sides of the valve. You can derive this equation yourself by solving
@@ -64,10 +65,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 // If you don't want to push through the math, just know that this behaves like a
                 // pump that can equalize pressure instantly, i.e. much faster than pressure or
                 // volume pumps.
-                var transferMoles = n1 - (n1+n2)*T2*V1 / (T1*V2 + T2*V1);
+                var transferMoles = n1 - (n1+n2)*T2*V1 / denom;
 
                 // Get the volume transfered to update our flow meter.
-                dV = n1*Atmospherics.R*T1/T1;
+                dV = n1*Atmospherics.R*T1/P1;
 
                 // Actually transfer the gas.
                 _atmosphereSystem.Merge(outlet.Air, inlet.Air.Remove(transferMoles));
