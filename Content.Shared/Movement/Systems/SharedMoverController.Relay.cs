@@ -16,7 +16,7 @@ public abstract partial class SharedMoverController
     private void OnRelayShutdown(EntityUid uid, RelayInputMoverComponent component, ComponentShutdown args)
     {
         // If relay is removed then cancel all inputs.
-        if (!TryComp<InputMoverComponent>(uid, out var inputMover)) return;
+        if (!TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover)) return;
         SetMoveInput(inputMover, MoveButtons.None);
     }
 

@@ -19,7 +19,7 @@
     weightlessModifier: 0
     acceleration: 2
     friction: 2
-    frictionNoInput: 8
+    frictionNoInput: 6
     baseWalkSpeed: 4.5
     baseSprintSpeed: 6
   - type: Eye
