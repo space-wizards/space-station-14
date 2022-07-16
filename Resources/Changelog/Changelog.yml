@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Removed the background from alerts., type: Tweak}
-  id: 1469
-  time: '2022-05-08T00:34:42.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'The space pollution has cleared, and now you can see the bright nebulae
@@ -2946,3 +2941,8 @@ Entries:
   - {message: Delta Station's atmos mix chamber should work now., type: Tweak}
   id: 1968
   time: '2022-07-16T00:46:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mobs are now properly throwable, type: Tweak}
+  id: 1969
+  time: '2022-07-16T03:04:14.0000000+00:00'
