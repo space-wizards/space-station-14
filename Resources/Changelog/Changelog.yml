@@ -1,10 +1,4 @@
 Entries:
-- author: emisse
-  changes:
-  - {message: tasers can only fire 1 shot, type: Add}
-  - {message: blood no longer slips, type: Add}
-  id: 1473
-  time: '2022-05-08T05:02:12.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'The botanists have clipped down the potted plants, you can now walk
@@ -2953,3 +2947,9 @@ Entries:
   - {message: added an error as an object!, type: Add}
   id: 1972
   time: '2022-07-16T22:33:30.0000000+00:00'
+- author: 13spacemen
+  changes:
+  - {message: 'Added purple research airlocks, green virology airlocks, (not mapped
+      in yet)', type: Add}
+  id: 1973
+  time: '2022-07-16T22:35:39.0000000+00:00'
