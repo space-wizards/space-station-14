@@ -79,6 +79,12 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     public List<EntityUid> Fields = new();
 
     /// <summary>
+    /// Dictionary of connections and fields
+    /// </summary>
+    [ViewVariables]
+    public Dictionary<Direction, (ContainmentFieldGeneratorComponent, List<EntityUid>)> Connections = new();
+
+    /// <summary>
     /// What fields should this spawn?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

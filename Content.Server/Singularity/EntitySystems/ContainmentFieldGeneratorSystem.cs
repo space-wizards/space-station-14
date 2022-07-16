@@ -10,9 +10,11 @@ using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
+
 public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tags = default!;
@@ -34,6 +36,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
     }
+
     private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
     {
         if (args.Handled)
@@ -45,7 +48,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User,
+                    Filter.Entities(args.User));
                 return;
             }
             else
@@ -55,25 +59,29 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component, UnanchorAttemptEvent args)
+    private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
+        UnanchorAttemptEvent args)
     {
         if (component.Enabled)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
-               args.Cancel();
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User,
+                Filter.Entities(args.User));
+            args.Cancel();
         }
     }
 
     private void TurnOn(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = true;
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner,
+            Filter.Pvs(component.Owner));
     }
 
     private void TurnOff(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = false;
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner,
+            Filter.Pvs(component.Owner));
     }
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
@@ -81,7 +89,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         DeleteFields(component);
     }
 
-    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component,
+        ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
         {
@@ -92,7 +101,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     //TODO: put into its own PA system?
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
+        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner,
+                out var singularityGeneratorComponent))
         {
             singularityGeneratorComponent.Power += component.State switch
             {
@@ -108,7 +118,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
-    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component,
+        StartCollideEvent args)
     {
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
@@ -128,8 +139,15 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         if (component.PowerBuffer >= component.Power)
         {
-            TryGenerateFieldConnection(ref component.Connection1, component);
-            TryGenerateFieldConnection(ref component.Connection2, component);
+            for (int i = 0; i < 8; i+=2)
+            {
+                var dir = (Direction)i;
+
+                if (component.Connections.ContainsKey(dir))
+                    continue; // This direction already has an active connection
+
+                TryFieldConnection(dir, component);
+            }
         }
     }
 
@@ -158,8 +176,51 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
         else if (component.Fields != null)
         {
-            Logger.Error("RemoveConnection called on Containment Field Generator with a connection that can't be found in its connections.");
+            Logger.Error(
+                "RemoveConnection called on Containment Field Generator with a connection that can't be found in its connections.");
         }
+    }
+
+    private bool TryFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component)
+    {
+        if (!component.Enabled) return false;
+
+        var genXForm = Transform(component.Owner);
+        if (!genXForm.Anchored) return false;
+
+        var genCardinalDirAngle = genXForm.WorldRotation;
+        var dirRad = dir.ToAngle() + genCardinalDirAngle;
+
+        var ray = new CollisionRay(genXForm.MapPosition.Position, dirRad.ToVec(), component.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(genXForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
+
+        if (!rayCastResults.Any()) return false;
+
+        RayCastResults? closestResult = null;
+
+        foreach (var result in rayCastResults)
+        {
+            if (HasComp<ContainmentFieldGeneratorComponent>(result.HitEntity))
+            {
+                closestResult = result;
+            }
+            break;
+        }
+        if (closestResult == null) return false;
+
+        var ent = closestResult.Value.HitEntity;
+
+        if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var otherFieldGeneratorComponent))
+        {
+            return false;
+        }
+
+        var fields = GenCon(component, otherFieldGeneratorComponent);
+
+        component.Connections[dir] = (otherFieldGeneratorComponent, fields);
+        component.Connections[dir.GetOpposite()] = (component, fields);
+
+        return true;
     }
 
     private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Angle, List<EntityUid>>? propertyFieldTuple,ContainmentFieldGeneratorComponent component)
@@ -248,6 +309,38 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
 
         return false;
+    }
+
+    private List<EntityUid> GenCon(ContainmentFieldGeneratorComponent firstGenComp, ContainmentFieldGeneratorComponent secondGenComp)
+    {
+        var fieldList = new List<EntityUid>();
+        var gen1Coords = Transform(firstGenComp.Owner).Coordinates;
+        var gen2Coords = Transform(secondGenComp.Owner).Coordinates;
+
+        var delta = (gen2Coords - gen1Coords).Position;
+        var dirVec = delta.Normalized;
+        var stopDist = delta.Length;
+        var currentOffset = dirVec;
+        while (currentOffset.Length < stopDist)
+        {
+            var currentCoords = gen1Coords.Offset(currentOffset);
+            var newField = Spawn(firstGenComp.CreatedField, currentCoords);
+
+            var fieldXForm = Transform(newField);
+            fieldXForm.AttachParent(firstGenComp.Owner);
+            if (dirVec.GetDir() == Direction.East || dirVec.GetDir() == Direction.West)
+            {
+                var angle = fieldXForm.LocalPosition.ToAngle();
+                var rotateBy90 = angle.Degrees + 90;
+                var rotatedAngle = Angle.FromDegrees(rotateBy90);
+
+                fieldXForm.LocalRotation = rotatedAngle;
+            }
+
+            fieldList.Add(newField);
+            currentOffset += dirVec;
+        }
+        return fieldList;
     }
 
     private void GenerateConnection(ContainmentFieldGeneratorComponent component)
