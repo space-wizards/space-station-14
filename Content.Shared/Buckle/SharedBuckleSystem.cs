@@ -13,12 +13,31 @@ namespace Content.Shared.Buckle
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SharedStrapComponent, RotateEvent>(OnStrapRotate);
+
             SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
             SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
             SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
             SubscribeLocalEvent<SharedBuckleComponent, UpdateCanMoveEvent>(HandleMove);
             SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
+        }
+
+        private void OnStrapRotate(EntityUid uid, SharedStrapComponent component, ref RotateEvent args)
+        {
+            // TODO: This looks dirty af.
+            // On rotation of a strap, reattach all buckled entities.
+            // This fixes buckle offsets and draw depths.
+            foreach (var buckledEntity in component.BuckledEntities)
+            {
+                if (!EntityManager.TryGetComponent(buckledEntity, out SharedBuckleComponent? buckled))
+                {
+                    continue;
+                }
+
+                buckled.ReAttach(component);
+                Dirty(buckled);
+            }
         }
 
         private void OnBuckleChangeDirectionAttempt(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
