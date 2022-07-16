@@ -6,7 +6,7 @@ using Robust.Server.GameStates;
 using Robust.Shared.Physics;
 using System.Linq;
 
-namespace Content.Server.Revenant;
+namespace Content.Server.Revenant.EntitySystems;
 
 /// <summary>
 /// Makes the revenant solid when the component is applied.

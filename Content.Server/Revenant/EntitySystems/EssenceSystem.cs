@@ -1,14 +1,9 @@
 using Content.Server.Mind.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
-using Content.Shared.Physics;
-using Content.Shared.Revenant;
-using Robust.Server.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using System.Linq;
 
-namespace Content.Server.Revenant;
+namespace Content.Server.Revenant.EntitySystems;
 
 /// <summary>
 /// Attached to entities when a revenant drains them in order to

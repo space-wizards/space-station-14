@@ -25,7 +25,7 @@ public sealed class RevenantComponent : Component
     public float MaxEssenceUpgradeAmount = 10;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
-    public float DamageToEssenceCoefficient = 0.75f;
+    public float DamageToEssenceCoefficient = 1f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
     public float EssencePerSecond = 0.5f;

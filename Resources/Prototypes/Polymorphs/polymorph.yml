@@ -19,6 +19,15 @@
   revertOnDeath: true
 
 - type: polymorph
+  id: Ectoplasm
+  entity: RevenantEctoplasm
+  forced: true
+  duration: 60
+  inventory: Drop
+  revertOnCrit: false
+  revertOnDeath: false
+
+- type: polymorph
   id: WizardForcedCarp
   entity: MobCarpMagic
   forced: true

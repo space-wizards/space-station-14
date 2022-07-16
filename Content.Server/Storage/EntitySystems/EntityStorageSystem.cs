@@ -208,9 +208,9 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool TryOpenStorage(EntityUid user, EntityUid target)
+    public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
     {
-        if (!CanOpen(user, target))
+        if (!CanOpen(user, target, silent))
             return false;
 
         OpenStorage(target);

@@ -1,0 +1,7 @@
+- type: instantAction
+  id: RevenantDefile
+  icon: Interface/Actions/scream.png
+  name: Defile
+  description: Costs 30 Essence. Defiles the surrounding area, ripping up floors and damaging windows.
+  serverEvent: !type:RevenantDefileActionEvent
+  useDelay: 15

@@ -51,3 +51,31 @@
     group: GenericNumber
   - type: Revenant
   - type: MobState
+
+- type: entity
+  parent: BaseItem
+  id: RevenantEctoplasm
+  name: ectoplasm
+  description: A weird bit of goo. You probably shouldn't leave it lying around like this.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Ghosts/revenant.rsi
+    layers:
+    - state: ectoplasm
+  - type: Eye
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    ignoreResistances: true
+    damage:
+      types:
+        Blunt: 5
