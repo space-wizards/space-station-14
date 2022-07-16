@@ -1,3 +1,3 @@
-ent-PortableScrubber = portable scrubber
-    .desc = It scrubs, portably!
+ent-PortableScrubber = переносной скруббер
+    .desc = Он скруббит, в переносном смысле!
     .suffix = { "" }

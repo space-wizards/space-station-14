@@ -5,10 +5,10 @@ comp-pda-ui = ID: [color=white]{ $Owner }[/color], [color=yellow]{ $JobTitle }[/
 comp-pda-ui-blank = ID:
 comp-pda-ui-owner = Владелец: [color=white]{ $ActualOwnerName }[/color]
 pda-bound-user-interface-main-menu-tab-title = Главное меню
-pda-bound-user-interface-uplink-tab-title = Uplink
+pda-bound-user-interface-uplink-tab-title = Аплинк
 comp-pda-ui-menu-title = КПК
 comp-pda-ui-eject-id-button = Извлечь ID
 comp-pda-ui-eject-pen-button = Извлечь ручку
 comp-pda-ui-ringtone-button = Рингтон
 comp-pda-ui-toggle-flashlight-button = Переключить фонарик
-pda-bound-user-interface-music-button = Music Instrument
+pda-bound-user-interface-music-button = Музыкальный инструмент

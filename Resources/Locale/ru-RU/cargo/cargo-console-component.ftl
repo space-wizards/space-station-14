@@ -39,5 +39,5 @@ cargo-console-paper-print-text =
 cargo-shuttle-console-menu-title = Консоль грузового шаттла
 cargo-shuttle-console-station-unknown = Неизвестно
 cargo-shuttle-console-shuttle-not-found = Не найден
-cargo-no-shuttle = No cargo shuttle found!
+cargo-no-shuttle = Грузовой шаттл не найден!
 cargo-shuttle-console-organics = На шаттле обнаружены органические формы жизни

@@ -21,4 +21,4 @@ injector-component-target-is-empty-message = { $target } пуст!
 ## mob-inject doafter messages
 
 injector-component-injecting-user = Вы начинаете вводить иглу.
-injector-component-injecting-target = { $user } пытается ввести вам иглу!
+injector-component-injecting-target = { CAPITALIZE($user) } пытается ввести вам иглу!

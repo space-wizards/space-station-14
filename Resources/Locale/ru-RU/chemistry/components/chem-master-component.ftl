@@ -5,7 +5,7 @@ chem-master-component-cannot-put-entity-message = Вы не можете пом�
 
 ## Bound UI
 
-chem-master-bound-user-interface-title = ChemMaster 4000
+chem-master-bound-user-interface-title = ХимМастер 4000
 
 ## UI
 
@@ -23,7 +23,7 @@ chem-master-window-packaging-text = Упаковка
 chem-master-current-text-label = Метка:
 chem-master-window-pills-label = Таблетка:
 chem-master-window-pill-type-label = Тип таблеток:
-chem-master-window-max-pills-volume-text = макс 25 ед./каждая
+chem-master-window-max-pills-volume-text = макс 50 ед./каждая
 chem-master-window-max-bottles-volume-text = макс 30 ед./каждая
 chem-master-window-create-pill-button = Создать
 chem-master-window-create-bottle-button = Создать

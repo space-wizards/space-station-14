@@ -1,6 +1,6 @@
-ent-WeaponStaffHealing = staff of healing
-    .desc = You don't foresee having to use this in your quest for carnage too often.
+ent-WeaponStaffHealing = посох исцеления
+    .desc = Вряд ли вам придется использовать его слишком часто в своем стремлении к резне.
     .suffix = { "" }
-ent-WeaponStaffPolymorphDoor = staff of entrance
-    .desc = For when you need a get-away route.
+ent-WeaponStaffPolymorphDoor = посох входа
+    .desc = На случай, когда нужен маршрут для побега.
     .suffix = { "" }
