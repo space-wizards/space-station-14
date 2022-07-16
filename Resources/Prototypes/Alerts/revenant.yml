@@ -1,4 +1,15 @@
 ﻿- type: alert
+  id: Essence
+  category: Health #it's like ghostie health
+  icon:
+    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence
+  name: Essence
+  description: The power of souls. It sustains you and allows for unlocking new abilities. It regenerates slowly over time.
+  minSeverity: 0
+  maxSeverity: 15
+
+- type: alert
   id: Corporeal
   icon: { sprite: "/Textures/Mobs/Ghosts/revenant.rsi", state: "icon" }
   name: "Corporeal"

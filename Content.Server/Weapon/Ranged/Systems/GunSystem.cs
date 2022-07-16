@@ -22,7 +22,6 @@ namespace Content.Server.Weapon.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly EffectSystem _effects = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public const float DamagePitchVariation = MeleeWeaponSystem.DamagePitchVariation;
@@ -215,17 +214,14 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) {}
 
-    protected override void CreateEffect(EffectSystemMessage message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        // TODO: Fucking bad
+        var filter = Filter.Pvs(uid, entityManager: EntityManager);
+
         if (TryComp<ActorComponent>(user, out var actor))
-        {
-            _effects.CreateParticle(message, actor.PlayerSession);
-        }
-        else
-        {
-            _effects.CreateParticle(message);
-        }
+            filter.RemovePlayer(actor.PlayerSession);
+
+        RaiseNetworkEvent(message, filter);
     }
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)

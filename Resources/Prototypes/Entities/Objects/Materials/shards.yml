@@ -101,7 +101,7 @@
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
-    - SheetSteel1
+    - PartRodMetal1
   - type: DamageUserOnTrigger
     damage:
       types:

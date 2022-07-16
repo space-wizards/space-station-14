@@ -13,10 +13,11 @@ namespace Content.Shared.Traitor.Uplink
         public readonly string Description;
         public readonly string ListingName;
         public readonly SpriteSpecifier? Icon;
+        public readonly HashSet<string>? JobWhitelist;
 
         public UplinkListingData(string listingName, string itemId,
             int price, UplinkCategory category,
-            string description, SpriteSpecifier? icon)
+            string description, SpriteSpecifier? icon, HashSet<string>? jobWhitelist)
         {
             ListingName = listingName;
             Price = price;
@@ -24,6 +25,7 @@ namespace Content.Shared.Traitor.Uplink
             Description = description;
             ItemId = itemId;
             Icon = icon;
+            JobWhitelist = jobWhitelist;
         }
 
         public bool Equals(UplinkListingData? other)

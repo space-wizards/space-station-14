@@ -24,7 +24,7 @@ public sealed class RevenantComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
     public float MaxEssenceUpgradeAmount = 10;
 
-    [DataField("damageToEssenceCoefficient")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
     public float DamageToEssenceCoefficient = 0.75f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
@@ -35,6 +35,12 @@ public sealed class RevenantComponent : Component
 
     [DataField("harvestDuration")]
     public float HarvestDuration = 5;
+
+    public float DefileUseCost = -30f;
+    public float DefileUnlockCost = -10f;
+    public float DefileStunDuration = 1f;
+    public float DefileCorporealDuration = 4f;
+    public float DefileRadius = 4.5f;
 
     public CancellationTokenSource? HarvestCancelToken;
 

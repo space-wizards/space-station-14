@@ -50,7 +50,7 @@ reagent-name-barozine = barozine
 reagent-desc-barozine = A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
 
 reagent-name-phalanximine = phalanximine
-reagent-desc-phalanximine = Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
+reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
 
 reagent-name-romerol = romerol
 reagent-desc-romerol = A difficult to procure chemical used in the reversal of the zombification process. Tastes like death.

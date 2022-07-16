@@ -15,3 +15,99 @@
     intensitySlope: 6
     totalIntensity: 200
     maxTileBreak: 0
+
+- type: entity
+  id: ProjectilePolyboltCarp
+  name: carp polybolt
+  description: Nooo, I don't wanna be fish!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: '#00FF00'
+  - type: PolymorphOnCollide
+    polymorph: WizardForcedCarp
+    whitelist:
+      components:
+      - Body
+    blacklist:
+      tags:
+      - Carp # can't re-polymorph
+  - type: Projectile
+    damage:
+      types:
+        Poison: 5
+
+- type: entity
+  id: ProjectilePolyboltDoor
+  name: door polybolt
+  description: Nooo, I don't wanna be door!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: brown
+  - type: PolymorphOnCollide
+    polymorph: WizardWallDoor
+    whitelist:
+      components:
+      - Airlock
+      - Firelock
+      tags:
+      - Wall
+  - type: Projectile
+    damage:
+      types:
+        Poison: 5
+
+- type: entity
+  id: ProjectileHealingBolt
+  name: healing bolt
+  description: I COMMAND YOU TO LIVE!
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: white
+  - type: Projectile
+    damage:
+      groups: # good enough. Maybe make it call the rejuvenate command later.
+        Brute: -900
+        Burn: -900
+        Airloss: -600
+        Toxin: -600
+    ignoreResistances: true
+
+- type: entity
+  id: BulletInstakillMagic
+  name: magical lead cylinder
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: This looks familiar.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 300
+    ignoreResistances: true
+
+- type: entity
+  id: BulletKinetic
+  name: kinetic bolt
+  parent: BaseBulletHighVelocity
+  noSpawn: true
+  description: Not too bad, but you still don't want to get hit by it.
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 10

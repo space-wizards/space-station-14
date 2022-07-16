@@ -1,3 +1,8 @@
+revenant-essence-amount = You have [color=plum]{$current} Essence[/color]. Your max amount of Essence is [color=plum]{$max}[/color].
+revenant-max-essence-increased = Your max essence has increased!
+
+revenant-not-enough-essence = Not enough essence!
+
 revenant-soul-too-powerful = This soul is too strong to harvest!
 revenant-soul-harvested = This soul has already been harvested!
 

@@ -35,7 +35,7 @@ public sealed class CorporealSystem : EntitySystem
         light.Radius = 1.5f;
         light.Softness = 0.75f;
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount < 1)
+        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount <= 1)
         {
             var fixture = fixtures.Fixtures.Values.First();
 
@@ -53,8 +53,6 @@ public sealed class CorporealSystem : EntitySystem
         {
             eye.DrawFov = true;
         }
-
-        Dirty(MetaData(uid));
     }
 
     private void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)
@@ -64,7 +62,7 @@ public sealed class CorporealSystem : EntitySystem
 
         RemComp<PointLightComponent>(uid);
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount < 1)
+        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount <= 1)
         {
             var fixture = fixtures.Fixtures.Values.First();
 
@@ -82,7 +80,5 @@ public sealed class CorporealSystem : EntitySystem
         {
             eye.DrawFov = false;
         }
-
-        Dirty(MetaData(uid));
     }
 }

@@ -22,21 +22,31 @@ using Robust.Shared.Player;
 using Content.Server.MobState;
 using Content.Shared.Speech;
 using Content.Server.Visible;
+using Content.Shared.Examine;
+using Robust.Shared.Prototypes;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Tag;
+using Content.Server.Storage.EntitySystems;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Revenant;
 
 public sealed class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
+    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
@@ -48,6 +58,7 @@ public sealed class RevenantSystem : EntitySystem
 
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<RevenantComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
 
@@ -55,10 +66,14 @@ public sealed class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
+        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
     }
 
     private void OnInit(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
+        //update the icon.
+        ChangeEssenceAmount(uid, 0, component);
+
         if (TryComp<AppearanceComponent>(uid, out var app))
         {
             app.SetData(RevenantVisuals.Corporeal, false);
@@ -76,6 +91,9 @@ public sealed class RevenantSystem : EntitySystem
         {
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
         }
+
+        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantDefile"));
+        _action.AddAction(uid, action, null);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)
@@ -94,6 +112,15 @@ public sealed class RevenantSystem : EntitySystem
 
         if (args.Key == "Stun")
             app.SetData(RevenantVisuals.Stunned, false);
+    }
+
+    private void OnExamine(EntityUid uid, RevenantComponent component, ExaminedEvent args)
+    {
+        if (args.Examiner == args.Examined)
+        {
+            args.PushMarkup(Loc.GetString("revenant-essence-amount",
+                ("current", Math.Round(component.Essence)), ("max", Math.Round(component.MaxEssence))));
+        }
     }
 
     private void OnSpeakAttempt(EntityUid uid, RevenantComponent component, SpeakAttemptEvent args)
@@ -124,6 +151,34 @@ public sealed class RevenantSystem : EntitySystem
         {
             BeginHarvestDoAfter(uid, target, component, essence);
         }
+    }
+
+    private void OnDamage(EntityUid uid, RevenantComponent component, DamageChangedEvent args)
+    {
+        if (args.DamageDelta == null)
+            return;
+
+        var essenceDamage = args.DamageDelta.Total.Float() * component.DamageToEssenceCoefficient * -1;
+        ChangeEssenceAmount(uid, essenceDamage, component);
+    }
+
+    public bool ChangeEssenceAmount(EntityUid uid, float amount, RevenantComponent? component = null, bool allowDeath = true)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (!allowDeath && component.Essence + amount <= 0)
+            return false;
+
+        component.Essence = Math.Min(component.Essence + amount, component.MaxEssence);
+
+        //change this into morph into ectoplasm
+        if (component.Essence <= 0)
+            EntityManager.QueueDeleteEntity(uid);
+
+        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Round(component.Essence / 10f));
+
+        return true;
     }
 
     public void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
@@ -184,8 +239,8 @@ public sealed class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
             target, Filter.Pvs(target), PopupType.Large);
 
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(revenant.HarvestDuration), false);
         _stun.TryStun(uid, TimeSpan.FromSeconds(revenant.HarvestDuration), false);
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(5), false);
         _doAfter.DoAfter(doAfter);
     }
 
@@ -200,8 +255,14 @@ public sealed class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Target)),
             args.Target, Filter.Pvs(args.Target), PopupType.LargeCaution);
 
+        essence.Harvested = true;
+        ChangeEssenceAmount(uid, essence.EssenceAmount, component);
+
         if (_mobState.IsAlive(args.Target))
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
             component.MaxEssence += 5;
+        }
 
         if (TryComp<MobStateComponent>(args.Target, out var mobstate))
         {
@@ -213,9 +274,6 @@ public sealed class RevenantSystem : EntitySystem
                 _damage.TryChangeDamage(args.Target, dspec, true);
             }
         }
-
-        essence.Harvested = true;
-        component.Essence = Math.Min(component.Essence + essence.EssenceAmount, component.MaxEssence);
     }
 
     private void OnHarvestCancelled(EntityUid uid, RevenantComponent component, HarvestDoAfterCancelled args)
@@ -224,16 +282,45 @@ public sealed class RevenantSystem : EntitySystem
             app.SetData(RevenantVisuals.Harvesting, false);
     }
 
-    private void OnDamage(EntityUid uid, RevenantComponent component, DamageChangedEvent args)
+    private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
     {
-        if (args.DamageDelta == null)
+        if (args.Handled)
             return;
 
-        var essenceDamage = args.DamageDelta.Total.Float() * component.DamageToEssenceCoefficient;
-        component.Essence = Math.Min(component.Essence - essenceDamage, component.MaxEssence);
+        if (!ChangeEssenceAmount(uid, component.DefileUseCost, component, false))
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
+            return;
+        }
 
-        if (component.Essence <= 0)
-            EntityManager.QueueDeleteEntity(uid);
+        args.Handled = true;
+
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(component.DefileCorporealDuration), false);
+        _stun.TryStun(uid, TimeSpan.FromSeconds(component.DefileStunDuration), false);
+
+        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
+        var tags = GetEntityQuery<TagComponent>();
+        var storage = GetEntityQuery<EntityStorageComponent>();
+
+        foreach (var ent in lookup)
+        {
+            //break windows
+            if (tags.HasComponent(ent))
+            {
+                if (_tag.HasAnyTag(ent, "Window"))
+                {
+                    var dspec = new DamageSpecifier();
+                    dspec.DamageDict.Add("Structural", 15);
+                    _damage.TryChangeDamage(ent, dspec);
+                }
+            }
+
+            if (storage.HasComponent(ent))
+            {
+                if (_random.Prob(0.8f)) //arbitrary number
+                    _entityStorage
+            }
+        }
     }
 
     public override void Update(float frameTime)
@@ -278,3 +365,4 @@ public sealed class HarvestDoAfterComplete : EntityEventArgs
 }
 
 public sealed class HarvestDoAfterCancelled : EntityEventArgs { }
+
