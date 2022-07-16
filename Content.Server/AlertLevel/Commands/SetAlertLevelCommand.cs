@@ -21,8 +21,16 @@ namespace Content.Server.AlertLevel.Commands
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
-            var levelPrototype = IoCManager.Resolve<IPrototypeManager>().Index<AlertLevelPrototype>(AlertLevelSystem.DefaultAlertLevelSet);
-            var levelNames = levelPrototype.Levels.Keys.ToArray();
+            var levelNames = new string[] {};
+            var player = shell.Player as IPlayerSession;
+            if (player?.AttachedEntity != null)
+            {
+                var stationUid = EntitySystem.Get<StationSystem>().GetOwningStation(player.AttachedEntity.Value);
+                if (stationUid != null)
+                {
+                    levelNames = GetStationLevelNames(stationUid.Value);
+                }
+            }
 
             return args.Length switch
             {
@@ -64,7 +72,26 @@ namespace Content.Server.AlertLevel.Commands
             }
 
             var level = args[0];
+            var levelNames = GetStationLevelNames(stationUid.Value);
+            if (!levelNames.Contains(level))
+            {
+                shell.WriteLine(Loc.GetString("cmd-setalertlevel-invalid-level"));
+                return;
+            }
+
             EntitySystem.Get<AlertLevelSystem>().SetLevel(stationUid.Value, level, true, true, true, locked);
+        }
+
+        private string[] GetStationLevelNames(EntityUid station)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetComponent<AlertLevelComponent>(station, out var alertLevelComp))
+                return new string[]{};
+
+            if (alertLevelComp.AlertLevels == null)
+                return new string[]{};
+
+            return alertLevelComp.AlertLevels.Levels.Keys.ToArray();
         }
     }
 }
