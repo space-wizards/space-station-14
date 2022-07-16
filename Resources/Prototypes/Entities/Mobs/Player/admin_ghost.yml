@@ -23,7 +23,6 @@
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic
-    status: InAir
     # TODO: Even need these? Don't think so but CBF checking right now.
   - type: Fixtures
     fixtures:
