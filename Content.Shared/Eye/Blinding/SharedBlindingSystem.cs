@@ -24,7 +24,7 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = true;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            blindComp.Sources++;
+            AdjustBlindSources(uid, true, blindComp);
         }
 
         private void OnUnequipped(EntityUid uid, BlindfoldComponent component, GotUnequippedEvent args)
@@ -34,7 +34,21 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = false;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            blindComp.Sources--;
+            AdjustBlindSources(uid, false, blindComp);
+        }
+
+        public void AdjustBlindSources(EntityUid uid, bool Add, BlindableComponent? blindable = null)
+        {
+            if (!Resolve(uid, ref blindable, false))
+                return;
+
+            if (Add)
+            {
+                blindable.Sources++;
+            } else
+            {
+                blindable.Sources--;
+            }
         }
     }
 }
