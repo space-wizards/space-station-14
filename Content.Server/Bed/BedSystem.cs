@@ -6,6 +6,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Sleep;
+using Content.Server.Bed.Sleep;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
@@ -21,6 +22,7 @@ namespace Content.Server.Bed
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
 
         public override void Initialize()
         {
@@ -45,6 +47,7 @@ namespace Content.Server.Bed
             if (sleepAction != null)
                 _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction, null);
 
+            _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
             component.Accumulator = 0;
         }
