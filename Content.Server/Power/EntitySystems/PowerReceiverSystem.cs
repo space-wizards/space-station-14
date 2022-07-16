@@ -91,7 +91,7 @@ namespace Content.Server.Power.EntitySystems
         /// </summary>
         public bool IsPowered(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
         {
-            if (!Resolve(uid, ref receiver))
+            if (!Resolve(uid, ref receiver, false))
                 return true;
 
             return receiver.Powered;
