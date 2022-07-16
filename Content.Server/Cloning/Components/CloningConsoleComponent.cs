@@ -1,28 +1,17 @@
-using Content.Shared.MachineLinking;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
     public sealed class CloningConsoleComponent : Component
     {
+        public const string ScannerPort = "MedicalScannerSender";
+
+        public const string PodPort = "CloningPodSender";
+
         [ViewVariables]
         public EntityUid? GeneticScanner = null;
 
         [ViewVariables]
         public EntityUid? CloningPod = null;
-
-        /// <summary>
-        ///     The port for medical scanners.
-        /// </summary>
-        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
-        public string ScannerPort = "MedicalScannerSender";
-
-        /// <summary>
-        ///     The port for cloning pods.
-        /// </summary>
-        [DataField("podPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
-        public string PodPort = "CloningPodSender";
 
         /// Maximum distance between console and one if its machines
         [DataField("maxDistance")]
@@ -31,7 +20,5 @@ namespace Content.Server.Cloning.Components
         public bool GeneticScannerInRange = true;
 
         public bool CloningPodInRange = true;
-
-        public bool Powered = false;
     }
 }

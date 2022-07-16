@@ -90,7 +90,7 @@ namespace Content.Server.Cloning.Systems
 
             if (args.Anchored)
             {
-                _cloningConsoleSystem.RecheckConnections((EntityUid) component.ConnectedConsole, uid, console.GeneticScanner, console);
+                _cloningConsoleSystem.RecheckConnections(component.ConnectedConsole.Value, uid, console.GeneticScanner, console);
                 return;
             }
             _cloningConsoleSystem.UpdateUserInterface(console);

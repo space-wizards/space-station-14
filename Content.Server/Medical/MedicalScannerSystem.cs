@@ -131,7 +131,7 @@ namespace Content.Server.Medical
 
             if (args.Anchored)
             {
-                _cloningConsoleSystem.RecheckConnections((EntityUid) component.ConnectedConsole, console.CloningPod, uid, console);
+                _cloningConsoleSystem.RecheckConnections(component.ConnectedConsole.Value, console.CloningPod, uid, console);
                 return;
             }
             _cloningConsoleSystem.UpdateUserInterface(console);
