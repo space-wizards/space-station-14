@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Bed;
+using Content.Shared.Bed.Sleep;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
@@ -69,6 +70,11 @@ namespace Content.Server.Bed
                 {
                     if (mobStateQuery.TryGetComponent(healedEntity, out var state) && state.IsDead())
                         continue;
+
+                    var damage = bedComponent.Damage;
+
+                    if (HasComp<SleepingComponent>(healedEntity))
+                        damage *= bedComponent.SleepMultiplier;
 
                     _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
