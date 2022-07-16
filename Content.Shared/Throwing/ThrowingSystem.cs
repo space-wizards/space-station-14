@@ -46,7 +46,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (physics == null && !physicsQuery.Value.TryGetComponent(uid, out physics))
             return;
 
-        if (physics.BodyType != BodyType.Dynamic)
+        if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
         {
             Logger.Warning($"Tried to throw entity {ToPrettyString(uid)} but can't throw {physics.BodyType} bodies!");
             return;

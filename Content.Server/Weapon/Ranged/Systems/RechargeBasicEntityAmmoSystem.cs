@@ -36,7 +36,7 @@ public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
             recharge.AccumulatedFrameTime += frameTime;
 
             if (recharge.AccumulatedFrameTime < recharge.NextRechargeTime)
-                return;
+                continue;
 
             recharge.AccumulatedFrameTime -= recharge.NextRechargeTime;
             UpdateCooldown(recharge);

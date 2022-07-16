@@ -8,6 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -48,7 +49,7 @@ namespace Content.Server.Toilet
                 body.HasPartOfType(BodyPartType.Head))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
-                    ("victim", args.Victim), ("owner", uid));
+                    ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));
                 _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(args.Victim), PopupType.MediumCaution);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-head-message",
@@ -60,7 +61,7 @@ namespace Content.Server.Toilet
             else
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-message-others",
-                    ("victim", args.Victim), ("owner", uid));
+                    ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));
                 _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(uid), PopupType.MediumCaution);
 
                 var selfMessage = Loc.GetString("toilet-component-suicide-message",

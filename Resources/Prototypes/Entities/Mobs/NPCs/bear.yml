@@ -69,3 +69,20 @@
         Brute: 15
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+    name: space bear
+    description: |
+      You're a bear! Do bear things.
+
+- type: entity
+  id: MobBearSpaceSalvage
+  parent: MobBearSpace
+  suffix: "Salvage Ruleset"
+  components:
+  - type: GhostTakeoverAvailable
+    prob: 0.05
+    name: space bear on salvage wreck
+    description: |
+      Defend the loot inside the salvage wreck!
+  - type: SalvageMobRestrictions
