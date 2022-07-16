@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6",
+  "states": [
+    {
+      "name": "nanotrasen"
+    },
+{
+      "name": "druid"
+    },
+{
+      "name": "chaos"
+    },
+    {
+      "name": "space-christian"
+    },
+    {
+      "name": "technology"
+    },
+    {
+      "name": "satana"
+    },
+    {
+      "name": "toolbox"
+    },
+    {
+      "name": "technology_lightning",
+      "delays": [
+        [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+      ]
+    },
+    {
+      "name": "satana_lightning",
+      "delays": [
+        [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+      ]
+    },
+    {
+      "name": "space-christian_lightning",
+      "delays": [
+        [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      ]
+    }
+  ]
+}

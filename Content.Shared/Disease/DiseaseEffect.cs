@@ -12,6 +12,11 @@ namespace Content.Shared.Disease
         [DataField("probability")]
         public float Probability = 1.0f;
         /// <summary>
+        ///     What stages this effect triggers on
+        /// </summary>
+        [DataField("stages")]
+        public readonly int[] Stages = { 0 };
+        /// <summary>
         /// What effect the disease will have.
         /// </summary>
         public abstract void Effect(DiseaseEffectArgs args);

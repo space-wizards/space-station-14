@@ -107,3 +107,26 @@
   - type: ReagentTank
     transferAmount: 100
 
+# Kvass
+- type: entity
+  id: KvassTank
+  parent: StorageTank
+  name: КВАС
+  suffix: Empty
+  description: A cool refreshing drink with a taste of socialism.
+  components:
+    - type: Sprite
+      sprite: Structures/Storage/kvass.rsi
+      state: kvass
+
+- type: entity
+  parent: KvassTank
+  id: KvassTankFull
+  suffix: Full
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Kvass
+              Quantity: 1500

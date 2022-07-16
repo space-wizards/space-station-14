@@ -1,8 +1,7 @@
-using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -12,7 +11,7 @@ using Robust.Shared.Physics;
 namespace Content.Server.Shuttles.Systems
 {
     [UsedImplicitly]
-    public sealed partial class ShuttleSystem : EntitySystem
+    public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
@@ -38,6 +37,7 @@ namespace Content.Server.Shuttles.Systems
 
             InitializeEmergencyConsole();
             InitializeEscape();
+            InitializeFTL();
 
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -138,24 +138,6 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        /// <summary>
-        /// Enables or disables a shuttle's piloting controls.
-        /// </summary>
-        public void SetPilotable(ShuttleComponent component, bool value)
-        {
-            if (component.CanPilot == value) return;
-            component.CanPilot = value;
-
-            foreach (var comp in EntityQuery<ShuttleConsoleComponent>(true))
-            {
-                comp.CanPilot = value;
-
-                // I'm gonna pray if the UI is force closed and we block UI opens that BUI handles it.
-                if (!value)
-                    _uiSystem.GetUiOrNull(comp.Owner, ShuttleConsoleUiKey.Key)?.CloseAll();
-            }
-        }
-
         public void Toggle(ShuttleComponent component)
         {
             if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
@@ -176,7 +158,6 @@ namespace Content.Server.Shuttles.Systems
         {
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
-            //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
             component.FixedRotation = false;
             component.LinearDamping = ShuttleIdleLinearDamping;
             component.AngularDamping = ShuttleIdleAngularDamping;

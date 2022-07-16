@@ -1,3 +1,31 @@
+# Available to everybody
+- Commands:
+    - disconnect
+    - help
+    - list
+    - quit
+    - hardquit
+    - svbind
+    - bind
+    - exec # macro moment
+    - cls
+    - vram
+    - monitor
+    - setmonitor
+    - keyinfo
+    - setclipboard
+    - getclipboard
+    - net_graph
+    - net_watchent
+    - net_draw_interp
+    - devwindow
+    - fill
+    - dumpentities
+    - ">"
+    - gcf
+    - gc
+    - gc_mode
+
 - Flags: DEBUG
   Commands:
     - atvrange
@@ -17,6 +45,7 @@
     - showspread
     - showambient
     - showemergencyshuttle
+    - zoom
 
 - Flags: MAPPING
   Commands:

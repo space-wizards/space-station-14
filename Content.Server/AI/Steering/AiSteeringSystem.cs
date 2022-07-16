@@ -123,7 +123,7 @@ namespace Content.Server.AI.Steering
         /// <exception cref="InvalidOperationException"></exception>
         public void Unregister(EntityUid entity)
         {
-            if (EntityManager.TryGetComponent(entity, out SharedPlayerInputMoverComponent? controller))
+            if (EntityManager.TryGetComponent(entity, out InputMoverComponent? controller))
             {
                 controller.CurTickSprintMovement = Vector2.Zero;
             }
@@ -231,11 +231,11 @@ namespace Content.Server.AI.Steering
             _listIndex = (_listIndex + 1) % _agentLists.Count;
         }
 
-        private void SetDirection(SharedPlayerInputMoverComponent component, Vector2 value)
+        private void SetDirection(InputMoverComponent component, Vector2 value)
         {
             component.CurTickSprintMovement = value;
-            component._lastInputTick = _timing.CurTick;
-            component._lastInputSubTick = ushort.MaxValue;
+            component.LastInputTick = _timing.CurTick;
+            component.LastInputSubTick = ushort.MaxValue;
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Content.Server.AI.Steering
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (Deleted(entity) ||
-                !EntityManager.TryGetComponent(entity, out SharedPlayerInputMoverComponent? controller) ||
+                !EntityManager.TryGetComponent(entity, out InputMoverComponent? controller) ||
                 !controller.CanMove ||
                 !TryComp(entity, out TransformComponent? xform) ||
                 xform.GridUid == null)

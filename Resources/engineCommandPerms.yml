@@ -1,32 +1,3 @@
-# Available to everybody
-- Commands:
-  - disconnect
-  - help
-  - list
-  - quit
-  - hardquit
-  - cvar
-  - svbind
-  - bind
-  - exec # macro moment
-  - clear
-  - vram
-  - monitor
-  - setmonitor
-  - keyinfo
-  - setclipboard
-  - getclipboard
-  - gcf
-  - net_graph
-  - net_watchent
-  - net_draw_interp
-  - devwindow
-  - fill
-  - dumpentities
-  - getcomponentregistration
-  - fuck
-  - ">"
-
 - Flags: VAREDIT
   Commands:
   - addcomp
@@ -141,6 +112,10 @@
   - scsi
   - csi
   - lsasm
+  - cvar
+  - gcf
+  - getcomponentregistration
+  - fuck
 
 - Flags: QUERY
   Commands:

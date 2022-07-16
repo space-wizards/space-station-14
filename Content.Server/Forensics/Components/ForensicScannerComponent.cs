@@ -18,6 +18,8 @@ namespace Content.Server.Forensics
         [ViewVariables(VVAccess.ReadOnly)]
         public List<string> Fibers = new();
 
+        public string LastScanned = string.Empty;
+
         /// <summary>
         /// The time (in seconds) that it takes to scan an entity.
         /// </summary>
