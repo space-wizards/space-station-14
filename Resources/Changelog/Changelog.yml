@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'The space pollution has cleared, and now you can see the bright nebulae
-      once hidden behind the space clouds.', type: Add}
-  id: 1470
-  time: '2022-05-08T00:49:22.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Unequipping clothing now properly resets any movespeed modifiers they
@@ -2946,3 +2940,16 @@ Entries:
   - {message: Mobs are now properly throwable, type: Tweak}
   id: 1969
   time: '2022-07-16T03:04:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Throwing pushback reduced to half when weightless., type: Tweak}
+  - {message: Weightless distance for touching upped to 1m as 0.6m to be more forgiving
+      when weightless., type: Tweak}
+  - {message: Vehicles are now predicted. Vehicles are also now generally higher speed
+      but lower acceleration than mobs. ATVs are fastest but have lowest acceleration.,
+    type: Tweak}
+  - {message: Changed mobs back to 4.5 speed., type: Tweak}
+  - {message: Shuttle strafing and rotation now have their own keybinds. Shuttle braking
+      has been implemented on spacebar., type: Tweak}
+  id: 1970
+  time: '2022-07-16T03:51:52.0000000+00:00'
