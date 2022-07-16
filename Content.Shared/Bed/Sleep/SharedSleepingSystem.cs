@@ -3,9 +3,10 @@ using Content.Shared.Stunnable;
 using Content.Shared.Speech;
 using Content.Shared.Damage;
 using Content.Shared.Actions;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.MobState.Components;
 
-namespace Content.Shared.Bed.Sleep
+namespace Content.Server.Bed.Sleep
 {
     public sealed class SleepingSystem : EntitySystem
     {
@@ -13,25 +14,55 @@ namespace Content.Shared.Bed.Sleep
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedSleepingComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<SharedSleepingComponent, ComponentShutdown>(OnShutdown);
-            SubscribeLocalEvent<SharedSleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<SleepingComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<SleepingComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<SleepingComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
         }
 
-        private void OnInit(EntityUid uid, SharedSleepingComponent component, ComponentInit args)
+        private void OnInit(EntityUid uid, SleepingComponent component, ComponentInit args)
         {
+            AddComp<StunnedComponent>(uid);
             _blindingSystem.AdjustBlindSources(uid, true);
         }
 
-        private void OnShutdown(EntityUid uid, SharedSleepingComponent component, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)
         {
+            RemComp<StunnedComponent>(uid);
             _blindingSystem.AdjustBlindSources(uid, false);
         }
-        private void OnSpeakAttempt(EntityUid uid, SharedSleepingComponent component, SpeakAttemptEvent args)
+
+        private void OnDamageChanged(EntityUid uid, SleepingComponent component, DamageChangedEvent args)
+        {
+            if (!args.DamageIncreased || args.DamageDelta == null)
+                return;
+
+            if (args.DamageDelta.Total >= 5)
+                TryWaking(uid);
+        }
+
+        private void OnSpeakAttempt(EntityUid uid, SleepingComponent component, SpeakAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        private void OnSleepAction(EntityUid uid, MobStateComponent component, SleepActionEvent args)
+        {
+            Logger.Error("Received event...");
+            AddComp<SleepingComponent>(args.Performer);
+            args.Handled = true;
+        }
+
+        public bool TryWaking(EntityUid uid)
+        {
+            if (HasComp<ForcedSleepingComponent>(uid))
+                return false;
+
+            RemComp<SleepingComponent>(uid);
+            return true;
         }
     }
 }
 
-public sealed class SleepActionEvent : InstantActionEvent { }
+public sealed class SleepActionEvent : InstantActionEvent {}

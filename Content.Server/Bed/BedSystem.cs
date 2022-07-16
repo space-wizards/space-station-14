@@ -9,12 +9,17 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.MobState.Components;
+using Content.Server.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bed
 {
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -27,11 +32,17 @@ namespace Content.Server.Bed
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
         {
+            _prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction);
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
+                if (sleepAction != null)
+                    _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
                 return;
             }
+
+            if (sleepAction != null)
+                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction, null);
 
             RemComp<HealOnBuckleHealingComponent>(uid);
             component.Accumulator = 0;

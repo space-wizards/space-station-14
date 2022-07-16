@@ -77,3 +77,11 @@
   icon: Objects/Consumable/Food/egg.rsi/icon.png
   useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
+
+- type: instantAction
+  id: Sleep
+  name: action-name-sleep
+  description: action-desc-sleep
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  useDelay: 60
+  event: !type:SleepActionEvent
