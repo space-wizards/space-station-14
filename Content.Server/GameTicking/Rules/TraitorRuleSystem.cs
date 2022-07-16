@@ -145,10 +145,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 continue;
             }
 
-            var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
-            var traitorRole = new TraitorRole(mind, antagPrototype);
-            mind.AddRole(traitorRole);
-            _traitors.Add(traitorRole);
+            AddTraitor(mind);
         }
 
         var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
@@ -208,15 +205,19 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 return;
             }
 
-            // Why is this duplicated? Because the round setup thing is adding a bunch at once and needs to avoid collisions
-            // so it's in a specific order
-            var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
-            var traitorRole = new TraitorRole(mind, antagPrototype);
-            mind.AddRole(traitorRole);
-            _traitors.Add(traitorRole);
-
+            var traitorRole = AddTraitor(mind);
             SetupTraitor(traitorRole, mind);
         }
+    }
+
+    // Two functions because at round start, we want to add all traitors before giving them objectives
+    private TraitorRole AddTraitor(Mind.Mind mind)
+    {
+        var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+        var traitorRole = new TraitorRole(mind, antagPrototype);
+        mind.AddRole(traitorRole);
+        _traitors.Add(traitorRole);
+        return traitorRole;
     }
 
     private void SetupTraitor(TraitorRole traitor, Mind.Mind mind)
