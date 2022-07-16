@@ -44,7 +44,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             args.Cancel();
     }
 
-    // TODO: Shitcode
+    // TODO: Shitcode, needs to use sprites instead of actual offsets.
     private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
     {
         // This first check is just for safety
@@ -60,6 +60,15 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnVehicleStartup(EntityUid uid, VehicleComponent component, ComponentStartup args)
     {
+        UpdateDrawDepth(uid, 2);
+
+        // This code should be purged anyway but with that being said this doesn't handle components being changed.
+        if (TryComp<SharedStrapComponent>(uid, out var strap))
+        {
+            component.BaseBuckleOffset = strap.BuckleOffset;
+            strap.BuckleOffsetUnclamped = Vector2.Zero;
+        }
+
         _modifier.RefreshMovementSpeedModifiers(uid);
     }
 

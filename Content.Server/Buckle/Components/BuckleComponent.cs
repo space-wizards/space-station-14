@@ -28,6 +28,7 @@ namespace Content.Server.Buckle.Components
     [ComponentReference(typeof(SharedBuckleComponent))]
     public sealed class BuckleComponent : SharedBuckleComponent
     {
+        [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
