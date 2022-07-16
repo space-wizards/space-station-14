@@ -1,78 +1,48 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
+using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Data;
-using Content.Shared;
 using Content.Shared.CCVar;
-using Nett;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Configuration;
-using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Parallax.Managers;
 
-internal sealed class ParallaxManager : IParallaxManager
+public sealed class ParallaxManager : IParallaxManager
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-    private string _parallaxName = "";
-    public string ParallaxName
-    {
-        get => _parallaxName;
-        set
-        {
-            LoadParallaxByName(value);
-        }
-    }
+    private ISawmill _sawmill = Logger.GetSawmill("parallax");
 
     public Vector2 ParallaxAnchor { get; set; }
 
-    private CancellationTokenSource? _presentParallaxLoadCancel;
+    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesLQ = new();
+    private readonly ConcurrentDictionary<string, ParallaxLayerPrepared[]> _parallaxesHQ = new();
 
-    private ParallaxLayerPrepared[] _parallaxLayersHQ = {};
-    private ParallaxLayerPrepared[] _parallaxLayersLQ = {};
+    private readonly ConcurrentDictionary<string, CancellationTokenSource> _loadingParallaxes = new();
 
-    public ParallaxLayerPrepared[] ParallaxLayers => _configurationManager.GetCVar(CCVars.ParallaxLowQuality) ? _parallaxLayersLQ : _parallaxLayersHQ;
-
-    public async void LoadParallax()
+    public ParallaxLayerPrepared[] GetParallaxLayers(string name)
     {
-        await LoadParallaxByName("default");
+        return _configurationManager.GetCVar(CCVars.ParallaxLowQuality) ? _parallaxesLQ[name] : _parallaxesHQ[name];
+    }
+
+    public async void LoadDefaultParallax()
+    {
+        await LoadParallaxByName("Default");
     }
 
     private async Task LoadParallaxByName(string name)
     {
-        // Update _parallaxName
-        if (_parallaxName == name)
-        {
-            return;
-        }
-        _parallaxName = name;
+        if (_parallaxesLQ.ContainsKey(name) || _loadingParallaxes.ContainsKey(name)) return;
 
         // Cancel any existing load and setup the new cancellation token
-        _presentParallaxLoadCancel?.Cancel();
-        _presentParallaxLoadCancel = new CancellationTokenSource();
-        var cancel = _presentParallaxLoadCancel.Token;
-
-        // Empty parallax name = no layers (this is so that the initial "" parallax name is consistent)
-        if (_parallaxName == "")
-        {
-            _parallaxLayersHQ = _parallaxLayersLQ = new ParallaxLayerPrepared[] {};
-            return;
-        }
+        var token = new CancellationTokenSource();
+        _loadingParallaxes[name] = token;
+        var cancel = token.Token;
 
         // Begin (for real)
-        Logger.InfoS("parallax", $"Loading parallax {name}");
+        _sawmill.Info($"Loading parallax {name}");
 
         try
         {
@@ -95,17 +65,15 @@ internal sealed class ParallaxManager : IParallaxManager
                 lq = results[1];
             }
 
-            // Still keeping this check just in case.
-            if (_parallaxName == name)
-            {
-                _parallaxLayersHQ = hq;
-                _parallaxLayersLQ = lq;
-                Logger.InfoS("parallax", $"Loaded parallax {name}");
-            }
+            _parallaxesLQ[name] = lq;
+            _parallaxesHQ[name] = hq;
+
+            _sawmill.Info($"Loaded parallax {name}");
+
         }
         catch (Exception ex)
         {
-            Logger.ErrorS("parallax", $"Failed to loaded parallax {name}: {ex}");
+            _sawmill.Error($"Failed to loaded parallax {name}: {ex}");
         }
     }
 

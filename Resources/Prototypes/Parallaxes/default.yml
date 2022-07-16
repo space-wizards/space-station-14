@@ -1,5 +1,5 @@
 - type: parallax
-  id: default
+  id: Default
   layers:
     - texture:
         !type:ImageParallaxTextureSource

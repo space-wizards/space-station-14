@@ -1,20 +1,19 @@
-using System;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Parallax;
 
 public sealed class ParallaxOverlay : Overlay
 {
-    [Dependency] private readonly IParallaxManager _parallaxManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IParallaxManager _manager = default!;
+    private readonly ParallaxSystem _parallax;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
     private readonly ShaderInstance _shader;
@@ -22,25 +21,25 @@ public sealed class ParallaxOverlay : Overlay
     public ParallaxOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
         _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.Viewport.Eye == null)
-        {
+        if (args.MapId == MapId.Nullspace)
             return;
-        }
 
         if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
-        {
             return;
-        }
 
+        var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
         var screenHandle = args.WorldHandle;
         screenHandle.UseShader(_shader);
 
-        foreach (var layer in _parallaxManager.ParallaxLayers)
+        var layers = _parallax.GetParallaxLayers(args.MapId);
+
+        foreach (var layer in layers)
         {
             var tex = layer.Texture;
 
@@ -52,10 +51,10 @@ public sealed class ParallaxOverlay : Overlay
             // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
             // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
             // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
-            var home = layer.Config.WorldHomePosition + _parallaxManager.ParallaxAnchor;
+            var home = layer.Config.WorldHomePosition + _manager.ParallaxAnchor;
 
             // Origin - start with the parallax shift itself.
-            var originBL = (args.Viewport.Eye.Position.Position - home) * layer.Config.Slowness;
+            var originBL = (position - home) * layer.Config.Slowness;
 
             // Place at the home.
             originBL += home;
