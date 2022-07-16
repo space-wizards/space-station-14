@@ -145,7 +145,7 @@ namespace Content.Server.Zombies
             _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target));
 
             //Make it sentient if it's an animal or something
-            if (!HasComp<SharedDummyInputMoverComponent>(target)) //this component is cursed and fucks shit up
+            if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
             //Make the zombie not die in the cold. Good for space zombies

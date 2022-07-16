@@ -8,9 +8,6 @@ namespace Content.Server.Shuttles.Components
         [ViewVariables]
         public bool Enabled = true;
 
-        [ViewVariables]
-        public ShuttleMode Mode = ShuttleMode.Cruise;
-
         /// <summary>
         /// The cached thrust available for each cardinal direction
         /// </summary>

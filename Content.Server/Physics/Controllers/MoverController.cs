@@ -1,15 +1,12 @@
 using Content.Server.Cargo.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Physics.Controllers
 {
@@ -18,14 +15,8 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ShuttleSystem _shuttle = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
-        /// <summary>
-        /// These mobs will get skipped over when checking which mobs
-        /// should be moved. Prediction is handled elsewhere by
-        /// cancelling the movement attempt in the shared and
-        /// client namespace.
-        /// </summary>
-        private HashSet<EntityUid> _excludedMobs = new();
-        private Dictionary<ShuttleComponent, List<(PilotComponent, IMoverComponent, TransformComponent)>> _shuttlePilots = new();
+
+        private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
 
         protected override Filter GetSoundPlayers(EntityUid mover)
         {
@@ -40,31 +31,166 @@ namespace Content.Server.Physics.Controllers
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics, xform) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent, TransformComponent>())
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
+
+            foreach (var (mover, xform) in EntityQuery<InputMoverComponent, TransformComponent>())
             {
-                _excludedMobs.Add(mover.Owner);
-                HandleMobMovement(mover, physics, mobMover, xform, frameTime);
+                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed != null)
+                {
+                    continue;
+                }
+
+                PhysicsComponent? body = null;
+
+                if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
+                {
+                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body)) continue;
+                }
+                else if (!bodyQuery.TryGetComponent(mover.Owner, out body))
+                {
+                    continue;
+                }
+
+                HandleMobMovement(mover, body, xform, frameTime);
             }
 
             HandleShuttleMovement(frameTime);
-            HandleVehicleMovement();
+        }
 
-            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+        public (Vector2 Strafe, float Rotation, float Brakes) GetPilotVelocityInput(PilotComponent component)
+        {
+            if (!Timing.InSimulation)
             {
-                if (_excludedMobs.Contains(mover.Owner)) continue;
-
-                HandleKinematicMovement(mover, physics);
+                // Outside of simulation we'll be running client predicted movement per-frame.
+                // So return a full-length vector as if it's a full tick.
+                // Physics system will have the correct time step anyways.
+                ResetSubtick(component);
+                ApplyTick(component, 1f);
+                return (component.CurTickStrafeMovement, component.CurTickRotationMovement, component.CurTickBraking);
             }
+
+            float remainingFraction;
+
+            if (Timing.CurTick > component.LastInputTick)
+            {
+                component.CurTickStrafeMovement = Vector2.Zero;
+                component.CurTickRotationMovement = 0f;
+                component.CurTickBraking = 0f;
+                remainingFraction = 1;
+            }
+            else
+            {
+                remainingFraction = (ushort.MaxValue - component.LastInputSubTick) / (float) ushort.MaxValue;
+            }
+
+            ApplyTick(component, remainingFraction);
+
+            // Logger.Info($"{curDir}{walk}{sprint}");
+            return (component.CurTickStrafeMovement, component.CurTickRotationMovement, component.CurTickBraking);
+        }
+
+        private void ResetSubtick(PilotComponent component)
+        {
+            if (Timing.CurTick <= component.LastInputTick) return;
+
+            component.CurTickStrafeMovement = Vector2.Zero;
+            component.CurTickRotationMovement = 0f;
+            component.CurTickBraking = 0f;
+            component.LastInputTick = Timing.CurTick;
+            component.LastInputSubTick = 0;
+        }
+
+        protected override void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state)
+        {
+            if (!TryComp<PilotComponent>(uid, out var pilot) || pilot.Console == null) return;
+
+            ResetSubtick(pilot);
+
+            if (subTick >= pilot.LastInputSubTick)
+            {
+                var fraction = (subTick - pilot.LastInputSubTick) / (float) ushort.MaxValue;
+
+                ApplyTick(pilot, fraction);
+                pilot.LastInputSubTick = subTick;
+            }
+
+            var buttons = pilot.HeldButtons;
+
+            if (state)
+            {
+                buttons |= button;
+            }
+            else
+            {
+                buttons &= ~button;
+            }
+
+            pilot.HeldButtons = buttons;
+        }
+
+        private void ApplyTick(PilotComponent component, float fraction)
+        {
+            var x = 0;
+            var y = 0;
+            var rot = 0;
+            int brake;
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeLeft) != 0x0)
+            {
+                x -= 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeRight) != 0x0)
+            {
+                x += 1;
+            }
+
+            component.CurTickStrafeMovement.X += x * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeUp) != 0x0)
+            {
+                y += 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.StrafeDown) != 0x0)
+            {
+                y -= 1;
+            }
+
+            component.CurTickStrafeMovement.Y += y * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.RotateLeft) != 0x0)
+            {
+                rot -= 1;
+            }
+
+            if ((component.HeldButtons & ShuttleButtons.RotateRight) != 0x0)
+            {
+                rot += 1;
+            }
+
+            component.CurTickRotationMovement += rot * fraction;
+
+            if ((component.HeldButtons & ShuttleButtons.Brake) != 0x0)
+            {
+                brake = 1;
+            }
+            else
+            {
+                brake = 0;
+            }
+
+            component.CurTickBraking += brake * fraction;
         }
 
         private void HandleShuttleMovement(float frameTime)
         {
-            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent Pilot, IMoverComponent Mover, TransformComponent ConsoleXform)>>();
+            var newPilots = new Dictionary<ShuttleComponent, List<(PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>>();
 
             // We just mark off their movement and the shuttle itself does its own movement
-            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, InputMoverComponent>())
             {
                 var consoleEnt = pilot.Console?.Owner;
 
@@ -76,8 +202,6 @@ namespace Content.Server.Physics.Controllers
 
                 if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
 
-                _excludedMobs.Add(mover.Owner);
-
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
                 if (!_mapManager.TryGetGrid(gridId, out var grid) ||
@@ -86,7 +210,7 @@ namespace Content.Server.Physics.Controllers
 
                 if (!newPilots.TryGetValue(shuttleComponent, out var pilots))
                 {
-                    pilots = new List<(PilotComponent, IMoverComponent, TransformComponent)>();
+                    pilots = new List<(PilotComponent, InputMoverComponent, TransformComponent)>();
                     newPilots[shuttleComponent] = pilots;
                 }
 
@@ -113,37 +237,57 @@ namespace Content.Server.Physics.Controllers
                 var linearInput = Vector2.Zero;
                 var angularInput = 0f;
 
-                switch (shuttle.Mode)
+                foreach (var (pilot, _, consoleXform) in pilots)
                 {
-                    case ShuttleMode.Cruise:
-                        foreach (var (pilot, mover, consoleXform) in pilots)
+                    var pilotInput = GetPilotVelocityInput(pilot);
+
+                    // On the one hand we could just make it relay inputs to brake
+                    // but uhh may be disorienting? n
+                    if (pilotInput.Brakes > 0f)
+                    {
+                        if (body.LinearVelocity.Length > 0f)
                         {
-                            var sprint = mover.VelocityDir.sprinting;
+                            var force = body.LinearVelocity.Normalized * pilotInput.Brakes / body.InvMass * 3f;
+                            var impulse = force * body.InvMass * frameTime;
 
-                            if (sprint.Equals(Vector2.Zero)) continue;
-
-                            var offsetRotation = consoleXform.LocalRotation;
-
-                            linearInput += offsetRotation.RotateVec(new Vector2(0f, sprint.Y));
-                            angularInput += sprint.X;
+                            if (impulse.Length > body.LinearVelocity.Length)
+                            {
+                                body.LinearVelocity = Vector2.Zero;
+                            }
+                            else
+                            {
+                                body.ApplyLinearImpulse(-force * frameTime);
+                            }
                         }
-                        break;
-                    case ShuttleMode.Strafing:
-                        // No angular input possible
-                        foreach (var (pilot, mover, consoleXform) in pilots)
+
+                        if (body.AngularVelocity != 0f)
                         {
-                            var sprint = mover.VelocityDir.sprinting;
+                            var force = body.AngularVelocity * pilotInput.Brakes / body.InvI * 2f;
+                            var impulse = force * body.InvI * frameTime;
 
-                            if (sprint.Equals(Vector2.Zero)) continue;
-
-                            var offsetRotation = consoleXform.LocalRotation;
-                            sprint = offsetRotation.RotateVec(sprint);
-
-                            linearInput += sprint;
+                            if (MathF.Abs(impulse) > MathF.Abs(body.AngularVelocity))
+                            {
+                                body.AngularVelocity = 0f;
+                            }
+                            else
+                            {
+                                body.ApplyAngularImpulse(-force * frameTime);
+                            }
                         }
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+
+                        continue;
+                    }
+
+                    if (pilotInput.Strafe.Length > 0f)
+                    {
+                        var offsetRotation = consoleXform.LocalRotation;
+                        linearInput += offsetRotation.RotateVec(pilotInput.Strafe);
+                    }
+
+                    if (pilotInput.Rotation != 0f)
+                    {
+                        angularInput += pilotInput.Rotation;
+                    }
                 }
 
                 var count = pilots.Count;
@@ -224,8 +368,7 @@ namespace Content.Server.Physics.Controllers
                         totalForce += force;
                     }
 
-                    var dragForce = body.LinearVelocity * (totalForce.Length / _shuttle.ShuttleMaxLinearSpeed);
-                    body.ApplyLinearImpulse((totalForce - dragForce) * frameTime);
+                    body.ApplyLinearImpulse(totalForce * frameTime);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
@@ -263,26 +406,5 @@ namespace Content.Server.Physics.Controllers
                     (ftl.State & (FTLState.Starting | FTLState.Travelling | FTLState.Arriving)) != 0x0);
         }
 
-        /// <summary>
-        /// Add mobs riding vehicles to the list of mobs whose input
-        /// should be ignored.
-        /// </summary>
-        private void HandleVehicleMovement()
-        {
-            // TODO: Nuke this code. It's on my list.
-            foreach (var (rider, mover) in EntityQuery<RiderComponent, SharedPlayerInputMoverComponent>())
-            {
-                if (rider.Vehicle == null) continue;
-                _excludedMobs.Add(mover.Owner);
-
-                if (!_excludedMobs.Add(rider.Vehicle.Owner)) continue;
-
-                if (!TryComp<IMoverComponent>(rider.Vehicle.Owner, out var vehicleMover) ||
-                    !TryComp<PhysicsComponent>(rider.Vehicle.Owner, out var vehicleBody) ||
-                    rider.Vehicle.Owner.IsWeightless(vehicleBody, mapManager: _mapManager, entityManager: EntityManager)) continue;
-
-                HandleKinematicMovement(vehicleMover, vehicleBody);
-            }
-        }
     }
 }

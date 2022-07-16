@@ -18,12 +18,12 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
             SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
             SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
         {
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
                 mobState.IsDead() &&

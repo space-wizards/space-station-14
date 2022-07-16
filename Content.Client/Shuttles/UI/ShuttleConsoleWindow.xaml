@@ -83,10 +83,6 @@
                            Align="Right"/>
                 </GridContainer>
             </BoxContainer>
-            <Button Name="ShuttleModeDisplay"
-                    Text="{Loc 'shuttle-console-strafing'}"
-                    TextAlign="Center"
-                    ToggleMode="True"/>
             <Button Name="IFFToggle"
                     Text="{Loc 'shuttle-console-iff-toggle'}"
                     TextAlign="Center"
