@@ -24,7 +24,16 @@ public sealed class ParallaxManager : IParallaxManager
 
     public ParallaxLayerPrepared[] GetParallaxLayers(string name)
     {
+        // TODO: Need to get dummy layers if it's still loading.
+        // Whenever we make a new map with a different parallax need to preload it.
         return _configurationManager.GetCVar(CCVars.ParallaxLowQuality) ? _parallaxesLQ[name] : _parallaxesHQ[name];
+    }
+
+    public async void UnloadParallax(string name)
+    {
+        if (!_parallaxesLQ.ContainsKey(name)) return;
+        // TODO:
+        throw new NotImplementedException();
     }
 
     public async void LoadDefaultParallax()
