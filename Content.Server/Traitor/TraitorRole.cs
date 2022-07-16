@@ -18,7 +18,7 @@ namespace Content.Server.Traitor
         public override string Name { get; }
         public override bool Antagonist { get; }
 
-        public void GreetTraitor(string[] codewords)
+        public void GreetTraitor(HashSet<string> codewords)
         {
             if (Mind.TryGetSession(out var session))
             {
