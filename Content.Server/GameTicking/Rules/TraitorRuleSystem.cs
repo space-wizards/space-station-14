@@ -41,6 +41,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     public int TotalTraitors => _traitors.Count;
 
     private int _playersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
+    private int _maxTraitors => _cfg.GetCVar(CCVars.TraitorMaxTraitors);
 
     public HashSet<string> CodeWords = new();
 
@@ -94,7 +95,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var maxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
         var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
 
         var list = new List<IPlayerSession>(ev.Players).Where(x =>
@@ -117,7 +117,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
 
         var numTraitors = MathHelper.Clamp(ev.Players.Length / _playersPerTraitor,
-            1, maxTraitors);
+            1, _maxTraitors);
         /// Get the initial traitors
         for (var i = 0; i < numTraitors; i++)
         {
@@ -168,10 +168,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     {
         if (!RuleAdded)
             return;
+        if (TotalTraitors >= _maxTraitors)
+            return;
         if (!ev.LateJoin)
             return;
         if (!ev.Profile.AntagPreferences.Contains(TraitorPrototypeID))
             return;
+
 
         if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
             return;
