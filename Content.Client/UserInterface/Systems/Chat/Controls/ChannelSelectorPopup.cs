@@ -18,7 +18,7 @@ public sealed class ChannelSelectorPopup : Popup
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 1
         };
-        SetupChannels(ChatUIController.ChannelSelectorConfig);
+        //SetupChannels(ChatUIController.ChannelSelectorConfig);
         AddChild(_channelSelectorHBox);
     }
 
@@ -34,7 +34,7 @@ public sealed class ChannelSelectorPopup : Popup
         }
     }
 
-    public ChatSelectChannel NextChannel()
+    /*public ChatSelectChannel NextChannel()
     {
         var nextChannel = ChatUIController.GetNextChannelSelector(_activeSelector);
         var index = 0;
@@ -91,6 +91,8 @@ public sealed class ChannelSelectorPopup : Popup
             }
         }
     }
+
+    */
     //run this only once
     public void SetSelectorButton(ChannelSelectorButton button)
     {

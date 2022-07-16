@@ -48,7 +48,7 @@ public sealed class ChannelSelectorButton : Button
         _channelSelectorPopup = _interfaceManager.CreateNamedPopup<ChannelSelectorPopup>("ChannelSelectorPopup", (0, 0)) ??
                                 throw new Exception("Tried to add channel selector popup while one already exists");
         _chatUIController.RegisterOnChannelsAdd(_channelSelectorPopup.ShowChannels);
-        _chatUIController.RegisterOnChannelsRemove(_channelSelectorPopup.HideChannels);
+        //_chatUIController.RegisterOnChannelsRemove(_channelSelectorPopup.HideChannels);
         _channelSelectorPopup.SetSelectorButton(this);
         var firstAvailableSelector = _channelSelectorPopup.FirstChannel;
         if (firstAvailableSelector != null)
