@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -19,6 +18,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -40,6 +40,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     public int TotalTraitors => _traitors.Count;
 
+    private int _playersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
+
     public HashSet<string> CodeWords = new();
 
     public override void Initialize()
@@ -48,6 +50,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
@@ -91,7 +94,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var playersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
         var maxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
         var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
 
@@ -114,7 +116,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             }
         }
 
-        var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor,
+        var numTraitors = MathHelper.Clamp(ev.Players.Length / _playersPerTraitor,
             1, maxTraitors);
         /// Get the initial traitors
         for (var i = 0; i < numTraitors; i++)
@@ -165,6 +167,65 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
 
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+    }
+
+    private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
+    {
+        if (!RuleAdded)
+            return;
+        if (!ev.LateJoin)
+            return;
+        if (!ev.Profile.AntagPreferences.Contains(TraitorPrototypeID))
+            return;
+        Logger.Error("Handling latejoin...");
+
+        if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
+            return;
+
+        if (!job.CanBeAntag)
+            return;
+
+        // the nth player we adjust our probabilities around
+        int target = ((_playersPerTraitor * TotalTraitors) + 1);
+        Logger.Error("We have " + TotalTraitors + " traitors, and " + _playersPerTraitor + " players per traitor.  Setting target of " + target);
+
+        float chance = (1 / _playersPerTraitor);
+        Logger.Error("Base chance is: " + chance);
+
+        /// If we have too many traitors, divide by how many players below target for next traitor we are.
+        Logger.Error("JoinOrder is: " + ev.JoinOrder);
+        if (ev.JoinOrder < target)
+        {
+            chance /= (target - ev.JoinOrder);
+        } else // Tick up towards 100% chance.
+        {
+            chance *= ((ev.JoinOrder + 1) - target);
+        }
+        if (chance > 1)
+            chance = 1;
+
+        Logger.Error("Adjusted chance is: " + chance);
+
+        if (_random.Prob((float) chance))
+        {
+            Logger.Error("Lucky! Setting up traitor...");
+            var mind = ev.Player.Data.ContentData()?.Mind;
+
+            if (mind == null)
+            {
+                Logger.Error("Player somehow joined with no mind, see entity " + ev.Mob);
+                return;
+            }
+
+            // Why is this duplicated? Because the round setup thing is adding a bunch at once and needs to avoid collisions
+            // so it's in a specific order
+            var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+            var traitorRole = new TraitorRole(mind, antagPrototype);
+            mind.AddRole(traitorRole);
+            _traitors.Add(traitorRole);
+
+            SetupTraitor(traitorRole, mind);
+        }
     }
 
     private void SetupTraitor(TraitorRole traitor, Mind.Mind mind)
