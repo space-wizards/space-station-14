@@ -1,4 +1,6 @@
 using Content.Shared.Cargo;
+using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cargo.Components;
 
@@ -22,7 +24,7 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     public int Index;
 
-    [ViewVariables, DataField("cargoShuttleProto")]
+    [ViewVariables, DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
     public string? CargoShuttleProto = "CargoShuttle";
 
     /// <summary>

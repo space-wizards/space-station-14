@@ -432,7 +432,7 @@ namespace Content.Server.Nuke
             var announcement = Loc.GetString("nuke-component-announcement-armed",
                 ("time", (int) component.RemainingTime), ("position", posText));
             var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, Color.Red);
+            _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false, null, Color.Red);
 
             NukeArmedAudio(component);
 

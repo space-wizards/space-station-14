@@ -132,7 +132,6 @@ public sealed partial class ShuttleSystem
        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
-       SetPilotable(component, false);
 
        if (shuttleDocks.Count > 0)
        {
@@ -165,7 +164,7 @@ public sealed partial class ShuttleSystem
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
                            dockedBounds).Any(o => o.GridEntityId != targetGrid))
                    {
-                       break;
+                       continue;
                    }
 
                    // Alright well the spawn is valid now to check how many we can connect
@@ -255,7 +254,7 @@ public sealed partial class ShuttleSystem
            return;
        }
 
-       if (TryHyperspaceDock(shuttle, targetGrid.Value))
+       if (TryFTLDock(shuttle, targetGrid.Value))
        {
            var xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -417,6 +416,9 @@ public sealed partial class ShuttleSystem
        {
            var (_, centcomm) = _loader.LoadBlueprint(_centcommMap.Value, "/Maps/centcomm.yml");
            _centcomm = centcomm;
+
+           if (_centcomm != null)
+               AddFTLDestination(_centcomm.Value, false);
        }
        else
        {

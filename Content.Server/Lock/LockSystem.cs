@@ -20,6 +20,7 @@ namespace Content.Server.Lock
     public sealed class LockSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -27,6 +28,7 @@ namespace Content.Server.Lock
             base.Initialize();
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
+            SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
             SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
@@ -55,6 +57,17 @@ namespace Content.Server.Lock
             {
                 TryLock(uid, args.User, lockComp);
                 args.Handled = true;
+            }
+        }
+
+        private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, StorageOpenAttemptEvent args)
+        {
+            if (component.Locked)
+            {
+                if (!args.Silent)
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+
+                args.Cancel();
             }
         }
 
