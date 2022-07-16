@@ -165,8 +165,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             SetupTraitor(traitor, traitor.Mind);
         }
-
-        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
@@ -189,7 +187,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         int target = ((_playersPerTraitor * TotalTraitors) + 1);
         Logger.Error("We have " + TotalTraitors + " traitors, and " + _playersPerTraitor + " players per traitor.  Setting target of " + target);
 
-        float chance = (1 / _playersPerTraitor);
+        float chance = (1f / _playersPerTraitor);
         Logger.Error("Base chance is: " + chance);
 
         /// If we have too many traitors, divide by how many players below target for next traitor we are.
@@ -255,6 +253,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
             //give traitors their codewords to keep in their character info menu
             traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",CodeWords)));
+            SoundSystem.Play(_addedSound.GetSound(), Filter.Entities(mind.OwnedEntity.Value), AudioParams.Default);
+
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
