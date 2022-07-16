@@ -19,8 +19,8 @@ namespace Content.Server.Bed.Sleep
         {
             if (args.FellAsleep)
             {
-                AddComp<StunnedComponent>(uid);
-                AddComp<KnockedDownComponent>(uid);
+                EnsureComp<StunnedComponent>(uid);
+                EnsureComp<KnockedDownComponent>(uid);
                 return;
             }
 
