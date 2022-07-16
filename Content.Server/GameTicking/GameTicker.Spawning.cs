@@ -30,9 +30,9 @@ namespace Content.Server.GameTicking
 
         /// <summary>
         /// How many players have joined the round through normal methods.
-        /// Useful for game rules to look at.
+        /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
         /// </summary>
-        public int PlayersJoined = 0;
+        public int PlayersJoinedRoundNormally = 0;
 
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
@@ -199,8 +199,8 @@ namespace Content.Server.GameTicking
             }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
-            PlayersJoined++;
-            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoined, station, character);
+            PlayersJoinedRoundNormally++;
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
             RaiseLocalEvent(mob, aev, true);
         }
 
