@@ -5,6 +5,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Icarus;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -92,8 +93,8 @@ public sealed class IcarusTerminalSystem : EntitySystem
                 ("target", target)),
             Loc.GetString("icarus-announce-sender"),
             false,
+            component.AlertSound,
             Color.Red);
-        SoundSystem.Play(component.AlertSound.GetSound(), Filter.Broadcast());
     }
 
     private void UpdateStatus(IcarusTerminalComponent component)
@@ -144,9 +145,7 @@ public sealed class IcarusTerminalSystem : EntitySystem
         if (!component.AuthorizationNotified)
         {
             _chatSystem.DispatchStationAnnouncement(component.Owner, Loc.GetString("icarus-authorized-announcement"),
-                playDefaultSound: false); // TODO: Just pass custom sound path after PR accepting
-            SoundSystem.Play("/Audio/Misc/notice1.ogg",
-                Filter.Broadcast());
+                announcementSound: new SoundPathSpecifier("/Audio/Misc/notice1.ogg"));
             component.AuthorizationNotified = true;
         }
     }
