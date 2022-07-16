@@ -175,7 +175,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             return;
         if (!ev.Profile.AntagPreferences.Contains(TraitorPrototypeID))
             return;
-        Logger.Error("Handling latejoin...");
 
         if (ev.JobId == null || !_prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job))
             return;
@@ -185,13 +184,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         // the nth player we adjust our probabilities around
         int target = ((_playersPerTraitor * TotalTraitors) + 1);
-        Logger.Error("We have " + TotalTraitors + " traitors, and " + _playersPerTraitor + " players per traitor.  Setting target of " + target);
 
         float chance = (1f / _playersPerTraitor);
-        Logger.Error("Base chance is: " + chance);
 
         /// If we have too many traitors, divide by how many players below target for next traitor we are.
-        Logger.Error("JoinOrder is: " + ev.JoinOrder);
         if (ev.JoinOrder < target)
         {
             chance /= (target - ev.JoinOrder);
@@ -202,11 +198,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (chance > 1)
             chance = 1;
 
-        Logger.Error("Adjusted chance is: " + chance);
-
         if (_random.Prob((float) chance))
         {
-            Logger.Error("Lucky! Setting up traitor...");
             var mind = ev.Player.Data.ContentData()?.Mind;
 
             if (mind == null)
