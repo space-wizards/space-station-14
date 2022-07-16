@@ -198,11 +198,42 @@ namespace Content.Server.Dragon
             _popupSystem.PopupEntity(Loc.GetString("dragon-spawn-action-popup-message-fail-no-eggs"), dragonuid, Filter.Entities(dragonuid));
         }
 
+        private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
+            DragonBreatheFireActionEvent args)
+        {
+            if (args.Handled || component.BreatheFireAction == null)
+                return;
+
+            // Check if dragon has a breath attack currently processing.
+            if (_breathAttacks.TryGetValue(dragonuid, out var breathAttack) && !breathAttack.Finished)
+                return;
+
+            var dragonXform = Transform(dragonuid);
+            var dragonPos = dragonXform.MapPosition;
+
+            var breathDirection = (args.Target.Position - dragonPos.Position).Normalized;
+
+            _breathAttacks.Add(dragonuid, new BreathAttack(this,
+                dragonuid,
+                dragonPos,
+                (int)component.BreatheFireAction.Range,
+                breathDirection.ToWorldAngle(),
+                TimeSpan.FromMilliseconds(150),
+                component.BreathDamage,
+                EntityManager,
+                _mapManager));
+
+            args.Handled = true;
+
+            if(component.SoundBreathFire != null)
+                SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
+        }
+
         public override void Update(float frameTime)
         {
             foreach (var entry in _breathAttacks)
             {
-                if (!entry.Value.Finished)
+                if (entry.Value.Finished)
                     _breathAttacks.Remove(entry.Key);
                 else
                     entry.Value.Update(frameTime, _gameTiming);
@@ -226,44 +257,6 @@ namespace Content.Server.Dragon
                 return false;
 
             return physics.CanCollide && physics.Hard && (physics.CollisionLayer & (int)CollisionGroup.BulletImpassable) != 0;
-        }
-
-        private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
-            DragonBreatheFireActionEvent args)
-        {
-            if (args.Handled || component.BreatheFireAction == null)
-                return;
-
-            // Check if dragon has a breath attack currently processing.
-            if (_breathAttacks.TryGetValue(dragonuid, out var breathAttack) && !breathAttack.Finished)
-                return;
-
-            if (breathAttack != null)
-                _breathAttacks.Remove(dragonuid);
-
-            var dragonXform = Transform(dragonuid);
-            var dragonPos = dragonXform.MapPosition;
-
-            if (dragonXform.GridUid == null)
-                return; // TODO: Support firing from outside of grids.
-
-            var breathDirection = (args.Target.Position - dragonPos.Position).Normalized;
-
-            _breathAttacks.Add(dragonuid, new BreathAttack(this,
-                dragonuid,
-                dragonPos,
-                (int)component.BreatheFireAction.Range,
-                breathDirection.ToWorldAngle(),
-                TimeSpan.FromMilliseconds(150),
-                component.BreathDamage,
-                EntityManager,
-                _mapManager));
-
-            // // TODO: Optimize with usage of entity queries and lookup systems.
-            args.Handled = true;
-
-            if(component.SoundBreathFire != null)
-                SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
         }
 
         /// <summary>
@@ -294,6 +287,34 @@ namespace Content.Server.Dragon
 
             var coords = grid.GridTileToLocal(tile);
             Spawn(effectPrototype, coords);
+        }
+
+        /// <summary>
+        ///     Looks for the largest grid near the start of the breath attack to use as the basis of the tile coordinates.
+        /// </summary>
+        /// <param name="position">Origin position of the breath attack.</param>
+        /// <param name="distance">Number of tiles the attack will propagate.</param>
+        /// <param name="physicsQuery"></param>
+        /// <returns></returns>
+        public EntityUid? getReferenceGrid(MapCoordinates position, int distance, EntityQuery<PhysicsComponent> physicsQuery)
+        {
+            EntityUid? referenceGrid = null;
+            var mass = 0f;
+
+            var boxSize = distance * 2;
+            var box = Box2.CenteredAround(position.Position, (boxSize, boxSize));
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(position.MapId, box))
+            {
+                if (physicsQuery.TryGetComponent(grid.GridEntityId, out var physics) &&
+                    physics.Mass > mass)
+                {
+                    mass = physics.Mass;
+                    referenceGrid = grid.GridEntityId;
+                }
+            }
+
+            return referenceGrid;
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs
@@ -378,7 +399,7 @@ internal sealed class BreathAttack
     /// <summary>
     ///     The current grid that is being processed.
     /// </summary>
-    private readonly IMapGrid? _currentGrid;
+    private readonly IMapGrid? _referenceGrid;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -428,19 +449,27 @@ internal sealed class BreathAttack
 
         var creatorXform = _xformQuery.GetComponent(creator);
 
-        if (mapMan.TryFindGridAt(origin, out var grid))
-            _currentGrid = grid;
+        if (creatorXform.GridUid != null)
+            _referenceGrid = mapMan.GetGrid(creatorXform.GridUid.Value);
+        else
+        {
+            var refGridUid = _system.getReferenceGrid(origin, range, _physicsQuery);
+            if (refGridUid != null)
+                _referenceGrid = mapMan.GetGrid(refGridUid.Value);
+        }
+
+
 
         // Check if the attack is starting from a grid.
-        var tileSize = grid?.TileSize ?? DefaultTileSize;
+        var tileSize = _referenceGrid?.TileSize ?? DefaultTileSize;
 
-        if (grid != null)
+        if (_referenceGrid != null)
         {
-            var angle = dir - grid.WorldRotation;
+            var angle = dir - _referenceGrid.WorldRotation;
             _direction = angle.ToWorldVec();
         }
 
-        var originTile = _currentGrid?.CoordinatesToTile(creatorXform.Coordinates) ?? Vector2i.Zero;
+        var originTile = _referenceGrid?.CoordinatesToTile(creatorXform.Coordinates) ?? Vector2i.Zero;
 
         _tileMover = TileMover(originTile, _direction).GetEnumerator();
         _tileMover.MoveNext();
@@ -491,8 +520,9 @@ internal sealed class BreathAttack
 
     public void Update(float frameTime, IGameTiming gameTiming)
     {
-        if (_currentGrid == null || _tileProcessedList.Count >= _range)
+        if (_referenceGrid == null || _tileProcessedList.Count >= _range)
         {
+            // TODO: Add support for gridless breath attacks.
             Finished = true;
             return;
         }
@@ -504,7 +534,7 @@ internal sealed class BreathAttack
         }
 
         // Check if this movement has intersected with any collidable.
-        var anchored = _currentGrid.GetAnchoredEntities(_currentTile).ToList();
+        var anchored = _referenceGrid.GetAnchoredEntities(_currentTile).ToList();
 
         var blocked = false;
         foreach (var a in anchored)
@@ -525,7 +555,7 @@ internal sealed class BreathAttack
 
         _lastTimeProcessed = gameTiming.CurTime;
 
-        ProcessTile(_currentTile, _currentGrid);
+        ProcessTile(_currentTile, _referenceGrid);
         _tileProcessedList.Add(_currentTile);
 
         // Proceed to the next tile.
