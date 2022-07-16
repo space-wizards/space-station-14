@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Unequipping clothing now properly resets any movespeed modifiers they
-      gave you., type: Fix}
-  id: 1471
-  time: '2022-05-08T01:45:07.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Pianos are now anchored to the ground to slowdown theft., type: Tweak}
@@ -2953,3 +2947,9 @@ Entries:
       has been implemented on spacebar., type: Tweak}
   id: 1970
   time: '2022-07-16T03:51:52.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed the makeshift laser recipe not accepting certain diamonds sometimes.,
+    type: Fix}
+  id: 1971
+  time: '2022-07-16T17:43:24.0000000+00:00'
