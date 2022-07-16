@@ -49,7 +49,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
             scannerComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, $"{scannerComponent.Name}-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, scannerComponent.ScannerPort);
+            _signalSystem.EnsureReceiverPorts(uid, MedicalScannerComponent.ScannerPort);
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)

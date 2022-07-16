@@ -226,7 +226,7 @@ namespace Content.Server.Cloning.Systems
 
                 cloningProgress = clonePod.CloningProgress;
                 cloningTime = clonePod.CloningTime;
-                clonerProgressing = _cloningSystem.IsPowered(clonePod) && (clonePod.BodyContainer.ContainedEntity != null);
+                clonerProgressing = _powerReceiverSystem.IsPowered(clonePod.Owner) && (clonePod.BodyContainer.ContainedEntity != null);
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {

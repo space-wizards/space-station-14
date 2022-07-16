@@ -1,6 +1,6 @@
 using Content.Server.Cloning.Components;
 using Content.Server.Mind.Components;
-using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.CharacterAppearance.Components;
@@ -27,6 +27,7 @@ namespace Content.Server.Cloning.Systems
         [Dependency] private readonly SharedHumanoidAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
@@ -43,7 +44,7 @@ namespace Content.Server.Cloning.Systems
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
         {
             clonePod.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(clonePod.Owner, $"{Name}-bodyContainer");
-            _signalSystem.EnsureReceiverPorts(uid, clonePod.PodPort);
+            _signalSystem.EnsureReceiverPorts(uid, CloningPodComponent.PodPort);
         }
 
         private void UpdateAppearance(CloningPodComponent clonePod)
@@ -96,14 +97,6 @@ namespace Content.Server.Cloning.Systems
             _cloningConsoleSystem.UpdateUserInterface(console);
         }
 
-        public bool IsPowered(CloningPodComponent clonepod)
-        {
-            if (!TryComp<ApcPowerReceiverComponent>(clonepod.Owner, out var receiver))
-                return false;
-
-            return receiver.Powered;
-        }
-
         public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
         {
             if (!Resolve(uid, ref clonePod) || bodyToClone == null)
@@ -120,7 +113,7 @@ namespace Content.Server.Cloning.Systems
                 ClonesWaitingForMind.Remove(mind);
             }
 
-            if (mind.OwnedEntity != null && !_mobStateSystem.IsDead(uid))
+            if (mind.OwnedEntity != null && !_mobStateSystem.IsDead(mind.OwnedEntity.Value))
                 return false; // Body controlled by mind is not dead
 
             // Yes, we still need to track down the client because we need to open the Eui
@@ -144,6 +137,8 @@ namespace Content.Server.Cloning.Systems
             ClonesWaitingForMind.Add(mind, mob);
             UpdateStatus(CloningPodStatus.NoMind, clonePod);
             _euiManager.OpenEui(new AcceptCloningEui(mind, this), client);
+
+            AddComp<ActiveCloningPodComponent>(uid);
             return true;
         }
 
@@ -155,9 +150,9 @@ namespace Content.Server.Cloning.Systems
 
         public override void Update(float frameTime)
         {
-            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>())
+            foreach (var (_, cloning) in EntityManager.EntityQuery<ActiveCloningPodComponent, CloningPodComponent>())
             {
-                if (!IsPowered(cloning))
+                if (!_powerReceiverSystem.IsPowered(cloning.Owner))
                     continue;
 
                 if (cloning.BodyContainer.ContainedEntity != null)
@@ -186,6 +181,7 @@ namespace Content.Server.Cloning.Systems
             clonePod.CapturedMind = null;
             clonePod.CloningProgress = 0f;
             UpdateStatus(CloningPodStatus.Idle, clonePod);
+            RemCompDeferred<ActiveCloningPodComponent>(uid);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

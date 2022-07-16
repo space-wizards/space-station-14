@@ -1,13 +1,12 @@
 using Content.Shared.Cloning;
 using Robust.Shared.Containers;
-using Content.Shared.MachineLinking;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
     public sealed class CloningPodComponent : Component
     {
+        public const string PodPort = "CloningPodReceiver";
         [ViewVariables] public ContainerSlot BodyContainer = default!;
         [ViewVariables] public Mind.Mind? CapturedMind;
         [ViewVariables] public float CloningProgress = 0;
@@ -15,11 +14,5 @@ namespace Content.Server.Cloning.Components
         [ViewVariables] public float CloningTime = 30f;
         [ViewVariables] public CloningPodStatus Status;
         public EntityUid? ConnectedConsole;
-
-        /// <summary>
-        ///     The port for cloning pods.
-        /// </summary>
-        [DataField("scannerPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
-        public string PodPort = "CloningPodReceiver";
     }
 }
