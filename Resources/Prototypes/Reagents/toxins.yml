@@ -54,6 +54,9 @@
   metabolisms:
     Poison:
       effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
       - !type:ChemSleep
         conditions:
         - !type:ReagentThreshold
@@ -66,7 +69,7 @@
           min: 20
         damage:
           types:
-            Poison: 3
+            Poison: 1.5
 
 - type: reagent
   id: Mold
