@@ -1,0 +1,82 @@
+- type: entity
+  id: DisplayCaseLaser
+  parent: BaseStructure
+  name: display case
+  description: A display case for prized possessions. It taunts you to kick it.
+  components:
+  - type: Transform
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.49,-0.49,0.49,0.49"
+      mass: 100
+      mask:
+      - TableMask
+      layer:
+      - MachineLayer
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Furniture/displaycase.rsi
+    layers:
+    - state: chassis
+    - state: laser
+    - state: glassbox
+  - type: Icon
+    sprite: Structures/Furniture/displaycase.rsi
+    state: glassbox
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_break3.ogg
+      - !type:SpawnEntitiesBehavior
+        offset: 0,0
+        spawn:
+          DisplayCasePart:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 1
+            max: 3
+          WeaponAntiqueLaser:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: DisplayCasePart
+  parent: DisplayCaseLaser
+  name: part of display case
+  description: Part of a broken display case.
+  components:
+  - type: Sprite
+    layers:
+    - state: chassis
+    - state: glassbox_broken
+  - type: Icon
+    state: chassis
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

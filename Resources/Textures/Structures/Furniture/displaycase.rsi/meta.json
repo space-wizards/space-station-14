@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "displaycase_laser"
+      "name": "chassis"
     },
     {
-      "name": "displaywindow"
+      "name": "glassbox"
     },
     {
-      "name": "displaypart"
+      "name": "glassbox_broken"
     },
     {
       "name": "laser"
