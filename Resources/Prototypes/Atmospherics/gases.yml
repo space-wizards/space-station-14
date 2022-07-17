@@ -68,3 +68,14 @@
   gasOverlayState: miasma
   color: 56941E
   reagent: Miasma
+
+- type: gas
+  id: 7
+  name: NitrousOxide
+  specificHeat: 40
+  heatCapacityRatio: 1.3
+  molarMass: 44
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: nitrous_oxide_old
+  color: 2887E8
+  reagent: NitrousOxide
