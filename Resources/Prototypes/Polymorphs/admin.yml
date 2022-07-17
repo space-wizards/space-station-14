@@ -27,4 +27,4 @@
   id: AdminMouseSmite
   entity: MobMouse
   forced: true
-  dropInventory: true
+  inventory: Drop
