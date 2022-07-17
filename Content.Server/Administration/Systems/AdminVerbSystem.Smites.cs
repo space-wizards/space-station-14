@@ -26,11 +26,9 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Administration.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Disease;
@@ -57,7 +55,6 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
@@ -202,11 +199,11 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState._highestToLowestStates.Where(x => x.Value.IsCritical()).FirstOrNull();
+                    var critState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Critical).FirstOrNull();
                     if (critState is null)
                     {
                         // We can't crit them so try killing them.
-                        var deadState = mobState._highestToLowestStates.Where(x => x.Value.IsDead()).FirstOrNull();
+                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Dead).FirstOrNull();
                         if (deadState is null)
                             return; // whelp.
 
@@ -607,6 +604,8 @@ public sealed partial class AdminVerbSystem
             {
                 var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
                 grav.Weightless = true;
+
+                Dirty(grav);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-remove-gravity-description"),
@@ -657,9 +656,6 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 EnsureComp<HeadstandComponent>(args.Target);
-                var eye = EnsureComp<EyeComponent>(args.Target);
-
-                eye.Zoom *= -Vector2.UnitY;
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-headstand-description"),
@@ -676,6 +672,8 @@ public sealed partial class AdminVerbSystem
                 var eye = EnsureComp<EyeComponent>(args.Target);
 
                 eye.Zoom *= Vector2.One * 0.2f;
+
+                Dirty(eye);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-zoom-in-description"),
@@ -692,6 +690,8 @@ public sealed partial class AdminVerbSystem
                 var eye = EnsureComp<EyeComponent>(args.Target);
 
                 eye.Zoom *= -1;
+
+                Dirty(eye);
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-flip-eye-description"),
@@ -707,6 +707,8 @@ public sealed partial class AdminVerbSystem
             {
                 var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
                 (movementSpeed.BaseSprintSpeed, movementSpeed.BaseWalkSpeed) = (movementSpeed.BaseWalkSpeed, movementSpeed.BaseSprintSpeed);
+
+                Dirty(movementSpeed);
 
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-run-walk-swap-prompt"), args.Target,
                     Filter.Entities(args.Target), PopupType.LargeCaution);
