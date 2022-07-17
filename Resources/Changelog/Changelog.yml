@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Several large areas of Barratry have been redone., type: Tweak}
-  id: 1476
-  time: '2022-05-08T07:45:30.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Attention syndicate agents! We have found some old crates with random
@@ -2959,3 +2954,9 @@ Entries:
       more cargo shuttle getting lost).', type: Tweak}
   id: 1975
   time: '2022-07-17T10:22:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuclear Operatives are now internally (i.e. badmins) recognized as antags.
+      You have been legitimized., type: Fix}
+  id: 1976
+  time: '2022-07-17T21:57:52.0000000+00:00'
