@@ -83,6 +83,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (environment.Pressure > vent.MaxPressure)
                     return;
 
+                if (environment.Pressure < vent.UnderPressureLockout)
+                    return;
+
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                     pressureDelta = MathF.Min(pressureDelta, vent.ExternalPressureBound - environment.Pressure);
 
