@@ -113,6 +113,12 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
+	    if (!HasComp<MicrowaveUserComponent>(args.User))
+	    {
+		_popupSystem.PopupEntity(Loc.GetString("microwave-component-denied-access"), uid, Filter.Entities(args.User));
+		return;
+	    }
+
             args.Handled = true;
 
             component.Storage.Insert(args.Used);

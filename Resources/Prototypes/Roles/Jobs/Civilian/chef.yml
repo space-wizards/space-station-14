@@ -13,6 +13,10 @@
   extendedAccess:
   - Hydroponics
   - Bar
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: MicrowaveUser
 
 - type: startingGear
   id: ChefGear

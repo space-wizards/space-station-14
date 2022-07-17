@@ -5,6 +5,7 @@ using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.UserInterface;
+using Content.Server.Players;
 using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
@@ -100,6 +101,12 @@ namespace Content.Server.Kitchen.Components
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
+	    EntityUid? uid = message.Session.Data?.ContentData()?.Mind?.OwnedEntity;
+            if (uid == null || !_entities.HasComponent<MicrowaveUserComponent>(uid))
+	    {
+                return;
+	    }
+
             if (!Powered || _busy)
             {
                 return;

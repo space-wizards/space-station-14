@@ -1,5 +1,6 @@
 ## Entity
 
+microwave-component-denied-access = You fail to unlock the microwave. You hear the chef getting closer.
 microwave-component-interact-using-no-power = It has no power!
 microwave-component-interact-using-broken = It's broken!
 microwave-component-interact-using-container-full = Container is full
