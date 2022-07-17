@@ -471,17 +471,18 @@ public sealed partial class ShuttleSystem
             lastCount = nearbyGrids.Count;
 
             // Mishap moment, dense asteroid field or whatever
-            if (iteration == 3)
-            {
-                foreach (var grid in _mapManager.GetAllGrids())
-                {
-                    // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
-                    if (nearbyGrids.Contains(grid.GridEntityId)) continue;
+            if (iteration != 3) continue;
 
-                    targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
-                        .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
-                }
+            foreach (var grid in _mapManager.GetAllGrids())
+            {
+                // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
+                if (nearbyGrids.Contains(grid.GridEntityId)) continue;
+
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                    .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
             }
+
+            break;
         }
 
         var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
