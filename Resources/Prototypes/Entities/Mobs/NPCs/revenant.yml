@@ -4,8 +4,8 @@
   description: A spooky ghostie.
   components:
   - type: Mind
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
