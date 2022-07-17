@@ -4,6 +4,6 @@
   spriteName: donut
   startingInventory:
     FoodDonutChocolate: 5
-    FoodDonutApple: 5
-    FoodDonutPink: 5
-    FoodDonutBungo: 5
+    FoodDonutApple: 3
+    FoodDonutPink: 3
+    FoodDonutBungo: 3
