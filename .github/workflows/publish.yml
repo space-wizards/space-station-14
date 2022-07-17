@@ -40,19 +40,19 @@ jobs:
         mv release/*.zip "release/${{ github.sha }}"
 
     - name: Upload files to mothership
-      uses: appleboy/scp-action@master
+      uses: burnett01/rsync-deployments@5.2
       with:
-        host: 108.61.171.191
-        username: deployer
-        key: ${{ secrets.BUILDS_SSH_KEY }}
-        source: "release/${{ github.sha }}"
-        target: "/var/www/builds.station14.ru/syndicate/builds/"
-        strip_components: 1
+        switches: -avzr --ignore-existing
+        path: "release/${{ github.sha }}"
+        remote_path: ${{ secrets.BUILDS_PATH }}
+        remote_host: ${{ secrets.BUILDS_HOST }}
+        remote_user: ${{ secrets.BUILDS_USERNAME }}
+        remote_key: ${{ secrets.BUILDS_SSH_KEY }}
 
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: 108.61.171.191
-        username: deployer
+        host: ${{ secrets.BUILDS_HOST }}
+        username: ${{ secrets.BUILDS_USERNAME }}
         key: ${{ secrets.BUILDS_SSH_KEY }}
         script: node ~/scripts/push_to_manifest.js -fork syndicate -id ${{ github.sha }}
