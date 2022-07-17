@@ -1,6 +1,7 @@
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Eye.Blinding
 {
@@ -24,7 +25,7 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = true;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            AdjustBlindSources(uid, true, blindComp);
+            AdjustBlindSources(args.Equipee, true, blindComp);
         }
 
         private void OnUnequipped(EntityUid uid, BlindfoldComponent component, GotUnequippedEvent args)
@@ -34,9 +35,10 @@ namespace Content.Shared.Eye.Blinding
             component.IsActive = false;
             if (!TryComp<BlindableComponent>(args.Equipee, out var blindComp))
                 return;
-            AdjustBlindSources(uid, false, blindComp);
+            AdjustBlindSources(args.Equipee, false, blindComp);
         }
 
+        [PublicAPI]
         public void AdjustBlindSources(EntityUid uid, bool Add, BlindableComponent? blindable = null)
         {
             if (!Resolve(uid, ref blindable, false))
