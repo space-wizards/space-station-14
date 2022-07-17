@@ -17,6 +17,7 @@ using Robust.Shared.Player;
 using Content.Shared.Audio;
 using Content.Server.Popups;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Random;
 
 namespace Content.Server.Bed.Sleep
@@ -206,7 +207,7 @@ namespace Content.Server.Bed.Sleep
                 if (user != null)
                 {
                     SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
-                    _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", uid)), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
+                    _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
                 }
                 return false;
             }
@@ -214,7 +215,7 @@ namespace Content.Server.Bed.Sleep
             if (user != null)
             {
                 SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
-                _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", uid)), uid, Filter.Entities(user.Value));
+                _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value));
             }
             RemComp<SleepingComponent>(uid);
             return true;
