@@ -13,11 +13,41 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// Store power with a cap. Decrease over time if not being powered from source.
     /// </summary>
     [ViewVariables]
+    [DataField("powerBuffer")]
     public int PowerBuffer
     {
         get => _powerBuffer;
         set => _powerBuffer = Math.Clamp(value, 0, 25); //have this decrease over time if not hit by a bolt
     }
+
+    /// <summary>
+    /// How much power should this field generator receive from a collision
+    /// Also acts as the minimum the field needs to start generating a connection
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("power")]
+    public int Power = 6;
+
+    /// <summary>
+    /// How much power should this field generator lose if not powered?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("powerLoss")]
+    public int PowerLoss = 2;
+
+    /// <summary>
+    /// Used to check if it's received power recently.
+    /// </summary>
+    [ViewVariables]
+    [DataField("accumulator")]
+    public float Accumulator = 0f;
+
+    /// <summary>
+    /// How many seconds should the generators wait before losing power?
+    /// </summary>
+    [ViewVariables]
+    [DataField("threshold")]
+    public float Threshold = 10f;
 
     /// <summary>
     /// How far should this field check before giving up?
@@ -33,14 +63,6 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("idTag")]
     public string IDTag = "EmitterBolt";
-
-    /// <summary>
-    /// How much power should this field generator receive from a collision
-    /// Also acts as the minimum the field needs to start generating a connection
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("power")]
-    public int Power = 6;
 
     /// <summary>
     /// Is the generator toggled on?

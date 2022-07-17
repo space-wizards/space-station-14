@@ -33,6 +33,25 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
+        {
+            if (!generator.IsConnected)
+                return; //don't drain power if it's not connected
+
+            generator.Accumulator += frameTime;
+
+            if (generator.Accumulator >= generator.Threshold)
+            {
+                LosePower(generator.PowerLoss, generator);
+                generator.Accumulator = 0f;
+            }
+        }
+    }
+
     #region Events
 
     /// <summary>
@@ -43,6 +62,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
             ReceivePower(component.Power, component);
+            component.Accumulator = 0f;
         }
     }
 
@@ -120,8 +140,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 QueueDel(field);
             }
             value.Item1.Connections.Remove(direction.GetOpposite());
+
+            if (value.Item1.Connections.Count == 0) //Change isconnected only if there's no more connections
+                value.Item1.IsConnected = false;
         }
         component.Connections.Clear();
+        component.IsConnected = false;
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner));
     }
 
@@ -148,6 +172,16 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
                 TryGenerateFieldConnection(dir, component);
             }
+        }
+    }
+
+    public void LosePower(int power, ContainmentFieldGeneratorComponent component)
+    {
+        component.PowerBuffer -= power;
+
+        if (component.PowerBuffer < component.Power)
+        {
+            RemoveConnections(component);
         }
     }
 
