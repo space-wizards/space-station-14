@@ -171,6 +171,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatOutlawHat
+  name: outlaw's hat
+  description: A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/outlawhat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/outlawhat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatWitch1
   name: witch hat
   description: A witch hat.
@@ -445,3 +456,14 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/fishcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadNurseHat
+  name: nurse hat
+  description: Somehow I feel I'm not supposed to leave this place.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/nursehat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/nursehat.rsi

@@ -47,7 +47,7 @@ public abstract class SharedFoldableSystem : EntitySystem
     public virtual void SetFolded(FoldableComponent component, bool folded)
     {
         component.IsFolded = folded;
-        component.Dirty();
+        Dirty(component);
 
         if (TryComp(component.Owner, out AppearanceComponent? appearance))
             appearance.SetData(FoldKey, folded);

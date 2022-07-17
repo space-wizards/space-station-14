@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Robust.Client.Graphics;
@@ -32,8 +32,8 @@ namespace Content.MapRenderer.Painters
             stopwatch.Start();
 
             var bounds = grid.LocalAABB;
-            var xOffset = Math.Abs(bounds.Left);
-            var yOffset = Math.Abs(bounds.Bottom);
+            var xOffset = -bounds.Left;
+            var yOffset = -bounds.Bottom;
             var tileSize = grid.TileSize * TileImageSize;
 
             var images = GetTileImages(_sTileDefinitionManager, _cResourceCache, tileSize);
@@ -51,7 +51,7 @@ namespace Content.MapRenderer.Painters
                 i++;
             });
 
-            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.Index} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {grid.GridEntityId} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private Dictionary<string, List<Image>> GetTileImages(

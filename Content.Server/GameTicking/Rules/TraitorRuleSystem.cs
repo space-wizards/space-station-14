@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
@@ -57,7 +58,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
@@ -85,7 +86,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var playersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
@@ -191,12 +192,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
         }
 
-        SoundSystem.Play(Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), _addedSound.GetSound(), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));

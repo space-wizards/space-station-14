@@ -5,6 +5,8 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.StepTrigger;
+using Content.Shared.StepTrigger.Components;
+using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -57,7 +59,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             bool hasEvaporationComponent = EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
             bool canEvaporate = (hasEvaporationComponent &&
-                                (evaporationComponent.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
+                                (evaporationComponent!.LowerLimit == 0 || puddleComponent.CurrentVolume > evaporationComponent.LowerLimit));
 
             // "Does this puddle's sprite need changing to the wet floor effect sprite?"
             bool changeToWetFloor = (puddleComponent.CurrentVolume <= puddleComponent.WetFloorEffectThreshold
@@ -157,15 +159,15 @@ namespace Content.Server.Fluids.EntitySystems
                 return false;
             }
 
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent());
+            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {
                 return true;
             }
 
-            SoundSystem.Play(Filter.Pvs(puddleComponent.Owner), puddleComponent.SpillSound.GetSound(),
-                puddleComponent.Owner);
+            SoundSystem.Play(puddleComponent.SpillSound.GetSound(),
+                Filter.Pvs(puddleComponent.Owner), puddleComponent.Owner);
             return true;
         }
 

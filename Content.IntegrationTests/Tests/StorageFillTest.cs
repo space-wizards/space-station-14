@@ -7,13 +7,14 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class StorageFillTest : ContentIntegrationTest
+    public sealed class StorageFillTest
     {
         [Test]
         public async Task TestStorageFillPrototypes()
         {
-            var server = StartServer();
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
             await server.WaitAssertion(() =>
@@ -29,6 +30,7 @@ namespace Content.IntegrationTests.Tests
                     }
                 }
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

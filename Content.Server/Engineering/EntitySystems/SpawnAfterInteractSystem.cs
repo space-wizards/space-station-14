@@ -3,6 +3,7 @@ using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
+using Content.Shared.Maps;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -29,14 +30,14 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
-            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridId(EntityManager), out var grid))
+            if (!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
                 return;
             if (!grid.TryGetTileRef(args.ClickLocation, out var tileRef))
                 return;
 
             bool IsTileClear()
             {
-                return tileRef.Tile.IsEmpty == false;
+                return tileRef.Tile.IsEmpty == false && !tileRef.IsBlockedTurf(true);
             }
 
             if (!IsTileClear())

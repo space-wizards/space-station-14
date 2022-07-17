@@ -5,4 +5,10 @@
 /// </summary>
 public sealed class RoundStartingEvent : EntityEventArgs
 {
+    public RoundStartingEvent(int id)
+    {
+        Id = id;
+    }
+
+    public int Id { get; }
 }

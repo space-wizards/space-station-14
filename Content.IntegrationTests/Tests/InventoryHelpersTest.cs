@@ -10,7 +10,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class InventoryHelpersTest : ContentIntegrationTest
+    public sealed class InventoryHelpersTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -43,10 +43,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
 
@@ -89,6 +87,7 @@ namespace Content.IntegrationTests.Tests
                     ID: "InventoryIDCardDummy"
                 });
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

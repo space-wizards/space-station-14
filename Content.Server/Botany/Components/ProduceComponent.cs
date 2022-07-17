@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
-[Friend(typeof(BotanySystem))]
+[Access(typeof(BotanySystem))]
 public sealed class ProduceComponent : Component
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";

@@ -27,6 +27,46 @@ namespace Content.Client.Singularity
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();
+            _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
+        }
+
+        private Vector2[] _positions = new Vector2[MaxCount];
+        private float[] _intensities = new float[MaxCount];
+        private float[] _falloffPowers = new float[MaxCount];
+        private int _count = 0;
+
+        protected override bool BeforeDraw(in OverlayDrawArgs args)
+        {
+            if (args.Viewport.Eye == null)
+                return false;
+
+            _count = 0;
+            foreach (var (distortion, xform) in _entMan.EntityQuery<SingularityDistortionComponent, TransformComponent>())
+            {
+                if (xform.MapID != args.MapId)
+                    continue;
+
+                var mapPos = xform.WorldPosition;
+
+                // is the distortion in range?
+                if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared > MaxDistance * MaxDistance)
+                    continue;
+
+                // To be clear, this needs to use "inside-viewport" pixels.
+                // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
+                var tempCoords = args.Viewport.WorldToLocal(mapPos);
+                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
+
+                _positions[_count] = tempCoords;
+                _intensities[_count] = distortion.Intensity;
+                _falloffPowers[_count] = distortion.FalloffPower;
+                _count++;
+
+                if (_count == MaxCount)
+                    break;
+            }
+
+            return (_count > 0);
         }
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -34,48 +74,11 @@ namespace Content.Client.Singularity
             if (ScreenTexture == null || args.Viewport.Eye == null)
                 return;
 
-            // Has to be correctly handled because of the way intensity/falloff transform works so just do it.
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale);
-
-            var position = new Vector2[MaxCount];
-            var intensity = new float[MaxCount];
-            var falloffPower = new float[MaxCount];
-            int count = 0;
-
-            var mapId = args.Viewport.Eye.Position.MapId;
-
-            foreach (var distortion in _entMan.EntityQuery<SingularityDistortionComponent>())
-            {
-                var mapPos = _entMan.GetComponent<TransformComponent>(distortion.Owner).MapPosition;
-                if (mapPos.MapId != mapId)
-                    continue;
-
-                // is the distortion in range?
-                if ((mapPos.Position - args.WorldAABB.ClosestPoint(mapPos.Position)).LengthSquared > MaxDistance * MaxDistance)
-                    continue;
-
-                // To be clear, this needs to use "inside-viewport" pixels.
-                // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
-                var tempCoords = args.Viewport.WorldToLocal(mapPos.Position);
-                tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y;
-
-                position[count] = tempCoords;
-                intensity[count] = distortion.Intensity;
-                falloffPower[count] = distortion.FalloffPower;
-                count++;
-
-                if (count == MaxCount)
-                    break;
-            }
-
-            if (count == 0)
-                return;
-
-            _shader?.SetParameter("count", count);
-            _shader?.SetParameter("position", position);
-            _shader?.SetParameter("intensity", intensity);
-            _shader?.SetParameter("falloffPower", falloffPower);
-            _shader?.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
+            _shader?.SetParameter("count", _count);
+            _shader?.SetParameter("position", _positions);
+            _shader?.SetParameter("intensity", _intensities);
+            _shader?.SetParameter("falloffPower", _falloffPowers);
             _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
             var worldHandle = args.WorldHandle;

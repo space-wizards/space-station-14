@@ -11,15 +11,6 @@
       "name": "icon"
     },
     {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
-    },
-    {
-      "name": "base"
-    },
-    {
       "name": "inhand-right",
       "directions": 4
     },

@@ -45,7 +45,7 @@ public sealed class WeldableSystem : EntitySystem
 
         // Other component systems
         var attempt = new WeldableAttemptEvent(user, tool);
-        RaiseLocalEvent(uid, attempt);
+        RaiseLocalEvent(uid, attempt, true);
         if (attempt.Cancelled)
             return false;
 
@@ -60,8 +60,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        component.BeingWelded = true;
-        _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
+        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
             component.WeldingTime.Seconds, component.WeldingQuality,
             new WeldFinishedEvent(user, tool), new WeldCancelledEvent(), uid);
 
@@ -77,7 +76,7 @@ public sealed class WeldableSystem : EntitySystem
             return;
 
         component.IsWelded = !component.IsWelded;
-        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded));
+        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded), true);
 
         UpdateAppearance(uid, component);
     }

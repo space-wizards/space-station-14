@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
-[Friend(typeof(SpraySystem))]
+[Access(typeof(SpraySystem))]
 public sealed class SprayComponent : Component
 {
     public const string SolutionName = "spray";
@@ -32,5 +32,6 @@ public sealed class SprayComponent : Component
     [DataField("impulse")] public float Impulse;
 
     [DataField("spraySound", required: true)]
+    [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; } = default!;
 }

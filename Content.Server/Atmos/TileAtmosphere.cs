@@ -9,7 +9,7 @@ namespace Content.Server.Atmos
     ///     Internal Atmos class that stores data about the atmosphere in a grid.
     ///     You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
     /// </summary>
-    [Friend(typeof(AtmosphereSystem))]
+    [Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
     public sealed class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]
@@ -40,6 +40,12 @@ namespace Content.Server.Atmos
         public bool Excited { get; set; }
 
         /// <summary>
+        ///     Whether this tile should be considered space.
+        /// </summary>
+        [ViewVariables]
+        public bool Space { get; set; }
+
+        /// <summary>
         ///     Adjacent tiles in the same order as <see cref="AtmosDirection"/>. (NSEW)
         /// </summary>
         [ViewVariables]
@@ -48,7 +54,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection AdjacentBits = AtmosDirection.Invalid;
 
-        [ViewVariables]
+        [ViewVariables, Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)]
         public MonstermosInfo MonstermosInfo;
 
         [ViewVariables]
@@ -62,7 +68,7 @@ namespace Content.Server.Atmos
         public AtmosDirection LastPressureDirection;
 
         [ViewVariables]
-        public GridId GridIndex { get; }
+        public EntityUid GridIndex { get; }
 
         [ViewVariables]
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
@@ -78,7 +84,15 @@ namespace Content.Server.Atmos
         /// This can be immutable if the tile is spaced.
         /// </summary>
         [ViewVariables]
+        [Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
+
+        [ViewVariables]
+        [DataField("lastShare")]
+        public float LastShare;
+
+        [ViewVariables]
+        public float[]? MolesArchived;
 
         GasMixture IGasMixtureHolder.Air
         {
@@ -92,11 +106,13 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
 
-        public TileAtmosphere(GridId gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false)
+        public TileAtmosphere(EntityUid gridIndex, Vector2i gridIndices, GasMixture? mixture = null, bool immutable = false, bool space = false)
         {
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
+            Space = space;
+            MolesArchived = Air != null ? new float[Atmospherics.AdjustedNumberOfGases] : null;
 
             if(immutable)
                 Air?.MarkImmutable();

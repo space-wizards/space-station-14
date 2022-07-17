@@ -7,6 +7,9 @@
   - type: HandheldLight
     addPrefix: true
   - type: PowerCellSlot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
   - type: Sprite
     sprite: Objects/Misc/Lights/lights.rsi
     netsync: false

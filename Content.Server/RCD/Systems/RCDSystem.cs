@@ -20,7 +20,7 @@ namespace Content.Server.RCD.Systems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        [Dependency] private readonly AdminLogSystem _logs = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
@@ -114,20 +114,20 @@ namespace Content.Server.RCD.Systems
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
                     mapGrid.SetTile(snapPos, new Tile(_tileDefinitionManager["floor_steel"].TileId));
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} {snapPos} to floor_steel");
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
                         mapGrid.SetTile(snapPos, Tile.Empty);
-                        _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
+                        _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to set grid: {tile.GridIndex} tile: {snapPos} to space");
                     }
                     else //Delete what the user targeted
                     {
                         if (args.Target is {Valid: true} target)
                         {
-                            _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to delete {ToPrettyString(target):target}");
+                            _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to delete {ToPrettyString(target):target}");
                             QueueDel(target);
                         }
                     }
@@ -137,19 +137,19 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _logs.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Index}");
                     break;
                 default:
                     args.Handled = true;
                     return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SuccessSound.GetSound(), rcd.Owner);
+            SoundSystem.Play(rcd.SuccessSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), rcd.Owner);
             rcd.CurrentAmmo--;
             args.Handled = true;
         }
@@ -240,7 +240,7 @@ namespace Content.Server.RCD.Systems
 
         private void NextMode(EntityUid uid, RCDComponent rcd, EntityUid user)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), rcd.SwapModeSound.GetSound(), uid);
+            SoundSystem.Play(rcd.SwapModeSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
 
             var mode = (int) rcd.Mode;
             mode = ++mode % RCDModeCount;

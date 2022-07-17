@@ -72,8 +72,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), transform.Coordinates,
-                AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid),
+                transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             component.Count--;
             // If someone makes food proto with 1 slice...

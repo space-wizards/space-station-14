@@ -13,9 +13,8 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: StunOnCollide
-    stunAmount: 1
-    knockdownAmount: 3
+  - type: StaminaDamageOnCollide
+    damage: 80
   - type: Construction
     graph: Bola
     node: bola

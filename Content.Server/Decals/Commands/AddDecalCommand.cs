@@ -40,7 +40,7 @@ namespace Content.Server.Decals.Commands
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!int.TryParse(args[3], out var gridIdRaw) || !mapManager.TryGetGrid(new GridId(gridIdRaw), out var grid))
+            if (!EntityUid.TryParse(args[3], out var gridIdRaw) || !mapManager.TryGetGrid(gridIdRaw, out var grid))
             {
                 shell.WriteError($"Failed parsing gridId '{args[3]}'.");
                 return;

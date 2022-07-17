@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(FoodSystem))]
+    [RegisterComponent, Access(typeof(FoodSystem))]
     public sealed class FoodComponent : Component
     {
         [DataField("solution")]

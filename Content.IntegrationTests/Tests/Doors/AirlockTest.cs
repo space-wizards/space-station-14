@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Doors
 {
     [TestFixture]
     [TestOf(typeof(AirlockComponent))]
-    public sealed class AirlockTest : ContentIntegrationTest
+    public sealed class AirlockTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -48,10 +48,8 @@ namespace Content.IntegrationTests.Tests.Doors
         [Test]
         public async Task OpenCloseDestroyTest()
         {
-            var options = new ServerIntegrationOptions {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -59,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Doors
             EntityUid airlock = default;
             DoorComponent doorComponent = null;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
 
@@ -71,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitIdleAsync();
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 EntitySystem.Get<DoorSystem>().StartOpening(airlock);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
@@ -79,21 +77,21 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, () => doorComponent.State == DoorState.Open);
+            await PoolManager.WaitUntil(server, () => doorComponent.State == DoorState.Open);
 
             Assert.That(doorComponent.State, Is.EqualTo(DoorState.Open));
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 EntitySystem.Get<DoorSystem>().TryClose((EntityUid) airlock);
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
             });
 
-            await WaitUntil(server, () => doorComponent.State == DoorState.Closed);
+            await PoolManager.WaitUntil(server, () => doorComponent.State == DoorState.Closed);
 
             Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 Assert.DoesNotThrow(() =>
                 {
@@ -103,17 +101,14 @@ namespace Content.IntegrationTests.Tests.Doors
 
             server.RunTicks(5);
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
         public async Task AirlockBlockTest()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            };
-            var server = StartServer(options);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
 
@@ -127,7 +122,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             var physicsDummyStartingX = -1;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapId = mapManager.CreateMap();
 
@@ -151,7 +146,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                server.Post(() => entityManager.GetComponent<IPhysBody>(airlock).WakeBody());
+                await server.WaitPost(() => entityManager.GetComponent<IPhysBody>(airlock).WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();
@@ -165,6 +160,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             // Blocked by the airlock
             await server.WaitAssertion(() => Assert.That(Math.Abs(entityManager.GetComponent<TransformComponent>(physicsDummy).MapPosition.X - 1) > 0.01f));
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

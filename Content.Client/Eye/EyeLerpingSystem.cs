@@ -105,7 +105,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         if (!TryComp(uid, out TransformComponent? transform)
             || !TryComp(uid, out EyeComponent? eye)
             || eye.Eye == null
-            || !_mapManager.TryGetGrid(transform.GridID, out var grid))
+            || !_mapManager.TryGetGrid(transform.GridUid, out var grid))
         {
             _toRemove.Add(uid);
             return;

@@ -56,7 +56,7 @@ namespace Content.Server.Access.Components
 
             var privilegedIdEntity = PrivilegedIdSlot.Item;
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
-            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Value);
+            return privilegedIdEntity != null && accessSystem.IsAllowed(privilegedIdEntity.Value, reader);
         }
 
         /// <summary>

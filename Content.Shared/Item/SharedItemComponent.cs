@@ -90,13 +90,13 @@ namespace Content.Shared.Item
 
         public void RemovedFromSlot()
         {
-            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent? component))
                 component.Visible = true;
         }
 
         public virtual void EquippedToSlot()
         {
-            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent component))
+            if (_entMan.TryGetComponent(Owner, out SharedSpriteComponent? component))
                 component.Visible = false;
         }
     }

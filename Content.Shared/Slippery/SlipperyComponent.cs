@@ -1,7 +1,6 @@
-using System.Linq;
-using Content.Shared.Sound;
 using Content.Shared.Sound;
 using Content.Shared.StepTrigger;
+using Content.Shared.StepTrigger.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 

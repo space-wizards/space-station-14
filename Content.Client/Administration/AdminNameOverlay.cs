@@ -1,4 +1,3 @@
-﻿using Content.Client.Administration.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
@@ -30,7 +29,7 @@ namespace Content.Client.Administration
 
         protected override void Draw(in OverlayDrawArgs args)
         {
-            var viewport = _eyeManager.GetWorldViewport();
+            var viewport = args.WorldAABB;
 
             foreach (var playerInfo in _system.PlayerList)
             {

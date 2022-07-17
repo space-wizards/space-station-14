@@ -5,7 +5,7 @@ namespace Content.Server.Kudzu;
 /// ONLY USE THIS FOR ANCHORED OBJECTS. An error will be logged if not anchored/static.
 /// Currently does not support growing in space.
 /// </summary>
-[RegisterComponent, Friend(typeof(SpreaderSystem))]
+[RegisterComponent, Access(typeof(SpreaderSystem))]
 public sealed class SpreaderComponent : Component
 {
     /// <summary>

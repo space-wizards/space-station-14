@@ -20,7 +20,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    _logSystem.Add(LogType.ReagentEffect, effect.LogImpact,
+                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 

@@ -2,7 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
-using Content.Shared.StepTrigger;
+using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -12,7 +12,7 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -71,7 +71,7 @@ namespace Content.Shared.Slippery
             if (playSound)
                 PlaySound(component);
 
-            _adminLog.Add(LogType.Slip, LogImpact.Low,
+            _adminLogger.Add(LogType.Slip, LogImpact.Low,
                 $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
         }
 

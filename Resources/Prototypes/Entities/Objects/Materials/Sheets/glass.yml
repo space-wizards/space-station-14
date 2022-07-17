@@ -9,6 +9,8 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/glass.rsi
+  - type: StaticPrice
+    price: 0
   - type: ItemStatus
   - type: Tag
     tags:
@@ -49,6 +51,8 @@
   - type: Material
     materials:
       Glass: 100
+  - type: StackPrice
+    price: 5
   - type: Stack
     stackType: Glass
   - type: Sprite
@@ -187,7 +191,7 @@
     node: SheetRPGlass
 
 - type: entity
-  parent: SheetPGlass
+  parent: SheetRPGlass
   id: SheetRPGlass1
   name: reinforced plasma glass
   suffix: Single

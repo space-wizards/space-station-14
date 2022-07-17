@@ -25,12 +25,12 @@ namespace Content.Shared.Construction.Steps
 
         public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
         {
-            return entityManager.TryGetComponent(uid, out SharedStackComponent? stack) && stack.StackTypeId.Equals(MaterialPrototypeId) && stack.Count >= Amount;
+            return entityManager.TryGetComponent(uid, out SharedStackComponent? stack) && stack.StackTypeId == MaterialPrototypeId && stack.Count >= Amount;
         }
 
         public bool EntityValid(EntityUid entity, [NotNullWhen(true)] out SharedStackComponent? stack)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SharedStackComponent? otherStack) && otherStack.StackTypeId == MaterialPrototypeId && otherStack.Count >= Amount)
                 stack = otherStack;
             else
                 stack = null;

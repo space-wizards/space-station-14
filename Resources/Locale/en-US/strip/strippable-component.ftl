@@ -6,6 +6,9 @@ strippable-component-cannot-put-message = {$owner} cannot put that there!
 strippable-component-item-slot-free-message = {$owner} has nothing there!
 strippable-component-cannot-unequip-message = {$owner} cannot unequip that!
 strippable-component-cannot-drop-message = {$owner} cannot drop that!
+strippable-component-alert-owner = {$user} is removing your {$item}!
+strippable-component-alert-owner-hidden = You feel someone fumbling in your {$slot}!
+strippable-component-alert-owner-insert = {$user} is putting {$item} on you!
 
 # StripVerb
 strip-verb-get-data-text = Strip
@@ -14,3 +17,4 @@ strip-verb-get-data-text = Strip
 
 strippable-bound-user-interface-stripping-menu-title = {$ownerName}'s inventory
 strippable-bound-user-interface-stripping-menu-handcuffs-button = Restraints
+strippable-bound-user-interface-stripping-menu-obfuscate = Occupied

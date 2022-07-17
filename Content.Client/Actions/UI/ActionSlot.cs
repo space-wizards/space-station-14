@@ -436,7 +436,7 @@ namespace Content.Client.Actions.UI
                 return;
             }
 
-            if (Action?.EntityIcon == null || !_entMan.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent sprite))
+            if (Action?.EntityIcon == null || !_entMan.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent? sprite))
             {
                 _bigItemSpriteView.Visible = false;
                 _bigItemSpriteView.Sprite = null;

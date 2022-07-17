@@ -63,6 +63,8 @@
           tags:
           - VehicleKey
         insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+  - type: StaticPrice
+    price: 750 # Grand Theft Auto.
 
 - type: entity
   id: VehiclePussyWagon

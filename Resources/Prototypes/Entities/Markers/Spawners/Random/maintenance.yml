@@ -50,14 +50,13 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Power/PowerCells/power_cell_large_sup.rsi/l_sup.png
+        - sprite: Objects/Power/power_cells.rsi
+          state: high
     - type: RandomSpawner
       rarePrototypes:
         - lanternextrabright
-        - PowerCellMediumSuper
-        - PowerCellSmallSuper
-        - PowerCellLargeSuper
-        - PowerCellSmallAutorecharge
+        - PowerCellHigh
+        - PowerCellMicroreactor
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
@@ -69,9 +68,10 @@
         - ClothingBeltUtilityFilled
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - SheetSteel
         - SheetPlastic
+        - ResearchDisk
       chance: 0.6
       offset: 0.0
 
@@ -100,8 +100,9 @@
         - Crowbar
         - Shovel
         - Welder
-        - FlareGun
+        - WeaponFlareGun
         - Spear
         - LidSalami
+        - ClothingEyesBlindfold
       chance: 0.6
       offset: 0.0

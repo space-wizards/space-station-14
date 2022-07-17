@@ -4,4 +4,5 @@
   presets:
   - Extended
   - Sandbox
+  - Secret
   - Traitor

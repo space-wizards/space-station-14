@@ -2,7 +2,7 @@
   name: particles
   description: Accelerated particles.
   id: ParticlesProjectile
-  parent: BulletBase
+  parent: BaseBullet
   components:
     - type: Sprite
       layers:

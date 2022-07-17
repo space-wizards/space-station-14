@@ -5,7 +5,7 @@ namespace Content.Server.Station.Components;
 /// <summary>
 /// Indicates that a grid is a member of the given station.
 /// </summary>
-[RegisterComponent, Friend(typeof(StationSystem))]
+[RegisterComponent, Access(typeof(StationSystem))]
 public sealed class StationMemberComponent : Component
 {
     /// <summary>

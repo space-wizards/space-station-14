@@ -21,8 +21,6 @@
   - Silicon
   - Sodium
   - Sulfur
-  - SulfuricAcid
-  - Uranium
 
 - type: reagentDispenserInventory
   id: ChemDispenserEmaggedInventory

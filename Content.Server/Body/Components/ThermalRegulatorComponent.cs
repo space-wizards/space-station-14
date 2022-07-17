@@ -3,7 +3,7 @@ using Content.Server.Body.Systems;
 namespace Content.Server.Body.Components;
 
 [RegisterComponent]
-[Friend(typeof(ThermalRegulatorSystem))]
+[Access(typeof(ThermalRegulatorSystem))]
 public sealed class ThermalRegulatorComponent : Component
 {
     /// <summary>

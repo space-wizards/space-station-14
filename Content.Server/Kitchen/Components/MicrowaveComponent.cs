@@ -225,7 +225,7 @@ namespace Content.Server.Kitchen.Components
                     // destroy microwave
                     Broken = true;
                     SetAppearance(MicrowaveVisualState.Broken);
-                    SoundSystem.Play(Filter.Pvs(Owner), ItemBreakSound.GetSound(), Owner);
+                    SoundSystem.Play(ItemBreakSound.GetSound(), Filter.Pvs(Owner), Owner);
                     return;
                 }
 
@@ -268,16 +268,13 @@ namespace Content.Server.Kitchen.Components
             }
 
             // Check recipes
-            FoodRecipePrototype? recipeToCook = null;
-            foreach (var r in _recipeManager.Recipes.Where(r =>
-                CanSatisfyRecipe(r, solidsDict, reagentDict)))
-            {
-                recipeToCook = r;
-            }
-
+            (FoodRecipePrototype, int) portionedRecipe = _recipeManager.Recipes.Select(
+                r => CanSatisfyRecipe(r, solidsDict, reagentDict)).Where(r => r.Item2 > 0).FirstOrDefault();
+            FoodRecipePrototype? recipeToCook = portionedRecipe.Item1;
+            
             SetAppearance(MicrowaveVisualState.Cooking);
             var time = _currentCookTimerTime * _cookTimeMultiplier;
-            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
+            SoundSystem.Play(_startCookingSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default);
             Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
                 if (_lostPower)
@@ -289,15 +286,18 @@ namespace Content.Server.Kitchen.Components
 
                 if (recipeToCook != null)
                 {
-                    SubtractContents(recipeToCook);
-                    _entities.SpawnEntity(recipeToCook.Result,
-                        _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                    for (int i = 0; i < portionedRecipe.Item2; i++)
+                    {
+                        SubtractContents(recipeToCook);
+                        _entities.SpawnEntity(recipeToCook.Result,
+                            _entities.GetComponent<TransformComponent>(Owner).Coordinates);
+                    }
                 }
 
                 EjectSolids();
 
-                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
-                    AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(_cookingCompleteSound.GetSound(), Filter.Pvs(Owner),
+                    Owner, AudioParams.Default.WithVolume(-1f));
 
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
@@ -415,37 +415,47 @@ namespace Content.Server.Kitchen.Components
             }
         }
 
-        private bool CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
+        private (FoodRecipePrototype, int) CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string, int> solids, Dictionary<string, FixedPoint2> reagents)
         {
-            if (_currentCookTimerTime != recipe.CookTime)
+            int portions = 0;
+
+            if(_currentCookTimerTime % recipe.CookTime != 0)
             {
-                return false;
+                //can't be a multiple of this recipe
+                return (recipe, 0);
             }
 
             foreach (var solid in recipe.IngredientsSolids)
             {
                 if (!solids.ContainsKey(solid.Key))
-                    return false;
+                    return (recipe, 0);
 
                 if (solids[solid.Key] < solid.Value)
-                    return false;
+                    return (recipe, 0);
+                else
+                    portions = portions == 0 ? solids[solid.Key] / solid.Value.Int()
+                        : Math.Min(portions, solids[solid.Key] / solid.Value.Int());
             }
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
                 if (!reagents.ContainsKey(reagent.Key))
-                    return false;
+                    return (recipe, 0);
 
                 if (reagents[reagent.Key] < reagent.Value)
-                    return false;
+                    return (recipe, 0);
+                else
+                    portions = portions == 0 ? reagents[reagent.Key].Int() / reagent.Value.Int()
+                        : Math.Min(portions, reagents[reagent.Key].Int() / reagent.Value.Int());
             }
 
-            return true;
+            //cook only as many of those portions as time allows
+            return (recipe, (int)Math.Min(portions, _currentCookTimerTime / recipe.CookTime));
         }
 
         public void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 

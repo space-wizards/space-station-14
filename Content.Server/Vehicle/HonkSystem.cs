@@ -28,7 +28,7 @@ namespace Content.Server.Vehicle
                 return;
             if (vehicle.HornSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
+                SoundSystem.Play(vehicle.HornSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.1f).WithVolume(8f));
                 args.Handled = true;
             }
         }
@@ -47,7 +47,7 @@ namespace Content.Server.Vehicle
                 vehicle.SirenPlayingStream?.Stop();
                 vehicle.LoopingHornIsPlaying = true;
                 if (vehicle.HornSound != null)
-                    vehicle.SirenPlayingStream = SoundSystem.Play(Filter.Pvs(uid), vehicle.HornSound.GetSound(), uid, AudioParams.Default.WithLoop(true).WithVolume(1.8f));
+                    vehicle.SirenPlayingStream = SoundSystem.Play(vehicle.HornSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithLoop(true).WithVolume(1.8f));
                 return;
             }
             vehicle.SirenPlayingStream?.Stop();

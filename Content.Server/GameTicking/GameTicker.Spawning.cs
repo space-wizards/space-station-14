@@ -157,8 +157,9 @@ namespace Content.Server.GameTicking
 
             if (lateJoin)
             {
-                _chatManager.DispatchStationAnnouncement(Loc.GetString(
-                    "latejoin-arrival-announcement",
+                _chatSystem.DispatchStationAnnouncement(station,
+                    Loc.GetString(
+                        "latejoin-arrival-announcement",
                     ("character", character.Name),
                     ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
                     ), Loc.GetString("latejoin-arrival-sender"),
@@ -179,9 +180,9 @@ namespace Content.Server.GameTicking
             _stationJobs.TryAssignJob(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogSystem.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
             else
-                _adminLogSystem.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
 
             // Make sure they're aware of extended access.
             if (Comp<StationJobsComponent>(station).ExtendedAccess
@@ -193,13 +194,13 @@ namespace Content.Server.GameTicking
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
-            RaiseLocalEvent(mob, aev);
+            RaiseLocalEvent(mob, aev, true);
         }
 
         public void Respawn(IPlayerSession player)
         {
             player.ContentData()?.WipeMind();
-            _adminLogSystem.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
+            _adminLogger.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
                 PlayerJoinLobby(player);

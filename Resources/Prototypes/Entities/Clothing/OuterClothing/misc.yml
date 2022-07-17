@@ -209,3 +209,14 @@
     sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterNunRobe
+  name: nun robe
+  description: Maximum piety in this star system.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/nunrobe.rsi

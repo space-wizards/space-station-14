@@ -7,10 +7,11 @@ namespace Content.Shared.Access.Components
     ///     Simple mutable access provider found on ID cards and such.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(AccessSystem))]
+    [Access(typeof(AccessSystem))]
     public sealed class AccessComponent : Component
     {
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
+        [Access(typeof(AccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public HashSet<string> Tags = new();
 
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]

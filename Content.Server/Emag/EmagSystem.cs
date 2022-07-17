@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -12,7 +13,7 @@ namespace Content.Server.Emag
     public sealed class EmagSystem : EntitySystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAdminLogSystem _adminLog = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -65,8 +66,9 @@ namespace Content.Server.Emag
             RaiseLocalEvent(args.Target.Value, emaggedEvent, false);
             if (emaggedEvent.Handled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("emag-success", ("target", args.Target)), args.User, Filter.Entities(args.User));
-                _adminLog.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
+                _popupSystem.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.User,
+                    Filter.Entities(args.User), PopupType.Medium);
+                _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
                 component.Charges--;
                 return;
             }

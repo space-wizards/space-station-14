@@ -65,6 +65,18 @@
     PolytrinicAcid: 3
 
 - type: reaction
+  id: SulfuricAcid
+  reactants:
+    Hydrogen:
+      amount: 1
+    Sulfur:
+      amount: 1
+    Oxygen:
+      amount: 2
+  products:
+    SulfuricAcid: 3
+
+- type: reaction
   id: FluorosulfuricAcid
   reactants:
     Fluorine:
@@ -91,7 +103,7 @@
     - !type:ExplosionReactionEffect
       explosionType: Default
       maxIntensity: 1 # at most 15 damage per tile
-      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion 
+      intensityPerUnit: 0.5 # 50+50 reagent for maximum explosion
       intensitySlope: 2
       maxTotalIntensity: 25
 
@@ -261,6 +273,7 @@
 - type: reaction
   id: Desoxyephedrine
   impact: Medium
+  minTemp: 370
   reactants:
     Ephedrine:
       amount: 1
@@ -287,3 +300,16 @@
      amount: 1
   products:
     Ephedrine: 4
+
+- type: reaction
+  id: MuteToxin
+  impact: Medium
+  reactants:
+    Uranium:
+      amount: 2
+    Water:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    MuteToxin: 2 #Lower yield is intentional

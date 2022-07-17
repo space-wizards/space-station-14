@@ -4,6 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It's a space tick, watch out for its nasty bite. Centcomm reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
@@ -34,14 +36,16 @@
       - SmallMobLayer
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      15: !type:DeadMobState {}
+      0: Alive
+      15: Dead
   - type: MovementIgnoreGravity
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: alive
-      dead: dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
   - type: Butcherable
     spawned:
     - id: FoodMeatXeno
@@ -74,6 +78,7 @@
   - type: SolutionTransfer
     maxTransferAmount: 5
   - type: GhostTakeoverAvailable
+    prob: 0.33
     makeSentient: true
     name: space tick
     description: |

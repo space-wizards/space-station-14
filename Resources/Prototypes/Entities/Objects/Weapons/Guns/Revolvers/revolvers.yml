@@ -1,185 +1,108 @@
 - type: entity
-  name: RevolverBase
+  name: BaseWeaponRevolver
   parent: BaseItem
-  id: RevolverBase
+  id: BaseWeaponRevolver
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
     state: icon
+  - type: Item
+    size: 10
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    proto: CartridgeMagnum
+    capacity: 7
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
   name: Deckard
-  parent: RevolverBase
-  id: RevolverDeckard
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-3
-      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
+  - type: RevolverAmmoProvider
     capacity: 5
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    autoCycle: true
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true
 
 - type: entity
   name: Inspector
-  parent: RevolverBase
-  id: RevolverInspector
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverInspector
   description: A detective's best friend.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
+  - type: RevolverAmmoProvider
     capacity: 6
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
   name: Mateba
-  parent: RevolverBase
-  id: RevolverMateba
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
+  - type: RevolverAmmoProvider
     capacity: 7
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
   name: Predator
-  parent: RevolverBase
-  id: RevolverPredator
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Item
-    size: 12
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
-    capacity: 7
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
 
 - type: entity
   name: pirate revolver
-  parent: RevolverBase
-  id: RevolverPirate
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverPirate
   description: An odd, muzzle-loading revolver, favoured by pirate crews.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Item
-    size: 12
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
+  - type: Gun
     fireRate: 1
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgePistol
-    caliber: Pistol
+  - type: RevolverAmmoProvider
     capacity: 5
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 20
-    angleDecay: 15
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

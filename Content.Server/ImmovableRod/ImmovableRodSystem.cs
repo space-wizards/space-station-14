@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Examine;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Dynamics;
@@ -77,14 +78,15 @@ public sealed class ImmovableRodSystem : EntitySystem
 
         if (_random.Prob(component.HitSoundProbability))
         {
-            SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), uid, component.Sound.Params);
+            SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid, component.Sound.Params);
         }
 
         if (HasComp<ImmovableRodComponent>(ent))
         {
             // oh god.
             var coords = Transform(uid).Coordinates;
-            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, Filter.Pvs(uid));
+            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords,
+                Filter.Pvs(uid), PopupType.LargeCaution);
 
             Del(uid);
             Del(ent);
@@ -98,7 +100,8 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             component.MobCount++;
 
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, Filter.Pvs(uid));
+            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
+                Filter.Pvs(uid), PopupType.LargeCaution);
             body.Gib();
         }
 

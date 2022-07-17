@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent, Friend(typeof(FlashSystem))]
+    [RegisterComponent, Access(typeof(FlashSystem))]
     public sealed class FlashComponent : Component
     {
         [DataField("duration")]

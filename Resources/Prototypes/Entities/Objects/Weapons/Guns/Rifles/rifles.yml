@@ -1,398 +1,179 @@
 - type: entity
-  name: BaseRifle
+  name: BaseWeaponRifle
   parent: BaseItem
-  id: RifleBase
+  id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
-    size: 24
-    state: icon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    magFillPrototype: MagazineLRifle
+    size: 50
+  - type: AmmoCounter
+  - type: Gun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 20
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
 
 - type: entity
   name: AKMS
-  parent: RifleBase
-  id: RifleAk
+  parent: BaseWeaponRifle
+  id: WeaponRifleAk
   description: An iconic weapon of war.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
+  - type: Gun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 20
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: black AK
-  parent: RifleBase
-  id: RifleBlackAk
-  description: An iconic weapon of war; painted black.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
-    fireRate: 6
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 15
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: Z8 Bulldog
-  parent: RifleBase
-  id: RifleCarbine
+  name: M-90gl
+  parent: BaseWeaponRifle
+  id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: Dallas
-  parent: RifleBase
-  id: RifleDallas
-  description: A pulse-action air-cooled automatic assault rifle.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: ClRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineClRifle
-    fireRate: 8
-    minAngle: 10
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/m41.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/m41_reload.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: STS-35
-  parent: RifleBase
-  id: RifleSTS
-  description: A rugged and durable automatic weapon.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: Vintorez
-  parent: RifleBase
-  id: RifleVintorez
-  description: Highly prized for its armor piercing capabilities.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: Wintermute
-  parent: RifleBase
-  id: RifleWintermute
+  name: Lecter
+  parent: BaseWeaponRifle
+  id: WeaponRifleLecter
   description: A high end military grade assault rifle.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+        map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    autoEjectMag: true
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 20
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: calico m900
-  parent: RifleBase
-  id: RifleCalico
-  description: A carbine with a unique cylindrical magazine design which allows for high capacity loads.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    magFillPrototype: MagazinePistolCalicoTopMounted
-    caliber: Pistol
-    magazineTypes:
-    - CalicoTopMounted
-    fireRate: 3
-    minAngle: 0
-    maxAngle: 25
-    angleIncrease: 15
-    angleDecay: 20
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true

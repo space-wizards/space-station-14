@@ -140,6 +140,7 @@
             Heat: 2
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "slime-hurt-by-water-popup" ]
         probability: 0.25
   - type: Butcherable
@@ -147,6 +148,18 @@
     spawned:
     - id: FoodMeatSlime
       amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    maxSaturation: 15
+  - type: DiseaseCarrier
+    naturalImmunities:
+    - Ultragigacancer
+    - BleedersBite
 
 - type: entity
   save: false

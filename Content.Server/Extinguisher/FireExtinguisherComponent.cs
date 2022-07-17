@@ -3,7 +3,7 @@ using Content.Shared.Sound;
 namespace Content.Server.Extinguisher;
 
 [RegisterComponent]
-[Friend(typeof(FireExtinguisherSystem))]
+[Access(typeof(FireExtinguisherSystem))]
 public sealed class FireExtinguisherComponent : Component
 {
     [DataField("refillSound")] public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");

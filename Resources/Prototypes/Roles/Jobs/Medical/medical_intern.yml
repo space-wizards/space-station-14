@@ -1,12 +1,12 @@
 ﻿- type: job
   id: MedicalIntern
-  name: "medical intern"
+  name: job-name-intern
   startingGear: MedicalInternGear
   departments:
   - Civilian
   - Medical
   icon: "MedicalIntern"
-  supervisors: "medical doctors, chemists, and the chief medical officer"
+  supervisors: job-supervisors-medicine
   canBeAntag: false
   access:
   - Medical

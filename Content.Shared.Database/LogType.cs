@@ -69,6 +69,9 @@ public enum LogType
     Trigger = 65,
     Anchor = 66,
     Unanchor = 67,
+    EmergencyShuttle = 68,
     // haha so funny
     Emag = 69,
+    Gib = 70,
+    Identity = 71
 }

@@ -16,7 +16,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -111,7 +110,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -155,7 +153,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-    fixedRotation: false
   - type: Fixtures
     fixtures:
     - shape:

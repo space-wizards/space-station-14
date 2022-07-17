@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
@@ -32,7 +32,7 @@ namespace Content.Client.Storage.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.TryGetComponent(component.Owner, out ISpriteComponent spriteComponent))
+            if (entities.TryGetComponent(component.Owner, out ISpriteComponent? spriteComponent))
             {
                 if (_spriteLayers.Count == 0)
                 {

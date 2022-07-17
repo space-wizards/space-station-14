@@ -1,78 +1,61 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Robust.Server.Player;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    sealed class HurtCommand : IConsoleCommand
+    sealed class DamageCommand : IConsoleCommand
     {
-        public string Command => "hurt";
-        public string Description => "Ouch";
-        public string Help => $"Usage: {Command} <type/?> <amount> (<entity uid/_>) (<ignoreResistances>)";
+        public string Command => "damage";
+        public string Description => Loc.GetString("damage-command-description");
+        public string Help => Loc.GetString("damage-command-help", ("command", Command));
 
         private readonly IPrototypeManager _prototypeManager = default!;
-        public HurtCommand() {
+        public DamageCommand() {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         }
 
-        private string DamageTypes()
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
-            var msg = new StringBuilder();
-
-            foreach (var damageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+            if (args.Length == 1)
             {
-                msg.Append($"\n{damageGroup.ID}");
-                if (damageGroup.DamageTypes.Any())
-                {
-                    msg.Append(": ");
-                    msg.AppendJoin('|', damageGroup.DamageTypes);
-                }
+                var types = _prototypeManager.EnumeratePrototypes<DamageTypePrototype>()
+                    .Select(p => new CompletionOption(p.ID));
+
+                var groups = _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>()
+                    .Select(p => new CompletionOption(p.ID));
+
+                return CompletionResult.FromHintOptions(types.Concat(groups).OrderBy(p => p.Value),
+                    Loc.GetString("damage-command-arg-type"));
             }
-            return $"Damage Types:{msg}";
+
+            if (args.Length == 2)
+            {
+                return CompletionResult.FromHint(Loc.GetString("damage-command-arg-quantity"));
+            }
+
+            if (args.Length == 3)
+            {
+                // if type.Name is good enough for cvars, <bool> doesn't need localizing.
+                return CompletionResult.FromHint("<bool>");
+            }
+
+            if (args.Length == 4)
+            {
+                return CompletionResult.FromHint(Loc.GetString("damage-command-arg-target"));
+            }
+
+            return CompletionResult.Empty;
         }
 
         private delegate void Damage(EntityUid entity, bool ignoreResistances);
-
-        private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg, out EntityUid entity)
-        {
-            entity = default;
-
-            if (arg == "_")
-            {
-                if (player?.AttachedEntity is not {Valid: true} playerEntity)
-                {
-                    shell.WriteLine($"You must have a player entity to use this command without specifying an entity.\n{Help}");
-                    return false;
-                }
-
-                entity = playerEntity;
-                return true;
-            }
-
-            if (!EntityUid.TryParse(arg, out entity))
-            {
-                shell.WriteLine($"{arg} is not a valid entity uid.\n{Help}");
-                return false;
-            }
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.EntityExists(entity))
-            {
-                shell.WriteLine($"No entity found with uid {entity}");
-                return false;
-            }
-
-            return true;
-        }
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
@@ -80,12 +63,9 @@ namespace Content.Server.Damage.Commands
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!int.TryParse(args[1], out var amount))
+            if (!float.TryParse(args[1], out var amount))
             {
-                shell.WriteLine($"{args[1]} is not a valid damage integer.");
-
+                shell.WriteLine(Loc.GetString("damage-command-error-quantity", ("arg", args[1])));
                 func = null;
                 return false;
             }
@@ -96,8 +76,6 @@ namespace Content.Server.Damage.Commands
                 {
                     var damage = new DamageSpecifier(damageGroup, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
-
-                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -109,20 +87,13 @@ namespace Content.Server.Damage.Commands
                 {
                     var damage = new DamageSpecifier(damageType, amount);
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
-
-                    shell.WriteLine($"Damaged entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
-
                 };
                 return true;
 
             }
             else
             {
-                shell.WriteLine($"{args[0]} is not a valid damage class or type.");
-
-                var types = DamageTypes();
-                shell.WriteLine(types);
-
+                shell.WriteLine(Loc.GetString("damage-command-error-type", ("arg", args[0])));
                 func = null;
                 return false;
             }
@@ -130,73 +101,50 @@ namespace Content.Server.Damage.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            bool ignoreResistances;
-            EntityUid entity;
-            Damage? damageFunc;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            switch (args.Length)
+            if (args.Length < 2 || args.Length > 4)
             {
-                // Check if we have enough for the dmg types to show
-                case var n when n > 0 && (args[0] == "?" || args[0] == "¿"):
-                    var types = DamageTypes();
-
-                    if (args[0] == "¿")
-                    {
-                        types = types.Replace('e', 'é');
-                    }
-
-                    shell.WriteLine(types);
-
-                    return;
-                // Not enough args
-                case var n when n < 2:
-                    shell.WriteLine($"Invalid number of arguments ({args.Length}).\n{Help}");
-                    return;
-                case var n when n >= 2 && n <= 4:
-
-                    var entityUid = n == 2 ? "_" : args[2];
-
-                    if (!TryParseEntity(shell, player, entityUid, out var parsedEntity))
-                    {
-                        return;
-                    }
-
-                    entity = parsedEntity;
-
-                    if (!TryParseDamageArgs(shell, entity, args, out damageFunc))
-                    {
-                        return;
-                    }
-
-                    if (n == 4)
-                    {
-                        if (!bool.TryParse(args[3], out ignoreResistances))
-                        {
-                            shell.WriteLine($"{args[3]} is not a valid boolean value for ignoreResistances.\n{Help}");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        ignoreResistances = false;
-                    }
-
-                    break;
-                default:
-                    shell.WriteLine($"Invalid amount of arguments ({args.Length}).\n{Help}");
-                    return;
-            }
-
-            if (!entMan.TryGetComponent(entity, out DamageableComponent? damageable))
-            {
-                shell.WriteLine($"Entity {entMan.GetComponent<MetaDataComponent>(entity).EntityName} with id {entity} does not have a {nameof(DamageableComponent)}.");
+                shell.WriteLine(Loc.GetString("damage-command-error-args"));
                 return;
             }
 
-            damageFunc(entity, ignoreResistances);
+            EntityUid target;
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (args.Length == 5)
+            {
+                if (!EntityUid.TryParse(args[4], out target) || !entMan.EntityExists(target))
+                {
+                    shell.WriteLine(Loc.GetString("damage-command-error-euid", ("arg", args[4])));
+                    return;
+                }
+            }
+            else if (shell.Player?.AttachedEntity is { Valid: true } playerEntity)
+            {
+                target = playerEntity;
+            }
+            else
+            {
+                shell.WriteLine(Loc.GetString("damage-command-error-player"));
+                return;
+            }
+
+            if (!TryParseDamageArgs(shell, target, args, out var damageFunc))
+                return;
+
+            bool ignoreResistances;
+            if (args.Length == 3)
+            {
+                if (!bool.TryParse(args[2], out ignoreResistances))
+                {
+                    shell.WriteLine(Loc.GetString("damage-command-error-bool", ("arg", args[2])));
+                    return;
+                }
+            }
+            else
+            {
+                ignoreResistances = false;
+            }
+
+            damageFunc(target, ignoreResistances);
         }
     }
 }
