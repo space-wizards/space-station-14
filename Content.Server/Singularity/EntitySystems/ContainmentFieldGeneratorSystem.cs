@@ -1,5 +1,4 @@
-﻿using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Singularity.Components;
+﻿using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -8,7 +7,9 @@ using Robust.Shared.Physics.Dynamics;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Throwing;
 using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -18,20 +19,18 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
-
-        SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
-
-        SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
     }
 
     #region Events
@@ -45,6 +44,15 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         {
             ReceivePower(component.Power, component);
         }
+    }
+
+    private void OnExamine(EntityUid uid, ContainmentFieldGeneratorComponent component, ExaminedEvent args)
+    {
+        if (component.Enabled)
+            args.PushMarkup(Loc.GetString("comp-containment-on"));
+
+        else
+            args.PushMarkup(Loc.GetString("comp-containment-off"));
     }
 
     private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
@@ -256,31 +264,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component)
     {
-        //component.Connection1?.Item2?.CanRepel(toRepel) == true || component.Connection2?.Item2?.CanRepel(toRepel) == true;
         return false;
-    }
-
-    //TODO: put into its own PA system?
-    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
-    {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
-        {
-            singularityGeneratorComponent.Power += component.State switch
-            {
-                ParticleAcceleratorPowerState.Standby => 0,
-                ParticleAcceleratorPowerState.Level0 => 1,
-                ParticleAcceleratorPowerState.Level1 => 2,
-                ParticleAcceleratorPowerState.Level2 => 4,
-                ParticleAcceleratorPowerState.Level3 => 8,
-                _ => 0
-            };
-            EntityManager.QueueDeleteEntity(uid);
-        }
-    }
-
-    //TODO: Rework this to player bouncing
-    private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
-    {
-
     }
 }
