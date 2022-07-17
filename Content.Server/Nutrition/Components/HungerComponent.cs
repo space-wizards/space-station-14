@@ -49,6 +49,7 @@ namespace Content.Server.Nutrition.Components
             set => _currentHunger = value;
         }
         private float _currentHunger;
+	private float _accumulatedFrameTime;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
@@ -170,13 +171,12 @@ namespace Content.Server.Nutrition.Components
             _currentHunger -= frametime * ActualDecayRate;
             UpdateCurrentThreshold();
 
-            if (_currentHungerThreshold != HungerThreshold.Dead)
+            if (_currentHungerThreshold != HungerThreshold.Dead && _currentHungerThreshold != HungerThreshold.Starving)
                 return;
             // --> Current Hunger is below dead threshold
 
             if (!_entMan.TryGetComponent(Owner, out MobStateComponent? mobState))
                 return;
-
             if (!mobState.IsDead())
             {
                 // --> But they are not dead yet.
@@ -184,7 +184,6 @@ namespace Content.Server.Nutrition.Components
                 if (_accumulatedFrameTime >= 1)
                 {
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime * 4, true);
-                    _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }
         }
