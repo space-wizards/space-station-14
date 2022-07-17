@@ -68,8 +68,7 @@ public sealed partial class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
             target, Filter.Pvs(target), PopupType.Large);
 
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(revenant.HarvestDuration), false);
-        _stun.TryStun(uid, TimeSpan.FromSeconds(revenant.HarvestDuration), false);
+        CanUseAbility(uid, revenant, 0, revenant.HarvestDuration, revenant.HarvestDuration);
         _doAfter.DoAfter(doAfter);
     }
 
@@ -90,7 +89,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (_mobState.IsAlive(args.Target) && _random.Prob(component.PerfectSoulChance))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
-            component.MaxEssence += component.MaxEssenceUpgradeAmount;
+            component.MaxEssence = Math.Min(component.MaxEssence + component.MaxEssenceUpgradeAmount, component.EssenceCap);
         }
 
         if (TryComp<MobStateComponent>(args.Target, out var mobstate))

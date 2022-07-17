@@ -24,6 +24,7 @@ namespace Content.Server.Entry
             "LatheVisuals",
             "DiseaseMachineVisuals",
             "HandheldGPS",
+            "RevenantVisuals",
             "SpentAmmoVisuals",
             "MagazineVisuals",
             "PowerCellVisuals",

@@ -6,6 +6,8 @@ namespace Content.Shared.Revenant;
 
 public sealed class RevenantDefileActionEvent : InstantActionEvent { }
 
+public sealed class RevenantMalfunctionActionEvent : InstantActionEvent { }
+
 [NetSerializable, Serializable]
 public enum RevenantVisuals
 {

@@ -26,16 +26,10 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!ChangeEssenceAmount(uid, component.DefileUseCost, component, false))
-        {
-            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
+        if (!CanUseAbility(uid, component, component.DefileUseCost, component.DefileStunDuration, component.DefileCorporealDuration))
             return;
-        }
 
         args.Handled = true;
-
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(component.DefileCorporealDuration), false);
-        _stun.TryStun(uid, TimeSpan.FromSeconds(component.DefileStunDuration), false);
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
 

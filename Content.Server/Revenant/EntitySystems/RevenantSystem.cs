@@ -1,6 +1,5 @@
 using Content.Server.Actions;
 using Content.Server.Disease;
-using Content.Server.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -19,8 +18,8 @@ using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
-using Content.Server.Storage.EntitySystems;
 using Content.Server.Polymorph.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -60,6 +59,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
     }
 
     private void OnInit(EntityUid uid, RevenantComponent component, ComponentStartup args)
@@ -88,7 +88,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //TODO: kill
-        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantDefile"));
+        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantMalfunction"));
         _action.AddAction(uid, action, null);
     }
 
@@ -151,7 +151,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnDamage(EntityUid uid, RevenantComponent component, DamageChangedEvent args)
     {
-        if (args.DamageDelta == null)
+        if (!HasComp<CorporealComponent>(uid) || args.DamageDelta == null)
             return;
 
         var essenceDamage = args.DamageDelta.Total.Float() * component.DamageToEssenceCoefficient * -1;
@@ -170,9 +170,22 @@ public sealed partial class RevenantSystem : EntitySystem
 
         _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Round(component.Essence / 10f));
 
-        //change this into morph into ectoplasm
         if (component.Essence <= 0)
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
+
+        return true;
+    }
+
+    private bool CanUseAbility(EntityUid uid, RevenantComponent component, float abilityCost, float stunDuration, float corporealDuration)
+    {
+        if (!ChangeEssenceAmount(uid, abilityCost, component, false))
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
+            return false;
+        }
+
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(corporealDuration), false);
+        _stun.TryStun(uid, TimeSpan.FromSeconds(stunDuration), false);
 
         return true;
     }

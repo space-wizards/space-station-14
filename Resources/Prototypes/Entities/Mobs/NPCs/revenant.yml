@@ -9,8 +9,8 @@
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 4
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
   - type: Sprite
     noRot: true
     drawdepth: Ghosts
@@ -65,6 +65,9 @@
     layers:
     - state: ectoplasm
   - type: Eye
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

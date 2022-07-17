@@ -1,7 +1,15 @@
 - type: instantAction
   id: RevenantDefile
-  icon: Interface/Actions/scream.png
+  icon: Interface/Actions/scream.png #replace
   name: Defile
   description: Costs 30 Essence. Defiles the surrounding area, ripping up floors and damaging windows.
   serverEvent: !type:RevenantDefileActionEvent
   useDelay: 15
+
+- type: instantAction
+  id: RevenantMalfunction
+  icon: Interface/Actions/scream.png #replace
+  name: Malfunction
+  description: Costs 60 Essence. Causes electronics in the surrounding area to malfunction.
+  serverEvent: !type:RevenantMalfunctionActionEvent
+  useDelay: 20
