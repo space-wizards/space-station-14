@@ -142,6 +142,7 @@
 
 - type: decal
   id: WarnEnd
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -149,6 +150,7 @@
 
 - type: decal
   id: WarnEndGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -174,6 +176,7 @@
 
 - type: decal
   id: WarningLine
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -181,6 +184,7 @@
 
 - type: decal
   id: WarningLineGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -188,6 +192,7 @@
 
 - type: decal
   id: WarningLineCorner
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -195,6 +200,7 @@
 
 - type: decal
   id: WarningLineCornerGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -202,6 +208,7 @@
 
 - type: decal
   id: WarningLineCornerFlipped
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -209,6 +216,7 @@
 
 - type: decal
   id: WarningLineCornerFlippedGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -216,6 +224,7 @@
 
 - type: decal
   id: WarnCorner
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -223,6 +232,7 @@
 
 - type: decal
   id: WarnCornerGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -230,6 +240,7 @@
 
 - type: decal
   id: WarnCornerFlipped
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
@@ -237,6 +248,7 @@
 
 - type: decal
   id: WarnCornerFlippedGreyscale
+  showMenu: false
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/markings.rsi
