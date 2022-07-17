@@ -130,7 +130,6 @@
   - type: Sprite
     netsync: false
     drawdepth: Effects
-    noRot: true
     layers:
       - shader: unshaded
         map: [ "enum.EffectLayers.Unshaded" ]

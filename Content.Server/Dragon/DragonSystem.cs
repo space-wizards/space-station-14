@@ -286,15 +286,20 @@ namespace Content.Server.Dragon
         {
             _atmosphereSystem.HotspotExpose(grid.GridEntityId, tile, 700f, 50f, true);
 
+            // TODO: Move to client-side.
             var coords = grid.GridTileToLocal(tile);
             Spawn(effectPrototype, coords);
         }
 
-        public void ProcessTile(Vector2i tile, MapCoordinates coords, string effectPrototype)
+        public void ProcessTile(Vector2i tile, MapCoordinates coords, Angle rotation, string effectPrototype)
         {
             // TODO: Hotspot expose overlapping tiles.
 
-            Spawn(effectPrototype, coords);
+            // TODO: Move to client-side.
+            var effectEntity = Spawn(effectPrototype, coords);
+            var xform = Transform(effectEntity);
+
+            xform.WorldRotation = rotation;
         }
 
         /// <summary>
@@ -479,7 +484,7 @@ internal sealed class BreathAttack
                 var curTile = _gridTilePropagation.CurrentTile;
                 var grid = _gridTilePropagation.Grid;
                 var pos = grid.GridTileToWorld(curTile);
-                _spaceTilePropagation = new SpaceTilePropagation(_mapUid, pos, _direction, grid, _xformQuery);
+                _spaceTilePropagation = new SpaceTilePropagation(_mapUid, pos, _direction, grid, _xformQuery, _gridTilePropagation.TilePathing);
             }
 
             else
@@ -577,7 +582,7 @@ internal sealed class BreathAttack
 
         private Vector2i _nextTile;
 
-        private readonly IEnumerator<Vector2i> _tilePathing;
+        public IEnumerator<Vector2i> TilePathing { get; }
 
         public GridTilePropagation(IMapGrid grid, MapCoordinates start, Angle direction)
         {
@@ -586,8 +591,8 @@ internal sealed class BreathAttack
 
             var localDir = direction - grid.WorldRotation;
 
-            _tilePathing = TileLinePathing(CurrentTile, localDir.ToWorldVec()).GetEnumerator();
-            _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : CurrentTile;
+            TilePathing = TileLinePathing(CurrentTile, localDir.ToWorldVec()).GetEnumerator();
+            _nextTile = TilePathing.MoveNext() ? TilePathing.Current : CurrentTile;
         }
 
         public void ProcessNext(
@@ -601,13 +606,13 @@ internal sealed class BreathAttack
             EntityQuery<FlammableComponent> flammableQuery)
         {
             CurrentTile = _nextTile;
-            if (!_tilePathing.MoveNext())
+            if (!TilePathing.MoveNext())
             {
                 Finished = true;
                 return;
             }
 
-            _nextTile = _tilePathing.Current;
+            _nextTile = TilePathing.Current;
 
             var tileBox = new Box2(CurrentTile * Grid.TileSize, (CurrentTile + 1) * Grid.TileSize);
             var lookup = entMan.GetComponent<EntityLookupComponent>(Grid.GridEntityId);
@@ -625,7 +630,7 @@ internal sealed class BreathAttack
             system.ProcessTile(CurrentTile, Grid, "FireBreathEffect");
 
             // Check if the next tile is a space tile. Detach from the grid if it is.
-            if (!Grid.TryGetTileRef(_nextTile, out var curTileRef) || curTileRef.IsSpace())
+            if (!Grid.TryGetTileRef(CurrentTile, out var curTileRef) || curTileRef.IsSpace())
             {
                 ReachedSpace = true;
                 Finished = true;
@@ -671,13 +676,13 @@ internal sealed class BreathAttack
 
         private readonly IEnumerator<Vector2i> _tilePathing;
 
-        private Matrix3 _spaceMatrix;
+        private readonly Matrix3 _spaceMatrix;
 
-        private Angle _spaceAngle;
+        private readonly Angle _spaceAngle;
 
         private readonly ushort _tileSize = 1;
 
-        public SpaceTilePropagation(EntityUid mapUid, MapCoordinates start, Angle direction, IMapGrid? referenceGrid, EntityQuery<TransformComponent> xformQuery)
+        public SpaceTilePropagation(EntityUid mapUid, MapCoordinates start, Angle direction, IMapGrid? referenceGrid, EntityQuery<TransformComponent> xformQuery, IEnumerator<Vector2i>? tilePathing = null)
         {
             _mapId = start.MapId;
             _mapUid = mapUid;
@@ -685,16 +690,28 @@ internal sealed class BreathAttack
             // A reference grid was supplied. Take its coordinate space to use as our own.
             if (referenceGrid != null)
             {
+                _tileSize = referenceGrid.TileSize;
+
                 var referenceXform = xformQuery.GetComponent(referenceGrid.GridEntityId);
                 _spaceAngle = referenceXform.WorldRotation;
                 _spaceMatrix = referenceXform.WorldMatrix;
 
                 var localDir = direction - referenceGrid.WorldRotation;
 
-                _currentTile = referenceGrid.TileIndicesFor(start);
-                _tilePathing = TileLinePathing(_currentTile, localDir.ToWorldVec()).GetEnumerator();
-                _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : _currentTile;
-                _tileSize = referenceGrid.TileSize;
+                _tilePathing = tilePathing ?? TileLinePathing(_currentTile, localDir.ToWorldVec()).GetEnumerator();
+                if (tilePathing != null)
+                {
+                    // Previous pathing provided. Keep it to maintain consistency in the tile path.
+                    _currentTile = tilePathing.Current;
+                    _nextTile = tilePathing.Current;
+                }
+                else
+                {
+                    _currentTile = referenceGrid.TileIndicesFor(start);
+                    _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : _currentTile;
+
+                }
+
                 return;
             }
 
@@ -721,7 +738,7 @@ internal sealed class BreathAttack
 
             var localBox = Box2.FromDimensions(_currentTile * _tileSize, (_tileSize, _tileSize));
             var worldBox = _spaceMatrix.TransformBox(localBox);
-            var localPos = new Vector2(_currentTile.X + (_tileSize * 0.5f), _currentTile.Y + (_tileSize * 0.5f));
+            var localPos = new Vector2(_currentTile.X * _tileSize + (_tileSize / 2f), _currentTile.Y + (_tileSize / 2f));
             var worldPos = _spaceMatrix.Transform(localPos);
 
             // Get the entities on the tile.
@@ -735,7 +752,7 @@ internal sealed class BreathAttack
             foreach(var xform in list)
                 system.ProcessEntity(xform.Owner, damageSpecifier, damageQuery, flammableQuery); // TODO: Move queries into system.
 
-            system.ProcessTile(_currentTile, new MapCoordinates(worldPos, _mapId), "FireBreathEffect");
+            system.ProcessTile(_currentTile, new MapCoordinates(worldPos, _mapId), _spaceAngle, "FireBreathEffect");
         }
 
         public void Update(float frameTime)
