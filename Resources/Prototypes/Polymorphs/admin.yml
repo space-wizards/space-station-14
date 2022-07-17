@@ -28,3 +28,9 @@
   entity: MobMouse
   forced: true
   inventory: Drop
+
+- type: polymorph
+  id: AdminDisposalsSmite
+  entity: DisposalUnit
+  forced: true
+  inventory: Drop

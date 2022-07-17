@@ -52,3 +52,4 @@ admin-smite-speak-backwards-description = Forces them to speak backwards, so the
 admin-smite-lung-removal-description = Removes their lungs, drowning them.
 admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.
+admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.

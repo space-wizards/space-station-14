@@ -171,6 +171,20 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(monkey);
 
+        Verb disposalBin = new()
+        {
+            Text = "Garbage Can",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Structures/Piping/disposal.rsi/disposal.png",
+            Act = () =>
+            {
+                _polymorphableSystem.PolymorphEntity(args.Target, "AdminDisposalsSmite");
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-garbage-can-description")
+        };
+        args.Verbs.Add(disposalBin);
+
         if (TryComp<DiseaseCarrierComponent>(args.Target, out var carrier))
         {
             Verb lungCancer = new()
