@@ -374,7 +374,7 @@
   id: BoxBeanbag
   description: A box full of beanbag shots, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
       capacity: 12
     - type: Sprite
@@ -388,7 +388,7 @@
   id: BoxLethalshot
   description: A box full of lethal pellet shots, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgun
       capacity: 12
     - type: Sprite
@@ -402,7 +402,7 @@
   id: BoxShotgunSlug
   description: A box full of shotgun slugs, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
       capacity: 12
     - type: Sprite
@@ -416,7 +416,7 @@
   id: BoxShotgunFlare
   description: A box full of shotgun flare cartridges, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
       capacity: 12
     - type: Sprite
@@ -430,7 +430,7 @@
   id: BoxShotgunIncendiary
   description: A box full of shotgun incendiary cartridges, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
       capacity: 12
     - type: Sprite
@@ -444,7 +444,7 @@
   id: BoxShotgunPractice
   description: A box full of shotgun practice cartridges, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
       capacicity: 12
     - type: Sprite
@@ -458,7 +458,7 @@
   id: BoxShellTranquilizer
   description: A box full of tranquilizer cartridges, designed for riot shotguns.
   components:
-    - type: ballisticammoprovider
+    - type: BallisticAmmoProvider
       proto: ShellTranquilizer
       capacicity: 12
     - type: Sprite
