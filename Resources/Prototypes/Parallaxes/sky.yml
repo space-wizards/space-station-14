@@ -1,0 +1,9 @@
+- type: parallax
+  id: Sky
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/sky.png"
+      slowness: 0.1
+      scale: "1, 1"
+      scrolling: "-1, 0"

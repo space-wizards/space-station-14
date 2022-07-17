@@ -1,15 +1,11 @@
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Parallax.Data;
 using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Managers;
 
@@ -27,18 +23,37 @@ public sealed class ParallaxManager : IParallaxManager
 
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _loadingParallaxes = new();
 
+    public bool IsLoaded(string name) => _parallaxesLQ.ContainsKey(name);
+
     public ParallaxLayerPrepared[] GetParallaxLayers(string name)
     {
-        // TODO: Need to get dummy layers if it's still loading.
-        // Whenever we make a new map with a different parallax need to preload it.
-        return _configurationManager.GetCVar(CCVars.ParallaxLowQuality) ? _parallaxesLQ[name] : _parallaxesHQ[name];
+        if (_configurationManager.GetCVar(CCVars.ParallaxLowQuality))
+        {
+            return !_parallaxesLQ.TryGetValue(name, out var lq) ? Array.Empty<ParallaxLayerPrepared>() : lq;
+        }
+
+        return !_parallaxesLQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
     }
 
     public async void UnloadParallax(string name)
     {
+        if (name == "Default")
+        {
+            _sawmill.Error($"Tried to unload default parallax, aborting!");
+            DebugTools.Assert(false);
+            return;
+        }
+
+        if (_loadingParallaxes.TryGetValue(name, out var loading))
+        {
+            loading.Cancel();
+            _loadingParallaxes.Remove(name, out _);
+            return;
+        }
+
         if (!_parallaxesLQ.ContainsKey(name)) return;
-        // TODO:
-        throw new NotImplementedException();
+        _parallaxesLQ.Remove(name, out _);
+        _parallaxesHQ.Remove(name, out _);
     }
 
     public async void LoadDefaultParallax()
@@ -46,7 +61,7 @@ public sealed class ParallaxManager : IParallaxManager
         await LoadParallaxByName("Default");
     }
 
-    private async Task LoadParallaxByName(string name)
+    public async Task LoadParallaxByName(string name)
     {
         if (_parallaxesLQ.ContainsKey(name) || _loadingParallaxes.ContainsKey(name)) return;
 
@@ -64,23 +79,25 @@ public sealed class ParallaxManager : IParallaxManager
 
             ParallaxLayerPrepared[] hq;
             ParallaxLayerPrepared[] lq;
+            ParallaxLayerPrepared[][] layers;
 
             if (parallaxPrototype.LayersLQUseHQ)
             {
-                lq = hq = await LoadParallaxLayers(parallaxPrototype.Layers, cancel);
+                layers = new ParallaxLayerPrepared[1][];
+                layers[0] = await LoadParallaxLayers(parallaxPrototype.Layers, cancel);
             }
             else
             {
-                var results = await Task.WhenAll(
+                layers = await Task.WhenAll(
                     LoadParallaxLayers(parallaxPrototype.Layers, cancel),
                     LoadParallaxLayers(parallaxPrototype.LayersLQ, cancel)
                 );
-                hq = results[0];
-                lq = results[1];
             }
 
-            _parallaxesLQ[name] = lq;
-            _parallaxesHQ[name] = hq;
+            if (token.Token.IsCancellationRequested) return;
+
+            _parallaxesLQ[name] = layers[0];
+            _parallaxesHQ[name] = layers[1];
 
             _sawmill.Info($"Loaded parallax {name}");
 
