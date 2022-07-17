@@ -30,3 +30,9 @@
   id: RobotBeeps
   files:
   - /Audio/Effects/Diseases/beepboop.ogg
+
+- type: soundCollection
+  id: Yawns
+  files:
+  - /Audio/Effects/Diseases/yawn1.ogg
+  - /Audio/Effects/Diseases/yawn2.ogg
