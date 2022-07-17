@@ -87,6 +87,9 @@ namespace Content.Shared.Polymorph
         /// </summary>
         [DataField("revertOnDeath", serverOnly: true)]
         public bool RevertOnDeath = true;
+
+        [DataField("allowRepeatedMorphs", serverOnly: true)]
+        public bool AllowRepeatedMorphs = false;
     }
 
     public enum PolymorphInventoryChange : byte
