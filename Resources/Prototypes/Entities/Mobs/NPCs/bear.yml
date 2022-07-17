@@ -4,8 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It looks friendly. Why don't you give it a hug?
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - Idle

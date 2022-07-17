@@ -39,6 +39,29 @@ binds:
 - function: Walk
   type: State
   key: Shift
+# Shuttle
+- function: ShuttleStrafeUp
+  type: State
+  key: W
+- function: ShuttleStrafeLeft
+  type: State
+  key: Q
+- function: ShuttleStrafeRight
+  type: State
+  key: E
+- function: ShuttleStrafeDown
+  type: State
+  key: S
+- function: ShuttleRotateLeft
+  type: State
+  key: A
+- function: ShuttleRotateRight
+  type: State
+  key: D
+- function: ShuttleBrake
+  type: State
+  key: Space
+
 - function: CameraRotateLeft
   type: State
   key: NumpadNum7

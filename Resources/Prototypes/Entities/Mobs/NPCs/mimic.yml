@@ -7,8 +7,8 @@
   - type: Tag
     tags:
     - FootstepSound
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles

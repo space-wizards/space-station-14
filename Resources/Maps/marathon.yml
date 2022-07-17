@@ -487,8 +487,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -27922,8 +27922,6 @@ entities:
   - pos: 6.5,18.5
     parent: 30
     type: Transform
-  - locked: False
-    type: Lock
   - containers:
       entity_storage: !type:Container
         ents:
@@ -27939,8 +27937,6 @@ entities:
   - pos: 5.5,18.5
     parent: 30
     type: Transform
-  - locked: False
-    type: Lock
   - containers:
       entity_storage: !type:Container
         ents:
@@ -74027,13 +74023,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7093
-  type: RollerBed
+  type: OperatingTable
   components:
-  - pos: -9.51763,-21.263887
+  - pos: -9.5,-21.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7094
   type: VendingMachineSmartFridge
   components:
@@ -74639,13 +74633,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 7191
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: -28.5,-17.5
     parent: 30
     type: Transform
 - uid: 7192
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: -28.5,-13.5
     parent: 30
@@ -82527,7 +82521,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8275
-  type: AirlockMedicalGlassLocked
+  type: AirlockVirologyGlassLocked
   components:
   - pos: -31.5,-21.5
     parent: 30
@@ -82539,7 +82533,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 8277
-  type: AirlockMedicalGlassLocked
+  type: AirlockVirologyGlassLocked
   components:
   - pos: -33.5,-21.5
     parent: 30
@@ -106679,9 +106673,17 @@ entities:
 - uid: 11572
   type: LampGold
   components:
-  - pos: -27.572895,-0.3626914
+  - pos: -27.499172,-0.11374092
     parent: 30
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 11573
@@ -107297,8 +107299,8 @@ entities:
     type: Transform
   - index: 1
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -150961,15 +150963,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 17468
-  type: TableWood
+  type: AltarConvertRed
   components:
-  - pos: -62.5,-44.5
+  - pos: -61.5,-44.5
     parent: 30
     type: Transform
 - uid: 17469
-  type: TableWood
+  type: AltarConvertRed
   components:
-  - pos: -61.5,-44.5
+  - pos: -62.5,-44.5
     parent: 30
     type: Transform
 - uid: 17470
@@ -153358,10 +153360,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 17810
-  type: WallReinforced
+  type: WallSolid
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -43.5,-22.5
+  - pos: -43.5,-22.5
     parent: 30
     type: Transform
 - uid: 17811
@@ -172665,8 +172666,8 @@ entities:
     type: Transform
   - index: 2
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -177610,6 +177611,44 @@ entities:
     pos: -25.5,-3.5
     parent: 30
     type: Transform
+- uid: 21246
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -20.5,-13.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21247
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -23.5,-11.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21248
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -24.5,-11.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21249
+  type: PortableScrubber
+  components:
+  - pos: 5.5,-25.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 21250
   type: Table
   components:
@@ -179536,6 +179575,28 @@ entities:
   - pos: -32.5,-2.5
     parent: 30
     type: Transform
+- uid: 21502
+  type: PortableScrubber
+  components:
+  - pos: 5.5,-24.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 21503
+  type: BrbSign
+  components:
+  - pos: -0.87252545,31.729797
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 21506
   type: PaintingCafeTerraceAtNight
   components:

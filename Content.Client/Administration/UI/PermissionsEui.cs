@@ -201,7 +201,7 @@ namespace Content.Client.Administration.UI
             _ranks = s.AdminRanks;
 
             _menu.AdminsList.RemoveAllChildren();
-            foreach (var admin in s.Admins)
+            foreach (var admin in s.Admins.OrderBy(d => d.UserName))
             {
                 var al = _menu.AdminsList;
                 var name = admin.UserName ?? admin.UserId.ToString();
