@@ -32,7 +32,7 @@
   id: WizardForcedSkeleton
   entity: MobSkeletonPerson
   forced: true
-  inventory: None
+  inventory: Drop
   transferName: true
   transferDamage: true
   revertOnCrit: false
