@@ -462,8 +462,9 @@ internal sealed class BreathAttack
         }
         else
         {
-            // Try to find a reference grid.
+            // Try to find a reference grid. TODO: Figure out if this is better vs free-aiming.
             var referenceGrid = findReferenceGrid(mapMan, _physicsQuery, origin, dir, range);
+            // IMapGrid? referenceGrid = null; // Uncomment for free-aiming.
 
             _spaceTilePropagation = new SpaceTilePropagation(
                 _creatorUid,
@@ -477,10 +478,20 @@ internal sealed class BreathAttack
 
     private IMapGrid? findReferenceGrid(IMapManager mapMan, EntityQuery<PhysicsComponent> physicsQuery, MapCoordinates start, Angle direction, float range)
     {
-        var distance = (range + 1) / 2;
-        var box = Box2.CenteredAround(start.Position, (distance, distance));
+        // Setup the bounding box so that only grids in the rough direction of the attack are considered.
+        var dist = Math.Max(range / 2, 5);
+        var boxPos = start.Position;
 
-        // TODO: Offset the bounding box so that only grids the attack would head towards is considered.
+        var dirVec = direction.ToWorldVec();
+        var signX = dirVec.X > 0 ? 1 : -1;
+        var signY = dirVec.Y > 0 ? 1 : -1;
+
+        if (dirVec.X > dirVec.Y)
+            boxPos.X += dist * signX;
+        else
+            boxPos.Y += dist * signY;
+
+        var box = Box2.CenteredAround(boxPos, (range, range));
 
         IMapGrid? refGrid = null;
         float mass = 0.0f;
@@ -609,7 +620,7 @@ internal sealed class BreathAttack
     /// <summary>
     ///     Handles the propagation of the breath attack on a grid.
     /// </summary>
-    public class GridTilePropagation
+    private sealed class GridTilePropagation
     {
         public bool Finished { get; private set; }
 
@@ -703,7 +714,7 @@ internal sealed class BreathAttack
     ///     other grids (or the grid of a prior propagation), but should be doing this via an independent
     ///     tile coordinate system.
     /// </summary>
-    public class SpaceTilePropagation
+    private sealed class SpaceTilePropagation
     {
         public bool Finished { get; private set; }
 
@@ -755,24 +766,20 @@ internal sealed class BreathAttack
                 else
                 {
                     _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : _currentTile;
-                    Logger.Debug("Starting at {0}", _currentTile);
                 }
 
                 return;
             }
 
-            // TODO: Fix deep space breath attacks.
             // No reference grid. Use the creator's coordinate space.
             _tileSize = DefaultTileSize;
 
             var creatorXform = xformQuery.GetComponent(creatorUid);
-            localDir = direction - creatorXform.WorldRotation;
 
             _spaceAngle = creatorXform.WorldRotation;
             _spaceMatrix = creatorXform.WorldMatrix;
 
-            // _currentTile = new Vector2i((int) Math.Floor(start.X / _tileSize - 0.5f),
-            //     (int) Math.Floor(start.Y / _tileSize - 0.5f));
+            localDir = direction - _spaceAngle;
 
             _currentTile = Vector2i.Zero;
 
@@ -837,9 +844,6 @@ internal sealed class BreathAttack
                 if (blocked)
                     Finished = true;
             }
-
-            // TODO: Implement collision checking
-            // TODO: Figure what to do for grid entry and grid re-entry.
         }
     }
 }

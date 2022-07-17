@@ -113,7 +113,7 @@
       name: action-name-breathe-fire
       description: action-description-breathe-fire
       checkCanAccess: false
-      useDelay: 5
+      useDelay: 1  # TODO: Raise this value to something more reasonable before merging.
       range: 20
     breathEffectPrototype: FireBreathEffect
     breathDamage:
