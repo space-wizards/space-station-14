@@ -1,3 +1,5 @@
+using Robust.Shared.Maths;
+
 namespace Content.Client.Parallax.Managers;
 
 public interface IParallaxManager
