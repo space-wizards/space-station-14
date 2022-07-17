@@ -7,5 +7,11 @@ namespace Content.Shared.Bed.Sleep
     /// Status effect that prevents waking.
     /// </summary>
     public sealed class ForcedSleepingComponent : Component
-    {}
+    {
+        [DataField("accumulator")]
+        public float Accumulator = 0f;
+
+        [DataField("targetDuration")]
+        public TimeSpan TargetDuration = TimeSpan.FromSeconds(5);
+    }
 }

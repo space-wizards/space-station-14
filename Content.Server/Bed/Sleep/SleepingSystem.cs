@@ -15,6 +15,20 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming GameTiming = default!;
 
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var forced in EntityQuery<ForcedSleepingComponent>())
+            {
+                forced.Accumulator += frameTime;
+                if (forced.Accumulator < forced.TargetDuration.TotalSeconds)
+                {
+                    continue;
+                }
+                RemCompDeferred<ForcedSleepingComponent>(forced.Owner);
+            }
+        }
         public override void Initialize()
         {
             base.Initialize();
@@ -34,7 +48,7 @@ namespace Content.Server.Bed.Sleep
                 if (wakeAction != null)
                 {
                     var wakeInstance = new InstantAction(wakeAction);
-                    wakeInstance.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + TimeSpan.FromMinutes(1));
+                    wakeInstance.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + TimeSpan.FromSeconds(30));
                     _actionsSystem.AddAction(uid, wakeInstance, null);
                 }
                 return;
@@ -51,19 +65,17 @@ namespace Content.Server.Bed.Sleep
             if (!args.DamageIncreased || args.DamageDelta == null)
                 return;
 
-            if (args.DamageDelta.Total >= 5)
+            if (args.DamageDelta.Total >= 2.5)
                 TryWaking(uid);
         }
 
         private void OnSleepAction(EntityUid uid, MobStateComponent component, SleepActionEvent args)
         {
-            Logger.Error("Received sleep action event");
             TrySleeping(uid);
         }
 
         private void OnWakeAction(EntityUid uid, MobStateComponent component, WakeActionEvent args)
         {
-            Logger.Error("Received wake action event");
             TryWaking(uid);
         }
 
@@ -75,7 +87,18 @@ namespace Content.Server.Bed.Sleep
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
                 _actionsSystem.RemoveAction(uid, sleepAction);
 
-            AddComp<SleepingComponent>(uid);
+            EnsureComp<SleepingComponent>(uid);
+            return true;
+        }
+
+        public bool AddForcedSleepingTime(EntityUid uid, float secondsToAdd)
+        {
+            if (!HasComp<MobStateComponent>(uid))
+                return false;
+
+            EnsureComp<SleepingComponent>(uid);
+            var forced = EnsureComp<ForcedSleepingComponent>(uid);
+            forced.Accumulator -= secondsToAdd;
             return true;
         }
 
