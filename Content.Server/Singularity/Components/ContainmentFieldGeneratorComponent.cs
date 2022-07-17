@@ -43,20 +43,6 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     public int Power = 6;
 
     /// <summary>
-    /// The first connection this generator made
-    /// Stored on the original generator and also stored on the generator it connected to
-    /// </summary>
-    [ViewVariables]
-    public Tuple<Angle, List<EntityUid>>? Connection1;
-
-    /// <summary>
-    /// The second connection this generator made
-    /// Stored on the original generator and also stored on the generator it connected to
-    /// </summary>
-    [ViewVariables]
-    public Tuple<Angle, List<EntityUid>>? Connection2;
-
-    /// <summary>
     /// Is the generator toggled on?
     /// </summary>
     [ViewVariables]
@@ -68,18 +54,16 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [ViewVariables(VVAccess.ReadWrite)]
     public bool IsConnected;
 
+    /// <summary>
+    /// The masks the raycast should not go through
+    /// </summary>
     [ViewVariables]
     [DataField("collisionMask")]
     public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.Impassable | CollisionGroup.MachineMask);
 
     /// <summary>
-    /// The fields connected to a generator
-    /// </summary>
-    [ViewVariables]
-    public List<EntityUid> Fields = new();
-
-    /// <summary>
-    /// Dictionary of connections and fields
+    /// A collection of connections that the generator has based on direction.
+    /// Stores a list of fields connected between generators in this direction.
     /// </summary>
     [ViewVariables]
     public Dictionary<Direction, (ContainmentFieldGeneratorComponent, List<EntityUid>)> Connections = new();
@@ -90,18 +74,4 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("createdField")]
     public string CreatedField = "ContainmentField";
-
-    /// <summary>
-    /// The first generator this field is connected to
-    /// Used to spawn fields from First Generator to Second Generator
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? Generator1;
-
-    /// <summary>
-    /// The second generator this field is connected to
-    /// Used to spawn fields from First Generator to Second Generator
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? Generator2;
 }

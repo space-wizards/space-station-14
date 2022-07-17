@@ -5,3 +5,4 @@ comp-containment-connected = The containment field generator shoots out a light 
 comp-containment-disconnected = The containment field generator light fades away, severing the connection.
 
 comp-containment-anchor-warning = You cannot unanchor the containment field generator while it's on or connected!
+comp-containment-toggle-warning = You cannot turn the generator off while it's connected.

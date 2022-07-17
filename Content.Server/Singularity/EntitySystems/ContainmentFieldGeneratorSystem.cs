@@ -23,16 +23,28 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
-
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
-        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
 
         SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
 
         SubscribeLocalEvent<ContainmentFieldComponent, StartCollideEvent>(HandleFieldCollide);
+    }
+
+    #region Events
+
+    /// <summary>
+    /// A generator receives power from a source colliding with it.
+    /// </summary>
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
+    {
+        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
+        {
+            ReceivePower(component.Power, component);
+        }
     }
 
     private void OnInteract(EntityUid uid, ContainmentFieldGeneratorComponent component, InteractHandEvent args)
@@ -46,13 +58,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User));
                 return;
             }
             else
                 TurnOff(component);
         }
         args.Handled = true;
+    }
+
+    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            RemoveConnections(component);
     }
 
     private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
@@ -68,61 +86,45 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void TurnOn(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = true;
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner,
-            Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
     }
 
     private void TurnOff(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = false;
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner,
-            Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
     }
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
     {
-        DeleteFields(component);
+        RemoveConnections(component);
     }
 
-    private void OnAnchorChanged(EntityUid uid, ContainmentFieldGeneratorComponent component,
-        ref AnchorStateChangedEvent args)
+    /// <summary>
+    /// Deletes the fields and removes the respective connections for the generators.
+    /// </summary>
+    private void RemoveConnections(ContainmentFieldGeneratorComponent component)
     {
-        if (!args.Anchored)
-            DeleteFields(component);
-    }
-
-    //TODO: put into its own PA system?
-    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
-    {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
+        foreach (var (direction, value) in component.Connections)
         {
-            singularityGeneratorComponent.Power += component.State switch
+            foreach (var field in value.Item2)
             {
-                ParticleAcceleratorPowerState.Standby => 0,
-                ParticleAcceleratorPowerState.Level0 => 1,
-                ParticleAcceleratorPowerState.Level1 => 2,
-                ParticleAcceleratorPowerState.Level2 => 4,
-                ParticleAcceleratorPowerState.Level3 => 8,
-                _ => 0
-            };
-            EntityManager.QueueDeleteEntity(uid);
+                QueueDel(field);
+            }
+            value.Item1.Connections.Remove(direction.GetOpposite());
         }
+        component.Connections.Clear();
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner));
     }
 
-    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
-    {
-        if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
-        {
-            ReceivePower(component.Power, component);
-        }
-    }
+    #endregion
 
-    //TODO: Rework this to player bouncing
-    private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
-    {
+    #region Connections
 
-    }
-
+        /// <summary>
+    /// Stores power in the generator. If it hits the threshold, it tries to establish a connection.
+    /// </summary>
+    /// <param name="power">The power that this generator received from the collision in <see cref="HandleGeneratorCollide"/></param>
     public void ReceivePower(int power, ContainmentFieldGeneratorComponent component)
     {
         component.PowerBuffer += power;
@@ -141,15 +143,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
-    public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
-    {
-        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
-        {
-            bool hasAnyConnection = component.Connections != null;
-            pointLightComponent.Enabled = hasAnyConnection;
-        }
-    }
-
+    /// <summary>
+    /// This will attempt to establish a connection of fields between two generators.
+    /// If all the checks pass and fields spawn, it will store this connection on each respective generator.
+    /// </summary>
+    /// <param name="dir">The field generator establishes a connection in this direction.</param>
+    /// <param name="component">The field generator component</param>
+    /// <returns></returns>
     private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component)
     {
         if (!component.Enabled) return false;
@@ -158,7 +158,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!genXForm.Anchored) return false;
 
         var genCardinalDirAngle = genXForm.WorldRotation;
-        var dirRad = dir.ToAngle() + genCardinalDirAngle;
+        var dirRad = dir.ToAngle() + genCardinalDirAngle; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genXForm.MapPosition.Position, dirRad.ToVec(), component.CollisionMask);
         var rayCastResults = _physics.IntersectRay(genXForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
@@ -198,9 +198,16 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             otherFieldGeneratorComponent.IsConnected = true;
 
         UpdateConnectionLights(component);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner, Filter.Pvs(component.Owner));
         return true;
     }
 
+    /// <summary>
+    /// Spawns fields between two generators if the <see cref="TryGenerateFieldConnection"/> finds two generators to connect.
+    /// </summary>
+    /// <param name="firstGenComp">The source field generator</param>
+    /// <param name="secondGenComp">The second generator that the source is connected to</param>
+    /// <returns></returns>
     private List<EntityUid> GenerateFieldConnection(ContainmentFieldGeneratorComponent firstGenComp, ContainmentFieldGeneratorComponent secondGenComp)
     {
         var fieldList = new List<EntityUid>();
@@ -233,22 +240,47 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         return fieldList;
     }
 
-    private void DeleteFields(ContainmentFieldGeneratorComponent component)
+    /// <summary>
+    /// Creates a light component for the spawned fields.
+    /// </summary>
+    public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
     {
-        foreach (var (direction, value) in component.Connections)
+        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
         {
-            foreach (var field in value.Item2)
-            {
-                QueueDel(field);
-            }
-            value.Item1.Connections.Remove(direction.GetOpposite());
+            bool hasAnyConnection = component.Connections != null;
+            pointLightComponent.Enabled = hasAnyConnection;
         }
-        component.Connections.Clear();
     }
+
+    #endregion
 
     public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component)
     {
         //component.Connection1?.Item2?.CanRepel(toRepel) == true || component.Connection2?.Item2?.CanRepel(toRepel) == true;
         return false;
+    }
+
+    //TODO: put into its own PA system?
+    private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
+    {
+        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
+        {
+            singularityGeneratorComponent.Power += component.State switch
+            {
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 2,
+                ParticleAcceleratorPowerState.Level2 => 4,
+                ParticleAcceleratorPowerState.Level3 => 8,
+                _ => 0
+            };
+            EntityManager.QueueDeleteEntity(uid);
+        }
+    }
+
+    //TODO: Rework this to player bouncing
+    private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
+    {
+
     }
 }
