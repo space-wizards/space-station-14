@@ -49,10 +49,6 @@ public sealed class CorporealSystem : EntitySystem
             _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
             _visibilitySystem.RefreshVisibility(visibility);
         }
-        if (TryComp<EyeComponent>(uid, out var eye))
-        {
-            eye.DrawFov = true;
-        }
     }
 
     private void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)
@@ -75,10 +71,6 @@ public sealed class CorporealSystem : EntitySystem
             _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
             _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
             _visibilitySystem.RefreshVisibility(visibility);
-        }
-        if (TryComp<EyeComponent>(uid, out var eye))
-        {
-            eye.DrawFov = false;
         }
     }
 }

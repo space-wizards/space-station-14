@@ -5,8 +5,6 @@ using Content.Server.DoAfter;
 using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
-using Content.Shared.Tag;
-using Content.Server.Storage.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -89,10 +87,10 @@ public sealed partial class RevenantSystem : EntitySystem
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
 
-        if (_mobState.IsAlive(args.Target))
+        if (_mobState.IsAlive(args.Target) && _random.Prob(component.PerfectSoulChance))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
-            component.MaxEssence += 5;
+            component.MaxEssence += component.MaxEssenceUpgradeAmount;
         }
 
         if (TryComp<MobStateComponent>(args.Target, out var mobstate))
@@ -111,46 +109,6 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (TryComp<AppearanceComponent>(uid, out var app))
             app.SetData(RevenantVisuals.Harvesting, false);
-    }
-
-    private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!ChangeEssenceAmount(uid, component.DefileUseCost, component, false))
-        {
-            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
-            return;
-        }
-
-        args.Handled = true;
-
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(component.DefileCorporealDuration), false);
-        _stun.TryStun(uid, TimeSpan.FromSeconds(component.DefileStunDuration), false);
-
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
-        var tags = GetEntityQuery<TagComponent>();
-        var storage = GetEntityQuery<EntityStorageComponent>();
-
-        foreach (var ent in lookup)
-        {
-            //break windows
-            if (tags.HasComponent(ent))
-            {
-                if (_tag.HasAnyTag(ent, "Window"))
-                {
-                    var dspec = new DamageSpecifier();
-                    dspec.DamageDict.Add("Structural", 15);
-                    _damage.TryChangeDamage(ent, dspec);
-                }
-            }
-
-            //randomly opens some lockers and such.
-            if (storage.HasComponent(ent))
-                if (_random.Prob(0.5f)) //arbitrary number
-                    _entityStorage.TryOpenStorage(ent, ent, true); //the locker opening itself doesn't matter because of the specific logic. trust me.
-        }
     }
 }
 

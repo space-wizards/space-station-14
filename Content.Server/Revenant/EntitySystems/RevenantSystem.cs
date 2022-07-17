@@ -34,7 +34,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphable = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -65,9 +64,10 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnInit(EntityUid uid, RevenantComponent component, ComponentStartup args)
     {
-        //update the icon.
+        //update the icon
         ChangeEssenceAmount(uid, 0, component);
 
+        //default the visuals
         if (TryComp<AppearanceComponent>(uid, out var app))
         {
             app.SetData(RevenantVisuals.Corporeal, false);
@@ -75,6 +75,7 @@ public sealed partial class RevenantSystem : EntitySystem
             app.SetData(RevenantVisuals.Stunned, false);
         }
 
+        //give ghost vis flags
         var visibility = EntityManager.EnsureComponent<VisibilityComponent>(component.Owner);
 
         _visibility.AddLayer(visibility, (int) VisibilityFlags.Ghost, false);
@@ -86,6 +87,7 @@ public sealed partial class RevenantSystem : EntitySystem
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
         }
 
+        //TODO: kill
         var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantDefile"));
         _action.AddAction(uid, action, null);
     }
@@ -189,8 +191,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (rev.Essence < rev.MaxEssence)
             {
-                rev.Essence += rev.EssencePerSecond;
-                rev.Essence = Math.Min(rev.Essence, rev.MaxEssence); //you're not squeaking out any extra essence
+                ChangeEssenceAmount(rev.Owner, rev.EssencePerSecond, rev);
             }
         }
     }

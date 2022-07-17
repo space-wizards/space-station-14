@@ -21,29 +21,39 @@ public sealed class RevenantComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssence")]
     public float MaxEssence = 75;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
-    public float MaxEssenceUpgradeAmount = 10;
-
     [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
     public float DamageToEssenceCoefficient = 1f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("essencePerSecond")]
-    public float EssencePerSecond = 0.5f;
-
-    [DataField("soulSearchDuration")]
-    public float SoulSearchDuration = 2.5f;
-
-    [DataField("harvestDuration")]
-    public float HarvestDuration = 5;
-
-    public float DefileUseCost = -30f;
-    public float DefileUnlockCost = -10f;
-    public float DefileStunDuration = 1f;
-    public float DefileCorporealDuration = 4f;
-    public float DefileRadius = 4.5f;
-
-    public CancellationTokenSource? HarvestCancelToken;
+    public float EssencePerSecond = 0.25f;
 
     [ViewVariables]
     public float Accumulator = 0;
+
+#region Harvest Ability
+    [DataField("soulSearchDuration")]
+    public float SoulSearchDuration = 2.5f;
+    [DataField("harvestDuration")]
+    public float HarvestDuration = 5;
+    [DataField("perfectSoulChance")]
+    public float PerfectSoulChance = 0.35f;
+    [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
+    public float MaxEssenceUpgradeAmount = 10;
+
+    public CancellationTokenSource? HarvestCancelToken;
+#endregion
+
+#region Defile Ability
+    public float DefileUseCost = -30f;
+
+    public float DefileStunDuration = 1f;
+
+    public float DefileCorporealDuration = 4f;
+
+    public float DefileRadius = 4.5f;
+
+    public int DefileTilePryAmount = 15;
+
+    public float DefileEffectChance = 0.5f;
+#endregion
 }

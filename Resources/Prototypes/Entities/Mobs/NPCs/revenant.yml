@@ -59,6 +59,7 @@
   description: A weird bit of goo. You probably shouldn't leave it lying around like this.
   components:
   - type: Sprite
+    noRot: true
     netsync: false
     sprite: Mobs/Ghosts/revenant.rsi
     layers:
