@@ -11,6 +11,8 @@ admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
 admin-smite-turned-ash-other = {CAPITALISE($name)} turns into a pile of ash!
 admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
+admin-smite-lung-removal-self = You can't breath!
+
 
 ## Smite descriptions
 
@@ -47,3 +49,6 @@ admin-smite-flip-eye-description = Flips their view, effectively reversing their
 admin-smite-run-walk-swap-description = Swaps running and walking, forcing them to hold shift to move fast.
 admin-smite-stomach-removal-description = Removes their stomach, rendering them unable to eat.
 admin-smite-speak-backwards-description = Forces them to speak backwards, so they can't call for help.
+admin-smite-lung-removal-description = Removes their lungs, drowning them.
+admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
+admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.

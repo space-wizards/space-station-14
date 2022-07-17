@@ -1,4 +1,5 @@
 using Content.Server.Actions.Events;
+using Content.Server.Administration.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Hands.Components;
@@ -108,6 +109,13 @@ namespace Content.Server.CombatMode
         private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
         {
             float healthMod = 0;
+
+            if (HasComp<DisarmProneComponent>(disarmer))
+                return 0.0f;
+
+            if (HasComp<DisarmProneComponent>(disarmed))
+                return 1.0f;
+
             if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
             {
                 // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.

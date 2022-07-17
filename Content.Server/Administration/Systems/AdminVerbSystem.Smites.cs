@@ -309,11 +309,11 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(vomitOrgans);
 
-            Verb handRemoval = new()
+            Verb handsRemoval = new()
             {
                 Text = "Remove hands",
                 Category = VerbCategory.Smite,
-                IconTexture = "/Textures/Interface/fist.svg.192dpi.png",
+                IconTexture = "/Textures/Interface/AdminActions/remove-hands.png",
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
@@ -329,6 +329,30 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-remove-hands-description")
+            };
+            args.Verbs.Add(handsRemoval);
+
+            Verb handRemoval = new()
+            {
+                Text = "Remove hands",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Interface/AdminActions/remove-hand.png",
+                Act = () =>
+                {
+                    var baseXform = Transform(args.Target);
+                    foreach (var part in body.GetPartsOfType(BodyPartType.Hand))
+                    {
+                        body.RemovePart(part);
+                        Transform(part.Owner).Coordinates = baseXform.Coordinates;
+                        break;
+                    }
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.LargeCaution);
+                    _popupSystem.PopupCoordinates(Loc.GetString("admin-smite-remove-hands-others", ("name", args.Target)), baseXform.Coordinates,
+                        Filter.PvsExcept(args.Target), PopupType.Medium);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-smite-remove-hand-description")
             };
             args.Verbs.Add(handRemoval);
 
@@ -355,6 +379,30 @@ public sealed partial class AdminVerbSystem
                 Message = Loc.GetString("admin-smite-stomach-removal-description"),
             };
             args.Verbs.Add(stomachRemoval);
+
+            Verb lungRemoval = new()
+            {
+                Text = "Lungs Removal",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/lung-r.png",
+                Act = () =>
+                {
+                    foreach (var part in body.Parts)
+                    {
+                        foreach (var mechanism in part.Key.Mechanisms)
+                        {
+                            if (HasComp<LungComponent>(mechanism.Owner))
+                                QueueDel(mechanism.Owner);
+                        }
+                    }
+
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.LargeCaution);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-smite-lung-removal-description"),
+            };
+            args.Verbs.Add(lungRemoval);
         }
 
         if (TryComp<PhysicsComponent>(args.Target, out var physics))
@@ -757,5 +805,18 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(backwardsAccent);
 
+        Verb disarmProne = new()
+        {
+            Text = "Disarm Prone",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/Actions/disarm.png",
+            Act = () =>
+            {
+                EnsureComp<DisarmProneComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-disarm-prone-description"),
+        };
+        args.Verbs.Add(disarmProne);
     }
 }
