@@ -27,7 +27,6 @@
   transferDamage: true
   revertOnCrit: false
   revertOnDeath: true
-  allowRepeatedMorphs: true
 
 - type: polymorph
   id: WizardWallDoor
