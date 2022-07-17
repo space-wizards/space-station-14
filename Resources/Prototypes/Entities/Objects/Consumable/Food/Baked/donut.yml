@@ -18,8 +18,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 1
@@ -54,8 +52,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -145,8 +141,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Theobromine
           Quantity: 1
 # Tastes like donut, bitterness.
@@ -208,8 +202,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -228,8 +220,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 
@@ -246,8 +236,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, violets.
@@ -265,8 +253,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, green apples.
@@ -284,8 +270,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, buttery sweetness.
@@ -303,8 +287,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Theobromine
           Quantity: 1
         - ReagentId: Vitamin
@@ -324,8 +306,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, blumpkin.
@@ -343,8 +323,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, tropical sweetness.
@@ -362,8 +340,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, matcha.
@@ -381,8 +357,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
@@ -400,8 +374,6 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.

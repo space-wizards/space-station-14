@@ -151,8 +151,6 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -229,8 +227,6 @@
       food:
         maxVol: 9
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -254,8 +250,6 @@
       food:
         maxVol: 9
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -279,8 +273,6 @@
       food:
         maxVol: 16
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Water
@@ -309,8 +301,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -334,8 +324,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -415,8 +403,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -435,8 +421,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -462,8 +446,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -502,8 +484,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -525,8 +505,6 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -547,8 +525,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
@@ -566,8 +542,6 @@
       food:
         maxVol: 3
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
   - type: Sprite
     netsync: false
     state: slice
@@ -617,8 +591,6 @@
         food:
           maxVol: 18
           reagents:
-            - ReagentId: Nutriment
-              Quantity: 4
             - ReagentId: CapsaicinOil
               Quantity: 10
             - ReagentId: Vitamin
@@ -661,8 +633,6 @@
       food:
         maxVol: 12
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
         - ReagentId: Bicaridine
           Quantity: 10
   - type: Sprite
@@ -709,8 +679,6 @@
           Quantity: 10
         - ReagentId: Kelotane
           Quantity: 10
-        - ReagentId: Nutriment
-          Quantity: 2
         - ReagentId: Desoxyephedrine
           Quantity: 2
         - ReagentId: Vitamin
@@ -759,8 +727,6 @@
         reagents:
         - ReagentId: Amatoxin
           Quantity: 25
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
   - type: Produce
@@ -779,8 +745,6 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
         - ReagentId: Sulfur
           Quantity: 5
   - type: Sprite

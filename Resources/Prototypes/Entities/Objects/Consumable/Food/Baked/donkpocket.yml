@@ -14,8 +14,6 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
   - type: Item
     size: 1
   - type: Tag
@@ -47,8 +45,6 @@
       food:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
 
 - type: entity
   name: dank-pocket
@@ -60,8 +56,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: dank
 
@@ -75,8 +69,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 4
 
@@ -99,8 +91,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
   - type: Sprite
@@ -125,8 +115,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -140,8 +128,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
   - type: Sprite
     state: pizza
 
@@ -155,8 +141,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -170,8 +154,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
         - ReagentId: Omnizine
           Quantity: 2
   - type: Sprite
@@ -187,8 +169,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -202,8 +182,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: berry
 
@@ -217,8 +195,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
         - ReagentId: Sugar
@@ -234,8 +210,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: gondola
 
@@ -248,8 +222,6 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -263,7 +235,5 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
   - type: Sprite
     state: dink

@@ -13,9 +13,6 @@
     solutions:
       food:
         maxVol: 30 # Room for extra condiments
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
@@ -99,8 +96,6 @@
       food:
         maxVol: 30
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
 
@@ -199,8 +194,6 @@
       food:
         maxVol: 30 # Room for extra condiments
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
@@ -220,8 +213,6 @@
       food:
         maxVol: 30 # Room for extra condiments
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: CapsaicinOil
           Quantity: 2
         - ReagentId: Soysauce
@@ -242,8 +233,6 @@
       food:
         maxVol: 1
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 1
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
@@ -286,8 +275,6 @@
       food:
         maxVol: 30
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -321,8 +308,6 @@
       food:
         maxVol: 15
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
 
