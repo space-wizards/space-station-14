@@ -35,7 +35,7 @@ namespace Content.Server.Physics.Controllers
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
 
-            foreach (var (mover, xform) in EntityQuery<InputMoverComponent, TransformComponent>())
+            foreach (var (mover, xform) in EntityQuery<InputMoverComponent, TransformComponent>(true))
             {
                 if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed != null)
                 {
