@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Damage;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -49,5 +50,10 @@ namespace Content.Server.Nutrition.Components
             {ThirstThreshold.Parched, AlertType.Parched},
             {ThirstThreshold.Dead, AlertType.Parched},
         };
+
+
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
     }
 }
