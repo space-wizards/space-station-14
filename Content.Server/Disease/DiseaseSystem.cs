@@ -1,5 +1,4 @@
 using System.Threading;
-using Content.Server.Chat;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Server.Disease.Components;
@@ -20,6 +19,7 @@ using Content.Shared.Inventory.Events;
 using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Item;
 
 namespace Content.Server.Disease
 {
@@ -43,8 +43,8 @@ namespace Content.Server.Disease
             base.Initialize();
             SubscribeLocalEvent<DiseaseCarrierComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DiseaseCarrierComponent, CureDiseaseAttemptEvent>(OnTryCureDisease);
-            SubscribeLocalEvent<DiseasedComponent, InteractHandEvent>(OnInteractDiseasedHand);
-            SubscribeLocalEvent<DiseasedComponent, InteractUsingEvent>(OnInteractDiseasedUsing);
+            SubscribeLocalEvent<DiseasedComponent, UserInteractedWithItemEvent>(OnUserInteractDiseased);
+            SubscribeLocalEvent<DiseasedComponent, ItemInteractedWithEvent>(OnTargetInteractDiseased);
             SubscribeLocalEvent<DiseasedComponent, EntitySpokeEvent>(OnEntitySpeak);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<DiseaseProtectionComponent, GotUnequippedEvent>(OnUnequipped);
@@ -246,21 +246,19 @@ namespace Content.Server.Disease
         }
 
         /// <summary>
-        /// Called when someone interacts with a diseased person with an empty hand
-        /// to check if they get infected
+        /// When a diseased person interacts with something, check infection.
         /// </summary>
-        private void OnInteractDiseasedHand(EntityUid uid, DiseasedComponent component, InteractHandEvent args)
+        private void OnUserInteractDiseased(EntityUid uid, DiseasedComponent component, UserInteractedWithItemEvent args)
         {
-            InteractWithDiseased(args.Target, args.User);
+            InteractWithDiseased(args.User, args.Item);
         }
 
         /// <summary>
-        /// Called when someone interacts with a diseased person with any object
-        /// to check if they get infected
+        /// When a diseased person is interacted with, check infection.
         /// </summary>
-        private void OnInteractDiseasedUsing(EntityUid uid, DiseasedComponent component, InteractUsingEvent args)
+        private void OnTargetInteractDiseased(EntityUid uid, DiseasedComponent component, ItemInteractedWithEvent args)
         {
-            InteractWithDiseased(args.Target, args.User);
+            InteractWithDiseased(args.Item, args.User);
         }
 
         private void OnEntitySpeak(EntityUid uid, DiseasedComponent component, EntitySpokeEvent args)
@@ -366,7 +364,7 @@ namespace Content.Server.Disease
                 return;
 
             var disease = _random.Pick(diseasedCarrier.Diseases);
-            TryInfect(carrier, disease, 0.4f);
+            TryInfect(carrier, disease, 0.25f);
         }
 
         /// <summary>

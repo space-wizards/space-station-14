@@ -10,6 +10,14 @@ using Robust.Shared.Timing;
 using Content.Shared.MobState;
 using Content.Server.MobState;
 using Content.Server.Sound.Components;
+using Content.Shared.Verbs;
+using Content.Shared.Interaction;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Content.Shared.Audio;
+using Content.Server.Popups;
+using Content.Shared.Examine;
+using Robust.Shared.Random;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -19,7 +27,9 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -41,6 +51,9 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
             SubscribeLocalEvent<MobStateComponent, WakeActionEvent>(OnWakeAction);
             SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
+            SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
+            SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
         }
 
         /// <summary>
@@ -115,6 +128,42 @@ namespace Content.Server.Bed.Sleep
                 RemComp<SleepingComponent>(uid);
         }
 
+        private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess)
+                return;
+
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+
+                   TryWaking(args.Target, user: args.User);
+                },
+                Text = Loc.GetString("action-name-wake"),
+                Priority = 2
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        /// <summary>
+        /// When you click on a sleeping person with an empty hand, try to wake them.
+        /// </summary>
+        private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
+        {
+            args.Handled = true;
+            TryWaking(args.Target, user: args.User);
+        }
+
+        private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)
+        {
+            if (args.IsInDetailsRange)
+            {
+                args.PushMarkup(Loc.GetString("sleep-examined", ("target", uid)));
+            }
+        }
+
         /// <summary>
         /// Try sleeping. Only mobs can sleep.
         /// </summary>
@@ -149,11 +198,24 @@ namespace Content.Server.Bed.Sleep
         /// <summary>
         /// Try to wake up.
         /// </summary>
-        public bool TryWaking(EntityUid uid, bool force = false)
+        public bool TryWaking(EntityUid uid, bool force = false, EntityUid? user = null)
         {
-            if (!force && HasComp<ForcedSleepingComponent>(uid))
-                return false;
 
+            if (!force && HasComp<ForcedSleepingComponent>(uid))
+            {
+                if (user != null)
+                {
+                    SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                    _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", uid)), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
+                }
+                return false;
+            }
+
+            if (user != null)
+            {
+                SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", uid)), uid, Filter.Entities(user.Value));
+            }
             RemComp<SleepingComponent>(uid);
             return true;
         }

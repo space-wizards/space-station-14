@@ -264,7 +264,7 @@
         - !type:OrganType
           type: Slime
           shouldHave: false
-        forcedSecondsPerTick: 1.05
+        forcedSecondsPerTick: 1.1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

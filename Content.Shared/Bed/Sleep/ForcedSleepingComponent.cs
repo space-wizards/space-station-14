@@ -12,6 +12,6 @@ namespace Content.Shared.Bed.Sleep
         public float Accumulator = 0f;
 
         [DataField("targetDuration")]
-        public TimeSpan TargetDuration = TimeSpan.FromSeconds(5);
+        public TimeSpan TargetDuration = TimeSpan.FromSeconds(3);
     }
 }
