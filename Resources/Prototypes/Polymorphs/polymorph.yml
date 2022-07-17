@@ -27,6 +27,7 @@
   transferDamage: true
   revertOnCrit: false
   revertOnDeath: true
+  allowRepeatedMorphs: true
 
 - type: polymorph
   id: WizardWallDoor
@@ -51,18 +52,21 @@
   entity: MobMonkey
   forced: true
   inventory: Drop
+  allowRepeatedMorphs: true
 
 - type: polymorph
   id: AdminBreadSmite
   entity: FoodBreadPlain
   forced: true
   inventory: Drop
+  allowRepeatedMorphs: true
 
 - type: polymorph
   id: AdminInstrumentSmite
   entity: SuperSynthesizerInstrument
   forced: true
   inventory: Drop
+  allowRepeatedMorphs: true
 
 - type: polymorph
   id: AMIVMorph
