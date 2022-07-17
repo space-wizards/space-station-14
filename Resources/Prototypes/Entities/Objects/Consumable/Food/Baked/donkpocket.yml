@@ -13,7 +13,6 @@
     solutions:
       food:
         maxVol: 10
-        reagents:
   - type: Item
     size: 1
   - type: Tag
@@ -44,7 +43,6 @@
     solutions:
       food:
         maxVol: 10
-        reagents:
 
 - type: entity
   name: dank-pocket
@@ -53,9 +51,6 @@
   description: The food of choice for the seasoned botanist.
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     state: dank
 
@@ -125,9 +120,6 @@
   description: Delicious, cheesy and surprisingly filling.
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     state: pizza
 
@@ -179,9 +171,6 @@
   description: A relentlessly sweet donk-pocket first created for use in Operation Iraqi Freedom.
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     state: berry
 
@@ -207,9 +196,6 @@
   description: The choice to use real gondola meat in the recipe is controversial, to say the least.
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     state: gondola
 
@@ -232,8 +218,5 @@
   description: An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     state: dink

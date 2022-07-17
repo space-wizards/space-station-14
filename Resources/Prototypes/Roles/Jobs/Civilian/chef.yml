@@ -5,6 +5,7 @@
   departments:
   - Civilian
   icon: "Chef"
+  extraMessage: "job-chef-introduce"
   supervisors: job-supervisors-hop
   access:
   - Service

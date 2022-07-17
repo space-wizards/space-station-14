@@ -17,7 +17,6 @@
     solutions:
       food:
         maxVol: 5
-        reagents:
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 1

@@ -403,6 +403,8 @@
       food:
         maxVol: 14
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
   - type: Sprite
@@ -522,9 +524,6 @@
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
   - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
@@ -541,7 +540,6 @@
     solutions:
       food:
         maxVol: 3
-        reagents:
   - type: Sprite
     netsync: false
     state: slice
