@@ -261,8 +261,8 @@ public sealed partial class ShuttleSystem
                     {
                         body.LinearVelocity = Vector2.Zero;
                         body.AngularVelocity = 0f;
-                        body.LinearDamping = ShuttleIdleLinearDamping;
-                        body.AngularDamping = ShuttleIdleAngularDamping;
+                        body.LinearDamping = ShuttleLinearDamping;
+                        body.AngularDamping = ShuttleAngularDamping;
                     }
 
                     TryComp(comp.Owner, out shuttle);
