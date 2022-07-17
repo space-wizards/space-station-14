@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.MobState.Components;
 using Content.Server.Actions;
+using Content.Server.MobState;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
 
@@ -23,7 +24,7 @@ namespace Content.Server.Bed
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
-
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -67,11 +68,9 @@ namespace Content.Server.Bed
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 
-                var mobStateQuery = GetEntityQuery<MobStateComponent>();
-
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
-                    if (mobStateQuery.TryGetComponent(healedEntity, out var state) && state.IsDead())
+                    if (_mobStateSystem.IsDead(healedEntity))
                         continue;
 
                     var damage = bedComponent.Damage;

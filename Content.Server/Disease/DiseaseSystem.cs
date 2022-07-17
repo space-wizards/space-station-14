@@ -20,6 +20,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Robust.Shared.Utility;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
+using Content.Server.MobState;
 
 namespace Content.Server.Disease
 {
@@ -37,7 +38,7 @@ namespace Content.Server.Disease
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
-
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -88,7 +89,7 @@ namespace Content.Server.Disease
             {
                 DebugTools.Assert(carrierComp.Diseases.Count > 0);
 
-                if (mobState.IsDead())
+                if (_mobStateSystem.IsDead(mobState.Owner, mobState))
                 {
                     if (_random.Prob(0.005f * frameTime)) //Mean time to remove is 200 seconds per disease
                         CureDisease(carrierComp, _random.Pick(carrierComp.Diseases));
@@ -364,7 +365,7 @@ namespace Content.Server.Disease
                 return;
 
             var disease = _random.Pick(diseasedCarrier.Diseases);
-            TryInfect(carrier, disease, 0.25f);
+            TryInfect(carrier, disease, 0.4f);
         }
 
         /// <summary>
