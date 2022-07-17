@@ -21,6 +21,7 @@ public sealed class TargetOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private bool _enabled = false;
 
@@ -143,7 +144,7 @@ public sealed class TargetOutlineSystem : EntitySystem
             if (!valid)
             {
                 // was this previously valid?
-                if (_highlightedSprites.Remove(sprite))
+                if (_highlightedSprites.Remove(sprite) && (sprite.PostShader == _shaderTargetValid || sprite.PostShader == _shaderTargetInvalid))
                 {
                     sprite.PostShader = null;
                     sprite.RenderOrder = 0;
@@ -162,6 +163,11 @@ public sealed class TargetOutlineSystem : EntitySystem
                 valid = (origin - target).LengthSquared <= Range;
             }
 
+            if (sprite.PostShader != null &&
+                sprite.PostShader != _shaderTargetValid &&
+                sprite.PostShader != _shaderTargetInvalid)
+                return;
+
             // highlight depending on whether its in or out of range
             sprite.PostShader = valid ? _shaderTargetValid : _shaderTargetInvalid;
             sprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -173,6 +179,9 @@ public sealed class TargetOutlineSystem : EntitySystem
     {
         foreach (var sprite in _highlightedSprites)
         {
+            if (sprite.PostShader != _shaderTargetValid && sprite.PostShader != _shaderTargetInvalid)
+                continue;
+
             sprite.PostShader = null;
             sprite.RenderOrder = 0;
         }

@@ -73,6 +73,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();
+        InitializeBasicEntity();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -389,5 +390,6 @@ public enum AmmoVisuals : byte
     Spent,
     AmmoCount,
     AmmoMax,
+    HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
     MagLoaded,
 }

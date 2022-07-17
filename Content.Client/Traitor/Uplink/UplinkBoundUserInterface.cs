@@ -1,7 +1,6 @@
 using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Traitor.Uplink
 {
@@ -12,6 +11,7 @@ namespace Content.Client.Traitor.Uplink
 
         public UplinkBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
+
         }
 
         protected override void Open()
@@ -29,7 +29,6 @@ namespace Content.Client.Traitor.Uplink
             {
                 _menu.CurrentFilterCategory = category;
                 SendMessage(new UplinkRequestUpdateInterfaceMessage());
-
             };
 
             _menu.OnWithdrawAttempt += (tc) =>

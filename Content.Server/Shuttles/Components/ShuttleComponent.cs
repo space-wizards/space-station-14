@@ -5,17 +5,8 @@ namespace Content.Server.Shuttles.Components
     [RegisterComponent]
     public sealed class ShuttleComponent : Component
     {
-        /// <summary>
-        /// Should controls be enabled or disabled on this shuttle.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanPilot = true;
-
         [ViewVariables]
         public bool Enabled = true;
-
-        [ViewVariables]
-        public ShuttleMode Mode = ShuttleMode.Cruise;
 
         /// <summary>
         /// The cached thrust available for each cardinal direction
