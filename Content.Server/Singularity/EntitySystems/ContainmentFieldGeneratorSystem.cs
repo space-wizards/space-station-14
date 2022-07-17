@@ -5,12 +5,10 @@ using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -48,14 +46,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User,
-                    Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
                 return;
             }
             else
                 TurnOff(component);
         }
-
         args.Handled = true;
     }
 
@@ -64,8 +60,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User,
-                Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
             args.Cancel();
         }
     }
@@ -93,16 +88,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-        {
             DeleteFields(component);
-        }
     }
 
     //TODO: put into its own PA system?
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, StartCollideEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner,
-                out var singularityGeneratorComponent))
+        if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
         {
             singularityGeneratorComponent.Power += component.State switch
             {
@@ -113,13 +105,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 ParticleAcceleratorPowerState.Level3 => 8,
                 _ => 0
             };
-
             EntityManager.QueueDeleteEntity(uid);
         }
     }
 
-    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component,
-        StartCollideEvent args)
+    private void HandleGeneratorCollide(EntityUid uid, ContainmentFieldGeneratorComponent component, StartCollideEvent args)
     {
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
@@ -160,27 +150,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         }
     }
 
-    public void RemoveConnection(ContainmentFieldGeneratorComponent component)
-    {
-        if (component.Connection1?.Item2 == component.Fields)
-        {
-            component.Connection1 = null;
-            component.IsConnected = false;
-            UpdateConnectionLights(component);
-        }
-        else if (component.Connection2?.Item2 == component.Fields)
-        {
-            component.Connection2 = null;
-            component.IsConnected = false;
-            UpdateConnectionLights(component);
-        }
-        else if (component.Fields != null)
-        {
-            Logger.Error(
-                "RemoveConnection called on Containment Field Generator with a connection that can't be found in its connections.");
-        }
-    }
-
     private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component)
     {
         if (!component.Enabled) return false;
@@ -201,9 +170,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         foreach (var result in rayCastResults)
         {
             if (HasComp<ContainmentFieldGeneratorComponent>(result.HitEntity))
-            {
                 closestResult = result;
-            }
+
             break;
         }
         if (closestResult == null) return false;
@@ -221,7 +189,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var fields = GenerateFieldConnection(component, otherFieldGeneratorComponent);
 
         component.Connections[dir] = (otherFieldGeneratorComponent, fields);
-        component.Connections[dir.GetOpposite()] = (component, fields);
+        otherFieldGeneratorComponent.Connections[dir.GetOpposite()] = (component, fields);
 
         if (!component.IsConnected)
             component.IsConnected = true;
@@ -267,46 +235,20 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     private void DeleteFields(ContainmentFieldGeneratorComponent component)
     {
-
-        if (component.Connection1?.Item2 != null)
+        foreach (var (direction, value) in component.Connections)
         {
-            foreach (var field in component.Connection1.Item2)
+            foreach (var field in value.Item2)
             {
                 QueueDel(field);
             }
-
-            component.Connection1 = null;
+            value.Item1.Connections.Remove(direction.GetOpposite());
         }
-
-        if (component.Connection2?.Item2 != null)
-        {
-            foreach (var field in component.Connection2.Item2)
-            {
-                QueueDel(field);
-            }
-
-            component.Connection2 = null;
-        }
-
-        foreach (var field in component.Fields)
-        {
-            QueueDel(field);
-        }
-        component.Fields.Clear();
-
-        component.Generator1 = null;
-        component.Generator2 = null;
+        component.Connections.Clear();
     }
 
     public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component)
     {
         //component.Connection1?.Item2?.CanRepel(toRepel) == true || component.Connection2?.Item2?.CanRepel(toRepel) == true;
         return false;
-    }
-
-    public bool IsConnectedWith(ContainmentFieldGeneratorComponent mainGen, ContainmentFieldGeneratorComponent connectedGen)
-    {
-        return connectedGen == mainGen || mainGen.Generator1 == connectedGen.Owner ||
-               mainGen.Generator2 == connectedGen.Owner;
     }
 }
