@@ -412,10 +412,12 @@ internal sealed class BreathAttack
     private readonly EntityQuery<PhysicsComponent> _physicsQuery;
     private readonly EntityQuery<DamageableComponent> _damageQuery;
     private readonly EntityQuery<MobStateComponent> _mobStateQuery;
-
-    private readonly IEntityManager _entMan;
-    private readonly DragonSystem _system;
     private readonly EntityQuery<FlammableComponent> _flammableQuery;
+
+    // Systems
+    private readonly DragonSystem _system;
+    private readonly IEntityManager _entMan;
+    private readonly IMapManager _mapMan;
 
     public BreathAttack(DragonSystem system,
         EntityUid creator,
@@ -429,6 +431,7 @@ internal sealed class BreathAttack
     {
         _system = system;
         _entMan = entMan;
+        _mapMan = mapMan;
 
         _creatorUid = creator;
         _mapUid = mapMan.GetMapEntityId(origin.MapId);
@@ -530,7 +533,7 @@ internal sealed class BreathAttack
         }
         else if (_spaceTilePropagation is { Finished: false })
         {
-            _spaceTilePropagation.Update(frameTime);
+            _spaceTilePropagation.Update(frameTime, _system, _mapMan, _entMan, _physicsQuery);
             if (isProcessingDue)
             {
                 _spaceTilePropagation.ProcessNext(_system, _entMan, _damageSpecifier, _processedEntities, _xformQuery, _mobStateQuery, _damageQuery, _flammableQuery);
@@ -758,13 +761,14 @@ internal sealed class BreathAttack
                 return;
             }
 
+            // TODO: Fix deep space breath attacks.
             // No reference grid. Use the creator's coordinate space.
             _tileSize = DefaultTileSize;
 
             var creatorXform = xformQuery.GetComponent(creatorUid);
             localDir = direction - creatorXform.WorldRotation;
 
-            _spaceAngle = Angle.Zero;
+            _spaceAngle = creatorXform.WorldRotation;
             _spaceMatrix = creatorXform.WorldMatrix;
 
             // _currentTile = new Vector2i((int) Math.Floor(start.X / _tileSize - 0.5f),
@@ -810,8 +814,30 @@ internal sealed class BreathAttack
             system.ProcessTile(_currentTile, new MapCoordinates(worldPos, _mapId), _spaceAngle, "FireBreathEffect");
         }
 
-        public void Update(float frameTime)
+        public void Update(float frameTime, DragonSystem system, IMapManager mapMan, IEntityManager entMan, EntityQuery<PhysicsComponent> physicsQuery)
         {
+            var blocked = false;
+            var box = Box2.FromDimensions(_currentTile * _tileSize, (_tileSize, _tileSize));
+            box = _spaceMatrix.TransformBox(box);
+
+            var boxPoints = new[] { box.TopLeft, box.TopRight, box.BottomRight, box.BottomLeft };
+
+            foreach (var grid in mapMan.FindGridsIntersecting(_mapId, box))
+            {
+                // Check if an anchored entity is intersecting.
+                var tilePositions = from p in boxPoints select grid.TileIndicesFor(p);
+
+                foreach(var tile in tilePositions)
+                {
+                    var anchored = grid.GetAnchoredEntities(tile).ToList();
+                    foreach (var a in anchored)
+                        blocked |= system.IsBlockingTurf(a, physicsQuery);
+                }
+
+                if (blocked)
+                    Finished = true;
+            }
+
             // TODO: Implement collision checking
             // TODO: Figure what to do for grid entry and grid re-entry.
         }
