@@ -1,11 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Attention syndicate agents! We have found some old crates with random
-      junk inside. We are ready to sell it for 20 telecrystals while content inside
-      cost 50 telecrystals., type: Add}
-  id: 1477
-  time: '2022-05-08T07:52:01.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: chef hat storage fixed!, type: Tweak}
@@ -2960,3 +2953,9 @@ Entries:
       You have been legitimized., type: Fix}
   id: 1976
   time: '2022-07-17T21:57:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Pneumatic cannons and cream pies no longer can be used to instakill
+      people with hyperoptimized poison mixes., type: Remove}
+  id: 1977
+  time: '2022-07-17T22:25:42.0000000+00:00'
