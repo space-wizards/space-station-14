@@ -66,7 +66,7 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate overear-headset
-  description: A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.
+  description: A Syndicate overear headset, designed for work in special operations, has access to the Syndicate frequencies, sadly, not Nanotrasen ones.
   components:
   - type: Headset
     channels:
