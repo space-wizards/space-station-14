@@ -5,7 +5,11 @@ using Content.Shared.Damage;
 using Content.Server.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
+using Content.Shared.Sound;
 using Robust.Shared.Timing;
+using Content.Shared.MobState;
+using Content.Server.MobState;
+using Content.Server.Sound.Components;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -13,8 +17,8 @@ namespace Content.Server.Bed.Sleep
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly IGameTiming GameTiming = default!;
-
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Update(float frameTime)
         {
@@ -36,6 +40,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, DamageChangedEvent>(OnDamageChanged);
             SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
             SubscribeLocalEvent<MobStateComponent, WakeActionEvent>(OnWakeAction);
+            SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
         private void OnSleepStateChanged(EntityUid uid, MobStateComponent component, SleepStateChangedEvent args)
@@ -47,8 +52,15 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<KnockedDownComponent>(uid);
                 if (wakeAction != null)
                 {
+                    var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
+                    emitSound.Sound = new SoundCollectionSpecifier("Snores");
+                    emitSound.PlayChance = 0.33f;
+                    emitSound.RollInterval = 5f;
+                    emitSound.PopUp = "sleep-onomatopoeia";
+                    emitSound.PitchVariation = 0.2f;
+
                     var wakeInstance = new InstantAction(wakeAction);
-                    wakeInstance.Cooldown = (GameTiming.CurTime, GameTiming.CurTime + TimeSpan.FromSeconds(30));
+                    wakeInstance.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(30));
                     _actionsSystem.AddAction(uid, wakeInstance, null);
                 }
                 return;
@@ -58,6 +70,7 @@ namespace Content.Server.Bed.Sleep
 
             RemComp<StunnedComponent>(uid);
             RemComp<KnockedDownComponent>(uid);
+            RemComp<SpamEmitSoundComponent>(uid);
         }
 
         private void OnDamageChanged(EntityUid uid, SleepingComponent component, DamageChangedEvent args)
@@ -77,6 +90,17 @@ namespace Content.Server.Bed.Sleep
         private void OnWakeAction(EntityUid uid, MobStateComponent component, WakeActionEvent args)
         {
             TryWaking(uid);
+        }
+
+        private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
+        {
+            if (_mobStateSystem.IsCritical(uid) && !HasComp<ForcedSleepingComponent>(uid))
+            {
+                RemComp<SleepingComponent>(uid);
+                return;
+            }
+            if (_mobStateSystem.IsDead(uid))
+                RemComp<SleepingComponent>(uid);
         }
 
         public bool TrySleeping(EntityUid uid)

@@ -14,6 +14,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("forcedSecondsPerTick")]
         public float ForcedSecondsPerTick = 1.25f;
 
+        /// <summary>
+        /// Set to 0 to force people asleep but without making them unable to be awoken.
+        /// </summary>
         public override void Effect(ReagentEffectArgs args)
         {
             EntitySystem.Get<SleepingSystem>().AddForcedSleepingTime(args.SolutionEntity, ForcedSecondsPerTick);
