@@ -126,7 +126,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 0.45
+    lifetime: 0.70
   - type: Sprite
     netsync: false
     drawdepth: Effects
@@ -135,8 +135,8 @@
         map: [ "enum.EffectLayers.Unshaded" ]
         sprite: Effects/fire.rsi
         state: 1
-      - type: EffectVisuals
-      - type: AnimationPlayer
+  - type: EffectVisuals
+  - type: AnimationPlayer
   - type: PointLight
   - type: Tag
     tags:
