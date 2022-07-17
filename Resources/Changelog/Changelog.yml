@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Barsigns should properly appear on top of glass without half-clipping
-      now., type: Fix}
-  id: 1475
-  time: '2022-05-08T06:08:23.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Several large areas of Barratry have been redone., type: Tweak}
@@ -2952,3 +2946,16 @@ Entries:
   - {message: Shuttle braking now uses thrusters., type: Tweak}
   id: 1974
   time: '2022-07-17T09:36:09.0000000+00:00'
+- author: metalgearsloth and DogZeroX
+  changes:
+  - {message: 'FTL mechanics have been added allowing you to go (for now, limited)
+      other destinations, ported from Vilous Station 14.', type: Add}
+  - {message: Nukies now start on a nukie planet and have to FTL to the station. No
+      more seeking out their shuttle at roundstart., type: Add}
+  - {message: Additional shuttles can now travel to Centcomm after the emergency shuttle
+      departs (e.g. cargo), type: Add}
+  - {message: Fix autodocking when only 1 port was blocked (woops)., type: Fix}
+  - {message: 'IFF labels now show much further away, at the edge of the radar (no
+      more cargo shuttle getting lost).', type: Tweak}
+  id: 1975
+  time: '2022-07-17T10:22:09.0000000+00:00'
