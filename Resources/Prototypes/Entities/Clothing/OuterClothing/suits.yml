@@ -16,7 +16,7 @@
         Piercing: 0.9
         Heat: 0.75
   - type: ExplosionResistance
-    damageCoefficient: 0.65 
+    damageCoefficient: 0.65
 
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -44,6 +44,10 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+    layers:
+    - state: icon
+    - state: stripes
+      shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.65
     lowPressureMultiplier: 1000
@@ -59,6 +63,11 @@
     sprintModifier: 0.7
   - type: TemperatureProtection
     coefficient: 0.01
+  - type: PointLight
+    netsync: false
+    enabled: true
+    radius: 2
+    energy: 0.1
 
 - type: entity
   parent: ClothingOuterBase

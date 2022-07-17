@@ -11,6 +11,9 @@
       "name": "icon"
     },
     {
+      "name": "stripes"
+    },
+    {
       "name": "equipped-OUTERCLOTHING",
       "directions": 4
     },
