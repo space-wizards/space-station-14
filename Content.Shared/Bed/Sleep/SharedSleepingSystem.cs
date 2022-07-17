@@ -42,6 +42,9 @@ public sealed class SleepActionEvent : InstantActionEvent {}
 
 public sealed class WakeActionEvent : InstantActionEvent {}
 
+/// <summary>
+/// Raised on an entity when they fall asleep or wake up.
+/// </summary>
 public sealed class SleepStateChangedEvent : EntityEventArgs
 {
     public bool FellAsleep = false;

@@ -4,7 +4,7 @@ namespace Content.Shared.Bed.Sleep
 {
     [NetworkedComponent, RegisterComponent]
     /// <summary>
-    /// Status effect that prevents waking.
+    /// Prevents waking up. Ticks up and removes itself when it hits the target duration.
     /// </summary>
     public sealed class ForcedSleepingComponent : Component
     {
