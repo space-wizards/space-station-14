@@ -446,7 +446,7 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
-      capacicity: 12
+      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
@@ -460,7 +460,7 @@
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
-      capacicity: 12
+      capacity: 12
     - type: Sprite
       layers:
         - state: boxwide
