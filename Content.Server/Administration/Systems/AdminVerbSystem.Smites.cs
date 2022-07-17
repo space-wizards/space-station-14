@@ -21,6 +21,7 @@ using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
@@ -72,6 +73,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
+    [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -491,6 +493,25 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(clown);
 
+            Verb maiden = new()
+            {
+                Text = "Maid",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Clothing/Uniforms/Jumpskirt/janimaid.rsi/icon.png",
+                Act = () =>
+                {
+                    SetOutfitCommand.SetOutfit(args.Target, "JanitorMaidGear", EntityManager, (_, clothing) =>
+                    {
+                        if (HasComp<ClothingComponent>(clothing))
+                            EnsureComp<UnremoveableComponent>(clothing);
+                        EnsureComp<ClumsyComponent>(args.Target);
+                    });
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-smite-maid-description")
+            };
+            args.Verbs.Add(maiden);
+
             Verb plasmaInternals = new()
             {
                 Text = "Plasma Internals",
@@ -617,9 +638,9 @@ public sealed partial class AdminVerbSystem
                 var locker = Spawn("ClosetMaintenance", xform.Coordinates);
                 if (TryComp<EntityStorageComponent>(locker, out var storage))
                 {
-                    storage.ToggleOpen(args.Target); // Not necessary, but plays the noise.
-                    storage.Insert(args.Target);
-                    storage.ToggleOpen(args.Target);
+                    _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
+                    _entityStorageSystem.Insert(args.Target, locker, storage);
+                    _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
                 }
                 _weldableSystem.ForceWeldedState(locker, true);
             },
@@ -636,10 +657,63 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 EnsureComp<HeadstandComponent>(args.Target);
+                var eye = EnsureComp<EyeComponent>(args.Target);
+
+                eye.Zoom *= -Vector2.UnitY;
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-headstand-description"),
         };
         args.Verbs.Add(headstand);
+
+        Verb zoomIn = new()
+        {
+            Text = "Zoom in",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/AdminActions/zoom.png",
+            Act = () =>
+            {
+                var eye = EnsureComp<EyeComponent>(args.Target);
+
+                eye.Zoom *= Vector2.One * 0.2f;
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-zoom-in-description"),
+        };
+        args.Verbs.Add(zoomIn);
+
+        Verb flipEye = new()
+        {
+            Text = "Flip eye",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/AdminActions/flip.png",
+            Act = () =>
+            {
+                var eye = EnsureComp<EyeComponent>(args.Target);
+
+                eye.Zoom *= -1;
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-flip-eye-description"),
+        };
+        args.Verbs.Add(flipEye);
+
+        Verb runWalkSwap = new()
+        {
+            Text = "Run Walk Swap",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/AdminActions/run-walk-swap.png",
+            Act = () =>
+            {
+                var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(args.Target);
+                (movementSpeed.BaseSprintSpeed, movementSpeed.BaseWalkSpeed) = (movementSpeed.BaseWalkSpeed, movementSpeed.BaseSprintSpeed);
+
+                _popupSystem.PopupEntity(Loc.GetString("admin-smite-run-walk-swap-prompt"), args.Target,
+                    Filter.Entities(args.Target), PopupType.LargeCaution);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-run-walk-swap-description"),
+        };
+        args.Verbs.Add(runWalkSwap);
     }
 }

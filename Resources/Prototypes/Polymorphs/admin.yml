@@ -1,29 +1,30 @@
 ﻿- type: polymorph
+  id: AdminLizardSmite
+  entity: MobReptilian
+  transferName: true
+  transferHumanoidAppearance: true
+  inventory: Transfer
+
+- type: polymorph
   id: AdminMonkeySmite
   entity: MobMonkey
   forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
   id: AdminBreadSmite
   entity: FoodBreadPlain
   forced: true
-  dropInventory: true
-
-- type: polymorph
-  id: AdminMouseSmite
-  entity: MobMouse
-  forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
   id: AdminInstrumentSmite
   entity: SuperSynthesizerInstrument
   forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
-  id: AdminLizardSmite
-  entity: MobReptilian
+  id: AdminMouseSmite
+  entity: MobMouse
   forced: true
   dropInventory: true

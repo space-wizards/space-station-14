@@ -10,6 +10,8 @@ admin-smite-remove-hands-self = Your hands fall off!
 admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
 admin-smite-turned-ash-other = {CAPITALISE($name)} turns into a pile of ash!
 
+admin-smite-run-walk-swap-prompt = You have to press shift to run!
+
 ## Smite descriptions
 
 admin-smite-explode-description = Explode them.
@@ -36,6 +38,10 @@ admin-smite-become-instrument-description = It turns them into a supersynth. Rea
 admin-smite-remove-gravity-description = Grants them anti-gravity.
 admin-smite-reptilian-species-swap-description = It changes their species to Reptilian. Useful for people who were being space racist.
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
-admin-smite-headstand-description = Rotates their sprite 180 degrees.
+admin-smite-headstand-description = Vertically flips their sprite.
 admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
 admin-smite-become-mouse-description = They become a rat. Ratatouille.
+admin-smite-maid-description = Forcibly converts them into a janitorial cat maid. This is actual torture for some players, use it wisely.
+admin-smite-zoom-in-description = Zooms in their view, a lot, so that they can no longer see their surroundings.
+admin-smite-flip-eye-description = Flips their view, effectively reversing their controls and making the game annoying to play.
+admin-smite-run-walk-swap-description = Swaps running and walking, forcing them to hold shift to move fast.
