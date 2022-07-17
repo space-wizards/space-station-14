@@ -35,7 +35,7 @@ namespace Content.Shared.Roles
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; } = false;
 
-	[DataField("extraMessage")]
+        [DataField("extraMessage")]
         public string? ExtraMessage { get; } = null;
 
         [DataField("setPreference")]
@@ -64,7 +64,7 @@ namespace Content.Shared.Roles
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        [DataField("special", serverOnly:true)]
+        [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField("departments")]

@@ -49,7 +49,7 @@ namespace Content.Server.Nutrition.Components
             set => _currentHunger = value;
         }
         private float _currentHunger;
-	private float _accumulatedFrameTime;
+        private float _accumulatedFrameTime;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
@@ -135,8 +135,8 @@ namespace Content.Server.Nutrition.Components
             base.Startup();
             // Similar functionality to SS13. Should also stagger people going to the chef.
             _currentHunger = _random.Next(
-                (int)_hungerThresholds[HungerThreshold.Peckish] + 10,
-                (int)_hungerThresholds[HungerThreshold.Okay] - 1);
+                (int) _hungerThresholds[HungerThreshold.Peckish] + 10,
+                (int) _hungerThresholds[HungerThreshold.Okay] - 1);
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);
             _lastHungerThreshold = HungerThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             HungerThresholdEffect(true);

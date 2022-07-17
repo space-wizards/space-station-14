@@ -32,10 +32,12 @@ namespace Content.Server.Kitchen.Components
         [DataField("cookTimeMultiplier")] private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
         [DataField("failureResult")] private string _badRecipeName = "FoodBadRecipe";
 
-        [DataField("beginCookingSound")] private SoundSpecifier _startCookingSound =
+        [DataField("beginCookingSound")]
+        private SoundSpecifier _startCookingSound =
             new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
 
-        [DataField("foodDoneSound")] private SoundSpecifier _cookingCompleteSound =
+        [DataField("foodDoneSound")]
+        private SoundSpecifier _cookingCompleteSound =
             new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
 
         [DataField("clickSound")]
@@ -101,11 +103,11 @@ namespace Content.Server.Kitchen.Components
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-	    EntityUid? uid = message.Session.Data?.ContentData()?.Mind?.OwnedEntity;
+            EntityUid? uid = message.Session.Data?.ContentData()?.Mind?.OwnedEntity;
             if (uid == null || !_entities.HasComponent<MicrowaveUserComponent>(uid))
-	    {
+            {
                 return;
-	    }
+            }
 
             if (!Powered || _busy)
             {
@@ -278,7 +280,7 @@ namespace Content.Server.Kitchen.Components
             (FoodRecipePrototype, int) portionedRecipe = _recipeManager.Recipes.Select(
                 r => CanSatisfyRecipe(r, solidsDict, reagentDict)).Where(r => r.Item2 > 0).FirstOrDefault();
             FoodRecipePrototype? recipeToCook = portionedRecipe.Item1;
-            
+
             SetAppearance(MicrowaveVisualState.Cooking);
             var time = _currentCookTimerTime * _cookTimeMultiplier;
             SoundSystem.Play(_startCookingSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default);
@@ -426,7 +428,7 @@ namespace Content.Server.Kitchen.Components
         {
             int portions = 0;
 
-            if(_currentCookTimerTime % recipe.CookTime != 0)
+            if (_currentCookTimerTime % recipe.CookTime != 0)
             {
                 //can't be a multiple of this recipe
                 return (recipe, 0);
@@ -457,7 +459,7 @@ namespace Content.Server.Kitchen.Components
             }
 
             //cook only as many of those portions as time allows
-            return (recipe, (int)Math.Min(portions, _currentCookTimerTime / recipe.CookTime));
+            return (recipe, (int) Math.Min(portions, _currentCookTimerTime / recipe.CookTime));
         }
 
         public void ClickSound()

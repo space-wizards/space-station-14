@@ -40,14 +40,14 @@ namespace Content.Server.Roles
                 var chatSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
 
-                if(Prototype.RequireAdminNotify)
+                if (Prototype.RequireAdminNotify)
                     chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
-		if(Prototype.ExtraMessage != null)
-		    chatMgr.DispatchServerMessage(session, Loc.GetString(Prototype.ExtraMessage));
+                if (Prototype.ExtraMessage != null)
+                    chatMgr.DispatchServerMessage(session, Loc.GetString(Prototype.ExtraMessage));
 
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Loc.GetString(Prototype.Supervisors))));
 
-                if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
+                if (Prototype.JoinNotifyCrew && Mind.CharacterName != null)
                 {
                     if (Mind.OwnedEntity != null)
                     {

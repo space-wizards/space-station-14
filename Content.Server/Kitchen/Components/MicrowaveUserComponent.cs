@@ -1,5 +1,5 @@
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
-    public sealed class MicrowaveUserComponent : Component {}
+    public sealed class MicrowaveUserComponent : Component { }
 }

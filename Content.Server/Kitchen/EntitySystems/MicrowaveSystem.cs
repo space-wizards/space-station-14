@@ -24,7 +24,7 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
-            SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[]{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
         }
@@ -94,7 +94,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, MicrowaveComponent component, InteractUsingEvent args)
         {
-            if(args.Handled) return;
+            if (args.Handled) return;
             if (!component.Powered)
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
@@ -113,11 +113,11 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-	    if (!HasComp<MicrowaveUserComponent>(args.User))
-	    {
-		_popupSystem.PopupEntity(Loc.GetString("microwave-component-denied-access"), uid, Filter.Entities(args.User));
-		return;
-	    }
+            if (!HasComp<MicrowaveUserComponent>(args.User))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-denied-access"), uid, Filter.Entities(args.User));
+                return;
+            }
 
             args.Handled = true;
 
