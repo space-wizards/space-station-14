@@ -40,6 +40,8 @@ namespace Content.Server.Bed.Sleep
 
 public sealed class SleepActionEvent : InstantActionEvent {}
 
+public sealed class WakeActionEvent : InstantActionEvent {}
+
 public sealed class SleepStateChangedEvent : EntityEventArgs
 {
     public bool FellAsleep = false;
