@@ -397,6 +397,8 @@ internal sealed class BreathAttack
     /// </summary>
     private readonly DamageSpecifier _damageSpecifier;
 
+    private EntityUid _creatorUid;
+
     private readonly EntityUid _mapUid;
 
     private GridTilePropagation? _gridTilePropagation;
@@ -427,6 +429,8 @@ internal sealed class BreathAttack
     {
         _system = system;
         _entMan = entMan;
+
+        _creatorUid = creator;
         _mapUid = mapMan.GetMapEntityId(origin.MapId);
 
         _xformQuery = _entMan.GetEntityQuery<TransformComponent>();
@@ -453,6 +457,41 @@ internal sealed class BreathAttack
             var grid = mapMan.GetGrid(creatorXform.GridUid.Value);
             _gridTilePropagation = new GridTilePropagation(grid, origin, _direction);
         }
+        else
+        {
+            // Try to find a reference grid.
+            var referenceGrid = findReferenceGrid(mapMan, _physicsQuery, origin, dir, range);
+
+            _spaceTilePropagation = new SpaceTilePropagation(
+                _creatorUid,
+                _mapUid,
+                origin,
+                _direction,
+                _xformQuery,
+                referenceGrid);
+        }
+    }
+
+    private IMapGrid? findReferenceGrid(IMapManager mapMan, EntityQuery<PhysicsComponent> physicsQuery, MapCoordinates start, Angle direction, float range)
+    {
+        var distance = (range + 1) / 2;
+        var box = Box2.CenteredAround(start.Position, (distance, distance));
+
+        // TODO: Offset the bounding box so that only grids the attack would head towards is considered.
+
+        IMapGrid? refGrid = null;
+        float mass = 0.0f;
+
+        foreach (var grid in mapMan.FindGridsIntersecting(start.MapId, box))
+        {
+            if (physicsQuery.TryGetComponent(grid.GridEntityId, out var physics) && physics.Mass > mass)
+            {
+                mass = physics.Mass;
+                refGrid = grid;
+            }
+        }
+
+        return refGrid;
     }
 
     public void Update(float frameTime, IGameTiming gameTiming)
@@ -478,13 +517,12 @@ internal sealed class BreathAttack
                 _tileProcessedCount++;
             }
 
-            // TODO: Start space tile propagation from the end of grid propagation.
             if (_gridTilePropagation.ReachedSpace)
             {
                 var curTile = _gridTilePropagation.CurrentTile;
                 var grid = _gridTilePropagation.Grid;
                 var pos = grid.GridTileToWorld(curTile);
-                _spaceTilePropagation = new SpaceTilePropagation(_mapUid, pos, _direction, grid, _xformQuery, _gridTilePropagation.TilePathing);
+                _spaceTilePropagation = new SpaceTilePropagation(_creatorUid, _mapUid, pos, _direction, _xformQuery, grid, _gridTilePropagation.TilePathing);
             }
 
             else
@@ -680,23 +718,29 @@ internal sealed class BreathAttack
 
         private readonly Angle _spaceAngle;
 
-        private readonly ushort _tileSize = 1;
+        private readonly ushort _tileSize;
 
-        public SpaceTilePropagation(EntityUid mapUid, MapCoordinates start, Angle direction, IMapGrid? referenceGrid, EntityQuery<TransformComponent> xformQuery, IEnumerator<Vector2i>? tilePathing = null)
+        private const ushort DefaultTileSize = 1;
+
+        public SpaceTilePropagation(EntityUid creatorUid, EntityUid mapUid, MapCoordinates start, Angle direction,
+            EntityQuery<TransformComponent> xformQuery, IMapGrid? referenceGrid = null,
+            IEnumerator<Vector2i>? tilePathing = null)
         {
             _mapId = start.MapId;
             _mapUid = mapUid;
+            Angle localDir;
 
             // A reference grid was supplied. Take its coordinate space to use as our own.
             if (referenceGrid != null)
             {
-                _tileSize = referenceGrid.TileSize;
-
                 var referenceXform = xformQuery.GetComponent(referenceGrid.GridEntityId);
+                localDir = direction - referenceGrid.WorldRotation;
+
+                _tileSize = referenceGrid.TileSize;
+                _currentTile = referenceGrid.TileIndicesFor(start);
+
                 _spaceAngle = referenceXform.WorldRotation;
                 _spaceMatrix = referenceXform.WorldMatrix;
-
-                var localDir = direction - referenceGrid.WorldRotation;
 
                 _tilePathing = tilePathing ?? TileLinePathing(_currentTile, localDir.ToWorldVec()).GetEnumerator();
                 if (tilePathing != null)
@@ -707,18 +751,29 @@ internal sealed class BreathAttack
                 }
                 else
                 {
-                    _currentTile = referenceGrid.TileIndicesFor(start);
                     _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : _currentTile;
-
+                    Logger.Debug("Starting at {0}", _currentTile);
                 }
 
                 return;
             }
 
-            Finished = true;
+            // No reference grid. Use the creator's coordinate space.
+            _tileSize = DefaultTileSize;
 
-            // TODO: Add non-reference grid code path. I.e. the breath attack being initiated off station.
-            throw new NotImplementedException("Non-reference grid not implemented.");
+            var creatorXform = xformQuery.GetComponent(creatorUid);
+            localDir = direction - creatorXform.WorldRotation;
+
+            _spaceAngle = Angle.Zero;
+            _spaceMatrix = creatorXform.WorldMatrix;
+
+            // _currentTile = new Vector2i((int) Math.Floor(start.X / _tileSize - 0.5f),
+            //     (int) Math.Floor(start.Y / _tileSize - 0.5f));
+
+            _currentTile = Vector2i.Zero;
+
+            _tilePathing = TileLinePathing(_currentTile, localDir.ToWorldVec()).GetEnumerator();
+            _nextTile = _tilePathing.MoveNext() ? _tilePathing.Current : _currentTile;
         }
 
         public void ProcessNext(DragonSystem system, IEntityManager entMan, DamageSpecifier damageSpecifier, HashSet<EntityUid> processedEntities,
