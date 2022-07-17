@@ -58,6 +58,11 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private const float Buffer = 5f;
 
+    /// <summary>
+    /// How many times we try to proximity warp close to something before falling back to map-wideAABB.
+    /// </summary>
+    private const int FTLProximityIterations = 3;
+
     private void InitializeFTL()
     {
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
@@ -445,7 +450,7 @@ public sealed partial class ShuttleSystem
         var lastCount = 1;
         var mapId = targetXform.MapID;
 
-        while (iteration < 5)
+        while (iteration < 3)
         {
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
             {
@@ -466,8 +471,17 @@ public sealed partial class ShuttleSystem
             lastCount = nearbyGrids.Count;
 
             // Mishap moment, dense asteroid field or whatever
-            if (iteration == 5)
-                return false;
+            if (iteration == 3)
+            {
+                foreach (var grid in _mapManager.GetAllGrids())
+                {
+                    // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
+                    if (nearbyGrids.Contains(grid.GridEntityId)) continue;
+
+                    targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                        .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+                }
+            }
         }
 
         var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
@@ -481,6 +495,6 @@ public sealed partial class ShuttleSystem
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
         xform.WorldRotation = _random.NextAngle();
-        return false;
+        return true;
     }
 }
