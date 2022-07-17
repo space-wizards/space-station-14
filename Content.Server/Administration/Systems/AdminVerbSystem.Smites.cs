@@ -20,6 +20,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
+using Content.Server.Speech.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
@@ -330,6 +331,30 @@ public sealed partial class AdminVerbSystem
                 Message = Loc.GetString("admin-smite-remove-hands-description")
             };
             args.Verbs.Add(handRemoval);
+
+            Verb stomachRemoval = new()
+            {
+                Text = "Stomach Removal",
+                Category = VerbCategory.Smite,
+                IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/stomach.png",
+                Act = () =>
+                {
+                    foreach (var part in body.Parts)
+                    {
+                        foreach (var mechanism in part.Key.Mechanisms)
+                        {
+                            if (HasComp<StomachComponent>(mechanism.Owner))
+                                QueueDel(mechanism.Owner);
+                        }
+                    }
+
+                    _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
+                        Filter.Entities(args.Target), PopupType.LargeCaution);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-smite-stomach-removal-description"),
+            };
+            args.Verbs.Add(stomachRemoval);
         }
 
         if (TryComp<PhysicsComponent>(args.Target, out var physics))
@@ -717,5 +742,20 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-smite-run-walk-swap-description"),
         };
         args.Verbs.Add(runWalkSwap);
+
+        Verb backwardsAccent = new()
+        {
+            Text = "Speak Backwards",
+            Category = VerbCategory.Smite,
+            IconTexture = "/Textures/Interface/AdminActions/help-backwards.png",
+            Act = () =>
+            {
+                EnsureComp<BackwardsAccentComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-smite-speak-backwards-description"),
+        };
+        args.Verbs.Add(backwardsAccent);
+
     }
 }

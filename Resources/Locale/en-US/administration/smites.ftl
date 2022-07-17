@@ -9,7 +9,7 @@ admin-smite-vomit-organs-others = {CAPITALIZE($name)} vomits up their organs!
 admin-smite-remove-hands-self = Your hands fall off!
 admin-smite-remove-hands-other = {CAPITALIZE($name)}'s hands fall off!
 admin-smite-turned-ash-other = {CAPITALISE($name)} turns into a pile of ash!
-
+admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 
 ## Smite descriptions
@@ -42,6 +42,8 @@ admin-smite-headstand-description = Vertically flips their sprite.
 admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
 admin-smite-become-mouse-description = They become a rat. Ratatouille.
 admin-smite-maid-description = Forcibly converts them into a janitorial cat maid. This is actual torture for some players, use it wisely.
-admin-smite-zoom-in-description = Zooms in their view, a lot, so that they can no longer see their surroundings.
+admin-smite-zoom-in-description = Zooms in their view so that they can no longer see their surroundings.
 admin-smite-flip-eye-description = Flips their view, effectively reversing their controls and making the game annoying to play.
 admin-smite-run-walk-swap-description = Swaps running and walking, forcing them to hold shift to move fast.
+admin-smite-stomach-removal-description = Removes their stomach, rendering them unable to eat.
+admin-smite-speak-backwards-description = Forces them to speak backwards, so they can't call for help.
