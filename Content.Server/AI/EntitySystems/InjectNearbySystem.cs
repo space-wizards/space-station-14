@@ -48,7 +48,7 @@ namespace Content.Server.AI.EntitySystems
             if (damage.TotalDamage == 0)
                 return false;
 
-            if (damage.TotalDamage <= botComp.StandardMedDamageThreshold)
+            if (damage.TotalDamage <= MedibotComponent.StandardMedDamageThreshold)
             {
                 _solutionSystem.TryAddReagent(target, injectable, botComp.StandardMed, botComp.StandardMedInjectAmount, out var accepted);
                 EnsureComp<RecentlyInjectedComponent>(target);
@@ -58,7 +58,7 @@ namespace Content.Server.AI.EntitySystems
                 return true;
             }
 
-            if (damage.TotalDamage >= botComp.EmergencyMedDamageThreshold)
+            if (damage.TotalDamage >= MedibotComponent.EmergencyMedDamageThreshold)
             {
                 _solutionSystem.TryAddReagent(target, injectable, botComp.EmergencyMed, botComp.EmergencyMedInjectAmount, out var accepted);
                 EnsureComp<RecentlyInjectedComponent>(target);
