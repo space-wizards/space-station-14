@@ -2,7 +2,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.Tracking;
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
+using Content.Server.MobState;
 using Content.Server.Silicons.Bots;
 
 namespace Content.Server.AI.Utility.Considerations.Bot
@@ -19,7 +19,7 @@ namespace Content.Server.AI.Utility.Considerations.Bot
             if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out RecentlyInjectedComponent? recently))
                 return 0f;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MobStateComponent? mobState) || mobState.IsDead())
+            if (IoCManager.Resolve<MobStateSystem>().IsDead(target.Value))
                 return 0f;
 
             if (damageableComponent.TotalDamage == 0)
