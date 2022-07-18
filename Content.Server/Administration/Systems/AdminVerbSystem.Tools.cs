@@ -11,12 +11,14 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+    [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -257,6 +259,23 @@ public sealed partial class AdminVerbSystem
                 };
                 args.Verbs.Add(refillInternalsPlasma);
             }
+
+            Verb sendToTestArena = new()
+            {
+                Text = "Send to test arena",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
+                Act = () =>
+                {
+                    var (_, arenaGrid) = _adminTestArenaSystem.AssertArenaLoaded(player);
+
+                    Transform(args.Target).Coordinates = new EntityCoordinates(arenaGrid, Vector2.One);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
+                Priority = (int) TricksVerbPriorities.RefillOxygen,
+            };
+            args.Verbs.Add(sendToTestArena);
         }
     }
 

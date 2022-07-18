@@ -1,6 +1,7 @@
 ﻿- type: polymorph
   id: AdminLizardSmite
   entity: MobReptilian
+  forced: true
   transferName: true
   transferHumanoidAppearance: true
   inventory: Transfer
