@@ -17,3 +17,5 @@ deprecated.png made by 20kdc, licensed under SS14's MIT license - don't remove i
 
 arcadeblue2, boxing, carpetclown, carpetoffice, and gym taken from Goon at commit https://github.com/goonstation/goonstation/commit/c4d549f9259728427c6003da0aa2d95aaafff805
 
+cave and cavedrought taken from Mojave-Sun at commit https://github.com/Mojave-Sun/mojave-sun-13/commit/0587dd16e28108bdf0b0a28e2caae4319845e861
+
