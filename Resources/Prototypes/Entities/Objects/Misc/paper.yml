@@ -114,7 +114,7 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen_cap
-   
+
 - type: entity
   name: hop's fountain pen
   parent: Pen
@@ -124,7 +124,7 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen_hop
-    
+
 - type: entity
   id: BoxFolderBase
   parent: BoxBase
@@ -164,8 +164,6 @@
           tags:
           - Document
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
   - type: Tag
     tags:
     - Folder

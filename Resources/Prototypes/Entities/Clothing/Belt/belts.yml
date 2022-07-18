@@ -57,10 +57,8 @@
         whitelist:
           components:
           - SignalLinker
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -132,10 +130,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -169,10 +165,8 @@
         whitelist:
           components:
           - Stunbaton
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -210,10 +204,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -271,10 +263,8 @@
         whitelist:
           tags:
           - Wrench
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -328,10 +318,8 @@
         whitelist:
           tags:
           - Bottle
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -363,10 +351,8 @@
         whitelist:
           components:
           - Stunbaton
+    sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-      sprite: Clothing/Belt/belt_overlay.rsi
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -391,8 +377,6 @@
           tags:
           - CaptainSabre
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
 
 # Belts without visualizers
 
