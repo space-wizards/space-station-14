@@ -12,4 +12,12 @@ public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
     [ViewVariables]
     [DataField("throwForce")]
     public float ThrowForce = 100f;
+
+    /// <summary>
+    /// This shouldn't be at 99999 or higher to prevent the singulo glitching out
+    /// Will throw anything at the supplied mass or less that collides with the field.
+    /// </summary>
+    [ViewVariables]
+    [DataField("maxMass")]
+    public float MaxMass = 100f;
 }
