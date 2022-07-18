@@ -8,6 +8,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Stack;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -29,8 +30,10 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+    [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly AccessSystem _accessSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
+    [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
@@ -401,6 +404,43 @@ public sealed partial class AdminVerbSystem
                 args.Verbs.Add(revokeAllAccess);
             }
         }
+
+        if (TryComp<StackComponent>(args.Target, out var stack))
+        {
+            Verb adjustStack = new()
+            {
+                Text = "Adjust Stack",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/adjust-stack.png",
+                Act = () =>
+                {
+                    // Unbounded intentionally.
+                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {stack.MaxCount})", (int newAmount) =>
+                    {
+                        _stackSystem.SetCount(args.Target, newAmount, stack);
+                    });
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-adjust-stack-description"),
+                Priority = (int) TricksVerbPriorities.AdjustStack,
+            };
+            args.Verbs.Add(adjustStack);
+
+            Verb fillStack = new()
+            {
+                Text = "Fill Stack",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/fill-stack.png",
+                Act = () =>
+                {
+                    _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-fill-stack-description"),
+                Priority = (int) TricksVerbPriorities.FillStack,
+            };
+            args.Verbs.Add(fillStack);
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -476,5 +516,7 @@ public sealed partial class AdminVerbSystem
         GrantAllAccess = -9,
         RevokeAllAccess = -10,
         Rejuvenate = -11,
+        AdjustStack = -12,
+        FillStack = -13,
     }
 }
