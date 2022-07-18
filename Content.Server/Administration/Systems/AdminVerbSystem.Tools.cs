@@ -1,5 +1,6 @@
 ﻿
 using System.Linq;
+using Content.Server.Administration.Commands;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
@@ -14,6 +15,7 @@ using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -75,6 +77,24 @@ public sealed partial class AdminVerbSystem
                     Priority = (int) (airlock.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
                 };
                 args.Verbs.Add(emergencyAccess);
+            }
+
+            if (HasComp<DamageableComponent>(args.Target))
+            {
+                Verb rejuvenate = new()
+                {
+                    Text = "Rejuvenate",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Interface/AdminActions/rejuvenate.png",
+                    Act = () =>
+                    {
+                        RejuvenateCommand.PerformRejuvenate(args.Target);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-rejuvenate-description"),
+                    Priority = (int) TricksVerbPriorities.Rejuvenate,
+                };
+                args.Verbs.Add(rejuvenate);
             }
 
             if (!_godmodeSystem.HasGodmode(args.Target))
@@ -211,7 +231,7 @@ public sealed partial class AdminVerbSystem
                             if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
                                 continue;
 
-                            if (!TryComp<GasTankComponent>(entity, out var tank) || !tank.IsFunctional)
+                            if (!TryComp<GasTankComponent>(entity, out var tank))
                                 continue;
 
                             RefillGasTank(entity.Value, Gas.Oxygen, tank);
@@ -235,7 +255,7 @@ public sealed partial class AdminVerbSystem
                             if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
                                 continue;
 
-                            if (!TryComp<GasTankComponent>(entity, out var tank) || !tank.IsFunctional)
+                            if (!TryComp<GasTankComponent>(entity, out var tank))
                                 continue;
 
                             RefillGasTank(entity.Value, Gas.Nitrogen, tank);
@@ -259,7 +279,7 @@ public sealed partial class AdminVerbSystem
                             if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
                                 continue;
 
-                            if (!TryComp<GasTankComponent>(entity, out var tank) || !tank.IsFunctional)
+                            if (!TryComp<GasTankComponent>(entity, out var tank))
                                 continue;
 
                             RefillGasTank(entity.Value, Gas.Plasma, tank);
@@ -367,6 +387,7 @@ public sealed partial class AdminVerbSystem
         var mixSize = tankComponent.Air.Volume;
         var newMix = new GasMixture(mixSize);
         newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
+        newMix.Temperature = Atmospherics.T20C;
         tankComponent.Air = newMix;
     }
 
@@ -430,5 +451,6 @@ public sealed partial class AdminVerbSystem
         SendToTestArena = -8,
         GrantAllAccess = -9,
         RevokeAllAccess = -10,
+        Rejuvenate = -11,
     }
 }
