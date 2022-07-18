@@ -2,7 +2,6 @@
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
@@ -27,7 +26,6 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
@@ -596,31 +594,7 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(maiden);
 
-            Verb plasmaInternals = new()
-            {
-                Text = "Plasma Internals",
-                Category = VerbCategory.Smite,
-                IconTexture = "/Textures/Objects/Tanks/plasma.rsi/icon.png",
-                Act = () =>
-                {
-                    foreach (var slot in _inventorySystem.GetSlots(args.Target))
-                    {
-                        if (!_inventorySystem.TryGetSlotEntity(args.Target, slot.Name, out var entity))
-                            continue;
 
-                        if (!TryComp<GasTankComponent>(entity, out var tank))
-                            continue;
-
-                        var mixSize = tank.Air.Volume;
-                        var newMix = new GasMixture(mixSize);
-                        newMix.SetMoles(Gas.Plasma, 30f);
-                        tank.Air = newMix;
-                    }
-                },
-                Impact = LogImpact.Extreme,
-                Message = Loc.GetString("admin-smite-plasma-internals-description"),
-            };
-            args.Verbs.Add(plasmaInternals);
         }
 
         Verb angerPointingArrows = new()

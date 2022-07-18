@@ -53,3 +53,18 @@ admin-smite-lung-removal-description = Removes their lungs, drowning them.
 admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
+
+
+## Tricks descriptions
+
+admin-trick-unbolt-description = Unbolts the targetted airlock.
+admin-trick-bolt-description = Bolts the targetted airlock.
+admin-trick-emergency-access-on-description = Turns on emergency access for the targetted airlock.
+admin-trick-emergency-access-off-description = Turns off emergency access for the targetted airlock.
+admin-trick-make-indestructible-description = Makes the given object indestructible, effectively godmode.
+admin-trick-make-vulnerable-description = Makes the given object vulnerable again, turning off godmode.
+admin-trick-block-unanchoring-description = Prevents unanchoring the given object.
+admin-trick-refill-battery-description = Refills the internal battery of the given object.
+admin-trick-internals-refill-oxygen-description = Refills oxygen in the target tank or target's internals.
+admin-trick-internals-refill-nitrogen-description = Refills nitrogen in the target tank or target's internals.
+admin-trick-internals-refill-plasma-description = Refills plasma in the target tank or target's internals.
