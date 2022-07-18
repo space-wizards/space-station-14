@@ -79,3 +79,4 @@ admin-trick-redescribe-description = Redescribes the given object.
 admin-trick-rename-and-redescribe-description = Convenient bundle of both rename and redescribe into one button.
 admin-trick-bar-job-slots-description = Closes all job slots on the station, such that nobody can join it.
 admin-trick-locate-cargo-shuttle-description = Teleports you directly to the station's cargo shuttle, if it exists.
+admin-trick-infinite-battery-description = Reconfigures the SMESes and substations on the grid/station/map to self-recharge rapidly.

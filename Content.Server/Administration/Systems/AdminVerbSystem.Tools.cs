@@ -1,6 +1,8 @@
 ﻿
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.Components;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
@@ -545,6 +547,34 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(locateCargoShuttle);
         }
+
+        if (TryGetGridChildren(args.Target, out var childEnum))
+        {
+            Verb infiniteBattery = new()
+            {
+                Text = "Infinite Battery",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/infinite_battery.png",
+                Act = () =>
+                {
+                    foreach (var ent in childEnum)
+                    {
+                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                            continue;
+
+                        var recharger = EnsureComp<BatterySelfRechargerComponent>(ent);
+                        var battery = EnsureComp<BatteryComponent>(ent);
+
+                        recharger.AutoRecharge = true;
+                        recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                    }
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-infinite-battery-description"),
+                Priority = (int) TricksVerbPriorities.BarJobSlots,
+            };
+            args.Verbs.Add(infiniteBattery);
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -557,6 +587,56 @@ public sealed partial class AdminVerbSystem
         newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
         newMix.Temperature = Atmospherics.T20C;
         tankComponent.Air = newMix;
+    }
+
+    private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)
+    {
+        if (!HasComp<IMapComponent>(target) && !HasComp<IMapGridComponent>(target) &&
+            !HasComp<StationDataComponent>(target))
+        {
+            enumerator = null;
+            return false;
+        }
+
+        enumerator = GetGridChildrenInner(target);
+        return true;
+    }
+
+    // ew. This finds everything supposedly on a grid.
+    private IEnumerable<EntityUid> GetGridChildrenInner(EntityUid target)
+    {
+        if (TryComp<StationDataComponent>(target, out var station))
+        {
+            foreach (var grid in station.Grids)
+            {
+                foreach (var ent in Transform(grid).ChildEntities)
+                {
+                    yield return ent;
+                }
+            }
+
+            yield break;
+        }
+
+        else if (HasComp<IMapComponent>(target))
+        {
+            foreach (var possibleGrid in Transform(target).ChildEntities)
+            {
+                foreach (var ent in Transform(possibleGrid).ChildEntities)
+                {
+                    yield return ent;
+                }
+            }
+
+            yield break;
+        }
+        else
+        {
+            foreach (var ent in Transform(target).ChildEntities)
+            {
+                yield return ent;
+            }
+        }
     }
 
     private EntityUid? FindActiveId(EntityUid target)
