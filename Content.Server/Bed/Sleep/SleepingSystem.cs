@@ -161,7 +161,7 @@ namespace Content.Server.Bed.Sleep
         {
             if (args.IsInDetailsRange)
             {
-                args.PushMarkup(Loc.GetString("sleep-examined", ("target", uid)));
+                args.PushMarkup(Loc.GetString("sleep-examined", ("target", Identity.Entity(uid, EntityManager))));
             }
         }
 
