@@ -113,31 +113,41 @@
       name: action-name-breathe-fire
       description: action-description-breathe-fire
       checkCanAccess: false
-      useDelay: 1  # TODO: Raise this value to something more reasonable before merging.
+      useDelay: 3
       range: 20
-    breathEffectPrototype: FireBreathEffect
-    breathDamage:
-      types:
-        Heat: 30
-
+    breathProjectileProto: DragonProjectileFireball
 
 - type: entity
-  id: FireBreathEffect
+  id: DragonProjectileFireball
+  parent: BaseBullet
   noSpawn: true
   components:
-  - type: TimedDespawn
-    lifetime: 0.70
-  - type: Sprite
-    netsync: false
-    drawdepth: Effects
-    layers:
-      - shader: unshaded
-        map: [ "enum.EffectLayers.Unshaded" ]
-        sprite: Effects/fire.rsi
-        state: 1
-  - type: EffectVisuals
-  - type: AnimationPlayer
-  - type: PointLight
-  - type: Tag
-    tags:
-      - HideContextMenu
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+      scale: 1.5, 1.5
+      layers:
+        - state: fireball
+    - type: Projectile
+      deleteOnCollide: true
+      damage:
+        groups:
+          Burn: 1
+    - type: Fixtures
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        id: projectile
+        mask:
+          - Impassable
+          - BulletImpassable
+    - type: PointLight
+      enabled: true
+      color: "#ff4300"
+      radius: 2.0
+      energy: 7.0
+    - type: IgniteOnCollide
+      fireStacks: 2
+    - type: TimedDespawn
+      lifetime: 3

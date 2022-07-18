@@ -71,7 +71,8 @@ namespace Content.Server.Dragon
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? SpawnPrototype = "MobCarpDragon";
 
-        [DataField("breathDamage")] public DamageSpecifier BreathDamage = default!;
+        [DataField("breathProjectileProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? BreathProjectilePrototype = "DragonProjectileFireball";
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
