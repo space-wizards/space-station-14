@@ -161,6 +161,23 @@ public sealed partial class AdminVerbSystem
                     Priority = (int) TricksVerbPriorities.RefillBattery,
                 };
                 args.Verbs.Add(refillBattery);
+
+                Verb infiniteBattery = new()
+                {
+                    Text = "Infinite Battery",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Interface/AdminActions/infinite_battery.png",
+                    Act = () =>
+                    {
+                        var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
+                        recharger.AutoRecharge = true;
+                        recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
+                    Priority = (int) TricksVerbPriorities.InfiniteBattery,
+                };
+                args.Verbs.Add(infiniteBattery);
             }
 
             if (TryComp<AnchorableComponent>(args.Target, out var anchor))
@@ -543,7 +560,7 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-trick-locate-cargo-shuttle-description"),
-                Priority = (int) TricksVerbPriorities.BarJobSlots,
+                Priority = (int) TricksVerbPriorities.LocateCargoShuttle,
             };
             args.Verbs.Add(locateCargoShuttle);
         }
@@ -557,6 +574,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/infinite_battery.png",
                 Act = () =>
                 {
+                    // this kills the sloth
                     foreach (var ent in childEnum)
                     {
                         if (!HasComp<StationInfBatteryTargetComponent>(ent))
@@ -571,7 +589,7 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-trick-infinite-battery-description"),
-                Priority = (int) TricksVerbPriorities.BarJobSlots,
+                Priority = (int) TricksVerbPriorities.InfiniteBattery,
             };
             args.Verbs.Add(infiniteBattery);
         }
@@ -706,5 +724,7 @@ public sealed partial class AdminVerbSystem
         Redescribe = -15,
         RenameAndRedescribe = -16,
         BarJobSlots = -17,
+        LocateCargoShuttle = -18,
+        InfiniteBattery = -19,
     }
 }
