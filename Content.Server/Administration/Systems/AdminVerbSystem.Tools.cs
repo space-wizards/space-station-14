@@ -2,6 +2,7 @@
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
@@ -15,6 +16,8 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
+    [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
         if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
@@ -52,8 +55,7 @@ public sealed partial class AdminVerbSystem
                     IconTexture = "/Textures/Interface/AdminActions/emergency_access.png",
                     Act = () =>
                     {
-                        airlock.EmergencyAccess = !airlock.EmergencyAccess;
-                        Dirty(airlock);
+                        _airlockSystem.ToggleEmergencyAccess(airlock);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString(airlock.EmergencyAccess ? "admin-trick-emergency-access-off-description" : "admin-trick-emergency-access-on-description" ),
