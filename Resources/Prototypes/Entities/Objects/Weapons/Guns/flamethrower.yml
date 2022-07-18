@@ -1,0 +1,40 @@
+- type: entity
+  name: flamethrower
+  parent: BaseWeaponLauncher
+  id: WeaponFlamethrower
+  description: ooga chaka ooga ooga ooga chaka
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: 10
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+  - type: Gun
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      #path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+  - type: MagazineAmmoProvider
+    proto: ProjectileFlame
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Tank
+        startingItem: PlasmaTankFilled
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        #whitelist: fix later tm
+        #  tags:w
+        #    - MagazineLightRifleBox
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot

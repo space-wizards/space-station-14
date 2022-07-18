@@ -355,3 +355,25 @@
     damage:
       types:
         Piercing: 0
+
+- type: entity
+  id: ProjectileFlame
+  name: flame
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: foamdart
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 7
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 1

@@ -71,6 +71,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeBattery();
         InitializeCartridge();
         InitializeChamberMagazine();
+        InitializeGas();
         InitializeMagazine();
         InitializeRevolver();
         InitializeBasicEntity();
