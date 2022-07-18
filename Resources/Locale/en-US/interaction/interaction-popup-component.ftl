@@ -10,6 +10,7 @@ petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
 petting-success-dog = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
+petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} head and {POSS-ADJ($target)} bloops happily!
 petting-success-frog = You pet {THE($target)} on {POSS-ADJ($target)} slippery little head.
 petting-success-goat = You pet {THE($target)} on {POSS-ADJ($target)} horned floofy head.
 petting-success-goose = Against all odds, you manage to pet {THE($target)} on {POSS-ADJ($target)} horrible little head.

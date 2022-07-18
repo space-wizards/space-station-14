@@ -89,6 +89,43 @@
     proto: guardian
 
 - type: entity
+  name: Lia
+  parent: MobCarpMagic
+  id: MobCarpLia
+  description: A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet.
+  components:
+    - type: AiFactionTag
+      factions:
+        - Nanotrasen
+    - type: InteractionPopup
+      interactSuccessString: petting-success-carp
+      interactFailureString: petting-failure-generic
+
+- type: entity
+  name: Cayenne
+  parent: MobCarpMagic
+  id: MobCarpCayenne
+  description: A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot.
+  components:
+    - type: AiFactionTag
+      factions:
+        - Syndicate
+    - type: InteractionPopup
+      interactSuccessString: petting-success-carp
+      interactFailureString: petting-failure-generic
+    - type: ItemSlots
+      slots:
+        NukeSlot:
+          name: Nuke Disk
+          whitelist:
+            components:
+              - "NukeDisk"
+          insertSound:
+            path: /Audio/Effects/bite.ogg
+            params:
+              volume: -3
+
+- type: entity
   name: holocarp
   parent: MobCarp
   id: MobCarpHolo
