@@ -236,9 +236,6 @@ namespace Content.Server.PneumaticCannon
 
             _throwingSystem.TryThrow(ent, data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
-            // lasagna, anybody?
-            ent.EnsureComponent<ForcefeedOnCollideComponent>();
-
             if(EntityManager.TryGetComponent<StatusEffectsComponent?>(data.User, out var status)
                && comp.Power == PneumaticCannonPower.High)
             {
