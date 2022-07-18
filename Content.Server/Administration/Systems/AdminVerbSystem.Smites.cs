@@ -82,6 +82,10 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
+        // 1984.
+        if (HasComp<IMapComponent>(args.Target) || HasComp<IMapGridComponent>(args.Target))
+            return;
+
         Verb explode = new()
         {
             Text = "Explode",
