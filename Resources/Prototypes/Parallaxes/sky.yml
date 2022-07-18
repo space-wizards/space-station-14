@@ -3,7 +3,7 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/sky.png"
-      slowness: 0.1
+        path: "/Textures/Tiles/snow.png"
+      slowness: 0
       scale: "1, 1"
-      scrolling: "-1, 0"
+      shader: ""
