@@ -81,3 +81,4 @@ admin-trick-bar-job-slots-description = Closes all job slots on the station, suc
 admin-trick-locate-cargo-shuttle-description = Teleports you directly to the station's cargo shuttle, if it exists.
 admin-trick-infinite-battery-description = Reconfigures the SMESes and substations on the grid/station/map to self-recharge rapidly.
 admin-trick-infinite-battery-object-description = Reconfigures the item so that it's battery rapidly refills.
+admin-trick-halt-movement-description = Halts the movement of the target object, at least until something moves it again.

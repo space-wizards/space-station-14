@@ -526,23 +526,26 @@ public sealed partial class AdminVerbSystem
 
         if (TryComp<StationDataComponent>(args.Target, out var stationData))
         {
-            Verb barJobSlots = new()
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Round))
             {
-                Text = "Bar job slots",
-                Category = VerbCategory.Tricks,
-                IconTexture = "/Textures/Interface/AdminActions/bar_jobslots.png",
-                Act = () =>
+                Verb barJobSlots = new()
                 {
-                    foreach (var (job, _) in _stationJobsSystem.GetJobs(args.Target))
+                    Text = "Bar job slots",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Interface/AdminActions/bar_jobslots.png",
+                    Act = () =>
                     {
-                        _stationJobsSystem.TrySetJobSlot(args.Target, job, 0, true);
-                    }
-                },
-                Impact = LogImpact.Extreme,
-                Message = Loc.GetString("admin-trick-bar-job-slots-description"),
-                Priority = (int) TricksVerbPriorities.BarJobSlots,
-            };
-            args.Verbs.Add(barJobSlots);
+                        foreach (var (job, _) in _stationJobsSystem.GetJobs(args.Target))
+                        {
+                            _stationJobsSystem.TrySetJobSlot(args.Target, job, 0, true);
+                        }
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-bar-job-slots-description"),
+                    Priority = (int) TricksVerbPriorities.BarJobSlots,
+                };
+                args.Verbs.Add(barJobSlots);
+            }
 
             Verb locateCargoShuttle = new()
             {
@@ -592,6 +595,25 @@ public sealed partial class AdminVerbSystem
                 Priority = (int) TricksVerbPriorities.InfiniteBattery,
             };
             args.Verbs.Add(infiniteBattery);
+        }
+
+        if (TryComp<PhysicsComponent>(args.Target, out var physics))
+        {
+            Verb haltMovement = new()
+            {
+                Text = "Halt Movement",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/halt.png",
+                Act = () =>
+                {
+                    physics.LinearVelocity = Vector2.Zero;
+                    physics.AngularVelocity = 0.0f;
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-halt-movement-description"),
+                Priority = (int) TricksVerbPriorities.HaltMovement,
+            };
+            args.Verbs.Add(haltMovement);
         }
     }
 
@@ -726,5 +748,6 @@ public sealed partial class AdminVerbSystem
         BarJobSlots = -17,
         LocateCargoShuttle = -18,
         InfiniteBattery = -19,
+        HaltMovement = -20,
     }
 }
