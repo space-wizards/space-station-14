@@ -3,12 +3,16 @@ using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Systems;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -35,6 +39,9 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
+    [Dependency] private readonly CargoSystem _cargoSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -497,6 +504,47 @@ public sealed partial class AdminVerbSystem
             Priority = (int) TricksVerbPriorities.RenameAndRedescribe,
         };
         args.Verbs.Add(renameAndRedescribe);
+
+        if (TryComp<StationDataComponent>(args.Target, out var stationData))
+        {
+            Verb barJobSlots = new()
+            {
+                Text = "Bar job slots",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/bar_jobslots.png",
+                Act = () =>
+                {
+                    foreach (var (job, _) in _stationJobsSystem.GetJobs(args.Target))
+                    {
+                        _stationJobsSystem.TrySetJobSlot(args.Target, job, 0, true);
+                    }
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-bar-job-slots-description"),
+                Priority = (int) TricksVerbPriorities.BarJobSlots,
+            };
+            args.Verbs.Add(barJobSlots);
+
+            Verb locateCargoShuttle = new()
+            {
+                Text = "Locate Cargo Shuttle",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Clothing/Head/Soft/cargosoft.rsi/icon.png",
+                Act = () =>
+                {
+                    var shuttle = Comp<StationCargoOrderDatabaseComponent>(args.Target).Shuttle;
+
+                    if (shuttle is null)
+                        return;
+
+                    Transform(args.User).Coordinates = new EntityCoordinates(shuttle.Value, Vector2.Zero);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-locate-cargo-shuttle-description"),
+                Priority = (int) TricksVerbPriorities.BarJobSlots,
+            };
+            args.Verbs.Add(locateCargoShuttle);
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -577,5 +625,6 @@ public sealed partial class AdminVerbSystem
         Rename = -14,
         Redescribe = -15,
         RenameAndRedescribe = -16,
+        BarJobSlots = -17,
     }
 }

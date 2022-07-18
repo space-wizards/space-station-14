@@ -77,3 +77,5 @@ admin-trick-fill-stack-description = Refills a stack of items to max.
 admin-trick-rename-description = Renames the given object. Note this is not equivalent to the `rename` command and won't fix their ID.
 admin-trick-redescribe-description = Redescribes the given object.
 admin-trick-rename-and-redescribe-description = Convenient bundle of both rename and redescribe into one button.
+admin-trick-bar-job-slots-description = Closes all job slots on the station, such that nobody can join it.
+admin-trick-locate-cargo-shuttle-description = Teleports you directly to the station's cargo shuttle, if it exists.

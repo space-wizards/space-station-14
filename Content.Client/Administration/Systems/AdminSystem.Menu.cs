@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs.ObjectsTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.HUD;
 using Content.Client.Verbs;
@@ -98,13 +99,18 @@ namespace Content.Client.Administration.Systems
             }
 
             _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
+            _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
             _window.OpenCentered();
         }
 
         public void Close()
         {
             if (_window != null)
+            {
                 _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
+                _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+            }
+
             _window?.Close();
 
             foreach (var window in _commandWindows)
@@ -149,6 +155,24 @@ namespace Content.Client.Administration.Systems
                 return;
 
             var uid = button.PlayerUid.Value;
+            var function = args.Event.Function;
+
+            if (function == EngineKeyFunctions.UIClick)
+                _clientConsoleHost.ExecuteCommand($"vv {uid}");
+            else if (function == ContentKeyFunctions.OpenContextMenu)
+                _verbSystem.VerbMenu.OpenVerbMenu(uid, true);
+            else
+                return;
+
+            args.Event.Handle();
+        }
+
+        private void ObjectsTabEntryPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Button is not ObjectsTabEntry button)
+                return;
+
+            var uid = button.AssocEntity;
             var function = args.Event.Function;
 
             if (function == EngineKeyFunctions.UIClick)
