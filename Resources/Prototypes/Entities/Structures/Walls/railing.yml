@@ -162,3 +162,80 @@
     graph: Railing
     node: railingCornerSmall
 
+# Yellow Handrail
+
+- type: entity
+  parent: Railing
+  id: RailingYellow
+  name: yellow railing
+  description: Basic railing meant to protect idiots like you from falling.
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Walls/railingyellow.rsi
+    state: side
+  - type: Icon
+    sprite: Structures/Walls/railingyellow.rsi
+    state: side
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,0.25,0.5,0.0"
+      mass: 50
+      mask:
+      - TableMask
+      layer:
+      - TableLayer
+    
+- type: entity
+  parent: RailingCorner
+  id: RailingYellowCorner
+  name: yellow railing
+  description: Basic railing meant to protect idiots like you from falling.
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Walls/railingyellow.rsi
+    state: corner
+  - type: Icon
+    sprite: Structures/Walls/railingyellow.rsi
+    state: corner
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,0.0,0.0,0.5"
+      mass: 50
+      mask:
+      - TableMask
+      layer:
+      - TableLayer
+
+
+- type: entity
+  parent: Railing
+  id: RailingYellowEnd
+  name: yellow railing
+  description: Basic railing meant to protect idiots like you from falling.
+  components:
+  - type: Sprite
+    netsync: false
+    drawdepth: WallTops
+    sprite: Structures/Walls/railingyellow.rsi
+    state: end
+  - type: Icon
+    sprite: Structures/Walls/railingyellow.rsi
+    state: end
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.3,0.5,0.3,0.3"
+      mass: 50
+      mask:
+      - TableMask
+      layer:
+      - TableLayer
