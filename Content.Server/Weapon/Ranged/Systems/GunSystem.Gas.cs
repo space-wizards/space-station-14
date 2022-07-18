@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 
@@ -11,9 +10,7 @@ public sealed partial class GunSystem
     {
         base.InitializeGas();
 
-        // Projectile
         SubscribeLocalEvent<GasAmmoProviderComponent, ComponentStartup>(OnGasStartup);
-        SubscribeLocalEvent<GasAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
     }
 
     private void OnGasStartup(EntityUid uid, GasAmmoProviderComponent component, ComponentStartup args)
@@ -21,14 +18,9 @@ public sealed partial class GunSystem
         UpdateShots(uid, component);
     }
 
-    private void OnBatteryChargeChange(EntityUid uid, GasAmmoProviderComponent component, ChargeChangedEvent args)
-    {
-        UpdateShots(uid, component);
-    }
-
     private void UpdateShots(EntityUid uid, GasAmmoProviderComponent component)
     {
-        if (!TryComp<GasTankComponent>(uid, out var gasTank)) return;
+        if (!TryComp<GasTankComponent>(component.TankEntity, out var gasTank)) return;
         UpdateShots(component, gasTank);
     }
 
@@ -46,11 +38,12 @@ public sealed partial class GunSystem
         UpdateGasAppearance(component);
     }
 
-    protected override void TakeGas(EntityUid uid, GasAmmoProviderComponent component)
+    protected override void UpdateGas(EntityUid uid, GasAmmoProviderComponent component, bool shotFired)
     {
-        if (!TryComp<GasTankComponent>(uid, out var gasTank)) return;
+        if (!TryComp<GasTankComponent>(component.TankEntity, out var gasTank)) return;
 
-        gasTank.Air.Remove(component.MolesPerShot);
+        if (shotFired)
+            gasTank.Air.AdjustMoles(component.GasId, -component.MolesPerShot);
         UpdateShots(component, gasTank);
     }
 }

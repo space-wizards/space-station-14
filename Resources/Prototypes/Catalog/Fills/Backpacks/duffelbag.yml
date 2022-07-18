@@ -19,15 +19,16 @@
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.
   components:
+  - type: Storage
+    capacity: 150
   - type: StorageFill
     contents:
+      - id: WeaponFlamethrower
       - id: WeaponShotgunDoubleBarreled
       - id: BoxShotgunFlare
-        amount: 2
       - id: PillRomerol
         amount: 5
-      - id: GrenadeFlash
-        amount: 2
+      - id: Flash
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical

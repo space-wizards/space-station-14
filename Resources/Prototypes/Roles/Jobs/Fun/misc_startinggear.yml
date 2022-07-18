@@ -150,7 +150,7 @@
     gloves: ClothingHandsGlovesFingerless
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsJack
-    id: CentcomPDA
+    id: ERTLeaderPDA
     pocket1: CombatKnife
     pocket2: WeaponLaserGun
     suitstorage: YellowOxygenTankFilled

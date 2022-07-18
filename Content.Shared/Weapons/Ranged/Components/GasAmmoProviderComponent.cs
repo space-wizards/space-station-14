@@ -12,17 +12,20 @@ namespace Content.Shared.Weapons.Ranged;
 [RegisterComponent, Virtual]
 public class GasAmmoProviderComponent : AmmoProviderComponent
 {
+    [ViewVariables]
+    public EntityUid? TankEntity;
+
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Proto = default!;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int GasId = 3;
+    [ViewVariables(VVAccess.ReadWrite), DataField("gasId")]
+    public int GasId = 0;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public float Moles = 0;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("molesPerShot")]
     public float MolesPerShot = 0.2f;
 }
 

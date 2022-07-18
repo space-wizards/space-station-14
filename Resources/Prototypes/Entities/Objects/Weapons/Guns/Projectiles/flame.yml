@@ -1,0 +1,24 @@
+- type: entity
+  id: ProjectileFlame
+  name: flame
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    scale: 1.5, 1.5
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 1
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+    radius: 2.0
+    energy: 7.0
+  - type: IgniteOnCollide
+    fireStacks: 3
+  - type: TimedDespawn
+    lifetime: 0.3
