@@ -47,10 +47,9 @@ namespace Content.Shared.Movement.Components
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridUid;
-            mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if ((entityManager.TryGetComponent<GravityComponent>(transform.GridUid, out var gravity) ||
-                entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.Enabled)
+                 entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.Enabled)
                 return false;
 
             if (gridId == null)
@@ -58,6 +57,7 @@ namespace Content.Shared.Movement.Components
                 return true;
             }
 
+            mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId.Value);
             var invSys = EntitySystem.Get<InventorySystem>();
 
