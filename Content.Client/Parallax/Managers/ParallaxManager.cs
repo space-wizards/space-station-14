@@ -35,15 +35,8 @@ public sealed class ParallaxManager : IParallaxManager
         return !_parallaxesLQ.TryGetValue(name, out var hq) ? Array.Empty<ParallaxLayerPrepared>() : hq;
     }
 
-    public async void UnloadParallax(string name)
+    public void UnloadParallax(string name)
     {
-        if (name == "Default")
-        {
-            _sawmill.Error($"Tried to unload default parallax, aborting!");
-            DebugTools.Assert(false);
-            return;
-        }
-
         if (_loadingParallaxes.TryGetValue(name, out var loading))
         {
             loading.Cancel();

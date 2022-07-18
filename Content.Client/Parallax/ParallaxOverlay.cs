@@ -18,13 +18,12 @@ public sealed class ParallaxOverlay : Overlay
     private readonly ParallaxSystem _parallax;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
-    private readonly ShaderInstance _shader;
 
     public ParallaxOverlay()
     {
         IoCManager.InjectDependencies(this);
         _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
-        _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
+
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -37,13 +36,20 @@ public sealed class ParallaxOverlay : Overlay
 
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
         var screenHandle = args.WorldHandle;
-        screenHandle.UseShader(_shader);
 
         var layers = _parallax.GetParallaxLayers(args.MapId);
         var realTime = (float) _timing.RealTime.TotalSeconds;
 
         foreach (var layer in layers)
         {
+            ShaderInstance? shader;
+
+            if (!string.IsNullOrEmpty(layer.Config.Shader))
+                shader = _prototypeManager.Index<ShaderPrototype>(layer.Config.Shader).Instance();
+            else
+                shader = null;
+
+            screenHandle.UseShader(shader);
             var tex = layer.Texture;
 
             // Size of the texture in world units.
@@ -92,6 +98,8 @@ public sealed class ParallaxOverlay : Overlay
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
+
+        screenHandle.UseShader(null);
     }
 }
 

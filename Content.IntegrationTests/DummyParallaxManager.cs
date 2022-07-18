@@ -28,5 +28,10 @@ namespace Content.IntegrationTests
         {
             return Task.CompletedTask;
         }
+
+        public void UnloadParallax(string name)
+        {
+            return;
+        }
     }
 }

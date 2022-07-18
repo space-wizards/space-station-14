@@ -24,5 +24,7 @@ public interface IParallaxManager
     void LoadDefaultParallax();
 
     Task LoadParallaxByName(string name);
+
+    void UnloadParallax(string name);
 }
 
