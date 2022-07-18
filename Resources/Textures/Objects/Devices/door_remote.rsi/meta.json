@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Command remote copied from tgstation, rest are recolors",
+  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/48dbdcc434a0d5a91d9595cac7e9f2a145ee675c",
   "size": {
     "x": 32,
     "y": 32
@@ -14,7 +14,34 @@
       "name": "door_remotelightscolour"
     },
     {
+      "name": "door_remotelightscolour_alternative"
+    },
+    {
       "name": "door_remotescreencolour"
+    },
+    {
+      "name": "CAP"
+    },
+    {
+      "name": "CE"
+    },
+    {
+      "name": "CMO"
+    },
+    {
+      "name": "generic"
+    },
+    {
+      "name": "HOP"
+    },
+    {
+      "name": "HOS"
+    },
+    {
+      "name": "QM"
+    },
+    {
+      "name": "RD"
     }
   ]
 }

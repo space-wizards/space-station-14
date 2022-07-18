@@ -8,6 +8,7 @@
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
     netsync: false
+    state: generic
   - type: Access
   - type: DoorRemote
 
@@ -19,10 +20,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: CAP
     - state: door_remotelightscolour
-      color: "#e6e600"
+      color: "#edc241"
     - state: door_remotescreencolour
-      color: "#9f9f00"
+      shader: unshaded
   - type: Access
     groups:
     - Command
@@ -35,10 +37,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: HOS
     - state: door_remotelightscolour
-      color: "#cb0000"
+      color: "#347eab"
     - state: door_remotescreencolour
-      color: "#830000"
+      shader: unshaded
   - type: Access
     groups:
     - Security
@@ -51,10 +54,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: HOP
     - state: door_remotelightscolour
-      color: "#58c800"
+      color: "#347eab"
     - state: door_remotescreencolour
-      color: "#3a7231"
+      shader: unshaded
   - type: Access
     groups:
     - Service
@@ -67,10 +71,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: RD
     - state: door_remotelightscolour
-      color: "#a53aaa"
+      color: "#347eab"
     - state: door_remotescreencolour
-      color: "#652368"
+      shader: unshaded
   - type: Access
     groups:
     - Research
@@ -83,10 +88,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: QM
     - state: door_remotelightscolour
-      color: "#b18644"
+      color: "#af9a01"
     - state: door_remotescreencolour
-      color: "#5b4523"
+      shader: unshaded
   - type: Access
     groups:
     - Cargo
@@ -99,10 +105,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
-    - state: door_remotelightscolour
-      color: "#68aed6"
+    - state: CMO
+    - state: door_remotelightscolour_alternative
+      color: "#286384"
     - state: door_remotescreencolour
-      color: "#325f7a"
+      shader: unshaded
   - type: Access
     groups:
     - Medical
@@ -115,10 +122,11 @@
   - type: Sprite
     layers:
     - state: door_remotebase
+    - state: CE
     - state: door_remotelightscolour
-      color: "#ffa62b"
+      color: "#347eab"
     - state: door_remotescreencolour
-      color: "#bc5b00"
+      shader: unshaded
   - type: Access
     groups:
     - Engineering
