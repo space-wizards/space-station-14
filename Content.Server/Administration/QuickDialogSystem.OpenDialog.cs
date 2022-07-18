@@ -9,12 +9,12 @@ public sealed partial class QuickDialogSystem
     /// <summary>
     /// Opens a dialog for the given client, allowing them to enter in the desired data.
     /// </summary>
-    /// <param name="session"></param>
-    /// <param name="title"></param>
-    /// <param name="prompt"></param>
-    /// <param name="okAction"></param>
-    /// <param name="cancelAction"></param>
-    /// <typeparam name="T1"></typeparam>
+    /// <param name="session">Client to show a dialog for.</param>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
+    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <typeparam name="T1">Type of the input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1>(IPlayerSession session, string title, string prompt, Action<T1> okAction,
         Action? cancelAction = null)
@@ -43,6 +43,17 @@ public sealed partial class QuickDialogSystem
         );
     }
 
+    /// <summary>
+    /// Opens a dialog for the given client, allowing them to enter in the desired data.
+    /// </summary>
+    /// <param name="session">Client to show a dialog for.</param>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="prompt1">The first prompt.</param>
+    /// <param name="prompt2">The second prompt.</param>
+    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
+    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <typeparam name="T1">Type of the first input.</typeparam>
+    /// <typeparam name="T2">Type of the second input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2>(IPlayerSession session, string title, string prompt1, string prompt2,
         Action<T1, T2> okAction, Action? cancelAction = null)
@@ -75,6 +86,19 @@ public sealed partial class QuickDialogSystem
         );
     }
 
+    /// <summary>
+    /// Opens a dialog for the given client, allowing them to enter in the desired data.
+    /// </summary>
+    /// <param name="session">Client to show a dialog for.</param>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="prompt1">The first prompt.</param>
+    /// <param name="prompt2">The second prompt.</param>
+    /// <param name="prompt3">The third prompt.</param>
+    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
+    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <typeparam name="T1">Type of the first input.</typeparam>
+    /// <typeparam name="T2">Type of the second input.</typeparam>
+    /// <typeparam name="T3">Type of the third input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2, T3>(IPlayerSession session, string title, string prompt1, string prompt2,
         string prompt3, Action<T1, T2, T3> okAction, Action? cancelAction = null)
@@ -109,6 +133,21 @@ public sealed partial class QuickDialogSystem
         );
     }
 
+    /// <summary>
+    /// Opens a dialog for the given client, allowing them to enter in the desired data.
+    /// </summary>
+    /// <param name="session">Client to show a dialog for.</param>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="prompt1">The first prompt.</param>
+    /// <param name="prompt2">The second prompt.</param>
+    /// <param name="prompt3">The third prompt.</param>
+    /// <param name="prompt4">The fourth prompt.</param>
+    /// <param name="okAction">The action to execute upon Ok being pressed.</param>
+    /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <typeparam name="T1">Type of the first input.</typeparam>
+    /// <typeparam name="T2">Type of the second input.</typeparam>
+    /// <typeparam name="T3">Type of the third input.</typeparam>
+    /// <typeparam name="T4">Type of the fourth input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2, T3, T4>(IPlayerSession session, string title, string prompt1, string prompt2,
         string prompt3, string prompt4, Action<T1, T2, T3, T4> okAction, Action? cancelAction = null)
