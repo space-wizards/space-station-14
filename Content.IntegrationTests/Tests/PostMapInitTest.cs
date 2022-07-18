@@ -16,8 +16,8 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class PostMapInitTest
     {
-        public const bool SkipTestMaps = true;
-        public const string TestMapsPath = "/Maps/Test/";
+        private const bool SkipTestMaps = true;
+        private const string TestMapsPath = "/Maps/Test/";
 
         [Test]
         public async Task NoSavedPostMapInitTest()
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests
 
         private static string[] GetMapNames()
         {
-           Task<string[]> task = null;
+           Task<string[]> task;
             using (ExecutionContext.SuppressFlow())
             {
                 task = Task.Run(static async () =>
