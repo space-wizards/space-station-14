@@ -803,22 +803,22 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitMonasticRobe
-  name: monastic robe
+  id: ClothingUniformJumpsuitMonasticRobeDark
+  name: dark monastic robe
   description: It's a dark robe, often worn by religious folk.
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe.rsi
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe.rsi
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitMonasticRobeWhite
-  name: monastic robe white
-  description: It's a white robe, often worn by religious folk.
+  id: ClothingUniformJumpsuitMonasticRobeLight
+  name: light monastic robe
+  description: It's a light robe, often worn by religious folk.
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_white.rsi
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_white.rsi
+      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
