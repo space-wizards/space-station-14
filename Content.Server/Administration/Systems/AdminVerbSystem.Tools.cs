@@ -441,6 +441,62 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(fillStack);
         }
+
+        Verb rename = new()
+        {
+            Text = "Rename",
+            Category = VerbCategory.Tricks,
+            IconTexture = "/Textures/Interface/AdminActions/rename.png",
+            Act = () =>
+            {
+                _quickDialog.OpenDialog(player, "Rename", "Name", (string newName) =>
+                {
+                    MetaData(args.Target).EntityName = newName;
+                });
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-trick-rename-description"),
+            Priority = (int) TricksVerbPriorities.Rename,
+        };
+        args.Verbs.Add(rename);
+
+        Verb redescribe = new()
+        {
+            Text = "Redescribe",
+            Category = VerbCategory.Tricks,
+            IconTexture = "/Textures/Interface/AdminActions/redescribe.png",
+            Act = () =>
+            {
+                _quickDialog.OpenDialog(player, "Redescribe", "Description", (LongString newDescription) =>
+                {
+                    MetaData(args.Target).EntityDescription = newDescription.String;
+                });
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-trick-redescribe-description"),
+            Priority = (int) TricksVerbPriorities.Redescribe,
+        };
+        args.Verbs.Add(redescribe);
+
+        Verb renameAndRedescribe = new()
+        {
+            Text = "Redescribe",
+            Category = VerbCategory.Tricks,
+            IconTexture = "/Textures/Interface/AdminActions/rename_and_redescribe.png",
+            Act = () =>
+            {
+                _quickDialog.OpenDialog(player, "Rename & Redescribe", "Name", "Description", (string newName, LongString newDescription) =>
+                {
+                    var meta = MetaData(args.Target);
+                    meta.EntityName = newName;
+                    meta.EntityDescription = newDescription.String;
+                });
+            },
+            Impact = LogImpact.Extreme,
+            Message = Loc.GetString("admin-trick-rename-and-redescribe-description"),
+            Priority = (int) TricksVerbPriorities.RenameAndRedescribe,
+        };
+        args.Verbs.Add(renameAndRedescribe);
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -518,5 +574,8 @@ public sealed partial class AdminVerbSystem
         Rejuvenate = -11,
         AdjustStack = -12,
         FillStack = -13,
+        Rename = -14,
+        Redescribe = -15,
+        RenameAndRedescribe = -16,
     }
 }
