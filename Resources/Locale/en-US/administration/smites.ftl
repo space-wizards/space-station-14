@@ -69,3 +69,5 @@ admin-trick-internals-refill-oxygen-description = Refills oxygen in the target t
 admin-trick-internals-refill-nitrogen-description = Refills nitrogen in the target tank or target's internals.
 admin-trick-internals-refill-plasma-description = Refills plasma in the target tank or target's internals.
 admin-trick-send-to-test-arena-description = Sends an object to the admin testing arena. This arena is per-admin.
+admin-trick-grant-all-access-description = Grants the target all access.
+admin-trick-revoke-all-access-description = Revokes all accesses on the target.

@@ -1,23 +1,34 @@
 ﻿
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
+using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.Access;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
+    [Dependency] private readonly AccessSystem _accessSystem = default!;
+    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
@@ -111,6 +122,7 @@ public sealed partial class AdminVerbSystem
                     Act = () =>
                     {
                         battery.CurrentCharge = battery.MaxCharge;
+                        Dirty(battery);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -273,9 +285,77 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
-                Priority = (int) TricksVerbPriorities.RefillOxygen,
+                Priority = (int) TricksVerbPriorities.SendToTestArena,
             };
             args.Verbs.Add(sendToTestArena);
+
+            var activeId = FindActiveId(args.Target);
+
+            if (activeId is not null)
+            {
+                Verb grantAllAccess = new()
+                {
+                    Text = "Grant All Access",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Objects/Misc/id_cards.rsi/centcom.png",
+                    Act = () =>
+                    {
+                        GiveAllAccess(activeId.Value);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-grant-all-access-description"),
+                    Priority = (int) TricksVerbPriorities.GrantAllAccess,
+                };
+                args.Verbs.Add(grantAllAccess);
+
+                Verb revokeAllAccess = new()
+                {
+                    Text = "Revoke All Access",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Objects/Misc/id_cards.rsi/default.png",
+                    Act = () =>
+                    {
+                        RevokeAllAccess(activeId.Value);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-revoke-all-access-description"),
+                    Priority = (int) TricksVerbPriorities.RevokeAllAccess,
+                };
+                args.Verbs.Add(revokeAllAccess);
+            }
+
+            if (HasComp<AccessComponent>(args.Target))
+            {
+                Verb grantAllAccess = new()
+                {
+                    Text = "Grant All Access",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Objects/Misc/id_cards.rsi/centcom.png",
+                    Act = () =>
+                    {
+                        GiveAllAccess(args.Target);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-grant-all-access-description"),
+                    Priority = (int) TricksVerbPriorities.GrantAllAccess,
+                };
+                args.Verbs.Add(grantAllAccess);
+
+                Verb revokeAllAccess = new()
+                {
+                    Text = "Revoke All Access",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Objects/Misc/id_cards.rsi/default.png",
+                    Act = () =>
+                    {
+                        RevokeAllAccess(args.Target);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-revoke-all-access-description"),
+                    Priority = (int) TricksVerbPriorities.RevokeAllAccess,
+                };
+                args.Verbs.Add(revokeAllAccess);
+            }
         }
     }
 
@@ -288,6 +368,50 @@ public sealed partial class AdminVerbSystem
         var newMix = new GasMixture(mixSize);
         newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
         tankComponent.Air = newMix;
+    }
+
+    private EntityUid? FindActiveId(EntityUid target)
+    {
+        if (_inventorySystem.TryGetSlotEntity(target, "id", out var slotEntity))
+        {
+            if (HasComp<AccessComponent>(slotEntity))
+            {
+                return slotEntity.Value;
+            }
+            else if (TryComp<PDAComponent>(slotEntity, out var pda))
+            {
+                if (pda.ContainedID != null)
+                {
+                    return pda.ContainedID.Owner;
+                }
+            }
+        }
+        else if (TryComp<HandsComponent>(target, out var hands))
+        {
+            foreach (var held in _handsSystem.EnumerateHeld(target))
+            {
+                if (HasComp<AccessComponent>(slotEntity))
+                {
+                    return slotEntity.Value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private void GiveAllAccess(EntityUid entity)
+    {
+        var allAccess = _prototypeManager
+            .EnumeratePrototypes<AccessLevelPrototype>()
+            .Select(p => p.ID).ToArray();
+
+        _accessSystem.TrySetTags(entity, allAccess);
+    }
+
+    private void RevokeAllAccess(EntityUid entity)
+    {
+        _accessSystem.TrySetTags(entity, new string[]{});
     }
 
     public enum TricksVerbPriorities
@@ -303,5 +427,8 @@ public sealed partial class AdminVerbSystem
         RefillOxygen = -5,
         RefillNitrogen = -6,
         RefillPlasma = -7,
+        SendToTestArena = -8,
+        GrantAllAccess = -9,
+        RevokeAllAccess = -10,
     }
 }
