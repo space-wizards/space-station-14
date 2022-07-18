@@ -73,6 +73,8 @@ public sealed class QuickDialogSystem : EntitySystem
             HorizontalAlignment = Control.HAlignment.Center,
         };
 
+        var alreadyReplied = false;
+
         if ((ev.Buttons & QuickDialogButtonFlag.OkButton) != 0)
         {
             var okButton = new Button()
@@ -85,6 +87,7 @@ public sealed class QuickDialogSystem : EntitySystem
                 RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
                     promptsDict.Select(x => (x.Key, x.Value.Text)).ToDictionary(x => x.Key, x => x.Text),
                     QuickDialogButtonFlag.OkButton));
+                alreadyReplied = true;
                 window.Close();
             };
 
@@ -103,6 +106,7 @@ public sealed class QuickDialogSystem : EntitySystem
                 RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
                     new(),
                     QuickDialogButtonFlag.CancelButton));
+                alreadyReplied = true;
                 window.Close();
             };
 
@@ -111,9 +115,12 @@ public sealed class QuickDialogSystem : EntitySystem
 
         window.OnClose += () =>
         {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
-                new(),
-                QuickDialogButtonFlag.CancelButton));
+            if (!alreadyReplied)
+            {
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    new(),
+                    QuickDialogButtonFlag.CancelButton));
+            }
         };
 
         entryContainer.AddChild(buttonsBox);
