@@ -30,6 +30,32 @@
       - MobCorgiIan
 
 - type: entity
+  name: Lia Spawner
+  id: SpawnMobLia
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobCarpLia
+
+- type: entity
+  name: Lia Spawner
+  id: SpawnMobLia
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobCarpCayenne
+
+- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
