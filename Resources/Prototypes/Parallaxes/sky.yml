@@ -1,9 +1,0 @@
-- type: parallax
-  id: Sky
-  layers:
-    - texture:
-        !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/snow.png"
-      slowness: 0
-      scale: "1, 1"
-      shader: ""

@@ -4,16 +4,16 @@ using JetBrains.Annotations;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class GravitySystem : SharedGravitySystem
+    public sealed class GravitySystem : SharedGravitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GravityComponent, ComponentInit>(HandleGravityInitialize);
-            SubscribeLocalEvent<GravityComponent, ComponentShutdown>(HandleGravityShutdown);
+            SubscribeLocalEvent<GravityComponent, ComponentInit>(OnGravityInit);
+            SubscribeLocalEvent<GravityComponent, ComponentShutdown>(OnGravityShutdown);
         }
 
-        private void HandleGravityInitialize(EntityUid uid, GravityComponent component, ComponentInit args)
+        private void OnGravityInit(EntityUid uid, GravityComponent component, ComponentInit args)
         {
             // Incase there's already a generator on the grid we'll just set it now.
             var gridId = Transform(component.Owner).GridUid;
@@ -21,25 +21,25 @@ namespace Content.Server.Gravity.EntitySystems
             if (gridId == null)
                 return;
 
-            GravityChangedMessage message;
+            GravityChangedEvent message;
 
             foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>())
             {
                 if (Transform(generator.Owner).GridUid == gridId && generator.GravityActive)
                 {
                     component.Enabled = true;
-                    message = new GravityChangedMessage(gridId.Value, true);
+                    message = new GravityChangedEvent(gridId.Value, true);
                     RaiseLocalEvent(message);
                     return;
                 }
             }
 
             component.Enabled = false;
-            message = new GravityChangedMessage(gridId.Value, false);
+            message = new GravityChangedEvent(gridId.Value, false);
             RaiseLocalEvent(message);
         }
 
-        private void HandleGravityShutdown(EntityUid uid, GravityComponent component, ComponentShutdown args)
+        private void OnGravityShutdown(EntityUid uid, GravityComponent component, ComponentShutdown args)
         {
             DisableGravity(component);
         }
@@ -53,7 +53,7 @@ namespace Content.Server.Gravity.EntitySystems
                 return;
 
             comp.Enabled = true;
-            var message = new GravityChangedMessage(gridId.Value, true);
+            var message = new GravityChangedEvent(gridId.Value, true);
             RaiseLocalEvent(message);
         }
 
@@ -66,7 +66,7 @@ namespace Content.Server.Gravity.EntitySystems
             if (gridId == null)
                 return;
 
-            var message = new GravityChangedMessage(gridId.Value, false);
+            var message = new GravityChangedEvent(gridId.Value, false);
             RaiseLocalEvent(message);
         }
     }

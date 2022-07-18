@@ -36,7 +36,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackUserComponent, ComponentGetState>(OnJetpackUserGetState);
         SubscribeLocalEvent<JetpackUserComponent, ComponentHandleState>(OnJetpackUserHandleState);
 
-        SubscribeLocalEvent<GravityChangedMessage>(OnJetpackUserGravityChanged);
+        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
     }
 
     private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)
@@ -44,7 +44,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.CanMove = true;
     }
 
-    private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
+    private void OnJetpackUserGravityChanged(GravityChangedEvent ev)
     {
         var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();
@@ -131,7 +131,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         return gridUid == null ||
                (TryComp<GravityComponent>(gridUid, out var gravity) &&
-                !gravity.Enabled);
+                !gravity.EnabledVV);
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)

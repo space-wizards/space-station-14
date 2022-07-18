@@ -11,7 +11,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests.Gravity
 {
     [TestFixture]
-    [TestOf(typeof(WeightlessSystem))]
+    [TestOf(typeof(GravitySystem))]
     [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class WeightlessStatusTests
     {
