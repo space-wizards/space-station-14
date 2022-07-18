@@ -23,6 +23,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -42,6 +45,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private bool _opsWon;
 
     public override string Prototype => "Nukeops";
+
+    private readonly SoundSpecifier _greetSound = new SoundPathSpecifier("/Audio/Misc/nukeops.ogg");
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
@@ -285,6 +290,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+
+        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
