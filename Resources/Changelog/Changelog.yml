@@ -1,9 +1,4 @@
 Entries:
-- author: UKNOWH
-  changes:
-  - {message: chef hat storage fixed!, type: Tweak}
-  id: 1478
-  time: '2022-05-08T07:52:41.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Light now passes through glass external airlocks and glass docking airlocks.,
@@ -2959,3 +2954,8 @@ Entries:
       people with hyperoptimized poison mixes., type: Remove}
   id: 1977
   time: '2022-07-17T22:25:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
+  id: 1978
+  time: '2022-07-18T03:48:36.0000000+00:00'
