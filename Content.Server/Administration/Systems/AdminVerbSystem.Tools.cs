@@ -236,6 +236,14 @@ public sealed partial class AdminVerbSystem
 
                             RefillGasTank(entity.Value, Gas.Oxygen, tank);
                         }
+
+                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
+                        {
+                            if (!TryComp<GasTankComponent>(held, out var tank))
+                                continue;
+
+                            RefillGasTank(held, Gas.Oxygen, tank);
+                        }
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
@@ -260,6 +268,14 @@ public sealed partial class AdminVerbSystem
 
                             RefillGasTank(entity.Value, Gas.Nitrogen, tank);
                         }
+
+                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
+                        {
+                            if (!TryComp<GasTankComponent>(held, out var tank))
+                                continue;
+
+                            RefillGasTank(held, Gas.Nitrogen, tank);
+                        }
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
@@ -283,6 +299,14 @@ public sealed partial class AdminVerbSystem
                                 continue;
 
                             RefillGasTank(entity.Value, Gas.Plasma, tank);
+                        }
+
+                        foreach (var held in _handsSystem.EnumerateHeld(args.Target))
+                        {
+                            if (!TryComp<GasTankComponent>(held, out var tank))
+                                continue;
+
+                            RefillGasTank(held, Gas.Plasma, tank);
                         }
                     },
                     Impact = LogImpact.Extreme,
