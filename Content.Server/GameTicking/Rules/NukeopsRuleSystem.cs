@@ -291,7 +291,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             GameTicker.PlayerJoinGame(session);
         }
 
-        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+        SoundSystem.Play(_greetSound.GetSound(), Filter.Empty().AddWhere(s =>
+        {
+            var mind = ((IPlayerSession) s).Data.ContentData()?.Mind;
+            return mind != null && _aliveNukeops.ContainsKey(mind);
+        }), AudioParams.Default);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
