@@ -29,10 +29,6 @@ namespace Content.Tests.Shared.Alert
   category: Pressure
 
 - type: alert
-  id: Overfed
-  category: Hunger
-
-- type: alert
   id: HighPressure
   category: Pressure
 
@@ -79,7 +75,6 @@ namespace Content.Tests.Shared.Alert
             expectedOrder.Add(AlertType.Handcuffed);
             expectedOrder.Add(AlertType.HighPressure);
             // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Overfed);
             expectedOrder.Add(AlertType.Peckish);
             expectedOrder.Add(AlertType.Hot);
             expectedOrder.Add(AlertType.Stun);
