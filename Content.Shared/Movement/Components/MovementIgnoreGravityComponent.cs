@@ -31,6 +31,7 @@ namespace Content.Shared.Movement.Components
 
     public static class GravityExtensions
     {
+        [Obsolete("Use GravitySystem")]
         public static bool IsWeightless(this EntityUid entity, PhysicsComponent? body = null, EntityCoordinates? coords = null, IMapManager? mapManager = null, IEntityManager? entityManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
@@ -46,15 +47,17 @@ namespace Content.Shared.Movement.Components
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
             var gridId = transform.GridUid;
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+
+            if ((entityManager.TryGetComponent<GravityComponent>(transform.GridUid, out var gravity) ||
+                entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.Enabled)
+                return false;
 
             if (gridId == null)
             {
-                // Not on a grid = no gravity for now.
-                // In the future, may want to allow maps to override to always have gravity instead.
                 return true;
             }
 
-            mapManager ??= IoCManager.Resolve<IMapManager>();
             var grid = mapManager.GetGrid(gridId.Value);
             var invSys = EntitySystem.Get<InventorySystem>();
 
