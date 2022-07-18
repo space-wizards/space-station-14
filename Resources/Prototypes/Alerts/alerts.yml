@@ -151,13 +151,6 @@
   description: You are piloting a shuttle. Click the alert to stop.
 
 - type: alert
-  id: Overfed
-  category: Hunger
-  icon: /Textures/Interface/Alerts/Hunger/Overfed.png
-  name: "[color=yellow]Overfed[/color]"
-  description: You ate too much food, lardass. Run around the station and lose some weight.
-
-- type: alert
   id: Peckish
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Peckish.png
@@ -181,13 +174,6 @@
   icon: /Textures/Interface/Alerts/Hunger/Starving.png
   name: "[color=red]Starving[/color]"
   description: You're severely malnourished. The hunger pains make moving around a chore.
-
-- type: alert
-  id: Overhydrated
-  category: Thirst
-  icon: /Textures/Interface/Alerts/Thirst/OverHydrated.png
-  name: "[color=yellow]Overhydrated[/color]"
-  description: You drank too much.
 
 - type: alert
   id: Thirsty

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
+using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
@@ -34,6 +35,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly TagSystem _tags = default!;
 
@@ -112,7 +114,7 @@ namespace Content.Shared.Movement.Systems
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: EntityManager);
+            var weightless = _gravity.IsWeightless(mover.Owner, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 

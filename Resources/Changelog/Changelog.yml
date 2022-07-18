@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Light now passes through glass external airlocks and glass docking airlocks.,
-    type: Fix}
-  id: 1479
-  time: '2022-05-08T08:51:20.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Crayons are now edible., type: Add}
@@ -2959,3 +2953,8 @@ Entries:
   - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
   id: 1978
   time: '2022-07-18T03:48:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
+  id: 1979
+  time: '2022-07-18T04:41:55.0000000+00:00'
