@@ -15,6 +15,7 @@ using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
 using Content.Shared.MachineLinking.Events;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Cloning.Systems
 {
@@ -230,7 +231,7 @@ namespace Content.Server.Cloning.Systems
                 clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
                 if (cloneBody != null)
                 {
-                    cloneBodyInfo = MetaData(cloneBody.Value).EntityName;
+                    cloneBodyInfo = Identity.Name(cloneBody.Value, EntityManager);
                     clonerStatus = ClonerStatus.ClonerOccupied;
                 }
             }
