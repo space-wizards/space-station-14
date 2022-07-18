@@ -212,7 +212,8 @@ namespace Content.Shared.Movement.Systems
                     : worldTotal.ToWorldAngle();
                 rotateXform.DeferUpdates = false;
 
-                if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) && TryGetSound(mover, mobMover, xform, out var variation, out var sound))
+                if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
+                    TryGetSound(weightless, mover, mobMover, xform, out var variation, out var sound))
                 {
                     var soundModifier = mover.Sprinting ? 1.0f : FootstepWalkingAddedVolumeMultiplier;
                     SoundSystem.Play(sound,
@@ -310,7 +311,7 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetSound(bool weightless, InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, out float variation, [NotNullWhen(true)] out string? sound)
         {
             sound = null;
             variation = 0f;
@@ -318,11 +319,10 @@ namespace Content.Shared.Movement.Systems
             if (!CanSound() || !_tags.HasTag(mover.Owner, "FootstepSound")) return false;
 
             var coordinates = xform.Coordinates;
-            var gridId = coordinates.GetGridUid(EntityManager);
             var distanceNeeded = mover.Sprinting ? StepSoundMoveDistanceRunning : StepSoundMoveDistanceWalking;
 
             // Handle footsteps.
-            if (_mapManager.GridExists(gridId))
+            if (!weightless)
             {
                 // Can happen when teleporting between grids.
                 if (!coordinates.TryDistance(EntityManager, mobMover.LastPosition, out var distance) ||
@@ -341,7 +341,6 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            DebugTools.Assert(gridId != null);
             mobMover.LastPosition = coordinates;
 
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
@@ -356,14 +355,29 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(gridId!.Value, coordinates, out variation, out sound);
+            return TryGetFootstepSound(coordinates, out variation, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityUid gridId, EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
+        private bool TryGetFootstepSound(EntityCoordinates coordinates, out float variation, [NotNullWhen(true)] out string? sound)
         {
             variation = 0f;
             sound = null;
-            var grid = _mapManager.GetGrid(gridId);
+            var gridUid = coordinates.GetGridUid(EntityManager);
+
+            // Fallback to the map
+            if (gridUid == null)
+            {
+                if (TryComp<FootstepModifierComponent>(coordinates.GetMapUid(EntityManager), out var modifier))
+                {
+                    sound = modifier.SoundCollection.GetSound();
+                    variation = modifier.SoundCollection.Params.Volume;
+                    return true;
+                }
+
+                return false;
+            }
+
+            var grid = _mapManager.GetGrid(gridUid.Value);
             var tile = grid.GetTileRef(coordinates);
 
             if (tile.IsSpace(_tileDefinitionManager)) return false;
