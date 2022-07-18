@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Administration;
 
 /// <summary>
-/// This handles...
+/// This handles the client portion of quick dialogs.
 /// </summary>
 public sealed class QuickDialogSystem : EntitySystem
 {

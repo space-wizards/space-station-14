@@ -2,15 +2,30 @@
 
 namespace Content.Shared.Administration;
 
+/// <summary>
+/// A networked event raised when the server wants to open a quick dialog.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class QuickDialogOpenEvent : EntityEventArgs
 {
+    /// <summary>
+    /// The title of the dialog.
+    /// </summary>
     public string Title;
 
+    /// <summary>
+    /// The internal dialog ID.
+    /// </summary>
     public int DialogId;
 
+    /// <summary>
+    /// The prompts to show the user.
+    /// </summary>
     public List<QuickDialogEntry> Prompts;
 
+    /// <summary>
+    /// The buttons presented for the user.
+    /// </summary>
     public QuickDialogButtonFlag Buttons = QuickDialogButtonFlag.OkButton;
 
     public QuickDialogOpenEvent(string title, List<QuickDialogEntry> prompts, int dialogId, QuickDialogButtonFlag buttons)
@@ -22,13 +37,25 @@ public sealed class QuickDialogOpenEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// A networked event raised when the client replies to a quick dialog.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class QuickDialogResponseEvent : EntityEventArgs
 {
+    /// <summary>
+    /// The internal dialog ID.
+    /// </summary>
     public int DialogId;
 
+    /// <summary>
+    /// The responses to the prompts.
+    /// </summary>
     public Dictionary<string, string> Responses;
 
+    /// <summary>
+    /// The button pressed when responding.
+    /// </summary>
     public QuickDialogButtonFlag ButtonPressed;
 
     public QuickDialogResponseEvent(int dialogId, Dictionary<string, string> responses, QuickDialogButtonFlag buttonPressed)
@@ -39,13 +66,25 @@ public sealed class QuickDialogResponseEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// An entry in a quick dialog.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class QuickDialogEntry
 {
+    /// <summary>
+    /// ID of the dialog field.
+    /// </summary>
     public string FieldId;
 
+    /// <summary>
+    /// Type of the field, for checks.
+    /// </summary>
     public QuickDialogEntryType Type;
 
+    /// <summary>
+    /// The prompt to show the user.
+    /// </summary>
     public string Prompt;
 
     public QuickDialogEntry(string fieldId, QuickDialogEntryType type, string prompt)
@@ -56,6 +95,9 @@ public sealed class QuickDialogEntry
     }
 }
 
+/// <summary>
+/// The buttons available in a quick dialog.
+/// </summary>
 [Flags]
 public enum QuickDialogButtonFlag
 {
@@ -63,6 +105,9 @@ public enum QuickDialogButtonFlag
     CancelButton = 2,
 }
 
+/// <summary>
+/// The entry types for a quick dialog.
+/// </summary>
 public enum QuickDialogEntryType
 {
     /// <summary>

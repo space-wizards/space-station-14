@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Administration;
 
 /// <summary>
-/// This handles...
+/// This handles the server portion of quick dialogs, including opening them.
 /// </summary>
 public sealed partial class QuickDialogSystem : EntitySystem
 {
