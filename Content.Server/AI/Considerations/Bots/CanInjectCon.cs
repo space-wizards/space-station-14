@@ -3,6 +3,7 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.AI.Tracking;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
+using Content.Server.Silicons.Bots;
 
 namespace Content.Server.AI.Utility.Considerations.Bot
 {
@@ -24,10 +25,10 @@ namespace Content.Server.AI.Utility.Considerations.Bot
             if (damageableComponent.TotalDamage == 0)
                 return 0f;
 
-            if (damageableComponent.TotalDamage <= 50)
+            if (damageableComponent.TotalDamage <= MedibotComponent.StandardMedDamageThreshold)
                 return 1f;
 
-            if (damageableComponent.TotalDamage >= 100)
+            if (damageableComponent.TotalDamage >= MedibotComponent.EmergencyMedDamageThreshold)
                 return 1f;
 
             return 0f;

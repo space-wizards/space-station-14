@@ -14,9 +14,7 @@ namespace Content.Server.Silicons.Bots
 
         [DataField("standardMedInjectAmount")]
         public float StandardMedInjectAmount = 15f;
-
-        [DataField("standardMedDamageThreshold")]
-        public float StandardMedDamageThreshold = 50f;
+        public const float StandardMedDamageThreshold = 50f;
 
         /// <summary>
         /// Med the bot will inject when OVER the emergency med damage threshold.
@@ -27,7 +25,7 @@ namespace Content.Server.Silicons.Bots
         [DataField("emergencyMedInjectAmount")]
         public float EmergencyMedInjectAmount = 15f;
 
-        public float EmergencyMedDamageThreshold = 100f;
+        public const float EmergencyMedDamageThreshold = 100f;
 
     }
 }
