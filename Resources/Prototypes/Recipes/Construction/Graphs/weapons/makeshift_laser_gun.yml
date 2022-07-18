@@ -8,18 +8,12 @@
           steps:
             - material: Cable
               amount: 2
-              doAfter: 2
+              doAfter: 12
             - material: Steel
               amount: 10
-              doAfter: 4
-            - prototype: MaterialDiamond
-              name: refined diamond
-              icon:
-                sprite: Objects/Materials/materials.rsi
-                state: diamond
-              doAfter: 1
+            - material: Diamond
+              amount: 1
             - material: Glass
               amount: 5
-              doAfter: 5
     - node: makeshiftLaser
       entity: WeaponMakeshiftLaser

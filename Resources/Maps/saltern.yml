@@ -6301,8 +6301,7 @@ entities:
 - uid: 737
   type: SpawnPointChiefMedicalOfficer
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,-14.5
+  - pos: 23.5,-14.5
     parent: 852
     type: Transform
 - uid: 738
@@ -13611,8 +13610,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -14299,6 +14298,14 @@ entities:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 20,17
+        626:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 30,8
+        627:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 30,9
       -1,0:
         9:
           color: '#334E6DC8'
@@ -17716,6 +17723,8 @@ entities:
 - uid: 1052
   type: HighSecCommandLocked
   components:
+  - name: Vault
+    type: MetaData
   - pos: 0.5,17.5
     parent: 852
     type: Transform
@@ -19696,33 +19705,19 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1289
-  type: Poweredlight
+  type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,8.5
+  - rot: -1.5707963267948966 rad
+    pos: 32.5,8.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1290
-  type: Poweredlight
+  type: GasPipeTJunction
   components:
   - rot: 3.141592653589793 rad
-    pos: 30.5,8.5
+    pos: 31.5,8.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1291
   type: WallSolid
   components:
@@ -43574,6 +43569,8 @@ entities:
   components:
   - parent: 7057
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 4586
   type: BedsheetSpawner
   components:
@@ -44400,6 +44397,12 @@ entities:
     pos: -9.5,22.5
     parent: 852
     type: Transform
+- uid: 4699
+  type: AirlockMedicalGlassLocked
+  components:
+  - pos: 8.5,-10.5
+    parent: 852
+    type: Transform
 - uid: 4700
   type: Carpet
   components:
@@ -44452,6 +44455,12 @@ entities:
   - containers:
       cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 4706
+  type: AirlockMedicalGlassLocked
+  components:
+  - pos: 8.5,-8.5
+    parent: 852
+    type: Transform
 - uid: 4707
   type: SurveillanceCameraCommand
   components:
@@ -44464,6 +44473,13 @@ entities:
     nameSet: True
     id: Bridge West
     type: SurveillanceCamera
+- uid: 4708
+  type: GasPipeTJunction
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,8.5
+    parent: 852
+    type: Transform
 - uid: 4709
   type: PoweredSmallLight
   components:
@@ -44657,9 +44673,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4735
-  type: AirlockMedicalLocked
+  type: GasPipeBend
   components:
-  - pos: 8.5,-8.5
+  - pos: 31.5,9.5
     parent: 852
     type: Transform
 - uid: 4736
@@ -47637,9 +47653,10 @@ entities:
     parent: 852
     type: Transform
 - uid: 5140
-  type: AirlockMedicalLocked
+  type: GasPort
   components:
-  - pos: 8.5,-10.5
+  - rot: 1.5707963267948966 rad
+    pos: 30.5,8.5
     parent: 852
     type: Transform
 - uid: 5141
@@ -56278,17 +56295,15 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 6180
-  type: GasPipeStraight
+  type: AltarToolbox
   components:
-  - pos: 33.5,8.5
+  - pos: -36.5,13.5
     parent: 852
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 6181
-  type: NitrogenCanister
+  type: OperatingTable
   components:
-  - pos: 30.5,9.5
+  - pos: 18.5,-20.5
     parent: 852
     type: Transform
 - uid: 6182
@@ -59224,11 +59239,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6587
-  type: NitrogenCanister
+  type: HospitalCurtainsOpen
   components:
-  - pos: 30.5,8.5
+  - pos: 8.5,-8.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6588
   type: CableMV
   components:
@@ -62340,8 +62357,8 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 9055
         - 4585
+        - 9055
     type: ContainerContainer
 - uid: 7058
   type: ClosetMaintenanceFilledRandom
@@ -62747,6 +62764,35 @@ entities:
         - 7109
         - 7098
         - 7108
+    type: ContainerContainer
+- uid: 7111
+  type: HospitalCurtainsOpen
+  components:
+  - pos: 8.5,-10.5
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7112
+  type: GasPort
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 30.5,9.5
+    parent: 852
+    type: Transform
+- uid: 7113
+  type: PortableScrubber
+  components:
+  - pos: 30.5,8.5
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 7114
   type: Table
@@ -67112,12 +67158,19 @@ entities:
     parent: 852
     type: Transform
 - uid: 7706
-  type: ChairWood
+  type: PortableScrubber
   components:
-  - rot: 3.141592653589793 rad
-    pos: -36.5,13.5
+  - pos: 30.5,9.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7707
   type: ChairWood
   components:
@@ -71708,8 +71761,8 @@ entities:
     type: Transform
   - index: 1
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71745,8 +71798,8 @@ entities:
     type: Transform
   - index: 2
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71805,8 +71858,8 @@ entities:
     type: Transform
   - index: 3
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71824,8 +71877,8 @@ entities:
     type: Transform
   - index: 4
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -76923,11 +76976,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 9093
-  type: StasisBed
+  type: BrbSign
   components:
-  - pos: 18.5,-20.5
+  - pos: 8.736744,18.337376
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 9094
   type: Poweredlight
   components:

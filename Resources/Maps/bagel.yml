@@ -724,8 +724,8 @@ entities:
     type: MapGrid
   - id: Bagel
     type: BecomesStation
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -4714,6 +4714,14 @@ entities:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale
           coordinates: -18,2
+        1783:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: -17,30
+        1784:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: -16,30
       0,-2:
         103:
           cleanable: True
@@ -35171,6 +35179,8 @@ entities:
   components:
   - parent: 7982
     type: Transform
+  - canCollide: False
+    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -40816,9 +40826,17 @@ entities:
 - uid: 2145
   type: Lamp
   components:
-  - pos: 34.652073,-13.291081
+  - pos: 34.77564,-13.074253
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 2146
@@ -47479,7 +47497,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 2963
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: 46.5,-32.5
     parent: 60
@@ -47521,7 +47539,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 2970
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: 49.5,-32.5
     parent: 60
@@ -53030,7 +53048,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -6547.084
+  - SecondsUntilStateChange: -7651.8643
     state: Opening
     type: Door
 - uid: 3729
@@ -56911,17 +56929,33 @@ entities:
 - uid: 4234
   type: LampGold
   components:
-  - pos: -46.468243,-17.296747
+  - pos: -46.455166,-17.122845
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 4235
   type: LampGold
   components:
-  - pos: -41.374493,-17.327997
+  - pos: -41.508133,-17.091595
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 4236
@@ -57241,9 +57275,17 @@ entities:
 - uid: 4278
   type: LampGold
   components:
-  - pos: -49.518177,-21.343807
+  - pos: -49.5201,-21.063173
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 4279
@@ -65249,9 +65291,17 @@ entities:
 - uid: 5326
   type: Lamp
   components:
-  - pos: -24.49899,-28.465124
+  - pos: -24.428305,-28.144638
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 5327
@@ -67440,9 +67490,17 @@ entities:
 - uid: 5611
   type: Lamp
   components:
-  - pos: -43.44232,9.676078
+  - pos: -43.443226,9.814736
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 5612
@@ -69094,6 +69152,8 @@ entities:
   components:
   - parent: 6448
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 5813
   type: Barricade
   components:
@@ -69378,9 +69438,17 @@ entities:
 - uid: 5845
   type: Lamp
   components:
-  - pos: 3.7008076,-31.317545
+  - pos: 3.4703474,-31.114569
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 5846
@@ -73682,8 +73750,8 @@ entities:
     type: Transform
   - index: 1
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -73716,8 +73784,8 @@ entities:
     type: Transform
   - index: 2
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -73751,8 +73819,8 @@ entities:
     type: Transform
   - index: 3
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -73785,8 +73853,8 @@ entities:
     type: Transform
   - index: 4
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -73820,8 +73888,8 @@ entities:
     type: Transform
   - index: 5
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -73854,8 +73922,8 @@ entities:
     type: Transform
   - index: 6
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -96609,9 +96677,17 @@ entities:
 - uid: 9533
   type: Lamp
   components:
-  - pos: -43.426285,4.6287546
+  - pos: -43.411976,4.910306
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 9534
@@ -117588,8 +117664,8 @@ entities:
     type: Transform
   - index: 7
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -126952,9 +127028,17 @@ entities:
 - uid: 14128
   type: LampGold
   components:
-  - pos: -8.430582,20.718344
+  - pos: -8.397732,20.931147
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 14129
@@ -129869,7 +129953,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -59.982807
+  - SecondsUntilStateChange: -1164.7632
     state: Closing
     type: Door
   - canCollide: False
@@ -131219,15 +131303,15 @@ entities:
     parent: 60
     type: Transform
 - uid: 14720
-  type: ClosetFireFilled
+  type: GasPort
   components:
-  - pos: -15.5,30.5
+  - pos: -16.5,30.5
     parent: 60
     type: Transform
 - uid: 14721
-  type: ClosetFireFilled
+  type: GasPort
   components:
-  - pos: -16.5,30.5
+  - pos: -15.5,30.5
     parent: 60
     type: Transform
 - uid: 14722
@@ -144447,13 +144531,11 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 16562
-  type: GasVentScrubber
+  type: GasPipeStraight
   components:
   - pos: -16.5,28.5
     parent: 60
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 16563
   type: GasPipeTJunction
   components:
@@ -152512,11 +152594,11 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 17739
         - 17737
-        - 17740
-        - 17738
         - 17741
+        - 17738
+        - 17739
+        - 17740
     type: ContainerContainer
 - uid: 17737
   type: DrinkLean
@@ -157794,9 +157876,17 @@ entities:
 - uid: 18475
   type: LampGold
   components:
-  - pos: -8.635315,-5.284297
+  - pos: -8.643374,-5.091722
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 18476
@@ -158203,9 +158293,17 @@ entities:
 - uid: 18528
   type: Lamp
   components:
-  - pos: -4.371214,-6.2960124
+  - pos: -4.422296,-6.0514507
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 18529
@@ -161657,14 +161755,14 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 18957
-  type: DisposalPipe
+  type: DisposalJunction
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: -1.5707963267948966 rad
     pos: 30.5,8.5
     parent: 60
     type: Transform
   - containers:
-      DisposalTransit: !type:Container
+      DisposalJunction: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 18958
@@ -165914,9 +166012,17 @@ entities:
 - uid: 19531
   type: Lamp
   components:
-  - pos: 34.625202,17.515594
+  - pos: 34.453712,17.956596
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 19532
@@ -169637,8 +169743,8 @@ entities:
     type: Transform
   - index: 8
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -176915,6 +177021,13 @@ entities:
     nameSet: True
     id: Morgue
     type: SurveillanceCamera
+- uid: 21168
+  type: GasPipeTJunction
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -16.5,29.5
+    parent: 60
+    type: Transform
 - uid: 21169
   type: SurveillanceCameraCommand
   components:
@@ -178595,4 +178708,91 @@ entities:
     pos: -16.5,3.5
     parent: 60
     type: Transform
+- uid: 21393
+  type: GasPipeBend
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -15.5,29.5
+    parent: 60
+    type: Transform
+- uid: 21394
+  type: PortableScrubber
+  components:
+  - pos: -16.5,30.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 21395
+  type: PortableScrubber
+  components:
+  - pos: -15.5,30.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 21396
+  type: PosterLegitDickGumshue
+  components:
+  - pos: -26.5,-25.5
+    parent: 60
+    type: Transform
+- uid: 21397
+  type: PosterLegitReportCrimes
+  components:
+  - pos: -22.5,-25.5
+    parent: 60
+    type: Transform
+- uid: 21398
+  type: BrbSign
+  components:
+  - pos: 4.662586,-31.583319
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21399
+  type: Chair
+  components:
+  - pos: 31.5,9.5
+    parent: 60
+    type: Transform
+- uid: 21400
+  type: Chair
+  components:
+  - pos: 29.5,9.5
+    parent: 60
+    type: Transform
+- uid: 21401
+  type: DisposalTrunk
+  components:
+  - pos: 30.5,9.5
+    parent: 60
+    type: Transform
+  - containers:
+      DisposalEntry: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 21402
+  type: DisposalUnit
+  components:
+  - pos: 30.5,9.5
+    parent: 60
+    type: Transform
+  - containers:
+      DisposalUnit: !type:Container
+        ents: []
+    type: ContainerContainer
 ...
