@@ -219,7 +219,7 @@ public sealed class CrewManifestCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 2)
+        if (args.Length != 1)
         {
             shell.WriteLine($"Invalid argument count.\n{Help}");
             return;
