@@ -43,8 +43,8 @@
         - MobCarpLia
 
 - type: entity
-  name: Lia Spawner
-  id: SpawnMobLia
+  name: Cayenne Spawner
+  id: SpawnMobCayenne
   parent: MarkerBase
   components:
     - type: Sprite
