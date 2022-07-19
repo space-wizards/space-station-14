@@ -7,6 +7,14 @@
   useDelay: 15
 
 - type: instantAction
+  id: RevenantOverloadLights
+  icon: Interface/Actions/scream.png #replace
+  name: Overload Lights
+  description: Costs 40 Essence. Causes nearby lights to overload and break, sending off sparks
+  serverEvent: !type:RevenantOverloadLightsActionEvent
+  useDelay: 20
+
+- type: instantAction
   id: RevenantMalfunction
   icon: Interface/Actions/scream.png #replace
   name: Malfunction

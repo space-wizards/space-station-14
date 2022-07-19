@@ -51,6 +51,16 @@ public sealed class RevenantComponent : Component
     public float DefileEffectChance = 0.5f;
     #endregion
 
+    #region Overload Lights Ability
+    public float OverloadLightsUseCost = -40;
+    public float OverloadLightsStunDuration = 3;
+    public float OverloadLightsCorporealDuration = 8;
+    public float OverloadLightsRadius = 5;
+    public float OverloadLightsBreakChance = 0.5f;
+    public float OverloadLightsProjectileChance = 0.33f;
+    public string OverloadLightsProjectileId = "BulletKinetic";
+    #endregion
+
     #region Malfunction Ability
     public float MalfuncitonUseCost = -60;
     public float MalfunctionStunDuration = 2;
@@ -59,3 +69,25 @@ public sealed class RevenantComponent : Component
     public float MalfunctionEffectChance = 0.5f;
     #endregion
 }
+
+public sealed class SoulSearchDoAfterComplete : EntityEventArgs
+{
+    public readonly EntityUid Target;
+
+    public SoulSearchDoAfterComplete(EntityUid target)
+    {
+        Target = target;
+    }
+}
+
+public sealed class HarvestDoAfterComplete : EntityEventArgs
+{
+    public readonly EntityUid Target;
+
+    public HarvestDoAfterComplete(EntityUid target)
+    {
+        Target = target;
+    }
+}
+
+public sealed class HarvestDoAfterCancelled : EntityEventArgs { }

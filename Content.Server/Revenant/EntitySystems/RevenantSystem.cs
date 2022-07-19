@@ -20,6 +20,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Player;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -49,7 +50,6 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, ComponentStartup>(OnInit);
 
         SubscribeLocalEvent<RevenantComponent, DamageChangedEvent>(OnDamage);
-        SubscribeLocalEvent<RevenantComponent, SpeakAttemptEvent>(OnSpeakAttempt);
         SubscribeLocalEvent<RevenantComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
@@ -59,6 +59,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
     }
 
@@ -88,7 +89,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //TODO: kill
-        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantMalfunction"));
+        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantOverloadLights"));
         _action.AddAction(uid, action, null);
     }
 
@@ -117,12 +118,6 @@ public sealed partial class RevenantSystem : EntitySystem
             args.PushMarkup(Loc.GetString("revenant-essence-amount",
                 ("current", Math.Round(component.Essence)), ("max", Math.Round(component.MaxEssence))));
         }
-    }
-
-    private void OnSpeakAttempt(EntityUid uid, RevenantComponent component, SpeakAttemptEvent args)
-    {
-        if (!HasComp<CorporealComponent>(uid))
-            args.Cancel();
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
@@ -171,7 +166,10 @@ public sealed partial class RevenantSystem : EntitySystem
         _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Round(component.Essence / 10f));
 
         if (component.Essence <= 0)
+        {
+            component.Essence = component.MaxEssence;
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
+        }
 
         return true;
     }
