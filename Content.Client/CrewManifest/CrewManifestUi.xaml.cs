@@ -12,11 +12,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.CrewManifest;
 
-/// <summary>
-///     Crew manifest window. This is intended to be opened by other UIs, and as a result,
-///     those UIs should ensure any controller registers this window with the intended
-///     station it's meant to track.
-/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class CrewManifestUi : DefaultWindow
 {
@@ -32,14 +27,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
         IoCManager.InjectDependencies(this);
 
         StationName.AddStyleClass("LabelBig");
-    }
-
-    public override void Close()
-    {
-        base.Close();
-
-        // ?
-        Dispose(true);
     }
 
     public void Populate(string name, CrewManifestEntries? entries)
