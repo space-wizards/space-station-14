@@ -20,7 +20,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
         RecordListing.OnItemSelected += args =>
         {
-            if (RecordListing[args.ItemIndex].Metadata is not StationRecordKey cast)
+            if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not StationRecordKey cast)
             {
                 return;
             }
