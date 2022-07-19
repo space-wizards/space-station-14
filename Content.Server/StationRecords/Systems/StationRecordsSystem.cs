@@ -146,6 +146,13 @@ public sealed class StationRecordsSystem : EntitySystem
         RaiseLocalEvent(new AfterGeneralRecordCreatedEvent(key, record, profile));
     }
 
+    /// <summary>
+    ///     Removes a record from this station.
+    /// </summary>
+    /// <param name="station">Station to remove the record from.</param>
+    /// <param name="key">The key to remove.</param>
+    /// <param name="records">Station records component.</param>
+    /// <returns>True if the record was removed, false otherwise.</returns>
     public bool RemoveRecord(EntityUid station, StationRecordKey key, StationRecordsComponent? records = null)
     {
         if (station != key.OriginStation || !Resolve(station, ref records))
@@ -163,12 +170,12 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     from the provided station record key. Will always return
     ///     null if the key does not match the station.
     /// </summary>
-    /// <param name="station"></param>
-    /// <param name="key"></param>
-    /// <param name="entry"></param>
-    /// <param name="records"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="station">Station to get the record from.</param>
+    /// <param name="key">Key to try and index from the record set.</param>
+    /// <param name="entry">The resulting entry.</param>
+    /// <param name="records">Station record component.</param>
+    /// <typeparam name="T">Type to get from the record set.</typeparam>
+    /// <returns>True if the record was obtained, false otherwise.</returns>
     public bool TryGetRecord<T>(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
     {
         entry = default;
@@ -181,6 +188,13 @@ public sealed class StationRecordsSystem : EntitySystem
         return records.Records.TryGetRecordEntry(key, out entry);
     }
 
+    /// <summary>
+    ///     Gets all records of a specific type from a station.
+    /// </summary>
+    /// <param name="station">The station to get the records from.</param>
+    /// <param name="records">Station records component.</param>
+    /// <typeparam name="T">Type of record to fetch</typeparam>
+    /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T.</returns>
     public IEnumerable<(StationRecordKey, T)?>? GetRecordsOfType<T>(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
@@ -191,6 +205,11 @@ public sealed class StationRecordsSystem : EntitySystem
         return records.Records.GetRecordsOfType<T>();
     }
 
+    /// <summary>
+    ///     Synchronizes a station's records with any systems that need it.
+    /// </summary>
+    /// <param name="station">The station to synchronize any recently accessed records with..</param>
+    /// <param name="records">Station records component.</param>
     public void Synchronize(EntityUid station, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records))
