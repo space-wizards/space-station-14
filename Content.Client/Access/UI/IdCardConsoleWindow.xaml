@@ -2,7 +2,7 @@
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
-            <GridContainer Columns="3">
+            <GridContainer Columns="3" HorizontalExpand="True">
                 <Label Text="{Loc 'id-card-console-window-privileged-id'}" />
                 <Button Name="PrivilegedIdButton" Access="Public"/>
                 <Label Name="PrivilegedIdLabel" />

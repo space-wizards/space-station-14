@@ -192,6 +192,7 @@
           type: GeneralStationRecordConsoleBoundUserInterface
     - type: ActivatableUI
       key: enum.GeneralStationRecordConsoleKey.Key
+    - type: ActivatableUIRequiresPower
     - type: PointLight
       radius: 1.5
       energy: 1.6
