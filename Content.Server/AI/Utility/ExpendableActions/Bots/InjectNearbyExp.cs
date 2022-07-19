@@ -13,6 +13,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Bots
     public sealed class InjectNearbyExp : ExpandableUtilityAction
     {
         public override float Bonus => 30;
+        IEntityManager _entMan = IoCManager.Resolve<IEntityManager>();
 
         protected override IReadOnlyCollection<Func<float>> GetCommonConsiderations(Blackboard context)
         {
@@ -27,8 +28,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Bots
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out AiControllerComponent? controller)
-                || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out MedibotComponent? bot))
+            if (!_entMan.TryGetComponent(owner, out AiControllerComponent? controller)
+                || !_entMan.TryGetComponent(owner, out MedibotComponent? bot))
             {
                 throw new InvalidOperationException();
             }
