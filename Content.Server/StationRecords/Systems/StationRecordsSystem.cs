@@ -187,6 +187,21 @@ public sealed class StationRecordsSystem : EntitySystem
 
         return records.Records.GetRecordsOfType<T>();
     }
+
+    public void Synchronize(EntityUid station, StationRecordsComponent? records = null)
+    {
+        if (!Resolve(station, ref records))
+        {
+            return;
+        }
+
+        foreach (var key in records.Records.GetRecentlyAccessed())
+        {
+            RaiseLocalEvent(new RecordModifiedEvent(key));
+        }
+
+        records.Records.ClearRecentlyAccessed();
+    }
 }
 
 /// <summary>

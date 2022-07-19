@@ -90,10 +90,11 @@ namespace Content.Server.Access.Components
         private void UpdateStationRecord(EntityUid idCard, string newFullName, string newJobTitle)
         {
             var station = EntitySystem.Get<StationSystem>().GetOwningStation(Owner);
+            var recordSystem = EntitySystem.Get<StationRecordsSystem>();
             if (station == null
                 || !_entities.TryGetComponent(idCard, out StationRecordKeyStorageComponent? keyStorage)
                 || keyStorage.Key == null
-                || !EntitySystem.Get<StationRecordsSystem>().TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
+                || !recordSystem.TryGetRecord(station.Value, keyStorage.Key.Value, out GeneralStationRecord? record))
             {
                 return;
             }
@@ -101,7 +102,7 @@ namespace Content.Server.Access.Components
             record.Name = newFullName;
             record.JobTitle = newJobTitle;
 
-            _entities.EventBus.RaiseEvent(EventSource.Local, new RecordModifiedEvent(keyStorage.Key.Value));
+            recordSystem.Synchronize(station.Value);
         }
 
         public void UpdateUserInterface()

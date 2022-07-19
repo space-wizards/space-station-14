@@ -18,9 +18,7 @@ public sealed class StationRecordSet
 
     private HashSet<StationRecordKey> _keys = new();
 
-    // Keys that were linked to another entity. This violates
-    // the abstraction that this is supposed to give
-    private HashSet<StationRecordKey> _linkedKeys = new();
+    private HashSet<StationRecordKey> _recentlyAccessed = new();
 
     [ViewVariables]
     private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
@@ -39,6 +37,8 @@ public sealed class StationRecordSet
             {
                 continue;
             }
+
+            _recentlyAccessed.Add(key);
 
             yield return (key, cast);
         }
@@ -89,6 +89,7 @@ public sealed class StationRecordSet
         }
 
         entry = (T) entryObject;
+        _recentlyAccessed.Add(key);
 
         return true;
     }
@@ -98,6 +99,16 @@ public sealed class StationRecordSet
         return _keys.Contains(key)
                && _tables.TryGetValue(typeof(T), out var table)
                && table.ContainsKey(key);
+    }
+
+    public IEnumerable<StationRecordKey> GetRecentlyAccessed()
+    {
+        return _recentlyAccessed;
+    }
+
+    public void ClearRecentlyAccessed()
+    {
+        _recentlyAccessed.Clear();
     }
 
     public bool RemoveAllRecords(StationRecordKey key)
