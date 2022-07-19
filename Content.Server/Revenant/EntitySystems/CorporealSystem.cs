@@ -35,7 +35,7 @@ public sealed class CorporealSystem : EntitySystem
         light.Radius = 1.5f;
         light.Softness = 0.75f;
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount <= 1)
+        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
             var fixture = fixtures.Fixtures.Values.First();
 
@@ -58,7 +58,7 @@ public sealed class CorporealSystem : EntitySystem
 
         RemComp<PointLightComponent>(uid);
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount <= 1)
+        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
             var fixture = fixtures.Fixtures.Values.First();
 
