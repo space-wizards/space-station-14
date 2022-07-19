@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Crayons are now edible., type: Add}
-  id: 1480
-  time: '2022-05-08T08:51:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Popups now get occluded, type: Tweak}
@@ -2958,3 +2953,8 @@ Entries:
   - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
   id: 1979
   time: '2022-07-18T04:41:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
+  id: 1980
+  time: '2022-07-19T07:09:27.0000000+00:00'
