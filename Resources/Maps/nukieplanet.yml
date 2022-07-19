@@ -13600,14 +13600,13 @@ entities:
     type: FootstepModifier
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: true
     type: Gravity
   - parallax: Sky
     type: Parallax
   - space: False
     mixture:
       volume: 2500
-      temperature: 253.15
+      temperature: 248.15
       moles:
       - 21.824879
       - 82.10312

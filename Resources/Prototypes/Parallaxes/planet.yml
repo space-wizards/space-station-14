@@ -3,20 +3,21 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/boxing.png"
-      slowness: 1
+        path: "/Textures/Parallaxes/land.png"
+      slowness: 0.98
+      scale: 1,1
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/noise.png"
-      slowness: 0
-      scale: "5, 5"
-      scrolling: "-1, -0.5"
+      slowness: 0.95
+      scale: "2, 2"
+      scrolling: "0.1, -0.05"
     #- texture:
     #    !type:ImageParallaxTextureSource
     #    path: "/Textures/Parallaxes/noise.png"
-    #    slowness: 0
-    #    scale: "0.1, 0.1"
-    #    scrolling: "0.1, 0"
+    #  slowness: 0.8
+    #  scale: "4, 4"
+    #  scrolling: "-0.2, -0.05"
 
 - type: parallax
   id: Snow
