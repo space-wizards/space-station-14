@@ -11,15 +11,16 @@ namespace Content.Server.AI.Utility.Considerations.Bot
     {
         protected override float GetScore(Blackboard context)
         {
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageableComponent))
+            if (target == null || !entMan.TryGetComponent(target, out DamageableComponent? damageableComponent))
                 return 0;
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out RecentlyInjectedComponent? recently))
+            if (entMan.TryGetComponent(target, out RecentlyInjectedComponent? recently))
                 return 0f;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out MobStateComponent? mobState) || mobState.IsDead())
+            if (!entMan.TryGetComponent(target, out MobStateComponent? mobState) || mobState.IsDead())
                 return 0f;
 
             if (damageableComponent.TotalDamage == 0)
