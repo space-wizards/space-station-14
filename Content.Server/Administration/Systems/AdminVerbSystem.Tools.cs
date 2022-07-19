@@ -27,6 +27,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
@@ -64,13 +65,17 @@ public sealed partial class AdminVerbSystem
                 {
                     Text = airlock.BoltsDown ? "Unbolt" : "Bolt",
                     Category = VerbCategory.Tricks,
-                    IconTexture = airlock.BoltsDown ? "/Textures/Interface/AdminActions/unbolt.png" : "/Textures/Interface/AdminActions/bolt.png",
+                    IconTexture = airlock.BoltsDown
+                        ? "/Textures/Interface/AdminActions/unbolt.png"
+                        : "/Textures/Interface/AdminActions/bolt.png",
                     Act = () =>
                     {
                         airlock.SetBoltsWithAudio(!airlock.BoltsDown);
                     },
                     Impact = LogImpact.Extreme,
-                    Message = Loc.GetString(airlock.BoltsDown ? "admin-trick-unbolt-description": "admin-trick-bolt-description"),
+                    Message = Loc.GetString(airlock.BoltsDown
+                        ? "admin-trick-unbolt-description"
+                        : "admin-trick-bolt-description"),
                     Priority = (int) (airlock.BoltsDown ? TricksVerbPriorities.Unbolt : TricksVerbPriorities.Bolt),
 
                 };
@@ -86,8 +91,12 @@ public sealed partial class AdminVerbSystem
                         _airlockSystem.ToggleEmergencyAccess(airlock);
                     },
                     Impact = LogImpact.Extreme,
-                    Message = Loc.GetString(airlock.EmergencyAccess ? "admin-trick-emergency-access-off-description" : "admin-trick-emergency-access-on-description" ),
-                    Priority = (int) (airlock.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
+                    Message = Loc.GetString(airlock.EmergencyAccess
+                        ? "admin-trick-emergency-access-off-description"
+                        : "admin-trick-emergency-access-on-description"),
+                    Priority = (int) (airlock.EmergencyAccess
+                        ? TricksVerbPriorities.EmergencyAccessOff
+                        : TricksVerbPriorities.EmergencyAccessOn),
                 };
                 args.Verbs.Add(emergencyAccess);
             }
@@ -512,12 +521,13 @@ public sealed partial class AdminVerbSystem
             IconTexture = "/Textures/Interface/AdminActions/rename_and_redescribe.png",
             Act = () =>
             {
-                _quickDialog.OpenDialog(player, "Rename & Redescribe", "Name", "Description", (string newName, LongString newDescription) =>
-                {
-                    var meta = MetaData(args.Target);
-                    meta.EntityName = newName;
-                    meta.EntityDescription = newDescription.String;
-                });
+                _quickDialog.OpenDialog(player, "Rename & Redescribe", "Name", "Description",
+                    (string newName, LongString newDescription) =>
+                    {
+                        var meta = MetaData(args.Target);
+                        meta.EntityName = newName;
+                        meta.EntityDescription = newDescription.String;
+                    });
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-trick-rename-and-redescribe-description"),
@@ -675,6 +685,45 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(snapJoints);
         }
+
+        if (TryComp<GunComponent>(args.Target, out var gun))
+        {
+            Verb minigunFire = new()
+            {
+                Text = "Make Minigun",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Objects/Weapons/Guns/HMGs/minigun.rsi/icon.png",
+                Act = () =>
+                {
+                    gun.FireRate = 15;
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-minigun-fire-description"),
+                Priority = (int) TricksVerbPriorities.MakeMinigun,
+            };
+            args.Verbs.Add(minigunFire);
+        }
+
+        if (TryComp<BallisticAmmoProviderComponent>(args.Target, out var ballisticAmmo))
+        {
+            Verb setCapacity = new()
+            {
+                Text = "Set Bullet Amount",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Objects/Fun/caps.rsi/mag-6.png",
+                Act = () =>
+                {
+                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (max {ballisticAmmo.Capacity}):", (int amount) =>
+                    {
+                        ballisticAmmo.UnspawnedCount = amount;
+                    });
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-set-bullet-amount-description"),
+                Priority = (int) TricksVerbPriorities.SetBulletAmount,
+            };
+            args.Verbs.Add(setCapacity);
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -812,5 +861,7 @@ public sealed partial class AdminVerbSystem
         Unpause = -21,
         Pause = -21,
         SnapJoints = -22,
+        MakeMinigun = -23,
+        SetBulletAmount = -24,
     }
 }
