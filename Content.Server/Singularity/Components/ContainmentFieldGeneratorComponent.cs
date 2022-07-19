@@ -21,8 +21,14 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     }
 
     /// <summary>
+    /// The minimum the field generator needs to start generating a connection
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("powerMinimum")]
+    public int PowerMinimum = 6;
+
+    /// <summary>
     /// How much power should this field generator receive from a collision
-    /// Also acts as the minimum the field needs to start generating a connection
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("power")]

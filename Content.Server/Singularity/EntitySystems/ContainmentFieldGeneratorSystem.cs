@@ -114,12 +114,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void TurnOn(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = true;
+        ChangeFieldVisualizer(component);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
     }
 
     private void TurnOff(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = false;
+        ChangeFieldVisualizer(component);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
     }
 
@@ -142,10 +144,17 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             value.Item1.Connections.Remove(direction.GetOpposite());
 
             if (value.Item1.Connections.Count == 0) //Change isconnected only if there's no more connections
+            {
                 value.Item1.IsConnected = false;
+                ChangeOnLightVisualizer(value.Item1);
+            }
+
+            ChangeFieldVisualizer(value.Item1);
         }
         component.Connections.Clear();
         component.IsConnected = false;
+        ChangeOnLightVisualizer(component);
+        ChangeFieldVisualizer(component);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner));
     }
 
@@ -161,7 +170,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         component.PowerBuffer += power;
 
-        if (component.PowerBuffer >= component.Power)
+        if (component.PowerBuffer >= component.PowerMinimum)
         {
             for (int i = 0; i < 8; i+=2)
             {
@@ -173,16 +182,85 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, component);
             }
         }
+
+        ChangePowerVisualizer(power, component);
     }
 
     public void LosePower(int power, ContainmentFieldGeneratorComponent component)
     {
         component.PowerBuffer -= power;
 
-        if (component.PowerBuffer < component.Power)
+        if (component.PowerBuffer < component.PowerMinimum)
         {
             RemoveConnections(component);
         }
+
+        ChangePowerVisualizer(power, component);
+    }
+
+    /// <summary>
+    /// Check if a fields power falls between certain ranges to update the field gen visual for power.
+    /// </summary>
+    /// <param name="power"></param>
+    /// <param name="component"></param>
+    private void ChangePowerVisualizer(int power, ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if(component.PowerBuffer == 0)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
+
+        if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
+
+        if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
+        }
+
+        if (component.PowerBuffer == 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
+        }
+    }
+
+    /// <summary>
+    /// Check if a field has any or no connections and if it's enabled to toggle the field light
+    /// </summary>
+    /// <param name="component"></param>
+    private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if (component.Connections.Count == 0 && !component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
+        }
+
+        if (component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
+        }
+
+        if (component.Connections.Count == 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
+        }
+
+        if (component.Connections.Count > 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
+        }
+    }
+
+    private void ChangeOnLightVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
     }
 
     /// <summary>
@@ -234,11 +312,18 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         otherFieldGeneratorComponent.Connections[dir.GetOpposite()] = (component, fields);
 
         if (!component.IsConnected)
+        {
             component.IsConnected = true;
+            ChangeOnLightVisualizer(component);
+        }
 
         if (!otherFieldGeneratorComponent.IsConnected)
+        {
             otherFieldGeneratorComponent.IsConnected = true;
+            ChangeOnLightVisualizer(component);
+        }
 
+        ChangeFieldVisualizer(component);
         UpdateConnectionLights(component);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner, Filter.Pvs(component.Owner));
         return true;
