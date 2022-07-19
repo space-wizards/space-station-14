@@ -96,23 +96,25 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         {
             new Label()
             {
-                Text = record.Name
+                Text = record.Name,
+                StyleClasses = { "LabelBig" }
             },
             new Label()
             {
-                Text = record.Age.ToString()
+                Text = Loc.GetString("general-station-record-console-record-age", ("age", record.Age.ToString()))
+
             },
             new Label()
             {
-                Text = Loc.GetString(record.JobTitle)
+                Text = Loc.GetString("general-station-record-console-record-title", ("job", record.JobTitle))
             },
             new Label()
             {
-                Text = record.Species
+                Text = Loc.GetString("general-station-record-console-record-species", ("species", record.Species))
             },
             new Label()
             {
-                Text = record.Gender.ToString()
+                Text = Loc.GetString("general-station-record-console-record-gender", ("gender", record.Gender.ToString()))
             }
         };
 
