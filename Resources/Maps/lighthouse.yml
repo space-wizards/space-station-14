@@ -109480,7 +109480,7 @@ entities:
   - pos: -29.69801,-2.933305
     parent: 100
     type: Transform
-  - content: "Clean up this mess before we hire a mailman for your station proper!\n \n \n-CentComm\n"
+  - content: "Clean up this mess before we hire a mailman for your station proper!\n \n \n-CentCom\n"
     type: Paper
   - canCollide: False
     type: Physics
