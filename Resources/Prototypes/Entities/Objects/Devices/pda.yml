@@ -64,6 +64,8 @@
       whitelist:
         components:
         - IdCard
+  - type: CrewManifestViewer
+    unsecure: true
   - type: Tag
     tags:
     - DoorBumpOpener
@@ -178,7 +180,7 @@
   - type: PDA
     id: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # no pink crayon?!? 
+      startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
       ejectSound: /Audio/Items/bikehorn.ogg
       priority: -1
