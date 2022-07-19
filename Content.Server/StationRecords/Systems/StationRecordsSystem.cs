@@ -90,8 +90,8 @@ public sealed class StationRecordsSystem : EntitySystem
     /// <param name="gender">Gender of the character.</param>
     /// <param name="jobId">
     ///     The job to initially tie this record to. This must be a valid job loaded in, otherwise
-    ///     this call will silently fail. For example, just give somebody the 'passenger' job if
-    ///     they want a new record.
+    ///     this call will cause an exception. Ensure that a general record starts out with a job
+    ///     that is currently a valid job prototype.
     /// </param>
     /// <param name="profile">
     ///     Profile for the related player. This is so that other systems can get further information
@@ -99,14 +99,17 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     Optional - other systems should anticipate this.
     /// </param>
     /// <param name="records">Station records component.</param>
-    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string? jobId, HumanoidCharacterProfile? profile = null,
+    public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string jobId, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {
-        if (!Resolve(station, ref records)
-            || string.IsNullOrEmpty(jobId)
-            || !_prototypeManager.TryIndex(jobId, out JobPrototype? jobPrototype))
+        if (!Resolve(station, ref records))
         {
             return;
+        }
+
+        if (!_prototypeManager.TryIndex(jobId, out JobPrototype? jobPrototype))
+        {
+            throw new ArgumentException($"Invalid job prototype ID: {jobId}");
         }
 
         var record = new GeneralStationRecord()

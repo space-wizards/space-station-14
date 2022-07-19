@@ -113,6 +113,22 @@ namespace Content.Client.Access.UI
                 }
             }
 
+            foreach (var group in job.AccessGroups)
+            {
+                if (!_prototypeManager.TryIndex(group, out AccessGroupPrototype? groupPrototype))
+                {
+                    continue;
+                }
+
+                foreach (var access in groupPrototype.Tags)
+                {
+                    if (_accessButtons.TryGetValue(access, out var button))
+                    {
+                        button.Pressed = true;
+                    }
+                }
+            }
+
             SubmitData();
         }
 
