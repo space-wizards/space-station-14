@@ -615,6 +615,47 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(haltMovement);
         }
+
+        if (TryComp<IMapComponent>(args.Target, out var map))
+        {
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
+            {
+                if (_mapManager.IsMapPaused(map.WorldMap))
+                {
+                    Verb unpauseMap = new()
+                    {
+                        Text = "Unpause Map",
+                        Category = VerbCategory.Tricks,
+                        IconTexture = "/Textures/Interface/AdminActions/play.png",
+                        Act = () =>
+                        {
+                            _mapManager.SetMapPaused(map.WorldMap, false);
+                        },
+                        Impact = LogImpact.Extreme,
+                        Message = Loc.GetString("admin-trick-unpause-map-description"),
+                        Priority = (int) TricksVerbPriorities.Unpause,
+                    };
+                    args.Verbs.Add(unpauseMap);
+                }
+                else
+                {
+                    Verb pauseMap = new()
+                    {
+                        Text = "Pause Map",
+                        Category = VerbCategory.Tricks,
+                        IconTexture = "/Textures/Interface/AdminActions/pause.png",
+                        Act = () =>
+                        {
+                            _mapManager.SetMapPaused(map.WorldMap, true);
+                        },
+                        Impact = LogImpact.Extreme,
+                        Message = Loc.GetString("admin-trick-pause-map-description"),
+                        Priority = (int) TricksVerbPriorities.Pause,
+                    };
+                    args.Verbs.Add(pauseMap);
+                }
+            }
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -749,5 +790,7 @@ public sealed partial class AdminVerbSystem
         LocateCargoShuttle = -18,
         InfiniteBattery = -19,
         HaltMovement = -20,
+        Unpause = -21,
+        Pause = -21,
     }
 }

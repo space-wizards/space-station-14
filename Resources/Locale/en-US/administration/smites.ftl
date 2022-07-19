@@ -82,3 +82,5 @@ admin-trick-locate-cargo-shuttle-description = Teleports you directly to the sta
 admin-trick-infinite-battery-description = Reconfigures the SMESes and substations on the grid/station/map to self-recharge rapidly.
 admin-trick-infinite-battery-object-description = Reconfigures the item so that it's battery rapidly refills.
 admin-trick-halt-movement-description = Halts the movement of the target object, at least until something moves it again.
+admin-trick-unpause-map-description = Unpause the selected map. NOTE THIS CAN CAUSE BAD BEHAVIOR WITH STORAGE MAPS!
+admin-trick-pause-map-description = Pause the selected map. Note this doesn't entirely stop player movement!
