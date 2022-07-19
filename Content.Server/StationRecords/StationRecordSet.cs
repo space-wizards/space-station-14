@@ -7,10 +7,6 @@ namespace Content.Server.StationRecords;
 ///     Set of station records. StationRecordsComponent stores these.
 ///     Keyed by StationRecordKey, which should be obtained from
 ///     an entity that stores a reference to it.
-///
-///     StationRecordsSystem should verify that all added records are
-///     correct, and all keys originate from the station that owns
-///     this component.
 /// </summary>
 public sealed class StationRecordSet
 {
