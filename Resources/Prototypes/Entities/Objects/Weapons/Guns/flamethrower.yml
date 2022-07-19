@@ -6,10 +6,10 @@
   components:
   - type: Gun
     minAngle: 25
-    maxAngle: 45
+    maxAngle: 35
     angleIncrease: 16
     angleDecay: 4
-    fireRate: 16
+    fireRate: 8
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -17,11 +17,8 @@
       path: /Audio/Effects/spray.ogg
   - type: GasAmmoProvider
     proto: ProjectileFlame
-    capacity: 1
     gasId: 3
-    molesPerShot: 0.05
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    molesPerShot: 0.1
   - type: ItemSlots
     slots:
       gun_tank:

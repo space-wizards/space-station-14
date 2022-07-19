@@ -20,6 +20,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<GasAmmoProviderComponent, ComponentGetState>(OnGasGetState);
         SubscribeLocalEvent<GasAmmoProviderComponent, ComponentHandleState>(OnGasHandleState);
     }
+
     private void OnGasGetState(EntityUid uid, GasAmmoProviderComponent component, ref ComponentGetState args)
     {
         args.State = new GasAmmoProviderComponentState(component.Moles, component.MolesPerShot);
