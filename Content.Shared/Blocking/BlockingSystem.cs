@@ -134,6 +134,12 @@ public sealed class BlockingSystem : EntitySystem
                 return false;
             }
 
+            if (TryComp<PhysicsComponent>(user, out var physics) && physics.ContactCount > 1)
+            {
+                TooCloseError(user);
+                return false;
+            }
+
             _transformSystem.AnchorEntity(xform);
             if (!xform.Anchored)
             {
@@ -165,6 +171,12 @@ public sealed class BlockingSystem : EntitySystem
     private void CantBlockError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
+        _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+    }
+
+    private void TooCloseError(EntityUid user)
+    {
+        var msgError = Loc.GetString("action-popup-blocking-user-too-close");
         _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
     }
 
