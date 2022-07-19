@@ -160,7 +160,7 @@ public sealed partial class AdminVerbSystem
                 {
                     Text = "Refill Battery",
                     Category = VerbCategory.Tricks,
-                    IconTexture = "/Textures/Objects/Power/power_cells.rsi/medium.png",
+                    IconTexture = "/Textures/Interface/AdminActions/fill_battery.png",
                     Act = () =>
                     {
                         battery.CurrentCharge = battery.MaxCharge;
@@ -171,6 +171,22 @@ public sealed partial class AdminVerbSystem
                     Priority = (int) TricksVerbPriorities.RefillBattery,
                 };
                 args.Verbs.Add(refillBattery);
+
+                Verb drainBattery = new()
+                {
+                    Text = "Drain Battery",
+                    Category = VerbCategory.Tricks,
+                    IconTexture = "/Textures/Interface/AdminActions/drain_battery.png",
+                    Act = () =>
+                    {
+                        battery.CurrentCharge = 0;
+                        Dirty(battery);
+                    },
+                    Impact = LogImpact.Extreme,
+                    Message = Loc.GetString("admin-trick-drain-battery-description"),
+                    Priority = (int) TricksVerbPriorities.DrainBattery,
+                };
+                args.Verbs.Add(drainBattery);
 
                 Verb infiniteBattery = new()
                 {
@@ -581,6 +597,50 @@ public sealed partial class AdminVerbSystem
 
         if (TryGetGridChildren(args.Target, out var childEnum))
         {
+            Verb refillBattery = new()
+            {
+                Text = "Refill Battery",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/fill_battery.png",
+                Act = () =>
+                {
+                    foreach (var ent in childEnum)
+                    {
+                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                            continue;
+                        var battery = EnsureComp<BatteryComponent>(ent);
+                        battery.CurrentCharge = battery.MaxCharge;
+                        Dirty(battery);
+                    }
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-refill-battery-description"),
+                Priority = (int) TricksVerbPriorities.RefillBattery,
+            };
+            args.Verbs.Add(refillBattery);
+
+            Verb drainBattery = new()
+            {
+                Text = "Drain Battery",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/drain_battery.png",
+                Act = () =>
+                {
+                    foreach (var ent in childEnum)
+                    {
+                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                            continue;
+                        var battery = EnsureComp<BatteryComponent>(ent);
+                        battery.CurrentCharge = 0;
+                        Dirty(battery);
+                    }
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-drain-battery-description"),
+                Priority = (int) TricksVerbPriorities.DrainBattery,
+            };
+            args.Verbs.Add(drainBattery);
+
             Verb infiniteBattery = new()
             {
                 Text = "Infinite Battery",
@@ -842,26 +902,27 @@ public sealed partial class AdminVerbSystem
         MakeVulnerable = -2,
         BlockUnanchoring = -3,
         RefillBattery = -4,
-        RefillOxygen = -5,
-        RefillNitrogen = -6,
-        RefillPlasma = -7,
-        SendToTestArena = -8,
-        GrantAllAccess = -9,
-        RevokeAllAccess = -10,
-        Rejuvenate = -11,
-        AdjustStack = -12,
-        FillStack = -13,
-        Rename = -14,
-        Redescribe = -15,
-        RenameAndRedescribe = -16,
-        BarJobSlots = -17,
-        LocateCargoShuttle = -18,
-        InfiniteBattery = -19,
-        HaltMovement = -20,
-        Unpause = -21,
-        Pause = -21,
-        SnapJoints = -22,
-        MakeMinigun = -23,
-        SetBulletAmount = -24,
+        DrainBattery = -5,
+        RefillOxygen = -6,
+        RefillNitrogen = -7,
+        RefillPlasma = -8,
+        SendToTestArena = -9,
+        GrantAllAccess = -10,
+        RevokeAllAccess = -11,
+        Rejuvenate = -12,
+        AdjustStack = -13,
+        FillStack = -14,
+        Rename = -15,
+        Redescribe = -16,
+        RenameAndRedescribe = -17,
+        BarJobSlots = -18,
+        LocateCargoShuttle = -19,
+        InfiniteBattery = -20,
+        HaltMovement = -21,
+        Unpause = -22,
+        Pause = -23,
+        SnapJoints = -24,
+        MakeMinigun = -25,
+        SetBulletAmount = -26,
     }
 }

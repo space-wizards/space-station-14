@@ -65,6 +65,7 @@ admin-trick-make-indestructible-description = Makes the given object indestructi
 admin-trick-make-vulnerable-description = Makes the given object vulnerable again, turning off godmode.
 admin-trick-block-unanchoring-description = Prevents unanchoring the given object.
 admin-trick-refill-battery-description = Refills the internal battery of the given object.
+admin-trick-drain-battery-description = Empties the internal battery of the given object.
 admin-trick-internals-refill-oxygen-description = Refills oxygen in the target tank or target's internals.
 admin-trick-internals-refill-nitrogen-description = Refills nitrogen in the target tank or target's internals.
 admin-trick-internals-refill-plasma-description = Refills plasma in the target tank or target's internals.
