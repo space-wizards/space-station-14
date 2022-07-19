@@ -12,6 +12,8 @@ using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
+using Content.Shared.Movement.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Dragon
 {
@@ -23,6 +25,12 @@ namespace Content.Server.Dragon
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly ProjectileSystem _projectileSystem = default!;
+        [Dependency] private readonly IGameTiming _timingSystem = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+
+        private readonly Dictionary<EntityUid, DragonFirebreath> _pendingBreathAttacks = new();
+
+        private const string DefaultProjectilePrototype = "DragonProjectileFireball";
 
         public override void Initialize()
         {
@@ -37,6 +45,7 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
+            SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonRefreshMovespeed);
         }
 
         private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)
@@ -89,6 +98,14 @@ namespace Content.Server.Dragon
 
             if (component.SoundDevour != null)
                 SoundSystem.Play(component.SoundDevour.GetSound(), Filter.Pvs(args.User, entityManager: EntityManager), uid, component.SoundDevour.Params);
+        }
+
+        private void OnDragonRefreshMovespeed(EntityUid uid, DragonComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            if (!_pendingBreathAttacks.ContainsKey(uid))
+                return;
+
+            args.ModifySpeed(0.5f, 0.5f);
         }
 
         private void OnStartup(EntityUid uid, DragonComponent component, ComponentStartup args)
@@ -185,7 +202,7 @@ namespace Content.Server.Dragon
         private void OnDragonBreathFire(EntityUid dragonuid, DragonComponent component,
             DragonBreatheFireActionEvent args)
         {
-            if (args.Handled || component.BreatheFireAction == null)
+            if (args.Handled || component.BreatheFireAction == null || _pendingBreathAttacks.ContainsKey(dragonuid))
                 return;
 
             var dragonXform = Transform(dragonuid);
@@ -195,8 +212,8 @@ namespace Content.Server.Dragon
             if (breathDirection == Vector2.Zero || breathDirection == Vector2.NaN)
                 return;
 
-            var breathProjectileUid = Spawn(component.BreathProjectilePrototype, dragonPos);
-            ShootBreathProjectile(breathProjectileUid, breathDirection, dragonuid);
+            _pendingBreathAttacks.Add(dragonuid, new DragonFirebreath()
+                    { BreathsRemaining = 5, MapDirection = breathDirection.Normalized, NextBreath = TimeSpan.Zero, BreathPrototype = component.BreathProjectilePrototype ?? DefaultProjectilePrototype});
 
             args.Handled = true;
 
@@ -204,16 +221,56 @@ namespace Content.Server.Dragon
                 SoundSystem.Play(component.SoundBreathFire.GetSound(), Filter.Pvs(args.Performer, 4f, EntityManager), dragonuid, component.SoundBreathFire.Params);
         }
 
-        private void ShootBreathProjectile(EntityUid uid, Vector2 direction, EntityUid user)
+        public override void Update(float frameTime)
+        {
+            foreach (var (uid, breath) in _pendingBreathAttacks)
+            {
+                if (breath.NextBreath > _timingSystem.CurTime)
+                    continue;
+
+                if (!TryComp<TransformComponent>(uid, out var xform))  // TODO: xform query
+                    return;
+
+                var breathSpawn = xform.MapPosition.Offset(breath.MapDirection * 1.2f);
+                var breathProjectileUid = Spawn(breath.BreathPrototype, breathSpawn);
+                ShootBreathProjectile(breathProjectileUid, breath.MapDirection, uid, breath.Speed);
+
+                breath.NextBreath = _timingSystem.CurTime + breath.Delay;
+                breath.BreathsRemaining--;
+
+                if (breath.BreathsRemaining <= 0)
+                    _pendingBreathAttacks.Remove(uid);
+
+                // TODO: Only need to run this for first and last breath.
+                _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
+            }
+        }
+
+        private void ShootBreathProjectile(EntityUid uid, Vector2 direction, EntityUid user, float speed)
         {
             var physics = EnsureComp<PhysicsComponent>(uid);
             physics.BodyStatus = BodyStatus.InAir;
-            physics.LinearVelocity = direction.Normalized * 6.5f;
+            physics.LinearVelocity = direction * speed;
 
             var projectile = EnsureComp<ProjectileComponent>(uid);
             _projectileSystem.SetShooter(projectile, user);
 
             Transform(uid).WorldRotation = direction.ToWorldAngle() - Angle.FromDegrees(180);
+        }
+
+        private sealed class DragonFirebreath
+        {
+            public TimeSpan NextBreath;
+
+            public int BreathsRemaining;
+
+            public Vector2 MapDirection;
+
+            public float Speed = 4.5f;
+
+            public TimeSpan Delay = TimeSpan.FromMilliseconds(400);
+
+            public string BreathPrototype = DefaultProjectilePrototype;
         }
 
         private sealed class DragonDevourComplete : EntityEventArgs

@@ -29,8 +29,8 @@ namespace Content.Server.Dragon
         [DataField("devourHealRate")]
         public float DevourHealRate = 15f;
 
-        [DataField("breathEffectPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string BreathEffectPrototype = "FireBreathEffect";
+        [DataField("breathProjectileProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? BreathProjectilePrototype = "DragonProjectileFireball";
 
         [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
         public string DevourActionId = "DragonDevour";
@@ -71,9 +71,6 @@ namespace Content.Server.Dragon
         [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? SpawnPrototype = "MobCarpDragon";
 
-        [DataField("breathProjectileProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? BreathProjectilePrototype = "DragonProjectileFireball";
-
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
         public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
 
@@ -90,7 +87,7 @@ namespace Content.Server.Dragon
         };
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundBreathFire")]
-        public SoundSpecifier? SoundBreathFire = new SoundPathSpecifier("/Audio/Magic/fireball.ogg")
+        public SoundSpecifier? SoundBreathFire = new SoundPathSpecifier("/Audio/Effects/fire.ogg")
         {
             Params = AudioParams.Default.WithVolume(-3f),
         };
