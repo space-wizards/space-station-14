@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -26,6 +27,7 @@ public sealed class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -128,18 +130,32 @@ public sealed class BlockingSystem : EntitySystem
 
         if (component.BlockingToggleAction != null)
         {
+            //Don't allow someone to block if they're in a container.
             if (_containerSystem.IsEntityInContainer(user) || !_mapManager.TryFindGridAt(xform.MapPosition, out var grid))
             {
                 CantBlockError(user);
                 return false;
             }
 
+            //Don't allow someone to block if they're too close to a solid object or player
             if (TryComp<PhysicsComponent>(user, out var physics) && physics.ContactCount > 1)
             {
                 TooCloseError(user);
                 return false;
             }
 
+            //Don't allow someone to block if they're in a doorway
+            var intersectingAnchoredEntities = _lookup.GetEntitiesIntersecting(user, LookupFlags.Anchored);
+            foreach (var entity in intersectingAnchoredEntities)
+            {
+                if (HasComp<DoorComponent>(entity))
+                {
+                    TooCloseError(user);
+                    return false;
+                }
+            }
+
+            //Don't allow someone to block if they're somehow not anchored.
             _transformSystem.AnchorEntity(xform);
             if (!xform.Anchored)
             {
