@@ -71,18 +71,18 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         RecordListing.Clear();
         RecordListing.ClearSelected();
 
+        _isPopulating = true;
         foreach (var (key, name) in listing)
         {
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
 
-            _isPopulating = true;
             if (selected != null && key.ID == selected.Value.ID)
             {
                 item.Selected = true;
             }
-            _isPopulating = false;
         }
+        _isPopulating = false;
 
         RecordListing.SortItemsByText();
     }
