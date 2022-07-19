@@ -42,21 +42,6 @@ public sealed partial class CrewManifestUi : DefaultWindow
         Dispose(true);
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-    }
-
-    public void Register(EntityUid station)
-    {
-        if (_station != null)
-        {
-            return;
-        }
-
-        _station = station;
-    }
-
     public void Populate(string name, CrewManifestEntries? entries)
     {
         CrewManifestListing.DisposeAllChildren();
