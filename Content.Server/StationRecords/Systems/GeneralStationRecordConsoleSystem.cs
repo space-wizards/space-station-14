@@ -12,11 +12,13 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(OnBoundUiOpened);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GeneralStationRecordConsoleComponent, SelectGeneralStationRecord>(OnKeySelected);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<GeneralStationRecordConsoleComponent, AfterGeneralRecordCreatedEvent>(UpdateUserInterface);
     }
 
-    private void OnBoundUiOpened(EntityUid uid, GeneralStationRecordConsoleComponent component, BoundUIOpenedEvent ev)
+    private void UpdateUserInterface<T>(EntityUid uid, GeneralStationRecordConsoleComponent component, T ev)
     {
         UpdateUserInterface(uid, component);
     }
