@@ -13,6 +13,7 @@ using System.Threading;
 using Content.Server.Projectiles;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Dragon
@@ -27,6 +28,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly ProjectileSystem _projectileSystem = default!;
         [Dependency] private readonly IGameTiming _timingSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] protected readonly IRobustRandom _randomSystem = default!;
 
         private readonly Dictionary<EntityUid, DragonFirebreath> _pendingBreathAttacks = new();
 
@@ -231,9 +233,14 @@ namespace Content.Server.Dragon
                 if (!TryComp<TransformComponent>(uid, out var xform))  // TODO: xform query
                     return;
 
-                var breathSpawn = xform.MapPosition.Offset(breath.MapDirection * 1.2f);
+                var random = _randomSystem.NextFloat(-1.0f, 1.0f);
+                var spread = Angle.FromDegrees(25f * random);
+                var angle = breath.MapDirection.ToWorldAngle() + spread;
+                var direction = angle.ToWorldVec();
+
+                var breathSpawn = xform.MapPosition.Offset(direction * 0.8f);
                 var breathProjectileUid = Spawn(breath.BreathPrototype, breathSpawn);
-                ShootBreathProjectile(breathProjectileUid, breath.MapDirection, uid, breath.Speed);
+                ShootBreathProjectile(breathProjectileUid, direction, uid, breath.Speed);
 
                 breath.NextBreath = _timingSystem.CurTime + breath.Delay;
                 breath.BreathsRemaining--;
@@ -266,9 +273,9 @@ namespace Content.Server.Dragon
 
             public Vector2 MapDirection;
 
-            public float Speed = 4.5f;
+            public float Speed = 6.5f;
 
-            public TimeSpan Delay = TimeSpan.FromMilliseconds(400);
+            public TimeSpan Delay = TimeSpan.FromMilliseconds(200);
 
             public string BreathPrototype = DefaultProjectilePrototype;
         }
