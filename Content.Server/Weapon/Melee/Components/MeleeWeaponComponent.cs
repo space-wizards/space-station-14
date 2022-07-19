@@ -52,5 +52,9 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("damage", required:true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
+
+        [DataField("bluntStaminaDamageFactor")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BluntStaminaDamageFactor { get; set; } = 0.5f;
     }
 }
