@@ -106,7 +106,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             },
             new Label()
             {
-                Text = Loc.GetString("general-station-record-console-record-title", ("job", record.JobTitle))
+                Text = Loc.GetString("general-station-record-console-record-title", ("job", Loc.GetString(record.JobTitle)))
             },
             new Label()
             {
