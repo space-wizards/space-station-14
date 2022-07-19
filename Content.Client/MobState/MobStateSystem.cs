@@ -55,6 +55,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
     {
         if (TryComp<MobStateComponent>(ev.Entity, out var mobState) && TryComp<DamageableComponent>(ev.Entity, out var damageable))
         {
+            _overlay.DeadLevel = 0f;
             SetLevel(mobState, damageable.TotalDamage);
         }
         else

@@ -1,4 +1,5 @@
 using Content.Shared.CCVar;
+using Content.Shared.Gravity;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -18,6 +19,7 @@ namespace Content.Shared.Friction
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
         protected SharedMoverController Mover = default!;
 
@@ -165,16 +167,14 @@ namespace Content.Shared.Friction
         [Pure]
         private float GetTileFriction(PhysicsComponent body, TransformComponent xform)
         {
-            var coords = xform.Coordinates;
-
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (body.Owner.IsWeightless(body, coords, _mapManager) ||
+            if (_gravity.IsWeightless(body.Owner, body, xform) ||
                 !_mapManager.TryGetGrid(xform.GridUid, out var grid))
                 return 0.0f;
 
-            if (!coords.IsValid(EntityManager)) return 0.0f;
+            if (!xform.Coordinates.IsValid(EntityManager)) return 0.0f;
 
-            var tile = grid.GetTileRef(coords);
+            var tile = grid.GetTileRef(xform.Coordinates);
             var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
             return tileDef.Friction;
         }

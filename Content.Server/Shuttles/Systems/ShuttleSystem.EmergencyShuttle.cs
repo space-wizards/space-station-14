@@ -254,24 +254,13 @@ public sealed partial class ShuttleSystem
            return;
        }
 
+       var xformQuery = GetEntityQuery<TransformComponent>();
+
        if (TryFTLDock(shuttle, targetGrid.Value))
        {
-           var xformQuery = GetEntityQuery<TransformComponent>();
-
            if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
            {
-               var (shuttlePos, shuttleRot) = xform.GetWorldPositionRotation(xformQuery);
-               var (targetPos, targetRot) = targetXform.GetWorldPositionRotation(xformQuery);
-
-               var shuttleCOM = Robust.Shared.Physics.Transform.Mul(new Transform(shuttlePos, shuttleRot),
-                   Comp<PhysicsComponent>(shuttle.Owner).LocalCenter);
-               var targetCOM = Robust.Shared.Physics.Transform.Mul(new Transform(targetPos, targetRot),
-                   Comp<PhysicsComponent>(targetGrid.Value).LocalCenter);
-
-               var mapDiff = shuttleCOM - targetCOM;
-               var targetRotation = targetRot;
-               var angle = mapDiff.ToWorldAngle();
-               angle -= targetRotation;
+               var angle = GetAngle(xform, targetXform, xformQuery);
                _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-docked", ("time", $"{_consoleAccumulator:0}"), ("direction", angle.GetDir())), playDefaultSound: false);
            }
 
@@ -281,11 +270,33 @@ public sealed partial class ShuttleSystem
        }
        else
        {
+           if (TryComp<TransformComponent>(targetGrid.Value, out var targetXform))
+           {
+               var angle = GetAngle(xform, targetXform, xformQuery);
+               _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-nearby", ("direction", angle.GetDir())), playDefaultSound: false);
+           }
+
            _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid.Value)} unable to find a valid docking port for {ToPrettyString(stationUid.Value)}");
-           _chatSystem.DispatchStationAnnouncement(stationUid.Value, Loc.GetString("emergency-shuttle-nearby"), playDefaultSound: false);
            // TODO: Need filter extensions or something don't blame me.
            SoundSystem.Play("/Audio/Misc/notice1.ogg", Filter.Broadcast());
        }
+   }
+
+   private Angle GetAngle(TransformComponent xform, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
+   {
+       var (shuttlePos, shuttleRot) = xform.GetWorldPositionRotation(xformQuery);
+       var (targetPos, targetRot) = targetXform.GetWorldPositionRotation(xformQuery);
+
+       var shuttleCOM = Robust.Shared.Physics.Transform.Mul(new Transform(shuttlePos, shuttleRot),
+           Comp<PhysicsComponent>(xform.Owner).LocalCenter);
+       var targetCOM = Robust.Shared.Physics.Transform.Mul(new Transform(targetPos, targetRot),
+           Comp<PhysicsComponent>(targetXform.Owner).LocalCenter);
+
+       var mapDiff = shuttleCOM - targetCOM;
+       var targetRotation = targetRot;
+       var angle = mapDiff.ToWorldAngle();
+       angle -= targetRotation;
+       return angle;
    }
 
    /// <summary>
