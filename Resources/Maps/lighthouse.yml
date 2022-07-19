@@ -58431,7 +58431,7 @@ entities:
 - uid: 5269
   type: Memorial
   components:
-  - desc: A gift from Centcomm, declaring Lighthouse as one of their finest stations, with only the best of crew sent to maintain it. Someone seems to have vandalized the back of it with 'Greytide 4ever'...
+  - desc: A gift from CentCom, declaring Lighthouse as one of their finest stations, with only the best of crew sent to maintain it. Someone seems to have vandalized the back of it with 'Greytide 4ever'...
     name: Lighthouse Station Monument
     type: MetaData
   - pos: 14.5,-23.5
