@@ -196,7 +196,7 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
-        // Make sure the map is setup before we lave to avoid pop-in (e.g. parallax).
+        // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
         SetupHyperspace();
         return true;
     }
