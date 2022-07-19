@@ -17,12 +17,14 @@
                 </controls:StripeBack>
                 <BoxContainer Name="DockPorts"
                               Orientation="Vertical"/>
+            </BoxContainer>
             <BoxContainer Orientation="Vertical">
                 <controls:StripeBack>
                     <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
                 </controls:StripeBack>
                 <BoxContainer Name="HyperspaceDestinations"
                               Orientation="Vertical"/>
+            </BoxContainer>
         </BoxContainer>
         <PanelContainer>
             <ui:RadarControl Name="RadarScreen"
