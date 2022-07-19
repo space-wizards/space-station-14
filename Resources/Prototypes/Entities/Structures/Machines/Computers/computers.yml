@@ -298,6 +298,7 @@
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
+  - type: CrewManifestViewer
   - type: Appearance
     visuals:
     - type: ComputerVisualizer

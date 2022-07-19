@@ -111,7 +111,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
 
                 var title = new Label()
                 {
-                    Text = entry.JobTitle
+                    Text = Loc.GetString(entry.JobTitle)
                 };
 
 

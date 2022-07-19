@@ -58,7 +58,7 @@ namespace Content.Client.Access.UI
                 }
 
                 _jobPrototypeIds.Add(job.ID);
-                JobPresetOptionButton.AddItem(job.Name, _jobPrototypeIds.Count - 1);
+                JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
             }
 
             JobPresetOptionButton.OnItemSelected += SelectJobPreset;

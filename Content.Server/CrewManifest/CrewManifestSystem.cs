@@ -115,6 +115,7 @@ public sealed class CrewManifestSystem : EntitySystem
         if (!_openEuis.TryGetValue(station, out var euis))
         {
             euis = new();
+            _openEuis.Add(station, euis);
         }
 
         if (euis.ContainsKey(session))
