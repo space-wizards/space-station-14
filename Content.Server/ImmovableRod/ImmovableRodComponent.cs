@@ -1,4 +1,4 @@
-﻿using Content.Shared.Sound;
+using Content.Shared.Sound;
 
 namespace Content.Server.ImmovableRod;
 
@@ -12,12 +12,6 @@ public sealed class ImmovableRodComponent : Component
 
     [DataField("hitSoundProbability")]
     public float HitSoundProbability = 0.1f;
-
-    /// <summary>
-    ///     The rod will be automatically cleaned up after this time.
-    /// </summary>
-    [DataField("lifetime")]
-    public TimeSpan Lifetime = TimeSpan.FromSeconds(30);
 
     [DataField("minSpeed")]
     public float MinSpeed = 10f;
@@ -42,7 +36,4 @@ public sealed class ImmovableRodComponent : Component
     /// </summary>
     [DataField("destroyTiles")]
     public bool DestroyTiles = true;
-
-    [DataField("accumulator")]
-    public float Accumulator = 0f;
 }
