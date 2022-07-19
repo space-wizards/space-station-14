@@ -28,7 +28,9 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
@@ -41,9 +43,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
-    [Dependency] private readonly CargoSystem _cargoSystem = default!;
+    [Dependency] private readonly JointSystem _jointSystem = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -656,6 +657,24 @@ public sealed partial class AdminVerbSystem
                 }
             }
         }
+
+        if (TryComp<JointComponent>(args.Target, out var joints))
+        {
+            Verb snapJoints = new()
+            {
+                Text = "Snap Joints",
+                Category = VerbCategory.Tricks,
+                IconTexture = "/Textures/Interface/AdminActions/snap_joints.png",
+                Act = () =>
+                {
+                    _jointSystem.ClearJoints(joints);
+                },
+                Impact = LogImpact.Extreme,
+                Message = Loc.GetString("admin-trick-snap-joints-description"),
+                Priority = (int) TricksVerbPriorities.SnapJoints,
+            };
+            args.Verbs.Add(snapJoints);
+        }
     }
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent)
@@ -792,5 +811,6 @@ public sealed partial class AdminVerbSystem
         HaltMovement = -20,
         Unpause = -21,
         Pause = -21,
+        SnapJoints = -22,
     }
 }

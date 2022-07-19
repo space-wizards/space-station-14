@@ -84,3 +84,4 @@ admin-trick-infinite-battery-object-description = Reconfigures the item so that 
 admin-trick-halt-movement-description = Halts the movement of the target object, at least until something moves it again.
 admin-trick-unpause-map-description = Unpause the selected map. NOTE THIS CAN CAUSE BAD BEHAVIOR WITH STORAGE MAPS!
 admin-trick-pause-map-description = Pause the selected map. Note this doesn't entirely stop player movement!
+admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
