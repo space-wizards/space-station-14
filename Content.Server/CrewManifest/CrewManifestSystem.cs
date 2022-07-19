@@ -2,10 +2,12 @@ using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
+using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 
@@ -17,6 +19,7 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -36,14 +39,10 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
     }
 
-    // As a result of this implementation, the crew manifest does not refresh when somebody
-    // joins the game, or if their title is modified. Equally, this should never be opened
-    // without ensuring that whatever parent window comes from it also closes, as otherwise
-    // this will never close on its own.
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
     {
-
-        if (args.SenderSession is not IPlayerSession sessionCast)
+        if (args.SenderSession is not IPlayerSession sessionCast
+            || !_configManager.GetCVar(CCVars.CrewManifestWithoutEntity))
         {
             return;
         }
@@ -98,6 +97,11 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
         if (owningStation == null || msg.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
+
+        if (_configManager.GetCVar(CCVars.CrewManifestUnsecure) && component.Unsecure)
         {
             return;
         }
