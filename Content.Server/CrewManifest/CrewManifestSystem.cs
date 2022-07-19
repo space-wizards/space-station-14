@@ -1,13 +1,16 @@
+using Content.Server.Administration;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
+using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 
@@ -204,5 +207,40 @@ public sealed class CrewManifestSystem : EntitySystem
         {
             _cachedEntries.Add(station, entries);
         }
+    }
+}
+
+[AdminCommand(AdminFlags.Admin)]
+public sealed class CrewManifestCommand : IConsoleCommand
+{
+    public string Command => "crewmanifest";
+    public string Description => "Opens the crew manifest for the given station.";
+    public string Help => $"Usage: {Command} <entity uid>";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 2)
+        {
+            shell.WriteLine($"Invalid argument count.\n{Help}");
+            return;
+        }
+
+        var entMan = IoCManager.Resolve<IEntityManager>();
+
+        if (!EntityUid.TryParse(args[0], out var uid))
+        {
+            shell.WriteLine($"{args[0]} is not a valid entity UID.");
+            return;
+        }
+
+        if (shell.Player == null || shell.Player is not IPlayerSession session)
+        {
+            shell.WriteLine("You must run this from a client.");
+            return;
+        }
+
+        var crewManifestSystem = entMan.EntitySysManager.GetEntitySystem<CrewManifestSystem>();
+
+        crewManifestSystem.OpenEui(uid, session);
     }
 }
