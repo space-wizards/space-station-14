@@ -32,7 +32,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("power")]
-    public int Power = 6;
+    public int PowerReceived = 3;
 
     /// <summary>
     /// How much power should this field generator lose if not powered?
@@ -46,7 +46,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// </summary>
     [ViewVariables]
     [DataField("accumulator")]
-    public float Accumulator = 0f;
+    public float Accumulator;
 
     /// <summary>
     /// How many seconds should the generators wait before losing power?

@@ -39,8 +39,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         foreach (var generator in EntityQuery<ContainmentFieldGeneratorComponent>())
         {
-            if (!generator.IsConnected)
-                return; //don't drain power if it's not connected
+            if (generator.PowerBuffer <= 0) //don't drain power if there's no power, or if it's somehow less than 0.
+                return;
 
             generator.Accumulator += frameTime;
 
@@ -61,7 +61,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (_tags.HasTag(args.OtherFixture.Body.Owner, component.IDTag))
         {
-            ReceivePower(component.Power, component);
+            ReceivePower(component.PowerReceived, component);
             component.Accumulator = 0f;
         }
     }
@@ -190,77 +190,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         component.PowerBuffer -= power;
 
-        if (component.PowerBuffer < component.PowerMinimum)
+        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
         {
             RemoveConnections(component);
         }
 
         ChangePowerVisualizer(power, component);
-    }
-
-    /// <summary>
-    /// Check if a fields power falls between certain ranges to update the field gen visual for power.
-    /// </summary>
-    /// <param name="power"></param>
-    /// <param name="component"></param>
-    private void ChangePowerVisualizer(int power, ContainmentFieldGeneratorComponent component)
-    {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        if(component.PowerBuffer == 0)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
-
-        if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
-
-        if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
-        }
-
-        if (component.PowerBuffer == 25)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
-        }
-    }
-
-    /// <summary>
-    /// Check if a field has any or no connections and if it's enabled to toggle the field light
-    /// </summary>
-    /// <param name="component"></param>
-    private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
-    {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        if (component.Connections.Count == 0 && !component.Enabled)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
-        }
-
-        if (component.Enabled)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
-        }
-
-        if (component.Connections.Count == 1)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
-        }
-
-        if (component.Connections.Count > 1)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
-        }
-    }
-
-    private void ChangeOnLightVisualizer(ContainmentFieldGeneratorComponent component)
-    {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
     }
 
     /// <summary>
@@ -320,7 +255,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!otherFieldGeneratorComponent.IsConnected)
         {
             otherFieldGeneratorComponent.IsConnected = true;
-            ChangeOnLightVisualizer(component);
+            ChangeOnLightVisualizer(otherFieldGeneratorComponent);
         }
 
         ChangeFieldVisualizer(component);
@@ -381,8 +316,70 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     #endregion
 
-    public bool CanRepel(SharedSingularityComponent toRepel, ContainmentFieldGeneratorComponent component)
+    #region VisualizerHelpers
+    /// <summary>
+    /// Check if a fields power falls between certain ranges to update the field gen visual for power.
+    /// </summary>
+    /// <param name="power"></param>
+    /// <param name="component"></param>
+    private void ChangePowerVisualizer(int power, ContainmentFieldGeneratorComponent component)
     {
-        return false;
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if(component.PowerBuffer == 0)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
+
+        if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
+
+        if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
+        }
+
+        if (component.PowerBuffer == 25)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
+        }
     }
+
+    /// <summary>
+    /// Check if a field has any or no connections and if it's enabled to toggle the field light
+    /// </summary>
+    /// <param name="component"></param>
+    private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        if (component.Connections.Count == 0 && !component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
+        }
+
+        if (component.Connections.Count == 0 && component.Enabled)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
+        }
+
+        if (component.Connections.Count == 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
+        }
+
+        if (component.Connections.Count > 1)
+        {
+            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
+        }
+    }
+
+    private void ChangeOnLightVisualizer(ContainmentFieldGeneratorComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
+            return;
+
+        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
+    }
+    #endregion
 }
