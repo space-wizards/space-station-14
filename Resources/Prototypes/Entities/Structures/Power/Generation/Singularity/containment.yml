@@ -59,7 +59,7 @@
           NoLevel: {visible: false}
           On: {visible: true, state: a1}
           OneField: {visible: true, state: a2}
-          TwoFields: {visible: true, state: a3}
+          MultipleFields: {visible: true, state: a3}
       enum.ContainmentFieldGeneratorVisuals.OnLight:
         connectedLight:
           True: { visible: true }

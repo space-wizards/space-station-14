@@ -245,6 +245,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         component.Connections[dir] = (otherFieldGeneratorComponent, fields);
         otherFieldGeneratorComponent.Connections[dir.GetOpposite()] = (component, fields);
+        ChangeFieldVisualizer(otherFieldGeneratorComponent);
 
         if (!component.IsConnected)
         {
@@ -345,7 +346,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if a field has any or no connections and if it's enabled to toggle the field light
+    /// Check if a field has any or no connections and if it's enabled to toggle the field level light
     /// </summary>
     /// <param name="component"></param>
     private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
