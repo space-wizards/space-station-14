@@ -101,7 +101,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        if (_configManager.GetCVar(CCVars.CrewManifestUnsecure) && component.Unsecure)
+        if (!_configManager.GetCVar(CCVars.CrewManifestUnsecure) && component.Unsecure)
         {
             return;
         }
