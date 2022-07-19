@@ -79,6 +79,11 @@ public sealed class CrewManifestSystem : EntitySystem
          CloseEui(owningStation.Value, sessionCast, uid);
     }
 
+    /// <summary>
+    ///     Gets the crew manifest for a given station, along with the name of the station.
+    /// </summary>
+    /// <param name="station">Entity uid of the station.</param>
+    /// <returns>The name and crew manifest entries (unordered) of the station.</returns>
     public (string name, CrewManifestEntries? entries) GetCrewManifest(EntityUid station)
     {
         var valid = _cachedEntries.TryGetValue(station, out var manifest);
@@ -112,6 +117,12 @@ public sealed class CrewManifestSystem : EntitySystem
         OpenEui(owningStation.Value, sessionCast, uid);
     }
 
+    /// <summary>
+    ///     Opens a crew manifest EUI for a given player.
+    /// </summary>
+    /// <param name="station">Station that we're displaying the crew manifest for.</param>
+    /// <param name="session">The player's session.</param>
+    /// <param name="owner">If this EUI should be 'owned' by an entity.</param>
     public void OpenEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))
@@ -137,6 +148,12 @@ public sealed class CrewManifestSystem : EntitySystem
         eui.StateDirty();
     }
 
+    /// <summary>
+    ///     Closes an EUI for a given player.
+    /// </summary>
+    /// <param name="station">Station that we're displaying the crew manifest for.</param>
+    /// <param name="session">The player's session.</param>
+    /// <param name="owner">The owner of this EUI, if there was one.</param>
     public void CloseEui(EntityUid station, IPlayerSession session, EntityUid? owner = null)
     {
         if (!HasComp<StationRecordsComponent>(station))

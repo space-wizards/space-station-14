@@ -83,11 +83,11 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     records should generally be dependent on some generic
     ///     record with the bare minimum of information involved.
     /// </remarks>
-    /// <param name="station"></param>
-    /// <param name="idUid"></param>
-    /// <param name="name"></param>
-    /// <param name="species"></param>
-    /// <param name="gender"></param>
+    /// <param name="station">The entity uid of the station.</param>
+    /// <param name="idUid">The entity uid of an entity's ID card. Can be null.</param>
+    /// <param name="name">Name of the character.</param>
+    /// <param name="species">Species of the character.</param>
+    /// <param name="gender">Gender of the character.</param>
     /// <param name="jobId">
     ///     The job to initially tie this record to. This must be a valid job loaded in, otherwise
     ///     this call will silently fail. For example, just give somebody the 'passenger' job if
@@ -98,7 +98,7 @@ public sealed class StationRecordsSystem : EntitySystem
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </param>
-    /// <param name="records"></param>
+    /// <param name="records">Station records component.</param>
     public void CreateGeneralRecord(EntityUid station, EntityUid? idUid, string name, int age, string species, Gender gender, string? jobId, HumanoidCharacterProfile? profile = null,
         StationRecordsComponent? records = null)
     {

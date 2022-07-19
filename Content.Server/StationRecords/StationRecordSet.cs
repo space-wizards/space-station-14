@@ -23,7 +23,11 @@ public sealed class StationRecordSet
     [ViewVariables]
     private Dictionary<Type, Dictionary<StationRecordKey, object>> _tables = new();
 
-    // Gets all records of a specific type stored in the record set.
+    /// <summary>
+    ///     Gets all records of a specific type stored in the record set.
+    /// </summary>
+    /// <typeparam name="T">The type of record to fetch.</typeparam>
+    /// <returns>An enumerable object that contains a pair of both a station key, and the record associated with it.</returns>
     public IEnumerable<(StationRecordKey, T)?> GetRecordsOfType<T>()
     {
         if (!_tables.ContainsKey(typeof(T)))
@@ -44,7 +48,11 @@ public sealed class StationRecordSet
         }
     }
 
-    // Add a record into this set of record entries.
+    /// <summary>
+    ///     Add a new record into this set of entries.
+    /// </summary>
+    /// <param name="station">Station that we're adding the record for.</param>
+    /// <returns>A key that represents the record in this set.</returns>
     public StationRecordKey AddRecord(EntityUid station)
     {
         var key = new StationRecordKey(_currentRecordId++, station);
@@ -54,6 +62,12 @@ public sealed class StationRecordSet
         return key;
     }
 
+    /// <summary>
+    ///     Add an entry into a record.
+    /// </summary>
+    /// <param name="key">Key for the record.</param>
+    /// <param name="entry">Entry to add.</param>
+    /// <typeparam name="T">Type of the entry that's being added.</typeparam>
     public void AddRecordEntry<T>(StationRecordKey key, T entry)
     {
         if (!_keys.Contains(key) || entry == null)
@@ -94,6 +108,12 @@ public sealed class StationRecordSet
         return true;
     }
 
+    /// <summary>
+    ///     Checks if the record associated with this key has an entry of a certain type.
+    /// </summary>
+    /// <param name="key">The record key.</param>
+    /// <typeparam name="T">Type to check.</typeparam>
+    /// <returns>True if the entry exists, false otherwise.</returns>
     public bool HasRecordEntry<T>(StationRecordKey key)
     {
         return _keys.Contains(key)
@@ -101,16 +121,28 @@ public sealed class StationRecordSet
                && table.ContainsKey(key);
     }
 
+    /// <summary>
+    ///     Get the recently accessed keys from this record set.
+    /// </summary>
+    /// <returns>All recently accessed keys from this record set.</returns>
     public IEnumerable<StationRecordKey> GetRecentlyAccessed()
     {
         return _recentlyAccessed;
     }
 
+    /// <summary>
+    ///     Clears the recently accessed keys from the set.
+    /// </summary>
     public void ClearRecentlyAccessed()
     {
         _recentlyAccessed.Clear();
     }
 
+    /// <summary>
+    ///     Removes all record entries related to this key from this set.
+    /// </summary>
+    /// <param name="key">The key to remove.</param>
+    /// <returns>True if successful, false otherwise.</returns>
     public bool RemoveAllRecords(StationRecordKey key)
     {
         if (!_keys.Remove(key))
