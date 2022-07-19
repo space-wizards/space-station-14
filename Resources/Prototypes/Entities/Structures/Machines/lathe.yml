@@ -196,6 +196,9 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - ProximitySensor
+      - LeftArmBorg
+      - RightArmBorg
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -237,6 +240,7 @@
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
@@ -351,9 +355,8 @@
   - type: LatheVisuals
     idleState: icon
     runningState: icon
-  - type: LatheDatabase
-    static: true
-    recipes:
+  - type: ProtolatheDatabase
+    protolatherecipes:
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingHandsGlovesNitrile
@@ -373,6 +376,7 @@
       - Dropper
       - Syringe
       - PillCanister
+      - BodyBag
   - type: Machine
     board: MedicalTechFabCircuitboard
 

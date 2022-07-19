@@ -65,20 +65,20 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         //this is just the general condition thing used for determining the win/lose text
-        var percent = Math.Round(GetInfectedPercentage(out var livingHumans), 2);
+        var percent = GetInfectedPercentage(out var livingHumans);
 
         if (percent <= 0)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
         else if (percent <= 0.25)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
         else if (percent <= 0.5)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", (percent * 100).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString())));
         else if (percent < 1)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", (percent * 100).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString())));
         else
             ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
@@ -113,7 +113,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         _initialInfectedNames = new();
@@ -127,14 +127,14 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     /// </remarks>
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
         CheckRoundEnd(ev.Entity);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
         CheckRoundEnd(ev.Target);
     }
@@ -158,7 +158,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (!Enabled)
+        if (!RuleAdded)
             return;
 
         var minPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
@@ -177,13 +177,13 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         }
     }
 
-    public override void Started(GameRuleConfiguration configuration)
+    public override void Started()
     {
         //this technically will run twice with zombies on roundstart, but it doesn't matter because it fails instantly
         InfectInitialPlayers();
     }
 
-    public override void Ended(GameRuleConfiguration configuration) { }
+    public override void Ended() { }
 
     private void OnZombifySelf(EntityUid uid, ZombifyOnDeathComponent component, ZombifySelfActionEvent args)
     {

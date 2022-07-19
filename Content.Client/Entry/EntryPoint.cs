@@ -2,6 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
+using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -11,10 +12,10 @@ using Content.Client.MainMenu;
 using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
+using Content.Client.Radiation;
+using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
-using Content.Client.StationEvents;
-using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -60,7 +61,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
-        [Dependency] private readonly IStationEventManager _stationEventManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
@@ -150,7 +150,6 @@ namespace Content.Client.Entry
 
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
-            _stationEventManager.Initialize();
             _euiManager.Initialize();
             _voteManager.Initialize();
             _gamePrototypeLoadManager.Initialize();

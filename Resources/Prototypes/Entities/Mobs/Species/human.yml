@@ -32,6 +32,7 @@
       - !type:WashCreamPieReaction
   - type: Flashable
   - type: Polymorphable
+  - type: Identity
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
@@ -81,6 +82,7 @@
     - PressureImmunity
     - Muted
   - type: DiseaseCarrier
+  - type: Blindable
   # Other
   - type: Inventory
   - type: Clickable
@@ -256,11 +258,6 @@
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
-      alternateState: Standing
-      fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: DamageVisualizer
@@ -278,6 +275,11 @@
           color: "#FF0000"
         Burn:
           sprite: Mobs/Effects/burn_damage.rsi
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
+    alternateState: Standing
+    fireStackAlternateState: 3
   - type: CombatMode
   - type: Climbing
   - type: Cuffable

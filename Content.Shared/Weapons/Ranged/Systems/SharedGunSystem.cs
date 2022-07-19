@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -43,17 +44,16 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
-    [Dependency] protected readonly TagSystem _tagSystem = default!;
+    [Dependency] protected readonly TagSystem TagSystem = default!;
+    [Dependency] protected readonly SharedProjectileSystem Projectiles = default!;
 
     protected ISawmill Sawmill = default!;
 
-    private const float MuzzleFlashLifetime = 1f;
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
     protected const string AmmoExamineColor = "yellow";
     protected const string FireRateExamineColor = "yellow";
-    protected const string SafetyExamineColor = "lightgreen";
     protected const string ModeExamineColor = "cyan";
 
     public override void Initialize()
@@ -73,6 +73,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();
+        InitializeBasicEntity();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -88,7 +89,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void OnGunMeleeAttempt(EntityUid uid, GunComponent component, ref MeleeAttackAttemptEvent args)
     {
-        if (_tagSystem.HasTag(args.User, "GunsDisabled"))
+        if (TagSystem.HasTag(args.User, "GunsDisabled"))
             return;
 
         args.Cancelled = true;
@@ -186,7 +187,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (toCoordinates == null) return;
 
-        if (_tagSystem.HasTag(user, "GunsDisabled"))
+        if (TagSystem.HasTag(user, "GunsDisabled"))
         {
             Popup(Loc.GetString("gun-disabled"), user, user);
             return;
@@ -343,36 +344,17 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
-        var sprite = component.MuzzleFlash?.ToString();
+        var sprite = component.MuzzleFlash;
 
-        // TODO: AAAAA THIS MUZZLE FLASH CODE IS BAD
-        // NEEDS EFFECTS TO NOT BE BAD!
         if (sprite == null)
             return;
 
-        var time = Timing.CurTime;
-        var deathTime = time + TimeSpan.FromSeconds(MuzzleFlashLifetime);
-        // Offset the sprite so it actually looks like it's coming from the gun
-        var offset = new Vector2(0.0f, -0.5f);
+        var ev = new MuzzleFlashEvent(sprite);
 
-        var message = new EffectSystemMessage
-        {
-            EffectSprite = sprite,
-            Born = time,
-            DeathTime = deathTime,
-            AttachedEntityUid = gun,
-            AttachedOffset = offset,
-            //Rotated from east facing
-            Rotation = -MathF.PI / 2f,
-            Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
-            ColorDelta = new Vector4(0, 0, 0, -1500f),
-            Shaded = false
-        };
-
-        CreateEffect(message, user);
+        CreateEffect(gun, ev, user);
     }
 
-    protected abstract void CreateEffect(EffectSystemMessage message, EntityUid? user = null);
+    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
     protected sealed class GunComponentState : ComponentState
@@ -408,5 +390,6 @@ public enum AmmoVisuals : byte
     Spent,
     AmmoCount,
     AmmoMax,
+    HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
     MagLoaded,
 }

@@ -221,7 +221,7 @@
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolHighVelocity
   - type: Sprite
     layers:
     - state: high_velocity

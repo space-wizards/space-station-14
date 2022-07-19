@@ -1,10 +1,10 @@
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
-using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Interaction;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -42,6 +42,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         base.Initialize();
 
         _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+        UpdatesAfter.Add(typeof(EyeUpdateSystem));
     }
 
     public override void Shutdown()
