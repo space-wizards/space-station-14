@@ -70,8 +70,6 @@ public sealed class ParallaxManager : IParallaxManager
         {
             var parallaxPrototype = _prototypeManager.Index<ParallaxPrototype>(name);
 
-            ParallaxLayerPrepared[] hq;
-            ParallaxLayerPrepared[] lq;
             ParallaxLayerPrepared[][] layers;
 
             if (parallaxPrototype.LayersLQUseHQ)
@@ -86,6 +84,8 @@ public sealed class ParallaxManager : IParallaxManager
                     LoadParallaxLayers(parallaxPrototype.LayersLQ, cancel)
                 );
             }
+
+            _loadingParallaxes.Remove(name, out _);
 
             if (token.Token.IsCancellationRequested) return;
 

@@ -60,10 +60,11 @@ public sealed class ParallaxOverlay : Overlay
             // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
             // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
             // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
-            var home = layer.Config.WorldHomePosition + _manager.ParallaxAnchor + layer.Config.Scrolling * realTime;
+            var home = layer.Config.WorldHomePosition + _manager.ParallaxAnchor;
+            var scrolled = layer.Config.Scrolling * realTime;
 
             // Origin - start with the parallax shift itself.
-            var originBL = (position - home) * layer.Config.Slowness;
+            var originBL = (position - home) * layer.Config.Slowness + scrolled;
 
             // Place at the home.
             originBL += home;

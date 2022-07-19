@@ -5,12 +5,18 @@
         !type:ImageParallaxTextureSource
         path: "/Textures/Tiles/boxing.png"
       slowness: 1
-    - texture: 
+    - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/noise.png"
       slowness: 0
-      scrolling: "-1, 0"
-      shader: AlphaShader
+      scale: "5, 5"
+      scrolling: "-1, -0.5"
+    #- texture:
+    #    !type:ImageParallaxTextureSource
+    #    path: "/Textures/Parallaxes/noise.png"
+    #    slowness: 0
+    #    scale: "0.1, 0.1"
+    #    scrolling: "0.1, 0"
 
 - type: parallax
   id: Snow
