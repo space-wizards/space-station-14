@@ -12,6 +12,7 @@ namespace Content.Client.StationRecords;
 public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
+    private bool _isPopulating;
 
     public GeneralStationRecordConsoleWindow()
     {
@@ -27,12 +28,16 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             OnKeySelected?.Invoke(cast);
         };
 
-        RecordListing.OnItemDeselected += _ => OnKeySelected?.Invoke(null);
+        RecordListing.OnItemDeselected += _ =>
+        {
+            if (!_isPopulating)
+                OnKeySelected?.Invoke(null);
+        };
     }
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
-        if (state.IsEmpty())
+        if (state.RecordListing == null)
         {
             RecordListingStatus.Visible = true;
             RecordListing.Visible = false;
@@ -71,10 +76,12 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             var item = RecordListing.AddItem(name);
             item.Metadata = key;
 
+            _isPopulating = true;
             if (selected != null && key.ID == selected.Value.ID)
             {
                 item.Selected = true;
             }
+            _isPopulating = false;
         }
 
         RecordListing.SortItemsByText();
