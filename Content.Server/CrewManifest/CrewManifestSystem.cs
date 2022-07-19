@@ -204,15 +204,28 @@ public sealed class CrewManifestSystem : EntitySystem
             var record = recordObject.Value.Item2;
             var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.DisplayPriority);
 
-            foreach (var department in record.Departments)
+            if (record.Departments.Count != 0)
             {
-                if (!entries.Entries.TryGetValue(department, out var entryList))
+                foreach (var department in record.Departments)
                 {
-                    entryList = new();
-                    entries.Entries.Add(department, entryList);
+                    if (!entries.Entries.TryGetValue(department, out var entryList))
+                    {
+                        entryList = new();
+                        entries.Entries.Add(department, entryList);
+                    }
+
+                    entryList.Add(entry);
+                }
+            }
+            else
+            {
+                if (!entries.Entries.TryGetValue("Unknown", out var unknownList))
+                {
+                    unknownList = new();
+                    entries.Entries.Add("Unknown", unknownList);
                 }
 
-                entryList.Add(entry);
+                unknownList.Add(entry);
             }
         }
 
