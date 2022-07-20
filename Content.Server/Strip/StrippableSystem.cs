@@ -307,12 +307,15 @@ namespace Content.Server.Strip
                 NeedHand = true,
             };
 
-            if (Check())
+            if (!ev.Stealth)
             {
-                if (userHands.ActiveHandEntity != null && !ev.Stealth)
+                if (Check())
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", userHands.ActiveHandEntity)), component.Owner,
-                        Filter.Entities(component.Owner), PopupType.Large);
+                    if (userHands.ActiveHandEntity != null)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", userHands.ActiveHandEntity)), component.Owner,
+                            Filter.Entities(component.Owner), PopupType.Large);
+                    }
                 }
             }
 
@@ -434,20 +437,19 @@ namespace Content.Server.Strip
                 BreakOnUserMove = true,
             };
 
-            if (Check())
+            if (!ev.Stealth)
             {
-                if (ev.Stealth)
+                if (Check())
                 {
-                    // show no alert
-                }
-                else if (slotDef.StripHidden)
-                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner,
-                        Filter.Entities(component.Owner), PopupType.Large);
-                else
-                {
-                    if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var slotItem))
-                        _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", slotItem)), component.Owner,
+                if (slotDef.StripHidden)
+                        _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner,
                             Filter.Entities(component.Owner), PopupType.Large);
+                    else
+                    {
+                        if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var slotItem))
+                            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", slotItem)), component.Owner,
+                                Filter.Entities(component.Owner), PopupType.Large);
+                    }
                 }
             }
 
