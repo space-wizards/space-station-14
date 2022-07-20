@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Roles;
@@ -30,7 +29,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
         foreach (var requirement in job.Requirements)
         {
-            if (!TryRequirementMet(id, job, requirement, ref overallTime, ref roleTimes, out reason)) return false;
+            if (!TryRequirementMet(id, requirement, ref overallTime, ref roleTimes, out reason)) return false;
         }
 
         return true;
@@ -39,7 +38,8 @@ public abstract class SharedRoleTimerSystem : EntitySystem
     /// <summary>
     /// Returns a string with the reason why a particular requirement may not be met.
     /// </summary>
-    public bool TryRequirementMet(NetUserId id, JobPrototype job, JobRequirement requirement,
+    public bool TryRequirementMet(NetUserId id,
+        JobRequirement requirement,
         ref TimeSpan? overallTime,
         ref Dictionary<string, TimeSpan>? roleTimes,
         [NotNullWhen(false)] out string? reason)
@@ -54,11 +54,16 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
                 // Check all jobs' departments
                 var jobs = ProtoManager.Index<DepartmentPrototype>(deptRequirement.Department).Roles.ToHashSet();
+                string proto;
 
                 // Check all jobs' playtime
                 foreach (var other in jobs)
                 {
-                    roleTimes.TryGetValue(other, out var otherTime);
+                    // The schema is stored on the Job role but we want to explode if the timer isn't found anyway.
+                    proto = "Job" + other;
+                    ProtoManager.Index<RoleTimerPrototype>(proto);
+
+                    roleTimes.TryGetValue(proto, out var otherTime);
                     playtime += otherTime;
                 }
 
@@ -83,7 +88,10 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
             case RoleTimeRequirement roleRequirement:
                 roleTimes ??= GetRolePlaytimes(id);
-                roleTimes.TryGetValue(roleRequirement.Role, out var roleTime);
+                proto = "Job" + roleRequirement.Role;
+                ProtoManager.Index<RoleTimerPrototype>(proto);
+
+                roleTimes.TryGetValue(proto, out var roleTime);
                 var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
 
                 if (roleDiff <= 0) return true;

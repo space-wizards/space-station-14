@@ -55,6 +55,30 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
     }
 
+    public IEnumerable<string> GetTimedRoles(Mind.Mind mind)
+    {
+        foreach (var role in mind.AllRoles)
+        {
+            if (role is not IRoleTimer timer) continue;
+            yield return ProtoManager.Index<RoleTimerPrototype>(timer.Timer).ID;
+        }
+    }
+
+    private List<string> GetTimedRoles(IPlayerSession session)
+    {
+        var roles = new List<string>();
+        var contentData = _playerManager.GetPlayerData(session.UserId).ContentData();
+
+        if (contentData?.Mind == null) return roles;
+
+        foreach (var mindRole in GetTimedRoles(contentData.Mind))
+        {
+            roles.Add(mindRole);
+        }
+
+        return roles;
+    }
+
     private void OnRoleRemove(RoleRemovedEvent ev)
     {
         if (ev.Mind.Session == null) return;
@@ -65,8 +89,12 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
     {
         if (ev.Mind.Session == null) return;
 
+        var time = "";
+        if (ev.Role is IRoleTimer timer)
+            time = ProtoManager.Index<RoleTimerPrototype>(timer.Timer).ID;
+
         // Save all but the current role.
-        SaveRoles(ev.Mind.Session, _timing.CurTime, ev.Mind.AllRoles.Where(r => r != ev.Role));
+        SaveRoles(ev.Mind.Session, _timing.CurTime, GetTimedRoles(ev.Mind).Where(r => r != time));
     }
 
     private void SetAutosaveDelay(float value) => _autosaveDelay = value;
@@ -154,7 +182,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         if (currentTime <= lastSave) return;
 
         var addedTime = currentTime - lastSave;
-        var roles = GetRoles(pSession);
+        var roles = GetTimedRoles(pSession);
         Sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
 
         foreach (var role in roles)
@@ -166,7 +194,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         _lastSetTime[pSession] = currentTime;
     }
 
-    private void SaveRoles(IPlayerSession pSession, TimeSpan currentTime, IEnumerable<Role> roles, bool dbSave = true)
+    private void SaveRoles(IPlayerSession pSession, TimeSpan currentTime, IEnumerable<string> roles, bool dbSave = true)
     {
         if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
         {
@@ -180,7 +208,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         foreach (var role in roles)
         {
-            _roleTimers.AddTimeToRole(pSession.UserId, role.Name, addedTime, dbSave);
+            _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime, dbSave);
         }
 
         _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
@@ -224,7 +252,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (TryRequirementMet(id, job, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
+                    if (TryRequirementMet(id, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
                     goto NoRole;
                 }
             }
@@ -253,27 +281,12 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (TryRequirementMet(id, jobber, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
+                if (TryRequirementMet(id, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
 
                 jobs.RemoveSwap(i);
                 i--;
             }
         }
-    }
-
-    private List<string> GetRoles(IPlayerSession session)
-    {
-        var roles = new List<string>();
-        var contentData = _playerManager.GetPlayerData(session.UserId).ContentData();
-
-        if (contentData?.Mind == null) return roles;
-
-        foreach (var mindRole in contentData.Mind.AllRoles)
-        {
-            roles.Add(mindRole.Name);
-        }
-
-        return roles;
     }
 
     public void PlayerRolesChanged(IPlayerSession player)

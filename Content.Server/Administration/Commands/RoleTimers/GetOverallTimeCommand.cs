@@ -28,6 +28,6 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
 
         var roles = IoCManager.Resolve<RoleTimerManager>();
         var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine($"Increased overall time for {args[0]} to {timers.TotalMinutes:0}");
+        shell.WriteLine($"Increased overall time for {args[0]} to {timers.TotalMinutes}");
     }
 }

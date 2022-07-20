@@ -356,7 +356,7 @@ namespace Content.Client.Preferences.UI
                         Orientation = LayoutOrientation.Vertical,
                         Name = department.ID,
                         ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                            ("departmentName", department))
+                            ("departmentName", department.ID))
                     };
 
                     if (firstCategory)
@@ -379,7 +379,7 @@ namespace Content.Client.Preferences.UI
                             new Label
                             {
                                 Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                    ("departmentName" ,department))
+                                    ("departmentName", department.ID))
                             }
                         }
                     });
@@ -1045,8 +1045,6 @@ namespace Content.Client.Preferences.UI
                 {
                     Text = Loc.GetString("role-timer-locked"),
                     Visible = true,
-                    MouseFilter = MouseFilterMode.Pass,
-                    TooltipDelay = 0.2f,
                     HorizontalAlignment = HAlignment.Center,
                     StyleClasses = {StyleBase.StyleClassLabelSubText},
                 };
@@ -1055,6 +1053,8 @@ namespace Content.Client.Preferences.UI
                 {
                     Visible = false,
                     HorizontalExpand = true,
+                    TooltipDelay = 0.2f,
+                    MouseFilter = MouseFilterMode.Stop,
                     Children =
                     {
                         _requirementsLabel
@@ -1076,7 +1076,7 @@ namespace Content.Client.Preferences.UI
 
             public void LockRequirements(string requirements)
             {
-                _requirementsLabel.ToolTip = requirements;
+                _lockStripe.ToolTip = requirements;
                 _lockStripe.Visible = true;
                 _optionButton.Visible = false;
             }

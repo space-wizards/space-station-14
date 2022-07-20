@@ -3,7 +3,7 @@
   name: job-name-bartender
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Service
+      department: Civilian
       time: 1800
   startingGear: BartenderGear
   departments:

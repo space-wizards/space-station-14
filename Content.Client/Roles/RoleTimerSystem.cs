@@ -53,7 +53,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
         foreach (var requirement in job.Requirements)
         {
-            if (TryRequirementMet(player.UserId, job, requirement, ref overall, ref roles, out reason)) continue;
+            if (TryRequirementMet(player.UserId, requirement, ref overall, ref roles, out reason)) continue;
             reasonBuilder.AppendLine(reason);
         }
 
