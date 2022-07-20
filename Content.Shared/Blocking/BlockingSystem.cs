@@ -5,6 +5,8 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Maps;
+using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
@@ -137,11 +139,22 @@ public sealed class BlockingSystem : EntitySystem
                 return false;
             }
 
-            //Don't allow someone to block if they're too close to a solid object or player
-            if (TryComp<PhysicsComponent>(user, out var physics) && physics.ContactCount > 1)
+            //Don't allow someone to block if someone else is on the same tile.
+            var playerTileRef = xform.Coordinates.GetTileRef();
+
+            if (playerTileRef != null)
             {
-                TooCloseError(user);
-                return false;
+                var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
+                var query =GetEntityQuery<MobStateComponent>();
+
+                foreach (var uid in intersecting)
+                {
+                    if (query.HasComponent(uid) && uid != user)
+                    {
+                        TooCloseError(user);
+                        return false;
+                    }
+                }
             }
 
             //Don't allow someone to block if they're in a doorway
