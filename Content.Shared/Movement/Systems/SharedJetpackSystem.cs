@@ -29,13 +29,19 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
         SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
+        SubscribeLocalEvent<JetpackComponent, CanWeightlessMoveEvent>(OnJetpackCanWeightlessMove);
+
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
-        SubscribeLocalEvent<JetpackUserComponent, MobMovementProfileEvent>(OnJetpackUserMovement);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
         SubscribeLocalEvent<JetpackUserComponent, ComponentGetState>(OnJetpackUserGetState);
         SubscribeLocalEvent<JetpackUserComponent, ComponentHandleState>(OnJetpackUserHandleState);
 
         SubscribeLocalEvent<GravityChangedMessage>(OnJetpackUserGravityChanged);
+    }
+
+    private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)
+    {
+        args.CanMove = true;
     }
 
     private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
@@ -75,17 +81,6 @@ public abstract class SharedJetpackSystem : EntitySystem
         SetEnabled(component, false, args.User);
     }
 
-    private void OnJetpackUserMovement(EntityUid uid, JetpackUserComponent component, ref MobMovementProfileEvent args)
-    {
-        // Only overwrite jetpack movement if they're offgrid.
-        if (args.Override || !args.Weightless) return;
-
-        args.Override = true;
-        args.Acceleration = component.Acceleration;
-        args.WeightlessModifier = component.WeightlessModifier;
-        args.Friction = component.Friction;
-    }
-
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
@@ -106,10 +101,15 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void SetupUser(EntityUid uid, JetpackComponent component)
     {
         var user = EnsureComp<JetpackUserComponent>(uid);
-        user.Acceleration = component.Acceleration;
-        user.Friction = component.Friction;
-        user.WeightlessModifier = component.WeightlessModifier;
+        var relay = EnsureComp<RelayInputMoverComponent>(uid);
+        relay.RelayEntity = component.Owner;
         user.Jetpack = component.Owner;
+    }
+
+    private void RemoveUser(EntityUid uid)
+    {
+        if (!RemComp<JetpackUserComponent>(uid)) return;
+        RemComp<RelayInputMoverComponent>(uid);
     }
 
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
@@ -175,7 +175,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             }
             else
             {
-                RemComp<JetpackUserComponent>(user.Value);
+                RemoveUser(user.Value);
             }
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);

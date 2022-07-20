@@ -137,8 +137,8 @@
       types:
         Poison: 2
         Piercing: 1
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -668,8 +668,8 @@
     damage:
       types:
         Blunt: 10
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1149,8 +1149,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -1317,8 +1317,8 @@
     - type: AiFactionTag
       factions:
         - Xeno
-    - type: PlayerInputMover
-    - type: PlayerMobMover
+    - type: InputMover
+    - type: MobMover
     - type: UtilityAI
       behaviorSets:
         - Idle
