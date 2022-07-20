@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation minor update. More hidden drip, intern spawn points, power
-      monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
-  id: 1489
-  time: '2022-05-09T21:39:35.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: "Space Wind \u2122 has been removed (until it is fixed or there's a\
@@ -2956,3 +2950,8 @@ Entries:
     type: Tweak}
   id: 1988
   time: '2022-07-20T12:30:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Necronomicon no longer can appear in surplus bundles., type: Tweak}
+  id: 1989
+  time: '2022-07-20T15:29:09.0000000+00:00'
