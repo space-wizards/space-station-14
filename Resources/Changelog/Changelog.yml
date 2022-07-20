@@ -1,9 +1,4 @@
 Entries:
-- author: Tomeno
-  changes:
-  - {message: Icon smoothing for asteroid rocks, type: Add}
-  id: 1491
-  time: '2022-05-10T00:41:28.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Audio now plays signalling roundstart., type: Add}
@@ -2953,3 +2948,8 @@ Entries:
   - {message: pAIs can play MIDI again, type: Fix}
   id: 1990
   time: '2022-07-20T16:08:33.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
+  id: 1991
+  time: '2022-07-20T23:50:49.0000000+00:00'
