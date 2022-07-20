@@ -246,16 +246,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (chance > 1)
             chance = 1;
 
+        // Now that we've calculated our chance, roll and make them a traitor if we roll under.
+        // You get one shot.
         if (_random.Prob((float) chance))
         {
-            var mind = ev.Player.Data.ContentData()?.Mind;
-
-            if (mind == null)
-            {
-                Logger.Error("Player somehow joined with no mind, see entity " + ev.Mob);
-                return;
-            }
-
             MakeTraitor(ev.Player);
         }
     }
