@@ -13,6 +13,9 @@ public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
+    [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -31,24 +34,24 @@ public sealed partial class AdminVerbSystem
 
         Verb traitor = new()
         {
-            Text = Loc.GetString("admin-antag-traitor"),
+            Text = "Make Traitor",
             Category = VerbCategory.Antag,
             IconTexture = "/Textures/Structures/Wallmounts/posters.rsi/poster5_contraband.png",
             Act = () =>
             {
-                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
                     return;
 
-                EntitySystem.Get<TraitorRuleSystem>().MakeTraitor(targetMindComp.Mind.Session);
+                _traitorRule.MakeTraitor(targetMindComp.Mind.Session);
             },
             Impact = LogImpact.High,
-            Message = "Recruit the target into the Syndicate immediately.",
+            Message = Loc.GetString("admin-verb-make-traitor"),
         };
         args.Verbs.Add(traitor);
 
         Verb zombie = new()
         {
-            Text = Loc.GetString("admin-antag-zombie"),
+            Text = "Make Zombie",
             Category = VerbCategory.Antag,
             IconTexture = "/Textures/Structures/Wallmounts/signs.rsi/bio.png",
             Act = () =>
@@ -60,42 +63,42 @@ public sealed partial class AdminVerbSystem
                 _zombify.ZombifyEntity(targetMindComp.Owner);
             },
             Impact = LogImpact.High,
-            Message = "Zombifies the target.",
+            Message = Loc.GetString("admin-verb-make-zombie"),
         };
         args.Verbs.Add(zombie);
 
 
         Verb nukeOp = new()
         {
-            Text = Loc.GetString("admin-antag-nukeop"),
+            Text = "Make nuclear operative",
             Category = VerbCategory.Antag,
             IconTexture = "/Textures/Structures/Wallmounts/signs.rsi/radiation.png",
             Act = () =>
             {
-                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
                     return;
 
-                EntitySystem.Get<NukeopsRuleSystem>().MakeLoneNukie(targetMindComp.Mind);
+                _nukeopsRule.MakeLoneNukie(targetMindComp.Mind);
             },
             Impact = LogImpact.High,
-            Message = "Make target a lone Nuclear Operative.",
+            Message = Loc.GetString("admin-verb-make-nuclear-operative"),
         };
         args.Verbs.Add(nukeOp);
 
         Verb pirate = new()
         {
-            Text = Loc.GetString("admin-antag-pirate"),
+            Text = "Make Pirate",
             Category = VerbCategory.Antag,
             IconTexture = "/Textures/Clothing/Head/Hats/pirate.rsi/icon.png",
             Act = () =>
             {
-                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
                     return;
 
-                EntitySystem.Get<PiratesRuleSystem>().MakePirate(targetMindComp.Mind);
+                _piratesRule.MakePirate(targetMindComp.Mind);
             },
             Impact = LogImpact.High,
-            Message = "Shiver the target's timbers",
+            Message = Loc.GetString("admin-verb-make-pirate"),
         };
         args.Verbs.Add(pirate);
 
