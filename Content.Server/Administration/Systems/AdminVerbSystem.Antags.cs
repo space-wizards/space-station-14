@@ -75,14 +75,14 @@ public sealed partial class AdminVerbSystem
             return;
 
         var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
-        if (targetMindComp == null)
+        if (!targetHasMind || targetMindComp == null)
             return;
 
         Verb traitor = new()
         {
             Text = Loc.GetString("admin-antag-traitor"),
             Category = VerbCategory.Antag,
-            IconTexture = "/Textures/Interface/VerbIcons/antag-e_sword-temp.192dpi.png",
+            IconTexture = "/Textures/Structures/Wallmounts/posters.rsi/poster5_contraband.png",
             Act = () =>
             {
                 if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
@@ -93,14 +93,13 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.High,
             Message = "Recruit the target into the Syndicate immediately.",
         };
-        if(targetHasMind)
-            args.Verbs.Add(traitor);
+        args.Verbs.Add(traitor);
 
         Verb zombie = new()
         {
             Text = Loc.GetString("admin-antag-zombie"),
             Category = VerbCategory.Antag,
-            IconTexture = "/Textures/Interface/VerbIcons/zombify-temp.png",
+            IconTexture = "/Textures/Structures/Wallmounts/signs.rsi/bio.png",
             Act = () =>
             {
                 TryComp(args.Target, out MindComponent? mindComp);
@@ -112,12 +111,42 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.High,
             Message = "Zombifies the target.",
         };
-        if (targetHasMind)
-            args.Verbs.Add(zombie);
-
-        //Remaining entries:
+        args.Verbs.Add(zombie);
 
 
+        Verb nukeOp = new()
+        {
+            Text = Loc.GetString("admin-antag-nukeop"),
+            Category = VerbCategory.Antag,
+            IconTexture = "/Textures/Structures/Wallmounts/signs.rsi/radiation.png",
+            Act = () =>
+            {
+                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                    return;
+
+                EntitySystem.Get<NukeopsRuleSystem>().MakeLoneNukie(targetMindComp.Mind);
+            },
+            Impact = LogImpact.High,
+            Message = "Make target a lone Nuclear Operative.",
+        };
+        args.Verbs.Add(nukeOp);
+
+        Verb pirate = new()
+        {
+            Text = Loc.GetString("admin-antag-pirate"),
+            Category = VerbCategory.Antag,
+            IconTexture = "/Textures/Clothing/Head/Hats/pirate.rsi/icon.png",
+            Act = () =>
+            {
+                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                    return;
+
+                EntitySystem.Get<PiratesRuleSystem>().MakePirate(targetMindComp.Mind);
+            },
+            Impact = LogImpact.High,
+            Message = "Shiver the target's timbers",
+        };
+        args.Verbs.Add(pirate);
 
     }
 }
