@@ -178,7 +178,7 @@ public abstract class SharedJetpackSystem : EntitySystem
                 RemoveUser(user.Value);
             }
 
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
+            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
