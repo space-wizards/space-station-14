@@ -1,106 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'The space pollution has cleared, and now you can see the bright nebulae
-      once hidden behind the space clouds.', type: Add}
-  id: 1470
-  time: '2022-05-08T00:49:22.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Unequipping clothing now properly resets any movespeed modifiers they
-      gave you., type: Fix}
-  id: 1471
-  time: '2022-05-08T01:45:07.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Pianos are now anchored to the ground to slowdown theft., type: Tweak}
-  id: 1472
-  time: '2022-05-08T05:02:02.0000000+00:00'
-- author: emisse
-  changes:
-  - {message: tasers can only fire 1 shot, type: Add}
-  - {message: blood no longer slips, type: Add}
-  id: 1473
-  time: '2022-05-08T05:02:12.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'The botanists have clipped down the potted plants, you can now walk
-      over them.', type: Tweak}
-  id: 1474
-  time: '2022-05-08T05:41:52.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Barsigns should properly appear on top of glass without half-clipping
-      now., type: Fix}
-  id: 1475
-  time: '2022-05-08T06:08:23.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Several large areas of Barratry have been redone., type: Tweak}
-  id: 1476
-  time: '2022-05-08T07:45:30.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Attention syndicate agents! We have found some old crates with random
-      junk inside. We are ready to sell it for 20 telecrystals while content inside
-      cost 50 telecrystals., type: Add}
-  id: 1477
-  time: '2022-05-08T07:52:01.0000000+00:00'
-- author: UKNOWH
-  changes:
-  - {message: chef hat storage fixed!, type: Tweak}
-  id: 1478
-  time: '2022-05-08T07:52:41.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Light now passes through glass external airlocks and glass docking airlocks.,
-    type: Fix}
-  id: 1479
-  time: '2022-05-08T08:51:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Crayons are now edible., type: Add}
-  id: 1480
-  time: '2022-05-08T08:51:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Popups now get occluded, type: Tweak}
-  id: 1481
-  time: '2022-05-08T08:54:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Speech bubbles are now occluded, type: Tweak}
-  id: 1482
-  time: '2022-05-08T08:54:56.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
-  id: 1483
-  time: '2022-05-08T13:23:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
-      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
-      you that they could not be traitors. Any members of this department are free
-      to bully or teach the interns however they please.', type: Add}
-  id: 1484
-  time: '2022-05-08T20:00:01.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: Speech sounds now sound a little different every time., type: Tweak}
-  - {message: Speech sounds now are louder when closer and quieter when further.,
-    type: Tweak}
-  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
-  - {message: Vending machines are quieter., type: Tweak}
-  - {message: Your personal AIs talk using their synthesizers., type: Add}
-  - {message: Monkeys use their beautiful voices., type: Add}
-  id: 1485
-  time: '2022-05-09T04:55:24.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added construction recipe for glass airlocks, type: Add}
-  id: 1486
-  time: '2022-05-09T05:52:19.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Removed the new parallax background., type: Remove}
@@ -2946,3 +2844,115 @@ Entries:
   - {message: Mobs are now properly throwable, type: Tweak}
   id: 1969
   time: '2022-07-16T03:04:14.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Throwing pushback reduced to half when weightless., type: Tweak}
+  - {message: Weightless distance for touching upped to 1m as 0.6m to be more forgiving
+      when weightless., type: Tweak}
+  - {message: Vehicles are now predicted. Vehicles are also now generally higher speed
+      but lower acceleration than mobs. ATVs are fastest but have lowest acceleration.,
+    type: Tweak}
+  - {message: Changed mobs back to 4.5 speed., type: Tweak}
+  - {message: Shuttle strafing and rotation now have their own keybinds. Shuttle braking
+      has been implemented on spacebar., type: Tweak}
+  id: 1970
+  time: '2022-07-16T03:51:52.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed the makeshift laser recipe not accepting certain diamonds sometimes.,
+    type: Fix}
+  id: 1971
+  time: '2022-07-16T17:43:24.0000000+00:00'
+- author: SunbearDev
+  changes:
+  - {message: added an error as an object!, type: Add}
+  id: 1972
+  time: '2022-07-16T22:33:30.0000000+00:00'
+- author: 13spacemen
+  changes:
+  - {message: 'Added purple research airlocks, green virology airlocks, (not mapped
+      in yet)', type: Add}
+  id: 1973
+  time: '2022-07-16T22:35:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle braking now uses thrusters., type: Tweak}
+  id: 1974
+  time: '2022-07-17T09:36:09.0000000+00:00'
+- author: metalgearsloth and DogZeroX
+  changes:
+  - {message: 'FTL mechanics have been added allowing you to go (for now, limited)
+      other destinations, ported from Vilous Station 14.', type: Add}
+  - {message: Nukies now start on a nukie planet and have to FTL to the station. No
+      more seeking out their shuttle at roundstart., type: Add}
+  - {message: Additional shuttles can now travel to Centcomm after the emergency shuttle
+      departs (e.g. cargo), type: Add}
+  - {message: Fix autodocking when only 1 port was blocked (woops)., type: Fix}
+  - {message: 'IFF labels now show much further away, at the edge of the radar (no
+      more cargo shuttle getting lost).', type: Tweak}
+  id: 1975
+  time: '2022-07-17T10:22:09.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Nuclear Operatives are now internally (i.e. badmins) recognized as antags.
+      You have been legitimized., type: Fix}
+  id: 1976
+  time: '2022-07-17T21:57:52.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Pneumatic cannons and cream pies no longer can be used to instakill
+      people with hyperoptimized poison mixes., type: Remove}
+  id: 1977
+  time: '2022-07-17T22:25:42.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Ported cleanbots from Nyanotrasen MRP., type: Add}
+  id: 1978
+  time: '2022-07-18T03:48:36.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
+  id: 1979
+  time: '2022-07-18T04:41:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
+  id: 1980
+  time: '2022-07-19T07:09:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: If the shuttle can't dock it will announce its direction from the station.,
+    type: Tweak}
+  id: 1981
+  time: '2022-07-19T11:47:49.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
+  id: 1982
+  time: '2022-07-20T03:57:05.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
+    type: Fix}
+  id: 1983
+  time: '2022-07-20T04:08:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
+      a steal!, type: Add}
+  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
+      you living.', type: Add}
+  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
+  id: 1984
+  time: '2022-07-20T04:16:35.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Air vents are now more resilient to spacing, type: Add}
+  id: 1985
+  time: '2022-07-20T04:23:23.0000000+00:00'
+- author: Cerol
+  changes:
+  - {message: added Antag menu for admins to make players into antags and 4 entries
+      for it., type: Add}
+  id: 1986
+  time: '2022-07-20T09:46:24.0000000+00:00'

@@ -30,12 +30,10 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var conSystem = sEntities.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
 
             EntityUid origin = default;
             EntityUid other = default;
-            IContainer container = null;
-            IComponent component = null;
-            EntityCoordinates entityCoordinates = default;
             MapCoordinates mapCoordinates = default;
 
             await server.WaitAssertion(() =>
@@ -45,9 +43,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
                 origin = sEntities.SpawnEntity(HumanId, coordinates);
                 other = sEntities.SpawnEntity(HumanId, coordinates);
-                container = other.EnsureContainer<Container>("InRangeUnobstructedTestOtherContainer");
-                component = sEntities.GetComponent<TransformComponent>(other);
-                entityCoordinates = sEntities.GetComponent<TransformComponent>(other).Coordinates;
+                conSystem.EnsureContainer<Container>(other, "InRangeUnobstructedTestOtherContainer");
                 mapCoordinates = sEntities.GetComponent<TransformComponent>(other).MapPosition;
             });
 

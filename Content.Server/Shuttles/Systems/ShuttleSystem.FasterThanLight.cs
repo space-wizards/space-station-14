@@ -24,6 +24,7 @@ public sealed partial class ShuttleSystem
 
     [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
     [Dependency] private readonly ThrusterSystem _thruster = default!;
 
@@ -56,6 +57,11 @@ public sealed partial class ShuttleSystem
     /// Space between grids within hyperspace.
     /// </summary>
     private const float Buffer = 5f;
+
+    /// <summary>
+    /// How many times we try to proximity warp close to something before falling back to map-wideAABB.
+    /// </summary>
+    private const int FTLProximityIterations = 3;
 
     private void InitializeFTL()
     {
@@ -261,8 +267,8 @@ public sealed partial class ShuttleSystem
                     {
                         body.LinearVelocity = Vector2.Zero;
                         body.AngularVelocity = 0f;
-                        body.LinearDamping = ShuttleIdleLinearDamping;
-                        body.AngularDamping = ShuttleIdleAngularDamping;
+                        body.LinearDamping = ShuttleLinearDamping;
+                        body.AngularDamping = ShuttleAngularDamping;
                     }
 
                     TryComp(comp.Owner, out shuttle);
@@ -429,20 +435,58 @@ public sealed partial class ShuttleSystem
     {
         if (!Resolve(targetUid, ref targetXform) || targetXform.MapUid == null || !Resolve(component.Owner, ref xform)) return false;
 
-        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.WorldAABB;
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
         Box2? aabb = null;
 
         // Spawn nearby.
-        foreach (var grid in _mapManager.GetAllMapGrids(targetXform.MapID))
+        // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
+        // Can't just get an AABB of every grid as we may spawn very far away.
+        var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
+            .TransformBox(Comp<IMapGridComponent>(targetUid).Grid.LocalAABB).Enlarged(shuttleAABB.Size.Length);
+
+        var nearbyGrids = new HashSet<EntityUid>(1) { targetUid };
+        var iteration = 0;
+        var lastCount = 1;
+        var mapId = targetXform.MapID;
+
+        while (iteration < 3)
         {
-            var gridAABB = grid.WorldAABB;
-            aabb = aabb?.Union(gridAABB) ?? gridAABB;
+            foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
+            {
+                if (!nearbyGrids.Add(grid.GridEntityId)) continue;
+
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                    .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+            }
+
+            // Can do proximity
+            if (nearbyGrids.Count == lastCount)
+            {
+                break;
+            }
+
+            targetAABB = targetAABB.Enlarged(shuttleAABB.Size.Length / 2f);
+            iteration++;
+            lastCount = nearbyGrids.Count;
+
+            // Mishap moment, dense asteroid field or whatever
+            if (iteration != 3) continue;
+
+            foreach (var grid in _mapManager.GetAllGrids())
+            {
+                // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
+                if (nearbyGrids.Contains(grid.GridEntityId)) continue;
+
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
+                    .TransformBox(Comp<IMapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+            }
+
+            break;
         }
 
-        aabb ??= new Box2();
-
-        var minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height);
-        var spawnPos = aabb.Value.Center + _random.NextVector2(minRadius, minRadius + 256f);
+        var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
+        var spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
 
         if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
         {
@@ -452,6 +496,6 @@ public sealed partial class ShuttleSystem
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
         xform.WorldRotation = _random.NextAngle();
-        return false;
+        return true;
     }
 }

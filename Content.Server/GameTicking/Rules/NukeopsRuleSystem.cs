@@ -22,6 +22,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Traitor;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -242,20 +244,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         for (var i = 0; i < operatives.Count; i++)
         {
             string name;
+            string role;
             StartingGearPrototype gear;
 
             switch (i)
             {
                 case 0:
                     name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
+                    role = NukeopsCommanderPrototypeId;
                     gear = commanderGear;
                     break;
                 case 1:
                     name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = medicGear;
                     break;
                 default:
                     name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = starterGear;
                     break;
             }
@@ -266,6 +272,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
+            newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
@@ -279,6 +286,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
