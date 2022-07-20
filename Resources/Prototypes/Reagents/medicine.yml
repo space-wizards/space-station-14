@@ -397,7 +397,7 @@
       - !type:HealthChange
         probability: 0.3
         damage:
-          groups:
+          types:
             Heat: 0.5
       - !type:HealthChange
         conditions:
