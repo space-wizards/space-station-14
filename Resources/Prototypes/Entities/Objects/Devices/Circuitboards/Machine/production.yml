@@ -541,3 +541,15 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+
+- type: entity
+  id: GasRecyclerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: gas recycler board
+  description: A printed circuit board for a gas recycler
+  components:
+  - type: MachineBoard
+    prototype: GasRecycler
+    materialRequirements:
+      Steel: 10
+      Plasma: 10
