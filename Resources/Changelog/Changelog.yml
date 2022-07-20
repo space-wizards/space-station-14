@@ -1,9 +1,4 @@
 Entries:
-- author: hubismal
-  changes:
-  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
-  id: 1483
-  time: '2022-05-08T13:23:08.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
@@ -2959,3 +2954,9 @@ Entries:
   - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
   id: 1982
   time: '2022-07-20T03:57:05.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
+    type: Fix}
+  id: 1983
+  time: '2022-07-20T04:08:24.0000000+00:00'
