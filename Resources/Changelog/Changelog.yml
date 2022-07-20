@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Removed the new parallax background., type: Remove}
-  id: 1487
-  time: '2022-05-09T09:15:42.0000000+00:00'
 - author: Daemon
   changes:
   - {message: Nanotrasen automated messages will no longer tell you to press the wrong
@@ -2956,3 +2951,8 @@ Entries:
       for it., type: Add}
   id: 1986
   time: '2022-07-20T09:46:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry got an update., type: Fix}
+  id: 1987
+  time: '2022-07-20T10:34:15.0000000+00:00'
