@@ -3,7 +3,7 @@
   name: job-name-qm
   requirements:
     - !type:RoleTimeRequirement
-      role: SalvageSpecialist
+      role: JobSalvageSpecialist
       time: 3600
     - !type:DepartmentTimeRequirement
       department: Cargo

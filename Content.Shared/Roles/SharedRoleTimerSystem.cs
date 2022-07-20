@@ -88,7 +88,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
             case RoleTimeRequirement roleRequirement:
                 roleTimes ??= GetRolePlaytimes(id);
-                proto = "Job" + roleRequirement.Role;
+                proto = roleRequirement.Role;
                 ProtoManager.Index<RoleTimerPrototype>(proto);
 
                 roleTimes.TryGetValue(proto, out var roleTime);
@@ -99,7 +99,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
                 reason = Loc.GetString(
                     "role-timer-role-insufficient",
                     ("time", $"{roleDiff:0}"),
-                    ("job", ProtoManager.Index<JobPrototype>(roleRequirement.Role).LocalizedName));
+                    ("job", Loc.GetString(proto)));
                 return false;
             default:
                 throw new NotImplementedException();

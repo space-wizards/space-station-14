@@ -37,3 +37,8 @@ job-name-ertengineer = ERT engineer
 job-name-ertsecurity = ERT security
 job-name-ertmedic = ERT medic
 job-name-ertjanitor = ERT janitor
+
+# Role timers - Make these alphabetical or I cut you
+JobAtmosphericTechnician = atmospheric technician
+JobSalvageSpecialist = salvage specialist
+JobWarden = warden

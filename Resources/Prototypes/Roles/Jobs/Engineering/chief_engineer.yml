@@ -3,7 +3,7 @@
   name: job-name-ce
   requirements:
     - !type:RoleTimeRequirement
-      role: AtmosphericTechnician
+      role: JobAtmosphericTechnician
       time: 3600
     - !type:DepartmentTimeRequirement
       department: Engineering

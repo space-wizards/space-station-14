@@ -3,7 +3,7 @@
   name: job-name-hos
   requirements:
     - !type:RoleTimeRequirement
-      role: Warden
+      role: JobWarden
       time: 3600
     - !type:DepartmentTimeRequirement
       department: Security
