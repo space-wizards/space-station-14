@@ -623,16 +623,6 @@ namespace Content.Shared.Interaction
             if (interactUsingEvent.Handled)
                 return;
 
-            var interactUsingEventArgs = new InteractUsingEventArgs(user, clickLocation, used, target);
-            var interactUsings = AllComps<IInteractUsing>(target).OrderByDescending(x => x.Priority);
-
-            foreach (var interactUsing in interactUsings)
-            {
-                // If an InteractUsing returns a status completion we finish our interaction
-                if (await interactUsing.InteractUsing(interactUsingEventArgs))
-                    return;
-            }
-
             InteractDoAfter(user, used, target, clickLocation, canReach: true);
         }
 
@@ -648,15 +638,6 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, afterInteractEvent, false);
             if (afterInteractEvent.Handled)
                 return;
-
-            var afterInteractEventArgs = new AfterInteractEventArgs(user, clickLocation, target, canReach);
-            var afterInteracts = AllComps<IAfterInteract>(used).OrderByDescending(x => x.Priority).ToList();
-
-            foreach (var afterInteract in afterInteracts)
-            {
-                if (await afterInteract.AfterInteract(afterInteractEventArgs))
-                    return;
-            }
 
             if (target == null)
                 return;
@@ -718,20 +699,9 @@ namespace Content.Shared.Interaction
 
             var activateMsg = new ActivateInWorldEvent(user, used);
             RaiseLocalEvent(used, activateMsg, true);
-            if (activateMsg.Handled)
-            {
-                _useDelay.BeginDelay(used, delayComponent);
-                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
-                return true;
-            }
-
-            var activatable = AllComps<IActivate>(used).FirstOrDefault();
-            if (activatable == null)
+            if (!activateMsg.Handled)
                 return false;
 
-            activatable.Activate(new ActivateEventArgs(user, used));
-
-            // No way to check success.
             _useDelay.BeginDelay(used, delayComponent);
             _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;

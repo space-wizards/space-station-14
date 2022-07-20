@@ -10,8 +10,10 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Clothing.Components;
 using Content.Server.Disease.Components;
+using Content.Server.IdentityManagement;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Clothing
@@ -23,6 +25,7 @@ namespace Content.Server.Clothing
         [Dependency] private readonly InternalsSystem _internals = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly IdentitySystem _identity = default!;
 
         public override void Initialize()
         {
@@ -49,6 +52,9 @@ namespace Content.Server.Clothing
 
             mask.IsToggled ^= true;
             _actionSystem.SetToggled(mask.ToggleAction, mask.IsToggled);
+
+            // Pulling mask down can change identity, so we want to update that
+            _identity.QueueIdentityUpdate(args.Performer);
 
             if (mask.IsToggled)
                 _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, Filter.Entities(args.Performer));
@@ -80,15 +86,19 @@ namespace Content.Server.Clothing
                 Dirty(item);
             }
 
-            //toggle ingestion blocking
+            // toggle ingestion blocking
             if (TryComp<IngestionBlockerComponent>(uid, out var blocker))
                 blocker.Enabled = !mask.IsToggled;
 
-            //toggle disease protection
+            // toggle disease protection
             if (TryComp<DiseaseProtectionComponent>(uid, out var diseaseProtection))
                 diseaseProtection.IsActive = !mask.IsToggled;
 
-            //toggle breath tool connection (skip during equip since that is handled in LungSystem)
+            // toggle identity
+            if (TryComp<IdentityBlockerComponent>(uid, out var identity))
+                identity.Enabled = !mask.IsToggled;
+
+            // toggle breath tool connection (skip during equip since that is handled in LungSystem)
             if (isEquip || !TryComp<BreathToolComponent>(uid, out var breathTool))
                 return;
 

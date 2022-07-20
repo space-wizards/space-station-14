@@ -141,6 +141,24 @@ namespace Content.Server.Administration.Systems
                     Act = () => _console.ExecuteCommand(player, $"tpto {args.Target} {args.User}"),
                     Impact = LogImpact.Low
                 });
+
+                // Respawn
+                if (HasComp<ActorComponent>(args.Target))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("admin-player-actions-respawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            if (!TryComp<ActorComponent>(args.Target, out var actor)) return;
+
+                            _console.ExecuteCommand(player, $"respawn {actor.PlayerSession.Name}");
+                        },
+                        ConfirmationPopup = true,
+                        // No logimpact as the command does it internally.
+                    });
+                }
             }
         }
 
@@ -154,44 +172,49 @@ namespace Content.Server.Administration.Systems
             // Delete verb
             if (_groupController.CanCommand(player, "deleteentity"))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("delete-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                verb.Act = () => EntityManager.DeleteEntity(args.Target);
-                verb.Impact = LogImpact.Medium;
-                verb.ConfirmationPopup = true;
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("delete-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png",
+                    Act = () => EntityManager.DeleteEntity(args.Target),
+                    Impact = LogImpact.Medium,
+                    ConfirmationPopup = true
+                };
                 args.Verbs.Add(verb);
             }
 
             // Rejuvenate verb
             if (_groupController.CanCommand(player, "rejuvenate"))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
-                verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
-                verb.Impact = LogImpact.Medium;
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("rejuvenate-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png",
+                    Act = () => RejuvenateCommand.PerformRejuvenate(args.Target),
+                    Impact = LogImpact.Medium
+                };
                 args.Verbs.Add(verb);
             }
 
             // Control mob verb
             if (_groupController.CanCommand(player, "controlmob") &&
-                args.User != args.Target &&
-                EntityManager.HasComponent<MindComponent>(args.User) &&
-                EntityManager.TryGetComponent<MindComponent?>(args.Target, out var targetMind))
+                args.User != args.Target)
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("control-mob-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                // TODO VERB ICON control mob icon
-                verb.Act = () =>
+                Verb verb = new()
                 {
-                    player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                    Text = Loc.GetString("control-mob-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    // TODO VERB ICON control mob icon
+                    Act = () =>
+                    {
+                        MakeSentientCommand.MakeSentient(args.Target, EntityManager);
+                        player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
+                    },
+                    Impact = LogImpact.High,
+                    ConfirmationPopup = true
                 };
-                verb.Impact = LogImpact.High;
-                verb.ConfirmationPopup = true;
                 args.Verbs.Add(verb);
             }
 
@@ -200,12 +223,14 @@ namespace Content.Server.Administration.Systems
                 args.User != args.Target &&
                 !EntityManager.HasComponent<MindComponent>(args.Target))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager);
-                verb.Impact = LogImpact.Medium;
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("make-sentient-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png",
+                    Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager),
+                    Impact = LogImpact.Medium
+                };
                 args.Verbs.Add(verb);
             }
 
@@ -213,28 +238,32 @@ namespace Content.Server.Administration.Systems
             if (_groupController.CanCommand(player, "setoutfit") &&
                 EntityManager.HasComponent<InventoryComponent>(args.Target))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
-                verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
-                verb.Impact = LogImpact.Medium;
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("set-outfit-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                    Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player),
+                    Impact = LogImpact.Medium
+                };
                 args.Verbs.Add(verb);
             }
 
             // In range unoccluded verb
             if (_groupController.CanCommand(player, "inrangeunoccluded"))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () =>
+                Verb verb = new()
                 {
-                    var message = args.User.InRangeUnOccluded(args.Target)
-                    ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
-                    : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
-                    args.Target.PopupMessage(args.User, message);
+                    Text = Loc.GetString("in-range-unoccluded-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png",
+                    Act = () =>
+                    {
+                        var message = args.User.InRangeUnOccluded(args.Target)
+                            ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
+                            : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
+                        args.Target.PopupMessage(args.User, message);
+                    }
                 };
                 args.Verbs.Add(verb);
             }
@@ -243,11 +272,13 @@ namespace Content.Server.Administration.Systems
             if (_groupController.CanCommand(player, "tubeconnections") &&
                 EntityManager.TryGetComponent<IDisposalTubeComponent?>(args.Target, out var tube))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () => tube.PopupDirections(args.User);
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("tube-direction-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png",
+                    Act = () => tube.PopupDirections(args.User)
+                };
                 args.Verbs.Add(verb);
             }
 
@@ -268,11 +299,13 @@ namespace Content.Server.Administration.Systems
             if (_groupController.CanAdminMenu(player) &&
                 EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("configure-verb-get-data-text");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession);
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("configure-verb-get-data-text"),
+                    IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png",
+                    Category = VerbCategory.Debug,
+                    Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
+                };
                 args.Verbs.Add(verb);
             }
 
@@ -280,12 +313,14 @@ namespace Content.Server.Administration.Systems
             if (_groupController.CanCommand(player, "addreagent") &&
                 EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
-                Verb verb = new();
-                verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => OpenEditSolutionsEui(player, args.Target);
-                verb.Impact = LogImpact.Medium; // maybe high depending on WHAT reagents they add...
+                Verb verb = new()
+                {
+                    Text = Loc.GetString("edit-solutions-verb-get-data-text"),
+                    Category = VerbCategory.Debug,
+                    IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png",
+                    Act = () => OpenEditSolutionsEui(player, args.Target),
+                    Impact = LogImpact.Medium // maybe high depending on WHAT reagents they add...
+                };
                 args.Verbs.Add(verb);
             }
         }

@@ -3382,8 +3382,6 @@ entities:
   - pos: -3.5,4.5
     parent: 0
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 362
   type: ExtinguisherCabinetFilled
   components:
@@ -3692,4 +3690,60 @@ entities:
   - containers:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 395
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -7.5,5.5
+    parent: 0
+    type: Transform
+- uid: 396
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -7.5,7.5
+    parent: 0
+    type: Transform
+- uid: 397
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 2.5,7.5
+    parent: 0
+    type: Transform
+- uid: 398
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 2.5,5.5
+    parent: 0
+    type: Transform
+- uid: 399
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 2.5,-0.5
+    parent: 0
+    type: Transform
+- uid: 400
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 2.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 401
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -7.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 402
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -7.5,-0.5
+    parent: 0
+    type: Transform
 ...

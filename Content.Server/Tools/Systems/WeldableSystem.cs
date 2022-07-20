@@ -60,8 +60,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        component.BeingWelded = true;
-        _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
+        component.BeingWelded = _toolSystem.UseTool(tool, user, uid, component.FuelConsumption,
             component.WeldingTime.Seconds, component.WeldingQuality,
             new WeldFinishedEvent(user, tool), new WeldCancelledEvent(), uid);
 

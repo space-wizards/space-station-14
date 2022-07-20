@@ -232,13 +232,10 @@ namespace Content.Server.PneumaticCannon
             if (EntityManager.HasComponent<CameraRecoilComponent>(data.User))
             {
                 var kick = Vector2.One * data.Strength;
-                _cameraRecoil.KickCamera(data.User, kick);
+                _sharedCameraRecoil.KickCamera(data.User, kick);
             }
 
             _throwingSystem.TryThrow(ent, data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
-
-            // lasagna, anybody?
-            ent.EnsureComponent<ForcefeedOnCollideComponent>();
 
             if(EntityManager.TryGetComponent<StatusEffectsComponent?>(data.User, out var status)
                && comp.Power == PneumaticCannonPower.High)

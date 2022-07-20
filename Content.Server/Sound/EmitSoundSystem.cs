@@ -26,6 +26,25 @@ namespace Content.Server.Sound
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
 
         /// <inheritdoc />
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var soundSpammer in EntityQuery<SpamEmitSoundComponent>())
+            {
+                soundSpammer.Accumulator += frameTime;
+                if (soundSpammer.Accumulator < soundSpammer.RollInterval)
+                {
+                    continue;
+                }
+                soundSpammer.Accumulator -= soundSpammer.RollInterval;
+
+                if (_random.Prob(soundSpammer.PlayChance))
+                {
+                    TryEmitSound(soundSpammer);
+                }
+            }
+        }
         public override void Initialize()
         {
             base.Initialize();
