@@ -10,9 +10,6 @@
       time: 18000
   weight: 10
   startingGear: HoSGear
-  departments:
-  - Command
-  - Security
   icon: "HeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

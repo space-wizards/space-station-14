@@ -15,8 +15,6 @@
       time: 108000
   weight: 20
   startingGear: CaptainGear
-  departments:
-  - Command
   icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true

@@ -2,8 +2,6 @@
   id: Lawyer
   name: job-name-lawyer
   startingGear: LawyerGear
-  departments:
-  - Civilian
   icon: "Lawyer"
   supervisors: job-supervisors-hop
   access:

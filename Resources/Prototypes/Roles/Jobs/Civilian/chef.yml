@@ -6,8 +6,6 @@
       department: Civilian
       time: 1800
   startingGear: ChefGear
-  departments:
-  - Civilian
   icon: "Chef"
   supervisors: job-supervisors-hop
   access:

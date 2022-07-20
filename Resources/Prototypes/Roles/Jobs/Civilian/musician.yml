@@ -2,8 +2,6 @@
   id: Musician
   name: job-name-musician
   startingGear: MusicianGear
-  departments:
-  - Civilian
   icon: "Musician"
   supervisors: job-supervisors-hire
   access:

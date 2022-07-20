@@ -2,8 +2,6 @@
   id: Mime
   name: job-name-mime
   startingGear: MimeGear
-  departments:
-  - Civilian
   icon: "Mime"
   supervisors: job-supervisors-hop
   access:

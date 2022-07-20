@@ -2,8 +2,6 @@
   id: CargoTechnician
   name: job-name-cargoteh
   startingGear: CargoTechGear
-  departments:
-  - Cargo
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
   access:

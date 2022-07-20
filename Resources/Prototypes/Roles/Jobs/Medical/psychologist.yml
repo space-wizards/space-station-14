@@ -2,8 +2,6 @@
   id: Psychologist
   name: job-name-psychologist
   startingGear: PsychologistGear
-  departments:
-  - Medical
   icon: "Psychologist"
   supervisors: job-supervisors-cmo
   access:

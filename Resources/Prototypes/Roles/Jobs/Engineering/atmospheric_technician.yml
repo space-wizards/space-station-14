@@ -6,8 +6,6 @@
       department: Engineering
       time: 3600
   startingGear: AtmosphericTechnicianGear
-  departments:
-  - Engineering
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
   canBeAntag: false

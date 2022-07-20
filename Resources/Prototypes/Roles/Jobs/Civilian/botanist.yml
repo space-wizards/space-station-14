@@ -2,8 +2,6 @@
   id: Botanist
   name: job-name-botanist
   startingGear: BotanistGear
-  departments:
-  - Civilian
   icon: "Botanist"
   supervisors: job-supervisors-hop
   access:

@@ -2,8 +2,6 @@
   id: ServiceWorker
   name: job-name-serviceworker
   startingGear: ServiceWorkerGear
-  departments:
-  - Civilian
   icon: "ServiceWorker"
   supervisors: job-supervisors-service
   canBeAntag: false

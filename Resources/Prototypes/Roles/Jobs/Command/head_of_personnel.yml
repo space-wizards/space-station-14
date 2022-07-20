@@ -15,9 +15,6 @@
       time: 54000
   weight: 20
   startingGear: HoPGear
-  departments:
-  - Command
-  - Civilian
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

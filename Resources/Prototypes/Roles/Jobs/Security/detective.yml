@@ -2,8 +2,6 @@
   id: Detective
   name: job-name-detective
   startingGear: DetectiveGear
-  departments:
-  - Security
   icon: "Detective"
   supervisors: job-supervisors-hos
   canBeAntag: false

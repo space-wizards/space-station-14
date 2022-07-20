@@ -7,9 +7,6 @@
       time: 18000
   weight: 10
   startingGear: ResearchDirectorGear
-  departments:
-  - Command
-  - Science
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

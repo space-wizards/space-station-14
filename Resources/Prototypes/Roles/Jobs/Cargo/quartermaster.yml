@@ -10,8 +10,6 @@
       time: 18000
   weight: 10
   startingGear: QuartermasterGear
-  departments:
-  - Cargo
   icon: "QuarterMaster"
   supervisors: job-supervisors-hop
   canBeAntag: false

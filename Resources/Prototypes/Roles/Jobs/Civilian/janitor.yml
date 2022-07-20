@@ -2,8 +2,6 @@
   id: Janitor
   name: job-name-janitor
   startingGear: JanitorGear
-  departments:
-  - Civilian
   icon: "Janitor"
   supervisors: job-supervisors-hop
   access:

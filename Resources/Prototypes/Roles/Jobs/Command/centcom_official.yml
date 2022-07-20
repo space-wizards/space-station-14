@@ -3,8 +3,6 @@
   name: job-name-centcomoff
   setPreference: false
   startingGear: CentcomGear
-  departments:
-  - Command
   icon: "Nanotrasen"
   supervisors: job-supervisors-hos
   canBeAntag: false

@@ -6,8 +6,6 @@
       department: Civilian
       time: 1800
   startingGear: BartenderGear
-  departments:
-  - Civilian
   icon: "Bartender"
   supervisors: job-supervisors-hop
   access:

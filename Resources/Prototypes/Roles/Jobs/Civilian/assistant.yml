@@ -2,8 +2,6 @@
   id: Passenger
   name: job-name-passenger
   startingGear: PassengerGear
-  departments:
-  - Civilian
   icon: "Passenger"
   supervisors: job-supervisors-everyone
   access:

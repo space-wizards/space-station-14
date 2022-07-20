@@ -2,8 +2,6 @@
   id: Reporter
   name: job-name-reporter
   startingGear: ReporterGear
-  departments:
-  - Civilian
   icon: "Reporter"
   supervisors: job-supervisors-hop
   access:

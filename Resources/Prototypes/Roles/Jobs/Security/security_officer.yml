@@ -6,8 +6,6 @@
       department: Security
       time: 1800
   startingGear: SecurityOfficerGear
-  departments:
-  - Security
   icon: "SecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false

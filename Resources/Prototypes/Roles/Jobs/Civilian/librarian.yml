@@ -2,8 +2,6 @@
   id: Librarian
   name: job-name-librarian
   startingGear: LibrarianGear
-  departments:
-  - Civilian
   icon: "Librarian"
   supervisors: job-supervisors-hop
   access:

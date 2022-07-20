@@ -2,9 +2,6 @@
   id: SecurityCadet
   name: job-name-cadet
   startingGear: SecurityCadetGear
-  departments:
-  - Civilian
-  - Security
   icon: "SecurityCadet"
   supervisors: job-supervisors-security
   canBeAntag: false
