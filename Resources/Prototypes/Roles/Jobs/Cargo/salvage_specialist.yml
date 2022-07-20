@@ -1,6 +1,10 @@
 - type: job
   id: SalvageSpecialist
   name: job-name-salvagespec
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   departments:

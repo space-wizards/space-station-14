@@ -114,6 +114,40 @@ namespace Content.Server.Database
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);
         #endregion
 
+        #region Playtime
+
+        /// <summary>
+        /// Get a role timer by player ID and role.
+        /// </summary>
+        /// <param name="player">The player to get the role timer from.</param>
+        /// <param name="role">The role that's being timed.</param>
+        /// <returns>A role timer for the passed role.</returns>
+        Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role);
+
+        /// <summary>
+        /// Look up a player's role timers.
+        /// </summary>
+        /// <param name="player">The player to get the role timer information from.</param>
+        /// <returns>All role timers belonging to the player.</returns>
+        Task<List<RoleTimer>> GetRoleTimers(Guid player);
+
+        /// <summary>
+        /// Set the time value of a RoleTimer database object.
+        /// </summary>
+        /// <param name="id">Numerical ID for the roletimer object</param>
+        /// <param name="time">New value for time spent on the role</param>
+        Task<RoleTimer?> SetRoleTime(int id, TimeSpan time);
+
+        Task<RoleTimer?> AddRoleTime(int id, TimeSpan time);
+
+        Task<TimeSpan> GetOverallPlayTime(Guid player);
+
+        Task SetOverallPlayTime(Guid player, TimeSpan time);
+
+        Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time);
+
+        #endregion
+
         #region Player Records
         Task UpdatePlayerRecordAsync(
             NetUserId userId,
@@ -338,6 +372,45 @@ namespace Content.Server.Database
         {
             return _db.AddServerRoleUnbanAsync(serverRoleUnban);
         }
+        #endregion
+
+        #region Playtime
+
+        public Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
+        {
+            return _db.CreateOrGetRoleTimer(player, role);
+        }
+
+        public Task<List<RoleTimer>> GetRoleTimers(Guid player)
+        {
+            return _db.GetRoleTimers(player);
+        }
+
+        public Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
+        {
+            return _db.SetRoleTime(id, time);
+        }
+
+        public Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        {
+            return _db.AddRoleTime(id, time);
+        }
+
+        public Task<TimeSpan> GetOverallPlayTime(Guid player)
+        {
+            return _db.GetOverallPlayTime(player);
+        }
+
+        public Task SetOverallPlayTime(Guid player, TimeSpan time)
+        {
+            return _db.SetOverallPlayTime(player, time);
+        }
+
+        public Task<TimeSpan> AddOverallPlayTime(Guid player, TimeSpan time)
+        {
+            return _db.AddOverallPlayTime(player, time);
+        }
+
         #endregion
 
         public Task UpdatePlayerRecordAsync(

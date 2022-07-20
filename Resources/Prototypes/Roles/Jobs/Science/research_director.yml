@@ -1,6 +1,10 @@
 - type: job
   id: ResearchDirector
   name: job-name-rd
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 18000
   weight: 10
   startingGear: ResearchDirectorGear
   departments:

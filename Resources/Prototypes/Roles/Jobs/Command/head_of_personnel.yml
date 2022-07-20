@@ -1,6 +1,18 @@
 - type: job
   id: HeadOfPersonnel
   name: job-name-hop
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 3600
+    - !type:OverallPlaytimeRequirement
+      time: 54000
   weight: 20
   startingGear: HoPGear
   departments:

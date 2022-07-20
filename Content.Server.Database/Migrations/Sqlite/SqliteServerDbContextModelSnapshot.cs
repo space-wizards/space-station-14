@@ -16,7 +16,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -451,6 +451,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("last_seen_user_name");
 
+                    b.Property<TimeSpan>("OverallPlaytime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("overall_playtime");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
@@ -600,6 +604,35 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("profile", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.RoleTimer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("role_timers_id");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_id");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("role");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time_spent");
+
+                    b.HasKey("Id")
+                        .HasName("PK_role_timers");
+
+                    b.HasIndex("PlayerId", "Role")
+                        .IsUnique();
+
+                    b.ToTable("role_timers", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

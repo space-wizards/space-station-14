@@ -1,6 +1,13 @@
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000
   weight: 10
   startingGear: HoSGear
   departments:

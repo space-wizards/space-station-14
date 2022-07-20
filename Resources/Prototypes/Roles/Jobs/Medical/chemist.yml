@@ -1,6 +1,10 @@
 - type: job
   id: Chemist
   name: job-name-chemist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 1800
   startingGear: ChemistGear
   departments:
   - Medical

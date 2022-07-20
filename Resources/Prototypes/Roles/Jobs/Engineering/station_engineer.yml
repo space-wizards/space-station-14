@@ -1,6 +1,10 @@
 - type: job
   id: StationEngineer
   name: job-name-engineer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 1800
   startingGear: StationEngineerGear
   departments:
   - Engineering

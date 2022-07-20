@@ -1,6 +1,13 @@
 - type: job
   id: Quartermaster
   name: job-name-qm
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000
   weight: 10
   startingGear: QuartermasterGear
   departments:

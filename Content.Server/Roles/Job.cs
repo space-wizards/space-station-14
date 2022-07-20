@@ -1,12 +1,15 @@
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Roles;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Roles
 {
-    public sealed class Job : Role
+    public sealed class Job : Role, IRoleTimer
     {
+        [ViewVariables, DataField("timer", customTypeSerializer: typeof(PrototypeIdSerializer<RoleTimerPrototype>))]
+        public string Timer => "Job" + Prototype.ID;
+
         [ViewVariables]
         public JobPrototype Prototype { get; }
 

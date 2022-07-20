@@ -359,6 +359,101 @@ namespace Content.Server.Database
         public abstract Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban);
         #endregion
 
+        #region Playtime
+        public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
+        {
+            await using var db = await GetDb();
+
+            RoleTimer result;
+            var query = await db.DbContext.RoleTimer
+                .Where(v => v.PlayerId == player)
+                .Where(v => v.Role == role)
+                .SingleOrDefaultAsync();
+
+            if (query == null)
+            {
+                result = new RoleTimer()
+                {
+                    PlayerId = player,
+                    Role = role,
+                    TimeSpent = TimeSpan.Zero
+                };
+                db.DbContext.Add(result);
+                await db.DbContext.SaveChangesAsync();
+            }
+            else
+            {
+                result = query;
+            }
+
+            return result;
+        }
+
+        public async Task<List<RoleTimer>> GetRoleTimers(Guid player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.RoleTimer
+                .Where(p => p.PlayerId == player)
+                .ToListAsync();
+        }
+
+        public async Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var newTimer = await db.DbContext.RoleTimer
+                .SingleAsync(timer => timer.Id == id);
+            newTimer.TimeSpent = time;
+
+            await db.DbContext.SaveChangesAsync();
+            return newTimer;
+        }
+
+        public async Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var newTimer = await db.DbContext.RoleTimer.SingleAsync(timer => timer.Id == id);
+            newTimer.TimeSpent += time;
+
+            await db.DbContext.SaveChangesAsync();
+            return newTimer;
+        }
+
+        public async Task<TimeSpan> GetOverallPlayTime(Guid id)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+
+            return player.OverallPlaytime;
+        }
+
+        public async Task SetOverallPlayTime(Guid id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+            player.OverallPlaytime = time;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time)
+        {
+            await using var db = await GetDb();
+
+            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            player.OverallPlaytime.Add(time);
+
+            await db.DbContext.SaveChangesAsync();
+            return player.OverallPlaytime;
+        }
+
+        #endregion
+
         #region Player Records
         /*
          * PLAYER RECORDS

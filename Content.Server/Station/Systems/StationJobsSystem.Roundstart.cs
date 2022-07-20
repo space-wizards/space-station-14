@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Roles;
 using Content.Server.Station.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -15,6 +17,7 @@ public sealed partial class StationJobsSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+    [Dependency] private readonly RoleTimerSystem _roleTimers = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -339,11 +342,15 @@ public sealed partial class StationJobsSystem
         foreach (var (player, profile) in profiles)
         {
             var roleBans = _roleBanManager.GetJobBans(player);
+            var profileJobs = profile.JobPriorities.Keys.ToList();
+            _roleTimers.RemoveDisallowedJobs(player, ref profileJobs);
 
             List<string>? availableJobs = null;
 
-            foreach (var (jobId, priority) in profile.JobPriorities)
+            foreach (var jobId in profileJobs)
             {
+                var priority = profile.JobPriorities[jobId];
+
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
 
@@ -357,7 +364,6 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);
-
                 availableJobs.Add(jobId);
             }
 

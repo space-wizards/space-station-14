@@ -1,6 +1,10 @@
 - type: job
   id: Chef
   name: job-name-chef
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 1800
   startingGear: ChefGear
   departments:
   - Civilian

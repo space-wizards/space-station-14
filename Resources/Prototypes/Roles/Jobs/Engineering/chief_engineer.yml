@@ -1,6 +1,13 @@
 - type: job
   id: ChiefEngineer
   name: job-name-ce
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 3600
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 18000
   weight: 10
   startingGear: ChiefEngineerGear
   departments:

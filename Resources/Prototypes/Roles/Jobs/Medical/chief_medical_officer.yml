@@ -3,6 +3,10 @@
 - type: job
   id: ChiefMedicalOfficer
   name: job-name-cmo
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 18000
   weight: 10
   startingGear: CMOGear
   departments:

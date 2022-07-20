@@ -1,6 +1,10 @@
 - type: job
   id: SecurityOfficer
   name: job-name-security
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 1800
   startingGear: SecurityOfficerGear
   departments:
   - Security
