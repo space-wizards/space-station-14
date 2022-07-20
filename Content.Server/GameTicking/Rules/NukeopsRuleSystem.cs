@@ -298,6 +298,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }), AudioParams.Default);
     }
 
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
+    }
+
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
         if (!RuleAdded)
