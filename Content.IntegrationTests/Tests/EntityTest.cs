@@ -20,7 +20,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true});
+            //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
