@@ -141,11 +141,10 @@ public sealed class BlockingSystem : EntitySystem
 
             //Don't allow someone to block if someone else is on the same tile.
             var playerTileRef = xform.Coordinates.GetTileRef();
-
             if (playerTileRef != null)
             {
                 var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
-                var query =GetEntityQuery<MobStateComponent>();
+                var query = GetEntityQuery<MobStateComponent>();
 
                 foreach (var uid in intersecting)
                 {
