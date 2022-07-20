@@ -17,13 +17,13 @@ public sealed partial class InventoryUIController
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
     private readonly List<HandsContainer> _handsContainers = new();
-    private readonly Dictionary<string,int> _handContainerIndices = new();
+    private readonly Dictionary<string, int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
     private HandsComponent? _playerHandsComponent;
     private HandButton? _activeHand = null;
-    private int _backupSuffix = 0;//this is used when autogenerating container names if they don't have names
+    private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
 
-    private HandsGui HandsGui => UIManager.GetActiveUIWidget<HandsGui>();
+    private HandsGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HandsGui>();
 
     private void OnHandsSystemActivate()
     {
@@ -74,23 +74,30 @@ public sealed partial class InventoryUIController
 
     private void UnloadPlayerHands()
     {
-        foreach (var container in _handsContainers)
-        {
-            container.Dispose();
-        }
-        _handsContainers.Clear();
+        if (HandsGui != null)
+            HandsGui.Visible = false;
+
         _handContainerIndices.Clear();
         _handLookup.Clear();
         _playerHandsComponent = null;
+
+        foreach (var container in _handsContainers)
+        {
+            container.Clear();
+        }
     }
 
     private void LoadPlayerHands(HandsComponent handsComp)
     {
+        if (HandsGui != null)
+            HandsGui.Visible = true;
+
         _playerHandsComponent = handsComp;
         foreach (var (name, hand) in handsComp.Hands)
         {
             AddHand(name, hand.Location);
         }
+
         var activeHand = handsComp.ActiveHand;
         if (activeHand == null) return;
         SetActiveHand(activeHand.Name);
@@ -124,7 +131,7 @@ public sealed partial class InventoryUIController
 
     private void OnItemAdded(string name, EntityUid entity)
     {
-        HandsGui.UpdatePanelEntity(entity);
+        HandsGui?.UpdatePanelEntity(entity);
         var hand = GetHand(name);
         if (hand == null) return;
         if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
@@ -135,7 +142,7 @@ public sealed partial class InventoryUIController
 
     private void OnItemRemoved(string name, EntityUid entity)
     {
-        HandsGui.UpdatePanelEntity(null);
+        HandsGui?.UpdatePanelEntity(null);
         var hand = GetHand(name);
         if (hand == null) return;
         hand.SpriteView.Sprite = null;
@@ -149,6 +156,7 @@ public sealed partial class InventoryUIController
             if (container.IsFull) continue;
             return container;
         }
+
         throw new Exception("All attached hand hud containers were full!");
     }
 
@@ -161,7 +169,7 @@ public sealed partial class InventoryUIController
         return true;
     }
 
-    private HandButton? GetLastHand()//useful for sorting
+    private HandButton? GetLastHand() //useful for sorting
     {
         TryGetLastHand(out var handButton);
         return handButton;
@@ -170,14 +178,16 @@ public sealed partial class InventoryUIController
     private bool TryGetLastHand(out HandButton? handButton)
     {
         handButton = null;
-        for (var i = _handsContainers.Count-1; i >= 0; i--)
+        for (var i = _handsContainers.Count - 1; i >= 0; i--)
         {
             var hands = _handsContainers[i];
             if (hands.ButtonCount == 0 || !hands.TryGetLastButton(out handButton)) continue;
             return true;
         }
+
         return false;
     }
+
     //propagate hand activation to the hand system.
     private void StorageActivate(GUIBoundKeyEventArgs args, SlotControl handControl)
     {
@@ -192,16 +202,20 @@ public sealed partial class InventoryUIController
             {
                 _activeHand.Highlight = false;
             }
+
             return;
         }
+
         if (!_handLookup.TryGetValue(handName, out var handControl) || handControl == _activeHand) return;
         if (_activeHand != null)
         {
             _activeHand.Highlight = false;
         }
+
         handControl.Highlight = true;
         _activeHand = handControl;
     }
+
     private HandButton? GetHand(string handName)
     {
         _handLookup.TryGetValue(handName, out var handControl);
@@ -238,14 +252,17 @@ public sealed partial class InventoryUIController
         {
             handContainer.RemoveButton(handButton);
         }
+
         _handLookup.Remove(handName);
         handButton.Dispose();
         BalanceContainers();
         return true;
     }
+
     public string RegisterHandContainer(HandsContainer handContainer)
     {
-        var name = "HandContainer_" + _backupSuffix;;
+        var name = "HandContainer_" + _backupSuffix;
+        ;
         if (handContainer.Name == null)
         {
             handContainer.Name = name;
@@ -255,10 +272,12 @@ public sealed partial class InventoryUIController
         {
             name = handContainer.Name;
         }
+
         _handContainerIndices.Add(name, _handsContainers.Count);
         _handsContainers.Add(handContainer);
         return name;
     }
+
     public bool RemoveHandContainer(string handContainerName)
     {
         var index = GetHandContainerIndex(handContainerName);
@@ -267,6 +286,7 @@ public sealed partial class InventoryUIController
         _handsContainers.RemoveAt(index);
         return true;
     }
+
     public bool RemoveHandContainer(string handContainerName, out HandsContainer? container)
     {
         var success = _handContainerIndices.TryGetValue(handContainerName, out var index);

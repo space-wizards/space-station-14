@@ -15,6 +15,7 @@ public interface IItemslotUIContainer
 public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContainer where T : SlotControl
 {
     protected readonly Dictionary<string, T> _buttons = new();
+
     public virtual bool TryAddButton(T newButton, out T button)
     {
         var tempButton = AddButton(newButton);
@@ -23,6 +24,7 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
             button = newButton;
             return false;
         }
+
         button = newButton;
         return true;
     }
@@ -33,9 +35,9 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
         {
             button.Dispose();
         }
+
         _buttons.Clear();
     }
-
 
     public bool TryRegisterButton(SlotControl control, string newSlotName)
     {
@@ -46,6 +48,7 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
             if (control == foundButton) return true; //if the slotName is already set do nothing
             throw new Exception("Could not update button to slot:" + newSlotName + " slot already assigned!");
         }
+
         _buttons.Remove(slotButton.SlotName);
         AddButton(slotButton);
         return true;
@@ -67,8 +70,9 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
     {
         if (newButton.SlotName == "")
         {
-            Logger.Warning("Could not add button "+newButton.Name+"No slotname");
+            Logger.Warning("Could not add button " + newButton.Name + "No slotname");
         }
+
         return !_buttons.TryAdd(newButton.SlotName, newButton) ? null : newButton;
     }
 
@@ -90,7 +94,7 @@ public abstract class ItemSlotUIContainer<T> : BoxContainer, IItemslotUIContaine
     {
         foreach (var button in buttons)
         {
-            if (button!= null) RemoveButton(button);
+            if (button != null) RemoveButton(button);
         }
     }
 
