@@ -202,7 +202,7 @@ namespace Content.Server.Nuke
             if (!component.DiskSlot.HasItem)
                 return;
 
-            if (component.Status == NukeStatus.AWAIT_ARM)
+            if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
             {
                 ArmBomb(uid, component);
             }
