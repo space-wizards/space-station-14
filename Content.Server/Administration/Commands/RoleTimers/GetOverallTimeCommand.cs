@@ -14,7 +14,7 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 2)
+        if (args.Length != 1)
         {
             shell.WriteLine("Name a player to get the role timer information from");
             return;
@@ -28,6 +28,6 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
 
         var roles = IoCManager.Resolve<RoleTimerManager>();
         var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine($"Increased overall time for {args[0]} to {timers.TotalMinutes}");
+        shell.WriteLine($"Overall time for {userId} is {timers.TotalMinutes:0} minutes");
     }
 }

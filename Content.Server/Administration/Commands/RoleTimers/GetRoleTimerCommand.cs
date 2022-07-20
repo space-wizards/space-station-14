@@ -52,7 +52,7 @@ namespace Content.Server.Administration.Commands.RoleTimers
                 if (args[1] == "Overall")
                 {
                     var timer = roles.GetOverallPlaytime(pSession.UserId).Result;
-                    shell.WriteLine($"Overall playtime is {timer.TotalMinutes}");
+                    shell.WriteLine($"Overall playtime is {timer.TotalMinutes:0}");
                     return;
                 }
 

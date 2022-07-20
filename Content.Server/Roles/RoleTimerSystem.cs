@@ -172,7 +172,7 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         }
     }
 
-    private void Save(IPlayerSession pSession, TimeSpan currentTime, bool dbSave = true)
+    public void Save(IPlayerSession pSession, TimeSpan currentTime, bool dbSave = true)
     {
         if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
         {
