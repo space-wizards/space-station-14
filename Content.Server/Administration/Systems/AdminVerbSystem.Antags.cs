@@ -26,6 +26,7 @@ using Content.Server.Tabletop.Components;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
+using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -60,6 +61,7 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
     private const string TraitorPrototypeID = "Traitor";
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -73,6 +75,8 @@ public sealed partial class AdminVerbSystem
             return;
 
         var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
+        if (targetMindComp == null)
+            return;
 
         Verb traitor = new()
         {
@@ -81,17 +85,39 @@ public sealed partial class AdminVerbSystem
             IconTexture = "/Textures/Interface/VerbIcons/antag-e_sword-temp.192dpi.png",
             Act = () =>
             {
-                //IPlayerSession traitor = args.Target;
-                TryComp(args.Target, out MindComponent? mindComp);
-                if (mindComp == null || mindComp.Mind == null || mindComp.Mind.Session == null)
+                if (targetMindComp == null || targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
                     return;
 
-                EntitySystem.Get<TraitorRuleSystem>().MakeTraitor(mindComp.Mind.Session);
+                EntitySystem.Get<TraitorRuleSystem>().MakeTraitor(targetMindComp.Mind.Session);
             },
             Impact = LogImpact.High,
             Message = "Recruit the target into the Syndicate immediately.",
         };
         if(targetHasMind)
             args.Verbs.Add(traitor);
+
+        Verb zombie = new()
+        {
+            Text = Loc.GetString("admin-antag-zombie"),
+            Category = VerbCategory.Antag,
+            IconTexture = "/Textures/Interface/VerbIcons/zombify-temp.png",
+            Act = () =>
+            {
+                TryComp(args.Target, out MindComponent? mindComp);
+                if (mindComp == null || mindComp.Mind == null)
+                    return;
+
+                _zombify.ZombifyEntity(targetMindComp.Owner);
+            },
+            Impact = LogImpact.High,
+            Message = "Zombifies the target.",
+        };
+        if (targetHasMind)
+            args.Verbs.Add(zombie);
+
+        //Remaining entries:
+
+
+
     }
 }
