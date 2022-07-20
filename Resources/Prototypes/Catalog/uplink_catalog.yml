@@ -307,6 +307,15 @@
 # Job Specific
 
 - type: uplinkListing
+  id: uplinkGatfruitSeeds
+  category: Job
+  itemId: GatfruitSeeds
+  description: And who says guns don't grow on trees?
+  price: 4
+  jobWhitelist:
+  - Botanist
+
+- type: uplinkListing
   id: uplinkNecronomicon
   category: Job
   itemId: BibleNecronomicon
