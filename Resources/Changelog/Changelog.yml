@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
-      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
-      you that they could not be traitors. Any members of this department are free
-      to bully or teach the interns however they please.', type: Add}
-  id: 1484
-  time: '2022-05-08T20:00:01.0000000+00:00'
 - author: hubismal
   changes:
   - {message: Speech sounds now sound a little different every time., type: Tweak}
@@ -2960,3 +2952,12 @@ Entries:
     type: Fix}
   id: 1983
   time: '2022-07-20T04:08:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
+      a steal!, type: Add}
+  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
+      you living.', type: Add}
+  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
+  id: 1984
+  time: '2022-07-20T04:16:35.0000000+00:00'
