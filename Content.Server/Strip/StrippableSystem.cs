@@ -293,7 +293,11 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, slotDef.StripTime, CancellationToken.None, component.Owner)
+            var ev = new BeforeStripEvent(slotDef.StripTime);
+            RaiseLocalEvent(user, ev);
+            var finalStripTime = ev.Time + ev.Additive;
+
+            var doAfterArgs = new DoAfterEventArgs(user, finalStripTime, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -305,7 +309,7 @@ namespace Content.Server.Strip
 
             if (Check())
             {
-                if (userHands.ActiveHandEntity != null)
+                if (userHands.ActiveHandEntity != null && !ev.Stealth)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", userHands.ActiveHandEntity)), component.Owner,
                         Filter.Entities(component.Owner), PopupType.Large);
@@ -432,7 +436,11 @@ namespace Content.Server.Strip
 
             if (Check())
             {
-                if (slotDef.StripHidden && !ev.Stealth)
+                if (ev.Stealth)
+                {
+                    // show no alert
+                }
+                else if (slotDef.StripHidden)
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner,
                         Filter.Entities(component.Owner), PopupType.Large);
                 else
