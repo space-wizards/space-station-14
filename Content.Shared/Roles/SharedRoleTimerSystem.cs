@@ -49,7 +49,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
         switch (requirement)
         {
             case DepartmentTimeRequirement deptRequirement:
-                roleTimes ??= GetRolePlaytime(id, job.ID);
+                roleTimes ??= GetRolePlaytimes(id);
                 var playtime = TimeSpan.Zero;
 
                 // Check all jobs' departments
@@ -82,7 +82,7 @@ public abstract class SharedRoleTimerSystem : EntitySystem
                 return false;
 
             case RoleTimeRequirement roleRequirement:
-                roleTimes ??= GetRolePlaytimes(id, job.ID);
+                roleTimes ??= GetRolePlaytimes(id);
                 roleTimes.TryGetValue(roleRequirement.Role, out var roleTime);
                 var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
 
@@ -100,5 +100,4 @@ public abstract class SharedRoleTimerSystem : EntitySystem
 
     protected abstract TimeSpan GetOverallPlaytime(NetUserId id);
     protected abstract Dictionary<string, TimeSpan> GetRolePlaytimes(NetUserId id);
-    protected abstract TimeSpan GetRolePlaytime(NetUserId id, string role);
 }

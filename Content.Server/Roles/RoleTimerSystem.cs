@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
@@ -10,7 +11,6 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -49,8 +49,24 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<RoleAddedEvent>(OnRoleAdd);
+        SubscribeLocalEvent<RoleRemovedEvent>(OnRoleRemove);
         SubscribeLocalEvent<AFKEvent>(OnAFK);
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
+    }
+
+    private void OnRoleRemove(RoleRemovedEvent ev)
+    {
+        if (ev.Mind.Session == null) return;
+        Save(ev.Mind.Session, _timing.CurTime);
+    }
+
+    private void OnRoleAdd(RoleAddedEvent ev)
+    {
+        if (ev.Mind.Session == null) return;
+
+        // Save all but the current role.
+        SaveRoles(ev.Mind.Session, _timing.CurTime, ev.Mind.AllRoles.Where(r => r != ev.Role));
     }
 
     private void SetAutosaveDelay(float value) => _autosaveDelay = value;
@@ -101,8 +117,6 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         FullSave();
     }
 
-    // TODO: Mind role events?
-
     private void OnUnAFK(ref UnAFKEvent ev)
     {
         _lastSetTime[ev.Session] = _timing.CurTime;
@@ -146,6 +160,27 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         foreach (var role in roles)
         {
             _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime, dbSave);
+        }
+
+        _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
+        _lastSetTime[pSession] = currentTime;
+    }
+
+    private void SaveRoles(IPlayerSession pSession, TimeSpan currentTime, IEnumerable<Role> roles, bool dbSave = true)
+    {
+        if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
+        {
+            lastSave = currentTime;
+        }
+
+        if (currentTime <= lastSave) return;
+
+        var addedTime = currentTime - lastSave;
+        Sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
+
+        foreach (var role in roles)
+        {
+            _roleTimers.AddTimeToRole(pSession.UserId, role.Name, addedTime, dbSave);
         }
 
         _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
