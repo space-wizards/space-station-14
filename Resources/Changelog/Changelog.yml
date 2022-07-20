@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Speech bubbles are now occluded, type: Tweak}
-  id: 1482
-  time: '2022-05-08T08:54:56.0000000+00:00'
 - author: hubismal
   changes:
   - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
@@ -2959,3 +2954,8 @@ Entries:
     type: Tweak}
   id: 1981
   time: '2022-07-19T11:47:49.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
+  id: 1982
+  time: '2022-07-20T03:57:05.0000000+00:00'
