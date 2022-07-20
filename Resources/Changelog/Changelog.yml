@@ -1,43 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Crayons are now edible., type: Add}
-  id: 1480
-  time: '2022-05-08T08:51:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Popups now get occluded, type: Tweak}
-  id: 1481
-  time: '2022-05-08T08:54:27.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Speech bubbles are now occluded, type: Tweak}
-  id: 1482
-  time: '2022-05-08T08:54:56.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
-  id: 1483
-  time: '2022-05-08T13:23:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
-      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
-      you that they could not be traitors. Any members of this department are free
-      to bully or teach the interns however they please.', type: Add}
-  id: 1484
-  time: '2022-05-08T20:00:01.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: Speech sounds now sound a little different every time., type: Tweak}
-  - {message: Speech sounds now are louder when closer and quieter when further.,
-    type: Tweak}
-  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
-  - {message: Vending machines are quieter., type: Tweak}
-  - {message: Your personal AIs talk using their synthesizers., type: Add}
-  - {message: Monkeys use their beautiful voices., type: Add}
-  id: 1485
-  time: '2022-05-09T04:55:24.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Added construction recipe for glass airlocks, type: Add}
@@ -2958,3 +2919,39 @@ Entries:
   - {message: Overfeeding and overhydration no longer show alerts., type: Remove}
   id: 1979
   time: '2022-07-18T04:41:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Damage overlay won't show up when returning to body anymore., type: Fix}
+  id: 1980
+  time: '2022-07-19T07:09:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: If the shuttle can't dock it will announce its direction from the station.,
+    type: Tweak}
+  id: 1981
+  time: '2022-07-19T11:47:49.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
+  id: 1982
+  time: '2022-07-20T03:57:05.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
+    type: Fix}
+  id: 1983
+  time: '2022-07-20T04:08:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
+      a steal!, type: Add}
+  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
+      you living.', type: Add}
+  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
+  id: 1984
+  time: '2022-07-20T04:16:35.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Air vents are now more resilient to spacing, type: Add}
+  id: 1985
+  time: '2022-07-20T04:23:23.0000000+00:00'

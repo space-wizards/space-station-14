@@ -254,7 +254,7 @@ namespace Content.Server.Shuttles.Systems
                 var locked = shuttleFtl != null || Paused(shuttle!.Owner);
 
                 // Can't cache it because it may have a whitelist for the particular console.
-                // Include paused as we still want to show centcomm.
+                // Include paused as we still want to show CentCom.
                 foreach (var comp in EntityQuery<FTLDestinationComponent>(true))
                 {
                     // Can't warp to itself or if it's not on the whitelist.
