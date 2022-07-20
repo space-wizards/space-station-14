@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Roles
 {
@@ -8,7 +9,7 @@ namespace Content.Shared.Roles
         /// <summary>
         /// What particular role they need the time requirement with.
         /// </summary>
-        [DataField("role")]
+        [DataField("role", customTypeSerializer:typeof(PrototypeIdSerializer<RoleTimerPrototype>))]
         public string Role = default!;
 
         /// <summary>
