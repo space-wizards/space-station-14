@@ -132,6 +132,7 @@ namespace Content.Client.LateJoin
 
                 foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
+                    var departmentName = Loc.GetString(department.ID);
                     _jobCategories[id] = new Dictionary<string, BoxContainer>();
                     _jobButtons[id] = new Dictionary<string, JobButton>();
                     var stationAvailable = gameTicker.JobsAvailable[id];
@@ -141,7 +142,7 @@ namespace Content.Client.LateJoin
                         Orientation = LayoutOrientation.Vertical,
                         Name = department.ID,
                         ToolTip = Loc.GetString("late-join-gui-jobs-amount-in-department-tooltip",
-                            ("departmentName", department))
+                            ("departmentName", departmentName))
                     };
 
                     if (firstCategory)
@@ -163,7 +164,7 @@ namespace Content.Client.LateJoin
                             new Label
                             {
                                 StyleClasses = { "LabelBig" },
-                                Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", department))
+                                Text = Loc.GetString("late-join-gui-department-jobs-label", ("departmentName", departmentName))
                             }
                         }
                     });

@@ -349,6 +349,8 @@ namespace Content.Client.Preferences.UI
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
+                var departmentName = Loc.GetString(department.ID);
+
                 if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {
                     category = new BoxContainer
@@ -356,7 +358,7 @@ namespace Content.Client.Preferences.UI
                         Orientation = LayoutOrientation.Vertical,
                         Name = department.ID,
                         ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                            ("departmentName", department.ID))
+                            ("departmentName", departmentName))
                     };
 
                     if (firstCategory)
@@ -379,7 +381,7 @@ namespace Content.Client.Preferences.UI
                             new Label
                             {
                                 Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                    ("departmentName", department.ID))
+                                    ("departmentName", departmentName))
                             }
                         }
                     });
