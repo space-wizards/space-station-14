@@ -18,9 +18,9 @@ public sealed partial class AtmosphereSystem
     public void DisconnectInternals(BreathToolComponent component)
     {
         var old = component.ConnectedInternalsEntity;
-        component.ConnectedInternalsEntity = default;
+        component.ConnectedInternalsEntity = null;
 
-        if (old != default && TryComp<InternalsComponent>(old, out var internalsComponent))
+        if (TryComp<InternalsComponent>(old, out var internalsComponent))
         {
             _internals.DisconnectBreathTool(internalsComponent);
         }
