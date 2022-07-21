@@ -35,13 +35,13 @@ namespace Content.Server.AI.Commands
                 return;
             }
 
-            if (_entities.HasComponent<AiControllerComponent>(entId))
+            if (_entities.HasComponent<NPCComponent>(entId))
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
-            var comp = _entities.AddComponent<UtilityAi>(entId);
+            var comp = _entities.AddComponent<UtilityNPCComponent>(entId);
             var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
 
             for (var i = 1; i < args.Length; i++)
