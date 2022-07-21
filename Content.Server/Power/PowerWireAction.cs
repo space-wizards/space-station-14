@@ -83,30 +83,33 @@ public sealed class PowerWireAction : BaseWireAction
             return;
         }
 
-        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
-            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count))
+        if (AllWiresCut(owner))
         {
-            if (AllWiresCut(owner))
+            power.PowerDisabled = true;
+        }
+        else
+        {
+            if (WiresSystem.TryGetData(owner, PowerWireActionKey.Pulsed, out bool isPulsed)
+                && isPulsed)
             {
-                power.PowerDisabled = true;
+                return;
             }
-            else
-            {
-                if (WiresSystem.TryGetData(owner, PowerWireActionKey.Pulsed, out bool isPulsed)
-                    && isPulsed)
-                {
-                    return;
-                }
 
-                power.PowerDisabled = false;
-            }
+            power.PowerDisabled = false;
         }
     }
 
     private void SetWireCuts(EntityUid owner, bool isCut)
     {
-        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut))
+        if (WiresSystem.TryGetData(owner, PowerWireActionKey.CutWires, out int? cut)
+            && WiresSystem.TryGetData(owner, PowerWireActionKey.WireCount, out int? count))
         {
+            if (cut == count && isCut
+                || cut <= 0 && !isCut)
+            {
+                return;
+            }
+
             cut = isCut ? cut + 1 : cut - 1;
             WiresSystem.SetData(owner, PowerWireActionKey.CutWires, cut);
         }
