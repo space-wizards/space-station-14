@@ -99,8 +99,6 @@ namespace Content.Server.AI.EntitySystems
             UpdateUtility(frameTime);
         }
 
-        private void Update(NPCComponent component, float frameTime) {}
-
         private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
         {
             switch (args.CurrentMobState)
