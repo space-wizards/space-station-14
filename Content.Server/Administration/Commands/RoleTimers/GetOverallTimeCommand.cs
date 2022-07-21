@@ -9,25 +9,25 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 public sealed class GetOverallTimeCommand : IConsoleCommand
 {
     public string Command => "getoveralltime";
-    public string Description => "Gets the specified minutes for a player's overall playtime";
-    public string Help => $"Usage: {Command} <netuserid>";
+    public string Description => Loc.GetString("get-overall-time-desc");
+    public string Help => Loc.GetString("get-overall-time-help", ("command", $"{Command}"));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteLine("Name a player to get the role timer information from");
+            shell.WriteLine(Loc.GetString("get-overall-time-help-plain"));
             return;
         }
 
         if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
         {
-            shell.WriteError($"Did not find userid for {args[0]}");
+            shell.WriteError(Loc.GetString("parser-userid-fail", ("userid", args[0])));
             return;
         }
 
         var roles = IoCManager.Resolve<RoleTimerManager>();
         var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine($"Overall time for {userId} is {timers.TotalMinutes:0} minutes");
+        shell.WriteLine(Loc.GetString("get-overall-time-success", ("userid", userId), ("time", $"{timers.TotalMinutes:0}")));
     }
 }

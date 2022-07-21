@@ -9,18 +9,16 @@ namespace Content.Server.Administration.Commands.RoleTimers
     public sealed class GetRoleTimerCommand : IConsoleCommand
     {
         public string Command => "getroletimers";
-        public string Description => "Gets all or one role timers from a player";
-        public string Help => $"Usage: {Command} <name or user ID> [role]";
+        public string Description => Loc.GetString("get-role-time-desc");
+        public string Help => Loc.GetString("get-role-time-help", ("command", $"{Command}"));
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length == 0)
             {
-                shell.WriteLine("Name a player to get the role timer information from");
+                shell.WriteLine(Loc.GetString("get-role-time-help-plain"));
                 return;
             }
-
-            // TODO: Loc
 
             if (shell.Player == null)
             {
@@ -37,13 +35,13 @@ namespace Content.Server.Administration.Commands.RoleTimers
 
                 if (timers.Count == 0)
                 {
-                    shell.WriteLine("Found no role timers");
+                    shell.WriteLine(Loc.GetString("get-role-time-no"));
                     return;
                 }
 
                 foreach (var (role, time) in timers)
                 {
-                    shell.WriteLine($"Role: {role}, Playtime: {time}");
+                    shell.WriteLine(Loc.GetString("get-role-time-role", ("role", role), ("time", $"{time.TotalMinutes:0}")));
                 }
             }
 
@@ -52,12 +50,12 @@ namespace Content.Server.Administration.Commands.RoleTimers
                 if (args[1] == "Overall")
                 {
                     var timer = roles.GetOverallPlaytime(pSession.UserId).Result;
-                    shell.WriteLine($"Overall playtime is {timer.TotalMinutes:0}");
+                    shell.WriteLine(Loc.GetString("get-role-time-overall", ("time", $"{timer.TotalMinutes:0}")));
                     return;
                 }
 
                 var time = roles.GetPlayTimeForRole(pSession.UserId, args[1]).Result;
-                shell.WriteLine($"Playtime for {args[1]} is: {time}");
+                shell.WriteLine(Loc.GetString("get-role-time-succeed", ("userid", pSession.UserId), ("time", $"{time.TotalMinutes:0}")));
             }
         }
     }

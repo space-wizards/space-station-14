@@ -13,14 +13,14 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 public sealed class TimeCommand : IConsoleCommand
 {
     public string Command => "savetime";
-    public string Description => "Saves the player's playtimes to the db";
-    public string Help => $"Usage: {Command} <netuserid>";
+    public string Description => Loc.GetString("save-time-desc");
+    public string Help => Loc.GetString("save-time-help");
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteLine("Name a player to get the role timer information from");
+            shell.WriteLine(Loc.GetString("save-time-help-plain"));
             return;
         }
 
@@ -28,18 +28,18 @@ public sealed class TimeCommand : IConsoleCommand
 
         if (!pManager.TryGetUserId(args[0], out var userId))
         {
-            shell.WriteError($"Did not find userid for {args[0]}");
+            shell.WriteError(Loc.GetString("parse-userid-fail", ("userid", args[0])));
             return;
         }
 
         if (!pManager.TryGetSessionById(userId, out var pSession))
         {
-            shell.WriteError($"Did not find session for {userId}");
+            shell.WriteError(Loc.GetString("parse-session-fail", ("userid", userId)));
             return;
         }
 
         var roles = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoleTimerSystem>();
         roles.Save(pSession, IoCManager.Resolve<IGameTiming>().CurTime);
-        shell.WriteLine($"Saved playtime for {userId}");
+        shell.WriteLine(Loc.GetString("save-time-succeed", ("userid", userId)));
     }
 }

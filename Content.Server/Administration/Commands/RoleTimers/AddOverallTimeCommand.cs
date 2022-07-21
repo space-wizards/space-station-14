@@ -22,13 +22,13 @@ public sealed class AddOverallTimeCommand : IConsoleCommand
 
         if (!int.TryParse(args[1], out var minutes))
         {
-            shell.WriteError(Loc.GetString("add-overall-time-parse", ("minutes", args[1])));
+            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", args[1])));
             return;
         }
 
         if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
         {
-            shell.WriteError(Loc.GetString("add-overall-time-userid", ("userid", args[0])));
+            shell.WriteError(Loc.GetString("parse-userid-fail", ("userid", args[0])));
             return;
         }
 
