@@ -14,7 +14,7 @@ public sealed class TimeCommand : IConsoleCommand
 {
     public string Command => "savetime";
     public string Description => Loc.GetString("save-time-desc");
-    public string Help => Loc.GetString("save-time-help");
+    public string Help => Loc.GetString("save-time-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

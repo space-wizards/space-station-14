@@ -8,7 +8,7 @@ public sealed class AddRoleTimeCommand : IConsoleCommand
 {
     public string Command => "addroletime";
     public string Description => Loc.GetString("add-role-time-desc");
-    public string Help => Loc.GetString("add-role-time-help", ("command", $"{Command}"));
+    public string Help => Loc.GetString("add-role-time-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

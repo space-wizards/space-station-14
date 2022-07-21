@@ -10,7 +10,7 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
 {
     public string Command => "getoveralltime";
     public string Description => Loc.GetString("get-overall-time-desc");
-    public string Help => Loc.GetString("get-overall-time-help", ("command", $"{Command}"));
+    public string Help => Loc.GetString("get-overall-time-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

@@ -10,7 +10,7 @@ namespace Content.Server.Administration.Commands.RoleTimers
     {
         public string Command => "getroletimers";
         public string Description => Loc.GetString("get-role-time-desc");
-        public string Help => Loc.GetString("get-role-time-help", ("command", $"{Command}"));
+        public string Help => Loc.GetString("get-role-time-help", ("command", Command));
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
