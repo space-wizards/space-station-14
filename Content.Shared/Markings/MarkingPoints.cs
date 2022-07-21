@@ -1,0 +1,42 @@
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+
+namespace Content.Shared.Markings;
+
+[DataDefinition]
+public sealed class MarkingPoints
+{
+    [DataField("points", required: true)]
+    public int Points = 0;
+    [DataField("required", required: true)]
+    public bool Required = false;
+    // Default markings for this layer.
+    [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
+    public List<string> DefaultMarkings = new();
+
+    public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
+    {
+        var clone = new Dictionary<MarkingCategories, MarkingPoints>();
+
+        foreach (var (category, points) in self)
+        {
+            clone[category] = new MarkingPoints()
+            {
+                Points = points.Points,
+                Required = points.Required,
+                DefaultMarkings = points.DefaultMarkings
+            };
+        }
+
+        return clone;
+    }
+}
+
+[Prototype("markingPoints")]
+public sealed class MarkingPointsPrototype : IPrototype
+{
+    [IdDataField] public string ID { get; } = default!;
+
+    [DataField("points", required: true)]
+    public MarkingPoints Points { get; } = default!;
+}
