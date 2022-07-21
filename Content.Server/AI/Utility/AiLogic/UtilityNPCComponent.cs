@@ -33,7 +33,8 @@ namespace Content.Server.AI.Utility.AiLogic
         /// or if there's no players nearby increase it.
         /// </summary>
         public float PlanCooldown { get; } = 0.5f;
-        private float _planCooldownRemaining;
+
+        public float _planCooldownRemaining;
 
         /// <summary>
         /// If we've requested a plan then wait patiently for the action
