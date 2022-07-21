@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Assistants no longer assist. They are merely Passengers on this great
-      station., type: Tweak}
-  id: 1495
-  time: '2022-05-10T03:35:09.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Removed drones as ghost roles for the time being, type: Remove}
@@ -2951,3 +2945,9 @@ Entries:
       in the lathe server menu., type: Fix}
   id: 1994
   time: '2022-07-21T22:16:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Introduced another 15 admin smites., type: Add}
+  - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
+  id: 1995
+  time: '2022-07-21T22:30:00.0000000+00:00'
