@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Audio now plays signalling roundstart., type: Add}
-  id: 1492
-  time: '2022-05-10T00:44:38.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: Pizzas no longer have a curse that forces them to come with a plate.
@@ -2953,3 +2948,8 @@ Entries:
   - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
   id: 1991
   time: '2022-07-20T23:50:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The zombify popup is now more noticeable., type: Tweak}
+  id: 1992
+  time: '2022-07-21T04:32:05.0000000+00:00'
