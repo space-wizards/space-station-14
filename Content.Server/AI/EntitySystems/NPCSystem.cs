@@ -3,6 +3,8 @@ using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 
 namespace Content.Server.AI.EntitySystems
 {
@@ -13,6 +15,9 @@ namespace Content.Server.AI.EntitySystems
     public sealed partial class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -22,6 +27,8 @@ namespace Content.Server.AI.EntitySystems
         public bool Enabled { get; set; } = true;
 
         private int _maxUpdates;
+
+        private int _count;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -85,18 +92,11 @@ namespace Content.Server.AI.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Enabled) return;
 
-            UpdateUtility();
-            var count = 0;
-
-            foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, NPCComponent>())
-            {
-                if (count >= _maxUpdates) break;
-
-                Update(comp, frameTime);
-                count++;
-            }
+            _count = 0;
+            UpdateUtility(frameTime);
         }
 
         private void Update(NPCComponent component, float frameTime) {}

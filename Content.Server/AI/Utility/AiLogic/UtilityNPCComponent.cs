@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.AiLogic
     public sealed class UtilityNPCComponent : NPCComponent
     {
         public Blackboard Blackboard => _blackboard;
-        private Blackboard _blackboard = default!;
+        public Blackboard _blackboard = default!;
 
         /// <summary>
         ///     The sum of all BehaviorSets gives us what actions the AI can take
@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// The currently running action; most importantly are the operators.
         /// </summary>
-        public UtilityAction? CurrentAction { get; private set; }
+        public UtilityAction? CurrentAction { get; set; }
 
         /// <summary>
         /// How frequently we can re-plan. If an AI's in combat you could decrease the cooldown,
@@ -39,8 +39,8 @@ namespace Content.Server.AI.Utility.AiLogic
         /// <summary>
         /// If we've requested a plan then wait patiently for the action
         /// </summary>
-        private AiActionRequestJob? _actionRequest;
+        public AiActionRequestJob? _actionRequest;
 
-        private CancellationTokenSource? _actionCancellation;
+        public CancellationTokenSource? _actionCancellation;
     }
 }

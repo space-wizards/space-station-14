@@ -1,5 +1,6 @@
 using System.Runtime.ExceptionServices;
 using System.Threading;
+using Content.Server.AI.Components;
 using Content.Server.AI.LoadBalancer;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Utility;
@@ -20,8 +21,6 @@ public sealed partial class NPCSystem
      * Handles Utility AI, implemented via IAUS
      */
 
-    [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-
     private readonly NpcActionComparer _comparer = new();
 
     private Dictionary<string, List<Type>> _behaviorSets = new();
@@ -32,16 +31,13 @@ public sealed partial class NPCSystem
     {
         SubscribeLocalEvent<UtilityNPCComponent, ComponentStartup>(OnUtilityStartup);
 
-        var protoManager = IoCManager.Resolve<IPrototypeManager>();
-        var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-
-        foreach (var bSet in protoManager.EnumeratePrototypes<BehaviorSetPrototype>())
+        foreach (var bSet in _prototypeManager.EnumeratePrototypes<BehaviorSetPrototype>())
         {
             var actions = new List<Type>();
 
             foreach (var act in bSet.Actions)
             {
-                if (!reflectionManager.TryLooseGetType(act, out var parsedType) ||
+                if (!_reflectionManager.TryLooseGetType(act, out var parsedType) ||
                     !typeof(IAiUtility).IsAssignableFrom(parsedType))
                 {
                     _sawmill.Error($"Unable to parse AI action for {act}");
@@ -67,7 +63,7 @@ public sealed partial class NPCSystem
         component._blackboard = new Blackboard(component.Owner);
     }
 
-    public AiActionRequestJob RequestAction(AiActionRequest request, CancellationTokenSource cancellationToken)
+    public AiActionRequestJob RequestAction(UtilityNPCComponent component, AiActionRequest request, CancellationTokenSource cancellationToken)
     {
         var job = new AiActionRequestJob(0.002, request, cancellationToken.Token);
         // AI should already know if it shouldn't request again
@@ -75,8 +71,16 @@ public sealed partial class NPCSystem
         return job;
     }
 
-    private void UpdateUtility()
+    private void UpdateUtility(float frameTime)
     {
+        foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, UtilityNPCComponent>())
+        {
+            if (_count >= _maxUpdates) break;
+
+            Update(comp, frameTime);
+            _count++;
+        }
+
         _aiRequestQueue.Process();
     }
 

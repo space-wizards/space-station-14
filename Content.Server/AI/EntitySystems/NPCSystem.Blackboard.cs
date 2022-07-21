@@ -5,6 +5,7 @@ namespace Content.Server.AI.EntitySystems;
 
 public sealed partial class NPCSystem
 {
+    /*
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>

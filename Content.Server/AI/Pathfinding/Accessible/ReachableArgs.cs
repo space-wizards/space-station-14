@@ -34,8 +34,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             var access = accessSystem.FindAccessTags(entity);
-            var visionRadius = EntitySystem.Get<NPCSystem>()
-                .GetValueOrDefault<float>(entMan.GetComponent<NPCComponent>(entity), NPCSystem.VisionRadius);
+            var visionRadius = entMan.GetComponent<NPCComponent>(entity).VisionRadius;
 
             return new ReachableArgs(visionRadius, access, collisionMask);
         }
