@@ -1,0 +1,9 @@
+- type: entity
+  parent: Paper
+  id: StationGoalPaper
+  name: station goal centcomm message
+  components:
+    - type: Paper
+      stampState: paper_stamp-cent
+      stampedBy:
+        - CentComm

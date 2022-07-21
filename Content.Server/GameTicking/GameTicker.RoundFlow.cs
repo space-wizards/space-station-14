@@ -217,7 +217,8 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             AnnounceRound();
-
+            var roundStartedEvent = new RoundStartedEvent();
+            RaiseLocalEvent(roundStartedEvent);
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
