@@ -659,6 +659,8 @@ public sealed class WiresSystem : EntitySystem
                 break;
         }
 
+        wires.WiresQueue.Add(id);
+
         if (_toolTime > 0f)
         {
             var args = new DoAfterEventArgs(user, _toolTime, default, used)
@@ -682,8 +684,6 @@ public sealed class WiresSystem : EntitySystem
             };
 
             _doAfter.DoAfter(args);
-
-            wires.WiresQueue.Add(id);
         }
         else
         {
@@ -696,6 +696,9 @@ public sealed class WiresSystem : EntitySystem
     private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
     {
         if (!Resolve(used, ref wires))
+            return;
+
+        if (!wires.WiresQueue.Contains(id))
             return;
 
         if (!Resolve(toolEntity, ref tool))
