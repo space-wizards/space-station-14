@@ -6,7 +6,7 @@ using Content.Shared.Sound;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-[Friend(typeof(ApcSystem))]
+[Access(typeof(ApcSystem))]
 public sealed class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]

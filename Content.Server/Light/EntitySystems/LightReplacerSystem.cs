@@ -131,8 +131,8 @@ namespace Content.Server.Light.EntitySystems
             var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
             if (wasReplaced)
             {
-                SoundSystem.Play(Filter.Pvs(replacerUid), replacer.Sound.GetSound(),
-                    replacerUid, AudioParams.Default.WithVolume(-4f));
+                SoundSystem.Play(replacer.Sound.GetSound(),
+                    Filter.Pvs(replacerUid), replacerUid, AudioParams.Default.WithVolume(-4f));
             }
 
 

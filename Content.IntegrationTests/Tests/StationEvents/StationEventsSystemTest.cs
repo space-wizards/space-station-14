@@ -9,14 +9,15 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests.StationEvents
 {
     [TestFixture]
-    public sealed class StationEventsSystemTest : ContentIntegrationTest
+    public sealed class StationEventsSystemTest
     {
         [Test]
         public async Task Test()
         {
-            var server = StartServer();
+            await using var pairTracker = await PoolManager.GetServerClient();
+            var server = pairTracker.Pair.Server;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Idle each event
                 var stationEventsSystem = EntitySystem.Get<StationEventSystem>();
@@ -42,7 +43,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
                 }
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

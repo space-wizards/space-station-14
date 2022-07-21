@@ -1,13 +1,15 @@
 using System.Threading;
+using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Singularity.Components;
+using Robust.Server.GameObjects;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.Components
 {
     public sealed class ContainmentFieldConnection : IDisposable
     {
-        public readonly ContainmentFieldGeneratorComponent Generator1;
-        public readonly ContainmentFieldGeneratorComponent Generator2;
+        public ContainmentFieldGeneratorComponent Generator1;
+        public ContainmentFieldGeneratorComponent Generator2;
         private readonly List<EntityUid> _fields = new();
         private int _sharedEnergyPool;
         private readonly CancellationTokenSource _powerDecreaseCancellationTokenSource = new();
@@ -63,7 +65,7 @@ namespace Content.Server.Singularity.Components
             }
 
 
-            Timer.SpawnRepeating(1000, () => { SharedEnergyPool--;}, _powerDecreaseCancellationTokenSource.Token);
+            Timer.SpawnRepeating(1000, () => { SharedEnergyPool--; }, _powerDecreaseCancellationTokenSource.Token);
         }
 
         public bool CanRepel(SharedSingularityComponent toRepel)
@@ -82,8 +84,29 @@ namespace Content.Server.Singularity.Components
             }
             _fields.Clear();
 
-            Generator1.RemoveConnection(this);
-            Generator2.RemoveConnection(this);
+            RemoveConnection(this, Generator1);
+            RemoveConnection(this, Generator2);
+        }
+
+        public void RemoveConnection(ContainmentFieldConnection? connection, ContainmentFieldGeneratorComponent component)
+        {
+            if (component.Connection1?.Item2 == connection)
+            {
+                component.Connection1 = null;
+            }
+            else if (component.Connection2?.Item2 == connection)
+            {
+                component.Connection2 = null;
+            }
+            else if (connection != null)
+            {
+                Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
+            }
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
+            {
+                bool hasAnyConnection = (component.Connection1 != null) || (component.Connection2 != null);
+                pointLightComponent.Enabled = hasAnyConnection;
+            }
         }
     }
 }

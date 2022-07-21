@@ -76,6 +76,7 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+  - type: AntiRottingContainer
 
 - type: entity
   id: CrateHydroponics

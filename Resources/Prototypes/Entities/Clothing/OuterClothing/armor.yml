@@ -135,7 +135,7 @@
         Piercing: 0.9
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.9
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -155,7 +155,7 @@
         Piercing: 0.4
         Heat: 0.9
   - type: ExplosionResistance
-    resistance: 0.8
+    damageCoefficient: 0.8
 
 - type: entity
   parent: ClothingOuterBase
@@ -175,7 +175,7 @@
         Piercing: 0.6
         Heat: 0.5
   - type: ExplosionResistance
-    resistance: 0.65
+    damageCoefficient: 0.65
     
 - type: entity
   parent: ClothingOuterBase
@@ -199,4 +199,4 @@
     walkModifier: 0.7
     sprintModifier: 0.65 
   - type: ExplosionResistance
-    resistance: 0.5
+    damageCoefficient: 0.5

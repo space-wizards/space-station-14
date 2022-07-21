@@ -26,7 +26,8 @@ public sealed class GasArtifactComponent : Component
         Gas.Plasma,
         Gas.Nitrogen,
         Gas.CarbonDioxide,
-        Gas.Tritium
+        Gas.Tritium,
+        Gas.Miasma,
     };
 
     /// <summary>

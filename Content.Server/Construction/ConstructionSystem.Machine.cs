@@ -41,7 +41,7 @@ public sealed partial class ConstructionSystem
         EntityManager.EventBus.RaiseLocalEvent(component.Owner, new RefreshPartsEvent()
         {
             Parts = GetAllParts(component),
-        });
+        }, true);
     }
 
     public void CreateBoardAndStockParts(MachineComponent component)

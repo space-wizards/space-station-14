@@ -15,7 +15,5 @@ namespace Content.Shared.Movement.Components
         float GrabRange { get; set; }
 
         float PushStrength { get; set; }
-
-        float WeightlessStrength { get; set; }
     }
 }

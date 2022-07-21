@@ -8,30 +8,38 @@
   id: Chicken
   entity: MobChicken
   forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
   id: Monkey
   entity: MobMonkey
   forced: true
-  dropInventory: true
+  inventory: Drop
   revertOnCrit: true
   revertOnDeath: true
+
+# this is a test for transferring some visual appearance stuff
+- type: polymorph
+  id: TestHumanMorph
+  entity: MobHuman
+  transferName: true
+  transferHumanoidAppearance: true
+  inventory: Transfer
 
 - type: polymorph
   id: AdminMonkeySmite
   entity: MobMonkey
   forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
   id: AdminBreadSmite
   entity: FoodBreadPlain
   forced: true
-  dropInventory: true
+  inventory: Drop
 
 - type: polymorph
   id: AdminInstrumentSmite
   entity: SuperSynthesizerInstrument
   forced: true
-  dropInventory: true
+  inventory: Drop

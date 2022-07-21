@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Gatherable.Components;
 
 [RegisterComponent]
-[Friend(typeof(GatherableSystem))]
+[Access(typeof(GatherableSystem))]
 public sealed class GatherableComponent : Component
 {
     /// <summary>
@@ -11,7 +11,7 @@ public sealed class GatherableComponent : Component
     ///     Supports multiple tags.
     /// </summary>
     [ViewVariables]
-    [DataField("whitelist", required: true)] 
+    [DataField("whitelist", required: true)]
     public EntityWhitelist? ToolWhitelist;
 
     /// <summary>
@@ -27,6 +27,6 @@ public sealed class GatherableComponent : Component
     ///       Tag1: LootTableID1
     ///       Tag2: LootTableID2
     /// </summary>
-    [DataField("loot")] 
+    [DataField("loot")]
     public Dictionary<string, string>? MappedLoot = new();
 }

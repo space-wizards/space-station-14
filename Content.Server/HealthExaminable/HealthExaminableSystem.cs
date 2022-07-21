@@ -93,7 +93,7 @@ public sealed class HealthExaminableSystem : EntitySystem
         }
 
         // Anything else want to add on to this?
-        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg));
+        RaiseLocalEvent(uid, new HealthBeingExaminedEvent(msg), true);
 
         return msg;
     }

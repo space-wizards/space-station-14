@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 areaEffectComponent.TryAddSolution(contents);
             areaEffectComponent.Start(amount, duration, spreadDelay, removeDelay);
 
-            SoundSystem.Play(Filter.Pvs(ent), sound.GetSound(), ent, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(sound.GetSound(), Filter.Pvs(ent), ent, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

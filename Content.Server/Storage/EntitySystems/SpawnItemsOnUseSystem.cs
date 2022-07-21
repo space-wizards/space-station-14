@@ -35,7 +35,7 @@ namespace Content.Server.Storage.EntitySystems
             }
 
             if (component.Sound != null)
-                SoundSystem.Play(Filter.Pvs(uid), component.Sound.GetSound(), uid);
+                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid);
 
             component.Uses--;
             if (component.Uses == 0)

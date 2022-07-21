@@ -73,6 +73,10 @@
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_parts: !type:Container
+      machine_board: !type:Container
 
 # Compact Wall Substation Base
 - type: entity
@@ -134,6 +138,9 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -142,9 +149,18 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/metalbreak.ogg
+  - type: Construction
+    graph: WallmountSubstation
+    node: substation
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 50
+    intensitySlope: 2
+    totalIntensity: 100
 
 # Substations in use
 
@@ -165,9 +181,6 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 2000000
-  - type: Construction
-    graph: WallmountSubstation
-    node: substation
 
 # Construction Frame
 - type: entity

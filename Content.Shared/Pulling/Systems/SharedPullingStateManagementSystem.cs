@@ -61,7 +61,7 @@ namespace Content.Shared.Pulling
             RaiseLocalEvent(puller.Owner, message, broadcast: false);
 
             if (Initialized(pullable.Owner))
-                RaiseLocalEvent(pullable.Owner, message);
+                RaiseLocalEvent(pullable.Owner, message, true);
 
             // Networking
             puller.Dirty();
@@ -117,7 +117,7 @@ namespace Content.Shared.Pulling
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
 
                 RaiseLocalEvent(puller.Owner, message, broadcast: false);
-                RaiseLocalEvent(pullable.Owner, message);
+                RaiseLocalEvent(pullable.Owner, message, true);
 
                 // Networking
                 Dirty(puller);
@@ -157,11 +157,11 @@ namespace Content.Shared.Pulling
 
             if (movingTo == null)
             {
-                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage(), true);
             }
             else
             {
-                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
             }
         }
     }

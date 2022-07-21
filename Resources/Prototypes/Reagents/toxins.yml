@@ -19,6 +19,57 @@
             Poison: 2
 
 - type: reagent
+  id: CarpoToxin
+  name: reagent-name-carpotoxin
+  group: Toxins
+  desc: reagent-desc-carpotoxin
+  color: "#e2a38c"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  color: "#8a9a5b"
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:ChemCauseRandomDisease
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mold
+          min: 1
+        diseases:
+          - VentCough
+          - SpaceCold
+          - SpaceFlu
+          - BirdFlew
+          - Plague
+
+- type: reagent
   id: PolytrinicAcid
   name: reagent-name-polytrinic-acid
   group: Toxins
@@ -164,7 +215,7 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 4
+            Asphyxiation: 2
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -215,7 +266,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         damage:
           groups:
             Brute: 2
@@ -228,7 +279,7 @@
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 45
         type: Local
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
@@ -255,7 +306,7 @@
           types:
             Poison: 4
       - !type:ChemVomit
-        probability: 0.025
+        probability: 0.04
         conditions:
           - !type:ReagentThreshold
             min: 3
@@ -309,4 +360,27 @@
               Cellular: 1
         - !type:ChemCauseDisease
           causeChance: 1
-          disease: ZombieInfection
+          disease: ActiveZombieVirus
+
+- type: reagent
+  id: UncookedAnimalProteins
+  name: reagent-name-uncooked-animal-proteins
+  desc: reagent-desc-uncooked-animal-proteins
+  physicalDesc: reagent-physical-desc-clumpy
+  color: "#FFFFE5"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Human
+        damage:
+          types:
+            Poison: 2
+      - !type:AdjustReagent
+        conditions:
+        - !type:OrganType
+          type: Animal
+        reagent: Protein
+        amount: 0.5

@@ -12,7 +12,7 @@ namespace Content.Shared.Light.Component;
 /// </remarks>
 [NetworkedComponent]
 [RegisterComponent]
-[Friend(typeof(SharedRgbLightControllerSystem))]
+[Access(typeof(SharedRgbLightControllerSystem))]
 public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
 {
     [DataField("cycleRate")]

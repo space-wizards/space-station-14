@@ -97,7 +97,7 @@ public sealed partial class PathfindingSystem
     private PathfindingChunk CreateChunk(GridPathfindingComponent comp, Vector2i indices)
     {
         var grid = _mapManager.GetGrid(comp.Owner);
-        var newChunk = new PathfindingChunk(grid.Index, indices);
+        var newChunk = new PathfindingChunk(grid.GridEntityId, indices);
         comp.Graph.Add(indices, newChunk);
         newChunk.Initialize(grid);
 
@@ -121,7 +121,7 @@ public sealed partial class PathfindingSystem
 
     private void OnTileUpdate(TileRef tile)
     {
-        if (!_mapManager.GridExists(tile.GridIndex)) return;
+        if (!_mapManager.GridExists(tile.GridUid)) return;
 
         var node = GetNode(tile);
         node.UpdateTile(tile);
@@ -129,7 +129,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsRelevant(TransformComponent xform, PhysicsComponent physics)
     {
-        return xform.GridID != GridId.Invalid && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
+        return xform.GridUid != null && (TrackedCollisionLayers & physics.CollisionLayer) != 0;
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public sealed partial class PathfindingSystem
             !Resolve(entity, ref physics, false)) return;
 
         if (!IsRelevant(xform, physics) ||
-            !_mapManager.TryGetGrid(xform.GridID, out var grid))
+            !_mapManager.TryGetGrid(xform.GridUid, out var grid))
         {
             return;
         }
@@ -158,7 +158,7 @@ public sealed partial class PathfindingSystem
     private void OnEntityRemove(EntityUid entity, TransformComponent? xform = null)
     {
         if (!Resolve(entity, ref xform, false) ||
-            !_mapManager.TryGetGrid(xform.GridID, out var grid)) return;
+            !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(xform.Coordinates));
         node.RemoveEntity(entity);
@@ -166,7 +166,7 @@ public sealed partial class PathfindingSystem
 
     private void OnEntityRemove(EntityUid entity, EntityCoordinates coordinates)
     {
-        var gridId = coordinates.GetGridId(EntityManager);
+        var gridId = coordinates.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridId, out var grid)) return;
 
         var node = GetNode(grid.GetTileRef(coordinates));
@@ -175,13 +175,13 @@ public sealed partial class PathfindingSystem
 
     private PathfindingNode? GetNode(TransformComponent xform)
     {
-        if (!_mapManager.TryGetGrid(xform.GridID, out var grid)) return null;
+        if (!_mapManager.TryGetGrid(xform.GridUid, out var grid)) return null;
         return GetNode(grid.GetTileRef(xform.Coordinates));
     }
 
     private PathfindingNode? GetNode(EntityCoordinates coordinates)
     {
-        if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var grid)) return null;
+        if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var grid)) return null;
         return GetNode(grid.GetTileRef(coordinates));
     }
 
@@ -215,8 +215,10 @@ public sealed partial class PathfindingSystem
     // Also look at increasing tile cost the more physics entities are on it
     public bool CanTraverse(EntityUid entity, EntityCoordinates coordinates)
     {
-        var gridId = coordinates.GetGridId(EntityManager);
-        var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
+        var gridId = coordinates.GetGridUid(EntityManager);
+        if (gridId == null)
+                return false;
+        var tile = _mapManager.GetGrid(gridId.Value).GetTileRef(coordinates);
         var node = GetNode(tile);
         return CanTraverse(entity, node);
     }
@@ -232,7 +234,7 @@ public sealed partial class PathfindingSystem
         var access = _accessReader.FindAccessTags(entity);
         foreach (var reader in node.AccessReaders)
         {
-            if (!_accessReader.IsAllowed(reader, access))
+            if (!_accessReader.IsAllowed(access, reader))
             {
                 return false;
             }

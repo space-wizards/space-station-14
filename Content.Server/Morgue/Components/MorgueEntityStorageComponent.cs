@@ -166,7 +166,7 @@ namespace Content.Server.Morgue.Components
             if (DoSoulBeep && _entMan.TryGetComponent<AppearanceComponent>(Owner, out var appearance) &&
                 appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
+                SoundSystem.Play(_occupantHasSoulAlarmSound.GetSound(), Filter.Pvs(Owner), Owner);
             }
         }
     }

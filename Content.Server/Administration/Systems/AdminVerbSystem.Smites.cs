@@ -30,6 +30,7 @@ using Content.Shared.Disease;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;

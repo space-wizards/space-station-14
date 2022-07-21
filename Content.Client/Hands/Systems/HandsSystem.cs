@@ -208,7 +208,7 @@ namespace Content.Client.Hands
             if (hand.HeldEntity == null)
             {
                 // the held item was removed.
-                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
                 return;
             }
 
@@ -217,7 +217,7 @@ namespace Content.Client.Hands
 
             if (ev.Layers.Count == 0)
             {
-                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
                 return;
             }
 
@@ -244,7 +244,7 @@ namespace Content.Client.Hands
                 sprite.LayerSetData(index, layerData);
             }
 
-            RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers));
+            RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
         }
 
         private void OnVisualsChanged(EntityUid uid, HandsComponent component, VisualsChangedEvent args)

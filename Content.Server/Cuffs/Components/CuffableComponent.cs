@@ -108,7 +108,7 @@ namespace Content.Server.Cuffs.Components
             _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
             UpdateAlert();
             UpdateHeldItems();
             Dirty(_entMan);
@@ -119,7 +119,7 @@ namespace Content.Server.Cuffs.Components
         {
             UpdateAlert();
             var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             var attempt = new UncuffAttemptEvent(user, Owner);
-            _entMan.EventBus.RaiseLocalEvent(user, attempt);
+            _entMan.EventBus.RaiseLocalEvent(user, attempt, true);
 
             if (attempt.Cancelled)
             {
@@ -216,17 +216,18 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.StartBreakoutSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.StartUncuffSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
                 BreakOnUserMove = true,
+                BreakOnTargetMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true
@@ -241,12 +242,10 @@ namespace Content.Server.Cuffs.Components
 
             if (result != DoAfterStatus.Cancelled)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
+                SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
                 Container.ForceRemove(cuffsToRemove.Value);
-                var transform = _entMan.GetComponent<TransformComponent>(cuffsToRemove.Value);
-                transform.AttachToGridOrMap();
-                transform.WorldPosition = _entMan.GetComponent<TransformComponent>(Owner).WorldPosition;
+                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove.Value);
 
                 if (cuff.BreakOnRemove)
                 {
@@ -265,7 +264,7 @@ namespace Content.Server.Cuffs.Components
                 CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
                 _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
                 var ev = new CuffedStateChangeEvent();
-                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev);
+                _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
                 UpdateAlert();
                 Dirty(_entMan);
 

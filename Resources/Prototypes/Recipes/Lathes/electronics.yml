@@ -294,3 +294,75 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraRouterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraRouterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraWirelessRouterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraWirelessRouterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraAnchoredCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraAnchoredCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraMovableCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraMovableCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: SurveillanceWirelessCameraMonitorCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: ComputerTelevisionCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ComputerTelevisionCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    
+- type: latheRecipe
+  id: EmitterCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: EmitterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900

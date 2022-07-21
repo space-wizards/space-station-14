@@ -45,7 +45,7 @@ public sealed class WeldableSystem : EntitySystem
 
         // Other component systems
         var attempt = new WeldableAttemptEvent(user, tool);
-        RaiseLocalEvent(uid, attempt);
+        RaiseLocalEvent(uid, attempt, true);
         if (attempt.Cancelled)
             return false;
 
@@ -77,7 +77,7 @@ public sealed class WeldableSystem : EntitySystem
             return;
 
         component.IsWelded = !component.IsWelded;
-        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded));
+        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded), true);
 
         UpdateAppearance(uid, component);
     }

@@ -22,15 +22,15 @@
   category: Shuttle
   group: market
 
-- type: cargoProduct
-  name: shuttle powering crate
-  id: ShuttlePowerKit
-  description: Contains boards for wallmounted power utilities.
-  icon:
-    sprite: Structures/Machines/computers.rsi
-    state: avionics-systems
-  product: CrateEngineeringShuttle
-  cost: 3000
-  category: Shuttle
-  group: market
+# - type: cargoProduct
+  # name: shuttle powering crate
+  # id: ShuttlePowerKit
+  # description: Contains boards for wallmounted power utilities.
+  # icon:
+    # sprite: Structures/Machines/computers.rsi
+    # state: avionics-systems
+  # product: CrateEngineeringShuttle
+  # cost: 3000
+  # category: Shuttle
+  # group: market
 #  locked: true   # only the QM has permission to order by default

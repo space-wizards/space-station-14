@@ -20,6 +20,7 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis;
 
 namespace Content.Server.Salvage;
 
@@ -63,16 +64,20 @@ public sealed class SalvageMobRestrictionsSystem : EntitySystem
 
     private void OnRemoveGrid(EntityUid uid, SalvageMobRestrictionsGridComponent component, ComponentRemove args)
     {
-        foreach (EntityUid target in component.MobsToKill)
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
+        var bodyQuery = GetEntityQuery<BodyComponent>();
+        var damageQuery = GetEntityQuery<DamageableComponent>();
+        foreach (var target in component.MobsToKill)
         {
-            if (TryComp(target, out BodyComponent? body))
+            if (Deleted(target, metaQuery)) continue;
+            if (bodyQuery.TryGetComponent(target, out var body))
             {
                 // Just because.
                 body.Gib();
             }
-            else if (TryComp(target, out DamageableComponent? dc))
+            else if (damageQuery.TryGetComponent(target, out var damageableComponent))
             {
-                _damageableSystem.SetAllDamage(dc, 200);
+                _damageableSystem.SetAllDamage(damageableComponent, 200);
             }
         }
     }

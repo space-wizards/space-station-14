@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -107,6 +109,11 @@ namespace Content.Server.StationEvents.Events
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
+        ///     Whether or not the event is announced when it is run
+        /// </summary>
+        public virtual bool AnnounceEvent { get; } = true;
+
+        /// <summary>
         ///     Has the startup time elapsed?
         /// </summary>
         protected bool Started { get; set; } = false;
@@ -138,15 +145,15 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventAnnounced, $"Event announce: {Name}");
 
-            if (StartAnnouncement != null)
+            if (AnnounceEvent && StartAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalAnnouncement(StartAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (StartAudio != null)
+            if (AnnounceEvent && StartAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), StartAudio.GetSound(), AudioParams);
+                SoundSystem.Play(StartAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Announced = true;
@@ -161,15 +168,15 @@ namespace Content.Server.StationEvents.Events
             IoCManager.Resolve<IAdminLogManager>()
                 .Add(LogType.EventStopped, $"Event shutdown: {Name}");
 
-            if (EndAnnouncement != null)
+            if (AnnounceEvent && EndAnnouncement != null)
             {
-                var chatManager = IoCManager.Resolve<IChatManager>();
-                chatManager.DispatchStationAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
+                var chatSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
+                chatSystem.DispatchGlobalAnnouncement(EndAnnouncement, playDefaultSound: false, colorOverride: Color.Gold);
             }
 
-            if (EndAudio != null)
+            if (AnnounceEvent && EndAudio != null)
             {
-                SoundSystem.Play(Filter.Broadcast(), EndAudio.GetSound(), AudioParams);
+                SoundSystem.Play(EndAudio.GetSound(), Filter.Broadcast(), AudioParams);
             }
 
             Started = false;
@@ -204,6 +211,12 @@ namespace Content.Server.StationEvents.Events
             entityManager.EntitySysManager.Resolve(ref stationSystem);
 
             targetCoords = EntityCoordinates.Invalid;
+            if (stationSystem.Stations.Count == 0)
+            {
+                targetStation = EntityUid.Invalid;
+                targetGrid = EntityUid.Invalid;
+                return false;
+            }
             targetStation = robustRandom.Pick(stationSystem.Stations);
             var possibleTargets = entityManager.GetComponent<StationDataComponent>(targetStation).Grids;
             if (possibleTargets.Count == 0)
@@ -214,7 +227,8 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = robustRandom.Pick(possibleTargets);
 
-            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!entityManager.TryGetComponent<IMapGridComponent>(targetGrid, out var gridComp)
+                || !entityManager.TryGetComponent<TransformComponent>(targetGrid, out var transform))
                 return false;
             var grid = gridComp.Grid;
 
@@ -229,7 +243,9 @@ namespace Content.Server.StationEvents.Events
                 var randomY = robustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid, tile) || atmosphereSystem.IsTileAirBlocked(grid, tile)) continue;
+                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, transform.MapUid, tile, mapGridComp:gridComp)
+                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp))
+                    continue;
                 found = true;
                 targetCoords = grid.GridTileToLocal(tile);
                 break;

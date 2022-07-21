@@ -116,7 +116,7 @@ namespace Content.Server.AI.Pathfinding
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             foreach (var reader in node.AccessReaders)
             {
-                if (!accessSystem.IsAllowed(reader, access))
+                if (!accessSystem.IsAllowed(access, reader))
                 {
                     return false;
                 }
@@ -160,7 +160,7 @@ namespace Content.Server.AI.Pathfinding
                 cameFrom.Remove(previousCurrent);
                 var pathfindingSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                var grid = mapManager.GetGrid(current.TileRef.GridIndex);
+                var grid = mapManager.GetGrid(current.TileRef.GridUid);
 
                 // Get all the intermediate nodes
                 while (true)

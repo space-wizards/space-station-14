@@ -79,7 +79,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(MapManager.GetGrid(args.NewTile.GridIndex), args.NewTile.GridIndices);
+            UpdateTile(MapManager.GetGrid(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
         private void OnGridChanged(GridModifiedEvent args)
@@ -98,7 +98,7 @@ namespace Content.Shared.SubFloor
             if (!Resolve(uid, ref component, ref xform))
                 return;
 
-            if (xform.Anchored && MapManager.TryGetGrid(xform.GridID, out var grid))
+            if (xform.Anchored && MapManager.TryGetGrid(xform.GridUid, out var grid))
                 component.IsUnderCover = HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates));
             else
                 component.IsUnderCover = false;

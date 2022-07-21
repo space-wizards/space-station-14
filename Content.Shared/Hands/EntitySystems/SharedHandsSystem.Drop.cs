@@ -158,7 +158,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         RaiseLocalEvent(entity, gotUnequipped, false);
 
         var didUnequip = new DidUnequipHandEvent(uid, entity, hand);
-        RaiseLocalEvent(uid, didUnequip);
+        RaiseLocalEvent(uid, didUnequip, true);
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid), false);

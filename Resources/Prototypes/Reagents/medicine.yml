@@ -46,6 +46,21 @@
         type: Remove
 
 - type: reagent
+  id: Ethylredoxrazine
+  name: reagent-name-ethylredoxrazine
+  group: Medicine
+  desc: reagent-desc-ethylredoxrazine
+  physicalDesc: reagent-physical-desc-opaque
+  color: "#2d5708"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: Drunk
+        time: 2.0
+        type: Remove
+
+- type: reagent
   id: Arithrazine
   name: reagent-name-arithrazine
   group: Medicine
@@ -76,6 +91,21 @@
         damage:
           groups:
             Brute: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Poison: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+    Alcohol:
+      effects:
+      - !type:Drunk
 
 - type: reagent
   id: Cryoxadone
@@ -133,6 +163,19 @@
         damage:
           groups:
             Burn: -3
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+        groups:
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Dexalin
@@ -248,13 +291,26 @@
         damage:
           types:
             Radiation: -1
+      - !type:ChemVomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        damage:
+          types:
+           Heat: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
 
 - type: reagent
   id: Ipecac
-  name: ipecac
+  name: reagent-name-ipecac
   group: Medicine
-  desc: Induces vomiting. Useful for stopping a poisoning that isn't done metabolizing.
-  physicalDesc: inky
+  desc: reagent-desc-ipecac
+  physicalDesc: reagent-physical-desc-inky
   color: "#422912"
   metabolisms:
     Medicine:
@@ -329,10 +385,10 @@
 
 - type: reagent
   id: Barozine
-  name: barozine
+  name: reagent-name-barozine
   group: Medicine
-  desc: A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
-  physicalDesc: viscous
+  desc: reagent-desc-barozine
+  physicalDesc: reagent-physical-desc-viscous
   color: "#ff867d"
   metabolisms:
     Medicine:
@@ -539,6 +595,7 @@
       - !type:SatiateHunger
         factor: -1
 
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
   name: reagent-name-omnizine
@@ -598,3 +655,4 @@
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+

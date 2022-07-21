@@ -1,4 +1,5 @@
 using Content.Shared.MachineLinking;
+using Content.Shared.Sound;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.MachineLinking.Components
@@ -24,5 +25,8 @@ namespace Content.Server.MachineLinking.Components
 
         [DataField("state")]
         public bool State;
+
+        [DataField("clickSound")]
+        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
     }
 }

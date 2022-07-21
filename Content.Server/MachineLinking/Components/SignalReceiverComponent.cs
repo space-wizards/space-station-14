@@ -3,7 +3,7 @@ using Content.Server.MachineLinking.System;
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SignalLinkerSystem))]
+    [Access(typeof(SignalLinkerSystem))]
     public sealed class SignalReceiverComponent : Component
     {
         [DataField("inputs")]

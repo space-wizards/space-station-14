@@ -30,7 +30,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         SubscribeLocalEvent<CrayonComponent, ComponentInit>(OnCrayonInit);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectMessage>(OnCrayonBoundUI);
         SubscribeLocalEvent<CrayonComponent, CrayonColorMessage>(OnCrayonBoundUIColor);
-        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse);
+        SubscribeLocalEvent<CrayonComponent, UseInHandEvent>(OnCrayonUse, before: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnCrayonAfterInteract, after: new []{ typeof(FoodSystem) });
         SubscribeLocalEvent<CrayonComponent, DroppedEvent>(OnCrayonDropped);
         SubscribeLocalEvent<CrayonComponent, ComponentGetState>(OnCrayonGetState);
@@ -68,7 +68,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (component.UseSound != null)
-            SoundSystem.Play(Filter.Pvs(uid), component.UseSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(component.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
 
         // Decrease "Ammo"
         component.Charges--;

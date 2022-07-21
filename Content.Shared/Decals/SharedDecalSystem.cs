@@ -13,7 +13,7 @@ namespace Content.Shared.Decals
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
-        protected readonly Dictionary<GridId, Dictionary<uint, Vector2i>> ChunkIndex = new();
+        protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
         public const int ChunkSize = 32;
         public static Vector2i GetChunkIndices(Vector2 coordinates) => new ((int) Math.Floor(coordinates.X / ChunkSize), (int) Math.Floor(coordinates.Y / ChunkSize));
@@ -41,27 +41,24 @@ namespace Content.Shared.Decals
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            var comp = EntityManager.EnsureComponent<DecalGridComponent>(MapManager.GetGrid(msg.GridId).GridEntityId);
-            ChunkIndex[msg.GridId] = new();
+            var comp = EntityManager.EnsureComponent<DecalGridComponent>(msg.EntityUid);
+            ChunkIndex[msg.EntityUid] = new();
             foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
             {
                 foreach (var uid in decals.Keys)
                 {
-                    ChunkIndex[msg.GridId][uid] = indices;
+                    ChunkIndex[msg.EntityUid][uid] = indices;
                 }
             }
         }
 
         protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(EntityUid gridEuid) =>
             Comp<DecalGridComponent>(gridEuid).ChunkCollection;
-        protected DecalGridComponent.DecalGridChunkCollection DecalGridChunkCollection(GridId gridId) =>
-            Comp<DecalGridComponent>(MapManager.GetGridEuid(gridId)).ChunkCollection;
         protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(EntityUid gridEuid) => DecalGridChunkCollection(gridEuid).ChunkCollection;
-        protected Dictionary<Vector2i, Dictionary<uint, Decal>> ChunkCollection(GridId gridId) => DecalGridChunkCollection(gridId).ChunkCollection;
 
-        protected virtual void DirtyChunk(GridId id, Vector2i chunkIndices) {}
+        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices) {}
 
-        protected bool RemoveDecalInternal(GridId gridId, uint uid)
+        protected bool RemoveDecalInternal(EntityUid gridId, uint uid)
         {
             if (!RemoveDecalHook(gridId, uid)) return false;
 
@@ -84,7 +81,7 @@ namespace Content.Shared.Decals
             return true;
         }
 
-        protected virtual bool RemoveDecalHook(GridId gridId, uint uid) => true;
+        protected virtual bool RemoveDecalHook(EntityUid gridId, uint uid) => true;
 
         protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
         {

@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 {
     [TestFixture]
     [TestOf(typeof(SharedInteractionSystem))]
-    public sealed class InRangeUnobstructed : ContentIntegrationTest
+    public sealed class InRangeUnobstructed
     {
         private const string HumanId = "MobHumanBase";
 
@@ -25,9 +25,8 @@ namespace Content.IntegrationTests.Tests.Interaction
         [Test]
         public async Task EntityEntityTest()
         {
-            var server = StartServer();
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -39,7 +38,7 @@ namespace Content.IntegrationTests.Tests.Interaction
             EntityCoordinates entityCoordinates = default;
             MapCoordinates mapCoordinates = default;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapId = mapManager.CreateMap();
                 var coordinates = new MapCoordinates(Vector2.Zero, mapId);
@@ -56,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
             var interactionSys = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<SharedInteractionSystem>();
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Entity <-> Entity
                 Assert.True(interactionSys.InRangeUnobstructed(origin, other));
@@ -100,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(interactionSys.InRangeUnobstructed(mapCoordinates, origin, InteractionRangeDivided15Times3));
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

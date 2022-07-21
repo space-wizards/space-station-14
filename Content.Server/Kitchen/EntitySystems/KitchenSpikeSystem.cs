@@ -1,7 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
@@ -20,6 +23,7 @@ namespace Content.Server.Kitchen.EntitySystems
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
+        [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -107,6 +111,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
+            _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
+
             // TODO VERY SUS
             component.PrototypesToSpawn = EntitySpawnCollection.GetSpawns(butcherable.SpawnedEntities, _random);
 
@@ -123,7 +129,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            SoundSystem.Play(Filter.Pvs(uid), component.SpikeSound.GetSound(), uid);
+            SoundSystem.Play(component.SpikeSound.GetSound(), Filter.Pvs(uid), uid);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

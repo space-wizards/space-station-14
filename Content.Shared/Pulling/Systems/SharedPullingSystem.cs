@@ -54,7 +54,7 @@ namespace Content.Shared.Pulling
 
         private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Are they trying to pull themselves up by their bootstraps?

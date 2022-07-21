@@ -2,7 +2,7 @@ using Content.Shared.Sound;
 
 namespace Content.Server.Dice
 {
-    [RegisterComponent, Friend(typeof(DiceSystem))]
+    [RegisterComponent, Access(typeof(DiceSystem))]
     public sealed class DiceComponent : Component
     {
         [ViewVariables]

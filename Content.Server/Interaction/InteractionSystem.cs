@@ -3,7 +3,6 @@ using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Pulling;
 using Content.Server.Storage.Components;
-using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Database;
 using Content.Shared.DragDrop;
@@ -13,7 +12,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -98,7 +96,7 @@ namespace Content.Server.Interaction
                 return;
 
             // trigger dragdrops on the dropped entity
-            RaiseLocalEvent(msg.Dropped, interactionArgs);
+            RaiseLocalEvent(msg.Dropped, interactionArgs, true);
 
             if (interactionArgs.Handled)
                 return;
@@ -199,6 +197,12 @@ namespace Content.Server.Interaction
                 if (!unobstructed)
                     return;
             }
+            else if (ContainerSystem.IsEntityInContainer(user))
+            {
+                // No wide attacking while in containers (holos, lockers, etc).
+                // Can't think of a valid case where you would want this.
+                return;
+            }
 
             // Verify user has a hand, and find what object they are currently holding in their active hand
             if (TryComp(user, out HandsComponent? hands))
@@ -208,7 +212,7 @@ namespace Content.Server.Interaction
                 if (!Deleted(item))
                 {
                     var meleeVee = new MeleeAttackAttemptEvent();
-                    RaiseLocalEvent(item.Value, ref meleeVee);
+                    RaiseLocalEvent(item.Value, ref meleeVee, true);
 
                     if (meleeVee.Cancelled) return;
 

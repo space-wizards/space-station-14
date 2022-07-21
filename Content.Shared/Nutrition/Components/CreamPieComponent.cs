@@ -3,7 +3,7 @@ using Content.Shared.Sound;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [Friend(typeof(SharedCreamPieSystem))]
+    [Access(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
     public sealed class CreamPieComponent : Component
     {

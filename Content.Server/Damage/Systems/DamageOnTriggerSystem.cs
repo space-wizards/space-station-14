@@ -30,7 +30,7 @@ public sealed class DamageOnTriggerSystem : EntitySystem
 
         var damage = new DamageSpecifier(component.Damage);
         var ev = new BeforeDamageOnTriggerEvent(damage, target);
-        RaiseLocalEvent(source, ev);
+        RaiseLocalEvent(source, ev, true);
 
         _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances);
     }

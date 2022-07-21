@@ -7,7 +7,7 @@ using System.Threading;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
-    [Friend(typeof(DrinkSystem))]
+    [Access(typeof(DrinkSystem))]
     public sealed class DrinkComponent : Component
     {
         [DataField("solution")]

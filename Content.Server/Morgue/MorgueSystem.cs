@@ -69,7 +69,7 @@ namespace Content.Server.Morgue
 
         private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.Cooking || component.Open )
                 return;
 
             AlternativeVerb verb = new();

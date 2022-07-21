@@ -1,28 +1,3 @@
-- type: damageType
-  id: Blunt
-
-- type: damageType
-  id: Slash
-
-- type: damageType
-  id: Piercing
-
-- type: damageType
-  id: Heat
-
-- type: damageType
-  id: Shock
-
-- type: damageType
-  id: Cold
-
-# Poison damage. Generally caused by various reagents being metabolised.
-- type: damageType
-  id: Poison
-
-- type: damageType
-  id: Radiation
-
 # Damage due to being unable to breathe.
 # Represents not enough oxygen (or equivalent) getting to the blood.
 # Usually healed automatically if entity can breathe
@@ -35,7 +10,32 @@
   id: Bloodloss
 
 - type: damageType
+  id: Blunt
+
+- type: damageType
   id: Cellular
+
+- type: damageType
+  id: Cold
+
+- type: damageType
+  id: Heat
+
+- type: damageType
+  id: Piercing
+
+# Poison damage. Generally caused by various reagents being metabolised.
+- type: damageType
+  id: Poison
+
+- type: damageType
+  id: Radiation
+
+- type: damageType
+  id: Shock
+
+- type: damageType
+  id: Slash
 
 # Damage represent structures internal integrity.
 # Exclusive for structures such as walls, airlocks and others.

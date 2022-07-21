@@ -14,11 +14,12 @@
     - toggledecals
     - nodevis
     - nodevisfilter
+    - showspread
+    - showambient
+    - showemergencyshuttle
 
 - Flags: MAPPING
   Commands:
-    - tethergun
-    - griddrag
     - showmarkers
     - showsubfloor
     - showsubfloorforever
@@ -27,9 +28,15 @@
     - nodevis
     - nodevisfilter
 
+- Flags: FUN
+  Commands:
+    - tethergun
+    - griddrag
+
 - Flags: ADMIN
   Commands:
     - togglehealthoverlay
+    - togglelight
 
 - Flags: QUERY
   Commands:

@@ -85,6 +85,12 @@
   components:
   - type: Door
     state: Open
+  - type: Physics
+    canCollide: false
+  - type: Occluder
+    enabled: false
+  - type: Airtight
+    airBlocked: false
   - type: Construction
     graph: Shutters
     node: Shutters

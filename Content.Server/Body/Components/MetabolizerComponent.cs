@@ -9,7 +9,7 @@ namespace Content.Server.Body.Components
     /// <summary>
     ///     Handles metabolizing various reagents with given effects.
     /// </summary>
-    [RegisterComponent, Friend(typeof(MetabolizerSystem))]
+    [RegisterComponent, Access(typeof(MetabolizerSystem))]
     public sealed class MetabolizerComponent : Component
     {
         public float AccumulatedFrametime = 0.0f;
@@ -40,6 +40,7 @@ namespace Content.Server.Body.Components
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
         [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<MetabolizerTypePrototype>))]
+        [Access(typeof(MetabolizerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public HashSet<string>? MetabolizerTypes = null;
 
         /// <summary>

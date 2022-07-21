@@ -84,7 +84,7 @@ namespace Content.Server.Stack
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             AlternativeVerb halve = new()

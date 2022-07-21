@@ -43,7 +43,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             component.Dirty();
 
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender, species));
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender, species), true);
         }
 
         public void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, HumanoidAppearanceComponent? component = null)
@@ -54,7 +54,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             component.Dirty();
 
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species));
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, component.Sex, component.Gender, component.Species), true);
         }
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)

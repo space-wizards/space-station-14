@@ -16,6 +16,8 @@
     max: 999999 # todo: add support for unlimited stacks
     stackType: Telecrystal
   - type: Telecrystal
+  - type: StackPrice
+    price: 200
 
 - type: entity
   parent: Telecrystal

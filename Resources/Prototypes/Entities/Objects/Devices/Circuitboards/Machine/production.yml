@@ -396,3 +396,70 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+        
+- type: entity
+  id: EmitterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: emitter machine board
+  components:
+    - type: MachineBoard
+      prototype: Emitter
+      requirements:
+        Capacitor: 1
+        Laser: 1
+      materialRequirements:
+        CableHV: 5
+        Glass: 2
+
+- type: entity
+  id: SurveillanceCameraRouterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: surveillance camera router board
+  description: A machine printed circuit board for a surveillance camera router
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceCameraRouterConstructed
+      requirements:
+        Capacitor: 4
+
+- type: entity
+  id: SurveillanceCameraWirelessRouterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: surveillance camera wireless router board
+  description: A machine printed circuit board for a surveillance camera wireless router
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceCameraWirelessRouterConstructed
+      requirements:
+        Laser: 1
+        Capacitor: 4
+
+- type: entity
+  id: SurveillanceWirelessCameraMovableCircuitboard
+  parent: BaseMachineCircuitboard
+  name: movable wireless camera board
+  description: A machine printed circuit board for a movable wireless camera
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceWirelessCameraMovableConstructed
+      requirements:
+        Laser: 1
+        Capacitor: 4
+      materialRequirements:
+        Glass: 2
+        Cable: 2
+
+- type: entity
+  id: SurveillanceWirelessCameraAnchoredCircuitboard
+  parent: BaseMachineCircuitboard
+  name: wireless camera board
+  description: A machine printed circuit board for a wireless camera
+  components:
+    - type: MachineBoard
+      prototype: SurveillanceWirelessCameraAnchoredConstructed
+      requirements:
+        Laser: 1
+        Capacitor: 4
+      materialRequirements:
+        Glass: 2
+        Cable: 2

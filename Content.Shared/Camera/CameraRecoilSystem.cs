@@ -88,7 +88,7 @@ public sealed class CameraRecoilSystem : EntitySystem
 
     private void HandleCameraKick(CameraKickEvent args)
     {
-        if (!EntityManager.TryGetComponent(args.Euid, out CameraRecoilComponent recoil))
+        if (!EntityManager.TryGetComponent(args.Euid, out CameraRecoilComponent? recoil))
         {
             _log.Warning($"Received a kick for euid {args.Euid}, but it is missing required components.");
             return;

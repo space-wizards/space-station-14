@@ -1,6 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Movement.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.ReagentEffects

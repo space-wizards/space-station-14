@@ -177,7 +177,7 @@ namespace Content.Server.Wieldable
 
             if (component.WieldSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(uid), component.WieldSound.GetSound());
+                SoundSystem.Play(component.WieldSound.GetSound(), Filter.Pvs(uid));
             }
 
             for (var i = 0; i < component.FreeHandsRequired; i++)
@@ -207,8 +207,7 @@ namespace Content.Server.Wieldable
             {
                 if (component.UnwieldSound != null)
                 {
-                    SoundSystem.Play(Filter.Pvs(uid),
-                        component.UnwieldSound.GetSound());
+                    SoundSystem.Play(component.UnwieldSound.GetSound(), Filter.Pvs(uid));
                 }
 
                 args.User.Value.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
@@ -222,7 +221,7 @@ namespace Content.Server.Wieldable
         {
             if (!component.Wielded || component.Owner != args.Unequipped)
                 return;
-            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true));
+            RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)

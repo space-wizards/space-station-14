@@ -26,6 +26,7 @@ public sealed class BureaucraticError : StationEvent
         base.Startup();
         var stationSystem = EntitySystem.Get<StationSystem>();
         var stationJobsSystem = EntitySystem.Get<StationJobsSystem>();
+        if (stationSystem.Stations.Count == 0) return; // No stations
         var chosenStation = _random.Pick(stationSystem.Stations.ToList());
         var jobList = stationJobsSystem.GetJobs(chosenStation).Keys.ToList();
 

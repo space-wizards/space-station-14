@@ -73,7 +73,7 @@ namespace Content.Server.Chat
         private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             // Suicide by held item
-            if (EntityManager.TryGetComponent(victim, out HandsComponent handsComponent)
+            if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
                 && handsComponent.ActiveHandEntity is EntityUid item)
             {
                 RaiseLocalEvent(item, suicideEvent, false);

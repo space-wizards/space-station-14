@@ -7,7 +7,7 @@ namespace Content.Server.Light.Components
     /// <summary>
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
-    [RegisterComponent, Friend(typeof(LightBulbSystem))]
+    [RegisterComponent, Access(typeof(LightBulbSystem))]
     public sealed class LightBulbComponent : Component
     {
         [DataField("color")]

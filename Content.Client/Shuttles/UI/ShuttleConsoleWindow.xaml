@@ -1,0 +1,81 @@
+<userInterface:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:userInterface="clr-namespace:Content.Client.UserInterface"
+                           xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+               Title="{Loc 'shuttle-console-window-title'}">
+    <GridContainer Columns="3"
+                  HorizontalAlignment="Stretch">
+        <BoxContainer Name="LeftDisplay"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      MinWidth="256"
+                      Align="Center"
+                      Orientation="Vertical">
+            <PanelContainer StyleClasses="BorderedWindowPanel">
+                <BoxContainer Name="DockPorts"
+                              Orientation="Vertical">
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+        <PanelContainer>
+            <ui:RadarControl Name="RadarScreen"
+                             MouseFilter="Stop"/>
+            <ui:DockingControl Name="DockingScreen"
+                               Visible="False"
+                               MouseFilter="Stop"/>
+        </PanelContainer>
+        <BoxContainer Name="RightDisplay"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Left"
+                      MinWidth="256"
+                      Align="Center"
+                      Orientation="Vertical">
+            <PanelContainer Name="ReadonlyDisplay"
+                            StyleClasses="BorderedWindowPanel">
+                <GridContainer Columns="2"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Top">
+                    <Label Text="{Loc 'shuttle-console-max-radar'}"/>
+                    <Label Name="MaxRadarRange"
+                           Text="0.0"
+                           HorizontalAlignment="Right"/>
+                    <Label Text="{Loc 'shuttle-console-radar'}"/>
+                    <Label Name="RadarRange"
+                           Text="0.0"
+                           HorizontalAlignment="Right"/>
+                    <Label Text="{Loc 'shuttle-console-position'}"/>
+                    <Label Name="GridPosition"
+                           Text="0.0, 0.0"
+                           Align="Right"/>
+                    <Label Text="{Loc 'shuttle-console-orientation'}"/>
+                    <Label Name="GridOrientation"
+                           Text="0.0"
+                           Align="Right"/>
+                    <Label Text="{Loc 'shuttle-console-linear-velocity'}"/>
+                    <Label Name="GridLinearVelocity"
+                           Text="0.0, 0.0"
+                           Align="Right"/>
+                    <Label Text="{Loc 'shuttle-console-angular-velocity'}"/>
+                    <Label Name="GridAngularVelocity"
+                           Text="0.0"
+                           Align="Right"/>
+                </GridContainer>
+            </PanelContainer>
+            <Button Name="ShuttleModeDisplay"
+                    Text="{Loc 'shuttle-console-strafing'}"
+                    TextAlign="Center"
+                    ToggleMode="True"/>
+            <Button Name="IFFToggle"
+                    Text="{Loc 'shuttle-console-iff-toggle'}"
+                    TextAlign="Center"
+                    ToggleMode="True"/>
+            <Button Name="DockToggle"
+                    Text="{Loc 'shuttle-console-dock-toggle'}"
+                    TextAlign="Center"
+                    ToggleMode="True"/>
+            <Button Name="UndockButton"
+                    Text="{Loc 'shuttle-console-undock'}"
+                    TextAlign="Center"
+                    Disabled="True"/>
+        </BoxContainer>
+    </GridContainer>
+</userInterface:FancyWindow>

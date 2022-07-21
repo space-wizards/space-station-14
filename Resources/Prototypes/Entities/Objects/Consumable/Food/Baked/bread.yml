@@ -434,7 +434,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
-        - ReagentId: Amatoxin
+        - ReagentId: Mold
           Quantity: 7
 # Tastes like decaying fungus.
 

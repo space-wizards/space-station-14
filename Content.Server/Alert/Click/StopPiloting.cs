@@ -1,4 +1,4 @@
-using Content.Server.Shuttles.EntitySystems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;

@@ -1,31 +1,22 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/d1120fc8287cca2632e834069b5019bf941a0170/icons/obj/guns/projectile/sawnshotgun.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-NC-4.0",
+    "copyright": "Taken from TerraGov Marine Corps at https://github.com/tgstation/TerraGov-Marine-Corps/pull/7678/commits/e7bc17b894aa4c1f882358016346c3be00236df8",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "base"
-    },
-    {
-      "name": "bolt-closed"
-    },
-    {
-      "name": "bolt-open"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }

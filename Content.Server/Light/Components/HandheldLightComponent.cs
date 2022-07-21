@@ -8,7 +8,7 @@ namespace Content.Server.Light.Components
     ///     Component that represents a powered handheld light source which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(HandheldLightSystem))]
+    [Access(typeof(HandheldLightSystem))]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = .8f;

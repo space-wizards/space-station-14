@@ -1,24 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using Nett;
-using Content.Shared;
 using Content.Shared.CCVar;
-using Content.Client.Resources;
 using Content.Client.IoC;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 

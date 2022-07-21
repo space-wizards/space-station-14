@@ -290,7 +290,7 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
+                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(25));
                 for (int i = 0; i < pillAmount; i++)
                 {
                     var pill = _entities.SpawnEntity("Pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);
@@ -326,7 +326,7 @@ namespace Content.Server.Chemistry.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

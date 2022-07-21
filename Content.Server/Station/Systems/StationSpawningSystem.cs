@@ -173,7 +173,7 @@ public sealed class StationSpawningSystem : EntitySystem
         var card = pdaComponent.ContainedID;
         var cardId = card.Owner;
         _cardSystem.TryChangeFullName(cardId, characterName, card);
-        _cardSystem.TryChangeJobTitle(cardId, jobPrototype.Name, card);
+        _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);
 
         var extendedAccess = false;
         if (station != null)

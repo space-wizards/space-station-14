@@ -26,7 +26,7 @@ namespace Content.Shared.Access.Systems
 
         private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
         {
-            if (component.Enabled && !IsAllowed(component, args.User))
+            if (component.Enabled && !IsAllowed(args.User, component))
                 args.Cancel();
         }
 
@@ -50,22 +50,39 @@ namespace Content.Shared.Access.Systems
                 args.Handled = true;
             }
         }
-
         /// <summary>
-        /// Searches an <see cref="AccessComponent"/> in the entity itself, in its active hand or in its ID slot.
-        /// Then compares the found access with the configured access lists to see if it is allowed.
+        /// Searches the source for access tags
+        /// then compares it with the targets readers access list to see if it is allowed.
         /// </summary>
-        /// <remarks>
-        ///     If no access is found, an empty set is used instead.
-        /// </remarks>
-        /// <param name="entity">The entity to bor access.</param>
-        public bool IsAllowed(AccessReaderComponent reader, EntityUid entity)
+        /// <param name="source">The entity that wants access.</param>
+        /// <param name="target">The entity to search for an access reader</param>
+        /// <param name="reader">Optional reader from the target entity</param>
+        public bool IsAllowed(EntityUid source, EntityUid target, AccessReaderComponent? reader = null)
         {
-            var tags = FindAccessTags(entity);
-            return IsAllowed(reader, tags);
+            if (!Resolve(target, ref reader, false))
+                return true;
+            var tags = FindAccessTags(source);
+            return IsAllowed(tags, reader);
         }
 
-        public bool IsAllowed(AccessReaderComponent reader, ICollection<string> accessTags)
+        /// <summary>
+        /// Searches the given entity for access tags
+        /// then compares it with the readers access list to see if it is allowed.
+        /// </summary>
+        /// <param name="entity">The entity that wants access.</param>
+        /// <param name="reader">A reader from a different entity</param>
+        public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
+        {
+            var tags = FindAccessTags(entity);
+            return IsAllowed(tags, reader);
+        }
+
+        /// <summary>
+        /// Compares the given tags with the readers access list to see if it is allowed.
+        /// </summary>
+        /// <param name="accessTags">A list of access tags</param>
+        /// <param name="reader">An access reader to check against</param>
+        public bool IsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
             if (!reader.Enabled)
             {
@@ -86,6 +103,10 @@ namespace Content.Shared.Access.Systems
             return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
+        /// <summary>
+        /// Finds the access tags on the given entity
+        /// </summary>
+        /// <param name="entity">The entity that to search.</param>
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
             HashSet<string>? tags = null;

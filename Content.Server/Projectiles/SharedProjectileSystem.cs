@@ -14,6 +14,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using GunSystem = Content.Server.Weapon.Ranged.Systems.GunSystem;
 
 namespace Content.Server.Projectiles
 {
@@ -51,7 +52,7 @@ namespace Content.Server.Projectiles
                     $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
             }
 
-            _guns.PlaySound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
+            _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
 
             // Damaging it can delete it
             if (HasComp<CameraRecoilComponent>(otherEntity))

@@ -196,8 +196,8 @@ namespace Content.Server.Singularity.EntitySystems
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => EntityManager.DeleteEntity(projectile));
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
-                AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
+            SoundSystem.Play(component.FireSound.GetSound(), Filter.Pvs(component.Owner),
+                component.Owner, AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 
         private void UpdateAppearance(EmitterComponent component)

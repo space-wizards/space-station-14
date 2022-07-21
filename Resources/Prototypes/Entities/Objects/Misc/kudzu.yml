@@ -18,8 +18,7 @@
       drawdepth: Overdoors
       netsync: false
     - type: Appearance
-      visuals:
-      - type: KudzuVisualizer
+    - type: KudzuVisuals
     - type: Clickable
     - type: Transform
       anchored: true

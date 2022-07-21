@@ -27,14 +27,16 @@ public sealed class LandMineSystem : EntitySystem
 
     private void HandleTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredEvent args)
     {
-        _popupSystem.PopupCoordinates(
-            Loc.GetString("land-mine-triggered", ("mine", uid)),
-            Transform(uid).Coordinates,
-            Filter.Entities(args.Tripper));
+        if (_trigger.Trigger(uid, args.Tripper))
+        {
+            _popupSystem.PopupCoordinates(
+                Loc.GetString("land-mine-triggered", ("mine", uid)),
+                Transform(uid).Coordinates,
+                Filter.Entities(args.Tripper));
+        }
 
-        _trigger.Trigger(uid, args.Tripper);
-
-        QueueDel(uid);
+        if (component.DeleteOnActivate)
+            QueueDel(uid);
     }
 }
 

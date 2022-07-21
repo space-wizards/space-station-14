@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Server.Cuffs
 {
@@ -23,14 +24,13 @@ namespace Content.Server.Cuffs
 
             SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
-
             SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
         }
 
         private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
         {
             // Can the user access the cuffs, and is there even anything to uncuff?
-            if (!args.CanAccess || component.CuffedHandCount == 0)
+            if (!args.CanAccess || component.CuffedHandCount == 0 || args.Hands == null)
                 return;
 
             // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up
@@ -73,8 +73,7 @@ namespace Content.Server.Cuffs
                 }
                 else
                 {
-                    // Uh... let it go through???
-                    // TODO CUFFABLE/STUN add UncuffAttemptEvent subscription to StunSystem
+                    // TODO Find a way for cuffable to check ActionBlockerSystem.CanInteract() without blocking itself
                 }
             }
             else

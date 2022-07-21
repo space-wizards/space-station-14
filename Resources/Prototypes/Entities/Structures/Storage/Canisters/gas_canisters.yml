@@ -338,6 +338,43 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
 
+- type: entity
+  parent: GasCanister
+  id: MiasmaCanister
+  name: miasma canister
+  components:
+    - type: Sprite
+      state: redws
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 1871.71051 # Miasma
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+
 # Broke Entities
 
 - type: entity
@@ -453,3 +490,12 @@
   components:
     - type: Sprite
       state: water_vapor-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: MiasmaCanisterBroken
+  name: broken miasma canister
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: redws-1

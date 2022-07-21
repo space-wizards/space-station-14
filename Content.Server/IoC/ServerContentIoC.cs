@@ -19,6 +19,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Preferences.Managers;
+using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
@@ -42,6 +43,7 @@ namespace Content.Server.IoC
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
+            IoCManager.Register<ServerUpdateManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();

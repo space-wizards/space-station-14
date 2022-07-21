@@ -26,11 +26,6 @@ namespace Content.Server.GameTicking
 
             switch (args.NewStatus)
             {
-                case SessionStatus.Connecting:
-                    // Cancel shutdown update timer in progress.
-                    _updateShutdownCts?.Cancel();
-                    break;
-
                 case SessionStatus.Connected:
                 {
                     AddPlayerToDb(args.Session.UserId.UserId);
@@ -95,7 +90,6 @@ namespace Content.Server.GameTicking
 
                     _chatManager.SendAdminAnnouncement(Loc.GetString("player-leave-message", ("name", args.Session.Name)));
 
-                    ServerEmptyUpdateRestartCheck();
                     _prefsManager.OnClientDisconnected(session);
                     break;
                 }

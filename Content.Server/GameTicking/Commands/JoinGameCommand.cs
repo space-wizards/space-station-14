@@ -65,7 +65,7 @@ namespace Content.Server.GameTicking.Commands
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
                 if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine($"{jobPrototype.Name} has no available slots.");
+                    shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;
                 }
                 ticker.MakeJoinGame(player, station, id);

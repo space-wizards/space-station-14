@@ -52,10 +52,10 @@ namespace Content.Shared.Interaction
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
-        public const float InteractionRange = 2;
+        public const float InteractionRange = 2f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        public const float MaxRaycastRange = 100;
+        public const float MaxRaycastRange = 100f;
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -280,7 +280,7 @@ namespace Content.Shared.Interaction
         {
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
-            RaiseLocalEvent(target, message);
+            RaiseLocalEvent(target, message, true);
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
             if (message.Handled)
                 return;
@@ -307,7 +307,7 @@ namespace Content.Shared.Interaction
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
-                RaiseLocalEvent(target.Value, rangedMsg);
+                RaiseLocalEvent(target.Value, rangedMsg, true);
 
                 if (rangedMsg.Handled)
                     return;
@@ -619,7 +619,7 @@ namespace Content.Shared.Interaction
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
-            RaiseLocalEvent(target, interactUsingEvent);
+            RaiseLocalEvent(target, interactUsingEvent, true);
             if (interactUsingEvent.Handled)
                 return;
 
@@ -717,7 +717,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
-            RaiseLocalEvent(used, activateMsg);
+            RaiseLocalEvent(used, activateMsg, true);
             if (activateMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
@@ -766,7 +766,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             var useMsg = new UseInHandEvent(user);
-            RaiseLocalEvent(used, useMsg);
+            RaiseLocalEvent(used, useMsg, true);
             if (useMsg.Handled)
             {
                 _useDelay.BeginDelay(used, delayComponent);
@@ -805,7 +805,7 @@ namespace Content.Shared.Interaction
         public void ThrownInteraction(EntityUid user, EntityUid thrown)
         {
             var throwMsg = new ThrownEvent(user, thrown);
-            RaiseLocalEvent(thrown, throwMsg);
+            RaiseLocalEvent(thrown, throwMsg, true);
             if (throwMsg.Handled)
             {
                 _adminLogger.Add(LogType.Throw, LogImpact.Low,$"{ToPrettyString(user):user} threw {ToPrettyString(thrown):entity}");
@@ -819,7 +819,7 @@ namespace Content.Shared.Interaction
         public void DroppedInteraction(EntityUid user, EntityUid item)
         {
             var dropMsg = new DroppedEvent(user);
-            RaiseLocalEvent(item, dropMsg);
+            RaiseLocalEvent(item, dropMsg, true);
             if (dropMsg.Handled)
                 _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
             Transform(item).LocalRotation = Angle.Zero;

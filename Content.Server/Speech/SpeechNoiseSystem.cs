@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Content.Server.Chat;
+using Content.Server.Chat.Systems;
 using Content.Shared.Speech;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -65,7 +66,7 @@ namespace Content.Server.Speech
             var pitchedAudioParams = component.AudioParams.WithPitchScale(scale);
 
             component.LastTimeSoundPlayed = currentTime;
-            SoundSystem.Play(Filter.Pvs(uid, entityManager: EntityManager), contextSound, uid, pitchedAudioParams);
+            SoundSystem.Play(contextSound, Filter.Pvs(uid, entityManager: EntityManager), uid, pitchedAudioParams);
         }
     }
 }

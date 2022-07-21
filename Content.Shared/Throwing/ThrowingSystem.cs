@@ -1,4 +1,5 @@
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -93,7 +94,10 @@ public sealed class ThrowingSystem : EntitySystem
         }
 
         // Give thrower an impulse in the other direction
-        if (user != null && pushbackRatio > 0.0f && physicsQuery.Value.TryGetComponent(user.Value, out var userPhysics))
+        if (user != null &&
+            pushbackRatio > 0.0f &&
+            physicsQuery.Value.TryGetComponent(user.Value, out var userPhysics) &&
+            user.Value.IsWeightless(userPhysics, entityManager: EntityManager))
         {
             var msg = new ThrowPushbackAttemptEvent();
             RaiseLocalEvent(physics.Owner, msg, false);

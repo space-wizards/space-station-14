@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
@@ -32,7 +32,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        if (!EntityManager.TryGetComponent(msg.EntityUid, out CharacterInfoComponent characterInfoComponent))
+        if (!EntityManager.TryGetComponent(msg.EntityUid, out CharacterInfoComponent? characterInfoComponent))
             return;
 
         UpdateUI(characterInfoComponent, msg.JobTitle, msg.Objectives, msg.Briefing);
@@ -41,7 +41,7 @@ public sealed class CharacterInfoSystem : EntitySystem
             characterInfoComponent.Control.SpriteView.Sprite = spriteComponent;
         }
 
-        if (!EntityManager.TryGetComponent(msg.EntityUid, out MetaDataComponent metadata))
+        if (!EntityManager.TryGetComponent(msg.EntityUid, out MetaDataComponent? metadata))
             return;
         characterInfoComponent.Control.NameLabel.Text = metadata.EntityName;
     }

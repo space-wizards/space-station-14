@@ -3,7 +3,7 @@ using Content.Shared.Sound;
 
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Friend(typeof(SliceableFoodSystem))]
+    [RegisterComponent, Access(typeof(SliceableFoodSystem))]
     internal sealed class SliceableFoodComponent : Component
     {
         [DataField("slice")]

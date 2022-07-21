@@ -7,7 +7,7 @@ namespace Content.Server.PneumaticCannon
 {
     // TODO: ideally, this and most of the actual firing code doesn't need to exist, and guns can be flexible enough
     // to handle shooting things that aren't ammo (just firing any entity)
-    [RegisterComponent, Friend(typeof(PneumaticCannonSystem))]
+    [RegisterComponent, Access(typeof(PneumaticCannonSystem))]
     public sealed class PneumaticCannonComponent : Component
     {
         [ViewVariables]

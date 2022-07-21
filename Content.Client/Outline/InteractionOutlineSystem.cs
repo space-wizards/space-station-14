@@ -134,7 +134,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         }
 
         var inRange = false;
-        if (localPlayer.ControlledEntity != null && entityToClick != null)
+        if (localPlayer.ControlledEntity != null && !Deleted(entityToClick))
         {
             inRange = _interactionSystem.InRangeUnobstructed(localPlayer.ControlledEntity.Value, entityToClick.Value);
         }

@@ -38,13 +38,16 @@ namespace Content.Shared.Movement.Components
             if (body == null)
                 entityManager.TryGetComponent(entity, out body);
 
-            if (entityManager.TryGetComponent<MovementIgnoreGravityComponent>(entity, out var ignoreGravityComponent) ||
-                (body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0) return ignoreGravityComponent.Weightless;
+            if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
+                return false;
+
+            if (entityManager.TryGetComponent<MovementIgnoreGravityComponent>(entity, out var ignoreGravityComponent))
+                return ignoreGravityComponent.Weightless;
 
             var transform = entityManager.GetComponent<TransformComponent>(entity);
-            var gridId = transform.GridID;
+            var gridId = transform.GridUid;
 
-            if (!gridId.IsValid())
+            if (gridId == null)
             {
                 // Not on a grid = no gravity for now.
                 // In the future, may want to allow maps to override to always have gravity instead.
@@ -52,12 +55,12 @@ namespace Content.Shared.Movement.Components
             }
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(gridId);
+            var grid = mapManager.GetGrid(gridId.Value);
             var invSys = EntitySystem.Get<InventorySystem>();
 
             if (invSys.TryGetSlotEntity(entity, "shoes", out var ent))
             {
-                if (entityManager.TryGetComponent<SharedMagbootsComponent>(ent, out var boots) && boots.On)
+                if (entityManager.TryGetComponent<MagbootsComponent>(ent, out var boots) && boots.On)
                     return false;
             }
 

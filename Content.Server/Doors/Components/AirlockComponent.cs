@@ -154,7 +154,7 @@ namespace Content.Server.Doors.Components
 
             BoltsDown = newBolts;
 
-            SoundSystem.Play(Filter.Broadcast(), newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Owner);
+            SoundSystem.Play(newBolts ? BoltDownSound.GetSound() : BoltUpSound.GetSound(), Filter.Pvs(Owner), Owner);
         }
     }
 }

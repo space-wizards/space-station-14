@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Light.Components
 {
     [RegisterComponent]
-    [Friend(typeof(HandheldLightSystem))]
+    [Access(typeof(HandheldLightSystem))]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
         public byte? Level;

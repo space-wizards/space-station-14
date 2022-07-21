@@ -41,7 +41,7 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            if (!_entMan.TryGetComponent(Owner, out RiderComponent? rider))
+            if (LastEntityBuckledTo != null && _entMan.HasComponent<VehicleComponent>(LastEntityBuckledTo))
             {
                 return;
             }

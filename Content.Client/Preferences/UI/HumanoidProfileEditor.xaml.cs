@@ -344,7 +344,7 @@ namespace Content.Client.Preferences.UI
 
             var firstCategory = true;
 
-            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
+            foreach (var job in prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.LocalizedName))
             {
                 if(!job.SetPreference) { continue; }
 
@@ -1033,7 +1033,7 @@ namespace Content.Client.Preferences.UI
                     Children =
                     {
                         icon,
-                        new Label {Text = job.Name, MinSize = (175, 0)},
+                        new Label {Text = job.LocalizedName, MinSize = (175, 0)},
                         _optionButton
                     }
                 });

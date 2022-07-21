@@ -262,12 +262,12 @@ namespace Content.Server.AME.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(_clickSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void InjectSound(bool overloading)
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _injectSound.GetSound(), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            SoundSystem.Play(_injectSound.GetSound(), Filter.Pvs(Owner), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
     }
 
