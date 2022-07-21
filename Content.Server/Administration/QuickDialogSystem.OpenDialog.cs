@@ -29,14 +29,12 @@ public sealed partial class QuickDialogSystem
             QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
             (ev =>
             {
-                try
-                {
-                    okAction.Invoke(ParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"]));
-                }
-                catch (Exception)
+                if (TryParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"], out var v1))
+                    okAction.Invoke(v1);
+                else
                 {
                     session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
-                    throw;
+                    cancelAction?.Invoke();
                 }
             }),
             cancelAction ?? (() => { })
@@ -69,17 +67,15 @@ public sealed partial class QuickDialogSystem
             QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
             (ev =>
             {
-                try
-                {
-                    okAction.Invoke(
-                        ParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"]),
-                        ParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"])
-                    );
-                }
-                catch (Exception)
+
+                if (TryParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"], out var v1) &&
+                    TryParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"], out var v2)
+                    )
+                    okAction.Invoke(v1, v2);
+                else
                 {
                     session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
-                    throw;
+                    cancelAction?.Invoke();
                 }
             }),
             cancelAction ?? (() => { })
@@ -115,18 +111,15 @@ public sealed partial class QuickDialogSystem
             QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
             (ev =>
             {
-                try
-                {
-                    okAction.Invoke(
-                        ParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"]),
-                        ParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"]),
-                        ParseQuickDialog<T3>(TypeToEntryType(typeof(T3)), ev.Responses["3"])
-                    );
-                }
-                catch (Exception)
+                if (TryParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"], out var v1) &&
+                    TryParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"], out var v2) &&
+                    TryParseQuickDialog<T3>(TypeToEntryType(typeof(T3)), ev.Responses["3"], out var v3)
+                   )
+                    okAction.Invoke(v1, v2, v3);
+                else
                 {
                     session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
-                    throw;
+                    cancelAction?.Invoke();
                 }
             }),
             cancelAction ?? (() => { })
@@ -165,19 +158,16 @@ public sealed partial class QuickDialogSystem
             QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton,
             (ev =>
             {
-                try
-                {
-                    okAction.Invoke(
-                        ParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"]),
-                        ParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"]),
-                        ParseQuickDialog<T3>(TypeToEntryType(typeof(T3)), ev.Responses["3"]),
-                        ParseQuickDialog<T4>(TypeToEntryType(typeof(T4)), ev.Responses["4"])
-                    );
-                }
-                catch (Exception)
+                if (TryParseQuickDialog<T1>(TypeToEntryType(typeof(T1)), ev.Responses["1"], out var v1) &&
+                    TryParseQuickDialog<T2>(TypeToEntryType(typeof(T2)), ev.Responses["2"], out var v2) &&
+                    TryParseQuickDialog<T3>(TypeToEntryType(typeof(T3)), ev.Responses["3"], out var v3) &&
+                    TryParseQuickDialog<T4>(TypeToEntryType(typeof(T4)), ev.Responses["4"], out var v4)
+                   )
+                    okAction.Invoke(v1, v2, v3, v4);
+                else
                 {
                     session.ConnectedClient.Disconnect("Replied with invalid quick dialog data.");
-                    throw;
+                    cancelAction?.Invoke();
                 }
             }),
             cancelAction ?? (() => { })

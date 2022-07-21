@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -28,6 +29,12 @@ public sealed partial class QuickDialogSystem : EntitySystem
         _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
 
         SubscribeNetworkEvent<QuickDialogResponseEvent>(Handler);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
     }
 
     private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
@@ -97,24 +104,47 @@ public sealed partial class QuickDialogSystem : EntitySystem
         _openDialogsByUser[session.UserId].Add(did);
     }
 
-    private T ParseQuickDialog<T>(QuickDialogEntryType entryType, string input)
+    private bool TryParseQuickDialog<T>(QuickDialogEntryType entryType, string input, [NotNullWhen(true)] out T? output)
     {
-        return entryType switch
+        switch (entryType)
         {
-            QuickDialogEntryType.ShortText when input.Length > 100 => throw new ArgumentException(
-                "Got an unexpectedly large short-text entry."),
-            QuickDialogEntryType.ShortText => (T)(object)input,
+            case QuickDialogEntryType.Integer:
+            {
+                var result = int.TryParse(input, out var val);
+                output = (T?) (object?) val;
+                return result;
+            }
+            case QuickDialogEntryType.Float:
+            {
+                var result = float.TryParse(input, out var val);
+                output = (T?) (object?) val;
+                return result;
+            }
+            case QuickDialogEntryType.ShortText:
+            {
+                if (input.Length > 100)
+                {
+                    output = default;
+                    return false;
+                }
 
-            QuickDialogEntryType.LongText when input.Length > 2000 => throw new ArgumentException(
-                "Got an unexpectedly large long-text entry."),
-            QuickDialogEntryType.LongText => (T)(object)new LongString(input),
+                output = (T?) (object?) input;
+                return output is not null;
+            }
+            case QuickDialogEntryType.LongText:
+            {
+                if (input.Length > 2000)
+                {
+                    output = default;
+                    return false;
+                }
 
-            QuickDialogEntryType.Float => (T)(object) float.Parse(input), // Gross, but fine. This exceptioning out will boot the client.
-
-            QuickDialogEntryType.Integer => (T)(object) int.Parse(input),
-
-            _ => throw new NotSupportedException(),
-        };
+                output = (T?) (object?) input;
+                return output is not null;
+            }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(entryType), entryType, null);
+        }
     }
 
     private QuickDialogEntryType TypeToEntryType(Type T)

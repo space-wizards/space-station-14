@@ -72,7 +72,7 @@ public sealed partial class AdminVerbSystem
                     {
                         airlock.SetBoltsWithAudio(!airlock.BoltsDown);
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString(airlock.BoltsDown
                         ? "admin-trick-unbolt-description"
                         : "admin-trick-bolt-description"),
@@ -90,7 +90,7 @@ public sealed partial class AdminVerbSystem
                     {
                         _airlockSystem.ToggleEmergencyAccess(airlock);
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString(airlock.EmergencyAccess
                         ? "admin-trick-emergency-access-off-description"
                         : "admin-trick-emergency-access-on-description"),
@@ -166,7 +166,7 @@ public sealed partial class AdminVerbSystem
                         battery.CurrentCharge = battery.MaxCharge;
                         Dirty(battery);
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-refill-battery-description"),
                     Priority = (int) TricksVerbPriorities.RefillBattery,
                 };
@@ -182,7 +182,7 @@ public sealed partial class AdminVerbSystem
                         battery.CurrentCharge = 0;
                         Dirty(battery);
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-drain-battery-description"),
                     Priority = (int) TricksVerbPriorities.DrainBattery,
                 };
@@ -199,7 +199,7 @@ public sealed partial class AdminVerbSystem
                         recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
                     Priority = (int) TricksVerbPriorities.InfiniteBattery,
                 };
@@ -217,7 +217,7 @@ public sealed partial class AdminVerbSystem
                     {
                         RemComp(args.Target, anchor);
                     },
-                    Impact = LogImpact.Extreme,
+                    Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-block-unanchoring-description"),
                     Priority = (int) TricksVerbPriorities.BlockUnanchoring,
                 };
@@ -382,7 +382,7 @@ public sealed partial class AdminVerbSystem
 
                     Transform(args.Target).Coordinates = new EntityCoordinates(arenaGrid, Vector2.One);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
                 Priority = (int) TricksVerbPriorities.SendToTestArena,
             };
@@ -472,7 +472,7 @@ public sealed partial class AdminVerbSystem
                         _stackSystem.SetCount(args.Target, newAmount, stack);
                     });
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-adjust-stack-description"),
                 Priority = (int) TricksVerbPriorities.AdjustStack,
             };
@@ -487,7 +487,7 @@ public sealed partial class AdminVerbSystem
                 {
                     _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),
                 Priority = (int) TricksVerbPriorities.FillStack,
             };
@@ -506,7 +506,7 @@ public sealed partial class AdminVerbSystem
                     MetaData(args.Target).EntityName = newName;
                 });
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-rename-description"),
             Priority = (int) TricksVerbPriorities.Rename,
         };
@@ -524,7 +524,7 @@ public sealed partial class AdminVerbSystem
                     MetaData(args.Target).EntityDescription = newDescription.String;
                 });
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-redescribe-description"),
             Priority = (int) TricksVerbPriorities.Redescribe,
         };
@@ -545,7 +545,7 @@ public sealed partial class AdminVerbSystem
                         meta.EntityDescription = newDescription.String;
                     });
             },
-            Impact = LogImpact.Extreme,
+            Impact = LogImpact.Medium,
             Message = Loc.GetString("admin-trick-rename-and-redescribe-description"),
             Priority = (int) TricksVerbPriorities.RenameAndRedescribe,
         };
@@ -588,7 +588,7 @@ public sealed partial class AdminVerbSystem
 
                     Transform(args.User).Coordinates = new EntityCoordinates(shuttle.Value, Vector2.Zero);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Low,
                 Message = Loc.GetString("admin-trick-locate-cargo-shuttle-description"),
                 Priority = (int) TricksVerbPriorities.LocateCargoShuttle,
             };
@@ -606,7 +606,7 @@ public sealed partial class AdminVerbSystem
                 {
                     foreach (var ent in childEnum)
                     {
-                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                        if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         battery.CurrentCharge = battery.MaxCharge;
@@ -628,7 +628,7 @@ public sealed partial class AdminVerbSystem
                 {
                     foreach (var ent in childEnum)
                     {
-                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                        if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
                         battery.CurrentCharge = 0;
@@ -651,7 +651,7 @@ public sealed partial class AdminVerbSystem
                     // this kills the sloth
                     foreach (var ent in childEnum)
                     {
-                        if (!HasComp<StationInfBatteryTargetComponent>(ent))
+                        if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
 
                         var recharger = EnsureComp<BatterySelfRechargerComponent>(ent);
@@ -680,7 +680,7 @@ public sealed partial class AdminVerbSystem
                     physics.LinearVelocity = Vector2.Zero;
                     physics.AngularVelocity = 0.0f;
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-halt-movement-description"),
                 Priority = (int) TricksVerbPriorities.HaltMovement,
             };
@@ -739,7 +739,7 @@ public sealed partial class AdminVerbSystem
                 {
                     _jointSystem.ClearJoints(joints);
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-snap-joints-description"),
                 Priority = (int) TricksVerbPriorities.SnapJoints,
             };
@@ -757,7 +757,7 @@ public sealed partial class AdminVerbSystem
                 {
                     gun.FireRate = 15;
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-minigun-fire-description"),
                 Priority = (int) TricksVerbPriorities.MakeMinigun,
             };
@@ -778,7 +778,7 @@ public sealed partial class AdminVerbSystem
                         ballisticAmmo.UnspawnedCount = amount;
                     });
                 },
-                Impact = LogImpact.Extreme,
+                Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-set-bullet-amount-description"),
                 Priority = (int) TricksVerbPriorities.SetBulletAmount,
             };
@@ -866,11 +866,11 @@ public sealed partial class AdminVerbSystem
         }
         else if (TryComp<HandsComponent>(target, out var hands))
         {
-            foreach (var held in _handsSystem.EnumerateHeld(target))
+            foreach (var held in _handsSystem.EnumerateHeld(target, hands))
             {
-                if (HasComp<AccessComponent>(slotEntity))
+                if (HasComp<AccessComponent>(held))
                 {
-                    return slotEntity.Value;
+                    return held;
                 }
             }
         }

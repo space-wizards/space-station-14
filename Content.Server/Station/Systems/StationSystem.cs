@@ -69,6 +69,12 @@ public sealed class StationSystem : EntitySystem
         _player.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _player.PlayerStatusChanged -= OnPlayerStatusChanged;
+    }
+
     private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
         if (e.NewStatus == SessionStatus.Connected)

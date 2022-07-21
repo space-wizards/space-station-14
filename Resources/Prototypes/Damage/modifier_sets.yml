@@ -289,19 +289,3 @@
     Heat: .6
   flatReductions:
     Heat: 1
-
-- type: damageModifierSet
-  id: Indestructible
-  coefficients:
-    Blunt: 0.0
-    Slash: 0.0
-    Piercing: 0.0
-    Shock: 0.0
-    Cold: 0.0
-    Heat: 0.0
-    Poison: 0.0
-    Radiation: 0.0
-    Asphyxiation: 0.0
-    Structural: 0.0
-    Bloodloss: 0.0
-    Cellular: 0.0

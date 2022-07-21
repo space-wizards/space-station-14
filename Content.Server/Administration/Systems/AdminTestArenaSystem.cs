@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Administration.Systems;
 
 /// <summary>
-/// This handles...
+/// This handles the administrative test arena maps, and loading them.
 /// </summary>
 public sealed class AdminTestArenaSystem : EntitySystem
 {
@@ -21,8 +21,8 @@ public sealed class AdminTestArenaSystem : EntitySystem
 
     public (EntityUid, EntityUid) AssertArenaLoaded(IPlayerSession admin)
     {
-        if (ArenaMap.ContainsKey(admin.UserId) && !Deleted(ArenaMap[admin.UserId]) && !Terminating(ArenaMap[admin.UserId]))
-            return (ArenaMap[admin.UserId], ArenaGrid[admin.UserId]);
+        if (ArenaMap.TryGetValue(admin.UserId, out var arenaMap) && !Deleted(arenaMap) && !Terminating(arenaMap))
+            return (arenaMap, ArenaGrid[admin.UserId]);
 
         ArenaMap[admin.UserId] = _mapManager.GetMapEntityId(_mapManager.CreateMap());
         var (grids, _) = _mapLoader.LoadMap(Comp<MapComponent>(ArenaMap[admin.UserId]).WorldMap, ArenaMapPath);
