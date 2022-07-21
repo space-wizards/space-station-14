@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Pizzas no longer have a curse that forces them to come with a plate.
-      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
-  id: 1493
-  time: '2022-05-10T01:12:14.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
@@ -2953,3 +2947,8 @@ Entries:
   - {message: The zombify popup is now more noticeable., type: Tweak}
   id: 1992
   time: '2022-07-21T04:32:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Now any job can spawn as nukeops antag, type: Fix}
+  id: 1993
+  time: '2022-07-21T21:00:24.0000000+00:00'
