@@ -151,7 +151,7 @@ public sealed class InternalsSystem : EntitySystem
             return tanks[0];
         }
 
-        if (inventory != null)
+        if (Resolve(component.Owner, ref inventory, false))
         {
             var enumerator = new InventorySystem.ContainerSlotEnumerator(component.Owner, inventory.TemplateId, _protoManager, _inventory, SlotFlags.POCKET);
 
