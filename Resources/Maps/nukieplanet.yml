@@ -13593,10 +13593,8 @@ entities:
   components:
   - index: 2
     type: Map
-  - footstepSoundCollection: 
+  - footstepSoundCollection:
       collection: footstep_snow
-      params:
-        variation: 0.01
     type: FootstepModifier
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
