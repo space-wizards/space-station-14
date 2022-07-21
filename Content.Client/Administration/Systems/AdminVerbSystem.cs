@@ -1,10 +1,7 @@
 using Content.Shared.Verbs;
 using Robust.Client.Console;
-using Robust.Client.ViewVariables;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.Client.Verbs
+namespace Content.Client.Administration.Systems
 {
     /// <summary>
     ///     Client-side admin verb system. These usually open some sort of UIs.

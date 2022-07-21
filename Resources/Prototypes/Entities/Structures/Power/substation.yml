@@ -77,6 +77,7 @@
     containers:
       machine_parts: !type:Container
       machine_board: !type:Container
+  - type: StationInfiniteBatteryTarget
 
 # Compact Wall Substation Base
 - type: entity
@@ -161,6 +162,7 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
+  - type: StationInfiniteBatteryTarget
 
 # Substations in use
 
