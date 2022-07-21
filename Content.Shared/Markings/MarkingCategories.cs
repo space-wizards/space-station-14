@@ -5,6 +5,8 @@ namespace Content.Shared.Markings
     [Serializable, NetSerializable]
     public enum MarkingCategories : byte
     {
+        Hair,
+        FacialHair,
         Head,
         HeadTop,
         HeadSide,
