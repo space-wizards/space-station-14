@@ -20,7 +20,7 @@ namespace Content.Shared.Pulling.Components
         /// The pull joint.
         /// SharedPullingStateManagementSystem should be writing this. This means probably not you.
         /// </summary>
-        public DistanceJoint? PullJoint { get; set; }
+        public string? PullJointId { get; set; }
 
         public bool BeingPulled => Puller != null;
 
