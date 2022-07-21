@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
-      on some items within vending machines, and gave the boards a redesign. Explore
-      the new, possibly hidden options on your local vending machine today!', type: Tweak}
-  id: 1494
-  time: '2022-05-10T02:22:58.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Assistants no longer assist. They are merely Passengers on this great
@@ -2952,3 +2945,9 @@ Entries:
   - {message: Now any job can spawn as nukeops antag, type: Fix}
   id: 1993
   time: '2022-07-21T21:00:24.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Research servers are once again uniquely identified and can be selected
+      in the lathe server menu., type: Fix}
+  id: 1994
+  time: '2022-07-21T22:16:15.0000000+00:00'
