@@ -34,7 +34,6 @@ func Entry() {
 		}
 
 		accessories, err := loadFromYaml[SpriteAccessoryPrototype](file)
-		fmt.Println(accessories)
 
 		markings, err := accessories_to_markings(accessories)
 		if err != nil {
