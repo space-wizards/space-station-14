@@ -66,6 +66,12 @@
     !type:GenericGameRuleConfiguration
     id: Zombie
 
+- type: gameRule
+  id: Revolution
+  config:
+    !type:GenericGameRuleConfiguration
+    id: Revolution
+
 # event schedulers
 - type: gameRule
   id: BasicStationEventScheduler
