@@ -23,10 +23,16 @@ namespace Content.Shared.Gravity
 
             if (!Resolve(uid, ref xform)) return true;
 
+            bool gravityEnabled = false;
+
             // If grid / map has gravity
             if ((TryComp<GravityComponent>(xform.GridUid, out var gravity) ||
                  TryComp(xform.MapUid, out gravity)) && gravity.Enabled)
-                return false;
+            {
+                gravityEnabled = gravity.Enabled;
+
+                if (gravityEnabled) return false;
+            }
 
             // On the map then always weightless (unless it has gravity comp obv).
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
@@ -39,7 +45,7 @@ namespace Content.Shared.Gravity
                     return false;
             }
 
-            if (!xform.Coordinates.IsValid(EntityManager)) return true;
+            if (!gravityEnabled || !xform.Coordinates.IsValid(EntityManager)) return true;
 
             var tile = grid.GetTileRef(xform.Coordinates).Tile;
             return tile.IsEmpty;
