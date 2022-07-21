@@ -1,69 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Speech bubbles are now occluded, type: Tweak}
-  id: 1482
-  time: '2022-05-08T08:54:56.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: 'Humans, mice, and vending machines make noise when they talk.', type: Add}
-  id: 1483
-  time: '2022-05-08T13:23:08.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Nanotrasen has hired four new classes of interns for Engineering, Medical,
-      Security, and Service. They have been vetted thoroughly and Nanotrasen assures
-      you that they could not be traitors. Any members of this department are free
-      to bully or teach the interns however they please.', type: Add}
-  id: 1484
-  time: '2022-05-08T20:00:01.0000000+00:00'
-- author: hubismal
-  changes:
-  - {message: Speech sounds now sound a little different every time., type: Tweak}
-  - {message: Speech sounds now are louder when closer and quieter when further.,
-    type: Tweak}
-  - {message: TYPING IN ALL CAPS will make you play the yelling speech sound., type: Tweak}
-  - {message: Vending machines are quieter., type: Tweak}
-  - {message: Your personal AIs talk using their synthesizers., type: Add}
-  - {message: Monkeys use their beautiful voices., type: Add}
-  id: 1485
-  time: '2022-05-09T04:55:24.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added construction recipe for glass airlocks, type: Add}
-  id: 1486
-  time: '2022-05-09T05:52:19.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Removed the new parallax background., type: Remove}
-  id: 1487
-  time: '2022-05-09T09:15:42.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Nanotrasen automated messages will no longer tell you to press the wrong
-      button., type: Tweak}
-  id: 1488
-  time: '2022-05-09T21:38:43.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation minor update. More hidden drip, intern spawn points, power
-      monitoring, removed spawn shuttle, paramedic void suit.', type: Tweak}
-  id: 1489
-  time: '2022-05-09T21:39:35.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: "Space Wind \u2122 has been removed (until it is fixed or there's a\
-      \ better alternative), you will no longer be pushed by explosive decompression\
-      \ or airflows.", type: Remove}
-  id: 1490
-  time: '2022-05-09T22:35:42.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Icon smoothing for asteroid rocks, type: Add}
-  id: 1491
-  time: '2022-05-10T00:41:28.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Audio now plays signalling roundstart., type: Add}
   id: 1492
   time: '2022-05-10T00:44:38.0000000+00:00'
@@ -2959,3 +2896,60 @@ Entries:
     type: Tweak}
   id: 1981
   time: '2022-07-19T11:47:49.0000000+00:00'
+- author: moony
+  changes:
+  - {message: The nuclear fission explosive MUST be anchored to arm it., type: Tweak}
+  id: 1982
+  time: '2022-07-20T03:57:05.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: 'It''s CentCom. Not Centcom, centcom, CentComm, Centcomm or centcomm.',
+    type: Fix}
+  id: 1983
+  time: '2022-07-20T04:08:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Gatfruit is now available to botanists in the uplink for 4 TC. What
+      a steal!, type: Add}
+  - {message: 'Added the Medicinal Seed Crate, containing all those plants which keep
+      you living.', type: Add}
+  - {message: Reduced amount of medicinal seeds per seed servitor from 5 to 3., type: Tweak}
+  id: 1984
+  time: '2022-07-20T04:16:35.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Air vents are now more resilient to spacing, type: Add}
+  id: 1985
+  time: '2022-07-20T04:23:23.0000000+00:00'
+- author: Cerol
+  changes:
+  - {message: added Antag menu for admins to make players into antags and 4 entries
+      for it., type: Add}
+  id: 1986
+  time: '2022-07-20T09:46:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry got an update., type: Fix}
+  id: 1987
+  time: '2022-07-20T10:34:15.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Gas pipes need to be unanchored before being able to deconstruct them.,
+    type: Tweak}
+  id: 1988
+  time: '2022-07-20T12:30:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Necronomicon no longer can appear in surplus bundles., type: Tweak}
+  id: 1989
+  time: '2022-07-20T15:29:09.0000000+00:00'
+- author: DoctorBeard
+  changes:
+  - {message: pAIs can play MIDI again, type: Fix}
+  id: 1990
+  time: '2022-07-20T16:08:33.0000000+00:00'
+- author: Ablankmann
+  changes:
+  - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
+  id: 1991
+  time: '2022-07-20T23:50:49.0000000+00:00'

@@ -46,7 +46,7 @@
   - type: GhostTakeoverAvailable
     makeSentient: false
     name: CBURN Agent
-    description: A highly trained Centcomm agent, capable of dealing with various threats.
+    description: A highly trained CentCom agent, capable of dealing with various threats.
 
 - type: entity
   parent: MobHumanBase

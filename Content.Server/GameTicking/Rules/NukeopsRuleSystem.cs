@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -285,6 +286,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
