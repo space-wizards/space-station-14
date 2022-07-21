@@ -300,6 +300,19 @@ namespace Content.Shared.CCVar
             CVarDef.Create("nukeops.players_per_op", 5);
 
         /*
+         * Revolutionary
+         */
+        
+        public static readonly CVarDef<int> RevolutionaryMinPlayers =
+            CVarDef.Create("revolutionary.min_players", 15);
+
+        public static readonly CVarDef<int> MaxRevolutionaryHeads =
+            CVarDef.Create("revolutionary.max_heads", 3);
+
+        public static readonly CVarDef<int> HeadsPerRevolutionaryHead =
+            CVarDef.Create("revolutionary.heads_per_revo_head", 1);
+
+        /*
          * Zombie
          */
 
