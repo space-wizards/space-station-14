@@ -2,7 +2,7 @@ using Content.Server.AI.EntitySystems;
 
 namespace Content.Server.AI.Components
 {
-    [RegisterComponent, Access(typeof(NPCSystem))]
+    [Access(typeof(NPCSystem))]
     public abstract class NPCComponent : Component
     {
         // TODO: Soon. I didn't realise how much effort it was to deprecate the old one.
