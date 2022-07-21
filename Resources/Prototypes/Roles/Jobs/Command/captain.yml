@@ -1,6 +1,7 @@
 - type: job
   id: Captain
   name: job-name-captain
+  roleTimer: JobCaptain
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

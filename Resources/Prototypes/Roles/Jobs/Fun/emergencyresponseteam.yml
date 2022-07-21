@@ -2,6 +2,7 @@
 - type: job
   id: ERTLeader
   name: job-name-ertleader
+  roleTimer: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
   icon: "Nanotrasen"
@@ -47,6 +48,7 @@
 - type: job
   id: ERTEngineer
   name: job-name-ertengineer
+  roleTimer: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "Nanotrasen"
@@ -91,6 +93,7 @@
 - type: job
   id: ERTSecurity
   name: job-name-ertsecurity
+  roleTimer: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "Nanotrasen"
@@ -135,6 +138,7 @@
 - type: job
   id: ERTMedical
   name: job-name-ertmedic
+  roleTimer: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
   icon: "Nanotrasen"
@@ -180,6 +184,7 @@
 - type: job
   id: ERTJanitor
   name: job-name-ertjanitor
+  roleTimer: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
   icon: "Nanotrasen"

@@ -1,6 +1,7 @@
 ﻿- type: job
   id: SecurityCadet
   name: job-name-cadet
+  roleTimer: JobSecurityCadet
   startingGear: SecurityCadetGear
   icon: "SecurityCadet"
   supervisors: job-supervisors-security

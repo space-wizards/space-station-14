@@ -1,6 +1,7 @@
 - type: job
   id: Librarian
   name: job-name-librarian
+  roleTimer: JobLibrarian
   startingGear: LibrarianGear
   icon: "Librarian"
   supervisors: job-supervisors-hop

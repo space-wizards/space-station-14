@@ -31,7 +31,7 @@ public sealed class AddRoleTimeCommand : IConsoleCommand
         }
 
         var roles = IoCManager.Resolve<RoleTimerManager>();
-        roles.AddTimeToRole(userId, args[1], TimeSpan.FromSeconds(minutes));
+        roles.AddTimeToRole(userId, args[1], TimeSpan.FromMinutes(minutes));
         var timers = roles.GetOverallPlaytime(userId).Result;
         shell.WriteLine($"Increased role playtime for {args[0]} / \'{args[1]}\' to {timers.TotalMinutes:0}");
     }

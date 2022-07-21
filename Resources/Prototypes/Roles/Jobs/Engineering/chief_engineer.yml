@@ -1,6 +1,7 @@
 - type: job
   id: ChiefEngineer
   name: job-name-ce
+  roleTimer: JobChiefEngineer
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician

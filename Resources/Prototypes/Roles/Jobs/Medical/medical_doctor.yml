@@ -1,6 +1,7 @@
 - type: job
   id: MedicalDoctor
   name: job-name-doctor
+  roleTimer: JobMedicalDoctor
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical

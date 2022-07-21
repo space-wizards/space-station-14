@@ -1,6 +1,7 @@
 - type: job
   id: Musician
   name: job-name-musician
+  roleTimer: JobMusician
   startingGear: MusicianGear
   icon: "Musician"
   supervisors: job-supervisors-hire

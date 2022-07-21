@@ -9,32 +9,32 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 public sealed class AddOverallTimeCommand : IConsoleCommand
 {
     public string Command => "addoveralltime";
-    public string Description => "Adds the specified minutes to a player's overall playtime";
-    public string Help => $"Usage: {Command} <netuserid> <minutes>";
+    public string Description => Loc.GetString("add-overall-time-desc");
+    public string Help => Loc.GetString("add-overall-time-help", ("command", $"{Command}"));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteLine("Name a player to get the role timer information from");
+            shell.WriteLine(Loc.GetString("add-overall-time-help-plain"));
             return;
         }
 
         if (!int.TryParse(args[1], out var minutes))
         {
-            shell.WriteError($"Unable to parse {args[1]} as minutes");
+            shell.WriteError(Loc.GetString("add-overall-time-parse", ("minutes", args[1])));
             return;
         }
 
         if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
         {
-            shell.WriteError($"Did not find userid for {args[0]}");
+            shell.WriteError(Loc.GetString("add-overall-time-userid", ("userid", args[0])));
             return;
         }
 
         var roles = IoCManager.Resolve<RoleTimerManager>();
-        roles.AddTimeToOverallPlaytime(userId, TimeSpan.FromSeconds(minutes));
+        roles.AddTimeToOverallPlaytime(userId, TimeSpan.FromMinutes(minutes));
         var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine($"Increased overall time for {args[0]} to {timers.TotalMinutes:0}");
+        shell.WriteLine(Loc.GetString("add-overall-time-succeed", ("username", args[0]), ("time", $"{timers.TotalMinutes:0}")));
     }
 }

@@ -1,6 +1,7 @@
 - type: job
   id: CargoTechnician
-  name: job-name-cargoteh
+  name: job-name-cargotech
+  roleTimer: JobCargoTechnician
   startingGear: CargoTechGear
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm

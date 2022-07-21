@@ -7,8 +7,7 @@ namespace Content.Server.Roles
 {
     public sealed class Job : Role, IRoleTimer
     {
-        [ViewVariables, DataField("timer", customTypeSerializer: typeof(PrototypeIdSerializer<RoleTimerPrototype>))]
-        public string Timer => "Job" + Prototype.ID;
+        [ViewVariables] public string Timer => Prototype.RoleTimer;
 
         [ViewVariables]
         public JobPrototype Prototype { get; }

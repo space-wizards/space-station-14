@@ -1,6 +1,7 @@
 - type: job
   id: Passenger
   name: job-name-passenger
+  roleTimer: JobPassenger
   startingGear: PassengerGear
   icon: "Passenger"
   supervisors: job-supervisors-everyone

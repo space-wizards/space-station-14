@@ -1,6 +1,7 @@
 - type: job
   id: Chef
   name: job-name-chef
+  roleTimer: JobChef
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian

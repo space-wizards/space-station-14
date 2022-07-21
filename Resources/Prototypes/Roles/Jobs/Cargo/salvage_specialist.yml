@@ -1,6 +1,7 @@
 - type: job
   id: SalvageSpecialist
   name: job-name-salvagespec
+  roleTimer: JobSalvageSpecialist
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo

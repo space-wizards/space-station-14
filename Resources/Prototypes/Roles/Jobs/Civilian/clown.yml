@@ -1,6 +1,7 @@
 - type: job
   id: Clown
   name: job-name-clown
+  roleTimer: JobClown
   startingGear: ClownGear
   icon: "Clown"
   supervisors: job-supervisors-hop

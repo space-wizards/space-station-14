@@ -1,6 +1,7 @@
 ﻿- type: job
   id: ServiceWorker
   name: job-name-serviceworker
+  roleTimer: JobServiceWorker
   startingGear: ServiceWorkerGear
   icon: "ServiceWorker"
   supervisors: job-supervisors-service

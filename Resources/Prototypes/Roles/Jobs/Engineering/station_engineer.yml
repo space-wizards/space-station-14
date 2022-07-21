@@ -1,6 +1,7 @@
 - type: job
   id: StationEngineer
   name: job-name-engineer
+  roleTimer: JobStationEngineer
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

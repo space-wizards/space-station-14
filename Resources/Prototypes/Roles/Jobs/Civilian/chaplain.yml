@@ -1,6 +1,7 @@
 - type: job
   id: Chaplain
   name: job-name-chaplain
+  roleTimer: JobChaplain
   startingGear: ChaplainGear
   icon: "Chaplain"
   supervisors: job-supervisors-hop

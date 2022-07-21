@@ -36,6 +36,9 @@
   id: JobClown
 
 - type: roleTimer
+  id: JobDetective
+
+- type: roleTimer
   id: JobERTEngineer
 
 - type: roleTimer

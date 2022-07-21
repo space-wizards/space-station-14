@@ -15,6 +15,9 @@ namespace Content.Shared.Roles
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
+        [ViewVariables, DataField("roleTimer", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<RoleTimerPrototype>))]
+        public string RoleTimer { get; } = string.Empty;
+
         [DataField("supervisors")]
         public string Supervisors { get; } = "nobody";
 

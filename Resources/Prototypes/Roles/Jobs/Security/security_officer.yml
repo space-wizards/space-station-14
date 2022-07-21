@@ -1,6 +1,7 @@
 - type: job
   id: SecurityOfficer
   name: job-name-security
+  roleTimer: JobSecurityOfficer
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security

@@ -1,6 +1,7 @@
 - type: job
   id: Mime
   name: job-name-mime
+  roleTimer: JobMime
   startingGear: MimeGear
   icon: "Mime"
   supervisors: job-supervisors-hop

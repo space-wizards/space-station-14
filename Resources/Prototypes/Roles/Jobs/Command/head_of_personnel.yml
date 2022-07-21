@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfPersonnel
   name: job-name-hop
+  roleTimer: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

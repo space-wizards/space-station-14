@@ -1,6 +1,7 @@
 - type: job
   id: Janitor
   name: job-name-janitor
+  roleTimer: JobJanitor
   startingGear: JanitorGear
   icon: "Janitor"
   supervisors: job-supervisors-hop
