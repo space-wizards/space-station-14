@@ -62,8 +62,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState.IsDead() ||
-                args.CurrentMobState.IsCritical())
+            if (args.CurrentMobState == DamageState.Dead ||
+                args.CurrentMobState == DamageState.Critical)
             {
                 ZombifyEntity(uid);
             }
@@ -100,7 +100,8 @@ namespace Content.Server.Zombies
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
-            EnsureComp<RottingComponent>(target);
+            var rotting = EnsureComp<RottingComponent>(target);
+            rotting.DealDamage = false;
 
             ///This is needed for stupid entities that fuck up combat mode component
             ///in an attempt to make an entity not attack. This is the easiest way to do it.
@@ -128,6 +129,7 @@ namespace Content.Server.Zombies
                 DamageSpecifier dspec = new();
                 dspec.DamageDict.Add("Slash", 13);
                 dspec.DamageDict.Add("Piercing", 7);
+                dspec.DamageDict.Add("Structural", 10);
                 melee.Damage = dspec;
             }
 
