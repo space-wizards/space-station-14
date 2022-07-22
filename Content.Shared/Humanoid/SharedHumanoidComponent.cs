@@ -1,5 +1,7 @@
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Markings;
+using Content.Shared.Preferences;
+using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -30,9 +32,15 @@ public sealed class SharedHumanoidComponent : Component
     /// <summary>
     ///     Skin color of this humanoid. This should probably
     ///     be enforced against the species if manually set...
+    ///
+    ///     - This is updated on the client by OnChangeData
     /// </summary>
     [DataField("skinColor")]
-    public Color SkinColor { get; } = default!;
+    public Color SkinColor { get; } = Color.FromHex("#C0967F");
+
+    // Eye color is updated by OnChangeData by just setting the
+    // color of the eye layer. It isn't stored in here, because
+    // anything relevant should just target that layer server-side.
 
     // TODO: Accessories and Markings should probably be merged into SpriteAccessory 2.0?
     // The distinction is really vague, and markings allows for things like species restriction
@@ -42,20 +50,41 @@ public sealed class SharedHumanoidComponent : Component
 
     // ^^^ Attempting this, let's see how well this goes
 
-    /*
-    /// <summary>
-    ///     Current sprite accessories on this humanoid, like hair.
-    /// </summary>
-    public Dictionary<HumanoidVisualLayers, List<string>> CurrentAccessories = new();
-    */
-
     /// <summary>
     ///     All current markings on this humanoid, by visual layer.
     ///
-    ///     - This is updated on the client by calls to OnChangeData in VisualizerSystem
+    ///     - This is updated on the client by OnChangeData
     /// </summary>
     [ViewVariables]
     public MarkingsSet CurrentMarkings = new();
+
+    /// <summary>
+    ///     Visual layers currently hidden. This will affect the base sprite
+    ///     on this humanoid layer, and any markings that sit above it.
+    ///
+    ///     - This is updated on the client by OnChangeData
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<HumanoidVisualLayers> HiddenLayers = new();
+
+    // Appearance loaded from a player profile: this should eventually be removed
+    // and replaced with accessory layer set calls, accessory color set calls,
+    // layer color set calls, etc.
+    public HumanoidCharacterAppearance Appearance = HumanoidCharacterAppearance.Default();
+
+    // these three could probably have their own components?
+    // i don't see these as being unique to human characters
+    // see: most animals having somebody classify this stuff
+
+    // also definable in component so that you can have mob variants
+    // of humanoids
+    [DataField("sex")]
+    public Sex Sex = Sex.Male;
+    [DataField("gender")]
+    public Gender Gender = Gender.Epicene;
+    [DataField("age")]
+    public int Age = HumanoidCharacterProfile.MinimumAge;
+
 }
 
 [Prototype("humanoidMarkingStartingSet")]

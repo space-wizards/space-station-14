@@ -37,12 +37,31 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         {
             var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
             ApplyMarkings(uid, new(startingSet.Markings), points);
+            ApplyDefaultMarkings(uid, points);
         }
     }
 
+    // Since this doesn't allow you to discern what you'd want to change
+    // without doing a double call, this will always setup all markings/accessories,
+    // skin color, etc. upon change. Oops.
+    //
+    // Alternatively, the 'last changed' items could be cached server-side, and given
+    // a null state upon the next state change, that way specific things aren't refreshed
+    // every single time something is changed.
     protected override void OnAppearanceChange(EntityUid uid, SharedHumanoidComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
+    }
+
+    private void SetSpriteVisibility(EntityUid uid, HumanoidVisualLayers layer, bool visibility, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite)
+            || !sprite.LayerMapTryGet(layer, out var index))
+        {
+            return;
+        }
+
+        sprite[index].Visible = visibility;
     }
 
     private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
@@ -91,38 +110,25 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         foreach (var (layerType, points) in usedPoints)
         {
-            if (points.Required && points.Points > 0)
+            if (!points.Required || points.Points <= 0)
             {
-                while (points.Points > 0)
+                continue;
+            }
+
+            while (points.Points > 0)
+            {
+                // this all has to be checked, continues shouldn't occur because
+                // points.Points needs to be subtracted
+                if (points.DefaultMarkings.TryGetValue(points.Points - 1, out var marking)
+                    && _markingManager.Markings().TryGetValue(marking, out var markingPrototype)
+                    && markingPrototype.MarkingCategory == layerType) // check if this actually belongs on this layer, too
                 {
-                    // this all has to be checked, continues shouldn't occur because
-                    // points.Points needs to be subtracted
-                    if (points.DefaultMarkings.TryGetValue(points.Points - 1, out var marking)
-                            && _markingManager.Markings().TryGetValue(marking, out var markingPrototype)
-                            && markingPrototype.MarkingCategory == layerType // check if this actually belongs on this layer, too
-                            && sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
-                    {
-                        for (int j = 0; j < markingPrototype.Sprites.Count; j++)
-                        {
-                            var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
-                            string layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
+                    ApplyMarking(uid, markingPrototype, null);
 
-                            if (sprite.LayerMapTryGet(layerId, out var existingLayer))
-                            {
-                                sprite.RemoveLayer(existingLayer);
-                                sprite.LayerMapRemove(markingPrototype.ID);
-                            }
-
-                            int layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
-                            sprite.LayerMapSet(layerId, layer);
-                            sprite.LayerSetColor(layerId, humanoid.SkinColor);
-                        }
-
-                        humanoid.CurrentMarkings.AddBack(markingPrototype.AsMarking());
-                    }
-
-                    points.Points--;
+                    humanoid.CurrentMarkings.AddBack(markingPrototype.AsMarking());
                 }
+
+                points.Points--;
             }
         }
     }
@@ -133,6 +139,13 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         SharedHumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
+        if (!Resolve(uid, ref spriteComp, ref humanoid))
+        {
+            return;
+        }
+
+        humanoid.CurrentMarkings = markings;
+
         var markingsEnumerator = markings.GetReverseEnumerator();
 
         while (markingsEnumerator.MoveNext())
@@ -164,7 +177,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         }
     }
 
-    private void ApplyMarking(EntityUid uid, MarkingPrototype markingPrototype, IReadOnlyList<Color> colors,
+    private void ApplyMarking(EntityUid uid,
+        MarkingPrototype markingPrototype,
+        IReadOnlyList<Color>? colors,
         SharedHumanoidComponent? humanoid = null,
         SpriteComponent? sprite = null)
     {
@@ -173,7 +188,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
             return;
         }
 
-        if (!sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
+        if (humanoid.HiddenLayers.Contains(markingPrototype.BodyPart)
+            || !sprite.LayerMapTryGet(markingPrototype.BodyPart, out int targetLayer))
         {
             return;
         }
@@ -191,7 +207,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
             var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
             sprite.LayerMapSet(layerId, layer);
-            if (markingPrototype.FollowSkinColor)
+            if (markingPrototype.FollowSkinColor || colors == null)
             {
                 sprite.LayerSetColor(layerId, humanoid.SkinColor);
             }
