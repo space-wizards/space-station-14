@@ -5,21 +5,20 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Tools
 {
     // TODO move tool system to shared, and make it a friend of Tool Component.
-    public sealed partial class ToolSystem : EntitySystem
+    public sealed partial class ToolSystem : SharedToolSystem
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -33,7 +32,6 @@ namespace Content.Server.Tools
 
             InitializeTilePrying();
             InitializeWelders();
-            InitializeMultipleTools();
 
             SubscribeLocalEvent<ToolDoAfterComplete>(OnDoAfterComplete);
             SubscribeLocalEvent<ToolDoAfterCancelled>(OnDoAfterCancelled);
