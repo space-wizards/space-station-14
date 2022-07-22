@@ -70,7 +70,7 @@
                 <!-- Gold line -->
                 <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
                 <ui:HSpacer Spacing="10"/>
-                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
+                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" Main="True"/>
                 </BoxContainer>
             </PanelContainer>
         </SplitContainer>
