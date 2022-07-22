@@ -15,6 +15,7 @@ verb-categories-buckle = Пристегнуть
 verb-categories-unbuckle = Отстегнуть
 verb-categories-rotate = Повернуть
 verb-categories-smite = Покарать
+verb-categories-tricks = Tricks
 verb-categories-transfer = Установить значение перемещения
 verb-categories-split = Разделить
 verb-categories-instrument-style = Стиль инструмента

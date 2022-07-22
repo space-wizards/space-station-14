@@ -88,6 +88,3 @@ ent-RubberStampSyndicate = syndicate rubber stamp
 ent-RubberStampCE = chief engineers's rubber stamp
     .desc = { ent-RubberStampMime.desc }
     .suffix = { "" }
-ent-StationGoalPaper = centcom station goal message
-    .desc = It looks like you have a lot of work to do.
-    .suffix = { "" }

@@ -4,3 +4,6 @@ ent-MobSiliconBase = { "" }
 ent-MobHonkBot = хонкбот
     .desc = Ужасающе.
     .suffix = { "" }
+ent-MobCleanBot = cleanbot
+    .desc = The creep of automation now threatening space janitors.
+    .suffix = { "" }

@@ -1,7 +1,7 @@
 ent-MobHuman = Urist McHands
     .desc = A miserable pile of secrets.
     .suffix = { "" }
-ent-MobHumanCentcomOfficial = centcom official
+ent-MobHumanCentcomOfficial = CentCom official
     .desc = { ent-MobHuman.desc }
     .suffix = { "" }
 ent-MobHumanERTLeader = ERT leader
