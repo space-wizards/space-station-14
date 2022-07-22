@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Client.UserInterface;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Administration;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
