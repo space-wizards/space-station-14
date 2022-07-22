@@ -38,9 +38,7 @@ namespace Content.Shared.PDA
 
         protected virtual void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
-            if (!pda.Initialized) return;
-
-            if (args.Container.ID == pda.IdSlot.ID)
+            if (args.Container.ID == PDAComponent.PDAIdSlotId)
                 pda.ContainedID = CompOrNull<IdCardComponent>(args.Entity);
 
             UpdatePDAAppearance(pda);

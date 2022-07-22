@@ -11,7 +11,7 @@
   - type: Physics
     bodyType: KinematicController
     fixedRotation: true
-    status: InAir
+    status: OnGround
   - type: Fixtures
     fixtures:
     - shape:
@@ -20,7 +20,7 @@
       mass: 5
       mask:
       - GhostImpassable
-  - type: PlayerInputMover
+  - type: InputMover
   - type: Appearance
   - type: Eye
     drawFov: false

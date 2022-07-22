@@ -17,13 +17,12 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
     ///  When the next FTL state change happens.
     /// </summary>
     public readonly TimeSpan FTLTime;
-    public readonly ShuttleMode Mode;
+
     public List<(EntityUid Entity, string Destination, bool Enabled)> Destinations;
 
     public ShuttleConsoleBoundInterfaceState(
         FTLState ftlState,
         TimeSpan ftlTime,
-        ShuttleMode mode,
         List<(EntityUid Entity, string Destination, bool Enabled)> destinations,
         float maxRange,
         EntityCoordinates? coordinates,
@@ -33,6 +32,5 @@ public sealed class ShuttleConsoleBoundInterfaceState : RadarConsoleBoundInterfa
         FTLState = ftlState;
         FTLTime = ftlTime;
         Destinations = destinations;
-        Mode = mode;
     }
 }

@@ -4,8 +4,8 @@
   parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
