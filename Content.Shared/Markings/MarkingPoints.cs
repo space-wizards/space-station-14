@@ -38,5 +38,5 @@ public sealed class MarkingPointsPrototype : IPrototype
     [IdDataField] public string ID { get; } = default!;
 
     [DataField("points", required: true)]
-    public MarkingPoints Points { get; } = default!;
+    public Dictionary<MarkingCategories, MarkingPoints> Points { get; } = default!;
 }

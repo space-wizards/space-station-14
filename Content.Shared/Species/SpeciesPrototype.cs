@@ -161,6 +161,9 @@ public sealed class HumanoidSpeciesSpriteLayer
     ///     replace this. Otherwise, they can be added on
     ///     top of this layer, and this layer can be
     ///     replaced
+    ///
+    ///     This should auto-set the attached HumanoidVisualLayer
+    ///     marking point limit to 1
     /// </summary>
     [DataField("replaceOnly")]
     public bool ReplaceOnly { get; }

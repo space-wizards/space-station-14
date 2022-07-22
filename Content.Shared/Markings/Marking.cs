@@ -5,6 +5,7 @@ namespace Content.Shared.Markings
     [Serializable, NetSerializable]
     public sealed class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>
     {
+        [DataField("markingColor")]
         private List<Color> _markingColors = new();
 
         private Marking(string markingId,
@@ -20,13 +21,6 @@ namespace Content.Shared.Markings
         {
         }
 
-        /*
-        public Marking(string markingId)
-            : this(markingId, new List<Color>())
-        {
-        }
-        */
-
         public Marking(string markingId, int colorCount)
         {
             MarkingId = markingId;
@@ -36,13 +30,30 @@ namespace Content.Shared.Markings
             _markingColors = colors;
         }
 
+        /// <summary>
+        ///     ID of the marking prototype.
+        /// </summary>
         [DataField("markingId")]
         [ViewVariables]
         public string MarkingId { get; } = default!;
 
-        [DataField("markingColor")]
+        /// <summary>
+        ///     All colors currently on this marking.
+        /// </summary>
         [ViewVariables]
         public IReadOnlyList<Color> MarkingColors => _markingColors;
+
+        /// <summary>
+        ///     If this marking is currently visible.
+        /// </summary>
+        [ViewVariables]
+        public bool Visible = true;
+
+        /// <summary>
+        ///     If this marking should be forcefully applied, regardless of points.
+        /// </summary>
+        [ViewVariables]
+        public bool Forced;
 
         public void SetColor(int colorIndex, Color color) =>
             _markingColors[colorIndex] = color;

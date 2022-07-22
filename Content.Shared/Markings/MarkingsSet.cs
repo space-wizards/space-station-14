@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Shared.Serialization;
 
@@ -80,6 +81,15 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
     public int FindIndexOf(string id)
     {
         return _markings.FindIndex(m => m.MarkingId == id);
+    }
+
+    public bool TryGetMarking(string id, [NotNullWhen(true)] out Marking? marking)
+    {
+        var index = FindIndexOf(id);
+
+        marking = index > 0 ? _markings[index] : null;
+
+        return index > 0;
     }
 
     // Shifts a marking's rank upwards (i.e., towards the front of the list)

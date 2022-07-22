@@ -1,10 +1,17 @@
 using Content.Shared.CharacterAppearance;
+using Content.Shared.Markings;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid;
 
 [RegisterComponent]
 public sealed class SharedHumanoidComponent : Component
 {
+    /// <summary>
+    ///     Current species. Dictates things like base body sprites,
+    ///     base humanoid to spawn, etc.
+    /// </summary>
     [DataField("species")]
     public string Species { get; } = default!;
 
@@ -17,8 +24,8 @@ public sealed class SharedHumanoidComponent : Component
     ///     This should be for humanoid variants that need
     ///     special sprites on spawn.
     /// </summary>
-    [DataField("initialSprites")]
-    public string InitialSprites { get; } = default!;
+    [DataField("initial")]
+    public string Initial { get; } = default!;
 
     /// <summary>
     ///     Skin color of this humanoid. This should probably
@@ -33,19 +40,30 @@ public sealed class SharedHumanoidComponent : Component
     // (which is literally just hairs) would be eclipsed by markings, so merging the two together
     // wouldn't be a bad idea.
 
+    // ^^^ Attempting this, let's see how well this goes
+
+    /*
     /// <summary>
     ///     Current sprite accessories on this humanoid, like hair.
     /// </summary>
     public Dictionary<HumanoidVisualLayers, List<string>> CurrentAccessories = new();
+    */
 
     /// <summary>
     ///     All current markings on this humanoid, by visual layer.
-    ///     This still eventually will boil down into a MarkingsSet,
-    ///     unless I change the markings UI to change the categories.
     ///
-    ///     This should probably stay in its own component...
-    ///     We'll see.
+    ///     - This is updated on the client by calls to OnChangeData in VisualizerSystem
     /// </summary>
     [ViewVariables]
-    public Dictionary<HumanoidVisualLayers, List<string>> CurrentMarkings = new();
+    public MarkingsSet CurrentMarkings = new();
+}
+
+[Prototype("humanoidMarkingStartingSet")]
+public sealed class HumanoidMarkingStartingSet : IPrototype
+{
+    [IdDataField]
+    public string ID { get; } = default!;
+
+    [DataField("markings")]
+    public List<Marking> Markings = new();
 }
