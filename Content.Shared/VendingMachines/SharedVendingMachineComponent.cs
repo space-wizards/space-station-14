@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.VendingMachines
 {
@@ -8,6 +9,9 @@ namespace Content.Shared.VendingMachines
     [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component
     {
+        [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
+        public string PackPrototypeId = string.Empty;
+
         [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
         [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
         [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
@@ -32,6 +36,7 @@ namespace Content.Shared.VendingMachines
         public enum VendingMachineVisuals
         {
             VisualState,
+            Inventory,
         }
 
         [Serializable, NetSerializable]

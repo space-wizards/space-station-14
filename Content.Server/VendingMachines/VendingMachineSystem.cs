@@ -128,23 +128,14 @@ namespace Content.Server.VendingMachines
             if (!Resolve(uid, ref vendComponent))
                 return;
 
-            if (string.IsNullOrEmpty(vendComponent.PackPrototypeId)) { return; }
-
             if (!_prototypeManager.TryIndex(vendComponent.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
-            {
                 return;
-            }
-
+            
             MetaData(uid).EntityName = packPrototype.Name;
             vendComponent.AnimationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
-            vendComponent.SpriteName = packPrototype.SpriteName;
-            if (!string.IsNullOrEmpty(vendComponent.SpriteName))
-            {
-                if (TryComp<SpriteComponent>(vendComponent.Owner, out var spriteComp)) {
-                    const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
-                    spriteComp.BaseRSIPath = string.Format(vendingMachineRSIPath, vendComponent.SpriteName);
-                }
-            }
+
+            if (TryComp(vendComponent.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(VendingMachineVisuals.Inventory, vendComponent.PackPrototypeId);
 
             AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, vendComponent);
             AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, vendComponent);

@@ -14,11 +14,6 @@ namespace Content.Server.VendingMachines
 
         public TimeSpan AnimationDuration = TimeSpan.Zero;
 
-        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
-        public string PackPrototypeId = string.Empty;
-
-        public string SpriteName = "";
-
         public bool Broken;
 
         /// <summary>
