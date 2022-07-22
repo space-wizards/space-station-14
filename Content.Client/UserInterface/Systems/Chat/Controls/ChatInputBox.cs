@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Chat;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
@@ -9,19 +8,20 @@ public class ChatInputBox : PanelContainer
 {
     public readonly ChannelSelectorButton ChannelSelector;
     public readonly HistoryLineEdit Input;
-    public readonly FilterButton FilterButton;
+    public readonly ChannelFilterButton FilterButton;
     protected readonly BoxContainer Container;
     protected ChatChannel ActiveChannel { get; private set; } = ChatChannel.Local;
+
     public ChatInputBox()
     {
-        Container = new BoxContainer()
+        Container = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 4
         };
         AddChild(Container);
 
-        ChannelSelector = new ChannelSelectorButton()
+        ChannelSelector = new ChannelSelectorButton
         {
             Name = "ChannelSelector",
             ToggleMode = true,
@@ -29,7 +29,7 @@ public class ChatInputBox : PanelContainer
             MinWidth = 75
         };
         Container.AddChild(ChannelSelector);
-        Input = new HistoryLineEdit()
+        Input = new HistoryLineEdit
         {
             Name = "Input",
             PlaceHolder = Loc.GetString("hud-chatbox-info"),
@@ -37,7 +37,7 @@ public class ChatInputBox : PanelContainer
             StyleClasses = {"chatLineEdit"}
         };
         Container.AddChild(Input);
-        FilterButton = new FilterButton()
+        FilterButton = new ChannelFilterButton
         {
             Name = "FilterButton",
             StyleClasses = {"chatFilterOptionButton"}
@@ -46,13 +46,8 @@ public class ChatInputBox : PanelContainer
         ChannelSelector.OnChannelSelect += UpdateActiveChannel;
     }
 
-    ~ChatInputBox()
-    {
-        ChannelSelector.OnChannelSelect -= UpdateActiveChannel;
-    }
-
     private void UpdateActiveChannel(ChatSelectChannel selectedChannel)
     {
-        ActiveChannel = (ChatChannel)selectedChannel;
+        ActiveChannel = (ChatChannel) selectedChannel;
     }
 }

@@ -6,14 +6,12 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 public sealed class ChannelFilterCheckbox : CheckBox
 {
     public readonly ChatChannel Channel;
-    public bool ShowUnread { get; set; }
 
     public bool IsHidden => Parent == null;
 
-    public ChannelFilterCheckbox(ChatChannel channel, bool showUnread)
+    public ChannelFilterCheckbox(ChatChannel channel)
     {
         Channel = channel;
-        ShowUnread = showUnread;
         Text = Loc.GetString($"hud-chatbox-channel-{Channel}");
     }
 
@@ -30,6 +28,6 @@ public sealed class ChannelFilterCheckbox : CheckBox
 
     public void UpdateUnreadCount(int? unread)
     {
-        if (ShowUnread) UpdateText(unread);
+        UpdateText(unread);
     }
 }

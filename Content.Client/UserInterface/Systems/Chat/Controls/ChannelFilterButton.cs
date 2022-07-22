@@ -6,17 +6,17 @@ using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
-public sealed class FilterButton : ContainerButton
+public sealed class ChannelFilterButton : ContainerButton
 {
     private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
     private static readonly Color ColorHovered = Color.FromHex("#9699bb");
     private static readonly Color ColorPressed = Color.FromHex("#789B8C");
     private readonly TextureRect _textureRect;
-    private readonly ChannelFilterPopup _chatFilterPopup;
-    private ChatUIController _chatUIController;
+    public readonly ChannelFilterPopup ChatFilterPopup;
+    private readonly ChatUIController _chatUIController;
     private const int FilterDropdownOffset = 120;
 
-    public FilterButton()
+    public ChannelFilterButton()
     {
         _chatUIController = UserInterfaceManager.GetUIController<ChatUIController>();
         var filterTexture = IoCManager.Resolve<IResourceCache>()
@@ -36,11 +36,17 @@ public sealed class FilterButton : ContainerButton
         );
         ToggleMode = true;
         OnToggled += OnFilterButtonToggled;
-        _chatFilterPopup = UserInterfaceManager.CreateNamedPopup<ChannelFilterPopup>("ChatFilterPopup", (0, 0)) ??
-                           throw new Exception("Tried to add chat filter popup while one already exists");
+        ChatFilterPopup = UserInterfaceManager.CreatePopupOfType<ChannelFilterPopup>();
+        ChatFilterPopup.OnVisibilityChanged += PopupVisibilityChanged;
 
-        _chatUIController.RegisterOnChannelsAdd(_chatFilterPopup.ShowChannels);
-        _chatUIController.RegisterOnChannelsRemove(_chatFilterPopup.HideChannels);
+        _chatUIController.FilterableChannelsChanged += ChatFilterPopup.SetChannels;
+        _chatUIController.UnreadMessageCountsUpdated += ChatFilterPopup.UpdateUnread;
+        ChatFilterPopup.SetChannels(_chatUIController.FilterableChannels);
+    }
+
+    private void PopupVisibilityChanged(Control control)
+    {
+        Pressed = control.Visible;
     }
 
     private void OnFilterButtonToggled(ButtonToggledEventArgs args)
@@ -48,14 +54,14 @@ public sealed class FilterButton : ContainerButton
         if (args.Pressed)
         {
             var globalPos = GlobalPosition;
-            var (minX, minY) = _chatFilterPopup.MinSize;
+            var (minX, minY) = ChatFilterPopup.MinSize;
             var box = UIBox2.FromDimensions(globalPos - (FilterDropdownOffset, 0),
-                (Math.Max(minX, _chatFilterPopup.MinWidth), minY));
-            _chatFilterPopup.Open(box);
+                (Math.Max(minX, ChatFilterPopup.MinWidth), minY));
+            ChatFilterPopup.Open(box);
         }
         else
         {
-            _chatFilterPopup.Close();
+            ChatFilterPopup.Close();
         }
     }
 
@@ -98,5 +104,16 @@ public sealed class FilterButton : ContainerButton
     {
         base.StylePropertiesChanged();
         UpdateChildColors();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (!disposing)
+            return;
+
+        _chatUIController.FilterableChannelsChanged -= ChatFilterPopup.SetChannels;
+        _chatUIController.UnreadMessageCountsUpdated -= ChatFilterPopup.UpdateUnread;
     }
 }

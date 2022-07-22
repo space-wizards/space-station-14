@@ -2,7 +2,6 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Eui;
-using Content.Client.Eye.Blinding;
 using Content.Client.Flash;
 using Content.Client.Info;
 using Content.Client.Input;
@@ -13,7 +12,6 @@ using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
 using Content.Client.Radiation;
-using Content.Client.Sandbox;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -36,7 +34,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
@@ -188,19 +185,6 @@ namespace Content.Client.Entry
             else
             {
                 _stateManager.RequestStateChange<MainScreen>();
-            }
-        }
-
-        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
-        {
-            base.Update(level, frameEventArgs);
-
-            switch (level)
-            {
-                case ModUpdateLevel.FramePreEngine:
-                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
-                    _chatManager.FrameUpdate(frameEventArgs);
-                    break;
             }
         }
     }

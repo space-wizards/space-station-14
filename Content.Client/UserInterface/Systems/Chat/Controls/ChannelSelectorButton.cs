@@ -12,31 +12,14 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 public sealed class ChannelSelectorButton : Button
 {
     private readonly ChannelSelectorPopup _channelSelectorPopup;
-    private IUserInterfaceManager _interfaceManager = IoCManager.Resolve<IUserInterfaceManager>();
-    private ChatUIController _chatUIController;
-    private ChatSelectChannel selectedChannel;
-    public Action<ChatSelectChannel>? OnChannelSelect = null;
-    public ChatSelectChannel SelectedChannel
-    {
-        get => selectedChannel;
-        set
-        {
-            if (Pressed)
-            {
-                Pressed = false;
-                _channelSelectorPopup.Close();
-            }
-            if (selectedChannel == value) return;
-            selectedChannel = value;
-            OnChannelSelect?.Invoke(value);
-            UpdateLabelText(value);
-        }
-    }
+    public event Action<ChatSelectChannel>? OnChannelSelect;
+
+    public ChatSelectChannel SelectedChannel { get; private set; }
 
     private const int SelectorDropdownOffset = 38;
+
     public ChannelSelectorButton()
     {
-        _chatUIController = _interfaceManager.GetUIController<ChatUIController>();
         // needed so the popup is untoggled regardless of which key is pressed when hovering this button.
         // If we don't have this, then right clicking the button while it's toggled on will hide
         // the popup but keep the button toggled on
@@ -45,25 +28,24 @@ public sealed class ChannelSelectorButton : Button
         EnableAllKeybinds = true;
         ToggleMode = true;
         OnToggled += OnSelectorButtonToggled;
-        _channelSelectorPopup = _interfaceManager.CreateNamedPopup<ChannelSelectorPopup>("ChannelSelectorPopup", (0, 0)) ??
-                                throw new Exception("Tried to add channel selector popup while one already exists");
-        _chatUIController.RegisterOnChannelsAdd(_channelSelectorPopup.ShowChannels);
-        //_chatUIController.RegisterOnChannelsRemove(_channelSelectorPopup.HideChannels);
-        _channelSelectorPopup.SetSelectorButton(this);
-        var firstAvailableSelector = _channelSelectorPopup.FirstChannel;
-        if (firstAvailableSelector != null)
+        _channelSelectorPopup = UserInterfaceManager.CreatePopupOfType<ChannelSelectorPopup>();
+        _channelSelectorPopup.Selected += OnChannelSelected;
+        _channelSelectorPopup.OnVisibilityChanged += OnPopupVisibilityChanged;
+
+        if (_channelSelectorPopup.FirstChannel is { } firstSelector)
         {
-            UpdateLabelText(firstAvailableSelector.Value);
-            SelectedChannel = firstAvailableSelector.Value;
-            return;
+            Select(firstSelector);
         }
-        UpdateLabelText(ChatSelectChannel.None);
-        SelectedChannel = ChatSelectChannel.None;
     }
 
-    private void UpdateLabelText(ChatSelectChannel selector)
+    private void OnChannelSelected(ChatSelectChannel channel)
     {
-        Text = ChatUIController.GetChannelSelectorName(selector);
+        Select(channel);
+    }
+
+    private void OnPopupVisibilityChanged(Control control)
+    {
+        Pressed = control.Visible;
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -71,6 +53,44 @@ public sealed class ChannelSelectorButton : Button
         // needed since we need EnableAllKeybinds - don't double-send both UI click and Use
         if (args.Function == EngineKeyFunctions.Use) return;
         base.KeyBindDown(args);
+    }
+
+    public void Select(ChatSelectChannel channel)
+    {
+        if (_channelSelectorPopup.Visible)
+        {
+            _channelSelectorPopup.Close();
+        }
+
+        if (SelectedChannel == channel) return;
+        SelectedChannel = channel;
+        UpdateChannelSelectButton(channel);
+
+        OnChannelSelect?.Invoke(channel);
+    }
+
+    public string ChannelSelectorName(ChatSelectChannel channel)
+    {
+        return Loc.GetString($"hud-chatbox-select-channel-{channel}");
+    }
+
+    public Color ChannelSelectColor(ChatSelectChannel channel)
+    {
+        return channel switch
+        {
+            ChatSelectChannel.Radio => Color.LimeGreen,
+            ChatSelectChannel.LOOC => Color.MediumTurquoise,
+            ChatSelectChannel.OOC => Color.LightSkyBlue,
+            ChatSelectChannel.Dead => Color.MediumPurple,
+            ChatSelectChannel.Admin => Color.Red,
+            _ => Color.DarkGray
+        };
+    }
+
+    public void UpdateChannelSelectButton(ChatSelectChannel channel)
+    {
+        Text = ChannelSelectorName(channel);
+        Modulate = ChannelSelectColor(channel);
     }
 
     private void OnSelectorButtonToggled(ButtonToggledEventArgs args)
@@ -86,6 +106,5 @@ public sealed class ChannelSelectorButton : Button
         {
             _channelSelectorPopup.Close();
         }
-
     }
 }
