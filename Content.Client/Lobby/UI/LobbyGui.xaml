@@ -3,12 +3,11 @@
          xmlns:maths="clr-namespace:Robust.Shared.Maths;assembly=Robust.Shared.Maths"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-         xmlns:parallax="clr-namespace:Content.Client.Parallax"
          xmlns:vote="clr-namespace:Content.Client.Voting.UI"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
-         xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
-         xmlns:info="clr-namespace:Content.Client.Info">
+         xmlns:info="clr-namespace:Content.Client.Info"
+         xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
     <!-- Background -->
     <TextureRect Access="Public" Name = "Background" Stretch="KeepAspectCovered"/>
     <BoxContainer Orientation="Horizontal" Margin="10 10 10 10" SeparationOverride="2">
@@ -54,7 +53,7 @@
                 <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2"/>
                 <ui:HSpacer Spacing="10"/>
                 <!-- Voting & misc button bar -->
-                <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="VoteContainer" Access="Public" HorizontalAlignment="Right">
+                <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
                     <cc:CommandButton Name = "AHelpButton" Command="openahelp" Access="Public" Text = "{Loc 'ui-lobby-ahelp-button'}" StyleClasses="ButtonBig"/>
                     <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
                     <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-options-button'}" />
@@ -65,13 +64,13 @@
                 <ui:NanoHeading Text="{Loc 'ui-lobby-server-info-block'}" />
                 <info:ServerInfo Name="ServerInfo" Access="Public" MinSize="0 30" VerticalExpand="false" Margin="3 3 3 3" MaxWidth="400" HorizontalAlignment="Left"/>
                 <ui:HSpacer Spacing="5"/>
-                <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public"></lobbyUi:LobbyCharacterPreviewPanel>
+                <lobbyUi:LobbyCharacterPreviewPanel Name="CharacterPreview" Access="Public" />
                 <ui:HSpacer Spacing="5"/>
                 <BoxContainer MinHeight="10"/>
                 <!-- Gold line -->
                 <ui:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="2" Access="Public"/>
                 <ui:HSpacer Spacing="10"/>
-                <!-- <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/> -->
+                <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50"/>
                 </BoxContainer>
             </PanelContainer>
         </SplitContainer>
