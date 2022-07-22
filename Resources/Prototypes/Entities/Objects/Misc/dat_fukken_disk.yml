@@ -10,7 +10,7 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: Item
-    size: 12
+    size: 5
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: StaticPrice
@@ -28,7 +28,7 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: Item
-    size: 12
+    size: 5
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: StaticPrice
