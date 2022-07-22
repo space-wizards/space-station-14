@@ -124,6 +124,7 @@ namespace Content.Server.Lathe
         {
             if (args.Handled)
                 return;
+            args.Handled = true;
 
             if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
@@ -184,7 +185,6 @@ namespace Content.Server.Lathe
                 UpdateInsertingAppearance(uid, true, matProto.Color);
             }
             UpdateInsertingAppearance(uid, true);
-            args.Handled = true;
         }
 
         /// <summary>
