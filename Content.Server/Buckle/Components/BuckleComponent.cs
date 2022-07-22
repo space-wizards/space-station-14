@@ -356,16 +356,7 @@ namespace Content.Server.Buckle.Components
 
         public override ComponentState GetComponentState()
         {
-            int? drawDepth = null;
-
-            if (BuckledTo != null &&
-                EntMan.GetComponent<TransformComponent>(BuckledTo.Owner).LocalRotation.GetCardinalDir() == Direction.North &&
-                EntMan.TryGetComponent<SpriteComponent>(BuckledTo.Owner, out var spriteComponent))
-            {
-                drawDepth = spriteComponent.DrawDepth - 1;
-            }
-
-            return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
+            return new BuckleComponentState(Buckled, LastEntityBuckledTo, DontCollide);
         }
     }
 }
