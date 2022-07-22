@@ -25,7 +25,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem
 {
    /*
-    * Handles the escape shuttle + Centcomm.
+    * Handles the escape shuttle + CentCom.
     */
 
    [Dependency] private readonly IAdminLogManager _logger = default!;
@@ -420,7 +420,7 @@ public sealed partial class ShuttleSystem
        _centcommMap = _mapManager.CreateMap();
        _mapManager.SetMapPaused(_centcommMap.Value, true);
 
-       // Load Centcomm
+       // Load CentCom
        var centcommPath = _configManager.GetCVar(CCVars.CentcommMap);
 
        if (!string.IsNullOrEmpty(centcommPath))
@@ -433,7 +433,7 @@ public sealed partial class ShuttleSystem
        }
        else
        {
-           _sawmill.Info("No centcomm map found, skipping setup.");
+           _sawmill.Info("No CentCom map found, skipping setup.");
        }
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
@@ -449,7 +449,7 @@ public sealed partial class ShuttleSystem
        // Load escape shuttle
        var (_, shuttle) = _loader.LoadBlueprint(_centcommMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
-           // Should be far enough... right? I'm too lazy to bounds check centcomm rn.
+           // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
        });
 

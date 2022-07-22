@@ -4,7 +4,7 @@ using Content.Shared.Administration.Events;
 using Content.Shared.GameTicking;
 using Robust.Shared.Network;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem : EntitySystem
     {

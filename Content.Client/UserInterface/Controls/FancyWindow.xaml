@@ -16,6 +16,6 @@
             </BoxContainer>
         </Control>
         <PanelContainer StyleClasses="LowDivider" />
-        <Control Name="ContentsContainer" Margin="0 2" RectClipContent="True" VerticalExpand="true" />
+        <Control Access="Public" Name="ContentsContainer" Margin="0 2" RectClipContent="True" VerticalExpand="true" />
     </BoxContainer>
 </controls:FancyWindow>

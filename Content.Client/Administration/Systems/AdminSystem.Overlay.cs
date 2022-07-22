@@ -2,7 +2,7 @@ using Content.Client.Administration.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem
     {

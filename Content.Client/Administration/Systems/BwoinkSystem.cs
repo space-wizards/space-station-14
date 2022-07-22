@@ -12,7 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     [UsedImplicitly]
     public sealed class BwoinkSystem : SharedBwoinkSystem

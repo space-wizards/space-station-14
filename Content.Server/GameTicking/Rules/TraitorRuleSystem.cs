@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
@@ -34,11 +35,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     public override string Prototype => "Traitor";
 
     private readonly SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
-    private readonly List<TraitorRole> _traitors = new ();
+    public List<TraitorRole> Traitors = new();
 
     private const string TraitorPrototypeID = "Traitor";
 
-    public int TotalTraitors => _traitors.Count;
+    public int TotalTraitors => Traitors.Count;
+    public string[] Codewords = new string[3];
 
     public override void Initialize()
     {
@@ -49,15 +51,16 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
-    public override void Started() {}
+    public override void Started(){}
 
     public override void Ended()
     {
-        _traitors.Clear();
+        Traitors.Clear();
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
+        MakeCodewords();
         if (!RuleAdded)
             return;
 
@@ -84,6 +87,21 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         }
     }
 
+    private void MakeCodewords()
+    {
+
+        var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
+        var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
+        var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
+        var codewordPool = adjectives.Concat(verbs).ToList();
+        var finalCodewordCount = Math.Min(codewordCount, codewordPool.Count);
+        Codewords = new string[finalCodewordCount];
+        for (var i = 0; i < finalCodewordCount; i++)
+        {
+            Codewords[i] = _random.PickAndTake(codewordPool);
+        }
+    }
+
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
     {
         if (!RuleAdded)
@@ -91,13 +109,19 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         var playersPerTraitor = _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
         var maxTraitors = _cfg.GetCVar(CCVars.TraitorMaxTraitors);
-        var codewordCount = _cfg.GetCVar(CCVars.TraitorCodewordCount);
-        var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
-        var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
-        var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
+        var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor, 1, maxTraitors);
 
+        var traitorPool = FindPotentialTraitors(ev);
+        var selectedTraitors = PickTraitors(numTraitors, traitorPool);
+
+        foreach (var traitor in selectedTraitors)
+            MakeTraitor(traitor);
+    }
+
+    public List<IPlayerSession> FindPotentialTraitors(RulePlayerJobsAssignedEvent ev)
+    {
         var list = new List<IPlayerSession>(ev.Players).Where(x =>
-            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false
+            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false
         ).ToList();
 
         var prefList = new List<IPlayerSession>();
@@ -114,85 +138,77 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 prefList.Add(player);
             }
         }
-
-        var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor,
-            1, maxTraitors);
-
-        for (var i = 0; i < numTraitors; i++)
+        if (prefList.Count == 0)
         {
-            IPlayerSession traitor;
-            if(prefList.Count == 0)
-            {
-                if (list.Count == 0)
-                {
-                    Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
-                    break;
-                }
-                traitor = _random.PickAndTake(list);
-                Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
-            }
-            else
-            {
-                traitor = _random.PickAndTake(prefList);
-                list.Remove(traitor);
-                Logger.InfoS("preset", "Selected a preferred traitor.");
-            }
-            var mind = traitor.Data.ContentData()?.Mind;
-            if (mind == null)
-            {
-                Logger.ErrorS("preset", "Failed getting mind for picked traitor.");
-                continue;
-            }
+            Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
+            prefList = list;
+        }
+        return prefList;
+    }
 
-            // creadth: we need to create uplink for the antag.
-            // PDA should be in place already, so we just need to
-            // initiate uplink account.
-            DebugTools.AssertNotNull(mind.OwnedEntity);
+    public List<IPlayerSession> PickTraitors(int traitorCount, List<IPlayerSession> prefList)
+    {
+        var results = new List<IPlayerSession>(traitorCount);
+        if (prefList.Count == 0)
+        {
+            Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
+            return results;
+        }
+        
+        for (var i = 0; i < traitorCount; i++)
+        {
+            results.Add(_random.PickAndTake(prefList));
+            Logger.InfoS("preset", "Selected a preferred traitor.");
+        }
+        return results;
+    }
 
-            var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity!);
-            var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
-            accounts.AddNewAccount(uplinkAccount);
-
-            if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                    .AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
-                continue;
-
-            var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
-            var traitorRole = new TraitorRole(mind, antagPrototype);
-            mind.AddRole(traitorRole);
-            _traitors.Add(traitorRole);
+    public bool MakeTraitor(IPlayerSession traitor)
+    {
+        var mind = traitor.Data.ContentData()?.Mind;
+        if (mind == null)
+        {
+            Logger.ErrorS("preset", "Failed getting mind for picked traitor.");
+            return false;
         }
 
-        var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;
-        var verbs = _prototypeManager.Index<DatasetPrototype>("verbs").Values;
+        // creadth: we need to create uplink for the antag.
+        // PDA should be in place already, so we just need to
+        // initiate uplink account.
+        DebugTools.AssertNotNull(mind.OwnedEntity);
 
-        var codewordPool = adjectives.Concat(verbs).ToList();
-        var finalCodewordCount = Math.Min(codewordCount, codewordPool.Count);
-        var codewords = new string[finalCodewordCount];
-        for (var i = 0; i < finalCodewordCount; i++)
+        var startingBalance = _cfg.GetCVar(CCVars.TraitorStartingBalance);
+        var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity!);
+        var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+        accounts.AddNewAccount(uplinkAccount);
+
+        if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>().AddUplink(mind.OwnedEntity!.Value, uplinkAccount))
+            return false;
+
+        var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
+        var traitorRole = new TraitorRole(mind, antagPrototype);
+        mind.AddRole(traitorRole);
+        Traitors.Add(traitorRole);
+        traitorRole.GreetTraitor(Codewords);
+
+        var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
+        var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
+
+        //give traitors their objectives
+        var difficulty = 0f;
+        for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
-            codewords[i] = _random.PickAndTake(codewordPool);
+            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind);
+            if (objective == null) continue;
+            if (traitorRole.Mind.TryAddObjective(objective))
+                difficulty += objective.Difficulty;
         }
 
-        foreach (var traitor in _traitors)
-        {
-            traitor.GreetTraitor(codewords);
+        //give traitors their codewords to keep in their character info menu
+        traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
 
-            //give traitors their objectives
-            var difficulty = 0f;
-            for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
-            {
-                var objective = _objectivesManager.GetRandomObjective(traitor.Mind);
-                if (objective == null) continue;
-                if (traitor.Mind.TryAddObjective(objective))
-                    difficulty += objective.Difficulty;
-            }
-
-            //give traitors their codewords to keep in their character info menu
-            traitor.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ",codewords)));
-        }
-
-        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
+        return true;
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
@@ -200,9 +216,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var result = Loc.GetString("traitor-round-end-result", ("traitorCount", _traitors.Count));
+        var result = Loc.GetString("traitor-round-end-result", ("traitorCount", Traitors.Count));
 
-        foreach (var traitor in _traitors)
+        foreach (var traitor in Traitors)
         {
             var name = traitor.Mind.CharacterName;
             traitor.Mind.TryGetSession(out var session);
@@ -264,7 +280,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
                 }
             }
         }
-
         ev.AddLine(result);
     }
 }
