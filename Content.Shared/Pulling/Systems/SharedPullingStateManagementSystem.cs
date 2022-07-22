@@ -45,7 +45,7 @@ namespace Content.Shared.Pulling
 
             // Joint shutdown
             if (!_timing.ApplyingState && // During state-handling, joint component will handle its own state.
-                EntityManager.TryGetComponent<JointComponent?>(puller.Owner, out var jointComp))
+                TryComp(puller.Owner, out JointComponent? jointComp))
             {
                 var j = jointComp.GetJoints.Where(j => j.ID == pullable.PullJointId).FirstOrDefault();
                 if (j != null)
