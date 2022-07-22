@@ -25,6 +25,8 @@ public sealed partial class ChannelFilterPopup : Popup
     private readonly ChatUIController _chat;
     private readonly Dictionary<ChatChannel, ChannelFilterCheckbox> _filterStates = new();
 
+    public event Action<ChatChannel, bool>? OnChannelFilter;
+
     public ChannelFilterPopup()
     {
         RobustXamlLoader.Load(this);
@@ -81,11 +83,8 @@ public sealed partial class ChannelFilterPopup : Popup
 
     private void CheckboxPressed(ButtonEventArgs args)
     {
-        if (!args.Button.Pressed)
-            return;
-
         var checkbox = (ChannelFilterCheckbox) args.Button;
-        _chat.ClearUnfilteredUnreads(checkbox.Channel);
+        OnChannelFilter?.Invoke(checkbox.Channel, checkbox.Pressed);
     }
 
     public void UpdateUnread(ChatChannel channel, int? unread)

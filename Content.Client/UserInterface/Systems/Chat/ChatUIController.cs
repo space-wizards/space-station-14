@@ -116,7 +116,7 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    private readonly List<StoredChatMessage> _history = new();
+    public readonly List<StoredChatMessage> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -425,7 +425,7 @@ public sealed class ChatUIController : UIController
             if ((channels & channel) == 0)
                 continue;
 
-            _unreadMessages.Remove(channel);
+            _unreadMessages[channel] = 0;
             UnreadMessageCountsUpdated?.Invoke(channel, 0);
         }
     }
@@ -624,7 +624,7 @@ public sealed class ChatUIController : UIController
         if (!msg.HideChat)
         {
             var storedMessage = new StoredChatMessage(msg);
-            _history.Add(storedMessage);
+            History.Add(storedMessage);
             MessageAdded?.Invoke(storedMessage);
 
             if (!storedMessage.Read)

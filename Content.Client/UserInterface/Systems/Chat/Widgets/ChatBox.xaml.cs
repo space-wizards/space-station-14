@@ -29,6 +29,7 @@ public sealed partial class ChatBox : Control
         ChatInput.Input.OnKeyBindDown += OnKeyBindDown;
         ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
+        ChatInput.FilterButton.ChatFilterPopup.OnChannelFilter += OnChannelFilter;
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
@@ -66,6 +67,21 @@ public sealed partial class ChatBox : Control
     private void OnChannelSelect(ChatSelectChannel channel)
     {
         UpdateSelectedChannel();
+    }
+
+    private void OnChannelFilter(ChatChannel channel, bool active)
+    {
+        Contents.Clear();
+
+        foreach (var message in _controller.History)
+        {
+            OnMessageAdded(message);
+        }
+
+        if (active)
+        {
+            _controller.ClearUnfilteredUnreads(channel);
+        }
     }
 
     public void AddLine(string message, Color color)
