@@ -130,6 +130,9 @@ namespace Content.Server.Flash
             if (attempt.Cancelled)
                 return;
 
+            var flashevent = new FlashEvent(target,user, used);
+            RaiseLocalEvent(target, flashevent, true);
+
             flashable.LastFlash = _gameTiming.CurTime;
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(flashable);
@@ -219,6 +222,20 @@ namespace Content.Server.Flash
         public readonly EntityUid? Used;
 
         public FlashAttemptEvent(EntityUid target, EntityUid? user, EntityUid? used)
+        {
+            Target = target;
+            User = user;
+            Used = used;
+        }
+    }
+
+    public sealed class FlashEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Target;
+        public readonly EntityUid? User;
+        public readonly EntityUid? Used;
+
+        public FlashEvent(EntityUid target, EntityUid? user, EntityUid? used)
         {
             Target = target;
             User = user;

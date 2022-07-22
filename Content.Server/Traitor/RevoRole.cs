@@ -4,11 +4,11 @@ using Content.Shared.Roles;
 
 namespace Content.Server.Traitor
 {
-    public sealed class RevoHeadRole : Role
+    public sealed class RevoRole : Role
     {
         public AntagPrototype Prototype { get; }
 
-        public RevoHeadRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
+        public RevoRole(Mind.Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
             Name = antagPrototype.Name;
@@ -23,7 +23,7 @@ namespace Content.Server.Traitor
             if (Mind.TryGetSession(out var session))
             {
                 var chatMgr = IoCManager.Resolve<IChatManager>();
-                chatMgr.DispatchServerMessage(session, Loc.GetString("revo-head-role-greeting"));
+                chatMgr.DispatchServerMessage(session, Loc.GetString("revo-role-greeting"));
             }
         }
     }

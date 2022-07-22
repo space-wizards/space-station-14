@@ -9,7 +9,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
 using Content.Shared.MobState;
-using Content.Server.Cloning.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -46,7 +45,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
     {
         base.Initialize();
 
-        //SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
+        //SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt); // Commented for testing purposes
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
@@ -59,6 +58,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         ///     Adds every player that is head of staff to a list
         /// </summary>
 
+
         var mind = ev.Player.ContentData()?.Mind;
 
         if (mind is null) return;
@@ -67,10 +67,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         {
             return;
         }
-        if (mind.CurrentJob.Prototype.Departments.ElementAt<string>(index: 0).Equals("Command"))
+        
+        // Gets departments of the players current job and checks if one is command
+        foreach (var department in mind.CurrentJob.Prototype.Departments)
         {
-            if (mind is not null)
-                _aliveCommandHeads.Add(mind, true);
+            if (department.Equals("Command"))
+            {
+                if (mind is not null)
+                    _aliveCommandHeads.Add(mind, true);
+            }
         }
     }
 
@@ -80,6 +85,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
             return;
         
         ev.AddLine(_revsWon ? Loc.GetString("revolutionaries-head-won") : Loc.GetString("revolutionaries-crew-won"));
+        foreach (var revohead in _revoHeads)
+            ev.AddLine(revohead.Name);
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -97,6 +104,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
 
         var prefList = new List<IPlayerSession>();
 
+        // Adds every player from the list that has Revolutionary Head checked in their preference list to the preflist list
         foreach (var player in list)
         {
             if (!ev.Profiles.ContainsKey(player.UserId))
@@ -153,9 +161,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         if (!RuleAdded) 
             return;
 
+        // Get the first key in the _aliveRevoHeads and if the entity
+        // relevant to the event is on said list...
         if (_aliveRevoHeads.TryFirstOrNull(x => x.Key is not null && x.Key.OwnedEntity == ev.Entity, out var revohead))
         {
-            _aliveRevoHeads[revohead.Value.Key] = !ev.CurrentMobState.IsDead();
+            // ...if so then check if theyre dead
+            // and if they are then change their alive bool to false
+            _aliveRevoHeads[revohead.Value.Key] = !ev.CurrentMobState.IsDead(); // Literally used by ICharacherDeadIC which isn't deprecated, dont @ me
 
             if (_aliveRevoHeads.Values.All(x => !x))
             {
@@ -164,6 +176,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
 
         }
 
+        // Same as above ^
         if (_aliveCommandHeads.TryFirstOrNull(x => x.Key is not null && x.Key.OwnedEntity == ev.Entity, out var staffhead))
         {
             _aliveCommandHeads[staffhead.Value.Key] = !ev.CurrentMobState.IsDead();
@@ -181,6 +194,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
+        // Check if there are enough players to to start, if not then cancel
         var minPlayers = _cfg.GetCVar(CCVars.RevolutionaryMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
@@ -204,5 +218,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         _revsWon = false;
     }
 
+    // This must be implemented even if it does nothing
     public override void Ended() { }
 }
