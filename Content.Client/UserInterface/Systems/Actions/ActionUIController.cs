@@ -69,6 +69,7 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
         ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
 
+        _dragShadow.Orphan();
         UIManager.PopupRoot.AddChild(_dragShadow);
         ActionButton.OnPressed += ActionButtonPressed;
 
