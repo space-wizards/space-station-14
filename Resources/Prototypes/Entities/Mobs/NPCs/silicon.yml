@@ -87,8 +87,8 @@
         acts: [ "Destruction" ]
   - type: Input
     context: "human"
-  - type: PlayerInputMover
-  - type: PlayerMobMover
+  - type: InputMover
+  - type: MobMover
 
 - type: entity
   parent: MobSiliconBase
@@ -128,3 +128,31 @@
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobCleanBot
+  name: cleanbot
+  description: The creep of automation now threatening space janitors.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+  - type: UtilityAI
+    behaviorSets:
+    - CleanBot
+  - type: Drain
+    range: 1
+    unitsDestroyedPerSecond: 6
+  - type: Construction
+    graph: CleanBot
+    node: bot
+  - type: SentienceTarget
+    flavorKind: mechanical
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 30
+  - type: DrainableSolution
+    solution: drainBuffer

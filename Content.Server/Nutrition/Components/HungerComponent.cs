@@ -59,7 +59,6 @@ namespace Content.Server.Nutrition.Components
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {
-            { HungerThreshold.Overfed, AlertType.Overfed },
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
             { HungerThreshold.Dead, AlertType.Starving },

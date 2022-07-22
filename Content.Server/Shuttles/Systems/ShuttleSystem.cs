@@ -21,14 +21,8 @@ namespace Content.Server.Shuttles.Systems
 
         public const float TileMassMultiplier = 0.5f;
 
-        public float ShuttleMaxLinearSpeed;
-
-        public float ShuttleMaxAngularMomentum;
-        public float ShuttleMaxAngularAcc;
-        public float ShuttleMaxAngularSpeed;
-
-        public float ShuttleIdleLinearDamping;
-        public float ShuttleIdleAngularDamping;
+        public const float ShuttleLinearDamping = 0.05f;
+        public const float ShuttleAngularDamping = 0.05f;
 
         public override void Initialize()
         {
@@ -47,14 +41,6 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
             SubscribeLocalEvent<GridFixtureChangeEvent>(OnGridFixtureChange);
-
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed, true);
-            configManager.OnValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularAcc, SetShuttleMaxAngularAcc, true);
-            configManager.OnValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum, true);
         }
 
         public override void Update(float frameTime)
@@ -71,23 +57,11 @@ namespace Content.Server.Shuttles.Systems
             CleanupHyperspace();
         }
 
-        private void SetShuttleMaxLinearSpeed(float value) => ShuttleMaxLinearSpeed = value;
-        private void SetShuttleMaxAngularSpeed(float value) => ShuttleMaxAngularSpeed = value;
-        private void SetShuttleMaxAngularAcc(float value) => ShuttleMaxAngularAcc = value;
-        private void SetShuttleMaxAngularMomentum(float value) => ShuttleMaxAngularMomentum = value;
-        private void SetShuttleIdleLinearDamping(float value) => ShuttleIdleLinearDamping = value;
-        private void SetShuttleIdleAngularDamping(float value) => ShuttleIdleAngularDamping = value;
-
         public override void Shutdown()
         {
             base.Shutdown();
             ShutdownEscape();
             ShutdownEmergencyConsole();
-            _configManager.UnsubValueChanged(CCVars.ShuttleMaxLinearSpeed, SetShuttleMaxLinearSpeed);
-            _configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularSpeed, SetShuttleMaxAngularSpeed);
-            _configManager.UnsubValueChanged(CCVars.ShuttleIdleLinearDamping, SetShuttleIdleLinearDamping);
-            _configManager.UnsubValueChanged(CCVars.ShuttleIdleAngularDamping, SetShuttleIdleAngularDamping);
-            _configManager.UnsubValueChanged(CCVars.ShuttleMaxAngularMomentum, SetShuttleMaxAngularMomentum);
         }
 
         private void OnShuttleAdd(EntityUid uid, ShuttleComponent component, ComponentAdd args)
@@ -159,8 +133,8 @@ namespace Content.Server.Shuttles.Systems
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
             component.FixedRotation = false;
-            component.LinearDamping = ShuttleIdleLinearDamping;
-            component.AngularDamping = ShuttleIdleAngularDamping;
+            component.LinearDamping = ShuttleLinearDamping;
+            component.AngularDamping = ShuttleAngularDamping;
         }
 
         private void Disable(PhysicsComponent component)
