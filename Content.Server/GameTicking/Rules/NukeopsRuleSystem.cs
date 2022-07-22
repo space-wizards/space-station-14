@@ -1,15 +1,12 @@
 using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Nuke;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
@@ -23,7 +20,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using System.Data;
+using Content.Shared.Preferences;
+using Robust.Shared.Enums;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
+using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -38,9 +39,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly IPlayerManager _playerSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
+
+    private MapId? _nukiePlanet;
+    private EntityUid? _nukieOutpost;
 
     public override string Prototype => "Nukeops";
 
@@ -100,13 +105,135 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
+        SpawnMap();
+        SpawnOperativesForSpawningPlayers(ev.PlayerPool, ev.Profiles);
+    }
+
+    private bool SpawnMap()
+    {
+        if (_nukiePlanet != null)
+            return true; // Map is already loaded.
+
+        // TODO: Make this a prototype
+        // so true PAUL!
+        var path = "/Maps/nukieplanet.yml";
+        var shuttlePath = "/Maps/infiltrator.yml";
+        var mapId = _mapManager.CreateMap();
+
+        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path);
+        if (outpost == null)
+        {
+            Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
+            return false;
+        }
+
+        // Listen I just don't want it to overlap.
+        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
+        {
+            Offset = Vector2.One * 1000f,
+        });
+
+        if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
+        {
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
+        }
+
+        _nukiePlanet = mapId;
+        _nukieOutpost = outpost;
+
+        return true;
+    }
+
+    private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions)
+    {
+        if (_nukieOutpost == null)
+            return;
+
+        var outpostUid = _nukieOutpost.Value;
+
+        // TODO: Loot table or something
+        var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
+        var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
+        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
+        var syndicateNamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values);
+        var syndicateNamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values);
+
+        var spawns = new List<EntityCoordinates>();
+
+        // Forgive me for hardcoding prototypes
+        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
+        {
+            if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
+
+            if (_nukieOutpost != null && xform.ParentUid == _nukieOutpost)
+            {
+                spawns.Add(xform.Coordinates);
+                break;
+            }
+        }
+
+        if (spawns.Count == 0)
+        {
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(outpostUid).Coordinates);
+            Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
+        }
+
+        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
+        for(var i = 0; i < spawnCount; i++)
+        {
+            string name;
+            string role;
+            StartingGearPrototype gear;
+
+            // Spawn the Command then Agent first.
+            switch (i)
+            {
+                case 0:
+                    name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
+                    role = NukeopsCommanderPrototypeId;
+                    gear = commanderGear;
+                    break;
+                case 1:
+                    name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
+                    gear = medicGear;
+                    break;
+                default:
+                    name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
+                    gear = starterGear;
+                    break;
+            }
+
+            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
+            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+            EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
+            _stationSpawningSystem.EquipStartingGear(mob, gear, null);
+
+            if (sessions.TryGetValue(i, out var session))
+            {
+                var newMind = new Mind.Mind(session.UserId)
+                {
+                    CharacterName = name
+                };
+                newMind.ChangeOwningPlayer(session.UserId);
+                newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
+
+                newMind.TransferTo(mob);
+                _aliveNukeops.Add(newMind, true);
+            }
+        }
+    }
+
+    private void SpawnOperativesForSpawningPlayers(List<IPlayerSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
+    {
         _aliveNukeops.Clear();
 
         // Basically copied verbatim from traitor code
         var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
         var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
 
-        var everyone = new List<IPlayerSession>(ev.PlayerPool);
+        var everyone = new List<IPlayerSession>(playerPool);
         var prefList = new List<IPlayerSession>();
         var cmdrPrefList = new List<IPlayerSession>();
         var operatives = new List<IPlayerSession>();
@@ -116,11 +243,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         foreach (var player in everyone)
         {
             if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
-            if (!ev.Profiles.ContainsKey(player.UserId))
+            if (!profiles.ContainsKey(player.UserId))
             {
                 continue;
             }
-            var profile = ev.Profiles[player.UserId];
+            var profile = profiles[player.UserId];
             if (profile.AntagPreferences.Contains(NukeopsPrototypeId))
             {
                 prefList.Add(player);
@@ -131,7 +258,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
         }
 
-        var numNukies = MathHelper.Clamp(ev.PlayerPool.Count / playersPerOperative, 1, maxOperatives);
+        var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
         for (var i = 0; i < numNukies; i++)
         {
@@ -188,104 +315,47 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             operatives.Add(nukeOp);
         }
 
-        // TODO: Make this a prototype
-        // so true PAUL!
-        var path = "/Maps/nukieplanet.yml";
-        var shuttlePath = "/Maps/infiltrator.yml";
-        var mapId = _mapManager.CreateMap();
+        SpawnOperatives(maxOperatives, operatives);
 
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
-
-        if (outpost == null)
+        foreach(var session in operatives)
         {
-            Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
+            playerPool.Remove(session);
+            GameTicker.PlayerJoinGame(session);
+        }
+    }
+
+    private void SpawnOperativesForGhostRoles()
+    {
+        _aliveNukeops.Clear();
+
+        // Basically copied verbatim from traitor code
+        var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
+        var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
+
+        var playerPool = Filter.GetAllPlayers(_playerSystem).ToList();
+        var eligible = new List<IPlayerSession>();
+
+        // Get players eligible to control an operative.
+        foreach (var session in playerPool)
+        {
+            if (session is not IPlayerSession { Status: SessionStatus.InGame } playerSession)
+                continue;
+
+            if(playerSession.ContentData()?.Mind?.CharacterDeadPhysically ?? false)
+                eligible.Add(playerSession);
+        }
+
+        if (eligible.Count == 0)
+        {
+            Logger.InfoS("preset", "Insufficient players available");
             return;
         }
 
-        // Listen I just don't want it to overlap.
-        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
-        {
-            Offset = Vector2.One * 1000f,
-        });
+        var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
-        if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
-        {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
-        }
-
-        // TODO: Loot table or something
-        var commanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull");
-        var starterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull");
-        var medicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull");
-        var syndicateNamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values);
-        var syndicateNamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values);
-
-        var spawns = new List<EntityCoordinates>();
-
-        // Forgive me for hardcoding prototypes
-        foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
-        {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
-
-            if (xform.ParentUid == outpost)
-            {
-                spawns.Add(xform.Coordinates);
-                break;
-            }
-        }
-
-        if (spawns.Count == 0)
-        {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(outpost.Value).Coordinates);
-            Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
-        }
-
-        // TODO: This should spawn the nukies in regardless and transfer if possible; rest should go to shot roles.
-        for (var i = 0; i < operatives.Count; i++)
-        {
-            string name;
-            string role;
-            StartingGearPrototype gear;
-
-            switch (i)
-            {
-                case 0:
-                    name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
-                    role = NukeopsCommanderPrototypeId;
-                    gear = commanderGear;
-                    break;
-                case 1:
-                    name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
-                    role = NukeopsPrototypeId;
-                    gear = medicGear;
-                    break;
-                default:
-                    name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
-                    role = NukeopsPrototypeId;
-                    gear = starterGear;
-                    break;
-            }
-
-            var session = operatives[i];
-            var newMind = new Mind.Mind(session.UserId)
-            {
-                CharacterName = name
-            };
-            newMind.ChangeOwningPlayer(session.UserId);
-            newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
-
-            var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
-            EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
-
-            newMind.TransferTo(mob);
-            _stationSpawningSystem.EquipStartingGear(mob, gear, null);
-
-            ev.PlayerPool.Remove(session);
-            _aliveNukeops.Add(newMind, true);
-
-            GameTicker.PlayerJoinGame(session);
-        }
+        // TODO: Pick randomly from eligible players. Maybe ask first if they would like to try and blow up the station.
+        var operatives = eligible.Take(numNukies).ToList();
+        SpawnOperatives(maxOperatives, operatives);
     }
 
     //For admins forcing someone to nukeOps.
@@ -322,6 +392,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     public override void Started()
     {
         _opsWon = false;
+        _nukieOutpost = null;
+        _nukiePlanet = null;
+
+        if (!SpawnMap())
+        {
+            Logger.InfoS("nukies", "Failed to load map for nukeops");
+            return;
+        }
+
+        if (GameTicker.RunLevel == GameRunLevel.InRound)
+            SpawnOperativesForGhostRoles();
     }
 
     public override void Ended() { }
