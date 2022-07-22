@@ -122,6 +122,9 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
                 || component.LatheWhitelist?.IsValid(args.Used) == false)
@@ -181,6 +184,7 @@ namespace Content.Server.Lathe
                 UpdateInsertingAppearance(uid, true, matProto.Color);
             }
             UpdateInsertingAppearance(uid, true);
+            args.Handled = true;
         }
 
         /// <summary>
