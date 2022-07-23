@@ -153,9 +153,7 @@ namespace Content.Server.Bed.Sleep
         }
         private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
         {
-            // You can't be forced to sleep and not sleep.
-            if (!TrySleeping(uid))
-                RemCompDeferred(uid, component);
+            TrySleeping(uid);
         }
 
         /// <summary>
