@@ -102,7 +102,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component, args.Hands))
+            if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
                 return;
 
             InteractionVerb verb = new();

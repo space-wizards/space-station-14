@@ -229,12 +229,12 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null, SharedHandsComponent? hands = null)
+    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null)
     {
         if (!Resolve(target, ref component))
             return false;
 
-        if (!Resolve(user, ref hands))
+        if (!HasComp<SharedHandsComponent>(user))
             return false;
 
         if (component.IsWeldedShut)
