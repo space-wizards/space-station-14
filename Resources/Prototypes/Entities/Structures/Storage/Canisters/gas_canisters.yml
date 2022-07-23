@@ -360,7 +360,7 @@
   components:
     - type: Sprite
       layers:
-        - state: freon
+        - state: greenys
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -552,7 +552,7 @@
   noSpawn: true
   components:
     - type: Sprite
-      state: freon-1
+      state: greenys-1
 
 - type: entity
   parent: GasCanisterBrokenBase

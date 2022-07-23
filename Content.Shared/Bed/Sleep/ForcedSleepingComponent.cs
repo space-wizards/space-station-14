@@ -4,14 +4,8 @@ namespace Content.Shared.Bed.Sleep
 {
     [NetworkedComponent, RegisterComponent]
     /// <summary>
-    /// Prevents waking up. Ticks up and removes itself when it hits the target duration.
+    /// Prevents waking up. Use as a status effect.
     /// </summary>
     public sealed class ForcedSleepingComponent : Component
-    {
-        [DataField("accumulator")]
-        public float Accumulator = 0f;
-
-        [DataField("targetDuration")]
-        public TimeSpan TargetDuration = TimeSpan.FromSeconds(3);
-    }
+    {}
 }

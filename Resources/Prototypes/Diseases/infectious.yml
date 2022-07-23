@@ -212,9 +212,12 @@
   id: MemeticAmirmir
   name: Memetic Amirmir
   effects:
-    - !type:DiseaseSleep
-      probability: 0.01
-      forcedSecondsPerTick: 0
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.015
+      key: ForcedSleep
+      component: ForcedSleeping
+      time: 3
+      type: Add
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-yawn

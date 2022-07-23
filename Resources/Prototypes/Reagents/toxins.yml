@@ -57,11 +57,15 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:ChemSleep
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: ChloralHydrate
           min: 15
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

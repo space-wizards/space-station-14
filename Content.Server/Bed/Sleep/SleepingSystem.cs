@@ -31,19 +31,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            foreach (var forced in EntityQuery<ForcedSleepingComponent>())
-            {
-                forced.Accumulator += frameTime;
-                if (forced.Accumulator < forced.TargetDuration.TotalSeconds)
-                {
-                    continue;
-                }
-                RemCompDeferred<ForcedSleepingComponent>(forced.Owner);
-            }
-        }
         public override void Initialize()
         {
             base.Initialize();
@@ -55,6 +42,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
             SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
         }
 
         /// <summary>
@@ -138,7 +126,6 @@ namespace Content.Server.Bed.Sleep
             {
                 Act = () =>
                 {
-
                    TryWaking(args.Target, user: args.User);
                 },
                 Text = Loc.GetString("action-name-wake"),
@@ -164,6 +151,12 @@ namespace Content.Server.Bed.Sleep
                 args.PushMarkup(Loc.GetString("sleep-examined", ("target", Identity.Entity(uid, EntityManager))));
             }
         }
+        private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
+        {
+            // You can't be forced to sleep and not sleep.
+            if (!TrySleeping(uid))
+                RemCompDeferred(uid, component);
+        }
 
         /// <summary>
         /// Try sleeping. Only mobs can sleep.
@@ -181,27 +174,10 @@ namespace Content.Server.Bed.Sleep
         }
 
         /// <summary>
-        /// This adds forced sleep that will not wake up on damage.
-        /// Lots of chems and disease effects use these.
-        /// You can always set it to 0 or a negative value too, I guess.
-        /// </summary>
-        public bool AddForcedSleepingTime(EntityUid uid, float secondsToAdd)
-        {
-            if (!HasComp<MobStateComponent>(uid))
-                return false;
-
-            EnsureComp<SleepingComponent>(uid);
-            var forced = EnsureComp<ForcedSleepingComponent>(uid);
-            forced.Accumulator -= secondsToAdd;
-            return true;
-        }
-
-        /// <summary>
         /// Try to wake up.
         /// </summary>
         public bool TryWaking(EntityUid uid, bool force = false, EntityUid? user = null)
         {
-
             if (!force && HasComp<ForcedSleepingComponent>(uid))
             {
                 if (user != null)
