@@ -1,0 +1,40 @@
+#- type: htnCompoundTask
+#  id: XenoRootNode
+#  graph:
+#  # Node class
+#  - name: Select attack target
+#    # Refer to this node from other nodes
+#    id: PickMeleeTarget
+#    preconditions:
+#    - BlackboardKeyNull:
+#        MeleeTarget
+#    # The underlying task to run
+#    task: PickMeleeTarget
+#      resultKey: MeleeTarget
+#      factions:
+#        - A
+#        - B
+#  - name:
+
+- type: htnCompoundTask
+  id: IdleCompoundTask
+  description: Picks a random location for the NPC to move to and idle.
+  graph:
+  # Node class
+  # Refer to this node from other nodes
+  - id: PickNearbyCoordinates
+    # The underlying task to run
+    task: PickNearbyCoordinates
+    # Edges on the graph
+    edges:
+    - MoveToTarget
+  - id: MoveToTarget
+    task: MoveToTask
+
+- type: htnPrimitiveTask
+  id: PickNearbyCoordinates
+  operator: !type:PickNearbyCoordinatesOperator
+
+- type: htnPrimitiveTask
+  id: MoveToTarget
+  operator: !type:MoveToOperator
