@@ -360,7 +360,7 @@ namespace Content.Server.Database
         #endregion
 
         #region Playtime
-        public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
+        public async Task<(RoleTimer, bool existed)> CreateOrGetRoleTimer(Guid player, string role)
         {
             await using var db = await GetDb();
 
@@ -370,23 +370,18 @@ namespace Content.Server.Database
                 .Where(v => v.Role == role)
                 .SingleOrDefaultAsync();
 
-            if (query == null)
-            {
-                result = new RoleTimer()
-                {
-                    PlayerId = player,
-                    Role = role,
-                    TimeSpent = TimeSpan.Zero
-                };
-                db.DbContext.Add(result);
-                await db.DbContext.SaveChangesAsync();
-            }
-            else
-            {
-                result = query;
-            }
+            if (query != null)
+                return (query, true);
 
-            return result;
+            result = new RoleTimer()
+            {
+                PlayerId = player,
+                Role = role,
+                TimeSpent = TimeSpan.Zero
+            };
+            db.DbContext.Add(result);
+            await db.DbContext.SaveChangesAsync();
+            return (result, false);
         }
 
         public async Task<List<RoleTimer>> GetRoleTimers(Guid player)
@@ -692,14 +687,15 @@ namespace Content.Server.Database
 
         #region Admin Logs
 
-        public async Task<Server> AddOrGetServer(string serverName)
+        public async Task<(Server, bool existed)> AddOrGetServer(string serverName)
         {
             await using var db = await GetDb();
-            var server = await db.DbContext.Server.Where(server => server.Name.Equals(serverName)).SingleOrDefaultAsync();
+            var server = await db.DbContext.Server
+                .Where(server => server.Name.Equals(serverName))
+                .SingleOrDefaultAsync();
+
             if (server != default)
-            {
-                return server;
-            }
+                return (server, true);
 
             server = new Server
             {
@@ -710,7 +706,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return server;
+            return (server, false);
         }
 
         public virtual async Task AddAdminLogs(List<QueuedLog> logs)

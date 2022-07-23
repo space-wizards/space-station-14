@@ -12,6 +12,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
+using Prometheus;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -243,6 +244,14 @@ namespace Content.Server.Database
 
     public sealed class ServerDbManager : IServerDbManager
     {
+        public static readonly Counter DbReadOpsMetric = Metrics.CreateCounter(
+            "db_read_ops",
+            "Amount of read operations processed by the database manager.");
+
+        public static readonly Counter DbWriteOpsMetric = Metrics.CreateCounter(
+            "db_write_ops",
+            "Amount of write operations processed by the database manager.");
+
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
@@ -278,46 +287,55 @@ namespace Content.Server.Database
 
         public Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
+            DbWriteOpsMetric.Inc();
             return _db.InitPrefsAsync(userId, defaultProfile);
         }
 
         public Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SaveSelectedCharacterIndexAsync(userId, index);
         }
 
         public Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
         public Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
         {
+            DbWriteOpsMetric.Inc();
             return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
         }
 
         public Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SaveAdminOOCColorAsync(userId, color);
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetPlayerPreferencesAsync(userId);
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AssignUserIdAsync(name, userId);
         }
 
         public Task<NetUserId?> GetAssignedUserIdAsync(string name)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAssignedUserIdAsync(name);
         }
 
         public Task<ServerBanDef?> GetServerBanAsync(int id)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetServerBanAsync(id);
         }
 
@@ -326,6 +344,7 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetServerBanAsync(address, userId, hwId);
         }
 
@@ -335,22 +354,26 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned=true)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetServerBansAsync(address, userId, hwId, includeUnbanned);
         }
 
         public Task AddServerBanAsync(ServerBanDef serverBan)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddServerBanAsync(serverBan);
         }
 
         public Task AddServerUnbanAsync(ServerUnbanDef serverUnban)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddServerUnbanAsync(serverUnban);
         }
 
         #region Role Ban
         public Task<ServerRoleBanDef?> GetServerRoleBanAsync(int id)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetServerRoleBanAsync(id);
         }
 
@@ -360,54 +383,69 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned = true)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetServerRoleBansAsync(address, userId, hwId, includeUnbanned);
         }
 
         public Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddServerRoleBanAsync(serverRoleBan);
         }
 
         public Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddServerRoleUnbanAsync(serverRoleUnban);
         }
         #endregion
 
         #region Playtime
 
-        public Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
+        public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
         {
-            return _db.CreateOrGetRoleTimer(player, role);
+            var (data, existed) = await _db.CreateOrGetRoleTimer(player, role);
+            if (existed)
+                DbReadOpsMetric.Inc();
+            else
+                DbWriteOpsMetric.Inc();
+
+            return data;
         }
 
         public Task<List<RoleTimer>> GetRoleTimers(Guid player)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetRoleTimers(player);
         }
 
         public Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SetRoleTime(id, time);
         }
 
         public Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddRoleTime(id, time);
         }
 
         public Task<TimeSpan> GetOverallPlayTime(Guid player)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetOverallPlayTime(player);
         }
 
         public Task SetOverallPlayTime(Guid player, TimeSpan time)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SetOverallPlayTime(player, time);
         }
 
         public Task<TimeSpan> AddOverallPlayTime(Guid player, TimeSpan time)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddOverallPlayTime(player, time);
         }
 
@@ -419,16 +457,19 @@ namespace Content.Server.Database
             IPAddress address,
             ImmutableArray<byte> hwId)
         {
+            DbWriteOpsMetric.Inc();
             return _db.UpdatePlayerRecord(userId, userName, address, hwId);
         }
 
         public Task<PlayerRecord?> GetPlayerRecordByUserName(string userName, CancellationToken cancel = default)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetPlayerRecordByUserName(userName, cancel);
         }
 
         public Task<PlayerRecord?> GetPlayerRecordByUserId(NetUserId userId, CancellationToken cancel = default)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetPlayerRecordByUserId(userId, cancel);
         }
 
@@ -439,137 +480,169 @@ namespace Content.Server.Database
             ImmutableArray<byte> hwId,
             ConnectionDenyReason? denied)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddConnectionLogAsync(userId, userName, address, hwId, denied);
         }
 
         public Task AddServerBanHitsAsync(int connection, IEnumerable<ServerBanDef> bans)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddServerBanHitsAsync(connection, bans);
         }
 
         public Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel = default)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminDataForAsync(userId, cancel);
         }
 
         public Task<AdminRank?> GetAdminRankAsync(int id, CancellationToken cancel = default)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminRankDataForAsync(id, cancel);
         }
 
         public Task<((Admin, string? lastUserName)[] admins, AdminRank[])> GetAllAdminAndRanksAsync(
             CancellationToken cancel = default)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAllAdminAndRanksAsync(cancel);
         }
 
         public Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.RemoveAdminAsync(userId, cancel);
         }
 
         public Task AddAdminAsync(Admin admin, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddAdminAsync(admin, cancel);
         }
 
         public Task UpdateAdminAsync(Admin admin, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.UpdateAdminAsync(admin, cancel);
         }
 
         public Task RemoveAdminRankAsync(int rankId, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.RemoveAdminRankAsync(rankId, cancel);
         }
 
         public Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddAdminRankAsync(rank, cancel);
         }
 
         public Task<int> AddNewRound(Server server, params Guid[] playerIds)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddNewRound(server, playerIds);
         }
 
         public Task<Round> GetRound(int id)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetRound(id);
         }
 
         public Task AddRoundPlayers(int id, params Guid[] playerIds)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddRoundPlayers(id, playerIds);
         }
 
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)
         {
+            DbWriteOpsMetric.Inc();
             return _db.UpdateAdminRankAsync(rank, cancel);
         }
 
-        public Task<Server> AddOrGetServer(string serverName)
+        public async Task<Server> AddOrGetServer(string serverName)
         {
-            return _db.AddOrGetServer(serverName);
+            var (server, existed) = await _db.AddOrGetServer(serverName);
+            if (existed)
+                DbReadOpsMetric.Inc();
+            else
+                DbWriteOpsMetric.Inc();
+
+            return server;
         }
 
         public Task AddAdminLogs(List<QueuedLog> logs)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddAdminLogs(logs);
         }
 
         public IAsyncEnumerable<string> GetAdminLogMessages(LogFilter? filter = null)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminLogMessages(filter);
         }
 
         public IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminLogs(filter);
         }
 
         public IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminLogsJson(filter);
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetWhitelistStatusAsync(player);
         }
 
         public Task AddToWhitelistAsync(NetUserId player)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddToWhitelistAsync(player);
         }
 
         public Task RemoveFromWhitelistAsync(NetUserId player)
         {
+            DbWriteOpsMetric.Inc();
             return _db.RemoveFromWhitelistAsync(player);
         }
 
         public Task AddUploadedResourceLogAsync(NetUserId user, DateTime date, string path, byte[] data)
         {
+            DbWriteOpsMetric.Inc();
             return _db.AddUploadedResourceLogAsync(user, date, path, data);
         }
 
         public Task PurgeUploadedResourceLogAsync(int days)
         {
+            DbWriteOpsMetric.Inc();
             return _db.PurgeUploadedResourceLogAsync(days);
         }
 
         public Task<DateTime?> GetLastReadRules(NetUserId player)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetLastReadRules(player);
         }
 
         public Task SetLastReadRules(NetUserId player, DateTime time)
         {
+            DbWriteOpsMetric.Inc();
             return _db.SetLastReadRules(player, time);
         }
 
         public Task<int> AddAdminNote(int? roundId, Guid player, string message, Guid createdBy, DateTime createdAt)
         {
+            DbWriteOpsMetric.Inc();
             var note = new AdminNote
             {
                 RoundId = roundId,
@@ -586,21 +659,25 @@ namespace Content.Server.Database
 
         public Task<AdminNote?> GetAdminNote(int id)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminNote(id);
         }
 
         public Task<List<AdminNote>> GetAdminNotes(Guid player)
         {
+            DbReadOpsMetric.Inc();
             return _db.GetAdminNotes(player);
         }
 
         public Task DeleteAdminNote(int id, Guid deletedBy, DateTime deletedAt)
         {
+            DbWriteOpsMetric.Inc();
             return _db.DeleteAdminNote(id, deletedBy, deletedAt);
         }
 
         public Task EditAdminNote(int id, string message, Guid editedBy, DateTime editedAt)
         {
+            DbWriteOpsMetric.Inc();
             return _db.EditAdminNote(id, message, editedBy, editedAt);
         }
 
