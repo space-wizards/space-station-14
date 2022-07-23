@@ -56,5 +56,8 @@ namespace Content.Server.Zombies
 
         [ViewVariables]
         public float Accumulator = 0f;
+
+        [ViewVariables]
+        public float LastDamageGroanAccumulator = 0f;
     }
 }

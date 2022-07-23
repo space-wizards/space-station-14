@@ -15,6 +15,7 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
+using Content.Shared.Damage;
 
 namespace Content.Server.Zombies
 {
@@ -34,6 +35,23 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ZombieComponent, DamageChangedEvent>(OnDamage);
+        }
+
+        private void OnDamage(EntityUid uid, ZombieComponent component, DamageChangedEvent args)
+        {
+            if (!args.DamageIncreased)
+                return;
+
+            if (component.LastDamageGroanAccumulator > 0)
+                return;
+
+            if (_robustRandom.Prob(0.50f))
+                _chat.TrySendInGameICMessage(uid, "generic automated groan", InGameICChatType.Speak, false);
+            else
+                _vocal.TryScream(uid);
+
+            component.LastDamageGroanAccumulator = 2;
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
@@ -115,6 +133,7 @@ namespace Content.Server.Zombies
             foreach (var zombiecomp in EntityQuery<ZombieComponent>())
             {
                 zombiecomp.Accumulator += frameTime;
+                zombiecomp.LastDamageGroanAccumulator -= frameTime;
 
                 if (zombiecomp.Accumulator < 5) //generic number
                     continue;
