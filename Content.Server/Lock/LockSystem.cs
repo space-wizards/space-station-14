@@ -3,6 +3,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -147,10 +148,13 @@ namespace Content.Server.Lock
         /// <summary>
         ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
         /// </summary>
-        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true)
+        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
+
+            if (!Resolve(user, ref hands))
+            return false;
 
             // Cannot lock if the entity is currently opened.
             if (storage.Open)
@@ -181,7 +185,7 @@ namespace Content.Server.Lock
 
         private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User) || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User, null, true, args.Hands))
                 return;
 
             AlternativeVerb verb = new();

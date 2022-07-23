@@ -6,6 +6,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
@@ -148,7 +149,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
-        
+
         var count = 0;
         foreach (var entity in ev.Contents)
         {
@@ -228,9 +229,12 @@ public sealed class EntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null)
+    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null, SharedHandsComponent? hands = null)
     {
         if (!Resolve(target, ref component))
+            return false;
+
+        if (!Resolve(user, ref hands))
             return false;
 
         if (component.IsWeldedShut)
@@ -361,6 +365,6 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
         }
-            
+
     }
 }
