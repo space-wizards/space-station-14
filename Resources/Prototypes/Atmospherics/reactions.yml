@@ -58,6 +58,7 @@
 - type: gasReaction
   id: MiasmicSubsumation
   priority: 0
+  maximumTemperature: 5066.25
   minimumRequirements:
   - 0     # oxygen
   - 0     # nitrogen

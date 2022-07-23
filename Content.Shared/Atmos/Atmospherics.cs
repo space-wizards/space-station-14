@@ -217,6 +217,11 @@ namespace Content.Shared.Atmos
         public const float FreonCoolRateModifier = 20f;
 
         /// <summary>
+        ///     How many mol of freon can be converted into miasma in one cycle.
+        /// </summary>
+        public const float MiasmicSubsumationMaxConversionRate = 5f;
+
+        /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>
         public const float HazardHighPressure = 550f;
