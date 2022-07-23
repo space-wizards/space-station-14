@@ -29,10 +29,15 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         {
             component.CurrentMarkings = new(startingSet.Markings);
         }
-        UpdateHumanoidAppearance(uid, component);
+        UpdateHumanoidAppearance(uid, true, true, true, component.HiddenLayers, component);
     }
 
-    private void UpdateHumanoidAppearance(EntityUid uid, SharedHumanoidComponent? humanoid = null)
+    private void UpdateHumanoidAppearance(EntityUid uid,
+        bool updateBaseSprites = false,
+        bool updateSkinColor = false,
+        bool updateMarkings = false,
+        HashSet<HumanoidVisualLayers>? newHiddenSet = null,
+        SharedHumanoidComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
         {
@@ -48,13 +53,17 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         // This is the humanoid appearance sprite pipeline.
 
-        ApplyBaseSprites(uid, baseSprites.Sprites);
-        ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
+        if (updateBaseSprites)
+            ApplyBaseSprites(uid, baseSprites.Sprites);
 
-        var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
-        ApplyMarkings(uid, humanoid.CurrentMarkings, points);
-        ApplyDefaultMarkings(uid, points);
-        SetSpriteVisibility(uid, humanoid.HiddenLayers, false);
+        if (updateSkinColor)
+            ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
+
+        if (newHiddenSet != null)
+            ReplaceHiddenLayers(uid, newHiddenSet, humanoid);
+
+        if (updateMarkings)
+            ApplyAllMarkings(uid, species, baseSprites);
     }
 
     // Since this doesn't allow you to discern what you'd want to change
@@ -90,43 +99,65 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         // we don't needlessly reorganize everything when one single
         // field's state was changed
 
+        var updateBaseSprites = false;
+        var updateSkinColor = false;
+        var updateVisibility = false;
+        var updateMarkings = false;
+
         if (humanoid.Species != state.Species || humanoid.Sex != state.Sex)
         {
             humanoid.Species = state.Species;
             humanoid.Sex = state.Sex;
 
-            ApplyBaseSprites(uid, baseSprites.Sprites);
+            updateBaseSprites = true;
         }
 
         if (humanoid.SkinColor != state.SkinColor)
         {
             humanoid.SkinColor = state.SkinColor;
 
-            ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
+            updateSkinColor = true;
         }
 
+        // This one is hard. It's less nicer to store the previous state in the component.
         var hiddenLayers = state.HiddenLayers.ToHashSet();
 
         if (!humanoid.HiddenLayers.SequenceEqual(hiddenLayers))
         {
-            SetSpriteVisibility(uid, hiddenLayers, false);
-
-            humanoid.HiddenLayers.ExceptWith(hiddenLayers);
-
-            SetSpriteVisibility(uid, humanoid.HiddenLayers, true);
-
-            humanoid.HiddenLayers.Clear();
-            humanoid.HiddenLayers.UnionWith(hiddenLayers);
+            updateVisibility = true;
         }
 
         if (!humanoid.CurrentMarkings.Equals(state.Markings))
         {
             humanoid.CurrentMarkings = state.Markings;
 
-            var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
-            ApplyMarkings(uid, humanoid.CurrentMarkings, points);
-            ApplyDefaultMarkings(uid, points);
+            updateMarkings = true;
         }
+
+        UpdateHumanoidAppearance(uid,
+            updateBaseSprites,
+            updateSkinColor,
+            updateMarkings,
+            updateVisibility ? hiddenLayers : null,
+            humanoid);
+    }
+
+    private void ReplaceHiddenLayers(EntityUid uid, HashSet<HumanoidVisualLayers> hiddenLayers,
+        SharedHumanoidComponent? humanoid)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        SetSpriteVisibility(uid, hiddenLayers, false);
+
+        humanoid.HiddenLayers.ExceptWith(hiddenLayers);
+
+        SetSpriteVisibility(uid, humanoid.HiddenLayers, true);
+
+        humanoid.HiddenLayers.Clear();
+        humanoid.HiddenLayers.UnionWith(hiddenLayers);
     }
 
     private void SetSpriteVisibility(EntityUid uid, HashSet<HumanoidVisualLayers> layers, bool visibility, SpriteComponent? sprite = null)
@@ -145,6 +176,18 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
             sprite[index].Visible = visibility;
         }
+    }
+
+    private void ApplyAllMarkings(EntityUid uid, SpeciesPrototype species, HumanoidSpeciesBaseSpritesPrototype baseSprites, SharedHumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
+        ApplyMarkings(uid, humanoid.CurrentMarkings, points);
+        ApplyDefaultMarkings(uid, points);
     }
 
     private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
@@ -311,12 +354,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         foreach (var (layer, spriteInfo) in sprites)
         {
-            if (!spriteInfo.MatchSkin || !spriteComp.LayerMapTryGet(layer, out var index))
+            if (!spriteInfo.MatchSkin)
             {
                 continue;
             }
 
-            spriteComp.LayerSetColor(index, skinColor);
+            SetBaseLayerColor(uid, layer, skinColor, spriteComp);
         }
     }
 
