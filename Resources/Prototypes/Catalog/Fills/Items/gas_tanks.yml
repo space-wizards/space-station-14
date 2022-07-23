@@ -102,8 +102,7 @@
       air:
         volume: 70
         moles:
-          - 4 # oxygen
-          - 16.5 # nitrogen
+          - 20.5 # oxygen
           - 0 # CO2
           - 0 # Plasma
           - 0 # Tritium
