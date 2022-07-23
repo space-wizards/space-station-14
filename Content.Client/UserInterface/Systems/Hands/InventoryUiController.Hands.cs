@@ -1,16 +1,17 @@
-﻿using Content.Client.Hands;
+﻿using Content.Client.Gameplay;
+using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
-using Content.Client.UserInterface.Systems.Inventory.Controls;
-using Content.Client.UserInterface.Systems.Inventory.Widgets;
+using Content.Client.UserInterface.Systems.Hands.Controls;
+using Content.Client.UserInterface.Systems.Hands.Widgets;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 
-namespace Content.Client.UserInterface.Systems.Inventory;
+namespace Content.Client.UserInterface.Systems.Hands;
 
-public sealed partial class InventoryUIController
+public sealed class HandsUIController : UIController, IOnStateEntered<GameplayState>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -25,6 +26,26 @@ public sealed partial class InventoryUIController
 
     private HandsGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HandsGui>();
 
+    public override void OnSystemLoaded(IEntitySystem system)
+    {
+        switch (system)
+        {
+            case HandsSystem:
+                OnHandsSystemActivate();
+                break;
+        }
+    }
+
+    public override void OnSystemUnloaded(IEntitySystem system)
+    {
+        switch (system)
+        {
+            case HandsSystem:
+                OnHandsSystemDeactivate();
+                break;
+        }
+    }
+
     private void OnHandsSystemActivate()
     {
         _handsSystem.OnAddHand += AddHand;
@@ -32,8 +53,8 @@ public sealed partial class InventoryUIController
         _handsSystem.OnItemRemoved += OnItemRemoved;
         _handsSystem.OnSetActiveHand += SetActiveHand;
         _handsSystem.OnRemoveHand += RemoveHand;
-        _handsSystem.OnComponentConnected += LoadPlayerHands;
-        _handsSystem.OnComponentDisconnected += UnloadPlayerHands;
+        _handsSystem.OnPlayerHandsAdded += LoadPlayerHands;
+        _handsSystem.OnPlayerHandsRemoved += UnloadPlayerHands;
         _handsSystem.OnHandBlocked += HandBlocked;
         _handsSystem.OnHandUnblocked += HandUnblocked;
     }
@@ -45,8 +66,8 @@ public sealed partial class InventoryUIController
         _handsSystem.OnItemRemoved -= OnItemRemoved;
         _handsSystem.OnSetActiveHand -= SetActiveHand;
         _handsSystem.OnRemoveHand -= RemoveHand;
-        _handsSystem.OnComponentConnected -= LoadPlayerHands;
-        _handsSystem.OnComponentDisconnected -= UnloadPlayerHands;
+        _handsSystem.OnPlayerHandsAdded -= LoadPlayerHands;
+        _handsSystem.OnPlayerHandsRemoved -= UnloadPlayerHands;
         _handsSystem.OnHandBlocked -= HandBlocked;
         _handsSystem.OnHandUnblocked -= HandUnblocked;
     }
@@ -294,5 +315,11 @@ public sealed partial class InventoryUIController
         _handContainerIndices.Remove(handContainerName);
         _handsContainers.RemoveAt(index);
         return success;
+    }
+
+    public void OnStateEntered(GameplayState state)
+    {
+        if (HandsGui != null)
+            HandsGui.Visible = _playerHandsComponent != null;
     }
 }

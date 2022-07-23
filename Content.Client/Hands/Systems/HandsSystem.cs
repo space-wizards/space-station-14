@@ -29,8 +29,8 @@ namespace Content.Client.Hands
         public Action<string,HandLocation>? OnAddHand = null;
         public Action<string>? OnRemoveHand = null;
         public Action<string?>? OnSetActiveHand = null;
-        public Action<HandsComponent>? OnComponentConnected = null;
-        public Action? OnComponentDisconnected = null;
+        public Action<HandsComponent>? OnPlayerHandsAdded = null;
+        public Action? OnPlayerHandsRemoved = null;
         public Action<string, EntityUid>? OnItemAdded = null;
         public Action<string, EntityUid>? OnItemRemoved = null;
         public event Action<string>? OnHandBlocked;
@@ -45,6 +45,7 @@ namespace Content.Client.Hands
 
             SubscribeLocalEvent<HandsComponent, PlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeLocalEvent<HandsComponent, PlayerDetachedEvent>(HandlePlayerDetached);
+            SubscribeLocalEvent<HandsComponent, ComponentAdd>(HandleCompAdd);
             SubscribeLocalEvent<HandsComponent, ComponentRemove>(HandleCompRemove);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
@@ -325,17 +326,24 @@ namespace Content.Client.Hands
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            OnComponentConnected?.Invoke(component);
+            OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)
         {
-            OnComponentDisconnected?.Invoke();
+            OnPlayerHandsRemoved?.Invoke();
+        }
+
+        private void HandleCompAdd(EntityUid uid, HandsComponent component, ComponentAdd args)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+                OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandleCompRemove(EntityUid uid, HandsComponent component, ComponentRemove args)
         {
-            OnComponentDisconnected?.Invoke();
+            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
+                OnPlayerHandsRemoved?.Invoke();
         }
         #endregion
 

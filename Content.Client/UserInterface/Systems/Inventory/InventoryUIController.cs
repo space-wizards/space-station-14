@@ -1,5 +1,4 @@
 ﻿using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Inventory;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
@@ -92,10 +91,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         {
             case ClientInventorySystem:
                 OnInventorySystemActivate();
-                return;
-            case HandsSystem:
-                OnHandsSystemActivate();
-                return;
+                break;
         }
     }
     //Neuron Deactivation
@@ -105,10 +101,7 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
         {
             case ClientInventorySystem:
                 OnInventorySystemDeactivate();
-                return;
-            case HandsSystem:
-                OnHandsSystemDeactivate();
-                return;
+                break;
         }
     }
 

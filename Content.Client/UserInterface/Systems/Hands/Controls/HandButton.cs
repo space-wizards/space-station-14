@@ -1,7 +1,7 @@
 ﻿using Content.Client.UserInterface.Controls;
 using Content.Shared.Hands.Components;
 
-namespace Content.Client.UserInterface.Systems.Inventory.Controls;
+namespace Content.Client.UserInterface.Systems.Hands.Controls;
 
 public sealed class HandButton : SlotControl
 {
