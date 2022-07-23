@@ -5,9 +5,13 @@
   description: Acts like a standard flash, however it never burns out at the cost of not having shorter stun time and a weaker stun. When used by a revolutionary head, it converts anyone that isn't either a staff head, a security officer, a detective, or anyone with anything covering their eyes over to the revolution
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/flash.rsi
+      sprite: Objects/Weapons/Melee/revoflash.rsi
       state: flash
-    - type: RevoFlash
+    - type: Flash
+      revo: true
+      duration: 1000
+      range: 1
+      aoeFlashDuration: 500
     - type: MeleeWeapon
       damage:
         types:

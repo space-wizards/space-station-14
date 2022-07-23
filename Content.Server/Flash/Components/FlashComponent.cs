@@ -29,6 +29,9 @@ namespace Content.Server.Flash.Components
         [DataField("sound")]
         public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
 
+        [DataField("revo")]
+        public bool isRevo = false;
+
         public bool Flashing;
 
         public bool HasUses => Uses > 0;

@@ -3,8 +3,10 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Server.Mind.Components;
 using Content.Server.RoundEnd;
 using Content.Server.Traitor;
+using Content.Server.Weapon.Melee;
 using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
@@ -36,7 +38,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
     public override string Prototype => "Revolution";
 
     private readonly SoundSpecifier _addedSound = new SoundPathSpecifier("/Audio/Misc/tatoralert.ogg");
-    private readonly List<RevoHeadRole> _revoHeads = new ();
+    private readonly List<Mind.Mind> _revoHeads = new ();
 
     private const string RevolutionaryHeadPrototypeId = "RevolutionaryHead";
 
@@ -50,6 +52,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(GetHead);
+        SubscribeLocalEvent<MeleeHitEvent>(Revert);
     }
 
     private void GetHead(PlayerSpawnCompleteEvent ev) // ;)
@@ -86,7 +89,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
         
         ev.AddLine(_revsWon ? Loc.GetString("revolutionaries-head-won") : Loc.GetString("revolutionaries-crew-won"));
         foreach (var revohead in _revoHeads)
-            ev.AddLine(revohead.Name);
+        {
+            if (revohead.CharacterName is not null)
+            ev.AddLine(revohead.CharacterName);
+        }
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -147,13 +153,30 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
             }
 
             var antagPrototype = _prototypeManager.Index<AntagPrototype>(RevolutionaryHeadPrototypeId);
-            var revoHeadRole = new RevoHeadRole(mind, antagPrototype);
+            var revoHeadRole = new TraitorRole(mind, antagPrototype);
             mind.AddRole(revoHeadRole);
-            _revoHeads.Add(revoHeadRole);
+            _revoHeads.Add(mind);
             _aliveRevoHeads.Add(mind, true);
         }
 
-        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<RevoHeadRole>() ?? false), AudioParams.Default);
+        SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+    }
+
+    private void Revert(MeleeHitEvent ev)
+    {
+        foreach (var entity in ev.HitEntities)
+        {
+            if (!TryComp<MindComponent>(entity, out MindComponent? mind) || mind.Mind is null)
+                return;
+            var rnd = new Random();
+            foreach (var role in mind.Mind.AllRoles)
+            {
+                if (role.Name == "Revolutionary" && rnd.Next(10) > 5)
+                    mind.Mind.RemoveRole(role);
+
+                SoundSystem.Play("/Audio/Magic/staff_change.ogg", Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
+            }
+        }
     }
 
     private void OnMobStateChanged(MobStateChangedEvent ev) 

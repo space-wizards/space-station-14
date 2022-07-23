@@ -9,7 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
-using Content.Shared.Popups;
+using Content.Server.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -72,9 +72,9 @@ namespace Content.Server.Flash
                 return;
 
             args.Handled = true;
-            foreach (var e in args.HitEntities)
+            foreach (var entity in args.HitEntities)
             {
-                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(entity, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
         
@@ -89,16 +89,16 @@ namespace Content.Server.Flash
 
         private bool UseFlash(FlashComponent comp, EntityUid user)
         {
-            if (comp.HasUses)
+            if (comp.HasUses || comp.isRevo)
             {
                 // TODO flash visualizer
                 if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite))
                     return false;
 
-                if (--comp.Uses == 0)
+                if (--comp.Uses == 0 && !comp.isRevo)
                 {
                     sprite.LayerSetState(0, "burnt");
-                    comp.Owner.PopupMessage(user, Loc.GetString("flash-component-becomes-empty"));
+                    PopupExtensions.PopupMessageOtherClients(user, Loc.GetString("flash-component-becomes-empty"));
                 }
                 else if (!comp.Flashing)
                 {
@@ -130,19 +130,18 @@ namespace Content.Server.Flash
             if (attempt.Cancelled)
                 return;
 
-            var flashevent = new FlashEvent(target,user, used);
-            RaiseLocalEvent(target, flashevent, true);
-
             flashable.LastFlash = _gameTiming.CurTime;
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(flashable);
+                
+            RaiseLocalEvent(new FlashEvent(target));
 
             _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
-                user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
+                PopupExtensions.PopupMessageOtherClients(user.Value, Loc.GetString("flash-component-user-blinds-you", 
                     ("user", Identity.Entity(user.Value, EntityManager))));
             }
         }
@@ -179,21 +178,16 @@ namespace Content.Server.Flash
 
         private void OnFlashExamined(EntityUid uid, FlashComponent comp, ExaminedEvent args)
         {
-            if (!comp.HasUses)
+
+            if (!comp.HasUses && !comp.isRevo)
             {
                 args.PushText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
-            if (args.IsInDetailsRange)
+            if (args.IsInDetailsRange && !comp.isRevo)
             {
-                args.PushMarkup(
-                    Loc.GetString(
-                        "flash-component-examine-detail-count",
-                        ("count", comp.Uses),
-                        ("markupCountColor", "green")
-                    )
-                );
+                args.PushMarkup(Loc.GetString("flash-component-examine-detail-count",("count", comp.Uses),("markupCountColor", "green")));
             }
         }
 
@@ -233,13 +227,12 @@ namespace Content.Server.Flash
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;
-        public readonly EntityUid? Used;
+        public readonly float Duration;
+        public readonly float Strength;
 
-        public FlashEvent(EntityUid target, EntityUid? user, EntityUid? used)
+        public FlashEvent(EntityUid target)
         {
             Target = target;
-            User = user;
-            Used = used;
         }
     }
 }
