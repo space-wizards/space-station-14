@@ -163,10 +163,6 @@ namespace Content.Server.PDA
             }
         }
 
-        private void BeforeUIOpen(EntityUid uid, PDAComponent pda, BeforeActivatableUIOpenEvent args)
-        {
-        }
-
         private void UpdateStationName(PDAComponent pda)
         {
             var station = _stationSystem.GetOwningStation(pda.Owner);
