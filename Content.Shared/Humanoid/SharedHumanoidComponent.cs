@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Markings;
 using Content.Shared.Preferences;
@@ -15,7 +16,7 @@ public sealed class SharedHumanoidComponent : Component
     ///     base humanoid to spawn, etc.
     /// </summary>
     [DataField("species")]
-    public string Species { get; } = default!;
+    public string Species { get; set; } = default!;
 
     /// <summary>
     ///     The initial sprites that this humanoid should
@@ -36,7 +37,7 @@ public sealed class SharedHumanoidComponent : Component
     ///     - This is updated on the client by OnChangeData
     /// </summary>
     [DataField("skinColor")]
-    public Color SkinColor { get; } = Color.FromHex("#C0967F");
+    public Color SkinColor { get; set;  } = Color.FromHex("#C0967F");
 
     // Eye color is updated by OnChangeData by just setting the
     // color of the eye layer. It isn't stored in here, because
@@ -70,6 +71,8 @@ public sealed class SharedHumanoidComponent : Component
     // Appearance loaded from a player profile: this should eventually be removed
     // and replaced with accessory layer set calls, accessory color set calls,
     // layer color set calls, etc.
+    //
+    // The actual back-end part isn't being removed, though. That's fine.
     public HumanoidCharacterAppearance Appearance = HumanoidCharacterAppearance.Default();
 
     // these three could probably have their own components?
@@ -85,6 +88,28 @@ public sealed class SharedHumanoidComponent : Component
     [DataField("age")]
     public int Age = HumanoidCharacterProfile.MinimumAge;
 
+}
+
+public sealed class HumanoidComponentState : ComponentState
+{
+    public HumanoidComponentState(string species, Color skinColor, MarkingsSet markings, Sex sex, Gender gender, int age, HashSet<HumanoidVisualLayers> hiddenLayers)
+    {
+        Species = species;
+        SkinColor = skinColor;
+        Markings = markings;
+        Sex = sex;
+        Gender = gender;
+        Age = age;
+        HiddenLayers = hiddenLayers.ToList();
+    }
+
+    public string Species { get; }
+    public Color SkinColor { get; }
+    public MarkingsSet Markings { get; }
+    public Sex Sex { get; }
+    public Gender Gender { get; }
+    public int Age { get; }
+    public List<HumanoidVisualLayers> HiddenLayers { get; }
 }
 
 [Prototype("humanoidMarkingStartingSet")]

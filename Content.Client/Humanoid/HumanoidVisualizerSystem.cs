@@ -1,9 +1,11 @@
+using System.Linq;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Humanoid;
 using Content.Shared.Markings;
 using Content.Shared.Species;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -23,22 +25,36 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
     private void OnInitialize(EntityUid uid, SharedHumanoidComponent component, ComponentInit args)
     {
-        if (!_prototypeManager.TryIndex(component.Species, out SpeciesPrototype? species)
+        if (_prototypeManager.TryIndex(component.Initial, out HumanoidMarkingStartingSet? startingSet))
+        {
+            component.CurrentMarkings = new(startingSet.Markings);
+        }
+        UpdateHumanoidAppearance(uid, component);
+    }
+
+    private void UpdateHumanoidAppearance(EntityUid uid, SharedHumanoidComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        if (!_prototypeManager.TryIndex(humanoid.Species, out SpeciesPrototype? species)
             || !_prototypeManager.TryIndex(species.SpriteSet, out HumanoidSpeciesSpritesPrototype? spriteSet)
             || !_prototypeManager.TryIndex(spriteSet.BaseSprites, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
         {
             return;
         }
 
-        ApplyBaseSprites(uid, baseSprites.Sprites);
-        ApplySkinColor(uid, baseSprites.Sprites, component.SkinColor);
+        // This is the humanoid appearance sprite pipeline.
 
-        if (_prototypeManager.TryIndex(component.Initial, out HumanoidMarkingStartingSet? startingSet))
-        {
-            var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
-            ApplyMarkings(uid, new(startingSet.Markings), points);
-            ApplyDefaultMarkings(uid, points);
-        }
+        ApplyBaseSprites(uid, baseSprites.Sprites);
+        ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
+
+        var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
+        ApplyMarkings(uid, humanoid.CurrentMarkings, points);
+        ApplyDefaultMarkings(uid, points);
+        SetSpriteVisibility(uid, humanoid.HiddenLayers, false);
     }
 
     // Since this doesn't allow you to discern what you'd want to change
@@ -53,15 +69,82 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         base.OnAppearanceChange(uid, component, ref args);
     }
 
-    private void SetSpriteVisibility(EntityUid uid, HumanoidVisualLayers layer, bool visibility, SpriteComponent? sprite = null)
+    private void HandleState(EntityUid uid, SharedHumanoidComponent humanoid, ref ComponentHandleState args)
     {
-        if (!Resolve(uid, ref sprite)
-            || !sprite.LayerMapTryGet(layer, out var index))
+        if (args.Current is not HumanoidComponentState state)
         {
             return;
         }
 
-        sprite[index].Visible = visibility;
+        humanoid.Age = state.Age;
+        humanoid.Gender = state.Gender;
+
+        if (!_prototypeManager.TryIndex(state.Species, out SpeciesPrototype? species)
+            || !_prototypeManager.TryIndex(species.SpriteSet, out HumanoidSpeciesSpritesPrototype? spriteSet)
+            || !_prototypeManager.TryIndex(spriteSet.BaseSprites, out HumanoidSpeciesBaseSpritesPrototype? baseSprites))
+        {
+            throw new ArgumentException("invalid species or sprites passed into component state");
+        }
+
+        // a lot of these checks are here to ensure that
+        // we don't needlessly reorganize everything when one single
+        // field's state was changed
+
+        if (humanoid.Species != state.Species || humanoid.Sex != state.Sex)
+        {
+            humanoid.Species = state.Species;
+            humanoid.Sex = state.Sex;
+
+            ApplyBaseSprites(uid, baseSprites.Sprites);
+        }
+
+        if (humanoid.SkinColor != state.SkinColor)
+        {
+            humanoid.SkinColor = state.SkinColor;
+
+            ApplySkinColor(uid, baseSprites.Sprites, humanoid.SkinColor);
+        }
+
+        var hiddenLayers = state.HiddenLayers.ToHashSet();
+
+        if (!humanoid.HiddenLayers.SequenceEqual(hiddenLayers))
+        {
+            SetSpriteVisibility(uid, hiddenLayers, false);
+
+            humanoid.HiddenLayers.ExceptWith(hiddenLayers);
+
+            SetSpriteVisibility(uid, humanoid.HiddenLayers, true);
+
+            humanoid.HiddenLayers.Clear();
+            humanoid.HiddenLayers.UnionWith(hiddenLayers);
+        }
+
+        if (!humanoid.CurrentMarkings.Equals(state.Markings))
+        {
+            humanoid.CurrentMarkings = state.Markings;
+
+            var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
+            ApplyMarkings(uid, humanoid.CurrentMarkings, points);
+            ApplyDefaultMarkings(uid, points);
+        }
+    }
+
+    private void SetSpriteVisibility(EntityUid uid, HashSet<HumanoidVisualLayers> layers, bool visibility, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite))
+        {
+            return;
+        }
+
+        foreach (var layer in layers)
+        {
+            if (!sprite.LayerMapTryGet(layer, out var index))
+            {
+                continue;
+            }
+
+            sprite[index].Visible = visibility;
+        }
     }
 
     private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
@@ -235,6 +318,18 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
             spriteComp.LayerSetColor(index, skinColor);
         }
+    }
+
+    private void SetBaseLayerColor(EntityUid uid, HumanoidVisualLayers layer, Color color,
+        SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite)
+            || !sprite.LayerMapTryGet(layer, out var index))
+        {
+            return;
+        }
+
+        sprite[index].Color = color;
     }
 
     private void ApplyBaseSprites(EntityUid uid, Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> sprites,
