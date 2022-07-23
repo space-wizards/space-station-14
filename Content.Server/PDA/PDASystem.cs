@@ -31,7 +31,6 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-            SubscribeLocalEvent<PDAComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
             SubscribeLocalEvent<PDAComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
             SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
