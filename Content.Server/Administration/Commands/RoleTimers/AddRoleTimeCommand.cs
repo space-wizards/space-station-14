@@ -38,7 +38,9 @@ public sealed class AddRoleTimeCommand : IConsoleCommand
         }
 
         _roleTimerManager.AddTimeToRole(userId, role, TimeSpan.FromMinutes(minutes));
+#pragma warning disable RA0004
         var timers = _roleTimerManager.GetOverallPlaytime(userId).Result;
+#pragma warning restore RA0004
         shell.WriteLine(Loc.GetString("cmd-addroletime-succeed",
             ("username", userName),
             ("role", role),

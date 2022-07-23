@@ -51,7 +51,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
-                    _prefsManager.OnClientConnected(session);
+                    _userDb.ClientConnected(session);
 
                     var data = session.ContentData();
 
@@ -66,13 +66,13 @@ namespace Content.Server.GameTicking
                         }
 
 
-                        SpawnWaitPrefs();
+                        SpawnWaitDb();
                     }
                     else
                     {
                         if (data.Mind.CurrentEntity == null)
                         {
-                            SpawnWaitPrefs();
+                            SpawnWaitDb();
                         }
                         else
                         {
@@ -97,9 +97,9 @@ namespace Content.Server.GameTicking
             //When the status of a player changes, update the server info text
             UpdateInfoText();
 
-            async void SpawnWaitPrefs()
+            async void SpawnWaitDb()
             {
-                await _prefsManager.WaitPreferencesLoaded(session);
+                await _userDb.WaitLoadComplete(session);
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 

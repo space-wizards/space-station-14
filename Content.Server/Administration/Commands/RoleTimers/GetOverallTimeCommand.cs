@@ -30,7 +30,9 @@ public sealed class GetOverallTimeCommand : IConsoleCommand
             return;
         }
 
+#pragma warning disable RA0004
         var timers = _roleTimerManager.GetOverallPlaytime(userId).Result;
+#pragma warning restore RA0004
         shell.WriteLine(Loc.GetString(
             "cmd-getoveralltime-success",
             ("username", userName),

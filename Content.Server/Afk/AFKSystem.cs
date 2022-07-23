@@ -19,7 +19,7 @@ public sealed class AFKSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
-    private float _checkDelay = 10f;
+    private float _checkDelay;
     private float _accumulator;
 
     private readonly HashSet<IPlayerSession> _afkPlayers = new();

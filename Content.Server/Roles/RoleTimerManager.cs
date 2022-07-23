@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Roles
 {
-    public sealed class RoleTimerManager : IEntityEventSubscriber
+    public sealed class RoleTimerManager
     {
         [Dependency] private readonly IEntityNetworkManager _netManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;

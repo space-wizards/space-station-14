@@ -32,7 +32,9 @@ namespace Content.Server.Administration.Commands.RoleTimers
 
             if (args.Length == 1)
             {
+#pragma warning disable RA0004
                 var timers = _roleTimerManager.GetRolePlaytimes(session.UserId).Result;
+#pragma warning restore RA0004
 
                 if (timers.Count == 0)
                 {
@@ -50,12 +52,16 @@ namespace Content.Server.Administration.Commands.RoleTimers
             {
                 if (args[1] == "Overall")
                 {
+#pragma warning disable RA0004
                     var timer = _roleTimerManager.GetOverallPlaytime(session.UserId).Result;
+#pragma warning restore RA0004
                     shell.WriteLine(Loc.GetString("cmd-getroletimers-overall", ("time", timer.TotalMinutes)));
                     return;
                 }
 
+#pragma warning disable RA0004
                 var time = _roleTimerManager.GetPlayTimeForRole(session.UserId, args[1]).Result;
+#pragma warning restore RA0004
                 shell.WriteLine(Loc.GetString("cmd-getroletimers-succeed", ("username", session.Name), ("time", time.TotalMinutes)));
             }
         }

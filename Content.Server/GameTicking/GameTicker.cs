@@ -120,5 +120,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly RoleTimerSystem _roleTimers = default!;
+        [Dependency] private readonly UserDbDataManager _userDb = default!;
     }
 }

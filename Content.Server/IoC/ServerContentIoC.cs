@@ -62,6 +62,7 @@ namespace Content.Server.IoC
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
             IoCManager.Register<RoleTimerManager>();
+            IoCManager.Register<UserDbDataManager>();
         }
     }
 }

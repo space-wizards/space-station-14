@@ -296,11 +296,15 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
     protected override TimeSpan GetOverallPlaytime(NetUserId id)
     {
+#pragma warning disable RA0004
         return _roleTimers.GetOverallPlaytime(id).Result;
+#pragma warning restore RA0004
     }
 
     protected override Dictionary<string, TimeSpan> GetRolePlaytimes(NetUserId id)
     {
+#pragma warning disable RA0004
         return _roleTimers.GetRolePlaytimes(id).Result;
+#pragma warning restore RA0004
     }
 }
