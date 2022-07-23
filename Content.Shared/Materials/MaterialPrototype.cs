@@ -15,7 +15,7 @@ namespace Content.Shared.Materials
     {
         [ViewVariables]
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
-        public string[]? Parents { get; } = null;
+        public string[]? Parents { get; }
 
         [ViewVariables]
         [AbstractDataFieldAttribute]

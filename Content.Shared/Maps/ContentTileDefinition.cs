@@ -12,7 +12,7 @@ namespace Content.Shared.Maps
     [Prototype("tile")]
     public sealed class ContentTileDefinition : IPrototype, IInheritingPrototype, ITileDefinition
     {
-        [ParentDataFieldAttribute(typeof(PrototypeIdArraySerializer<ContentTileDefinition>))]
+        [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<ContentTileDefinition>))]
         public string[]? Parents { get; private set; }
 
         [NeverPushInheritance]
