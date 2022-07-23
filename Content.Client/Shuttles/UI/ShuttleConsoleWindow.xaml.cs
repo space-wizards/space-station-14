@@ -40,7 +40,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     public TimeSpan FTLTime;
 
-    public Action<ShuttleMode>? ShuttleModePressed;
     public Action<EntityUid>? UndockPressed;
     public Action<EntityUid>? StartAutodockPressed;
     public Action<EntityUid>? StopAutodockPressed;
@@ -61,19 +60,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         DockToggle.OnToggled += OnDockTogglePressed;
         DockToggle.Pressed = RadarScreen.ShowDocks;
 
-        ShuttleModeDisplay.OnToggled += OnShuttleModePressed;
-
         UndockButton.OnPressed += OnUndockPressed;
     }
 
     private void OnRadarRangeChange(float value)
     {
         RadarRange.Text = $"{value:0}";
-    }
-
-    private void OnShuttleModePressed(BaseButton.ButtonEventArgs obj)
-    {
-        ShuttleModePressed?.Invoke(obj.Button.Pressed ? ShuttleMode.Strafing : ShuttleMode.Cruise);
     }
 
     private void OnIFFTogglePressed(BaseButton.ButtonEventArgs args)
@@ -106,7 +98,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         UpdateFTL(scc.Destinations, scc.FTLState, scc.FTLTime);
         RadarScreen.UpdateState(scc);
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
-        ShuttleModeDisplay.Pressed = scc.Mode == ShuttleMode.Strafing;
     }
 
     private void UpdateFTL(List<(EntityUid Entity, string Destination, bool Enabled)> destinations, FTLState state, TimeSpan time)

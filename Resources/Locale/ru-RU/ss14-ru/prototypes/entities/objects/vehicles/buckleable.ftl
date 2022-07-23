@@ -1,4 +1,4 @@
-ent-VehicleBase = Транспорт
+ent-BaseVehicle = Транспорт
     .desc = { "" }
     .suffix = { "" }
 ent-VehiclePussyWagon = уборочная машина

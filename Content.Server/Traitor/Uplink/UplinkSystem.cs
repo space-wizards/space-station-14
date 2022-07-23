@@ -111,7 +111,7 @@ namespace Content.Server.Traitor.Uplink
             if (message.Session.AttachedEntity is not { Valid: true } player) return;
             if (uplink.UplinkAccount == null) return;
 
-            if (!_accounts.TryPurchaseItem(uplink, message.ItemId,
+            if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
                 EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
             {
                 SoundSystem.Play(uplink.InsufficientFundsSound.GetSound(),
@@ -190,14 +190,14 @@ namespace Content.Server.Traitor.Uplink
                 }
 
                 // filter out items not on the whitelist
-                if (component.JobWhitelist != null)
+                for (var i = 0; i < listings.Count; i++)
                 {
-                    for (var i = 0; i < listings.Count; i++)
+                    var entry = listings[i];
+                    if (entry.JobWhitelist != null)
                     {
-                        var entry = listings[i];
-                        if (entry.JobWhitelist != null)
+                        var found = false;
+                        if (component.JobWhitelist != null)
                         {
-                            var found = false;
                             foreach (var job in component.JobWhitelist)
                             {
                                 if (entry.JobWhitelist.Contains(job))
@@ -206,8 +206,11 @@ namespace Content.Server.Traitor.Uplink
                                     break;
                                 }
                             }
-                            if (!found)
-                                listings.Remove(entry);
+                        }
+                        if (!found)
+                        {
+                            listings.Remove(entry);
+                            i--;
                         }
                     }
                 }

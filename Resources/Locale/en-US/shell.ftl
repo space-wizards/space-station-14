@@ -14,6 +14,7 @@ shell-only-players-can-run-this-command = Only players can run this command.
 shell-need-exactly-one-argument = Need exactly one argument.
 shell-wrong-arguments-number-need-specific = Need {$properAmount} arguments, there were {$currentAmount}.
 shell-argument-must-be-number = Argument must be a number.
+shell-argument-must-be-boolean = Argument must be a boolean.
 shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 

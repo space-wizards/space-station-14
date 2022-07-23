@@ -1,6 +1,9 @@
 ent-CrateHydroponicsSeedsExotic = ящик с экзотическими семенами
     .desc = Мечта любого практикующего ботаника. Содержит много экзотических семян. Чтобы открыть необходим доступ к Гидропонике.
     .suffix = { "" }
+ent-CrateHydroponicsSeedsMedicinal = medicinal seeds crate
+    .desc = The wannabe chemist's dream. The power of medicine is at your fingertips! Requires Hydroponics access to open.
+    .suffix = { "" }
 ent-CrateHydroponicsTools = ящик со снаряжением для гидропоники
     .desc = Припасы для выращивания превосходного сада! Содержит несколько спреев с химикатами для растений, топорик, грабли, косу, несколько пар кожаных перчаток и ботанический фартук.
     .suffix = { "" }

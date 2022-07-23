@@ -1,4 +1,4 @@
-ent-VehicleBase = Vehicle
+ent-BaseVehicle = Vehicle
     .desc = { "" }
     .suffix = { "" }
 ent-VehiclePussyWagon = janicart
