@@ -365,6 +365,5 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
         }
-
     }
 }
