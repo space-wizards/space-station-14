@@ -99,7 +99,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
