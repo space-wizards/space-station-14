@@ -185,9 +185,44 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
             return;
         }
 
+        ClearAllMarkings(uid);
         var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
         ApplyMarkings(uid, humanoid.CurrentMarkings, points);
         ApplyDefaultMarkings(uid, points);
+    }
+
+    private void ClearAllMarkings(EntityUid uid, SharedHumanoidComponent? humanoid = null,
+        SpriteComponent? spriteComp = null)
+    {
+        if (!Resolve(uid, ref humanoid, ref spriteComp))
+        {
+            return;
+        }
+
+        foreach (var marking in humanoid.CurrentMarkings)
+        {
+            if (!_markingManager.IsValidMarking(marking, out var prototype))
+            {
+                continue;
+            }
+
+            foreach (var sprite in prototype.Sprites)
+            {
+                if (sprite is not SpriteSpecifier.Rsi rsi)
+                {
+                    continue;
+                }
+
+                var layerId = $"{marking.MarkingId}-{rsi.RsiState}";
+                if (!spriteComp.LayerMapTryGet(layerId, out var index))
+                {
+                    continue;
+                }
+
+                spriteComp.LayerMapRemove(layerId);
+                spriteComp.RemoveLayer(index);
+            }
+        }
     }
 
     private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
@@ -322,7 +357,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
-            var rsi = (SpriteSpecifier.Rsi) markingPrototype.Sprites[j];
+            if (markingPrototype.Sprites[j] is not SpriteSpecifier.Rsi rsi)
+            {
+                continue;
+            }
+
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
 
             if (sprite.LayerMapTryGet(layerId, out var existingLayer))
