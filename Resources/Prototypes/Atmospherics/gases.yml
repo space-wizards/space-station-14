@@ -68,3 +68,14 @@
   gasOverlayState: miasma
   color: 56941E
   reagent: Miasma
+
+- type: gas
+  id: 7
+  name: Freon
+  specificHeat: 2000
+  heatCapacityRatio: 1.33
+  molarMass: 50
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: freon
+  color: 3a758c
+  reagent: Freon

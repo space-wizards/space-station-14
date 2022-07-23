@@ -215,3 +215,51 @@
             Blunt: -4
             Slash: -3
             Piercing: -3
+
+- type: reagent
+  id: Freon
+  name: reagent-name-freon
+  desc: reagent-desc-freon
+  physicalDesc: reagent-physical-desc-gaseous
+  color: "#3a758c"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        - !type:ReagentThreshold
+          reagent: Freon
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.1
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Freon
+          min: 1
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:PopupMessage
+        type: Local
+        messages: [ "freon-lungs-cold" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Freon
+          min: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "freon-euphoric" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Freon
+          min: 1

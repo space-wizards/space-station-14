@@ -15,3 +15,6 @@ reagent-desc-nitrogen = A colorless, odorless unreactive gas. Highly stable.
 
 reagent-name-miasma = miasma
 reagent-desc-miasma = Uh oh, stinky!
+
+reagent-name-freon = freon
+reagent-desc-freon = A highly effective coolant.. and hallucinogenic.
