@@ -14,6 +14,8 @@ pda-bound-user-interface-uplink-tab-title = Uplink
 
 comp-pda-ui-menu-title = PDA
 
+comp-pda-ui-station = Station: [color=white]{$Station}[/color]
+
 comp-pda-ui-eject-id-button = Eject ID
 
 comp-pda-ui-eject-pen-button = Eject Pen

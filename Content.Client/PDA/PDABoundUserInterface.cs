@@ -87,6 +87,8 @@ namespace Content.Client.PDA
                         _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
                     }
 
+                    _menu.StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",msg.StationName ?? "Unknown")));
+
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
                     _menu.ActivateUplinkButton.Visible = msg.HasUplink;
