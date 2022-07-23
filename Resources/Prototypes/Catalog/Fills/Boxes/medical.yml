@@ -10,7 +10,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: syringe
 
 - type: entity
@@ -25,7 +25,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: pillbox
 
 - type: entity
@@ -40,7 +40,7 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: sterile
 
 - type: entity
@@ -55,9 +55,9 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: latex
-      
+
 - type: entity
   name: nitrile gloves box
   parent: BoxCardboard
@@ -70,7 +70,7 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: nitrile
 
 - type: entity
@@ -95,7 +95,7 @@
         amount: 5
   - type: Sprite
     layers:
-      - state: box
+      - state: box_medical
       - state: bodybags
     whitelist:
       tags:

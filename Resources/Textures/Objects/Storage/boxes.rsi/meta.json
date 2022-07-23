@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0",
+  "copyright": "Taken fromTauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/commit/401d381d53ceb9a045bca9c0ae60eb52b5fab2c5, some icons from tgstation at commit https://github.com/tgstation/tgstation/commit/cc65477c04f7403ca8a457bd5bae69a01abadbf0, modified by github:Morb0",
   "size": {
     "x": 32,
     "y": 32
@@ -44,9 +44,6 @@
             "name": "box_hug"
         },
         {
-            "name": "box_id"
-        },
-        {
             "name": "box_of_doom"
         },
         {
@@ -56,7 +53,13 @@
             "name": "box_security"
         },
         {
+            "name": "box_medical"
+        },
+        {
             "name": "box_olive"
+        },
+        {
+            "name": "id"
         },
         {
             "name": "circuit"
