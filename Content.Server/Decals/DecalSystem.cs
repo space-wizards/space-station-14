@@ -404,7 +404,7 @@ namespace Content.Server.Decals
                     continue;
 
                 var chunksInRange = _chunking.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
-                var staleChunks = new Dictionary<EntityUid, HashSet<Vector2i>>();
+                var staleChunks = _chunkViewerPool.Get();
                 var previouslySent = _previousSentChunks[playerSession];
 
                 // Get any chunks not in range anymore

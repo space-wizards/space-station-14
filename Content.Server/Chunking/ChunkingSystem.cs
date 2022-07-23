@@ -19,12 +19,6 @@ public sealed class ChunkingSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    // Pool if we ever parallelise.
-    private HashSet<EntityUid> _viewers = new(64);
-
-    public static Vector2i GetChunkIndices(Vector2 coordinates, float chunkSize)
-        => new((int) Math.Floor(coordinates.X / chunkSize), (int) Math.Floor(coordinates.Y / chunkSize));
-
     private Box2 _baseViewBounds;
 
     public override void Initialize()
@@ -45,19 +39,18 @@ public sealed class ChunkingSystem : EntitySystem
         IPlayerSession session,
         int chunkSize,
         EntityQuery<TransformComponent> xformQuery,
-        ObjectPool<HashSet<Vector2i>>? indexPool = null,
-        ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>? viewerPool = null,
+        ObjectPool<HashSet<Vector2i>> indexPool,
+        ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> viewerPool,
         float? viewEnlargement = null)
     {
         var viewers = GetSessionViewers(session);
-        var chunks = GetChunksForViewers(viewers, chunkSize, indexPool, viewerPool, viewEnlargement ?? chunkSize / 2, xformQuery);
-        viewers.Clear();
+        var chunks = GetChunksForViewers(viewers, chunkSize, indexPool, viewerPool, viewEnlargement ?? chunkSize, xformQuery);
         return chunks;
     }
 
     private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
     {
-        var viewers = _viewers;
+        var viewers = new HashSet<EntityUid>();
         if (session.Status != SessionStatus.InGame || session.AttachedEntity is null)
             return viewers;
 
@@ -74,12 +67,12 @@ public sealed class ChunkingSystem : EntitySystem
     private Dictionary<EntityUid, HashSet<Vector2i>> GetChunksForViewers(
         HashSet<EntityUid> viewers,
         int chunkSize,
-        ObjectPool<HashSet<Vector2i>>? indexPool,
-        ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>? viewerPool,
+        ObjectPool<HashSet<Vector2i>> indexPool,
+        ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> viewerPool,
         float viewEnlargement,
         EntityQuery<TransformComponent> xformQuery)
     {
-        Dictionary<EntityUid, HashSet<Vector2i>> chunks = viewerPool?.Get() ?? new();
+        Dictionary<EntityUid, HashSet<Vector2i>> chunks = viewerPool.Get();
         DebugTools.Assert(chunks.Count == 0);
 
         foreach (var viewerUid in viewers)
@@ -88,11 +81,11 @@ public sealed class ChunkingSystem : EntitySystem
             var pos = _transform.GetWorldPosition(xform, xformQuery);
             var bounds = _baseViewBounds.Translated(pos).Enlarged(viewEnlargement);
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds, true))
             {
                 if (!chunks.TryGetValue(grid.GridEntityId, out var set))
                 {
-                    chunks[grid.GridEntityId] = set = indexPool?.Get() ?? new();
+                    chunks[grid.GridEntityId] = set = indexPool.Get();
                     DebugTools.Assert(set.Count == 0);
                 }
 
