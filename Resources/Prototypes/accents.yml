@@ -54,6 +54,9 @@
     - accent-words-zombie-2
     - accent-words-zombie-3
     - accent-words-zombie-4
+    - accent-words-zombie-5
+    - accent-words-zombie-6
+    - accent-words-zombie-7
 
 - type: accent
   id: genericAggressive

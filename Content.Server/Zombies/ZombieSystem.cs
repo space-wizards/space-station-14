@@ -8,10 +8,13 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Shared.Inventory;
+using Content.Shared.MobState;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
+using Content.Server.Speech;
+using Content.Server.Chat.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -21,6 +24,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
         [Dependency] private readonly ServerInventorySystem _inv = default!;
+        [Dependency] private readonly VocalSystem _vocal = default!;
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -88,18 +93,41 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
-                if ((mobState.IsDead() || mobState.IsCritical())
+                if ((mobState.CurrentState == DamageState.Dead || mobState.CurrentState == DamageState.Critical)
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else if (mobState.IsAlive()) //heals when zombies bite live entities
+                else if (mobState.CurrentState == DamageState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
                     _bloodstream.TryAddToChemicals(args.User, healingSolution);
                 }
+            }
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var zombiecomp in EntityQuery<ZombieComponent>())
+            {
+                zombiecomp.Accumulator += frameTime;
+
+                if (zombiecomp.Accumulator < 5) //generic number
+                    continue;
+
+                if (!_robustRandom.Prob(zombiecomp.GroanChance))
+                    continue;
+                zombiecomp.Accumulator -= 5; //same generic number
+
+                //either do a random accent line or scream
+                if (_robustRandom.Prob(0.5f))
+                    _chat.TrySendInGameICMessage(zombiecomp.Owner, "generic automated groan", InGameICChatType.Speak, false);
+                else
+                    _vocal.TryScream(zombiecomp.Owner);
             }
         }
     }

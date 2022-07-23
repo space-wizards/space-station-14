@@ -30,6 +30,10 @@ using Content.Shared.Zombies;
 using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.IdentityManagement;
+using Content.Shared.Audio;
+using Content.Shared.Sound;
+using Robust.Shared.Random;
+using Content.Server.Speech;
 
 namespace Content.Server.Zombies
 {
@@ -107,6 +111,11 @@ namespace Content.Server.Zombies
             ///in an attempt to make an entity not attack. This is the easiest way to do it.
             RemComp<CombatModeComponent>(target);
             AddComp<CombatModeComponent>(target);
+
+            var vocal = EnsureComp<VocalComponent>(target);
+            var scream = new SoundCollectionSpecifier ("ZombieScreams");
+            vocal.FemaleScream = scream;
+            vocal.MaleScream = scream;
 
             ///This is the actual damage of the zombie. We assign the visual appearance
             ///and range here because of stuff we'll find out later
