@@ -66,10 +66,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     /// </summary>
     private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
 
-    private const string NukeopsPrototypeId = "Nukeops";
-    private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
-
-
     public override void Initialize()
     {
         base.Initialize();
@@ -142,7 +138,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         EntityManager.GetComponent<MetaDataComponent>(uid).EntityName = nukeOpSpawner.OperativeName;
         EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(uid);
 
-        if(_prototypeManager.TryIndex<StartingGearPrototype>(nukeOpSpawner.OperativeStartingGear, out var gear))
+        if(_startingGearPrototypes.TryGetValue(nukeOpSpawner.OperativeStartingGear, out var gear))
             _stationSpawningSystem.EquipStartingGear(uid, gear, null);
 
         _aliveNukeops.Add(uid, (null, true));
@@ -213,17 +209,17 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             case 0:
                 name = $"Commander " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.EliteNames]);
-                role = NukeopsCommanderPrototypeId;
+                role = _nukeopsRuleConfig.CommanderRolePrototype;
                 gear = _nukeopsRuleConfig.CommanderStartGearPrototype;
                 break;
             case 1:
                 name = $"Agent " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
-                role = NukeopsPrototypeId;
+                role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.MedicStartGearPrototype;
                 break;
             default:
                 name = $"Operator " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
-                role = NukeopsPrototypeId;
+                role = _nukeopsRuleConfig.OperativeRoleProto;
                 gear = _nukeopsRuleConfig.OperativeStartGearPrototype;
                 break;
         }
@@ -242,7 +238,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // Forgive me for hardcoding prototypes
         foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
+            if (meta.EntityPrototype?.ID != _nukeopsRuleConfig.SpawnPointPrototype)
+                continue;
 
             if (_nukieOutpost != null && xform.ParentUid == _nukieOutpost)
             {
@@ -281,7 +278,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 _aliveNukeops.Add(mob, (newMind, true));
             } else if (addSpawnPoints)
             {
-                var spawnPoint = EntityManager.SpawnEntity("SpawnPointNukeOperative", _random.Pick(spawns));
+                var spawnPoint = EntityManager.SpawnEntity(_nukeopsRuleConfig.GhostSpawnPointProto, _random.Pick(spawns));
                 var spawner = EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
                 spawner.RoleName = nukeOpsAntag.Name;
                 spawner.RoleDescription = nukeOpsAntag.Objective;
@@ -317,11 +314,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 continue;
             }
             var profile = profiles[player.UserId];
-            if (profile.AntagPreferences.Contains(NukeopsPrototypeId))
+            if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.OperativeRoleProto))
             {
                 prefList.Add(player);
             }
-            if (profile.AntagPreferences.Contains(NukeopsCommanderPrototypeId))
+            if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.CommanderRolePrototype))
             {
                 cmdrPrefList.Add(player);
             }
@@ -414,7 +411,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!mind.OwnedEntity.HasValue)
             return;
 
-        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(_nukeopsRuleConfig.OperativeRoleProto)));
         _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 

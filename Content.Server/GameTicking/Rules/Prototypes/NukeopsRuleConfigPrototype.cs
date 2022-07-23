@@ -15,6 +15,18 @@ public sealed class NukeopsRuleConfigPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
+    [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
+    public string SpawnPointPrototype = "SpawnPointNukies";
+
+    [DataField("ghostSpawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
+    public string GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
+
+    [DataField("commanderRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
+    public string CommanderRolePrototype = "Nukeops";
+
+    [DataField("operativeRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
+    public string OperativeRoleProto = "NukeopsCommander";
+
     [DataField("commanderStartingGearProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string CommanderStartGearPrototype = "SyndicateCommanderGearFull";
 

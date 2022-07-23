@@ -51,7 +51,7 @@
 
 - type: entity
   noSpawn: true
-  id: SpawnPointNukeOperative
+  id: SpawnPointGhostNukeOperative
   name: ghost role spawn point
   suffix: nukeops
   parent: MarkerBase
