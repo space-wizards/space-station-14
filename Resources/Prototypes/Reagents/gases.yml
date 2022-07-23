@@ -228,6 +228,7 @@
     Gas:
       effects:
       - !type:HealthChange
+        conditions:
         - !type:ReagentThreshold
           reagent: Freon
           min: 0.5
@@ -235,7 +236,7 @@
         ignoreResistances: true
         damage:
           types:
-            Cellular: 0.1
+            Cellular: 0.01
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
@@ -246,6 +247,11 @@
         type: Add
         time: 5
         refresh: false
+      - !type:Drunk
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Freon
+          min: 1
       - !type:PopupMessage
         type: Local
         messages: [ "freon-lungs-cold" ]

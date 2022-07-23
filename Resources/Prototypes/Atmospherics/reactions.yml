@@ -23,6 +23,67 @@
   effects:
     - !type:TritiumFireReaction {}
 
+- type: gasReaction
+  id: FreonCoolant
+  priority: 1
+  minimumRequirements:
+  - 0.01  # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0     # miasma
+  - 0.01  # freon
+  effects:
+  - !type:FreonCoolantReaction {}
+
+- type: gasReaction
+  id: FreonCoolant
+  priority: 1
+  minimumRequirements: # In this case, same as minimum mole count.
+  - 0.01  # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0     # miasma
+  - 0.01  # freon
+  effects:
+  - !type:FreonCoolantReaction {}
+
+- type: gasReaction
+  id: FreonProduction
+  priority: 2
+  maximumTemperature: 23.15 # Cold tritium fire, basically.
+  minimumRequirements:
+  - 0.01  # oxygen
+  - 0.01  # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0.01  # tritium
+  - 0     # vapor
+  - 0     # miasma
+  - 0     # freon
+  effects:
+  - !type:FreonProductionReaction {}
+
+- type: gasReaction
+  id: MiasmicSubsumation
+  priority: 0
+  minimumRequirements:
+  - 0     # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0.01  # miasma
+  - 0.01  # freon
+  effects:
+  - !type:MiasmicSubsumationReaction {}
+
 #- type: gasReaction
 #  id: WaterVaporPuddle
 #  priority: 1

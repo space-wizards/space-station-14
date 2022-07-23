@@ -72,7 +72,7 @@
 - type: gas
   id: 7
   name: Freon
-  specificHeat: 2000
+  specificHeat: 1000 # Strongest by far
   heatCapacityRatio: 1.33
   molarMass: 50
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi

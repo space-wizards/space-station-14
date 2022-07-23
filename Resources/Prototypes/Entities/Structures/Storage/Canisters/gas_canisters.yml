@@ -394,6 +394,7 @@
   parent: GasCanister
   id: FreonCanister
   name: freon canister
+  description: A coolant with light hallucinogenic properties. Proceed.
   components:
   - type: Sprite
     layers:
@@ -410,7 +411,7 @@
       - 0 #  Water vapor
       - 0 # Miasma
       - 1871.71051 # Freon
-      temperature: 73.15
+      temperature: 293.15
   - type: Destructible
     thresholds:
     - trigger:
