@@ -7,4 +7,4 @@ admin-menu-atmos-tab = Атмос
 admin-menu-round-tab = Раунд
 admin-menu-server-tab = Сервер
 admin-menu-players-tab = Игроки
-admin-menu-objects-tab = Objects
+admin-menu-objects-tab = Объекты

@@ -1,5 +1,5 @@
-verb-categories-antag = Antag ctrl
-admin-verb-make-traitor = Make the target into a traitor.
-admin-verb-make-zombie = Zombifies the target immediately.
-admin-verb-make-nuclear-operative = Make target a into lone Nuclear Operative.
-admin-verb-make-pirate = Make the target into a pirate. Note this doesn't configure the game rule.
+verb-categories-antag = Антаг меню
+admin-verb-make-traitor = Сделать цель предателем.
+admin-verb-make-zombie = Немедленно превратить цель в зомби.
+admin-verb-make-nuclear-operative = Сделать цель одиноким Ядерным Оперативником.
+admin-verb-make-pirate = Сделать цель пиратом\капером. Учтите, что это не меняет игровой режим.
