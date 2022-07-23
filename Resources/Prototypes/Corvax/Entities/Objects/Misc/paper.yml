@@ -2,6 +2,7 @@
   parent: Paper
   id: StationGoalPaper
   name: station goal centcomm message
+  description: 'It looks like you have a lot of work to do.'
   components:
     - type: Paper
       stampState: paper_stamp-cent

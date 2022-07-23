@@ -1,3 +1,3 @@
-ent-StationGoalPaper = station goal centcomm message
-    .desc = { ent-Paper.desc }
+ent-StationGoalPaper = сообщение ЦК о текущей цели станции
+    .desc = Похоже вам предстоит хорошо потрудиться.
     .suffix = { "" }
