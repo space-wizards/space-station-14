@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
@@ -11,14 +10,14 @@ namespace Content.Server.Atmos.Monitor.Systems
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<AtmosAlarmableComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
-        private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, PacketSentEvent args)
+        private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, DeviceNetworkPacketEvent args)
         {
             if (component.IgnoreAlarms) return;
 
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn))
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
                 return;
 
             if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
@@ -35,7 +34,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 {
                     component.LastAlarmState = state;
                     component.HighestNetworkState = netMax;
-                    RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax));
+                    RaiseLocalEvent(component.Owner, new AtmosMonitorAlarmEvent(state, netMax), true);
                 }
             }
         }

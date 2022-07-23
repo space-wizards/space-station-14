@@ -1,10 +1,10 @@
 - type: entity
-  abstract: true
-  parent: BulletBaseHV
+  noSpawn: true
+  parent: BaseBulletHighVelocity
   id: BulletAntiMaterial
   name: bullet (.60 anti-material)
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 70
+        Piercing: 49

@@ -7,14 +7,6 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: Physics
-    canCollide: false
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [ Passable ]
   - type: Sprite
     netsync: false
     sprite: Structures/catwalk.rsi
@@ -33,6 +25,9 @@
   - type: Construction
     graph: Catwalk
     node: Catwalk
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -49,6 +44,6 @@
         spawn:
           PartRodMetal: # takes two to construct, so drop less than that
             min: 0
-            max: 1 
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]

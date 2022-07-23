@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using Content.Server.Chat;
-using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Radio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components
 {
@@ -19,21 +14,24 @@ namespace Content.Server.Radio.Components
     [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate, IExamine
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio
 #pragma warning restore 618
     {
         private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
 
         private bool _radioOn;
-        [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+        private HashSet<string> _channels = new();
 
+        public int BroadcastFrequency => IoCManager.Resolve<IPrototypeManager>()
+            .Index<RadioChannelPrototype>(BroadcastChannel).Frequency;
+
+        // TODO: Assert in componentinit that channels has this.
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+        public string BroadcastChannel { get; set; } = "Common";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
@@ -47,8 +45,6 @@ namespace Content.Server.Radio.Components
                 Dirty();
             }
         }
-
-        [ViewVariables] public IReadOnlyList<int> Channels => _channels;
 
         protected override void Initialize()
         {
@@ -76,38 +72,30 @@ namespace Content.Server.Radio.Components
             return true;
         }
 
-        public bool CanListen(string message, EntityUid source)
+        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
         {
+            if (!_channels.Contains(prototype.ID)) return false;
+
             return RadioOn &&
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
-        public void Receive(string message, int channel, EntityUid speaker)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
         {
-            if (RadioOn)
+            if (_channels.Contains(channel.ID) && RadioOn)
             {
                 Speak(message);
             }
         }
 
-        public void Listen(string message, EntityUid speaker)
+        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            Broadcast(message, speaker);
+            Broadcast(message, speaker, channel);
         }
 
-        public void Broadcast(string message, EntityUid speaker)
+        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            Use(eventArgs.User);
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
+            _radioSystem.SpreadMessage(this, speaker, message, channel);
         }
     }
 }

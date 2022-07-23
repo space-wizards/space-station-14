@@ -22,11 +22,12 @@
           radius: 0.45
       mass: 25
       # Keep an eye on ParticlesProjectile when adjusting these
+      mask:
+      - MachineMask
       layer:
       - Opaque
-      mask:
-      - MobMask
   - type: Transform
     anchored: true
+    noRot: true
   - type: Anchorable
   - type: Pullable

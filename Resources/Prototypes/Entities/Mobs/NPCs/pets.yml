@@ -19,22 +19,23 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 12
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: corgi
+      Critical:
+        Base: corgi_dead
+      Dead:
+        Base: corgi_dead
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: corgi
-      crit: corgi_dead
-      dead: corgi_dead
   - type: Butcherable
     spawned:
-    - id: FoodMeatCorgi
+    - id: FoodMeat
       amount: 2
   - type: ReplacementAccent
     accent: dog
@@ -48,6 +49,9 @@
       gender: epicene
   - type: SentienceTarget
     flavorKind: corgi
+  - type: Puller
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: corrupted corgi
@@ -62,12 +66,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: narsian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: narsian
-      crit: narsian_dead
-      dead: narsian_dead
-  - type: UnarmedCombat
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: narsian
+      Critical:
+        Base: narsian_dead
+      Dead:
+        Base: narsian_dead
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -75,6 +82,8 @@
       types:
         Piercing: 5
         Slash: 5
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles
@@ -88,11 +97,35 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Bloodstream
+    bloodReagent: DemonsBlood
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -0.25
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Infernal
+  - type: Temperature
+    heatDamageThreshold: 4000 #They come from hell, so...
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
 
 - type: entity
   name: Ian
   parent: MobCorgi
-  id: MobCorgiOld
+  id: MobCorgiIan
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -102,15 +135,22 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ian
-      crit: ian_dead
-      dead: ian_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: ian
+      Critical:
+        Base: ian_dead
+      Dead:
+        Base: ian_dead
   - type: Grammar
     attributes:
       proper: true
       gender: male
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCorgi
+      amount: 2
 
 - type: entity
   name: Old Ian
@@ -125,11 +165,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: old_ian
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: old_ian
-      crit: old_ian_dead
-      dead: old_ian_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: old_ian
+      Critical:
+        Base: old_ian_dead
+      Dead:
+        Base: old_ian_dead
   - type: Grammar
     attributes:
       proper: true
@@ -148,11 +191,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: lisa
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: lisa
-      crit: lisa_dead
-      dead: lisa_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lisa
+      Critical:
+        Base: lisa_dead
+      Dead:
+        Base: lisa_dead
   - type: Grammar
     attributes:
       proper: true
@@ -171,11 +217,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: puppy
-      crit: puppy_dead
-      dead: puppy_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: puppy
+      Critical:
+        Base: puppy_dead
+      Dead:
+        Base: puppy_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -198,19 +247,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 5
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat
-      crit: cat_dead
-      dead: cat_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cat
+      Critical:
+        Base: cat_dead
+      Dead:
+        Base: cat_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -226,6 +276,8 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: MobPrice
+    price: 200
 
 - type: entity
   name: Runtime
@@ -250,11 +302,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: cat2
-      crit: cat2_dead
-      dead: cat2_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: cat2
+      Critical:
+        Base: cat2_dead
+      Dead:
+        Base: cat2_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -282,11 +337,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacecat
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: spacecat
-      crit: spacecat_dead
-      dead: spacecat_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: spacecat
+      Critical:
+        Base: spacecat_dead
+      Dead:
+        Base: spacecat_dead
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
@@ -310,11 +368,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: caracal_flop
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: caracal_flop
-      crit: caracal_dead
-      dead: caracal_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: caracal_flop
+      Critical:
+        Base: caracal_dead
+      Dead:
+        Base: caracal_dead
   - type: Grammar
     attributes:
       gender: epicene
@@ -325,6 +386,16 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 15
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Grammar
     attributes:
       gender: male
@@ -350,19 +421,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 6
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: sloth
-      crit: sloth_dead
-      dead: sloth_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: sloth
+      Critical:
+        Base: sloth_dead
+      Dead:
+        Base: sloth_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -371,6 +443,8 @@
     successChance: 0.9
     interactSuccessString: petting-success-sloth
     interactFailureString: petting-failure-sloth
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
   - type: Grammar
     attributes:
       gender: epicene
@@ -393,20 +467,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 2
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: ferret
-      crit: ferret_dead
-      dead: ferret_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: ferret
+      Critical:
+        Base: ferret_dead
+      Dead:
+        Base: ferret_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -450,20 +524,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 5
       mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: bingus
-      crit: bingus_dead
-      dead: bingus_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bingus
+      Critical:
+        Base: bingus_dead
+      Dead:
+        Base: bingus_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -496,20 +570,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 8
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: mcgriff
-      crit: mcgriff_dead
-      dead: mcgriff_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mcgriff
+      Critical:
+        Base: mcgriff_dead
+      Dead:
+        Base: mcgriff_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -528,10 +602,10 @@
       gender: male
 
 - type: entity
-  name: paperwork
+  name: Paperwork
   parent: MobSloth
   id: MobPaperwork
-  description: Took up a new job sorting books in the library after he got transferred from space station 13. He seems to be just as slow at this.
+  description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -540,11 +614,14 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: paperwork
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: paperwork
-      crit: paperwork_dead
-      dead: paperwork_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: paperwork
+      Critical:
+        Base: paperwork_dead
+      Dead:
+        Base: paperwork_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -559,7 +636,7 @@
       gender: male
 
 - type: entity
-  name: walter
+  name: Walter
   parent: SimpleMobBase
   id: MobWalter
   description: He likes chems and treats. Walter.
@@ -576,20 +653,20 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
-      mass: 10
+      mass: 20
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
-      - VaultImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      normal: walter
-      crit: walter_dead
-      dead: walter_dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: walter
+      Critical:
+        Base: walter_dead
+      Dead:
+        Base: walter_dead
   - type: Butcherable
     spawned:
     - id: FoodMeat

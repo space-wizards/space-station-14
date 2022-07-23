@@ -1,4 +1,4 @@
-using System;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -6,25 +6,22 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.EntitySystems;
-using Content.Shared.Speech;
+using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable
 {
     [UsedImplicitly]
     public abstract class SharedStunSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
@@ -35,7 +32,10 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
-            SubscribeLocalEvent<SlowedDownComponent, ComponentRemove>(OnSlowRemove);
+            SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
+
+            SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
+            SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
 
             SubscribeLocalEvent<SlowedDownComponent, ComponentGetState>(OnSlowGetState);
             SubscribeLocalEvent<SlowedDownComponent, ComponentHandleState>(OnSlowHandleState);
@@ -48,7 +48,7 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
             // Attempt event subscriptions.
-            SubscribeLocalEvent<StunnedComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnThrowAttempt);
@@ -56,6 +56,11 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+        }
+
+        private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
+        {
+            _blocker.UpdateCanMove(uid);
         }
 
         private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
@@ -101,8 +106,10 @@ namespace Content.Shared.Stunnable
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
-        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
+        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
         {
+            component.SprintSpeedModifier = 1f;
+            component.WalkSpeedModifier = 1f;
             _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(uid);
         }
 
@@ -196,7 +203,7 @@ namespace Content.Shared.Stunnable
 
             _statusEffectSystem.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
 
-            SoundSystem.Play(Filter.Pvs(uid), knocked.StunAttemptSound.GetSound(), uid, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(knocked.StunAttemptSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f));
 
             knocked.Dirty();
 
@@ -205,8 +212,11 @@ namespace Content.Shared.Stunnable
 
         #region Attempt Event Handling
 
-        private void OnMoveAttempt(EntityUid uid, StunnedComponent stunned, MovementAttemptEvent args)
+        private void OnMoveAttempt(EntityUid uid, StunnedComponent stunned, UpdateCanMoveEvent args)
         {
+            if (stunned.LifeStage > ComponentLifeStage.Running)
+                return;
+
             args.Cancel();
         }
 

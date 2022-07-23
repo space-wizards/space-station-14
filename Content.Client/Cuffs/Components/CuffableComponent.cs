@@ -1,4 +1,5 @@
-﻿using Content.Shared.CharacterAppearance;
+using Content.Shared.ActionBlocker;
+using Content.Shared.CharacterAppearance;
 using Content.Shared.Cuffs.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -17,6 +18,7 @@ namespace Content.Client.Cuffs.Components
         private string? _currentRSI;
 
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _sysMan = default!;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -26,6 +28,7 @@ namespace Content.Client.Cuffs.Components
             }
 
             CanStillInteract = cuffState.CanStillInteract;
+            _sysMan.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
 
             if (_entityManager.TryGetComponent<SpriteComponent>(Owner, out var spriteComponent))
             {

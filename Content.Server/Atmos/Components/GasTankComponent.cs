@@ -7,21 +7,17 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
 #pragma warning disable 618
-    public sealed class GasTankComponent : Component, IExamine, IGasMixtureHolder
+    public sealed class GasTankComponent : Component, IGasMixtureHolder
 #pragma warning restore 618
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
@@ -31,9 +27,23 @@ namespace Content.Server.Atmos.Components
 
         private int _integrity = 3;
 
-        [ViewVariables] private BoundUserInterface? _userInterface;
+        [ViewVariables] public BoundUserInterface? UserInterface;
 
-        [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
+        [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("connectSound")] private SoundSpecifier? _connectSound =
+            new SoundPathSpecifier("/Audio/Effects/internals.ogg")
+            {
+                Params = AudioParams.Default.WithVolume(10f),
+            };
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("disconnectSound")] private SoundSpecifier? _disconnectSound;
+
+        // Cancel toggles sounds if we re-toggle again.
+
+        private IPlayingAudioStream? _connectStream;
+        private IPlayingAudioStream? _disconnectStream;
+
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -84,20 +94,10 @@ namespace Content.Server.Atmos.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
-            if (_userInterface != null)
+            UserInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
+            if (UserInterface != null)
             {
-                _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
-            if (IsConnected)
-            {
-                message.AddText("\n");
-                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
         }
 
@@ -145,6 +145,15 @@ namespace Content.Server.Atmos.Components
             if (internals == null) return;
             IsConnected = internals.TryConnectTank(Owner);
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, IsConnected);
+
+            // Couldn't toggle!
+            if (!IsConnected) return;
+
+            _connectStream?.Stop();
+
+            if (_connectSound != null)
+                _connectStream = SoundSystem.Play(_connectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _connectSound.Params);
+
             UpdateUserInterface();
         }
 
@@ -153,14 +162,20 @@ namespace Content.Server.Atmos.Components
             if (!IsConnected) return;
             IsConnected = false;
             EntitySystem.Get<SharedActionsSystem>().SetToggled(ToggleAction, false);
+
             GetInternalsComponent(owner)?.DisconnectTank();
+            _disconnectStream?.Stop();
+
+            if (_disconnectSound != null)
+                _disconnectStream = SoundSystem.Play(_disconnectSound.GetSound(), Filter.Pvs(Owner, entityManager: _entMan), Owner, _disconnectSound.Params);
+
             UpdateUserInterface();
         }
 
         public void UpdateUserInterface(bool initialUpdate = false)
         {
             var internals = GetInternalsComponent();
-            _userInterface?.SetState(
+            UserInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
                     TankPressure = Air?.Pressure ?? 0,
@@ -205,16 +220,17 @@ namespace Content.Server.Atmos.Components
 
         public void AssumeAir(GasMixture giver)
         {
-            EntitySystem.Get<AtmosphereSystem>().Merge(Air, giver);
-            CheckStatus();
+            var atmos = EntitySystem.Get<AtmosphereSystem>();
+            atmos.Merge(Air, giver);
+            CheckStatus(atmos);
         }
 
-        public void CheckStatus()
+        public void CheckStatus(AtmosphereSystem? atmosphereSystem=null)
         {
             if (Air == null)
                 return;
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            atmosphereSystem ??= EntitySystem.Get<AtmosphereSystem>();
 
             var pressure = Air.Pressure;
 
@@ -245,11 +261,11 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetContainingMixture(Owner, false, true);
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(_ruptureSound.GetSound(), Filter.Pvs(Owner), _entMan.GetComponent<TransformComponent>(Owner).Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     _entMan.QueueDeleteEntity(Owner);
                     return;
@@ -263,7 +279,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var environment = atmosphereSystem.GetTileMixture(_entMan.GetComponent<TransformComponent>(Owner).Coordinates, true);
+                    var environment = atmosphereSystem.GetContainingMixture(Owner, false, true);
                     if (environment == null)
                         return;
 

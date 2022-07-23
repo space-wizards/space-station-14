@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Shared.Atmos
 {
     public sealed class AtmosCommandUtils

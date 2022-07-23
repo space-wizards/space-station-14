@@ -713,27 +713,6 @@
     state: rock07
 
 - type: decal
-  id: Rock08
-  tags: ["flora"]
-  sprite:
-    sprite: Decals/Flora/flora_rocks.rsi
-    state: rock08
-
-- type: decal
-  id: Rock09
-  tags: ["flora"]
-  sprite:
-    sprite: Decals/Flora/flora_rocks.rsi
-    state: rock09
-
-- type: decal
-  id: Rock10
-  tags: ["flora"]
-  sprite:
-    sprite: Decals/Flora/flora_rocks.rsi
-    state: rock10
-
-- type: decal
   id: Flowersbr1
   tags: ["flora"]
   sprite:

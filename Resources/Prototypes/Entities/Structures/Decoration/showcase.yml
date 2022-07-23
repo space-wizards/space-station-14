@@ -1,8 +1,41 @@
 - type: entity
-  id: ShowcaseRobot
+  id: BaseShowcaseRobot
   parent: BaseStructure
   name: security robot showcase
-  description: It is an unfunctional replica of an old security robot.
+  description: A non-functional replica of an old security robot.
+  components:
+    - type: Anchorable
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 75
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                PartRodMetal1:
+                  min: 5
+                  max: 10
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: ShowcaseRobot
+  parent: BaseShowcaseRobot
+  name: security robot showcase
+  description: A non-functional replica of an old security robot.
   components:
   - type: Sprite
     sprite: Structures/Decoration/showcase.rsi
@@ -10,9 +43,9 @@
 
 - type: entity
   id: ShowcaseRobotWhite
-  parent: BaseStructure
+  parent: BaseShowcaseRobot
   name: white robot showcase
-  description: It is an unfunctional replica of an old robot.
+  description: A non-functional replica of an old robot.
   components:
   - type: Sprite
     sprite: Structures/Decoration/showcase.rsi
@@ -20,9 +53,9 @@
 
 - type: entity
   id: ShowcaseRobotAntique
-  parent: BaseStructure
+  parent: BaseShowcaseRobot
   name: cargo robot showcase
-  description: It is an unfunctional replica of an old cargo robot.
+  description: A non-functional replica of an old cargo robot.
   components:
   - type: Sprite
     sprite: Structures/Decoration/showcase.rsi
@@ -30,9 +63,9 @@
 
 - type: entity
   id: ShowcaseRobotMarauder
-  parent: BaseStructure
+  parent: BaseShowcaseRobot
   name: marauder showcase
-  description: It is an unfunctional replica of a marauder, painted green.
+  description: A non-functional replica of a marauder, painted green.
   components:
   - type: Sprite
     sprite: Structures/Decoration/showcase.rsi

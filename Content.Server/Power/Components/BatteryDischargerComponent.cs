@@ -1,5 +1,4 @@
 ﻿using Content.Server.Power.NodeGroups;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Power.Components
 {

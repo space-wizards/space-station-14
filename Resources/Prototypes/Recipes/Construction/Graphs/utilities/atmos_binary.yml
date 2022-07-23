@@ -9,35 +9,44 @@
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: volumepump
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: passivegate
       steps:
       - material: Steel
         amount: 2
-        doAfter: 1    
+        doAfter: 1
+
     - to: valve
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: port
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
     - to: dualportventpump
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
+
   - node: pressurepump
     entity: GasPressurePump
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -46,10 +55,14 @@
       steps:
       - tool: Welding
         doAfter: 1
+
   - node: volumepump
     entity: GasVolumePump
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -58,10 +71,14 @@
       steps:
       - tool: Welding
         doAfter: 1
+
   - node: passivegate
     entity: GasPassiveGate
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -70,10 +87,14 @@
       steps:
       - tool: Welding
         doAfter: 1
+
   - node: valve
     entity: GasValve
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -81,11 +102,15 @@
       - !type:DeleteEntity
       steps:
       - tool: Welding
-        doAfter: 1 
+        doAfter: 1
+
   - node: port
     entity: GasPort
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
@@ -93,16 +118,22 @@
       - !type:DeleteEntity
       steps:
       - tool: Welding
-        doAfter: 1 
+        doAfter: 1
+
   - node: dualportventpump
     entity: GasDualPortVentPump
     edges:
     - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity
       steps:
+      - tool: Screwing
+        doAfter: 1
       - tool: Welding
-        doAfter: 1 
+        doAfter: 1

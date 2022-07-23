@@ -118,3 +118,28 @@
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
     color: "#4246b3"
+
+- type: entity
+  id: DebugGyroscope
+  parent: Gyroscope
+  name: gyroscope
+  suffix: DEBUG
+  description: Increases the shuttle's potential angular rotation.
+  components:
+    - type: Thruster
+      requireSpace: false
+    - type: ApcPowerReceiver
+      needsPower: false
+      powerLoad: 0
+    - type: Sprite
+      sprite: Structures/Shuttles/thruster.rsi
+      layers:
+        - state: base
+          map: ["enum.ThrusterVisualLayers.Base"]
+        - state: thrust
+          map: ["enum.ThrusterVisualLayers.ThrustOn"]
+          shader: unshaded
+        - state: thrust_burn_unshaded
+          map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+          shader: unshaded
+          offset: 0, 1

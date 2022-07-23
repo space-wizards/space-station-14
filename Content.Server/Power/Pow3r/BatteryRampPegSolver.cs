@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Utility;
+﻿using Robust.Shared.Utility;
 using static Content.Server.Power.Pow3r.PowerState;
 
 namespace Content.Server.Power.Pow3r

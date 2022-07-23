@@ -17,9 +17,6 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
-- function: WideAttack
-  type: State
-  key: Space
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -42,6 +39,29 @@ binds:
 - function: Walk
   type: State
   key: Shift
+# Shuttle
+- function: ShuttleStrafeUp
+  type: State
+  key: W
+- function: ShuttleStrafeLeft
+  type: State
+  key: Q
+- function: ShuttleStrafeRight
+  type: State
+  key: E
+- function: ShuttleStrafeDown
+  type: State
+  key: S
+- function: ShuttleRotateLeft
+  type: State
+  key: A
+- function: ShuttleRotateRight
+  type: State
+  key: D
+- function: ShuttleBrake
+  type: State
+  key: Space
+
 - function: CameraRotateLeft
   type: State
   key: NumpadNum7
@@ -104,6 +124,9 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorCopyObject
+  type: State
+  key: P
 - function: SwapHands
   type: State
   key: X
@@ -291,6 +314,16 @@ binds:
 - function: TextHistoryNext
   type: State
   key: Down
+- function: TextCompleteNext
+  type: State
+  key: Down
+  priority: 1
+  canRepeat: true
+- function: TextCompletePrev
+  type: State
+  key: Up
+  priority: 1
+  canRepeat: true
 - function: TextReleaseFocus
   type: State
   key: Escape

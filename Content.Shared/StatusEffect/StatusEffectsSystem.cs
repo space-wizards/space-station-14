@@ -1,9 +1,6 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -32,9 +29,8 @@ namespace Content.Shared.StatusEffect
             base.Update(frameTime);
 
             var curTime = _gameTiming.CurTime;
-            foreach (var status in EntityManager.EntityQuery<StatusEffectsComponent>(false))
+            foreach (var (_, status) in EntityManager.EntityQuery<ActiveStatusEffectsComponent, StatusEffectsComponent>())
             {
-                if (status.ActiveEffects.Count == 0) continue;
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
@@ -190,6 +186,7 @@ namespace Content.Shared.StatusEffect
             else
             {
                 status.ActiveEffects.Add(key, new StatusEffectState(cooldown, refresh, null));
+                EnsureComp<ActiveStatusEffectsComponent>(uid);
             }
 
             if (proto.Alert != null)
@@ -271,6 +268,10 @@ namespace Content.Shared.StatusEffect
             }
 
             status.ActiveEffects.Remove(key);
+            if (status.ActiveEffects.Count == 0)
+            {
+                RemComp<ActiveStatusEffectsComponent>(uid);
+            }
 
             Dirty(status);
             // event?

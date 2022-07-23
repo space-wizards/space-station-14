@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
     [TestOf(typeof(EntityWhitelist))]
-    public sealed class EntityWhitelistTest : ContentIntegrationTest
+    public sealed class EntityWhitelistTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
@@ -60,18 +60,16 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            var serverOptions = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(serverOptions);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
-            await server.WaitIdleAsync();
-            var mapManager = server.ResolveDependency<IMapManager>();
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var mapCoordinates = testMap.MapCoords;
+
             var sEntities = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
-                var mapId = GetMainMapId(mapManager);
-                var mapCoordinates = new MapCoordinates(0, 0, mapId);
-
                 var validComponent = sEntities.SpawnEntity("ValidComponentDummy", mapCoordinates);
                 var validTag = sEntities.SpawnEntity("ValidTagDummy", mapCoordinates);
 
@@ -81,8 +79,8 @@ namespace Content.IntegrationTests.Tests.Utility
                 // Test instantiated on its own
                 var whitelistInst = new EntityWhitelist
                 {
-                    Components = new[] {$"{ValidComponent}"},
-                    Tags = new[] {"ValidTag"}
+                    Components = new[] { $"{ValidComponent}"},
+                    Tags = new() {"ValidTag"}
                 };
                 whitelistInst.UpdateRegistrations();
                 Assert.That(whitelistInst, Is.Not.Null);
@@ -110,6 +108,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.That(whitelistSer.IsValid(invalidComponent), Is.False);
                 Assert.That(whitelistSer.IsValid(invalidTag), Is.False);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using Content.Server.Mind.Components;
+﻿using Content.Server.Mind.Components;
 using Content.Server.Roles;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.CharacterInfo;

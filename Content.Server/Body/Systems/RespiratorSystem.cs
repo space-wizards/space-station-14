@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
@@ -12,9 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -24,7 +19,7 @@ namespace Content.Server.Body.Systems
     public sealed class RespiratorSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
-        [Dependency] private readonly AdminLogSystem _logSys = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
@@ -38,6 +33,7 @@ namespace Content.Server.Body.Systems
 
             // We want to process lung reagents before we inhale new reagents.
             UpdatesAfter.Add(typeof(MetabolizerSystem));
+            SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
         public override void Update(float frameTime)
@@ -93,7 +89,6 @@ namespace Content.Server.Body.Systems
                 respirator.SuffocationCycles = 0;
             }
         }
-
         public void Inhale(EntityUid uid, SharedBodyComponent? body=null)
         {
             if (!Resolve(uid, ref body, false))
@@ -107,7 +102,7 @@ namespace Content.Server.Body.Systems
 
             if (ev.Gas == null)
             {
-                ev.Gas = _atmosSys.GetTileMixture(Transform(uid).Coordinates);
+                ev.Gas = _atmosSys.GetContainingMixture(uid, false, true);
                 if (ev.Gas == null) return;
             }
 
@@ -138,7 +133,7 @@ namespace Content.Server.Body.Systems
 
             if (ev.Gas == null)
             {
-                ev.Gas = _atmosSys.GetTileMixture(Transform(uid).Coordinates);
+                ev.Gas = _atmosSys.GetContainingMixture(uid, false, true);
 
                 // Walls and grids without atmos comp return null. I guess it makes sense to not be able to exhale in walls,
                 // but this also means you cannot exhale on some grids.
@@ -159,7 +154,7 @@ namespace Content.Server.Body.Systems
         private void TakeSuffocationDamage(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles == 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} started suffocating");
 
             if (respirator.SuffocationCycles >= respirator.SuffocationCycleThreshold)
             {
@@ -172,7 +167,7 @@ namespace Content.Server.Body.Systems
         private void StopSuffocation(EntityUid uid, RespiratorComponent respirator)
         {
             if (respirator.SuffocationCycles >= 2)
-                _logSys.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
+                _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(uid):entity} stopped suffocating");
 
             _alertsSystem.ClearAlert(uid, AlertType.LowOxygen);
 
@@ -188,6 +183,26 @@ namespace Content.Server.Body.Systems
             respirator.Saturation += amount;
             respirator.Saturation =
                 Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, RespiratorComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            if (args.Apply)
+            {
+                component.CycleDelay *= args.Multiplier;
+                component.Saturation *= args.Multiplier;
+                component.MaxSaturation *= args.Multiplier;
+                component.MinSaturation *= args.Multiplier;
+                return;
+            }
+            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
+            component.CycleDelay /= args.Multiplier;
+            component.Saturation /= args.Multiplier;
+            component.MaxSaturation /= args.Multiplier;
+            component.MinSaturation /= args.Multiplier;
+            // Reset the accumulator properly
+            if (component.AccumulatedFrametime >= component.CycleDelay)
+                component.AccumulatedFrametime = component.CycleDelay;
         }
     }
 }

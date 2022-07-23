@@ -1,21 +1,26 @@
+
 using System.Linq;
-using Content.Server.Act;
-using Content.Server.Administration.Logs;
+using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
+using Content.Server.Pulling;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Shared.Stunnable;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Popups;
+using Content.Shared.Pulling.Components;
+using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -26,10 +31,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
-using Content.Shared.Pulling.Components;
-using Content.Server.Pulling;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Throwing;
 
 namespace Content.Server.Hands.Systems
 {
@@ -40,13 +41,13 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
         [Dependency] private readonly StrippableSystem _strippableSystem = default!;
         [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {
@@ -54,7 +55,6 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, DisarmedEvent>(OnDisarmed, before: new[] { typeof(StunSystem) });
 
-            SubscribeLocalEvent<HandsComponent, PullAttemptMessage>(HandlePullAttempt);
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
@@ -90,13 +90,13 @@ namespace Content.Server.Hands.Systems
             if (TryComp(uid, out SharedPullerComponent? puller) && puller.Pulling is EntityUid pulled && TryComp(pulled, out SharedPullableComponent? pullable))
                 _pullingSystem.TryStopPull(pullable);
 
-            if (_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
+            if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
-            var targetName = Name(args.Target);
-
-            var msgOther = Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name(args.Source)), ("disarmed", targetName));
-            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targetName));
+            var targEnt = Identity.Entity(args.Target, EntityManager);
+            var msgOther = Loc.GetString("hands-component-disarm-success-others-message",
+                ("disarmer", Identity.Entity(args.Source, EntityManager)), ("disarmed", targEnt));
+            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targEnt));
 
             var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
             _popupSystem.PopupEntity(msgOther, args.Source, filter);
@@ -123,8 +123,6 @@ namespace Content.Server.Hands.Systems
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
-
-            _logSystem.Add(LogType.Pickup, LogImpact.Low, $"{uid} picked up {entity}");
         }
 
 
@@ -150,19 +148,12 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region pulling
-        private static void HandlePullAttempt(EntityUid uid, HandsComponent component, PullAttemptMessage args)
+        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
             if (args.Puller.Owner != uid)
                 return;
 
-            // Cancel pull if all hands full.
-            if (!component.IsAnyHandFree())
-                args.Cancelled = true;
-        }
-
-        private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
-        {
-            if (args.Puller.Owner != uid)
+            if (TryComp<SharedPullerComponent>(args.Puller.Owner, out var pullerComp) && !pullerComp.NeedsHands)
                 return;
 
             if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner, uid))
@@ -262,7 +253,7 @@ namespace Content.Server.Hands.Systems
 
             if (hands.ActiveHand?.HeldEntity != null)
             {
-                storageComponent.PlayerInsertHeldEntity(plyEnt);
+                _storageSystem.PlayerInsertHeldEntity(slotEntity.Value, plyEnt, storageComponent);
             }
             else if (storageComponent.StoredEntities != null)
             {

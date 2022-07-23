@@ -1,15 +1,17 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -38,6 +40,35 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BloodstreamComponent, HealthBeingExaminedEvent>(OnHealthBeingExamined);
         SubscribeLocalEvent<BloodstreamComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
+    }
+
+    private void OnReactionAttempt(EntityUid uid, BloodstreamComponent component, ReactionAttemptEvent args)
+    {
+        if (args.Solution.Name != BloodstreamComponent.DefaultBloodSolutionName
+            && args.Solution.Name != BloodstreamComponent.DefaultChemicalsSolutionName
+            && args.Solution.Name != BloodstreamComponent.DefaultBloodTemporarySolutionName)
+            return;
+
+        foreach (var effect in args.Reaction.Effects)
+        {
+            switch (effect)
+            {
+                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
+                    args.Cancel();
+                    return;
+            }
+        }
+
+        // The area-reaction effect canceling is part of avoiding smoke-fork-bombs (create two smoke bombs, that when
+        // ingested by mobs create more smoke). This also used to act as a rapid chemical-purge, because all the
+        // reagents would get carried away by the smoke/foam. This does still work for the stomach (I guess people vomit
+        // up the smoke or spawned entities?).
+
+        // TODO apply organ damage instead of just blocking the reaction?
+        // Having cheese-clots form in your veins can't be good for you.
     }
 
     public override void Update(float frameTime)
@@ -125,7 +156,7 @@ public sealed class BloodstreamSystem : EntitySystem
         if (totalFloat > 0 && _robustRandom.Prob(prob))
         {
             TryModifyBloodLevel(uid, (-total) / 5, component);
-            SoundSystem.Play(Filter.Pvs(uid), component.InstantBloodSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.InstantBloodSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
         }
         else if (totalFloat < 0 && oldBleedAmount > 0 && _robustRandom.Prob(healPopupProb))
         {
@@ -133,9 +164,9 @@ public sealed class BloodstreamSystem : EntitySystem
             // because it's burn damage that cauterized their wounds.
 
             // We'll play a special sound and popup for feedback.
-            SoundSystem.Play(Filter.Pvs(uid), component.BloodHealedSound.GetSound(), uid, AudioParams.Default);
+            SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
-                Filter.Entities(uid));
+                Filter.Entities(uid), PopupType.Medium);
 ;       }
     }
 
@@ -144,24 +175,37 @@ public sealed class BloodstreamSystem : EntitySystem
         if (component.BleedAmount > 10)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
         else if (component.BleedAmount > 0)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-bleeding", ("target", Identity.Entity(uid, EntityManager))));
         }
 
         if (GetBloodLevelPercentage(uid, component) < component.BloodlossThreshold)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", uid)));
+            args.Message.AddMarkup(Loc.GetString("bloodstream-component-looks-pale", ("target", Identity.Entity(uid, EntityManager))));
         }
     }
 
     private void OnBeingGibbed(EntityUid uid, BloodstreamComponent component, BeingGibbedEvent args)
     {
         SpillAllSolutions(uid, component);
+    }
+
+    private void OnApplyMetabolicMultiplier(EntityUid uid, BloodstreamComponent component, ApplyMetabolicMultiplierEvent args)
+    {
+        if (args.Apply)
+        {
+            component.UpdateInterval *= args.Multiplier;
+            return;
+        }
+        component.UpdateInterval /= args.Multiplier;
+        // Reset the accumulator properly
+        if (component.AccumulatedFrametime >= component.UpdateInterval)
+            component.AccumulatedFrametime = component.UpdateInterval;
     }
 
     /// <summary>
@@ -181,6 +225,14 @@ public sealed class BloodstreamSystem : EntitySystem
             return 0.0f;
 
         return (component.BloodSolution.CurrentVolume / component.BloodSolution.MaxVolume).Float();
+    }
+
+    public void SetBloodLossThreshold(EntityUid uid, float threshold, BloodstreamComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.BloodlossThreshold = threshold;
     }
 
     /// <summary>
@@ -239,8 +291,11 @@ public sealed class BloodstreamSystem : EntitySystem
         var tempSol = new Solution() { MaxVolume = max };
 
         tempSol.AddSolution(component.BloodSolution);
+        component.BloodSolution.RemoveAllSolution();
         tempSol.AddSolution(component.BloodTemporarySolution);
+        component.BloodTemporarySolution.RemoveAllSolution();
         tempSol.AddSolution(component.ChemicalSolution);
+        component.ChemicalSolution.RemoveAllSolution();
         _spillableSystem.SpillAt(uid, tempSol, "PuddleBlood", true);
     }
 }

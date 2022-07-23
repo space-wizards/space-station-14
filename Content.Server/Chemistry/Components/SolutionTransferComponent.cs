@@ -1,20 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -22,15 +14,8 @@ namespace Content.Server.Chemistry.Components
     ///     Gives click behavior for transferring to/from other reagent containers.
     /// </summary>
     [RegisterComponent]
-    public sealed class SolutionTransferComponent : Component, IAfterInteract
+    public sealed class SolutionTransferComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
-
-        // Behavior is as such:
-        // If it's a reagent tank, TAKE reagent.
-        // If it's anything else, GIVE reagent.
-        // Of course, only if possible.
-
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
@@ -109,102 +94,6 @@ namespace Content.Server.Chemistry.Components
             amount = FixedPoint2.New(Math.Clamp(amount.Int(), MinimumTransferAmount.Int(),
                 MaximumTransferAmount.Int()));
             TransferAmount = amount;
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-
-            if (!eventArgs.CanReach || eventArgs.Target == null)
-                return false;
-
-            var target = eventArgs.Target!.Value;
-
-            //Special case for reagent tanks, because normally clicking another container will give solution, not take it.
-            if (CanReceive  && !_entities.HasComponent<RefillableSolutionComponent>(target) // target must not be refillable (e.g. Reagent Tanks)
-                            && solutionsSys.TryGetDrainableSolution(target, out var targetDrain) // target must be drainable
-                            && _entities.TryGetComponent(Owner, out RefillableSolutionComponent refillComp)
-                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill, refillable: refillComp))
-
-            {
-
-                var transferAmount = TransferAmount; // This is the player-configurable transfer amount of "Owner," not the target reagent tank.
-
-                if (_entities.TryGetComponent(Owner, out RefillableSolutionComponent? refill) && refill.MaxRefill != null) // Owner is the entity receiving solution from target.
-                {
-                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill); // if the receiver has a smaller transfer limit, use that instead
-                }
-
-                var transferred = DoTransfer(eventArgs.User, target, targetDrain, Owner, ownerRefill, transferAmount);
-                if (transferred > 0)
-                {
-                    var toTheBrim = ownerRefill.AvailableVolume == 0;
-                    var msg = toTheBrim
-                        ? "comp-solution-transfer-fill-fully"
-                        : "comp-solution-transfer-fill-normal";
-
-                    target.PopupMessage(eventArgs.User,
-                        Loc.GetString(msg, ("owner", eventArgs.Target), ("amount", transferred), ("target", Owner)));
-                    return true;
-                }
-            }
-
-            // if target is refillable, and owner is drainable
-            if (CanSend && solutionsSys.TryGetRefillableSolution(target, out var targetRefill)
-                        && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
-            {
-                var transferAmount = TransferAmount;
-
-                if (_entities.TryGetComponent(target, out RefillableSolutionComponent? refill) && refill.MaxRefill != null)
-                {
-                    transferAmount = FixedPoint2.Min(transferAmount, (FixedPoint2) refill.MaxRefill);
-                }
-
-                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, transferAmount);
-
-                if (transferred > 0)
-                {
-                    Owner.PopupMessage(eventArgs.User,
-                        Loc.GetString("comp-solution-transfer-transfer-solution",
-                            ("amount", transferred),
-                            ("target", target)));
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <returns>The actual amount transferred.</returns>
-        private static FixedPoint2 DoTransfer(EntityUid user,
-            EntityUid sourceEntity,
-            Solution source,
-            EntityUid targetEntity,
-            Solution target,
-            FixedPoint2 amount)
-        {
-
-            if (source.DrainAvailable == 0)
-            {
-                sourceEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
-                return FixedPoint2.Zero;
-            }
-
-            if (target.AvailableVolume == 0)
-            {
-                targetEntity.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-full", ("target", targetEntity)));
-                return FixedPoint2.Zero;
-            }
-
-            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
-
-            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity, source, actualAmount);
-            EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity, target, solution);
-
-            return actualAmount;
         }
     }
 }

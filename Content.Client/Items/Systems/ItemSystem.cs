@@ -1,15 +1,9 @@
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Robust.Shared.GameObjects.SharedSpriteComponent;
@@ -34,12 +28,12 @@ public sealed class ItemSystem : SharedItemSystem
     /// </summary>
     public override void VisualsChanged(EntityUid uid, SharedItemComponent? item = null)
     {
-        if (!Resolve(uid, ref item))
+        if (!Resolve(uid, ref item, false))
             return;
 
         // if the item is in a container, it might be equipped to hands or inventory slots --> update visuals.
         if (_containerSystem.TryGetContainingContainer(uid, out var container))
-            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID));
+            RaiseLocalEvent(container.Owner, new VisualsChangedEvent(uid, container.ID), true);
     }
 
     /// <summary>
@@ -98,7 +92,7 @@ public sealed class ItemSystem : SharedItemSystem
         if (!rsi.TryGetState(state, out var _))
             return false;
 
-        var layer = PrototypeLayerData.New();
+        var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layer.MapKeys = new() { state };

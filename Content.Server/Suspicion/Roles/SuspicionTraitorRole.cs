@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Shared.Roles;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Suspicion.Roles
 {

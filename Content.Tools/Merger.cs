@@ -2,8 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools

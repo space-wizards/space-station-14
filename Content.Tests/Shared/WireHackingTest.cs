@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Shared.Wires;
 using NUnit.Framework;
 using Robust.UnitTesting;
-using static Content.Shared.Wires.SharedWiresComponent;
 
 namespace Content.Tests.Shared
 {

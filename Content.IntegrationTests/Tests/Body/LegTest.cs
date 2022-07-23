@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.Body;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
 using NUnit.Framework;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -16,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestFixture]
     [TestOf(typeof(SharedBodyComponent))]
     [TestOf(typeof(BodyComponent))]
-    public sealed class LegTest : ContentIntegrationTest
+    public sealed class LegTest
     {
         private const string Prototypes = @"
 - type: entity
@@ -34,8 +32,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             AppearanceComponent appearance = null;
 
@@ -66,6 +64,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(appearance.TryGetData(RotationVisuals.RotationState, out RotationState state));
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

@@ -1,9 +1,9 @@
-using System.Linq;
 using Content.Shared.Drone;
 using Content.Server.Drone.Components;
 using Content.Shared.Actions;
 using Content.Server.Light.Components;
 using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Examine;
@@ -20,9 +20,11 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Robust.Shared.Player;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Drone
 {
@@ -75,16 +77,13 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-            if (args.IsInDetailsRange)
+            if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
-                {
-                    args.PushMarkup(Loc.GetString("drone-active"));
-                }
-                else
-                {
-                    args.PushMarkup(Loc.GetString("drone-dormant"));
-                }
+                args.PushMarkup(Loc.GetString("drone-active"));
+            }
+            else
+            {
+                args.PushMarkup(Loc.GetString("drone-dormant"));
             }
         }
 
@@ -94,26 +93,28 @@ namespace Content.Server.Drone
             {
                 var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
-                foreach (var item in drone.ToolUids.Select((value, i) => ( value, i )))
+                foreach (var item in drone.ToolUids)
                 {
-                    if (_tagSystem.HasTag(item.value, "Drone"))
+                    if (_tagSystem.HasTag(item, "Drone"))
                     {
-                        RemComp<UnremoveableComponent>(item.value);
+                        RemComp<UnremoveableComponent>(item);
                     }
                     else
                     {
-                        EntityManager.DeleteEntity(item.value);
+                        Del(item);
                     }
                 }
+
                 body.Gib();
-                EntityManager.DeleteEntity(uid);
+                Del(uid);
             }
         }
 
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
+                Filter.Pvs(uid), PopupType.Large);
 
             if (drone.AlreadyAwoken == false)
             {
@@ -126,7 +127,7 @@ namespace Content.Server.Drone
                     var items = EntitySpawnCollection.GetSpawns(drone.Tools, _robustRandom);
                     foreach (var entry in items)
                     {
-                        var item = EntityManager.SpawnEntity(entry, spawnCoord);
+                        var item = Spawn(entry, spawnCoord);
                         AddComp<UnremoveableComponent>(item);
                         if (!_handsSystem.TryPickupAnyHand(uid, item, checkActionBlocker: false))
                         {
@@ -175,12 +176,16 @@ namespace Content.Server.Drone
         private bool NonDronesInRange(EntityUid uid, DroneComponent component)
         {
             var xform = Comp<TransformComponent>(uid);
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, xform.WorldPosition, component.InteractionBlockRange))
+            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
+                // Return true if the entity is/was controlled by a player and is not a drone or ghost.
                 if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
+                    // Filter out dead ghost roles. Dead normal players are intended to block.
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                        continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", entity)), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
                     return true;
                 }
             }

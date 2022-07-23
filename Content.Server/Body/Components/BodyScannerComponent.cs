@@ -1,4 +1,4 @@
-﻿using Content.Server.UserInterface;
+using Content.Server.UserInterface;
 using Content.Shared.Body.Components;
 using Robust.Server.GameObjects;
 
@@ -8,8 +8,6 @@ namespace Content.Server.Body.Components
     [ComponentReference(typeof(SharedBodyScannerComponent))]
     public sealed class BodyScannerComponent : SharedBodyScannerComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
         protected override void Initialize()
         {

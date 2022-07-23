@@ -10,6 +10,14 @@
     - DroneUsable
   - type: HandheldLight
     addPrefix: false
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: ToggleableLightVisuals
+    spriteLayer: light
     inhandVisuals:
       left:
       - state: inhand-left-light
@@ -17,15 +25,12 @@
       right:
       - state: inhand-right-light
         shader: unshaded
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallHigh
+      startingItem: PowerCellMedium
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     netsync: false
@@ -55,7 +60,7 @@
   components:
   - type: PowerCellSlot
     cellSlot:
-      startingItem: PowerCellSmallSuper
+      startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
     inhandVisuals:

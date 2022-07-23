@@ -27,13 +27,13 @@ namespace Content.Client.Conveyor.Visualizers
                 return;
             }
 
-            appearance.TryGetData(TwoWayLeverVisuals.State, out TwoWayLeverSignal state);
+            appearance.TryGetData(TwoWayLeverVisuals.State, out TwoWayLeverState state);
 
             var texture = state switch
             {
-                TwoWayLeverSignal.Middle => _stateOff,
-                TwoWayLeverSignal.Right => _stateForward,
-                TwoWayLeverSignal.Left => _stateReversed,
+                TwoWayLeverState.Middle => _stateOff,
+                TwoWayLeverState.Right => _stateForward,
+                TwoWayLeverState.Left => _stateReversed,
                 _ => _stateOff
             };
 

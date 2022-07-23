@@ -15,7 +15,11 @@ ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-ambience-max-sounds = Ambience simultaneous sounds:
-ui-options-lobby-music = Lobby Music
+ui-options-lobby-music = Lobby & Round-end Music
+ui-options-event-music = Event Music
+ui-options-admin-sounds = Play Admin Sounds
+ui-options-station-ambience = Station Ambience
+ui-options-space-ambience = Space Ambience
 ui-options-volume-label = Volume
 ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
@@ -49,6 +53,7 @@ ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport 
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
 ui-options-vp-low-res = Low-resolution viewport
+ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
 
 ## Controls menu
@@ -65,6 +70,7 @@ ui-options-header-interaction-adv = Advanced Interaction
 ui-options-header-ui = User Interface
 ui-options-header-misc = Miscellaneous
 ui-options-header-hotbar = Hotbar
+ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
@@ -109,7 +115,7 @@ ui-options-function-open-character-menu = Open character menu
 ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-info = Open server info
+ui-options-function-open-info = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
@@ -125,6 +131,7 @@ ui-options-function-editor-cancel-place = Cancel placement
 ui-options-function-editor-grid-place = Place in grid
 ui-options-function-editor-line-place = Place line
 ui-options-function-editor-rotate-object = Rotate
+ui-options-function-editor-copy-object = Copy
 
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
@@ -150,6 +157,14 @@ ui-options-function-loadout6 = Hotbar Loadout 6
 ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
+
+ui-options-function-shuttle-strafe-up = Strafe up
+ui-options-function-shuttle-strafe-right = Strafe right
+ui-options-function-shuttle-strafe-left = Strafe left
+ui-options-function-shuttle-strafe-down = Strafe down
+ui-options-function-shuttle-rotate-left = Rotate left
+ui-options-function-shuttle-rotate-right = Rotate right
+ui-options-function-shuttle-brake = Brake
 
 ## Network menu
 

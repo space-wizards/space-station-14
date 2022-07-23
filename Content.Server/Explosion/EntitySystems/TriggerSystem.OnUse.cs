@@ -1,4 +1,5 @@
 using Content.Server.Explosion.Components;
+using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Interaction.Events;
@@ -16,6 +17,22 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, UseInHandEvent>(OnTimerUse);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+        SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
+    }
+
+    private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, EntityStuckEvent args)
+    {
+        if (!component.StartOnStick)
+            return;
+
+        HandleTimerTrigger(
+            uid,
+            args.User,
+            component.Delay,
+            component.BeepInterval,
+            component.InitialBeepDelay,
+            component.BeepSound,
+            component.BeepParams);
     }
 
     private void OnExamined(EntityUid uid, OnUseTimerTriggerComponent component, ExaminedEvent args)

@@ -1,10 +1,5 @@
 ﻿using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Shared.Inventory;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Atmos.Components
 {

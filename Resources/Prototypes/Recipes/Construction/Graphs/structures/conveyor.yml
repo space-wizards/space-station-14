@@ -29,29 +29,3 @@
           steps:
             - tool: Prying
               doAfter: 3
-
-- type: constructionGraph
-  id: LeverGraph
-  start: start
-  graph:
-  - node: start
-    actions:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:DeleteEntity {}
-    edges:
-      - to: lever
-        completed:
-          - !type:SnapToGrid {}
-        steps:
-          - material: Steel
-            amount: 2
-            doAfter: 1
-  - node: lever
-    entity: TwoWayLever
-    edges:
-      - to: start
-        steps:
-          - tool: Anchoring
-            doAfter: 1

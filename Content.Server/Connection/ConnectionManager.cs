@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -8,9 +6,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 
 
@@ -106,6 +101,19 @@ The ban reason is: ""{ban.Reason}""
             }
 
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
+            {
+                var record = await _dbManager.GetPlayerRecordByUserId(userId);
+                if ((record is null ||
+                    record.FirstSeenTime.CompareTo(DateTimeOffset.Now - TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.PanicBunkerMinAccountAge))) < 0)
+                    && !await _db.GetWhitelistStatusAsync(userId)
+                    )
+                {
+                    return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
+                }
+            }
+
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) && ticker.PlayersInGame.Contains(userId);
             if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && adminData is null) && !wasInGame)
             {

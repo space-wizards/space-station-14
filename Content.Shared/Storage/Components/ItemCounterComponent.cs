@@ -1,8 +1,5 @@
 ﻿using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Storage.Components
 {
@@ -19,7 +16,7 @@ namespace Content.Shared.Storage.Components
     ///      tags: [Cigarette]
     /// </code>
     [RegisterComponent]
-    [Friend(typeof(SharedItemCounterSystem))]
+    [Access(typeof(SharedItemCounterSystem))]
     public sealed class ItemCounterComponent : Component
     {
         [DataField("count", required: true)]

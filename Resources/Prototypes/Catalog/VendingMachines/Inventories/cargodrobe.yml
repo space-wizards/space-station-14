@@ -3,6 +3,7 @@
   name: CargoDrobe
   spriteName: cargodrobe
   startingInventory:
+    AppraisalTool: 3
     ClothingUniformJumpsuitCargo: 3
     ClothingUniformJumpskirtCargo: 3
     ClothingShoesColorBlack: 3

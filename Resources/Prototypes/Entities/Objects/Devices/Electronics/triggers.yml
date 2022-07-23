@@ -25,3 +25,17 @@
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+
+- type: entity
+  parent: TimerTrigger
+  id: SignalTrigger
+  name: signal trigger
+  description: Adds a machine link that is triggered by signals.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/signaltrigger.rsi
+    state: signaltrigger
+  - type: PayloadTrigger
+    components:
+    - type: TriggerOnSignal
+    - type: SignalReceiver

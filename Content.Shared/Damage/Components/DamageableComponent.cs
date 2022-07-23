@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using Content.Shared.Radiation;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage
 {
@@ -24,8 +16,8 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    [Friend(typeof(DamageableSystem))]
-    public sealed class DamageableComponent : Component, IRadiationAct
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
+    public sealed class DamageableComponent : Component
     {
         /// <summary>
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
@@ -42,7 +34,6 @@ namespace Content.Shared.Damage
         ///     Though DamageModifierSets can be deserialized directly, we only want to use the prototype version here
         ///     to reduce duplication.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("damageModifierSet", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
         public string? DamageModifierSetId;
 
@@ -53,7 +44,6 @@ namespace Content.Shared.Damage
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
         [DataField("damage")]
-        [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -68,30 +58,11 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     The sum of all damages in the DamageableComponent.
         /// </summary>
-        [ViewVariables] public FixedPoint2 TotalDamage;
-
-        // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
         [ViewVariables]
+        public FixedPoint2 TotalDamage;
+
         [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
-        [ViewVariables]
-        [DataField("explosionDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
-
-        // TODO RADIATION Remove this.
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            var damageValue = FixedPoint2.New(MathF.Max((frameTime * radiation.RadsPerSecond), 1));
-
-            // Radiation should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in RadiationDamageTypeIDs)
-            {
-                damage.DamageDict.Add(typeID, damageValue);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
-        }
     }
 
     [Serializable, NetSerializable]

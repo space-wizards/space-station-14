@@ -1,14 +1,9 @@
-using System.Collections.Generic;
 using Content.Shared.Construction.Prototypes;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
-    [RegisterComponent, Friend(typeof(ConstructionSystem))]
+    [RegisterComponent, Access(typeof(ConstructionSystem))]
     public sealed class ConstructionComponent : Component
     {
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]

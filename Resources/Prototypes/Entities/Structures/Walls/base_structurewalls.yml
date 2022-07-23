@@ -9,6 +9,15 @@
     snap:
     - Wall
   components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MetalBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MetalLaserImpact
   - type: Tag
     tags:
     - Wall
@@ -26,18 +35,12 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-      layer:
-      - Opaque
-      - Impassable
-      - VaultImpassable
-      - SmallImpassable
+        bounds: "-0.5,-0.5,0.5,0.5"
       mask:
-      - Impassable
+      - FullTileMask
+      layer:
+      - WallLayer
   - type: Occluder
     sizeX: 32
     sizeY: 32
   - type: Airtight
-  - type: IconSmooth
-    key: walls
-    base: solid

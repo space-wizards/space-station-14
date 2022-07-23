@@ -1,8 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Singularity.Components
+﻿namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     public sealed class SingularityGeneratorComponent : Component

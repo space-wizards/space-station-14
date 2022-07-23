@@ -2,13 +2,9 @@
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Plants.Systems
@@ -62,7 +58,7 @@ namespace Content.Server.Plants.Systems
             if (!Resolve(uid, ref component))
                 return;
 
-            SoundSystem.Play(Filter.Pvs(uid), component.RustleSound.GetSound(), uid, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(component.RustleSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

@@ -4,8 +4,6 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction

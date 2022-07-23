@@ -17,6 +17,16 @@
   id: ClothingHeadsetAltCommand
   name: command overear-headset
   components:
+  - type: Headset
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing
@@ -27,6 +37,11 @@
   id: ClothingHeadsetAltMedical
   name: medical overear-headset
   components:
+  - type: Headset
+    channels:
+    - Command
+    - Common
+    - Medical
   - type: Sprite
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
@@ -37,6 +52,11 @@
   id: ClothingHeadsetAltSecurity
   name: security overear-headset
   components:
+  - type: Headset
+    channels:
+    - Command
+    - Common
+    - Security
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
@@ -48,6 +68,9 @@
   name: syndicate overear-headset
   description: A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.
   components:
+  - type: Headset
+    channels:
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

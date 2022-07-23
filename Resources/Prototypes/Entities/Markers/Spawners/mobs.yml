@@ -17,7 +17,7 @@
       - MobMouse2
 
 - type: entity
-  name: Corgi Spawner
+  name: Ian Spawner
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -27,8 +27,7 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCorgi
-      - MobCorgiOld
+      - MobCorgiIan
 
 - type: entity
   name: Possum Morty Spawner
@@ -94,7 +93,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCatRuntime
-      
+
 - type: entity
   name: Exception Spawner
   id: SpawnMobCatException
@@ -163,7 +162,7 @@
   - type: ConditionalSpawner
     prototypes:
       - MobBandito
-  
+
 - type: entity
   name:  McGriff Spawner
   id: SpawnMobMcGriff
@@ -202,3 +201,17 @@
   - type: ConditionalSpawner
     prototypes:
       - MobWalter
+
+- type: entity
+  name: Space Bear Spawner
+  id: SpawnMobBear
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: bear
+      sprite: Mobs/Animals/bear.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpace

@@ -51,7 +51,7 @@ namespace Content.Server.Pointing.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("rogue")]
-        private bool _rogue = default;
+        public bool Rogue = false;
 
         protected override void Startup()
         {
@@ -73,7 +73,7 @@ namespace Content.Server.Pointing.Components
 
             if (_duration <= 0)
             {
-                if (_rogue)
+                if (Rogue)
                 {
                     _entMan.RemoveComponent<PointingArrowComponent>(Owner);
                     _entMan.AddComponent<RoguePointingArrowComponent>(Owner);

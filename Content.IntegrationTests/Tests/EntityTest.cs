@@ -6,28 +6,23 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(EntityUid))]
-    public sealed class EntityTest : ContentIntegrationTest
+    public sealed class EntityTest
     {
         [Test]
         public async Task SpawnTest()
         {
-            var options = new ServerContentIntegrationOption()
-            {
-                CVarOverrides = {{CCVars.NPCMaxUpdates.Name, int.MaxValue.ToString()}}
-            };
-
-            var server = StartServer(options);
-            await server.WaitIdleAsync();
+            //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
@@ -39,19 +34,14 @@ namespace Content.IntegrationTests.Tests
             EntityUid testEntity;
 
             //Build up test environment
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -62,14 +52,16 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DoMapInitialize(mapId);
             });
 
-            server.Assert(() =>
+            await server.WaitRunTicks(5);
+
+            await server.WaitAssertion(() =>
             {
                 var testLocation = grid.ToCoordinates();
 
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (prototype.NoSpawn || prototype.Abstract)
+                    if (prototype.Abstract)
                     {
                         continue;
                     }
@@ -86,7 +78,7 @@ namespace Content.IntegrationTests.Tests
                             {
                                 Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
                                 testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
-                                server.RunTicks(2);
+                                server.RunTicks(1);
                                 if(!entityMan.Deleted(testEntity))
                                     entityMan.DeleteEntity(testEntity);
                             }, "Entity '{0}' threw an exception.",
@@ -95,7 +87,7 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
@@ -116,12 +108,8 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneToOneDeleteTestEntity";
 
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = testEntity,
-                FailureLogLevel = LogLevel.Error
-            });
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = testEntity});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -130,19 +118,14 @@ namespace Content.IntegrationTests.Tests
 
             IMapGrid grid = default;
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
@@ -153,7 +136,9 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DoMapInitialize(mapId);
             });
 
-            server.Assert(() =>
+            await server.WaitRunTicks(5);
+
+            await server.WaitAssertion(() =>
             {
                 Assert.Multiple(() =>
                 {
@@ -162,9 +147,10 @@ namespace Content.IntegrationTests.Tests
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
                         var component = (Component) componentFactory.GetComponent(type);
+                        var name = componentFactory.GetComponentName(type);
 
                         // If this component is ignored
-                        if (skipComponents.Contains(component.Name))
+                        if (skipComponents.Contains(name))
                         {
                             continue;
                         }
@@ -182,22 +168,20 @@ namespace Content.IntegrationTests.Tests
 
                         component.Owner = entity;
 
-                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                         Assert.DoesNotThrow(() =>
                             {
                                 entityManager.AddComponent(entity, component);
                             }, "Component '{0}' threw an exception.",
-                            component.Name);
-
-                        server.RunTicks(2);
+                            name);
 
                         entityManager.DeleteEntity(entity);
                     }
                 });
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
 
         [Test]
@@ -218,13 +202,8 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneEntityDeleteTestEntity";
 
-            var server = StartServer(new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = testEntity,
-                FailureLogLevel = LogLevel.Error,
-                Pool = false
-            });
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = testEntity});
+            var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -233,32 +212,26 @@ namespace Content.IntegrationTests.Tests
 
             IMapGrid grid = default;
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
 
                 mapManager.AddUninitializedMap(mapId);
 
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
+                grid = mapManager.CreateGrid(mapId);
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = grid.ToCoordinates();
 
-                grid.SetTile(coordinates, tile);
-
+                grid.SetTile(Vector2i.Zero, tile);
                 mapManager.DoMapInitialize(mapId);
             });
+            await server.WaitRunTicks(5);
 
-            var distinctComponents = new List<(List<Type> components, List<Type> references)>
+            var distinctComponents = new List<(List<CompIdx> components, List<CompIdx> references)>
             {
-                (new List<Type>(), new List<Type>())
+                (new List<CompIdx>(), new List<CompIdx>())
             };
 
             // Split components into groups, ensuring that their references don't conflict
@@ -275,14 +248,14 @@ namespace Content.IntegrationTests.Tests
                         // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
                         {
-                            distinctComponents.Add((new List<Type>(), new List<Type>()));
+                            distinctComponents.Add((new List<CompIdx>(), new List<CompIdx>()));
                         }
 
                         continue;
                     }
 
                     // Add the component and its references if no conflicting references were found
-                    distinct.components.Add(type);
+                    distinct.components.Add(registration.Idx);
                     distinct.references.AddRange(registration.References);
                 }
             }
@@ -290,7 +263,7 @@ namespace Content.IntegrationTests.Tests
             // Sanity check
             Assert.That(distinctComponents, Is.Not.Empty);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 Assert.Multiple(() =>
                 {
@@ -311,15 +284,14 @@ namespace Content.IntegrationTests.Tests
                                 continue;
                             }
 
+                            var name = componentFactory.GetComponentName(component.GetType());
+
                             // If this component is ignored
-                            if (skipComponents.Contains(component.Name))
-                            {
+                            if (skipComponents.Contains(name))
                                 continue;
-                            }
 
                             component.Owner = entity;
-
-                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {name}");
 
                             // Note for the future coder: if an exception occurs where a component reference
                             // was already occupied it might be because some component is ensuring another // initialize.
@@ -329,16 +301,14 @@ namespace Content.IntegrationTests.Tests
                                 {
                                     entityManager.AddComponent(entity, component);
                                 }, "Component '{0}' threw an exception.",
-                                component.Name);
+                                name);
                         }
-
-                        server.RunTicks(2);
                         entityManager.DeleteEntity(entity);
                     }
                 });
             });
 
-            await server.WaitIdleAsync();
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using Content.Server.Body.Components;
+﻿using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Systems;
 

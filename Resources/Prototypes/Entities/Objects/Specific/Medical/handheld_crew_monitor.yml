@@ -14,7 +14,8 @@
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
-  - type: DeviceNetworkComponent
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500

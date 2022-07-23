@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Shared.Access.Components
 {
     /// <summary>

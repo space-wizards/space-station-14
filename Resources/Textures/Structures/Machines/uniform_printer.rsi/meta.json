@@ -12,12 +12,6 @@
       "directions": 4
     },
     {
-      "name": "panel"
-    },
-    {
-      "name": "unlit"
-    },
-    {
       "name": "building",
       "directions": 4,
       "delays": [

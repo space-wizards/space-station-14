@@ -1,7 +1,7 @@
 - type: entity
   name: construction ghost
   id: constructionghost
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     color: '#3F38'

@@ -5,8 +5,6 @@ using Content.Server.AI.Utility.AiLogic;
 using Content.Shared.Administration;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Commands
 {
@@ -41,12 +39,6 @@ namespace Content.Server.AI.Commands
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
-            }
-
-            // TODO: IMover refffaaccctttooorrr
-            if (_entities.HasComponent<IMoverComponent>(entId))
-            {
-                _entities.RemoveComponent<IMoverComponent>(entId);
             }
 
             var comp = _entities.AddComponent<UtilityAi>(entId);

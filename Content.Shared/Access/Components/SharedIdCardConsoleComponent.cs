@@ -1,8 +1,11 @@
 using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Access.Components
 {
+    [NetworkedComponent]
     public abstract class SharedIdCardConsoleComponent : Component
     {
         public const int MaxFullNameLength = 256;
@@ -32,6 +35,42 @@ namespace Content.Shared.Access.Components
             }
         }
 
+        // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
+
+        [ViewVariables]
+        [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
+        public List<string> AccessLevels = new()
+        {
+            "Armory",
+            "Atmospherics",
+            "Bar",
+            "Brig",
+            // "Detective",
+            "Captain",
+            "Cargo",
+            "Chapel",
+            "Chemistry",
+            "ChiefEngineer",
+            "ChiefMedicalOfficer",
+            "Command",
+            "Engineering",
+            "External",
+            "HeadOfPersonnel",
+            "HeadOfSecurity",
+            "Hydroponics",
+            "Janitor",
+            "Kitchen",
+            "Maintenance",
+            "Medical",
+            "Quartermaster",
+            "Research",
+            "ResearchDirector",
+            "Salvage",
+            "Security",
+            "Service",
+            "Theatre",
+        };
+
         [Serializable, NetSerializable]
         public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
         {
@@ -49,7 +88,9 @@ namespace Content.Shared.Access.Components
                 bool isTargetIdPresent,
                 string? targetIdFullName,
                 string? targetIdJobTitle,
-                string[]? targetIdAccessList, string privilegedIdName, string targetIdName)
+                string[]? targetIdAccessList,
+                string privilegedIdName,
+                string targetIdName)
             {
                 IsPrivilegedIdPresent = isPrivilegedIdPresent;
                 IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -63,7 +104,7 @@ namespace Content.Shared.Access.Components
         }
 
         [Serializable, NetSerializable]
-        public enum IdCardConsoleUiKey
+        public enum IdCardConsoleUiKey : byte
         {
             Key,
         }

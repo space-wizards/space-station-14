@@ -13,6 +13,9 @@
   - type: Tag
     tags:
       - DroneUsable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
     - trigger:

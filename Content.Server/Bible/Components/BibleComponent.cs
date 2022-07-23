@@ -1,18 +1,11 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Sound;
 
 namespace Content.Server.Bible.Components
 {
     [RegisterComponent]
     public sealed class BibleComponent : Component
     {
-
         // Damage that will be healed on a success
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -33,6 +26,15 @@ namespace Content.Server.Bible.Components
 
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
+        [DataField("cooldownTime")]
         public float CooldownTime { get; } = 5f;
+
+        [DataField("sizzleSound")]
+        public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+        [DataField("healSound")]
+        public SoundSpecifier HealSoundPath = new  SoundPathSpecifier("/Audio/Effects/holy.ogg");
+
+        [DataField("locPrefix")]
+        public string LocPrefix = "bible";
     }
 }

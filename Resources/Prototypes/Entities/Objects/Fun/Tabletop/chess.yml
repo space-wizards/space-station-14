@@ -17,7 +17,7 @@
 - type: entity
   id: ChessBoardTabletop
   name: chessboard
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi

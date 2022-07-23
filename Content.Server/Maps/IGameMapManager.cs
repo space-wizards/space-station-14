@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Content.Server.Maps;
 
 /// <summary>
@@ -64,6 +62,4 @@ public interface IGameMapManager
     /// <param name="gameMap">name of the map</param>
     /// <returns>existence</returns>
     bool CheckMapExists(string gameMap);
-
-    public string GenerateMapName(GameMapPrototype gameMap);
 }

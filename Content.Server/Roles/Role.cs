@@ -1,8 +1,6 @@
 ﻿// Hey look,
 // Antag Datums.
 
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Roles
 {
     /// <summary>

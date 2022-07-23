@@ -1,26 +1,27 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Movement.EntitySystems;
 using Content.Shared.Pulling.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Pulling.Systems
 {
     public sealed class SharedPullableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedPullableComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<SharedPullableComponent, MoveInputEvent>(OnRelayMoveInput);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, ref MoveInputEvent args)
         {
-            var entity = args.Session.AttachedEntity;
-            if (entity == null || !_blocker.CanMove(entity.Value)) return;
+            var entity = args.Entity;
+            if (_mobState.IsIncapacitated(entity) || !_blocker.CanMove(entity)) return;
+
             _pullSystem.TryStopPull(component);
         }
     }

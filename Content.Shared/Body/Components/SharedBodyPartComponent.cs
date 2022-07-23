@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Components
 {
@@ -261,28 +255,29 @@ namespace Content.Shared.Body.Components
 
         private void AddedToBody(SharedBodyComponent body)
         {
-            _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = 0;
-            _entMan.GetComponent<TransformComponent>(Owner).AttachParent(body.Owner);
+            var transformComponent = _entMan.GetComponent<TransformComponent>(Owner);
+            transformComponent.LocalRotation = 0;
+            transformComponent.AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new AddedToBodyEvent(body), true);
             }
         }
 
         private void RemovedFromBody(SharedBodyComponent old)
         {
-            if (!_entMan.GetComponent<TransformComponent>(Owner).Deleted)
+            if (_entMan.TryGetComponent<TransformComponent>(Owner, out var transformComponent))
             {
-                _entMan.GetComponent<TransformComponent>(Owner).AttachToGridOrMap();
+                transformComponent.AttachToGridOrMap();
             }
 
             OnRemovedFromBody(old);
 
             foreach (var mechanism in _mechanisms)
             {
-                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old));
+                _entMan.EventBus.RaiseLocalEvent(mechanism.Owner, new RemovedFromBodyEvent(old), true);
             }
         }
 
@@ -293,12 +288,17 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Gibs the body part.
         /// </summary>
-        public virtual void Gib()
+        public virtual HashSet<EntityUid> Gib()
         {
+            var gibs = new HashSet<EntityUid>();
+
             foreach (var mechanism in _mechanisms)
             {
+                gibs.Add(mechanism.Owner);
                 RemoveMechanism(mechanism);
             }
+
+            return gibs;
         }
     }
 

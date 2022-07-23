@@ -21,6 +21,7 @@
       - id: CigPackGreen
         prob: 0.50
       - id: DoorRemoteCargo
+      - id: RubberStampQm
 
 - type: entity
   id: LockerCaptainFilled
@@ -37,8 +38,8 @@
       - id: ClothingNeckCloakCap
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
-      - id: TaserGun
-      - id: ClothingHeadHelmetHardsuitCap
+      - id: ClothingMaskGasCaptain
+      - id: WeaponDisabler
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
       - id: SpaceCash1000
@@ -53,6 +54,9 @@
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingNeckBronzeheart
       - id: ClothingNeckGoldmedal
+      - id: RubberStampCaptain
+      - id: WeaponAntiqueLaser
+      - id: JetpackCaptainFilled
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -69,7 +73,7 @@
       - id: BoxPDA
       - id: BoxID
       - id: IDComputerCircuitboard
-      - id: TaserGun
+      - id: WeaponDisabler
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -79,6 +83,7 @@
         # Fuck the HoP they don't deserve fucking cigars.
       - id: DoorRemoteService
       - id: ClothingNeckGoldmedal
+      - id: RubberStampHop
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -87,10 +92,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetHardsuitEngineeringWhite
       - id: ClothingOuterHardsuitEngineeringWhite
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingNeckCloakCe
       - id: ClothingEyesGlassesMeson
       - id: ClothingBeltChiefEngineerFilled
@@ -100,6 +105,8 @@
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
+      - id: RubberStampCE
+      - id: JetpackVoidFilled
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -116,7 +123,6 @@
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
-      - id: ClothingHeadHelmetHardsuitMedical
       - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
@@ -124,6 +130,8 @@
       - id: Hypospray
       - id: HandheldCrewMonitor
       - id: DoorRemoteMedical
+      - id: RubberStampCMO
+      - id: MedicalTechFabCircuitboard
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -137,11 +145,11 @@
       - id: CircuitImprinterMachineCircuitboard
       - id: ClothingNeckCloakRd
       - id: ClothingHeadsetMedicalScience
-      - id: ClothingHeadHelmetHardsuitRd
       - id: ClothingOuterHardsuitRd
       - id: PlushieSlime
         prob: 0.1
       - id: DoorRemoteResearch
+      - id: RubberStampRd
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -150,7 +158,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: TaserGun
+      - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
@@ -165,8 +173,8 @@
         prob: 0.1
       - id: ClothingUniformJumpskirtHoSParadeMale
         prob: 0.1
-      - id: ClothingHeadHelmetHardsuitSecurityRed
       - id: ClothingOuterHardsuitSecurityRed
+      - id: ClothingMaskGasSecurity
       - id: ClothingShoeSlippersDuck
         prob: 0.2
       - id: DrinkVacuumFlask
@@ -180,3 +188,6 @@
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal
+      - id: RubberStampHos
+      - id: SecurityTechFabCircuitboard
+      - id: JetpackSecurityFilled

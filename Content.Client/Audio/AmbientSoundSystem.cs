@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -29,8 +30,9 @@ namespace Content.Client.Audio
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        private AmbientSoundOverlay? _overlay;
         private int _maxAmbientCount;
-
+        private bool _overlayEnabled;
         private float _maxAmbientRange;
         private float _cooldown;
         private float _accumulator;
@@ -45,7 +47,37 @@ namespace Content.Client.Audio
 
         private const float RangeBuffer = 3f;
 
+        public bool OverlayEnabled
+        {
+            get => _overlayEnabled;
+            set
+            {
+                if (_overlayEnabled == value) return;
+                _overlayEnabled = value;
+                var overlayManager = IoCManager.Resolve<IOverlayManager>();
 
+                if (_overlayEnabled)
+                {
+                    _overlay = new AmbientSoundOverlay(EntityManager, this, Get<EntityLookupSystem>());
+                    overlayManager.AddOverlay(_overlay);
+                }
+                else
+                {
+                    overlayManager.RemoveOverlay(_overlay!);
+                    _overlay = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Is this AmbientSound actively playing right now?
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public bool IsActive(AmbientSoundComponent component)
+        {
+            return _playingSounds.ContainsKey(component);
+        }
 
         public override void Initialize()
         {
@@ -135,12 +167,14 @@ namespace Content.Client.Audio
         {
             //TODO: Make this produce a hashset of nearby entities again.
             var sourceDict = new Dictionary<string, List<AmbientSoundComponent>>(16);
+            var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.IncludeAnchored | LookupFlags.Approximate))
+            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange + RangeBuffer, LookupFlags.Anchored | LookupFlags.Approximate))
             {
-                if (!EntityManager.TryGetComponent(entity, out AmbientSoundComponent? ambientComp) ||
+                if (!ambientQuery.TryGetComponent(entity, out var ambientComp) ||
                     !ambientComp.Enabled ||
-                    !EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
+                    !xformQuery.GetComponent(entity).Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
                     range > ambientComp.Range)
                 {
                     continue;
@@ -225,11 +259,9 @@ namespace Content.Client.Audio
                         .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                         .WithMaxDistance(comp.Range);
 
-                    var stream = SoundSystem.Play(
+                    var stream = SoundSystem.Play(sound,
                         Filter.Local(),
-                        sound,
-                        comp.Owner,
-                        audioParams);
+                        comp.Owner, audioParams);
 
                     if (stream == null) continue;
 

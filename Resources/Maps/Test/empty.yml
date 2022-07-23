@@ -37,7 +37,7 @@ tilemap:
   30: floor_wood
   31: lattice
   32: plating
-  33: underplating
+  33: plating
 grids:
 - settings:
     chunksize: 16
@@ -56,4 +56,10 @@ entities:
     fixtures: []
     bodyType: Dynamic
     type: Physics
+- uid: 1
+  type: SpawnPointLatejoin
+  components:
+  - parent: 0
+    pos: 0,0
+    type: Transform
 ...

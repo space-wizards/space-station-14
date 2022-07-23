@@ -40,6 +40,11 @@ namespace Content.Client.Crayon.UI
             SendMessage(new CrayonSelectMessage(state));
         }
 
+        public void SelectColor(Color color)
+        {
+            SendMessage(new CrayonColorMessage(color));
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

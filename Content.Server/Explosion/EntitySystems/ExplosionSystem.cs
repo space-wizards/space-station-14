@@ -7,8 +7,8 @@ using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.GameTicking;
 using Content.Shared.Throwing;
-using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -16,7 +16,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -29,15 +28,14 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
-    [Dependency] private readonly CameraRecoilSystem _recoilSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly AdminLogSystem _logsSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -62,11 +60,16 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         DebugTools.Assert(_prototypeManager.HasIndex<ExplosionPrototype>(DefaultExplosionPrototypeId));
 
-        // handled in ExplosionSystemGridMap.cs
+        // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
         SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
+
+        // Handled by ExplosionSystem.Processing.cs
+        SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
@@ -74,17 +77,25 @@ public sealed partial class ExplosionSystem : EntitySystem
         InitAirtightMap();
     }
 
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        _explosionQueue.Clear();
+        _activeExplosion = null;
+        _nodeGroupSystem.Snoozing = false;
+    }
+
     public override void Shutdown()
     {
         base.Shutdown();
         UnsubscribeCvars();
+        _nodeGroupSystem.Snoozing = false;
     }
 
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
     {
-        args.Resistance += component.GlobalResistance;
+        args.DamageCoefficient *= component.DamageCoefficient;
         if (component.Resistances.TryGetValue(args.ExplotionPrototype, out var resistance))
-            args.Resistance += resistance;
+            args.DamageCoefficient *= resistance;
     }
 
     /// <summary>
@@ -118,6 +129,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             (float) totalIntensity,
             explosive.IntensitySlope,
             explosive.MaxIntensity,
+            explosive.TileBreakScale,
+            explosive.MaxTileBreak,
+            explosive.CanCreateVacuum,
             user);
 
         if (delete)
@@ -184,22 +198,25 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
         EntityUid? user = null,
         bool addLog = false)
     {
         var pos = Transform(uid).MapPosition;
 
 
-        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, addLog: false);
+        QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
 
         if (!addLog)
             return;
 
         if (user == null)
-            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(uid):entity} exploded at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
         else
-            _logsSystem.Add(LogType.Explosion, LogImpact.High,
+            _adminLogger.Add(LogType.Explosion, LogImpact.High,
                 $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode at {pos:coordinates} with intensity {totalIntensity} slope {slope}");
     }
 
@@ -211,6 +228,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         float totalIntensity,
         float slope,
         float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
         bool addLog = false)
     {
         if (totalIntensity <= 0 || slope <= 0)
@@ -223,10 +243,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
-            _logsSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
-        
+            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+
         _explosionQueue.Enqueue(() => SpawnExplosion(epicenter, type, totalIntensity,
-            slope, maxTileIntensity));
+            slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum));
     }
 
     /// <summary>
@@ -238,8 +258,14 @@ public sealed partial class ExplosionSystem : EntitySystem
         ExplosionPrototype type,
         float totalIntensity,
         float slope,
-        float maxTileIntensity)
+        float maxTileIntensity,
+        float tileBreakScale,
+        int maxTileBreak,
+        bool canCreateVacuum)
     {
+        if (!_mapManager.MapExists(epicenter.MapId))
+            return null;
+
         var results = GetExplosionTiles(epicenter, type.ID, totalIntensity, slope, maxTileIntensity);
 
         if (results == null)
@@ -258,7 +284,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // play sound.
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
-        SoundSystem.Play(filter, type.Sound.GetSound(), mapEntityCoords, _audioParams);
+        SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
         return new Explosion(this,
             type,
@@ -268,6 +294,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             epicenter,
             spaceMatrix,
             area,
+            tileBreakScale,
+            maxTileBreak,
+            canCreateVacuum,
             EntityManager,
             _mapManager);
     }
@@ -275,14 +304,14 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Constructor for the shared <see cref="ExplosionEvent"/> using the server-exclusive explosion classes.
     /// </summary>
-    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, SpaceExplosion? spaceData, IEnumerable<GridExplosion> gridData, List<float> iterationIntensity)
+    internal ExplosionEvent GetExplosionEvent(MapCoordinates epicenter, string id, Matrix3 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
     {
         var spaceTiles = spaceData?.TileLists;
 
-        Dictionary<GridId, Dictionary<int, List<Vector2i>>> tileLists = new();
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var grid in gridData)
         {
-            tileLists.Add(grid.Grid.Index, grid.TileLists);
+            tileLists.Add(grid.Grid.GridEntityId, grid.TileLists);
         }
 
         return new ExplosionEvent(_explosionCounter, epicenter, id, iterationIntensity, spaceTiles, tileLists, spaceMatrix, spaceData?.TileSize ?? DefaultTileSize);

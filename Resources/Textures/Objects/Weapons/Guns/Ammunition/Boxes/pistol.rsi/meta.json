@@ -8,16 +8,10 @@
   },
   "states": [
     {
-      "name": "icon"
-    },
-    {
       "name": "base"
     },
     {
       "name": "mag-1"
-    },
-    {
-      "name": "flash"
     },
     {
       "name": "hv"

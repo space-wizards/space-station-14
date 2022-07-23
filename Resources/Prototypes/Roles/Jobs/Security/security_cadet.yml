@@ -1,0 +1,26 @@
+﻿- type: job
+  id: SecurityCadet
+  name: job-name-cadet
+  startingGear: SecurityCadetGear
+  departments:
+  - Civilian
+  - Security
+  icon: "SecurityCadet"
+  supervisors: job-supervisors-security
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+
+- type: startingGear
+  id: SecurityCadetGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsJack
+    id: SecurityCadetPDA
+    ears: ClothingHeadsetSecurity
+  innerclothingskirt: ClothingUniformJumpskirtColorRed
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

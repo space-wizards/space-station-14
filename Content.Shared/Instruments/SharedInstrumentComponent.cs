@@ -1,22 +1,14 @@
-using System;
-using Robust.Shared.Analyzers;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Instruments;
 
-[NetworkedComponent, Friend(typeof(SharedInstrumentSystem))]
+[NetworkedComponent, Access(typeof(SharedInstrumentSystem))]
 public abstract class SharedInstrumentComponent : Component
 {
     [ViewVariables]
     public bool Playing { get; set; }
-
-    [ViewVariables]
-    public uint LastSequencerTick { get; set; }
 
     [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
     public byte InstrumentProgram { get; set; }
@@ -34,6 +26,7 @@ public abstract class SharedInstrumentComponent : Component
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    [Access(typeof(SharedInstrumentSystem), Other = AccessPermissions.ReadWrite)] // FIXME Friends
     public bool DirtyRenderer { get; set; }
 }
 
@@ -73,9 +66,9 @@ public sealed class InstrumentStartMidiEvent : EntityEventArgs
 public sealed class InstrumentMidiEventEvent : EntityEventArgs
 {
     public EntityUid Uid { get; }
-    public MidiEvent[] MidiEvent { get; }
+    public RobustMidiEvent[] MidiEvent { get; }
 
-    public InstrumentMidiEventEvent(EntityUid uid, MidiEvent[] midiEvent)
+    public InstrumentMidiEventEvent(EntityUid uid, RobustMidiEvent[] midiEvent)
     {
         Uid = uid;
         MidiEvent = midiEvent;
@@ -92,7 +85,7 @@ public sealed class InstrumentState : ComponentState
     public bool AllowProgramChange { get; }
     public bool RespectMidiLimits { get; }
 
-    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits, uint sequencerTick = 0)
+    public InstrumentState(bool playing, byte instrumentProgram, byte instrumentBank, bool allowPercussion, bool allowProgramChange, bool respectMidiLimits)
     {
         Playing = playing;
         InstrumentProgram = instrumentProgram;

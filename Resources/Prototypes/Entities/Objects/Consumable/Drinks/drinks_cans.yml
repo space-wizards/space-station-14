@@ -36,10 +36,10 @@
       stateOpen: icon_open
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: ItemCooldown
   - type: Recyclable
+  - type: SpaceGarbage
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -76,9 +76,7 @@
         maxVol: 30
         reagents:
         - ReagentId: IcedTea
-          Quantity: 28
-        - ReagentId: Theobromine
-          Quantity: 2
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -238,9 +236,7 @@
         maxVol: 30
         reagents:
         - ReagentId: FourteenLoko
-          Quantity: 28
-        - ReagentId: Theobromine
-          Quantity: 2
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
@@ -296,9 +292,7 @@
         maxVol: 30
         reagents:
         - ReagentId: EnergyDrink
-          Quantity: 28
-        - ReagentId: Theobromine
-          Quantity: 2
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
@@ -307,7 +301,7 @@
 
 - type: entity
   id: DrinkCanPack
-  parent: BaseItem
+  parent: BaseStorageItem
   name: 6pack
   components:
   - type: Sprite

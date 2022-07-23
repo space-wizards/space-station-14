@@ -1,15 +1,10 @@
 using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -241,17 +236,22 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(new NetworkBatteryPostSync());
 
             // Send events where necessary.
+            // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
+            // raised, should probably assemble a list of entity Uids during the actual solver steps.
             {
+                var appearanceQuery = GetEntityQuery<AppearanceComponent>();
                 foreach (var apcReceiver in EntityManager.EntityQuery<ApcPowerReceiverComponent>())
                 {
-                    var recv = apcReceiver.NetworkLoad.ReceivingPower;
-                    ref var last = ref apcReceiver.LastPowerReceived;
+                    var powered = apcReceiver.Powered;
+                    if (powered == apcReceiver.PoweredLastUpdate)
+                        continue;
 
-                    if (!MathHelper.CloseToPercent(recv, last))
-                    {
-                        last = recv;
-                        apcReceiver.ApcPowerChanged();
-                    }
+                    apcReceiver.PoweredLastUpdate = powered;
+
+                    RaiseLocalEvent(apcReceiver.Owner, new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower), true);
+
+                    if (appearanceQuery.TryGetComponent(apcReceiver.Owner, out var appearance))
+                        appearance.SetData(PowerDeviceVisuals.Powered, powered);
                 }
 
                 foreach (var consumer in EntityManager.EntityQuery<PowerConsumerComponent>())
@@ -262,7 +262,7 @@ namespace Content.Server.Power.EntitySystems
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
-                        RaiseLocalEvent(consumer.Owner, msg);
+                        RaiseLocalEvent(consumer.Owner, msg, true);
                     }
                 }
 
@@ -273,11 +273,11 @@ namespace Content.Server.Power.EntitySystems
 
                     if (lastSupply == 0f && currentSupply != 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = true}, true);
                     }
                     else if (lastSupply > 0f && currentSupply == 0f)
                     {
-                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false});
+                        RaiseLocalEvent(powerNetBattery.Owner, new PowerNetBatterySupplyEvent {Supply = false}, true);
                     }
 
                     powerNetBattery.LastSupply = currentSupply;

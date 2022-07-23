@@ -1,6 +1,5 @@
 using Content.Server.Nutrition.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

@@ -1,8 +1,6 @@
 ﻿using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.Examine.ExamineSystemShared;
 using static Content.Shared.Interaction.SharedInteractionSystem;
@@ -342,38 +340,6 @@ namespace Content.Shared.Interaction.Helpers
             bool ignoreInsideBlocker = true)
         {
             return ExamineSystemShared.InRangeUnOccluded(origin, other, range, predicate,
-                ignoreInsideBlocker);
-        }
-        #endregion
-
-        #region EventArgs
-        public static bool InRangeUnOccluded(
-            this ITargetedInteractEventArgs args,
-            float range = InteractionRange,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = true)
-        {
-            return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
-                ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(
-            this DragDropEvent args,
-            float range = InteractionRange,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = true)
-        {
-            return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
-                ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(
-            this AfterInteractEventArgs args,
-            float range = InteractionRange,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = true)
-        {
-            return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
                 ignoreInsideBlocker);
         }
         #endregion

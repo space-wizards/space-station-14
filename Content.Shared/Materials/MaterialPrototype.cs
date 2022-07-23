@@ -14,7 +14,7 @@ namespace Content.Shared.Materials
     public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [ParentDataField(typeof(PrototypeIdArraySerializer<MaterialPrototype>))]
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
         public string[]? Parents { get; } = null;
 
         [ViewVariables]
@@ -43,5 +43,11 @@ namespace Content.Shared.Materials
         [ViewVariables]
         [DataField("icon")]
         public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+
+        /// <summary>
+        /// The price per cm3.
+        /// </summary>
+        [DataField("price", required: true)]
+        public double Price = 0;
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Content.Server.AI.Components;
 using Content.Shared.Access.Systems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Server.AI.Pathfinding.Accessible

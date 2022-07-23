@@ -16,6 +16,8 @@
       - AccordionInstrument
       - HarmonicaInstrument
       - TromboneInstrument
+      - FrenchHornInstrument
+      - EuphoniumInstrument
       - SaxophoneInstrument
       - BanjoInstrument
       - GlockenspielInstrument

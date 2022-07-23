@@ -1,37 +1,43 @@
-## CreateVoteCommand
+### Voting system related console commands
 
-create-vote-command-description = Creates a vote
-create-vote-command-help = Usage: createvote <'restart'|'preset'>
-create-vote-command-cannot-call-vote-now = You can't call a vote right now!
-create-vote-command-invalid-vote-type = You can't call a vote right now!
+## 'createvote' command
 
-## CreateCustomCommand
+cmd-createvote-desc = Creates a vote
+cmd-createvote-help = Usage: createvote <'restart'|'preset'|'map'>
+cmd-createvote-cannot-call-vote-now = You can't call a vote right now!
+cmd-createvote-invalid-vote-type = Invalid vote type
+cmd-createvote-arg-vote-type = <vote type>
 
-create-custom-command-description = Creates a custom vote
-create-custom-command-help = customvote <title> <option1> <option2> [option3...]
-create-custom-command-on-finished-tie = Tie between {$ties}!
-create-custom-command-on-finished-win = {$winner} wins!
+## 'customvote' command
 
-## VoteCommand
+cmd-customvote-desc = Creates a custom vote
+cmd-customvote-help = Usage: customvote <title> <option1> <option2> [option3...]
+cmd-customvote-on-finished-tie = Tie between {$ties}!
+cmd-customvote-on-finished-win = {$winner} wins!
+cmd-customvote-arg-title = <title>
+cmd-customvote-arg-option-n = <option{ $n }>
 
-vote-command-description = Votes on an active vote
-vote-command-help = vote <voteId> <option>
-vote-command-cannot-call-vote-now = You can't call a vote right now!
-vote-command-on-execute-error-must-be-player = Must be a player
-vote-command-on-execute-error-invalid-vote-id = Invalid vote ID
-vote-command-on-execute-error-invalid-vote-options = Invalid vote options
-vote-command-on-execute-error-invalid-vote = Invalid vote
-vote-command-on-execute-error-invalid-option = Invalid option
+## 'vote' command
 
-## ListVotesCommand
+cmd-vote-desc = Votes on an active vote
+cmd-vote-help = vote <voteId> <option>
+cmd-vote-cannot-call-vote-now = You can't call a vote right now!
+cmd-vote-on-execute-error-must-be-player = Must be a player
+cmd-vote-on-execute-error-invalid-vote-id = Invalid vote ID
+cmd-vote-on-execute-error-invalid-vote-options = Invalid vote options
+cmd-vote-on-execute-error-invalid-vote = Invalid vote
+cmd-vote-on-execute-error-invalid-option = Invalid option
 
-list-votes-command-description = Lists currently active votes
-list-votes-command-help = Usage: listvotes
+## 'listvotes' command
 
-## CancelVoteCommand
+cmd-listvotes-desc = Lists currently active votes
+cmd-listvotes-help = Usage: listvotes
 
-cancel-vote-command-description = Cancels an active vote
-cancel-vote-command-help = Usage: cancelvote <id>
-                           You can get the ID from the listvotes command.
-cancel-vote-command-on-execute-error-invalid-vote-id = Invalid vote ID
-cancel-vote-command-on-execute-error-missing-vote-id = Missing ID
+## 'cancelvote' command
+
+cmd-cancelvote-desc = Cancels an active vote
+cmd-cancelvote-help = Usage: cancelvote <id>
+                      You can get the ID from the listvotes command.
+cmd-cancelvote-error-invalid-vote-id = Invalid vote ID
+cmd-cancelvote-error-missing-vote-id = Missing ID
+cmd-cancelvote-arg-id = <id>

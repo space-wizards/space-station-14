@@ -1,16 +1,16 @@
-using System;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.DoAfter;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
@@ -20,11 +20,12 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System.Threading;
 
 namespace Content.Server.Light.EntitySystems
 {
     /// <summary>
-    ///     System for the PoweredLightComponens
+    ///     System for the PoweredLightComponents
     /// </summary>
     public sealed class PoweredLightSystem : EntitySystem
     {
@@ -33,10 +34,14 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
+        public const string LightBulbContainer = "light_bulb";
 
         public override void Initialize()
         {
@@ -50,14 +55,18 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
+
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCompleteEvent>(OnEjectBulbComplete);
+            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCancelledEvent>(OnEjectBulbCancelled);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
-            light.LightBulbContainer = light.Owner.EnsureContainer<ContainerSlot>("light_bulb");
+            light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+            _signalSystem.EnsureReceiverPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
@@ -84,6 +93,9 @@ namespace Content.Server.Light.EntitySystems
             if (args.Handled)
                 return;
 
+            if (light.CancelToken != null)
+                return;
+
             // check if light has bulb to eject
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null)
@@ -108,19 +120,44 @@ namespace Content.Server.Light.EntitySystems
                     var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage);
 
                     if (damage != null)
-                        _logSystem.Add(LogType.Damaged,
+                        _adminLogger.Add(LogType.Damaged,
                             $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
+                    SoundSystem.Play(light.BurnHandSound.GetSound(), Filter.Pvs(uid), uid);
 
                     args.Handled = true;
                     return;
                 }
             }
 
-            // all checks passed
-            // just try to eject bulb
-            args.Handled = EjectBulb(uid, userUid, light) != null;
+
+            //removing a broken/burned bulb, so allow instant removal
+            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            {
+                args.Handled = EjectBulb(uid, userUid, light) != null;
+                return;
+            }
+
+            // removing a working bulb, so require a delay
+            light.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs((EntityUid) userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
+            {
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                TargetFinishedEvent = new EjectBulbCompleteEvent()
+                {
+                    Component = light,
+                    User = userUid,
+                    Target = uid,
+                },
+                TargetCancelledEvent = new EjectBulbCancelledEvent()
+                {
+                    Component = light,
+                }
+            });
+
+            args.Handled = true;
         }
 
         #region Bulb Logic API
@@ -161,7 +198,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // check if light has bulb
-            if (GetBulb(uid, light) is not {Valid: true} bulb)
+            if (GetBulb(uid, light) is not { Valid: true } bulb)
                 return null;
 
             // try to remove bulb from container
@@ -238,7 +275,6 @@ namespace Content.Server.Light.EntitySystems
             }
             else
             {
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
 
                 switch (lightBulb.State)
                 {
@@ -251,7 +287,7 @@ namespace Content.Server.Light.EntitySystems
                             if (time > light.LastThunk + ThunkDelay)
                             {
                                 light.LastThunk = time;
-                                SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));
+                                SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
                             }
                         }
                         else
@@ -269,6 +305,8 @@ namespace Content.Server.Light.EntitySystems
                         appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                         break;
                 }
+
+                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
             }
         }
 
@@ -328,19 +366,19 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
         {
-            switch (args.Port)
-            {
-                case "state":
-                    ToggleLight(uid, component);
-                    break;
-            }
+            if (args.Port == component.OffPort)
+                SetState(uid, false, component);
+            else if (args.Port == component.OnPort)
+                SetState(uid, true, component);
+            else if (args.Port == component.TogglePort)
+                ToggleLight(uid, component);
         }
 
         /// <summary>
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
-         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+        /// </summary>
+        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
@@ -348,7 +386,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness=null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -387,6 +425,29 @@ namespace Content.Server.Light.EntitySystems
 
             light.On = state;
             UpdateLight(uid, light);
+        }
+
+        private void OnEjectBulbComplete(EntityUid uid, PoweredLightComponent component, EjectBulbCompleteEvent args)
+        {
+            args.Component.CancelToken = null;
+            EjectBulb(args.Target, args.User, args.Component);
+        }
+
+        private static void OnEjectBulbCancelled(EntityUid uid, PoweredLightComponent component, EjectBulbCancelledEvent args)
+        {
+            args.Component.CancelToken = null;
+        }
+
+        private sealed class EjectBulbCompleteEvent : EntityEventArgs
+        {
+            public PoweredLightComponent Component { get; init; } = default!;
+            public EntityUid User { get; init; }
+            public EntityUid Target { get; init; }
+        }
+
+        private sealed class EjectBulbCancelledEvent : EntityEventArgs
+        {
+            public PoweredLightComponent Component { get; init; } = default!;
         }
     }
 }

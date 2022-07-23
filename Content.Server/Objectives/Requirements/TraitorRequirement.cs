@@ -1,7 +1,6 @@
 ﻿using Content.Server.Objectives.Interfaces;
 using Content.Server.Traitor;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Objectives.Requirements
 {

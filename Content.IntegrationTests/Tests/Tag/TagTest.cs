@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Shared.Tag;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Tag
 {
     [TestFixture]
     [TestOf(typeof(TagComponent))]
-    public sealed class TagTest : ContentIntegrationTest
+    public sealed class TagTest
     {
         private const string TagEntityId = "TagTestDummy";
 
@@ -45,15 +44,13 @@ namespace Content.IntegrationTests.Tests.Tag
         [Test]
         public async Task TagComponentTest()
         {
-            var options = new ServerContentIntegrationOption {ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var tagSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<TagSystem>();
+            var entManager = server.ResolveDependency<IEntitySystemManager>();
 
             EntityUid sTagDummy = default;
             TagComponent sTagComponent = null!;
@@ -67,6 +64,7 @@ namespace Content.IntegrationTests.Tests.Tag
 
             await server.WaitAssertion(() =>
             {
+                var tagSystem = entManager.GetEntitySystem<TagSystem>();
                 // Has one tag, the starting tag
                 Assert.That(sTagComponent.Tags.Count, Is.EqualTo(1));
                 sPrototypeManager.Index<TagPrototype>(StartingTag);
@@ -219,6 +217,7 @@ namespace Content.IntegrationTests.Tests.Tag
                 // No tags left in the component
                 Assert.That(sTagComponent.Tags, Is.Empty);
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

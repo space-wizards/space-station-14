@@ -4,14 +4,11 @@ using Content.Shared.Audio;
 using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -60,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var (_, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(fixtures, fixture, (int) CollisionGroup.VaultImpassable);
+                        _physics.AddCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
                     }
                 }
             }
@@ -79,7 +76,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
-                _physics.RemoveCollisionMask(fixtures, fixture, (int) CollisionGroup.VaultImpassable);
+                _physics.RemoveCollisionMask(fixtures, fixture, (int) CollisionGroup.TableLayer);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
@@ -99,9 +96,44 @@ namespace Content.Server.Atmos.EntitySystems
                 if(_spaceWindSoundCooldown == 0 && !string.IsNullOrEmpty(SpaceWindSound))
                 {
                     var coordinates = tile.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager);
-                    SoundSystem.Play(Filter.Pvs(coordinates), SpaceWindSound, coordinates,
-                        AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
+                    SoundSystem.Play(SpaceWindSound, Filter.Pvs(coordinates),
+                        coordinates, AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
+            }
+
+
+            if (tile.PressureDifference > 100)
+            {
+                // TODO ATMOS Do space wind graphics here!
+            }
+
+            if (_spaceWindSoundCooldown++ > SpaceWindSoundCooldownCycles)
+                _spaceWindSoundCooldown = 0;
+
+            // No atmos yeets, return early.
+            if (!SpaceWind)
+                return;
+
+            // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
+            var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
+
+            // If we're using monstermos, smooth out the yeet direction to follow the flow
+            if (MonstermosEqualization)
+            {
+                // We step through tiles according to the pressure direction on the current tile.
+                // The goal is to get a general direction of the airflow in the area.
+                // 3 is the magic number - enough to go around corners, but not U-turns.
+                var curTile = tile!;
+                for (var i = 0; i < 3; i++)
+                {
+                    if (curTile.PressureDirection == AtmosDirection.Invalid
+                        || !curTile.AdjacentBits.IsFlagSet(curTile.PressureDirection))
+                        break;
+                    curTile = curTile.AdjacentTiles[curTile.PressureDirection.ToIndex()]!;
+                }
+
+                if (curTile != tile)
+                    tile.PressureSpecificTarget = curTile;
             }
 
             foreach (var entity in _lookup.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
@@ -125,29 +157,23 @@ namespace Content.Server.Atmos.EntitySystems
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
                         tile.PressureSpecificTarget?.GridIndices.ToEntityCoordinates(tile.GridIndex, _mapManager) ?? EntityCoordinates.Invalid,
+                        gridWorldRotation,
                         xforms.GetComponent(entity),
                         body);
                 }
-
             }
-
-            if (tile.PressureDifference > 100)
-            {
-                // TODO ATMOS Do space wind graphics here!
-            }
-
-            if (_spaceWindSoundCooldown++ > SpaceWindSoundCooldownCycles)
-                _spaceWindSoundCooldown = 0;
         }
 
-        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, TileAtmosphere other, float difference)
+        // Called from AtmosphereSystem.LINDA.cs with SpaceWind CVar check handled there.
+        private void ConsiderPressureDifference(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, AtmosDirection differenceDirection, float difference)
         {
             gridAtmosphere.HighPressureDelta.Add(tile);
-            if (difference > tile.PressureDifference)
-            {
-                tile.PressureDifference = difference;
-                tile.PressureDirection = (tile.GridIndices - other.GridIndices).GetDir().ToAtmosDirection();
-            }
+
+            if (difference <= tile.PressureDifference)
+                return;
+
+            tile.PressureDifference = difference;
+            tile.PressureDirection = differenceDirection;
         }
 
         public void ExperiencePressureDifference(
@@ -157,6 +183,7 @@ namespace Content.Server.Atmos.EntitySystems
             AtmosDirection direction,
             float pressureResistanceProbDelta,
             EntityCoordinates throwTarget,
+            Angle gridWorldRotation,
             TransformComponent? xform = null,
             PhysicsComponent? physics = null)
         {
@@ -188,18 +215,28 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (maxForce > MovedByPressureComponent.ThrowForce)
                 {
+                    var moveForce = maxForce;
+                    moveForce /= (throwTarget != EntityCoordinates.Invalid) ? SpaceWindPressureForceDivisorThrow : SpaceWindPressureForceDivisorPush;
+                    moveForce *= MathHelper.Clamp(moveProb, 0, 100);
+
+                    // Apply a sanity clamp to prevent being thrown through objects.
+                    var maxSafeForceForObject = SpaceWindMaxVelocity * physics.Mass;
+                    moveForce = MathF.Min(moveForce, maxSafeForceForObject);
+
+                    // Grid-rotation adjusted direction
+                    var dirVec = (direction.ToAngle() + gridWorldRotation).ToWorldVec();
+
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 15f;
-                        var pos = ((throwTarget.Position - xform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
+                        var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized + dirVec).Normalized;
                         physics.ApplyLinearImpulse(pos * moveForce);
                     }
 
                     else
                     {
-                        var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
-                        physics.ApplyLinearImpulse(direction.ToDirection().ToVec() * moveForce);
+                        moveForce = MathF.Min(moveForce, SpaceWindMaxPushForce);
+                        physics.ApplyLinearImpulse(dirVec * moveForce);
                     }
 
                     component.LastHighPressureMovementAirCycle = cycle;

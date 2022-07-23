@@ -6,9 +6,6 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Doors.Systems
 {
@@ -68,7 +65,7 @@ namespace Content.Server.Doors.Systems
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable))
+            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent? alarmable))
             {
                 args.Cancel();
                 return;

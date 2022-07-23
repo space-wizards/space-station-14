@@ -39,7 +39,7 @@ namespace Content.Client.Paper.UI
         {
             if (!string.IsNullOrEmpty(obj.Text))
             {
-                SendMessage(new PaperInputText(obj.Text));
+                SendMessage(new PaperInputTextMessage(obj.Text));
 
                 if (_window != null)
                 {

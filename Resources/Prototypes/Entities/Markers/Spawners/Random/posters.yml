@@ -79,6 +79,9 @@
       - PosterContrabandGotWood
       - PosterContrabandWehWatches
       - PosterContrabandVoteWeh
+      - PosterContrabandBeachStarYamamoto
+      - PosterContrabandHighEffectEngineering
+      - PosterContrabandNuclearDeviceInformational
     chance: 1
 
 - type: entity

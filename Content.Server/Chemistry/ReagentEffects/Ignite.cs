@@ -1,7 +1,6 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 

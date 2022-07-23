@@ -1,5 +1,4 @@
 using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Singularity.Components
 {

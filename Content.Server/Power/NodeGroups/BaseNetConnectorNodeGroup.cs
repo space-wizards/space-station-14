@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Power.NodeGroups
 {
@@ -13,13 +9,21 @@ namespace Content.Server.Power.NodeGroups
         public override void LoadNodes(List<Node> groupNodes)
         {
             base.LoadNodes(groupNodes);
+            var entManager = IoCManager.Resolve<IEntityManager>();
 
             foreach (var node in groupNodes)
             {
-                var newNetConnectorComponents = IoCManager.Resolve<IEntityManager>().GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner)
-                    .Where(powerComp => (powerComp.NodeId == null || powerComp.NodeId == node.Name) &&
-                                        (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
-                    .ToList();
+                var newNetConnectorComponents = new List<IBaseNetConnectorComponent<TNetType>>();
+
+                foreach (var comp in entManager.GetComponents<IBaseNetConnectorComponent<TNetType>>(node.Owner))
+                {
+                    if ((comp.NodeId == null ||
+                         comp.NodeId == node.Name) &&
+                        (NodeGroupID) comp.Voltage == node.NodeGroupID)
+                    {
+                        newNetConnectorComponents.Add(comp);
+                    }
+                }
 
                 foreach (var netConnector in newNetConnectorComponents)
                 {

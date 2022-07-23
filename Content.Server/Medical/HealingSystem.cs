@@ -4,6 +4,7 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
+using Content.Server.MobState;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -17,12 +18,13 @@ namespace Content.Server.Medical;
 
 public sealed class HealingSystem : EntitySystem
 {
-    [Dependency] private readonly AdminLogSystem _logs = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     public override void Initialize()
     {
@@ -35,6 +37,9 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnHealingComplete(EntityUid uid, DamageableComponent component, HealingCompleteEvent args)
     {
+        if (_mobStateSystem.IsDead(uid))
+            return;
+
         if (TryComp<StackComponent>(args.Component.Owner, out var stack) && stack.Count < 1) return;
 
         if (component.DamageContainerID is not null &&
@@ -55,13 +60,13 @@ public sealed class HealingSystem : EntitySystem
         _stacks.Use(args.Component.Owner, 1, stack);
 
         if (uid != args.User)
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(uid):target} for {healed.Total:damage} damage");
         else
-            _logs.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
+            _adminLogger.Add(LogType.Healed, $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {healed.Total:damage} damage");
 
         if (args.Component.HealingEndSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), args.Component.HealingEndSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(args.Component.HealingEndSound.GetSound(), Filter.Pvs(uid, entityManager:EntityManager), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
     }
 
@@ -74,50 +79,59 @@ public sealed class HealingSystem : EntitySystem
     {
         if (args.Handled) return;
 
-        args.Handled = true;
-        Heal(uid, args.User, args.User, component);
+        if (TryHeal(uid, args.User, args.User, component))
+            args.Handled = true;
     }
 
     private void OnHealingAfterInteract(EntityUid uid, HealingComponent component, AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null) return;
 
-        args.Handled = true;
-        Heal(uid, args.User, args.Target.Value, component);
+        if (TryHeal(uid, args.User, args.Target.Value, component))
+            args.Handled = true;
     }
 
-    private void Heal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
+    private bool TryHeal(EntityUid uid, EntityUid user, EntityUid target, HealingComponent component)
     {
         if (component.CancelToken != null)
         {
-            component.CancelToken?.Cancel();
-            component.CancelToken = null;
-            return;
+            return false;
         }
 
+        if (_mobStateSystem.IsDead(target))
+            return false;
+
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
-            return;
+            return false;
+
+        if (targetDamage.TotalDamage == 0)
+            return false;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
-            return;
+            return false;
 
         if (user != target &&
             !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
         {
-            return;
+            return false;
         }
 
         if (TryComp<SharedStackComponent>(component.Owner, out var stack) && stack.Count < 1)
-            return;
+            return false;
 
         component.CancelToken = new CancellationTokenSource();
 
         if (component.HealingBeginSound != null)
         {
-            SoundSystem.Play(Filter.Pvs(uid, entityManager:EntityManager), component.HealingBeginSound.GetSound(), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
+            SoundSystem.Play(component.HealingBeginSound.GetSound(), Filter.Pvs(uid, entityManager:EntityManager), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
 
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)
+        var delay = component.Delay;
+
+        if (user == target)
+            delay *= component.SelfHealPenaltyMultiplier;
+
+        _doAfter.DoAfter(new DoAfterEventArgs(user, delay, component.CancelToken.Token, target)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,
@@ -141,6 +155,8 @@ public sealed class HealingSystem : EntitySystem
                 return true;
             },
         });
+
+        return true;
     }
 
     private sealed class HealingCompleteEvent : EntityEventArgs

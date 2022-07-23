@@ -1,14 +1,13 @@
 using System.Threading.Tasks;
 using Content.Shared.Atmos.Monitor;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Atmos
 {
     [TestFixture]
     [TestOf(typeof(AtmosAlarmThreshold))]
-    public sealed class AlarmThresholdTest : ContentIntegrationTest
+    public sealed class AlarmThresholdTest
     {
         private const string Prototypes = @"
 - type: alarmThreshold
@@ -22,12 +21,8 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestAlarmThreshold()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
-            {
-                ExtraPrototypes = Prototypes
-            });
-
-            await server.WaitIdleAsync();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            var server = pairTracker.Pair.Server;
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             AtmosAlarmThreshold threshold = default!;
@@ -92,6 +87,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 Assert.That(threshold.UpperBound, Is.EqualTo(null));
                 Assert.That(threshold.LowerBound, Is.EqualTo(null));
             });
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

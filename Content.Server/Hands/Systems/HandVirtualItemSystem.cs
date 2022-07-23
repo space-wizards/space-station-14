@@ -1,4 +1,3 @@
-using Content.Server.Hands.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -35,7 +34,6 @@ namespace Content.Server.Hands.Systems
                 if (TryComp(hand.HeldEntity, out HandVirtualItemComponent? virt) && virt.BlockingEntity == matching)
                 {
                     Delete(virt, user);
-                    return;
                 }
             }
         }

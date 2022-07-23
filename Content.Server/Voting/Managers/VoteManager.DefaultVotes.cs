@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
@@ -9,10 +7,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Voting.Managers
@@ -42,7 +36,8 @@ namespace Content.Server.Voting.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }
-
+            var ticker = EntitySystem.Get<GameTicker>();
+            ticker.UpdateInfoText();
             TimeoutStandardVote(voteType);
         }
 
@@ -54,13 +49,14 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-restart-title"),
                 Options =
                 {
-                    (Loc.GetString("ui-vote-restart-yes"), true),
-                    (Loc.GetString("ui-vote-restart-no"), false)
+                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                    (Loc.GetString("ui-vote-restart-no"), "no"),
+                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
                 },
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                InitiatorTimeout = TimeSpan.FromMinutes(3)
+                InitiatorTimeout = TimeSpan.FromMinutes(5)
             };
 
             if (alone)
@@ -72,12 +68,12 @@ namespace Content.Server.Voting.Managers
 
             vote.OnFinished += (_, _) =>
             {
-                var votesYes = vote.VotesPerOption[true];
-                var votesNo = vote.VotesPerOption[false];
+                var votesYes = vote.VotesPerOption["yes"];
+                var votesNo = vote.VotesPerOption["no"];
                 var total = votesYes + votesNo;
 
                 var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
-                if (votesYes / (float) total >= ratioRequired)
+                if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
                     EntitySystem.Get<RoundEndSystem>().EndRound();
@@ -97,10 +93,10 @@ namespace Content.Server.Voting.Managers
 
             foreach (var player in _playerManager.ServerSessions)
             {
-                if (player != initiator && !_afkManager.IsAfk(player))
+                if (player != initiator)
                 {
-                    // Everybody else defaults to a no vote.
-                    vote.CastVote(player, 1);
+                    // Everybody else defaults to an abstain vote to say they don't mind.
+                    vote.CastVote(player, 2);
                 }
             }
         }
@@ -112,6 +108,12 @@ namespace Content.Server.Voting.Managers
             foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
             {
                 if(!preset.ShowInVote)
+                    continue;
+
+                if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
+                    continue;
+
+                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
                     continue;
 
                 presets[preset.ID] = preset.ModeTitle;

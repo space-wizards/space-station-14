@@ -88,7 +88,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
-  description: Useful both for security and cargonia
+  description: Useful both for security and cargonia.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
@@ -119,3 +119,7 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95

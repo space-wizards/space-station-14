@@ -1,0 +1,154 @@
+﻿- type: gameRule
+  id: BreakerFlip
+  config:
+    !type:StationEventRuleConfiguration
+    id: BreakerFlip
+    weight: 10
+    endAfter: 1
+    maxOccurrences: 5
+    minimumPlayers: 15
+
+- type: gameRule
+  id: BureaucraticError
+  config:
+    !type:StationEventRuleConfiguration
+    id: BureaucraticError
+    startAnnouncement: station-event-bureaucratic-error-announcement
+    minimumPlayers: 25
+    weight: 5
+    maxOccurrences: 2
+    endAfter: 1
+
+- type: gameRule
+  id: DiseaseOutbreak
+  config:
+    !type:StationEventRuleConfiguration
+    startAnnouncement: station-event-disease-outbreak-announcement
+    startAudio:
+      path: /Audio/Announcements/outbreak7.ogg
+    id: DiseaseOutbreak
+    weight: 5
+    endAfter: 1
+    earliestStart: 15
+    maxOccurrences: 3
+
+- type: gameRule
+  id: FalseAlarm
+  config:
+    !type:StationEventRuleConfiguration
+    id: FalseAlarm
+    weight: 15
+    endAfter: 1
+    maxOccurrences: 5
+
+- type: gameRule
+  id: GasLeak
+  config:
+    !type:StationEventRuleConfiguration
+    id: GasLeak
+    startAnnouncement: station-event-gas-leak-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    endAnnouncement: station-event-gas-leak-end-announcement
+    earliestStart: 10
+    minimumPlayers: 5
+    weight: 5
+    maxOccurrences: 1
+    startAfter: 20
+
+- type: gameRule
+  id: KudzuGrowth
+  config:
+    !type:StationEventRuleConfiguration
+    id: KudzuGrowth
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    maxOccurrences: 2
+    startAfter: 50
+    endAfter: 240
+
+- type: gameRule
+  id: MeteorSwarm
+  config:
+    !type:StationEventRuleConfiguration
+    id: MeteorSwarm
+    earliestStart: 30
+    weight: 5
+    maxOccurrences: 2
+    minimumPlayers: 20
+    startAnnouncement: station-event-meteor-swarm-start-announcement
+    endAnnouncement: station-event-meteor-swarm-end-announcement
+    startAudio:
+      path: /Audio/Announcements/meteors.ogg
+    startAfter: 30
+
+- type: gameRule
+  id: MouseMigration
+  config:
+    !type:StationEventRuleConfiguration
+    id: MouseMigration
+    earliestStart: 30
+    minimumPlayers: 35
+    weightLow: 5
+    maxOccurrences: 1
+    endAfter: 50
+
+- type: gameRule
+  id: PowerGridCheck
+  config:
+    !type:StationEventRuleConfiguration
+    id: PowerGridCheck
+    weight: 10
+    maxOccurrences: 3
+    startAnnouncement: station-event-power-grid-check-start-announcement
+    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAudio:
+      path: /Audio/Announcements/power_off.ogg
+    startAfter: 12
+
+- type: gameRule
+  id: RandomSentience
+  config:
+    !type:StationEventRuleConfiguration
+    id: RandomSentience
+    weight: 10
+    endAfter: 1
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+
+- type: gameRule
+  id: VentClog
+  config:
+    !type:StationEventRuleConfiguration
+    id: VentClog
+    startAnnouncement: station-event-vent-clog-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    maxOccurrences: 2
+    startAfter: 50
+    endAfter: 60
+
+- type: gameRule
+  id: VentCritters
+  config:
+    !type:StationEventRuleConfiguration
+    id: VentCritters
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    maxOccurrences: 2
+    endAfter: 60
+
+- type: gameRule
+  id: ZombieOutbreak
+  config:
+    !type:StationEventRuleConfiguration
+    id: ZombieOutbreak
+    earliestStart: 50
+    weight: 2.5
+    endAfter: 1
+    maxOccurrences: 1

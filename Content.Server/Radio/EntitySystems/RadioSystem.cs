@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Examine;
 using Content.Server.Radio.Components;
+using Content.Shared.Radio;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Radio.EntitySystems
 {
@@ -11,7 +12,30 @@ namespace Content.Server.Radio.EntitySystems
     {
         private readonly List<string> _messages = new();
 
-        public void SpreadMessage(IRadio source, EntityUid speaker, string message, int channel)
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<HandheldRadioComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<HandheldRadioComponent, ActivateInWorldEvent>(OnActivate);
+        }
+
+        private void OnActivate(EntityUid uid, HandheldRadioComponent component, ActivateInWorldEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+            component.Use(args.User);
+        }
+
+        private void OnExamine(EntityUid uid, HandheldRadioComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine",("frequency", component.BroadcastFrequency)));
+        }
+
+        public void SpreadMessage(IRadio source, EntityUid speaker, string message, RadioChannelPrototype channel)
         {
             if (_messages.Contains(message)) return;
 
@@ -19,11 +43,8 @@ namespace Content.Server.Radio.EntitySystems
 
             foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
-                if (radio.Channels.Contains(channel))
-                {
-                    //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                    radio.Receive(message, channel, speaker);
-                }
+                //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
+                radio.Receive(message, channel, speaker);
             }
 
             _messages.Remove(message);

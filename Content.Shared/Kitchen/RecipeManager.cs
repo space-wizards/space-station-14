@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {

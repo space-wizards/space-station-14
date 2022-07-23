@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using Content.Server.Holiday.Interfaces;
 
 namespace Content.Server.Holiday.ShouldCelebrate

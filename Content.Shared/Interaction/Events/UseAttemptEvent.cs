@@ -1,6 +1,4 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Shared.Interaction.Events
+﻿namespace Content.Shared.Interaction.Events
 {
     public sealed class UseAttemptEvent : CancellableEntityEventArgs
     {

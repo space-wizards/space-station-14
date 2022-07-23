@@ -30,11 +30,11 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.08,-0.35,0.15,0.25"
-      layer:
-      - SmallImpassable
+        bounds: "-0.08,-0.35,0.15,0.25"
       mask:
-      - VaultImpassable
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi

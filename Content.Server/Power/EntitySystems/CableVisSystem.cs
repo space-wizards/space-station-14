@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems
@@ -33,7 +29,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
                 return;
 
             var mask = WireVisDirFlags.None;

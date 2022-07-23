@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Systems
 {

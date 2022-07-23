@@ -1,5 +1,5 @@
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerAlert
   name: alerts computer
   description: Used to access the station's automated alert system.
@@ -13,13 +13,22 @@
     board: AlertsComputerCircuitboard
 
 - type: entity
-  parent: ComputerBase
-  id: ComputerShuttleBase
-  name: shuttle console
-  description: Used to pilot a shuttle.
-  abstract: true
+  parent: BaseComputer
+  id: ComputerEmergencyShuttle
+  name: emergency shuttle console
+  description: Handles authorization to early launch the shuttle.
   components:
-  - type: ShuttleConsole
+  - type: AccessReader
+    access:
+    - [ Command ]
+  - type: EmergencyShuttleConsole
+  - type: ActivatableUI
+    key: enum.EmergencyConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      - key: enum.EmergencyConsoleUiKey.Key
+        type: EmergencyConsoleBoundUserInterface
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
@@ -29,7 +38,31 @@
     rotateWhileAnchored: true
 
 - type: entity
-  parent: ComputerShuttleBase
+  parent: BaseComputer
+  id: BaseComputerShuttle
+  name: shuttle console
+  description: Used to pilot a shuttle.
+  abstract: true
+  components:
+  - type: ShuttleConsole
+  - type: ActivatableUI
+    key: enum.ShuttleConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ShuttleConsoleUiKey.Key
+      type: ShuttleConsoleBoundUserInterface
+  - type: RadarConsole
+  - type: ExtensionCableReceiver
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#43ccb5"
+  - type: Rotatable
+    rotateWhileAnchored: true
+
+- type: entity
+  parent: BaseComputerShuttle
   id: ComputerShuttle
   name: shuttle console
   description: Used to pilot a shuttle.
@@ -43,23 +76,47 @@
     board: ShuttleConsoleCircuitboard
 
 - type: entity
-  parent: ComputerShuttleBase
+  parent: BaseComputerShuttle
   id: ComputerShuttleSyndie
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
   components:
+  - type: Tag
+    tags:
+    - Syndicate
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: syndie_key
       screen: syndishuttle
+  - type: RadarConsole
+    maxRange: 1536
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#c94242"
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputerShuttle
+  id: ComputerShuttleCargo
+  name: cargo shuttle console
+  description: Used to pilot the cargo shuttle.
+  components:
+  - type: Appearance
+    visuals:
+      - type: ComputerVisualizer
+        key: generic_key
+        screen: shuttle
+  - type: CargoPilotConsole
+  - type: RadarConsole
+    maxRange: 256
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c94242"
+
+- type: entity
+  parent: BaseComputer
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.
@@ -75,9 +132,22 @@
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
+  - type: PowerMonitoringConsole
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      hv:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PowerMonitoringConsoleUiKey.Key
+      type: PowerMonitoringConsoleBoundUserInterface
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerMedicalRecords
   name: medical records computer
   description: This can be used to check medical records.
@@ -95,7 +165,7 @@
     board: MedicalRecordsComputerCircuitboard
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerCriminalRecords
   name: criminal records computer
   description: This can be used to check criminal records.
@@ -113,7 +183,7 @@
     board: CriminalRecordsComputerCircuitboard
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerCrewMonitoring
   name: crew monitoring console
   description: Used to monitor active health sensors built into most of the crew's uniforms.
@@ -137,13 +207,14 @@
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
     - type: CrewMonitoringConsole
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wireless
+      receiveFrequencyId: SuitSensor
     - type: WirelessNetworkConnection
       range: 500
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
@@ -177,7 +248,7 @@
     color: "#b53ca1"
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
@@ -221,12 +292,15 @@
     radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
+  - type: Tag
+    tags:
+    - EmagImmune
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: computerBodyScanner
   name: body scanner computer
-  description: That's a body scanner.
+  description: A body scanner.
   components:
   - type: BodyScanner
   - type: ActivatableUI
@@ -251,7 +325,7 @@
     color: "#1f8c28"
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerComms
   name: communications computer
   description: This can be used for various important functions. Still under development.
@@ -261,7 +335,10 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: comm
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: CommunicationsConsole
+    title: comms-console-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -277,7 +354,33 @@
     color: "#3c5eb5"
 
 - type: entity
-  parent: ComputerBase
+  parent: ComputerComms
+  id: SyndicateComputerComms
+  name: syndicate communications computer
+  description: This can be used for various important functions. Still under development.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: syndie_key
+      screen: comm_syndie
+  - type: AccessReader
+    access: [[ "NuclearOperative" ]]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-nukie
+    color: "#ff0000"
+    canShuttle: false
+    global: true #announce to everyone they're about to fuck shit up
+    sound: /Audio/Announcements/war.ogg
+  - type: Computer
+    board: SyndicateCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"
+
+- type: entity
+  parent: BaseComputer
   id: ComputerSolarControl
   name: solar control computer
   description: A controller for solar panel arrays.
@@ -307,7 +410,7 @@
 
 
 - type: entity
-  parent: ComputerBase
+  parent: BaseComputer
   id: ComputerRadar
   name: mass scanner computer
   description: A computer for detecting nearby bodies, displaying them by position and mass.
@@ -333,89 +436,24 @@
       color: "#e6e227"
 
 - type: entity
-  id: ComputerSupplyOrdering
-  parent: ComputerBase
-  name: Cargo ordering computer
-  description: Used to order supplies, approve requests, and control the shuttle.
+  id: ComputerCargoShuttle
+  parent: BaseComputer
+  name: cargo shuttle computer
+  description: Used to order the shuttle.
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: tech_key
       screen: supply
-  - type: CargoConsole
-  - type: CargoOrderDatabase
-  - type: GalacticMarket
-    products:
-      - MedicalSupplies
-      - MedicalChemistrySupplies
-      - EmergencyExplosive
-      - EmergencyFire
-      - EmergencyInternals
-      - EmergencyRadiation
-      - EmergencyInflatablewall
-      - ArmorySmg
-      - ArmoryShotgun
-      - SecurityArmor
-      - SecurityRiot
-      - SecurityLaser
-      - SecurityHelmet
-      - SecuritySupplies
-      - SecurityNonLethal
-      - SecurityRestraints
-      - HydroponicsTools
-      - HydroponicsSeeds
-      - HydroponicsSeedsExotic
-      - LivestockMonkeyCube
-      - LivestockCow
-      - LivestockChicken
-      - LivestockDuck
-      - LivestockGoat
-      - FoodPizza
-      - ServiceJanitorial
-      - ServiceLightsReplacement
-      - ServiceSmokeables
-      - ServiceCustomSmokable
-      - ServiceBureaucracy
-      - ServicePersonnel
-      - EngineeringCableLv
-      - EngineeringCableMv
-      - EngineeringCableHv
-      - EngineeringCableBulk
-      - EngineAmeShielding
-      - EngineAmeJar
-      - EngineAmeControl
-      - EngineSolar
-      - FunPlushies
-      - FunArtSupplies
-      - FunInstruments
-      - FunBoardGames
-      - MaterialSteel
-      - MaterialGlass
-      - MaterialPlastic
-      - MaterialPlasteel
-      - MaterialPlasma
-      - EngineSingularityEmitter
-      - EngineSingularityCollector
-      - EngineSingularityGenerator
-      - EngineSingularityContainment
-      - EngineParticleAccelerator
-      - ShuttleThruster
-      - ShuttleGyroscope
-      - AtmosphericsAir
-      - AtmosphericsOxygen
-      - AtmosphericsNitrogen
-      - AtmosphericsCarbonDioxide
-#      - AtmosphericsWaterVapor
-#      - AtmosphericsPlasma
-#      - AtmosphericsTritium
+  - type: CargoShuttleConsole
   - type: ActivatableUI
-    key: enum.CargoConsoleUiKey.Key
+    key: enum.CargoConsoleUiKey.Shuttle
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.CargoConsoleUiKey.Key
-      type: CargoConsoleBoundUserInterface
+    - key: enum.CargoConsoleUiKey.Shuttle
+      type: CargoShuttleConsoleBoundUserInterface
   - type: Computer
     board: SupplyComputerCircuitboard
   - type: PointLight
@@ -426,49 +464,129 @@
     access: [["Cargo"]]
 
 - type: entity
-  id: ComputerSupplyRequest
-  parent: ComputerSupplyOrdering
+  id: ComputerCargoOrders
+  parent: BaseComputer
   name: cargo request computer
-  description: Used to request supplies from cargo.
+  description: Used to order supplies and approve requests.
   components:
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: tech_key
       screen: request
-  - type: CargoConsole
-    requestOnly: true
+  - type: CargoOrderConsole
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Orders
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Orders
+      type: CargoOrderConsoleBoundUserInterface
   - type: Computer
-    board: SupplyRequestComputerCircuitboard
+    board: SupplyComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
 
 - type: entity
-  parent: BaseStructure
+  parent: BaseComputer
+  id: ComputerSurveillanceCameraMonitor
+  name: camera monitor
+  description: A surveillance camera monitor. You're watching them. Maybe.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: tech_key
+          screen: cameras
+    - type: Computer
+      board: SurveillanceCameraMonitorCircuitboard
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WiredNetworkConnection
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSurveillanceWirelessCameraMonitor
+  name: wireless camera monitor
+  description: A wireless surveillance camera monitor. You're watching them. Maybe.
+  components:
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          key: tech_key
+          screen: cameras
+    - type: Computer
+      board: SurveillanceWirelessCameraMonitorCircuitboard
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCamera
+      transmitFrequencyId: SurveillanceCamera
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: SurveillanceCameraMonitor
+    - type: ActivatableUI
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: Transform
+      anchored: true
+    - type: UserInterface
+      interfaces:
+        - key: enum.SurveillanceCameraMonitorUiKey.Key
+          type: SurveillanceCameraMonitorBoundUserInterface
+
+- type: entity
+  parent: ComputerSurveillanceWirelessCameraMonitor
   id: ComputerTelevision
   name: wooden television
-  description: It is an old television displaying the station's cameras, if they worked.
+  description: Finally, some decent reception around here...
   components:
-  - type: Sprite
-    sprite: Structures/Machines/computers.rsi
-    layers:
-    - state: television
-    - state: detective_television
-      shader: unshaded
-    visuals:
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-      mass: 50
-      layer:
-      - SmallImpassable
-      mask:
-      - Impassable
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          body: television
+          bodyBroken: television_broken
+          screen: detective_television
+    - type: Computer
+      board: ComputerTelevisionCircuitboard
+    - type: Sprite
+      sprite: Structures/Machines/computers.rsi
+      layers:
+        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
+          visible: false
+        - map: [ "enum.ComputerVisualizer+Layers.Body"]
+          state: television
+        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
+          state: detective_television
+          shader: unshaded
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#b89f25"
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          mass: 50
+          mask:
+            - TabletopMachineMask
+          layer:
+            - TabletopMachineLayer

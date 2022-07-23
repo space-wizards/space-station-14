@@ -1,6 +1,7 @@
 ﻿- type: entity
   name: pointing arrow
   id: pointingarrow
+  save: false
   components:
   - type: Tag
     tags:

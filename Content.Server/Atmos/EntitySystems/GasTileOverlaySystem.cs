@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
@@ -13,11 +11,9 @@ using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
+
 // ReSharper disable once RedundantUsingDirective
 
 namespace Content.Server.Atmos.EntitySystems
@@ -33,7 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
         /// </summary>
-        private readonly Dictionary<GridId, HashSet<Vector2i>> _invalidTiles = new();
+        private readonly Dictionary<EntityUid, HashSet<Vector2i>> _invalidTiles = new();
 
         private readonly Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks =
             new();
@@ -41,7 +37,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
-        private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
+        private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _overlay =
             new();
 
         /// <summary>
@@ -81,7 +77,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invalidate(GridId gridIndex, Vector2i indices)
+        public void Invalidate(EntityUid gridIndex, Vector2i indices)
         {
             if (!_invalidTiles.TryGetValue(gridIndex, out var existing))
             {
@@ -92,7 +88,7 @@ namespace Content.Server.Atmos.EntitySystems
             existing.Add(indices);
         }
 
-        private GasOverlayChunk GetOrCreateChunk(GridId gridIndex, Vector2i indices)
+        private GasOverlayChunk GetOrCreateChunk(EntityUid gridIndex, Vector2i indices)
         {
             if (!_overlay.TryGetValue(gridIndex, out var chunks))
             {
@@ -113,10 +109,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_overlay.ContainsKey(ev.GridId))
-            {
-                _overlay.Remove(ev.GridId);
-            }
+            _overlay.Remove(ev.EntityUid);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -145,11 +138,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridAtmosphereComponent gridAtmosphere, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
-
-            if (tile == null)
+            if (!gridAtmosphere.Tiles.TryGetValue(indices, out var tile))
             {
                 overlayData = default;
                 return false;
@@ -190,22 +181,30 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns></returns>
         private List<GasOverlayChunk> GetChunksInRange(EntityUid entity)
         {
-            var inRange = new List<GasOverlayChunk>();
-
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
 
-            var worldBounds = Box2.CenteredAround(EntityManager.GetComponent<TransformComponent>(entity).WorldPosition,
-                new Vector2(_updateRange, _updateRange));
+            // Setting initial list size based on the theoretical max number of chunks from a single grid. For default
+            // parameters, this is currently 6^2 = 36. Unless a player is near more than one grid, this is will
+            // generally slightly over-estimate the actual list size, which will be either 25, 30, or 36 (assuming the
+            // player is not near the edge of a grid).
+            var initialListSize = (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize)) * (1 + (int) MathF.Ceiling(2 * _updateRange / ChunkSize));
 
-            foreach (var grid in _mapManager.FindGridsIntersecting(EntityManager.GetComponent<TransformComponent>(entity).MapID, worldBounds))
+            var inRange = new List<GasOverlayChunk>(initialListSize);
+
+            var xform = Transform(entity);
+            var worldPos = xform.MapPosition;
+
+            var worldBounds = Box2.CenteredAround(worldPos.Position, new Vector2(_updateRange, _updateRange));
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, worldBounds))
             {
-                if (!_overlay.TryGetValue(grid.Index, out var chunks))
+                if (!_overlay.TryGetValue(grid.GridEntityId, out var chunks))
                 {
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(EntityManager.GetComponent<TransformComponent>(entity).Coordinates).GridIndices;
+                var entityTile = grid.GetTileRef(worldPos).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -219,8 +218,8 @@ namespace Content.Server.Atmos.EntitySystems
                         // (e.g. if we're on the very edge of a chunk we may need more chunks).
 
                         var (xDiff, yDiff) = (chunkIndices.X - entityTile.X, chunkIndices.Y - entityTile.Y);
-                        if (xDiff > 0 && xDiff > _updateRange ||
-                            yDiff > 0 && yDiff > _updateRange ||
+                        if (xDiff > _updateRange ||
+                            yDiff > _updateRange ||
                             xDiff < 0 && Math.Abs(xDiff + ChunkSize) > _updateRange ||
                             yDiff < 0 && Math.Abs(yDiff + ChunkSize) > _updateRange) continue;
 
@@ -252,7 +251,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             AccumulatedFrameTime -= _updateCooldown;
 
-            var gridAtmosComponents = new Dictionary<GridId, GridAtmosphereComponent>();
+            var gridAtmosComponents = new Dictionary<EntityUid, GridAtmosphereComponent>();
             var updatedTiles = new Dictionary<GasOverlayChunk, HashSet<Vector2i>>();
 
             // So up to this point we've been caching the updated tiles for multiple ticks.
@@ -283,7 +282,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {
@@ -291,7 +290,7 @@ namespace Content.Server.Atmos.EntitySystems
                         updatedTiles[chunk] = tiles;
                     }
 
-                    updatedTiles[chunk].Add(invalid);
+                    tiles.Add(invalid);
                     chunk.Update(data, invalid);
                 }
             }
@@ -347,7 +346,7 @@ namespace Content.Server.Atmos.EntitySystems
                     overlay.RemoveChunk(chunk);
                 }
 
-                var clientInvalids = new Dictionary<GridId, List<(Vector2i, GasOverlayData)>>();
+                var clientInvalids = new Dictionary<EntityUid, List<(Vector2i, GasOverlayData)>>();
 
                 // Check for any dirty chunks in range and bundle the data to send to the client.
                 foreach (var chunk in chunksInRange)
@@ -374,13 +373,13 @@ namespace Content.Server.Atmos.EntitySystems
         }
         private sealed class PlayerGasOverlay
         {
-            private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _data =
+            private readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> _data =
                 new();
 
             private readonly Dictionary<GasOverlayChunk, GameTick> _lastSent =
                 new();
 
-            public GasOverlayMessage UpdateClient(GridId grid, List<(Vector2i, GasOverlayData)> data)
+            public GasOverlayMessage UpdateClient(EntityUid grid, List<(Vector2i, GasOverlayData)> data)
             {
                 return new(grid, data);
             }

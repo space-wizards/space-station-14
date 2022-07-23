@@ -4,11 +4,16 @@
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
+  - type: Tag
+    tags:
+    - DoorBumpOpener
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     # - Clothing
@@ -52,12 +57,9 @@
         radius: 0.35
       mass: 20
       mask:
-      - Impassable
-      - MobImpassable #Bullets?!
-      - VaultImpassable
-      - SmallImpassable
+      - MobMask
       layer:
-      - Opaque
+      - MobLayer
   - type: SolutionContainerManager
   - type: Bloodstream
     bloodlossDamage:
@@ -79,27 +81,33 @@
         Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
-    coldDamageThreshold: 260
+    coldDamageThreshold: 0
     currentTemperature: 310.15
     coldDamage:
       types:
-        Cold : 1 #per second, scales with temperature & other constants
+        Cold : 0.1 #per second, scales with temperature & other constants
     specificHeat: 42
     heatDamage:
       types:
-        Heat : 1 #per second, scales with temperature & other constants
+        Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
+      0: Alive
+      50: Critical
+      100: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
     - SlowedDown
     - Stutter
     - Electrocution
@@ -107,7 +115,7 @@
     template: AnimalTemplate
     preset: AnimalPreset
   - type: Examiner
-  - type: UnarmedCombat
+  - type: MeleeWeapon
     range: 1.5
     arcwidth: 0
     arc: bite
@@ -117,20 +125,30 @@
   - type: Appearance
     visuals:
     - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Generic_mob_burning
   - type: Actions
   - type: DoAfter
   - type: Climbing
   - type: Flashable
+  - type: Polymorphable
   - type: Pullable
-  - type: Puller
   - type: Buckle
+  - type: DiseaseCarrier
   - type: Recyclable
     safe: false
   - type: StandingState
   - type: Alerts
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+  - type: MobPrice
+    price: 1000 # Living critters are valuable in space.
+  - type: Perishable
 
 - type: entity
   save: false
@@ -139,23 +157,26 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
     # - Thirst
   - type: Hunger
-    damage:
-      types:
-        Blunt: 2
   - type: Thirst
-    damage:
-      types:
-        Blunt: 2
   - type: Barotrauma
     damage:
       types:
-        Blunt: 1 #per second, scales with pressure and other constants.
+        Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: StatusEffects
+    allowed:
+      - Stun
+      - KnockedDown
+      - SlowedDown
+      - Stutter
+      - Electrocution
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -167,10 +188,10 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 3
+        Asphyxiation: 2
     damageRecovery:
       types:
-        Asphyxiation: -1.5
+        Asphyxiation: -1.0
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
@@ -182,6 +203,8 @@
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
-
   - type: Bloodstream
     bloodMaxVolume: 150
+  - type: MobPrice
+    price: 150
+

@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.Traitor.Uplink.Account
@@ -77,19 +73,13 @@ namespace Content.Server.Traitor.Uplink.Account
             purchasedItem = null;
 
             if (!_listingSystem.TryGetListing(itemId, out var listing))
-            {
                 return false;
-            }
 
             if (acc.Balance < listing.Price)
-            {
                 return false;
-            }
 
             if (!RemoveFromBalance(acc, listing.Price))
-            {
                 return false;
-            }
 
             purchasedItem = EntityManager.SpawnEntity(listing.ItemId, spawnCoords);
             return true;

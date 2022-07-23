@@ -25,6 +25,26 @@
 
 - type: entity
   parent: ClothingShoesBase
+  id: ClothingShoesBling
+  name: bling clown shoes
+  description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/bling.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: footstep_clown
+  - type: PointLight
+    netsync: false
+    enabled: true 
+    radius: 3
+    energy: 2
+    color: "#FFD800"   
+
+- type: entity
+  parent: ClothingShoesBase
   id: ClothingShoesCult
   name: cult shoes
   description: A pair of boots worn by the followers of Nar'Sie.

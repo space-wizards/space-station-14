@@ -9,9 +9,10 @@ namespace Content.Client.MachineLinking.UI
     {
         private SignalPortSelectorMenu? _menu;
 
-        public SignalPortSelectorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
-        {
-        }
+        private string? _selectedTransmitterPort;
+        private string? _selectedReceiverPort;
+
+        public SignalPortSelectorBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
@@ -29,13 +30,46 @@ namespace Content.Client.MachineLinking.UI
             {
                 case SignalPortsState data:
                     _menu?.UpdateState(data);
+                    _selectedTransmitterPort = null;
+                    _selectedReceiverPort = null;
                     break;
             }
         }
 
-        public void OnPortSelected(string port)
+        public void OnTransmitterPortSelected(string port)
         {
-            SendMessage(new SignalPortSelected(port));
+            _selectedTransmitterPort = port;
+            if (_selectedReceiverPort != null)
+            {
+                SendMessage(new SignalPortSelected(_selectedTransmitterPort, _selectedReceiverPort));
+                _selectedTransmitterPort = null;
+                _selectedReceiverPort = null;
+            }
+        }
+
+        public void OnReceiverPortSelected(string port)
+        {
+            _selectedReceiverPort = port;
+            if (_selectedTransmitterPort != null)
+            {
+                SendMessage(new SignalPortSelected(_selectedTransmitterPort, _selectedReceiverPort));
+                _selectedTransmitterPort = null;
+                _selectedReceiverPort = null;
+            }
+        }
+
+        public void OnClearPressed()
+        {
+            _selectedTransmitterPort = null;
+            _selectedReceiverPort = null;
+            SendMessage(new LinkerClearSelected());
+        }
+
+        public void OnLinkDefaultPressed()
+        {
+            _selectedTransmitterPort = null;
+            _selectedReceiverPort = null;
+            SendMessage(new LinkerLinkDefaultSelected());
         }
 
         protected override void Dispose(bool disposing)

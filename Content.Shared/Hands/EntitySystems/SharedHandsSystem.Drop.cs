@@ -66,17 +66,24 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var entity = hand.HeldEntity!.Value;
         DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
-        var xform = Transform(uid);
+        var userXform = Transform(uid);
+        var itemXform = Transform(entity);
+        var isInContainer = _containerSystem.IsEntityInContainer(uid);
 
-        if (targetDropLocation == null)
+        if (targetDropLocation == null || isInContainer)
         {
+            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.\
             // TODO recursively check upwards for containers
-            Transform(entity).AttachParentToContainerOrGrid(EntityManager);
+
+            if (!isInContainer
+                || !_containerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
+                || !container.Insert(entity, EntityManager, itemXform))
+                itemXform.AttachToGridOrMap();
             return true;
         }
 
         var target = targetDropLocation.Value.ToMap(EntityManager);
-        Transform(entity).WorldPosition = GetFinalDropCoordinates(uid, xform.MapPosition, target);
+        itemXform.WorldPosition = GetFinalDropCoordinates(uid, userXform.MapPosition, target);
         return true;
     }
 
@@ -151,7 +158,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         RaiseLocalEvent(entity, gotUnequipped, false);
 
         var didUnequip = new DidUnequipHandEvent(uid, entity, hand);
-        RaiseLocalEvent(uid, didUnequip);
+        RaiseLocalEvent(uid, didUnequip, true);
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid), false);

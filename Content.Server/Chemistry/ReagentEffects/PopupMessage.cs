@@ -1,10 +1,7 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -14,7 +11,10 @@ namespace Content.Server.Chemistry.ReagentEffects
         public string[] Messages = default!;
 
         [DataField("type")]
-        public PopupType Type = PopupType.Local;
+        public PopupRecipients Type = PopupRecipients.Local;
+
+        [DataField("visualType")]
+        public PopupType VisualType = PopupType.Small;
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -22,14 +22,14 @@ namespace Content.Server.Chemistry.ReagentEffects
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var msg = random.Pick(Messages);
-            if (Type == PopupType.Local)
-                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Entities(args.SolutionEntity));
-            else if (Type == PopupType.Pvs)
-                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Pvs(args.SolutionEntity));
+            if (Type == PopupRecipients.Local)
+                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Entities(args.SolutionEntity), VisualType);
+            else if (Type == PopupRecipients.Pvs)
+                popupSys.PopupEntity(Loc.GetString(msg), args.SolutionEntity, Filter.Pvs(args.SolutionEntity), VisualType);
         }
     }
 
-    public enum PopupType
+    public enum PopupRecipients
     {
         Pvs,
         Local

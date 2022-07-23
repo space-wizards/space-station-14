@@ -114,7 +114,7 @@ namespace Content.Client.Verbs
             }
 
             // Get entities
-            var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
+            var entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize)
                 .ToList();
 
             if (entities.Count == 0)
@@ -238,7 +238,7 @@ namespace Content.Client.Verbs
             if (verb.ExecutionEventArgs != null)
             {
                 if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs, true);
                 else
                     RaiseLocalEvent(verb.ExecutionEventArgs);
             }

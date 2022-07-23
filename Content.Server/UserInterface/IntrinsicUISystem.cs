@@ -1,10 +1,7 @@
 ﻿using Content.Server.Actions;
 using Content.Shared.Actions;
-using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.UserInterface;
 
@@ -70,7 +67,7 @@ public sealed class IntrinsicUISystem : EntitySystem
 }
 
 [UsedImplicitly]
-public sealed class ToggleIntrinsicUIEvent : PerformActionEvent
+public sealed class ToggleIntrinsicUIEvent : InstantActionEvent
 {
     [ViewVariables]
     public Enum? Key { get; set; }

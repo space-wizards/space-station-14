@@ -26,6 +26,7 @@
       compatibility: Slime
       mechanisms:
         - SentientSlimeCore
+        - OrganSlimeLungs
 #    criticalThreshold: 100
 #    deadThreshold: 150
 
@@ -50,7 +51,10 @@
     #    deadThreshold: 120
     - type: Input
       context: "ghost"
-    - type: DummyInputMover
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 0
+      baseSprintSpeed: 0
+    - type: InputMover
     - type: GhostOnMove
 
 - type: entity

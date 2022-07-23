@@ -1,5 +1,6 @@
 using Content.Shared.Disease;
 using Content.Server.Buckle.Components;
+using Content.Server.Bed.Components;
 
 namespace Content.Server.Disease.Cures
 {
@@ -7,7 +8,6 @@ namespace Content.Server.Disease.Cures
     /// Cures the disease after a certain amount of time
     /// strapped.
     /// </summary>
-    /// TODO: Revisit after bed pr merged
     public sealed class DiseaseBedrestCure : DiseaseCure
     {
         [ViewVariables(VVAccess.ReadWrite)]
@@ -18,7 +18,8 @@ namespace Content.Server.Disease.Cures
 
         public override bool Cure(DiseaseEffectArgs args)
         {
-            if (!args.EntityManager.TryGetComponent<BuckleComponent>(args.DiseasedEntity, out var buckle))
+            if (!args.EntityManager.TryGetComponent<BuckleComponent>(args.DiseasedEntity, out var buckle) ||
+                !args.EntityManager.HasComponent<HealOnBuckleComponent>(buckle.BuckledTo?.Owner))
                 return false;
             if (buckle.Buckled)
                 Ticker++;

@@ -3,8 +3,11 @@
   save: false
   id: AdminObserver
   name: admin observer
-  abstract: true
+  noSpawn: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -13,13 +16,13 @@
   - type: DoAfter
   - type: CombatMode
   - type: Actions
-  - type: PlayerInputMover
+  - type: InputMover
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
   - type: Physics
+    ignorePaused: true
     bodyType: Kinematic
-    status: InAir
     # TODO: Even need these? Don't think so but CBF checking right now.
   - type: Fixtures
     fixtures:
@@ -28,7 +31,7 @@
         bounds: "-0.35,-0.35,0.35,0.35"
       mass: 5
       mask:
-        - GhostImpassable
+      - GhostImpassable
   - type: Body
     template: AGhostTemplate
     preset: HumanPreset
@@ -43,8 +46,8 @@
         type: CommunicationsConsoleBoundUserInterface
       - key: enum.RadarConsoleUiKey.Key
         type: RadarConsoleBoundUserInterface
-      - key: enum.CargoConsoleUiKey.Key
-        type: CargoConsoleBoundUserInterface
+      - key: enum.CargoConsoleUiKey.Orders
+        type: CargoOrderConsoleBoundUserInterface
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
   - type: IntrinsicUI
@@ -76,7 +79,7 @@
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
-      - key: enum.CargoConsoleUiKey.Key
+      - key: enum.CargoConsoleUiKey.Orders
         toggleAction:
           name: action-name-show-cargo-console
           description: action-description-show-cargo-console
@@ -96,72 +99,15 @@
           event: !type:ToggleIntrinsicUIEvent
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
+    title: communicationsconsole-announcement-title-centcom
+    color: "#228b22"
   - type: RadarConsole
-  - type: CargoConsole
-  - type: CargoOrderDatabase
-  - type: GalacticMarket # wow this kinda sucks.
-    products:
-      - MedicalSupplies
-      - MedicalChemistrySupplies
-      - EmergencyExplosive
-      - EmergencyFire
-      - EmergencyInternals
-      - EmergencyRadiation
-      - EmergencyInflatablewall
-      - ArmorySmg
-      - ArmoryShotgun
-      - SecurityArmor
-      - SecurityRiot
-      - SecurityLaser
-      - SecurityHelmet
-      - SecuritySupplies
-      - SecurityNonLethal
-      - SecurityRestraints
-      - HydroponicsTools
-      - HydroponicsSeeds
-      - HydroponicsSeedsExotic
-      - LivestockMonkeyCube
-      - LivestockCow
-      - LivestockChicken
-      - LivestockDuck
-      - LivestockGoat
-      - FoodPizza
-      - ServiceJanitorial
-      - ServiceLightsReplacement
-      - ServiceSmokeables
-      - ServiceCustomSmokable
-      - ServiceBureaucracy
-      - ServicePersonnel
-      - EngineeringCableLv
-      - EngineeringCableMv
-      - EngineeringCableHv
-      - EngineeringCableBulk
-      - EngineAmeShielding
-      - EngineAmeJar
-      - EngineAmeControl
-      - EngineSolar
-      - FunPlushies
-      - FunArtSupplies
-      - FunInstruments
-      - FunBoardGames
-      - MaterialSteel
-      - MaterialGlass
-      - MaterialPlastic
-      - MaterialPlasteel
-      - MaterialPlasma
-      - EngineSingularityEmitter
-      - EngineSingularityCollector
-      - EngineSingularityGenerator
-      - EngineSingularityContainment
-      - EngineParticleAccelerator
-      - ShuttleThruster
-      - ShuttleGyroscope
-      - AtmosphericsAir
-      - AtmosphericsOxygen
-      - AtmosphericsNitrogen
-      - AtmosphericsCarbonDioxide
+  - type: CargoOrderConsole
   - type: CrewMonitoringConsole
-  - type: DeviceNetworkComponent
+    snap: false
+    precision: 3
+  - type: DeviceNetwork
     deviceNetId: Wireless
+    receiveFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
     range: 500

@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
@@ -15,6 +16,7 @@ namespace Content.Server.UserInterface
     internal sealed class ActivatableUISystem : EntitySystem
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
 
         public override void Initialize()
         {
@@ -66,6 +68,9 @@ namespace Content.Server.UserInterface
             if (!args.CanAccess)
                 return;
 
+            if (component.RequireHands && args.Hands == null)
+                return;
+
             if (component.InHandsOnly && args.Using != uid)
                 return;
 
@@ -106,6 +111,12 @@ namespace Content.Server.UserInterface
 
         private bool InteractUI(EntityUid user, ActivatableUIComponent aui)
         {
+            if (!_blockerSystem.CanInteract(user, aui.Owner) && (!aui.AllowSpectator || !HasComp<GhostComponent>(user)))
+                return false;
+
+            if (aui.RequireHands && !HasComp<SharedHandsComponent>(user))
+                return false;
+
             if (!EntityManager.TryGetComponent(user, out ActorComponent? actor)) return false;
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return false;

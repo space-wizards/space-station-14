@@ -1,9 +1,5 @@
 ﻿using Content.Server.Kitchen.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -11,7 +7,7 @@ namespace Content.Server.Kitchen.Components
     /// Tag component that denotes an entity as Extractable
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(ReagentGrinderSystem))]
+    [Access(typeof(ReagentGrinderSystem))]
     public sealed class ExtractableComponent : Component
     {
         [ViewVariables]

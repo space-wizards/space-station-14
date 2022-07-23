@@ -1,38 +1,23 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
+using Content.Shared.Eye.Blinding;
+using Content.Shared.MobState.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    [Obsolete("Use ExaminedEvent instead.")]
-    public interface IExamine
-    {
-        /// <summary>
-        /// Returns a status examine value for components appended to the end of the description of the entity
-        /// </summary>
-        /// <param name="message">The message to append to which will be displayed.</param>
-        /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
-        void Examine(FormattedMessage message, bool inDetailsRange);
-    }
-
     public abstract class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -61,8 +46,8 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
-            // check if the mob is in ciritcal or dead
-            if (EntityManager.TryGetComponent(examiner, out MobStateComponent mobState) && mobState.IsIncapacitated())
+            // check if the mob is in critical or dead
+            if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
 
             if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
@@ -112,12 +97,20 @@ namespace Content.Shared.Examine
         {
             if (Resolve(examiner, ref mobState, logMissing: false))
             {
-                if (mobState.IsDead())
+                if (MobStateSystem.IsDead(examiner, mobState))
                     return DeadExamineRange;
-                else if (mobState.IsCritical())
+                else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
             }
             return ExamineRange;
+        }
+
+        /// <summary>
+        /// True if occluders are drawn for this entity, otherwise false.
+        /// </summary>
+        public bool IsOccluded(EntityUid uid)
+        {
+            return TryComp<SharedEyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
         public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
@@ -216,34 +209,6 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(ITargetedInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(args.User).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(args.Target).MapPosition;
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(DragDropEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(args.User).MapPosition;
-            var otherPos = args.DropLocation.ToMap(entMan);
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
-        {
-            var entityManager = IoCManager.Resolve<IEntityManager>();;
-            var originPos = entityManager.GetComponent<TransformComponent>(args.User).MapPosition;
-            var target = args.Target;
-            var otherPos = (target != null ? entityManager.GetComponent<TransformComponent>(target.Value).MapPosition : args.ClickLocation.ToMap(entityManager));
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
         public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
         {
             var message = new FormattedMessage();
@@ -267,22 +232,7 @@ namespace Content.Shared.Examine
             // Raise the event and let things that subscribe to it change the message...
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
             var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity, examinedEvent);
-
-            //Add component statuses from components that report one
-            foreach (var examineComponent in EntityManager.GetComponents<IExamine>(entity))
-            {
-                var subMessage = new FormattedMessage();
-                examineComponent.Examine(subMessage, isInDetailsRange);
-                if (subMessage.Tags.Count == 0)
-                    continue;
-
-                if (doNewline)
-                    message.AddText("\n");
-
-                message.AddMessage(subMessage);
-                doNewline = true;
-            }
+            RaiseLocalEvent(entity, examinedEvent, true);
 
             message.Pop();
 

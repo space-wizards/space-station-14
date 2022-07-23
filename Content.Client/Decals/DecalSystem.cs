@@ -1,7 +1,6 @@
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Decals
@@ -13,8 +12,8 @@ namespace Content.Client.Decals
         [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay _overlay = default!;
-        public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
-        private Dictionary<GridId, Dictionary<uint, int>> DecalZIndexIndex = new();
+        public Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
+        private Dictionary<EntityUid, Dictionary<uint, int>> _decalZIndexIndex = new();
 
         public override void Initialize()
         {
@@ -42,14 +41,14 @@ namespace Content.Client.Decals
 
         private void OnGridRemoval(GridRemovalEvent ev)
         {
-            DecalRenderIndex.Remove(ev.GridId);
-            DecalZIndexIndex.Remove(ev.GridId);
+            DecalRenderIndex.Remove(ev.EntityUid);
+            _decalZIndexIndex.Remove(ev.EntityUid);
         }
 
         private void OnGridInitialize(GridInitializeEvent ev)
         {
-            DecalRenderIndex[ev.GridId] = new();
-            DecalZIndexIndex[ev.GridId] = new();
+            DecalRenderIndex[ev.EntityUid] = new();
+            _decalZIndexIndex[ev.EntityUid] = new();
         }
 
         public override void Shutdown()
@@ -58,31 +57,42 @@ namespace Content.Client.Decals
             _overlayManager.RemoveOverlay(_overlay);
         }
 
-        protected override bool RemoveDecalHook(GridId gridId, uint uid)
+        protected override bool RemoveDecalHook(EntityUid gridId, uint uid)
         {
             RemoveDecalFromRenderIndex(gridId, uid);
-
             return base.RemoveDecalHook(gridId, uid);
         }
 
-        private void RemoveDecalFromRenderIndex(GridId gridId, uint uid)
+        private void RemoveDecalFromRenderIndex(EntityUid gridId, uint uid)
         {
-            var zIndex = DecalZIndexIndex[gridId][uid];
+            var zIndex = _decalZIndexIndex[gridId][uid];
 
             DecalRenderIndex[gridId][zIndex].Remove(uid);
             if (DecalRenderIndex[gridId][zIndex].Count == 0)
                 DecalRenderIndex[gridId].Remove(zIndex);
 
-            DecalZIndexIndex[gridId].Remove(uid);
+            _decalZIndexIndex[gridId].Remove(uid);
         }
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
-            foreach (var (gridId, gridChunks) in ev.Data)
+            foreach (var (gridId, updatedGridChunks) in ev.Data)
             {
-                var chunkCollection = ChunkCollection(gridId);
+                if (updatedGridChunks.Count == 0) continue;
 
-                foreach (var (indices, newChunkData) in gridChunks)
+                if (!TryComp(gridId, out DecalGridComponent? gridComp))
+                {
+                    Logger.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
+                    continue;
+                }
+
+                var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
+                var chunkIndex = ChunkIndex[gridId];
+                var renderIndex = DecalRenderIndex[gridId];
+                var zIndexIndex = _decalZIndexIndex[gridId];
+
+                // Update any existing data / remove decals we didn't receive data for.
+                foreach (var (indices, newChunkData) in updatedGridChunks)
                 {
                     if (chunkCollection.TryGetValue(indices, out var chunk))
                     {
@@ -90,42 +100,49 @@ namespace Content.Client.Decals
                         removedUids.ExceptWith(newChunkData.Keys);
                         foreach (var removedUid in removedUids)
                         {
-                            RemoveDecalFromRenderIndex(gridId, removedUid);
+                            RemoveDecalHook(gridId, removedUid);
+                            chunkIndex.Remove(removedUid);
                         }
-                    }
-
-                    foreach (var (uid, decal) in newChunkData)
-                    {
-                        if (!DecalRenderIndex[gridId].ContainsKey(decal.ZIndex))
-                            DecalRenderIndex[gridId][decal.ZIndex] = new();
-
-                        if (DecalZIndexIndex.TryGetValue(gridId, out var values) &&
-                            values.TryGetValue(uid, out var zIndex))
-                        {
-                            DecalRenderIndex[gridId][zIndex].Remove(uid);
-                        }
-
-                        DecalRenderIndex[gridId][decal.ZIndex][uid] = decal;
-                        DecalZIndexIndex[gridId][uid] = decal.ZIndex;
-
-                        ChunkIndex[gridId][uid] = indices;
                     }
 
                     chunkCollection[indices] = newChunkData;
+
+                    foreach (var (uid, decal) in newChunkData)
+                    {       
+                        if (zIndexIndex.TryGetValue(uid, out var zIndex))
+                            renderIndex[zIndex].Remove(uid);
+
+                        renderIndex.GetOrNew(decal.ZIndex)[uid] = decal;
+                        zIndexIndex[uid] = decal.ZIndex;
+                        chunkIndex[uid] = indices;
+                    }
+                }
+            }
+
+            // Now we'll cull old chunks out of range as the server will send them to us anyway.
+            foreach (var (gridId, chunks) in ev.RemovedChunks)
+            {
+                if (chunks.Count == 0) continue;
+
+                if (!TryComp(gridId, out DecalGridComponent? gridComp))
+                {
+                    Logger.Error($"Received decal information for an entity without a decal component: {ToPrettyString(gridId)}");
+                    continue;
                 }
 
-                // Now we'll cull old chunks out of range as the server will send them to us anyway.
-                var toRemove = new RemQueue<Vector2i>();
+                var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
+                var chunkIndex = ChunkIndex[gridId];
 
-                foreach (var (index, _) in chunkCollection)
+                foreach (var index in chunks)
                 {
-                    if (gridChunks.ContainsKey(index)) continue;
+                    if (!chunkCollection.TryGetValue(index, out var chunk)) continue;
 
-                    toRemove.Add(index);
-                }
+                    foreach (var (uid, _) in chunk)
+                    {
+                        RemoveDecalHook(gridId, uid);
+                        chunkIndex.Remove(uid);
+                    }
 
-                foreach (var index in toRemove)
-                {
                     chunkCollection.Remove(index);
                 }
             }

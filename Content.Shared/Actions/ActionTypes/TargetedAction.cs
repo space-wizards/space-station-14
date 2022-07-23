@@ -67,10 +67,9 @@ public abstract class TargetedAction : ActionType
 }
 
 /// <summary>
-///     Action that targets some entity. Will result in <see cref="PerformEntityTargetActionEvent"/> being raised.
+///     Action that targets some entity. Will result in <see cref="EntityTargetActionEvent"/> being raised.
 /// </summary>
 [Serializable, NetSerializable]
-[Friend(typeof(SharedActionsSystem))]
 [Virtual]
 public class EntityTargetAction : TargetedAction
 {
@@ -79,7 +78,7 @@ public class EntityTargetAction : TargetedAction
     /// </summary>
     [NonSerialized]
     [DataField("event")]
-    public PerformEntityTargetActionEvent? Event;
+    public EntityTargetActionEvent? Event;
 
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist;
@@ -115,10 +114,9 @@ public class EntityTargetAction : TargetedAction
 }
 
 /// <summary>
-///     Action that targets some map coordinates. Will result in <see cref="PerformWorldTargetActionEvent"/> being raised.
+///     Action that targets some map coordinates. Will result in <see cref="WorldTargetActionEvent"/> being raised.
 /// </summary>
 [Serializable, NetSerializable]
-[Friend(typeof(SharedActionsSystem))]
 [Virtual]
 public class WorldTargetAction : TargetedAction
 {
@@ -127,7 +125,7 @@ public class WorldTargetAction : TargetedAction
     /// </summary>
     [DataField("event")]
     [NonSerialized]
-    public PerformWorldTargetActionEvent? Event;
+    public WorldTargetActionEvent? Event;
 
     public WorldTargetAction() { }
     public WorldTargetAction(WorldTargetAction toClone)

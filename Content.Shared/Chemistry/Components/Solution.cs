@@ -1,19 +1,12 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -43,6 +36,11 @@ namespace Content.Shared.Chemistry.Components
         public float Temperature { get; set; } = 293.15f;
 
         public Color Color => GetColor();
+
+        /// <summary>
+        ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
+        /// </summary>
+        public string? Name;
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).

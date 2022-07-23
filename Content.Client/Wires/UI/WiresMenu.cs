@@ -14,7 +14,7 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.Wires.SharedWiresComponent;
+using Robust.Shared.Random;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -267,7 +267,16 @@ namespace Content.Client.Wires.UI
 
 
             _statusContainer.RemoveAllChildren();
-            foreach (var status in state.Statuses)
+            var originalStatuses = new List<StatusEntry>(state.Statuses); // TODO: maybe not this way?
+            var shuffledStatuses = new List<StatusEntry>();
+            for (var i = originalStatuses.Count; i > 0; i--)
+            {
+                var index = random.Next(originalStatuses.Count);
+                shuffledStatuses.Add(originalStatuses[index]);
+                originalStatuses.RemoveAt(index);
+            }
+
+            foreach (var status in shuffledStatuses)
             {
                 if (status.Value is StatusLightData statusLightData)
                 {

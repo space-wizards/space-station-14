@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Robust.Shared.GameObjects;
+﻿using System.Text.RegularExpressions;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Components

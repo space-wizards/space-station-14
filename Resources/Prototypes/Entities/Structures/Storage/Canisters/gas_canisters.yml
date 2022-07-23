@@ -6,21 +6,30 @@
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
     - type: InteractionOutline
+    - type: Transform
+      noRot: true
     - type: Sprite
       netsync: false
       sprite: Structures/Storage/canister.rsi
-      state: grey
+      layers:
+        - state: grey
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: GasPortableVisualizer
-          stateConnected: can-connector
-        - type: GasCanisterVisualizer
-          insertedTankState: can-open
-          pressureStates:
-            - can-o0
-            - can-o1
-            - can-o2
-            - can-o3
+        enum.GasPortableVisuals.ConnectedState:
+          connectedToPort:
+            False: { state: can-connector, visible: false }
+            True: { state: can-connector, visible: true }
+        enum.GasCanisterVisuals.TankInserted:
+          tankInserted:
+            False: { state: can-open, visible: false }
+            True: { state: can-open, visible: true }
+        enum.GasCanisterVisuals.PressureState:
+          pressureLight:
+            0: { state: can-o0, shader: "unshaded" }
+            1: { state: can-o1, shader: "unshaded" }
+            2: { state: can-o2, shader: "unshaded" }
+            3: { state: can-o3, shader: "unshaded" }
     - type: UserInterface
       interfaces:
         - key: enum.GasCanisterUiKey.Key
@@ -48,17 +57,14 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 25
-          mask:
-          - MobMask
-          layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 25
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
@@ -81,7 +87,8 @@
   name: storage canister
   components:
     - type: Sprite
-      state: yellow # Classic toxins canister
+      layers:
+        - state: yellow
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -118,7 +125,8 @@
   name: air canister
   components:
   - type: Sprite
-    state: grey
+    layers:
+      - state: grey
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -149,7 +157,8 @@
   name: oxygen canister
   components:
   - type: Sprite
-    state: blue
+    layers:
+      - state: blue
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -179,7 +188,8 @@
   name: nitrogen canister
   components:
     - type: Sprite
-      state: red
+      layers:
+        - state: red
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -210,7 +220,8 @@
   name: carbon dioxide canister
   components:
     - type: Sprite
-      state: black
+      layers:
+        - state: black
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -242,7 +253,8 @@
   name: plasma canister
   components:
     - type: Sprite
-      state: orange
+      layers:
+        - state: orange
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -276,7 +288,8 @@
   name: tritium canister
   components:
     - type: Sprite
-      state: green
+      layers:
+        - state: green
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -310,7 +323,8 @@
   name: water vapor canister
   components:
     - type: Sprite
-      state: water_vapor
+      layers:
+        - state: water_vapor
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -339,6 +353,44 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
 
+- type: entity
+  parent: GasCanister
+  id: MiasmaCanister
+  name: miasma canister
+  components:
+    - type: Sprite
+      layers:
+        - state: redws
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 1871.71051 # Miasma
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+
 # Broke Entities
 
 - type: entity
@@ -346,7 +398,6 @@
   id: GasCanisterBrokenBase
   name: broken gas canister
   description: A broken gas canister. Not useless yet, as it can be salvaged for high quality materials.
-  abstract: true
   components:
     - type: Destructible
       thresholds:
@@ -375,23 +426,20 @@
       bodyType: Dynamic
     - type: Fixtures
       fixtures:
-        - shape:
-            !type:PhysShapeAabb
-              bounds: "-0.4,-0.3,0.4,0.3"
-          mass: 25
-          mask:
-          - MobMask
-          layer:
-            - Opaque
-            - MobImpassable
-            - SmallImpassable
-            - VaultImpassable
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.3,0.4,0.3"
+        mass: 25
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
 - type: entity
   parent: GasCanisterBrokenBase
   id: StorageCanisterBroken
   name: broken storage canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: yellow-1
@@ -400,7 +448,7 @@
   parent: GasCanisterBrokenBase
   id: AirCanisterBroken
   name: broken air canister
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     state: grey-1
@@ -409,7 +457,7 @@
   parent: GasCanisterBrokenBase
   id: OxygenCanisterBroken
   name: broken oxygen canister
-  abstract: true
+  noSpawn: true
   components:
   - type: Sprite
     state: blue-1
@@ -418,7 +466,7 @@
   parent: GasCanisterBrokenBase
   id: NitrogenCanisterBroken
   name: broken nitrogen canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: red-1
@@ -427,7 +475,7 @@
   parent: GasCanisterBrokenBase
   id: CarbonDioxideCanisterBroken
   name: broken carbon dioxide canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: black-1
@@ -436,7 +484,7 @@
   parent: GasCanisterBrokenBase
   id: PlasmaCanisterBroken
   name: broken plasma canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: orange-1
@@ -445,7 +493,7 @@
   parent: GasCanisterBrokenBase
   id: TritiumCanisterBroken
   name: broken tritium canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: green-1
@@ -454,7 +502,16 @@
   parent: GasCanisterBrokenBase
   id: WaterVaporCanisterBroken
   name: broken water vapor canister
-  abstract: true
+  noSpawn: true
   components:
     - type: Sprite
       state: water_vapor-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: MiasmaCanisterBroken
+  name: broken miasma canister
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: redws-1

@@ -1,6 +1,4 @@
-using System;
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

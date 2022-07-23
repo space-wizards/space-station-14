@@ -4,6 +4,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: ATVKeys
+
+- type: Tag
   id: Baguette
 
 - type: Tag
@@ -17,6 +20,9 @@
 
 - type: Tag
   id: BodyBag
+
+- type: Tag
+  id: BorgArm
 
 - type: Tag
   id: BotanyHatchet
@@ -43,10 +49,43 @@
   id: CanPilot
 
 - type: Tag
+  id: CannotSuicide
+
+- type: Tag
   id: CaptainSabre
 
 - type: Tag
+  id: Carp
+
+- type: Tag
   id: Cartridge
+
+- type: Tag
+  id: CartridgeAntiMaterial
+
+- type: Tag
+  id: CartridgeCap
+
+- type: Tag
+  id: CartridgeCaselessRifle
+
+- type: Tag
+  id: CartridgeHeavyRifle
+
+- type: Tag
+  id: CartridgeLightRifle
+
+- type: Tag
+  id: CartridgeMagnum
+
+- type: Tag
+  id: CartridgePistol
+
+- type: Tag
+  id: CartridgeRifle
+
+- type: Tag
+  id: CartridgeRocket
 
 - type: Tag
   id: CigFilter
@@ -88,6 +127,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Cryobeaker
+
+- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
@@ -118,10 +160,16 @@
   id: Donut
 
 - type: Tag
+  id: Drone
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
   id: Egg
+
+- type: Tag
+  id: EmagImmune
 
 - type: Tag
   id: EmitterBolt
@@ -145,6 +193,9 @@
   id: Flashlight
 
 - type: Tag
+  id: Folder
+
+- type: Tag
   id: FootstepSound
 
 - type: Tag
@@ -158,6 +209,12 @@
 
 - type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: Grenade
+
+- type: Tag
+  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
 
 - type: Tag
   id: Handcuffs
@@ -189,6 +246,56 @@
 - type: Tag
   id: Machete
 
+# Magazines ordered by slot then caliber
+
+- type: Tag
+  id: MagazineCalico
+
+- type: Tag
+  id: MagazineCaselessRifle
+
+- type: Tag
+  id: MagazineHeavyRifle
+
+- type: Tag
+  id: MagazineHeavyRifleBox
+
+- type: Tag
+  id: MagazineLightRifle
+
+- type: Tag
+  id: MagazineLightRifleBox
+
+- type: Tag
+  id: MagazineLightRiflePan
+
+- type: Tag
+  id: MagazineMagnum
+
+- type: Tag
+  id: MagazinePistol
+
+- type: Tag
+  id: MagazinePistolCaselessRifle
+
+- type: Tag
+  id: MagazinePistolHighCapacity
+
+- type: Tag
+  id: MagazinePistolSubMachineGunTopMounted
+
+- type: Tag
+  id: MagazineRifle
+
+- type: Tag
+  id: MagazineShotgun
+
+- type: Tag
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazinePistolSubMachineGun
+
 - type: Tag
   id: Matchstick
 
@@ -218,12 +325,15 @@
 
 - type: Tag
   id: Payload # for grenade/bomb crafting
-  
+
+- type: Tag
+  id: PaintableAirlock
+
 - type: Tag
   id: PercussionInstrument
 
 - type: Tag
-  id: Plastic
+  id: Pickaxe
 
 - type: Tag
   id: Pill
@@ -247,7 +357,19 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: Plastic
+
+- type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: ProximitySensor
+
+- type: Tag
+  id: PussyWagonKeys
+
+- type: Tag
+  id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
@@ -266,10 +388,13 @@
   id: Screwdriver
 
 - type: Tag
+  id: SecwayKeys
+
+- type: Tag
   id: Sheet
 
 - type: Tag
-  id: ShotgunShell
+  id: ShellShotgun
 
 - type: Tag
   id: Shovel
@@ -287,6 +412,12 @@
   id: StringInstrument
 
 - type: Tag
+  id: Syndicate
+
+- type: Tag
+  id: SyndicateSegwayKeys
+
+- type: Tag
   id: Taser
 
 - type: Tag
@@ -296,10 +427,22 @@
   id: TrashBag
 
 - type: Tag
+  id: VehicleKey
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
   id: Wall
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter
@@ -319,5 +462,3 @@
 - type: Tag
   id: Write
 
-- type: Tag
-  id: Drone

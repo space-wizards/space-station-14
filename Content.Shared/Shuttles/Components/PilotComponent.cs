@@ -1,11 +1,6 @@
-using System;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Shuttles.Components
 {
@@ -25,43 +20,14 @@ namespace Content.Shared.Shuttles.Components
 
         public const float BreakDistance = 0.25f;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not PilotComponentState state) return;
+        public Vector2 CurTickStrafeMovement = Vector2.Zero;
+        public float CurTickRotationMovement;
+        public float CurTickBraking;
 
-            var console = state.Console.GetValueOrDefault();
-            if (!console.IsValid())
-            {
-                Console = null;
-                return;
-            }
+        public GameTick LastInputTick = GameTick.Zero;
+        public ushort LastInputSubTick = 0;
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
-            {
-                Logger.Warning($"Unable to set Helmsman console to {console}");
-                return;
-            }
-
-            Console = shuttleConsoleComponent;
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return Console == null ? new PilotComponentState(null) : new PilotComponentState(Console.Owner);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class PilotComponentState : ComponentState
-        {
-            public EntityUid? Console { get; }
-
-            public PilotComponentState(EntityUid? uid)
-            {
-                Console = uid;
-            }
-        }
+        [ViewVariables]
+        public ShuttleButtons HeldButtons = ShuttleButtons.None;
     }
 }

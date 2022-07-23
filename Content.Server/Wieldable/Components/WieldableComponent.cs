@@ -1,14 +1,11 @@
 using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Wieldable.Components
 {
     /// <summary>
     ///     Used for objects that can be wielded in two or more hands,
     /// </summary>
-    [RegisterComponent, Friend(typeof(WieldableSystem))]
+    [RegisterComponent, Access(typeof(WieldableSystem))]
     public sealed class WieldableComponent : Component
     {
         [DataField("wieldSound")]

@@ -16,10 +16,10 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DeviceNetworkComponent, PacketSentEvent>(OnPacketReceived);
+            SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
-        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, PacketSentEvent args)
+        private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
         {
             LastPayload = args.Data;
         }

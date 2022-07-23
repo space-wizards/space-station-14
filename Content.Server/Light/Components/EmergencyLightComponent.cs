@@ -6,11 +6,17 @@ namespace Content.Server.Light.Components
     /// <summary>
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
-    [RegisterComponent, Friend(typeof(EmergencyLightSystem))]
+    [RegisterComponent, Access(typeof(EmergencyLightSystem))]
     public sealed class EmergencyLightComponent : SharedEmergencyLightComponent
     {
         [ViewVariables]
         public EmergencyLightState State;
+
+        /// <summary>
+        ///     Is this emergency light forced on for some reason and cannot be disabled through normal means
+        ///     (i.e. delta alert level?)
+        /// </summary>
+        public bool ForciblyEnabled = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("wattage")]

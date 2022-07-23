@@ -1,24 +1,9 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Pulling.Events;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics.Joints;
-using Robust.Shared.Players;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -76,7 +61,7 @@ namespace Content.Shared.Pulling
             RaiseLocalEvent(puller.Owner, message, broadcast: false);
 
             if (Initialized(pullable.Owner))
-                RaiseLocalEvent(pullable.Owner, message);
+                RaiseLocalEvent(pullable.Owner, message, true);
 
             // Networking
             puller.Dirty();
@@ -132,7 +117,7 @@ namespace Content.Shared.Pulling
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
 
                 RaiseLocalEvent(puller.Owner, message, broadcast: false);
-                RaiseLocalEvent(pullable.Owner, message);
+                RaiseLocalEvent(pullable.Owner, message, true);
 
                 // Networking
                 Dirty(puller);
@@ -172,11 +157,11 @@ namespace Content.Shared.Pulling
 
             if (movingTo == null)
             {
-                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableStopMovingMessage(), true);
             }
             else
             {
-                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage());
+                RaiseLocalEvent(pullable.Owner, new PullableMoveMessage(), true);
             }
         }
     }

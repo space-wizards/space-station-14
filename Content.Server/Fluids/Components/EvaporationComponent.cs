@@ -1,14 +1,10 @@
 ﻿using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    [Friend(typeof(EvaporationSystem))]
+    [Access(typeof(EvaporationSystem))]
     public sealed class EvaporationComponent : Component
     {
         /// <summary>
@@ -46,6 +42,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         ///     The time accumulated since the start.
         /// </summary>
+        [DataField("accumulator")]
         public float Accumulator = 0f;
     }
 }

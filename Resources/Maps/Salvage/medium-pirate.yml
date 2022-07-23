@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -108,16 +108,11 @@ entities:
     parent: 52
     type: Transform
 - uid: 6
-  type: FlintlockPistol
+  type: WeaponPistolFlintlock
   components:
   - pos: 0.5412905,2.4954393
     parent: 52
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7
   type: WallReinforced
   components:
@@ -717,7 +712,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 75
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: -2.5,1.5
     parent: 52
@@ -737,9 +732,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 77
   type: WallReinforced
@@ -798,9 +793,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 86
   type: DrinkShinyFlask
@@ -899,7 +894,7 @@ entities:
     parent: 52
     type: Transform
 - uid: 99
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: -0.5,1.5
     parent: 52

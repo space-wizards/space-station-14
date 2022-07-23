@@ -1,12 +1,9 @@
 ﻿using Content.Server.Mind.Commands;
 using Robust.Server.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Ghost.Roles.Components
 {
+    [Access(typeof(GhostRoleSystem))]
     public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
@@ -21,9 +18,17 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("makeSentient")]
         protected bool MakeSentient = true;
 
+        /// <summary>
+        ///     The probability that this ghost role will be available after init.
+        ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
+        /// </summary>
+        [DataField("prob")]
+        public float Probability = 1f;
+
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleName
         {
             get => _roleName;
@@ -35,6 +40,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleDescription
         {
             get => _roleDescription;
@@ -46,6 +52,7 @@ namespace Content.Server.Ghost.Roles.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleRules
         {
             get => _roleRules;
@@ -68,21 +75,6 @@ namespace Content.Server.Ghost.Roles.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("reregister")]
         public bool ReregisterOnGhost { get; set; } = true;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            if (_roleRules == "")
-                _roleRules = Loc.GetString("ghost-role-component-default-rules");
-            EntitySystem.Get<GhostRoleSystem>().RegisterGhostRole(this);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            EntitySystem.Get<GhostRoleSystem>().UnregisterGhostRole(this);
-        }
 
         public abstract bool Take(IPlayerSession session);
     }

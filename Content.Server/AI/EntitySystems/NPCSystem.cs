@@ -1,13 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.AI.Components;
-using Content.Server.MobState.States;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Random;
 
 namespace Content.Server.AI.EntitySystems
@@ -124,11 +120,11 @@ namespace Content.Server.AI.EntitySystems
         {
             switch (args.CurrentMobState)
             {
-                case NormalMobState:
+                case DamageState.Alive:
                     component.Awake = true;
                     break;
-                case CriticalMobState:
-                case DeadMobState:
+                case DamageState.Critical:
+                case DamageState.Dead:
                     component.Awake = false;
                     break;
             }

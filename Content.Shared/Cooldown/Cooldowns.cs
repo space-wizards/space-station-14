@@ -1,6 +1,4 @@
-﻿using System;
-using Robust.Shared.IoC;
-using Robust.Shared.Timing;
+﻿using Robust.Shared.Timing;
 
 namespace Content.Shared.Cooldown
 {

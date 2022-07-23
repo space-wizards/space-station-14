@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.MachineLinking.Models;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Server.MachineLinking.System;
 
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
+    [Access(typeof(SignalLinkerSystem))]
     public sealed class SignalReceiverComponent : Component
     {
         [DataField("inputs")]
-        private List<SignalPort> _inputs = new();
-
-        [ViewVariables]
-        public IReadOnlyList<SignalPort> Inputs => _inputs;
+        public Dictionary<string, List<PortIdentifier>> Inputs = new();
     }
 }

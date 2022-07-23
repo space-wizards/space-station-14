@@ -1,14 +1,9 @@
-using System;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Jittering
 {
-    [Friend(typeof(SharedJitteringSystem))]
+    [Access(typeof(SharedJitteringSystem))]
     [RegisterComponent, NetworkedComponent]
     public sealed class JitteringComponent : Component
     {

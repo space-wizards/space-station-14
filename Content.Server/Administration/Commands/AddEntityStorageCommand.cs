@@ -1,9 +1,7 @@
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
@@ -36,9 +34,10 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var storage))
+            if (entityManager.HasComponent<EntityStorageComponent>(storageUid) &&
+                entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var storageSys))
             {
-                storage.Insert(entityUid);
+                storageSys.Insert(entityUid, storageUid);
             }
             else
             {

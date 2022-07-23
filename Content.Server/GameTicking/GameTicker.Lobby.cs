@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameTicking
 {
@@ -33,23 +28,24 @@ namespace Content.Server.GameTicking
         public IReadOnlyDictionary<IPlayerSession, LobbyPlayerStatus> PlayersInLobby => _playersInLobby;
         public IReadOnlySet<NetUserId> PlayersInGame => _playersInGame;
 
-        private void UpdateInfoText()
+        public void UpdateInfoText()
         {
             RaiseNetworkEvent(GetInfoMsg(), Filter.Empty().AddPlayers(_playersInLobby.Keys));
         }
 
         private string GetInfoText()
         {
-            if (_preset == null)
+            if (Preset == null)
             {
                 return string.Empty;
             }
 
+            var playerCount = $"{_playerManager.PlayerCount}";
             var map = _gameMapManager.GetSelectedMap();
             var mapName = map?.MapName ?? Loc.GetString("game-ticker-no-map-selected");
-            var gmTitle = Loc.GetString(_preset.ModeTitle);
-            var desc = Loc.GetString(_preset.Description);
-            return Loc.GetString("game-ticker-get-info-text",("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
+            var gmTitle = Loc.GetString(Preset.ModeTitle);
+            var desc = Loc.GetString(Preset.Description);
+            return Loc.GetString("game-ticker-get-info-text",("roundId", RoundId), ("playerCount", playerCount),("mapName", mapName),("gmTitle", gmTitle),("desc", desc));
         }
 
         private TickerLobbyReadyEvent GetStatusSingle(ICommonSession player, LobbyPlayerStatus status)

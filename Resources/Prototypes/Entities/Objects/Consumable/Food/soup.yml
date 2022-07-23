@@ -306,7 +306,7 @@
           Quantity: 3
         - ReagentId: Milk ##This is probably a reference to something but I don't get it
           Quantity: 5
-        - ReagentId: Glucose
+        - ReagentId: Sugar
           Quantity: 5
 # Tastes like rice, sweetness.
 

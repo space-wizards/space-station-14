@@ -1,8 +1,5 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Engineering.Components
 {
@@ -12,6 +9,10 @@ namespace Content.Server.Engineering.Components
         [ViewVariables]
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; }
+
+        [ViewVariables]
+        [DataField("ignoreDistance")]
+        public bool IgnoreDistance { get; }
 
         [ViewVariables]
         [DataField("doAfter")]

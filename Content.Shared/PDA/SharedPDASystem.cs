@@ -1,8 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Shared.PDA
 {
@@ -40,9 +38,7 @@ namespace Content.Shared.PDA
 
         protected virtual void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
-            if (!pda.Initialized) return;
-
-            if (args.Container.ID == pda.IdSlot.ID)
+            if (args.Container.ID == PDAComponent.PDAIdSlotId)
                 pda.ContainedID = CompOrNull<IdCardComponent>(args.Entity);
 
             UpdatePDAAppearance(pda);

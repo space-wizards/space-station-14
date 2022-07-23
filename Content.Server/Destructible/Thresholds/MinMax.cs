@@ -1,8 +1,4 @@
-﻿using System;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
-namespace Content.Server.Destructible.Thresholds
+﻿namespace Content.Server.Destructible.Thresholds
 {
     [Serializable]
     [DataDefinition]

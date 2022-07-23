@@ -54,7 +54,7 @@ tilemap:
   47: floor_wood
   48: lattice
   49: plating
-  50: underplating
+  50: plating
 grids:
 - settings:
     chunksize: 16
@@ -94,16 +94,11 @@ entities:
     parent: 20
     type: Transform
 - uid: 4
-  type: FlareGun
+  type: WeaponFlareGun
   components:
   - pos: -3.609375,2.629901
     parent: 20
     type: Transform
-  - containers:
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-ammo-container: !type:Container
-        ents: []
-      Content.Server.Weapon.Ranged.Barrels.Components.BoltActionBarrelComponent-chamber-container: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 5
   type: BoxBeanbag
   components:
@@ -673,9 +668,9 @@ entities:
   - isPlaceable: False
     type: PlaceableSurface
   - containers:
-      EntityStorageComponent: !type:Container
+      entity_storage: !type:Container
         ents: []
-      PaperLabel: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 54
   type: WallReinforced
@@ -736,7 +731,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 62
-  type: SalternAPC
+  type: APCBasic
   components:
   - pos: 1.5,0.5
     parent: 20
@@ -755,10 +750,7 @@ entities:
     type: Transform
   - isPlaceable: False
     type: PlaceableSurface
-  - containers:
-      EntityStorageComponent: !type:Container
-        ents: []
-    type: ContainerContainer
+
 - uid: 65
   type: ConveyorBelt
   components:
@@ -817,7 +809,7 @@ entities:
     parent: 20
     type: Transform
 - uid: 74
-  type: SalternSubstation
+  type: SubstationBasic
   components:
   - pos: 2.5,-0.5
     parent: 20

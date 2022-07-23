@@ -5,12 +5,19 @@
   id: MobReptilian
   description: A miserable pile of scales.
   components:
+    - type: CombatMode
+      canDisarm: true
+    - type: InteractionPopup
+      successChance: 1
+      interactSuccessString: hugging-success-generic
+      interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+      messagePerceivedByOthers: hugging-success-generic-others
     - type: Mind
       showExamineInfo: true
     - type: Input
       context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
+    - type: MobMover
+    - type: InputMover
     - type: Vocal
       maleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
       femaleScream: /Audio/Voice/Reptilian/reptilian_scream.ogg
@@ -25,8 +32,8 @@
     - type: Respirator
       damage:
        types:
-        Asphyxiation: 1.5
+        Asphyxiation: 1.0
       damageRecovery:
         types:
-          Asphyxiation: -1.5
+          Asphyxiation: -1.0
 #Weh

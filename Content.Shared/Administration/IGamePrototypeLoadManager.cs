@@ -1,5 +1,3 @@
-using System;
-
 namespace Content.Shared.Administration;
 
 public interface IGamePrototypeLoadManager

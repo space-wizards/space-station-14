@@ -1,5 +1,3 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Light.Events
 {
     public sealed class LightToggleEvent : EntityEventArgs

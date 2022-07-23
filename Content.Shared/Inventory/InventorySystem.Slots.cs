@@ -1,9 +1,5 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
@@ -48,8 +44,14 @@ public partial class InventorySystem : EntitySystem
         if (!_prototypeManager.TryIndex<InventoryTemplatePrototype>(inventory.TemplateId, out var templatePrototype))
             return false;
 
-        slotDefinition = templatePrototype.Slots.FirstOrDefault(x => x.Name == slot);
-        return slotDefinition != default;
+        foreach (var slotDef in templatePrototype.Slots)
+        {
+            if (!slotDef.Name.Equals(slot)) continue;
+            slotDefinition = slotDef;
+            return true;
+        }
+
+        return false;
     }
 
     public bool TryGetContainerSlotEnumerator(EntityUid uid, out ContainerSlotEnumerator containerSlotEnumerator, InventoryComponent? component = null)

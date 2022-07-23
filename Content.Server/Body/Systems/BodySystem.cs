@@ -1,14 +1,11 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
+using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
@@ -21,10 +18,12 @@ namespace Content.Server.Body.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+            SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
         {
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
                 mobState.IsDead() &&
@@ -38,6 +37,27 @@ namespace Content.Server.Body.Systems
 
                 _ticker.OnGhostAttempt(mind.Mind!, true);
             }
+        }
+
+        private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
+        {
+            foreach (var (part, _) in component.Parts)
+            foreach (var mechanism in part.Mechanisms)
+            {
+                RaiseLocalEvent(mechanism.Owner, args, false);
+            }
+        }
+
+        private void OnBeingMicrowaved(EntityUid uid, BodyComponent component, BeingMicrowavedEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // Don't microwave animals, kids
+            Transform(uid).AttachToGridOrMap();
+            component.Gib();
+
+            args.Handled = true;
         }
 
         /// <summary>

@@ -1,0 +1,36 @@
+- type: latheRecipe
+  id: PowerCellSmall
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: small
+  result: PowerCellSmallPrinted
+  completetime: 1
+  materials:
+    Steel: 100
+    Plastic: 50
+
+- type: latheRecipe
+  id: PowerCellMedium
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: medium
+  result: PowerCellMediumPrinted
+  completetime: 6
+  materials:
+    Steel: 300
+    Glass: 300
+    Plastic: 100
+    Gold: 10
+
+- type: latheRecipe
+  id: PowerCellHigh
+  icon:
+    sprite: Objects/Power/power_cells.rsi
+    state: high
+  result: PowerCellHighPrinted
+  completetime: 10
+  materials:
+    Steel: 300
+    Glass: 400
+    Plastic: 200
+    Gold: 50

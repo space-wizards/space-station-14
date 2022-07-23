@@ -1,12 +1,8 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Stack;
+﻿using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Completions

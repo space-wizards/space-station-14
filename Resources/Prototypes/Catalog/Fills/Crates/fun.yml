@@ -64,6 +64,25 @@
         amount: 1
 
 - type: entity
+  id: CrateFunBrass
+  name: brass instrument ensemble crate
+  description: Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrumpetInstrument
+        amount: 3
+      - id: TromboneInstrument
+        amount: 3
+      - id: FrenchHornInstrument
+        amount: 2
+      - id: EuphoniumInstrument
+        amount: 1
+      - id: TubaInstrument
+        amount: 1
+
+- type: entity
   id: CrateFunArtSupplies
   name: art supplies
   parent: CrateGenericSteel
@@ -92,3 +111,27 @@
         amount: 1
       - id: d6Dice
         amount: 4
+
+- type: entity
+  id: CrateFunATV
+  name: ATV crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: VehicleATV
+      amount: 1
+    - id: VehicleKeyATV
+      amount: 1
+
+- type: entity
+  id: CrateFunSyndicateSegway
+  name: syndicate segway crate
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleSyndicateSegway
+          amount: 1
+        - id: VehicleKeySyndicateSegway
+          amount: 1

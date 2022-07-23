@@ -10,19 +10,8 @@
     drawdepth: SmallObjects
     state: booze
     netsync: false
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 25
-      mask:
-        - Impassable
-        - VaultImpassable
-      layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
     emagPack: BoozeDispenserEmagInventory
+  - type: Transform
+    noRot: false 

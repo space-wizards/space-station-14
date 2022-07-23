@@ -3,6 +3,11 @@
   id: BaseLightbulb
   abstract: true
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
     netsync: false
     sprite: Objects/Power/light_bulb.rsi
@@ -54,9 +59,9 @@
     - type: LightBulbVisualizer
   - type: Tag
     tags:
-    - Recyclable
     - Trash
   - type: Recyclable
+  - type: SpaceGarbage
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -65,7 +70,7 @@
   parent: BaseLightbulb
   name: incandescent light bulb
   id: LightBulb
-  description: That's a light bulb.
+  description: A light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
@@ -81,7 +86,7 @@
   parent: BaseLightbulb
   name: fluorescent light tube
   id: LightTube
-  description: That's a light fixture.
+  description: A light fixture.
   components:
   - type: LightBulb
     bulb: Tube

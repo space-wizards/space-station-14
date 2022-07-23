@@ -4,19 +4,19 @@ using Content.Server.Medical.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement;
+using Content.Shared.Movement.Events;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -41,7 +41,7 @@ namespace Content.Server.Medical
 
             SubscribeLocalEvent<MedicalScannerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MedicalScannerComponent, ActivateInWorldEvent>(OnActivated);
-            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<MedicalScannerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
@@ -59,13 +59,13 @@ namespace Content.Server.Medical
 
         private void OnActivated(EntityUid uid, MedicalScannerComponent scannerComponent, ActivateInWorldEvent args)
         {
-            if (!IsPowered(scannerComponent))
+            if (!this.IsPowered(uid, EntityManager))
                 return;
 
             UpdateUserInterface(uid, scannerComponent);
         }
 
-        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)
         {
             if (!_blocker.CanInteract(args.Entity, scannerComponent.Owner))
                 return;
@@ -166,10 +166,8 @@ namespace Content.Server.Medical
 
         private void UpdateUserInterface(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
-            if (!IsPowered(scannerComponent))
-            {
+            if (!this.IsPowered(uid, EntityManager))
                 return;
-            }
 
             var newState = GetUserInterfaceState(uid, scannerComponent);
             scannerComponent.UserInterface?.SetState(newState);
@@ -177,7 +175,7 @@ namespace Content.Server.Medical
 
         private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
         {
-            if (IsPowered(scannerComponent))
+            if (this.IsPowered(scannerComponent.Owner, EntityManager))
             {
                 var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)
@@ -191,15 +189,6 @@ namespace Content.Server.Medical
                 return GetStatusFromDamageState(state);
             }
             return MedicalScannerStatus.Off;
-        }
-
-        public bool IsPowered(MedicalScannerComponent scannerComponent)
-        {
-            if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var receiver))
-            {
-                return receiver.Powered;
-            }
-            return false;
         }
 
         public bool IsOccupied(MedicalScannerComponent scannerComponent)
@@ -269,7 +258,7 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
 
             scannerComponent.BodyContainer.Remove(contained);
-            _climbSystem.ForciblySetClimbing(contained);
+            _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateUserInterface(uid, scannerComponent);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
         }

@@ -2,10 +2,7 @@ using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -41,6 +38,12 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3f;
+
+        /// <summary>
+        /// Delay multiplier when healing yourself.
+        /// </summary>
+        [DataField("selfHealPenaltyMultiplier")]
+        public float SelfHealPenaltyMultiplier = 3f;
 
         public CancellationTokenSource? CancelToken = null;
 

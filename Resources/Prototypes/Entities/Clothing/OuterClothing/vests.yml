@@ -1,8 +1,8 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
   name: merc web vest
-  description: A high-quality armored vest made from a hard synthetic material. It is surprisingly flexible and light, despite formidable armor plating.
+  description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
@@ -15,9 +15,11 @@
         Slash: 0.7
         Piercing: 0.5
         Heat: 0.9
-
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+    
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterStorageBase
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -33,6 +35,8 @@
         Slash: 0.6
         Piercing: 0.3
         Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -51,17 +55,28 @@
         Slash: 0.9
         Piercing: 0.4
         Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterVestDetective
   name: detective's vest
-  description: A hard-boiled private investigator's grey trenchcoat.
+  description: A hard-boiled private investigator's armored vest.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/detvest.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.75
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterBase
