@@ -19,6 +19,7 @@
     sprite: Clothing/Shoes/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Color/blue.rsi
+  - type: Legcuff
 
 - type: entity
   parent: ClothingShoesBase
