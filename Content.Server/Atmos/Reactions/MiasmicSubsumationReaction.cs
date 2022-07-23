@@ -6,6 +6,6 @@ public sealed class MiasmicSubsumationReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
     {
-        return ReactionResult.Reacting;
+        return ReactionResult.NoReaction;
     }
 }

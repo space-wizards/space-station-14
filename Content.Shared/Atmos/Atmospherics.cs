@@ -202,6 +202,20 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;
 
+        public const float FreonCoolLowerTemperature = 23.15f;
+
+        /// <summary>
+        ///     Freon cools better at higher temperatures.
+        /// </summary>
+        public const float FreonCoolUpperTemperature = 5066.25f;
+
+        /// <summary>
+        ///     Remove X mol of oxygen for each mol of freon.
+        /// </summary>
+        public const float FreonOxygenCoolRatio = 5;
+        public const float FreonCoolEnergyReleased = -1500000f;
+        public const float FreonCoolRateModifier = 20f;
+
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
         /// </summary>

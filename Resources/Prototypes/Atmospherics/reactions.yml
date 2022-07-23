@@ -26,22 +26,8 @@
 - type: gasReaction
   id: FreonCoolant
   priority: 1
+  minimumTemperature: 23.15
   minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # miasma
-  - 0.01  # freon
-  effects:
-  - !type:FreonCoolantReaction {}
-
-- type: gasReaction
-  id: FreonCoolant
-  priority: 1
-  minimumRequirements: # In this case, same as minimum mole count.
   - 0.01  # oxygen
   - 0     # nitrogen
   - 0     # carbon dioxide
@@ -56,7 +42,7 @@
 - type: gasReaction
   id: FreonProduction
   priority: 2
-  maximumTemperature: 23.15 # Cold tritium fire, basically.
+  maximumTemperature: 73.15 # Cold tritium fire, basically.
   minimumRequirements:
   - 0.01  # oxygen
   - 0.01  # nitrogen
