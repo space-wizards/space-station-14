@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Reactions;
 
+/// <summary>
+///     Takes in nitrogen and freon and cools down the surrounding area.
+/// </summary>
 [UsedImplicitly]
 public sealed class FreonCoolantReaction : IGasReactionEffect
 {
@@ -12,15 +15,21 @@ public sealed class FreonCoolantReaction : IGasReactionEffect
         var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
         var temperature = mixture.Temperature;
 
-        var scale = 5 * (temperature - Atmospherics.FreonCoolLowerTemperature) /
-                    (Atmospherics.FreonCoolUpperTemperature - Atmospherics.FreonCoolLowerTemperature);
+        var energyModifier = 1f;
+        var scale = (temperature - Atmospherics.FreonCoolLowerTemperature) /
+                    (Atmospherics.FreonCoolMidTemperature - Atmospherics.FreonCoolLowerTemperature);
 
-        scale = Math.Min(scale, 5f);
+        if (scale > 1f)
+        {
+            // Scale energy but not freon usage if we're in a very, very hot place
+            energyModifier = Math.Min(scale, Atmospherics.FreonCoolMaximumEnergyModifier);
+            scale = 1f;
+        }
 
         if (scale <= 0)
             return ReactionResult.NoReaction;
 
-        var initialOxy = mixture.GetMoles(Gas.Oxygen);
+        var initialNit = mixture.GetMoles(Gas.Nitrogen);
         var initialFreon = mixture.GetMoles(Gas.Freon);
 
         var burnRate = initialFreon * scale / Atmospherics.FreonCoolRateModifier;
@@ -28,12 +37,13 @@ public sealed class FreonCoolantReaction : IGasReactionEffect
         var energyReleased = 0f;
         if (burnRate > Atmospherics.MinimumHeatCapacity)
         {
-            var oxyAmt = Math.Min(burnRate * Atmospherics.FreonOxygenCoolRatio, initialOxy);
+            var nitAmt = Math.Min(burnRate * Atmospherics.FreonNitrogenCoolRatio, initialNit);
             var freonAmt = Math.Min(burnRate, initialFreon);
-            mixture.AdjustMoles(Gas.Oxygen, -oxyAmt);
+            mixture.AdjustMoles(Gas.Nitrogen, -nitAmt);
             mixture.AdjustMoles(Gas.Freon, -freonAmt);
-            mixture.AdjustMoles(Gas.CarbonDioxide, oxyAmt + freonAmt);
-            energyReleased = burnRate * Atmospherics.FreonCoolEnergyReleased;
+            // TODO nitrous oxide
+            mixture.AdjustMoles(Gas.CarbonDioxide, nitAmt + freonAmt);
+            energyReleased = burnRate * Atmospherics.FreonCoolEnergyReleased * energyModifier;
         }
 
         if (energyReleased >= 0f)

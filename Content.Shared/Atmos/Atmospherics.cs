@@ -207,13 +207,15 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Freon cools better at higher temperatures.
         /// </summary>
-        public const float FreonCoolUpperTemperature = 5066.25f;
+        public const float FreonCoolMidTemperature = 373.15f;
+
+        public const float FreonCoolMaximumEnergyModifier = 10f;
 
         /// <summary>
-        ///     Remove X mol of oxygen for each mol of freon.
+        ///     Remove X mol of nitrogen for each mol of freon.
         /// </summary>
-        public const float FreonOxygenCoolRatio = 5;
-        public const float FreonCoolEnergyReleased = -1500000f;
+        public const float FreonNitrogenCoolRatio = 5;
+        public const float FreonCoolEnergyReleased = -3000000f;
         public const float FreonCoolRateModifier = 20f;
 
         public const float FreonProductionMaxEfficiencyTemperature = 73.15f;

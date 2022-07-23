@@ -28,8 +28,8 @@
   priority: 1
   minimumTemperature: 23.15
   minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
+  - 0     # oxygen
+  - 0.01  # nitrogen
   - 0     # carbon dioxide
   - 0     # plasma
   - 0     # tritium
