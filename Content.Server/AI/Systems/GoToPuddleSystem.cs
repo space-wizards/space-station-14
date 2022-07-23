@@ -1,6 +1,6 @@
 using Content.Server.Fluids.Components;
 
-namespace Content.Server.AI.EntitySystems
+namespace Content.Server.AI.Systems
 {
     public sealed class GoToPuddleSystem : EntitySystem
     {

@@ -1,6 +1,9 @@
 namespace Content.Server.AI.HTN;
 
-public class HTNPlan
+/// <summary>
+///
+/// </summary>
+public sealed class HTNPlan
 {
-    
+
 }

@@ -12,10 +12,10 @@
     canDisarm: true
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
+  - type: HTN
+    rootNode: IdleCompoundTask
+    blackboardA:
+      visionRadius: 7
   - type: Tool
     speed: 0.3
     qualities:

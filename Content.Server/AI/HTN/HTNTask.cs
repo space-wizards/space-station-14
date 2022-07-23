@@ -1,6 +1,9 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.AI.HTN;
 
-public class HTNTask
+[ImplicitDataDefinitionForInheritors()]
+public abstract class HTNTask : IPrototype
 {
-    
+    [IdDataFieldAttribute] public string ID { get; } = default!;
 }

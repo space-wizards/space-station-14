@@ -10,10 +10,8 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Reflection;
 
-namespace Content.Server.AI.EntitySystems;
+namespace Content.Server.AI.Systems;
 
 public sealed partial class NPCSystem
 {

@@ -2,7 +2,7 @@ using Content.Server.AI.LoadBalancer;
 using Content.Shared.AI;
 using JetBrains.Annotations;
 
-namespace Content.Server.AI.EntitySystems
+namespace Content.Server.AI.Systems
 {
 #if DEBUG
     [UsedImplicitly]

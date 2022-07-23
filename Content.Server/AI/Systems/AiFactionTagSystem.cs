@@ -1,7 +1,7 @@
 using Content.Server.AI.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.AI.EntitySystems
+namespace Content.Server.AI.Systems
 {
     /// <summary>
     ///     Outlines faction relationships with each other for AI.

@@ -6,7 +6,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 
-namespace Content.Server.AI.EntitySystems
+namespace Content.Server.AI.Systems
 {
     /// <summary>
     ///     Handles NPCs running every tick.
@@ -35,6 +35,7 @@ namespace Content.Server.AI.EntitySystems
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("npc");
+            InitializeHTN();
             InitializeUtility();
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
@@ -96,6 +97,7 @@ namespace Content.Server.AI.EntitySystems
             if (!Enabled) return;
 
             _count = 0;
+            UpdateHTN(frameTime);
             UpdateUtility(frameTime);
         }
 

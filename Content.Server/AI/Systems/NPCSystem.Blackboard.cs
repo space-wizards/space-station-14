@@ -1,7 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.AI.Components;
-
-namespace Content.Server.AI.EntitySystems;
+namespace Content.Server.AI.Systems;
 
 public sealed partial class NPCSystem
 {

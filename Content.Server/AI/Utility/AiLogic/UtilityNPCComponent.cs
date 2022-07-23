@@ -4,7 +4,7 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.WorldState;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using System.Threading;
-using Content.Server.AI.EntitySystems;
+using Content.Server.AI.Systems;
 
 namespace Content.Server.AI.Utility.AiLogic
 {

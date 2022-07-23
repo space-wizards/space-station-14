@@ -1,6 +1,7 @@
 namespace Content.Server.AI.HTN.PrimitiveTasks;
 
-public class HTNOperator
+[ImplicitDataDefinitionForInheritors]
+public abstract class HTNOperator
 {
-    
+
 }

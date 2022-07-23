@@ -1,5 +1,5 @@
 ﻿using Content.Server.AI.Components;
-using Content.Server.AI.EntitySystems;
+using Content.Server.AI.Systems;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Combat.Melee;
 using Content.Server.AI.Utility.Considerations;

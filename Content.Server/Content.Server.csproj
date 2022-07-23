@@ -29,6 +29,9 @@
     <Compile Remove="AI\Utility\NpcBehaviorManager.cs" />
     <Compile Remove="AI\LoadBalancer\AiActionSystem.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AI\HTN\Serializers" />
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 
 </Project>

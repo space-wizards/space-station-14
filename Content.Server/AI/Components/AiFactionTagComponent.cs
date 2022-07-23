@@ -1,4 +1,4 @@
-using Content.Server.AI.EntitySystems;
+using Content.Server.AI.Systems;
 
 namespace Content.Server.AI.Components
 {
