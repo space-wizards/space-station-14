@@ -59,13 +59,11 @@
   - type: GhostRoleMobSpawner
     prototype: MobHuman
     rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
+  - type: NukeOperativeSpawner
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
       - state: green
       - texture: Structures/Wallmounts/signs.rsi/radiation.png
-  - type: Tag
-    tags:
-      - NukeOperatives
 
 

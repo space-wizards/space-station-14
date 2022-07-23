@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules.Prototypes;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
@@ -52,12 +54,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private MapId? _nukiePlanet;
     private EntityUid? _nukieOutpost;
 
-    private SpawnData? _spawnData;
-
     public override string Prototype => "Nukeops";
+
+    private readonly NukeopsConfig _nukeopsConfig = new();
+
+    private readonly Dictionary<string, StartingGearPrototype> _startingGearPrototypes = new ();
+    private readonly Dictionary<string, List<string>> _operativeNames = new();
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
+
 
     public override void Initialize()
     {
@@ -125,14 +131,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     {
         var spawner = args.Spawner;
 
-        if (!TryComp<TagComponent>(spawner, out var tag) || !tag.Tags.Contains("NukeOperatives"))
+        if (!TryComp<NukeOperativeSpawnerComponent>(spawner, out var nukeOpSpawner))
             return;
 
-        var spawnDetails = GetOperativeSpawnDetails(_aliveNukeops.Count);
-
-        EntityManager.GetComponent<MetaDataComponent>(uid).EntityName = spawnDetails.Name;
+        EntityManager.GetComponent<MetaDataComponent>(uid).EntityName = nukeOpSpawner.OperativeName;
         EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(uid);
-        _stationSpawningSystem.EquipStartingGear(uid, spawnDetails.Gear, null);
+
+        if(_prototypeManager.TryIndex<StartingGearPrototype>(nukeOpSpawner.OperativeStartingGear, out var gear))
+            _stationSpawningSystem.EquipStartingGear(uid, gear, null);
 
         _aliveNukeops.Add(uid, (null, true));
     }
@@ -154,10 +160,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (_nukiePlanet != null)
             return true; // Map is already loaded.
 
-        // TODO: Make this a prototype
-        // so true PAUL!
-        var path = "/Maps/nukieplanet.yml";
-        var shuttlePath = "/Maps/infiltrator.yml";
+        var path = _nukeopsConfig.NukieOutpostMap;
+        var shuttlePath = _nukeopsConfig.NukieShuttleMap;
         var mapId = _mapManager.CreateMap();
 
         var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path);
@@ -184,41 +188,29 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         return true;
     }
 
-    private (string Name, string Role, StartingGearPrototype Gear) GetOperativeSpawnDetails(int spawnNumber)
+    private (string Name, string Role, string Gear) GetOperativeSpawnDetails(int spawnNumber)
     {
-        // TODO: Loot table or something
-        _spawnData ??= new SpawnData
-        {
-            CommanderGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateCommanderGearFull"),
-            StarterGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"),
-            MedicGear = _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeMedicFull"),
-
-            NamesElite = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesElite").Values),
-            NamesNormal = new List<string>(_prototypeManager.Index<DatasetPrototype>("SyndicateNamesNormal").Values),
-        };
-
-
         string name;
         string role;
-        StartingGearPrototype gear;
+        string gear;
 
-        // Spawn the Command then Agent first.
+        // Spawn the Commander then Agent first.
         switch (spawnNumber)
         {
             case 0:
-                name = $"Commander " + _random.PickAndTake<string>(_spawnData.Value.NamesElite);
+                name = $"Commander " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.EliteNames]);
                 role = NukeopsCommanderPrototypeId;
-                gear = _spawnData.Value.CommanderGear;
+                gear = _nukeopsConfig.CommanderStartGearPrototype;
                 break;
             case 1:
-                name = $"Agent " + _random.PickAndTake<string>(_spawnData.Value.NamesNormal);
+                name = $"Agent " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.NormalNames]);
                 role = NukeopsPrototypeId;
-                gear = _spawnData.Value.MedicGear;
+                gear = _nukeopsConfig.MedicStartGearPrototype;
                 break;
             default:
-                name = $"Operator " + _random.PickAndTake<string>(_spawnData.Value.NamesNormal);
+                name = $"Operator " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.NormalNames]);
                 role = NukeopsPrototypeId;
-                gear = _spawnData.Value.StarterGear;
+                gear = _nukeopsConfig.OperativeStartGearPrototype;
                 break;
         }
 
@@ -262,7 +254,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
                 EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = spawnDetails.Name;
                 EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
-                _stationSpawningSystem.EquipStartingGear(mob, spawnDetails.Gear, null);
+                _stationSpawningSystem.EquipStartingGear(mob, _startingGearPrototypes[spawnDetails.Gear], null);
 
                 var newMind = new Mind.Mind(session.UserId)
                 {
@@ -279,6 +271,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 var spawner = EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
                 spawner.RoleName = nukeOpsAntag.Name;
                 spawner.RoleDescription = nukeOpsAntag.Objective;
+
+                var nukeOpSpawner = EnsureComp<NukeOperativeSpawnerComponent>(spawnPoint);
+                nukeOpSpawner.OperativeName = spawnDetails.Name;
+                nukeOpSpawner.OperativeRolePrototype = spawnDetails.Role;
+                nukeOpSpawner.OperativeStartingGear = spawnDetails.Gear;
             }
         }
     }
@@ -434,6 +431,26 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukieOutpost = null;
         _nukiePlanet = null;
 
+        _startingGearPrototypes.Clear();
+        _operativeNames.Clear();
+
+        // TODO: Loot table or something
+        foreach (var proto in new[]
+                 {
+                     _nukeopsConfig.CommanderStartGearPrototype,
+                     _nukeopsConfig.MedicStartGearPrototype,
+                     _nukeopsConfig.OperativeStartGearPrototype
+                 })
+        {
+            _startingGearPrototypes.Add(proto, _prototypeManager.Index<StartingGearPrototype>(proto));
+        }
+
+        foreach (var proto in new[] { _nukeopsConfig.EliteNames, _nukeopsConfig.NormalNames })
+        {
+            _operativeNames.Add(proto, new List<string>(_prototypeManager.Index<DatasetPrototype>(proto).Values));
+        }
+
+
         if (!SpawnMap())
         {
             Logger.InfoS("nukies", "Failed to load map for nukeops");
@@ -445,14 +462,4 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
     public override void Ended() { }
-
-    private struct SpawnData
-    {
-        public StartingGearPrototype CommanderGear;
-        public StartingGearPrototype StarterGear;
-        public StartingGearPrototype MedicGear;
-
-        public List<string> NamesElite;
-        public List<string> NamesNormal;
-    }
 }
