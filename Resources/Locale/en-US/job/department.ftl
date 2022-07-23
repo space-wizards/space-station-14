@@ -1,7 +1,7 @@
-Cargo = cargo
-Civilian = civilian
-Command = command
-Engineering = engineering
-Medical = medical
-Security = security
-Science = science
+department-Cargo = cargo
+department-Civilian = civilian
+department-Command = command
+department-Engineering = engineering
+department-Medical = medical
+department-Security = security
+department-Science = science

@@ -349,7 +349,7 @@ namespace Content.Client.Preferences.UI
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                var departmentName = Loc.GetString(department.ID);
+                var departmentName = Loc.GetString($"department-{department.ID}");
 
                 if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {
@@ -391,7 +391,7 @@ namespace Content.Client.Preferences.UI
                 }
 
                 var jobs = department.Roles.Select(o => _prototypeManager.Index<JobPrototype>(o)).Where(o => o.SetPreference).ToList();
-                jobs.Sort((x, y) => string.Compare(y.LocalizedName, x.LocalizedName, StringComparison.Ordinal));
+                jobs.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
 
                 foreach (var job in jobs)
                 {

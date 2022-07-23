@@ -132,7 +132,7 @@ namespace Content.Client.LateJoin
 
                 foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    var departmentName = Loc.GetString(department.ID);
+                    var departmentName = Loc.GetString($"department-{department.ID}");
                     _jobCategories[id] = new Dictionary<string, BoxContainer>();
                     _jobButtons[id] = new Dictionary<string, JobButton>();
                     var stationAvailable = gameTicker.JobsAvailable[id];
@@ -179,7 +179,7 @@ namespace Content.Client.LateJoin
                         jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
                     }
 
-                    jobsAvailable.Sort((x, y) => string.Compare(y.LocalizedName, x.LocalizedName, StringComparison.Ordinal));
+                    jobsAvailable.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
 
                     foreach (var prototype in jobsAvailable)
                     {
