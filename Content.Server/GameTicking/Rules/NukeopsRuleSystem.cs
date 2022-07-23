@@ -56,10 +56,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override string Prototype => "Nukeops";
 
-    private readonly NukeopsConfig _nukeopsConfig = new();
+    private readonly NukeopsRuleConfigPrototype _nukeopsRuleConfig = new();
 
     private readonly Dictionary<string, StartingGearPrototype> _startingGearPrototypes = new ();
     private readonly Dictionary<string, List<string>> _operativeNames = new();
+
+    /// <summary>
+    ///     Data to be used for an operative once the Mind has been added.
+    /// </summary>
+    private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
 
     private const string NukeopsPrototypeId = "Nukeops";
     private const string NukeopsCommanderPrototypeId = "NukeopsCommander";
@@ -141,6 +146,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _stationSpawningSystem.EquipStartingGear(uid, gear, null);
 
         _aliveNukeops.Add(uid, (null, true));
+        _operativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);
     }
 
     private void OnMindAdded(EntityUid uid, MobStateComponent component, MindAddedMessage args)
@@ -148,11 +154,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!_aliveNukeops.ContainsKey(uid))
             return;
 
-        if (!TryComp<MindComponent>(uid, out var mindComp))
+        if (!TryComp<MindComponent>(uid, out var mindComp) || mindComp.Mind == null)
             return;
 
+        var mind = mindComp.Mind;
+
         if (mindComp.Mind != null)
-            _aliveNukeops[uid] = (mindComp.Mind, mindComp.Mind.CharacterDeadIC);
+            _aliveNukeops[uid] = (mind, mind.CharacterDeadIC);
+
+        if (_operativeMindPendingData.TryGetValue(uid, out var role))
+        {
+            mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+            _operativeMindPendingData.Remove(uid);
+        }
     }
 
     private bool SpawnMap()
@@ -160,8 +174,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (_nukiePlanet != null)
             return true; // Map is already loaded.
 
-        var path = _nukeopsConfig.NukieOutpostMap;
-        var shuttlePath = _nukeopsConfig.NukieShuttleMap;
+        var path = _nukeopsRuleConfig.NukieOutpostMap;
+        var shuttlePath = _nukeopsRuleConfig.NukieShuttleMap;
         var mapId = _mapManager.CreateMap();
 
         var (_, outpost) = _mapLoader.LoadBlueprint(mapId, path);
@@ -198,19 +212,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         switch (spawnNumber)
         {
             case 0:
-                name = $"Commander " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.EliteNames]);
+                name = $"Commander " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.EliteNames]);
                 role = NukeopsCommanderPrototypeId;
-                gear = _nukeopsConfig.CommanderStartGearPrototype;
+                gear = _nukeopsRuleConfig.CommanderStartGearPrototype;
                 break;
             case 1:
-                name = $"Agent " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.NormalNames]);
+                name = $"Agent " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = NukeopsPrototypeId;
-                gear = _nukeopsConfig.MedicStartGearPrototype;
+                gear = _nukeopsRuleConfig.MedicStartGearPrototype;
                 break;
             default:
-                name = $"Operator " + _random.PickAndTake<string>(_operativeNames[_nukeopsConfig.NormalNames]);
+                name = $"Operator " + _random.PickAndTake<string>(_operativeNames[_nukeopsRuleConfig.NormalNames]);
                 role = NukeopsPrototypeId;
-                gear = _nukeopsConfig.OperativeStartGearPrototype;
+                gear = _nukeopsRuleConfig.OperativeStartGearPrototype;
                 break;
         }
 
@@ -435,17 +449,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _operativeNames.Clear();
 
         // TODO: Loot table or something
+        // TODO: Some form of override for nuke ops config (CVar?).
         foreach (var proto in new[]
                  {
-                     _nukeopsConfig.CommanderStartGearPrototype,
-                     _nukeopsConfig.MedicStartGearPrototype,
-                     _nukeopsConfig.OperativeStartGearPrototype
+                     _nukeopsRuleConfig.CommanderStartGearPrototype,
+                     _nukeopsRuleConfig.MedicStartGearPrototype,
+                     _nukeopsRuleConfig.OperativeStartGearPrototype
                  })
         {
             _startingGearPrototypes.Add(proto, _prototypeManager.Index<StartingGearPrototype>(proto));
         }
 
-        foreach (var proto in new[] { _nukeopsConfig.EliteNames, _nukeopsConfig.NormalNames })
+        foreach (var proto in new[] { _nukeopsRuleConfig.EliteNames, _nukeopsRuleConfig.NormalNames })
         {
             _operativeNames.Add(proto, new List<string>(_prototypeManager.Index<DatasetPrototype>(proto).Values));
         }

@@ -8,8 +8,8 @@ namespace Content.Server.GameTicking.Rules.Prototypes;
 /// <summary>
 /// This is a prototype for configuring the nuke operatives game rule.
 /// </summary>
-[Prototype("nukeopsConfig")]
-public sealed class NukeopsConfig : IPrototype
+[Prototype("nukeopsRuleConfig")]
+public sealed class NukeopsRuleConfigPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
