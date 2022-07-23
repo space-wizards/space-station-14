@@ -31,6 +31,7 @@ namespace Content.Server.Research
         {
             if (_servers.Contains(server)) return false;
             _servers.Add(server);
+            _servers[^1].Id = _servers.Count - 1;
             return true;
         }
 
