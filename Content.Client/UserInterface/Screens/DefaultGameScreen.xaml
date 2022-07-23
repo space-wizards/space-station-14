@@ -5,21 +5,14 @@
     xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Widgets"
     xmlns:actions="clr-namespace:Content.Client.UserInterface.Systems.Actions.Widgets"
     xmlns:chat="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
     Name="DefaultHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <menuBar:MenuBar
-        Name="TopBarUI"
-        Access="Protected" />
-    <inventory:HandsGui
-        Name="HandUI"
-        Access="Protected" />
-    <actions:ActionsBar
-        Name="ActionUI"
-        Access="Protected" />
-    <chat:ChatBox
-        Name="Chat"
-        Access="Protected"
-        Main="True" />
+    <menuBar:MenuBar Name="TopBar" Access="Protected" />
+    <inventory:HandsGui Name="Hands" Access="Protected" />
+    <actions:ActionsBar Name="Actions" Access="Protected" />
+    <chat:ChatBox Name="Chat" Access="Protected" Main="True" />
+    <widgets:AlertsUI Name="Alerts" Access="Protected" />
 </screens:DefaultGameScreen>

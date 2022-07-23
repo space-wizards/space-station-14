@@ -1,15 +1,9 @@
-using Content.Client.Alerts.UI;
-using Content.Client.Chat;
-using Content.Client.Chat.Managers;
-using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
 using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.Viewport;
-using Content.Client.Voting;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
@@ -21,9 +15,6 @@ namespace Content.Client.Gameplay
 {
     public sealed class GameplayState : GamePlayStateBase, IMainViewportState
     {
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -32,7 +23,6 @@ namespace Content.Client.Gameplay
         protected override Type? LinkedScreenType => typeof(DefaultGameScreen);
         public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
         private ConstructionMenuPresenter? _constructionMenu;
-        private AlertsFramePresenter? _alertsFramePresenter;
         private FpsCounter _fpsCounter = default!;
 
         public MainViewport Viewport { get; private set; } = default!;
@@ -55,7 +45,6 @@ namespace Content.Client.Gameplay
             UserInterfaceManager.StateRoot.AddChild(Viewport);
             LayoutContainer.SetAnchorPreset(Viewport, LayoutContainer.LayoutPreset.Wide);
             Viewport.SetPositionFirst();
-            SetupPresenters();
             _eyeManager.MainViewport = Viewport.Viewport;
             _overlayManager.AddOverlay(new ShowHandItemOverlay());
             _fpsCounter = new FpsCounter(_gameTiming);
@@ -77,24 +66,12 @@ namespace Content.Client.Gameplay
         }
 
         /// <summary>
-        /// All UI Presenters should be constructed in here.
-        /// </summary>
-        private void SetupPresenters()
-        {
-            // HUD
-            //_alertsFramePresenter = new AlertsFramePresenter();
-        }
-
-        /// <summary>
         /// All UI Presenters should be disposed in here.
         /// </summary>
         private void DisposePresenters()
         {
             // Windows
             _constructionMenu?.Dispose();
-
-            // HUD
-            _alertsFramePresenter?.Dispose();
         }
 
         public override void FrameUpdate(FrameEventArgs e)

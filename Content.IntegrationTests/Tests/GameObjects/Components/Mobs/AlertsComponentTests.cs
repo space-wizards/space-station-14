@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Client.Alerts.UI;
+using Content.Client.UserInterface.Systems.Alerts.Controls;
+using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
