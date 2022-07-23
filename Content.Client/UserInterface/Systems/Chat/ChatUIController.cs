@@ -352,7 +352,19 @@ public sealed class ChatUIController : UIController
 
     public static char GetChannelSelectorPrefix(ChatSelectChannel channelSelector)
     {
-        return (char) (ChatPrefixes) channelSelector;
+        return channelSelector switch
+        {
+            ChatSelectChannel.Local => '.',
+            ChatSelectChannel.Whisper => ',',
+            ChatSelectChannel.Radio => ';',
+            ChatSelectChannel.LOOC => '(',
+            ChatSelectChannel.OOC => '[',
+            ChatSelectChannel.Emotes => '@',
+            ChatSelectChannel.Dead => '\\',
+            ChatSelectChannel.Admin => ']',
+            ChatSelectChannel.Console => '/',
+            _ => ' '
+        };
     }
 
     private void UpdateChannelPermissions()
