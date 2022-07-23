@@ -81,7 +81,8 @@ namespace Content.IntegrationTests.Tests.Networking
             // Check client buffer is full
             Assert.That(cGameStateManager.CurrentBufferSize, Is.EqualTo(cGameStateManager.TargetBufferSize));
 
-            // This isn't required anymore, but the old test for "technical things", and I cbf shifting all the tick times.
+            // This isn't required anymore, but the test had this for the sake of "technical things", and I cbf shifting
+            // all the tick times over. So it stays.
             await client.WaitRunTicks(1);
 
             await client.WaitPost(() =>
@@ -363,7 +364,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 }
             }
             
-            cfg.SetCVar(CVars.NetLogging, true);
+            cfg.SetCVar(CVars.NetLogging, log);
             await pairTracker.CleanReturnAsync();
         }
 
