@@ -4,41 +4,50 @@ role-timer-role-insufficient = Require {$time} more minutes with {$job} for this
 
 role-timer-locked = Locked (hover for details)
 
-parse-minutes-fail = Unable to parse {$minutes} as minutes
-parse-session-fail = Did not find session for {$userid}
-parse-userid-fail = Did not find userid for {$userid}
+parse-minutes-fail = Unable to parse '{$minutes}' as minutes
+parse-session-fail = Did not find session for '{$username}'
 
-# Commands
+## Role Timer Commands
+
 # - AddOverallTime
-add-overall-time-desc = Adds the specified minutes to a player's overall playtime
-add-overall-time-help = Usage: {$command} <netuserid> <minutes>
-add-overall-time-help-plain = Name a player to get the role timer information from
-add-overall-time-succeed = Increased overall time for {$username} to {$time}
+cmd-addoveralltime-desc = Adds the specified minutes to a player's overall playtime
+cmd-addoveralltime-help = Usage: {$command} <user name> <minutes>
+cmd-addoveralltime-succeed = Increased overall time for {$username} to {TOSTRING($time, "0")}
+cmd-addoveralltime-arg-user = <user name>
+cmd-addoveralltime-arg-minutes = <minutes>
+cmd-addoveralltime-error-args = Expected exactly two arguments
 
 # - AddRoleTime
-add-role-time-desc = Adds the specified minutes to a player's role playtime
-add-role-time-help = Usage: {$command} <netuserid> <role> <minutes>
-add-role-time-help-plain = Name a player to get the role timer information from
-add-role-time-succeed = Increased role playtime for {$userid} / \'{$role}\' to {$time}
+cmd-addroletime-desc = Adds the specified minutes to a player's role playtime
+cmd-addroletime-help = Usage: {$command} <user name> <role> <minutes>
+cmd-addroletime-succeed = Increased role playtime for {$username} / \'{$role}\' to {TOSTRING($time, "0")}
+cmd-addroletime-arg-user = <user name>
+cmd-addroletime-arg-role = <role>
+cmd-addroletime-arg-minutes = <minutes>
+cmd-addroletime-error-args = Expected exactly three arguments
 
 # - GetOverallTime
-get-overall-time-desc = Gets the specified minutes for a player's overall playtime
-get-overall-time-help = Usage: {$command} <netuserid>
-get-overall-time-help-plain = Name a player to get the role timer information from
-get-overall-time-success = Overall time for {$userid} is {$time} minutes
+cmd-getoveralltime-desc = Gets the specified minutes for a player's overall playtime
+cmd-getoveralltime-help = Usage: {$command} <user name>
+cmd-getoveralltime-success = Overall time for {$username} is {TOSTRING($time, "0")} minutes
+cmd-getoveralltime-arg-user = <user name>
+cmd-getoveralltime-error-args = Expected exactly one argument
 
 # - GetRoleTimer
-get-role-time-desc = Gets all or one role timers from a player
-get-role-time-help = Usage: {$command} <name or user ID> [role]
-get-role-time-help-plain = Name a player to get the role timer information from
-get-role-time-no = Found no role timers
-get-role-time-role = Role: {$role}, Playtime: {$time}
-get-role-time-overall = Overall playtime is {$time}
-get-role-time-succeed = Playtime for {$userid} is: {$time}
+cmd-getroletimers-desc = Gets all or one role timers from a player
+cmd-getroletimers-help = Usage: {$command} <user name> [role]
+cmd-getroletimers-no = Found no role timers
+cmd-getroletimers-role = Role: {$role}, Playtime: {$time}
+cmd-getroletimers-overall = Overall playtime is {$time}
+cmd-getroletimers-succeed = Playtime for {$username} is: {TOSTRING($time, "0")}
+cmd-getroletimers-arg-user = <user name>
+cmd-getroletimers-arg-role = <role|'Overall'>
+cmd-getroletimers-error-args = Expected exactly one or two arguments
 
 # - SaveTime
-save-time-desc = Saves the player's playtimes to the db
-save-time-help = Usage: {$command} <netuserid>
-save-time-help-plain = Name a player to get the role timer information from
-save-time-succeed = Saved playtime for {$userid}
+cmd-savetime-desc = Saves the player's playtimes to the db
+cmd-savetime-help = Usage: {$command} <user name>
+cmd-savetime-succeed = Saved playtime for {$username}
+cmd-savetime-arg-user = <user name>
+cmd-savetime-error-args = Expected exactly one argument
 

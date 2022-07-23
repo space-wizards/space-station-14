@@ -8,15 +8,18 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class AddOverallTimeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
+
     public string Command => "addoveralltime";
-    public string Description => Loc.GetString("add-overall-time-desc");
-    public string Help => Loc.GetString("add-overall-time-help", ("command", Command));
+    public string Description => Loc.GetString("cmd-addoveralltime-desc");
+    public string Help => Loc.GetString("cmd-addoveralltime-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteLine(Loc.GetString("add-overall-time-help-plain"));
+            shell.WriteError(Loc.GetString("cmd-addoveralltime-error-args"));
             return;
         }
 
@@ -26,15 +29,29 @@ public sealed class AddOverallTimeCommand : IConsoleCommand
             return;
         }
 
-        if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
+        if (!_playerManager.TryGetUserId(args[0], out var userId))
         {
-            shell.WriteError(Loc.GetString("parse-userid-fail", ("userid", args[0])));
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", args[0])));
             return;
         }
 
-        var roles = IoCManager.Resolve<RoleTimerManager>();
-        roles.AddTimeToOverallPlaytime(userId, TimeSpan.FromMinutes(minutes));
-        var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine(Loc.GetString("add-overall-time-succeed", ("username", args[0]), ("time", $"{timers.TotalMinutes:0}")));
+        _roleTimerManager.AddTimeToOverallPlaytime(userId, TimeSpan.FromMinutes(minutes));
+        var timers = _roleTimerManager.GetOverallPlaytime(userId).Result;
+
+        shell.WriteLine(Loc.GetString(
+            "cmd-addoveralltime-succeed",
+            ("username", args[0]),
+            ("time", timers.TotalMinutes)));
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+            return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("cmd-addoveralltime-arg-user"));
+
+        if (args.Length == 2)
+            return CompletionResult.FromHint(Loc.GetString("cmd-addoveralltime-arg-minutes"));
+
+        return CompletionResult.Empty;
     }
 }

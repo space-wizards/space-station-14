@@ -6,36 +6,60 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 
 public sealed class AddRoleTimeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
+
     public string Command => "addroletime";
-    public string Description => Loc.GetString("add-role-time-desc");
-    public string Help => Loc.GetString("add-role-time-help", ("command", Command));
+    public string Description => Loc.GetString("cmd-addroletime-desc");
+    public string Help => Loc.GetString("cmd-addroletime-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {
-            shell.WriteLine(Loc.GetString("add-role-time-help-plain"));
+            shell.WriteError(Loc.GetString("cmd-addroletime-error-args"));
             return;
         }
 
-        if (!int.TryParse(args[2], out var minutes))
+        var userName = args[0];
+        if (!_playerManager.TryGetUserId(userName, out var userId))
         {
-            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", args[2])));
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", userName)));
             return;
         }
 
-        if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
+        var role = args[1];
+
+        var m = args[2];
+        if (!int.TryParse(m, out var minutes))
         {
-            shell.WriteError(Loc.GetString("parse-userid-fail", ("userid", args[0])));
+            shell.WriteError(Loc.GetString("parse-minutes-fail", ("minutes", minutes)));
             return;
         }
 
-        var roles = IoCManager.Resolve<RoleTimerManager>();
-        roles.AddTimeToRole(userId, args[1], TimeSpan.FromMinutes(minutes));
-        var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine(Loc.GetString("add-role-time-succeed",
-            ("userid", args[0]),
-            ("role", args[1]),
-            ("time", $"{timers.TotalMinutes:0}")));
+        _roleTimerManager.AddTimeToRole(userId, role, TimeSpan.FromMinutes(minutes));
+        var timers = _roleTimerManager.GetOverallPlaytime(userId).Result;
+        shell.WriteLine(Loc.GetString("cmd-addroletime-succeed",
+            ("username", userName),
+            ("role", role),
+            ("time", timers.TotalMinutes)));
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _playerManager),
+                Loc.GetString("cmd-addroletime-arg-user"));
+        }
+
+        if (args.Length == 2)
+            return CompletionResult.FromHint(Loc.GetString("cmd-addroletime-arg-role"));
+
+        if (args.Length == 3)
+            return CompletionResult.FromHint(Loc.GetString("cmd-addroletime-arg-minutes"));
+
+        return CompletionResult.Empty;
     }
 }

@@ -8,26 +8,44 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class GetOverallTimeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly RoleTimerManager _roleTimerManager = default!;
+
     public string Command => "getoveralltime";
-    public string Description => Loc.GetString("get-overall-time-desc");
-    public string Help => Loc.GetString("get-overall-time-help", ("command", Command));
+    public string Description => Loc.GetString("cmd-getoveralltime-desc");
+    public string Help => Loc.GetString("cmd-getoveralltime-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteLine(Loc.GetString("get-overall-time-help-plain"));
+            shell.WriteError(Loc.GetString("cmd-getoveralltime-error-args"));
             return;
         }
 
-        if (!IoCManager.Resolve<IPlayerManager>().TryGetUserId(args[0], out var userId))
+        var userName = args[0];
+        if (!_playerManager.TryGetUserId(userName, out var userId))
         {
-            shell.WriteError(Loc.GetString("parser-userid-fail", ("userid", args[0])));
+            shell.WriteError(Loc.GetString("parser-session-fail", ("username", userName)));
             return;
         }
 
-        var roles = IoCManager.Resolve<RoleTimerManager>();
-        var timers = roles.GetOverallPlaytime(userId).Result;
-        shell.WriteLine(Loc.GetString("get-overall-time-success", ("userid", userId), ("time", $"{timers.TotalMinutes:0}")));
+        var timers = _roleTimerManager.GetOverallPlaytime(userId).Result;
+        shell.WriteLine(Loc.GetString(
+            "cmd-getoveralltime-success",
+            ("username", userName),
+            ("time", timers.TotalMinutes)));
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _playerManager),
+                Loc.GetString("cmd-getoveralltime-arg-user"));
+        }
+
+        return CompletionResult.Empty;
     }
 }

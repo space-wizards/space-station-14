@@ -10,36 +10,45 @@ namespace Content.Server.Administration.Commands.RoleTimers;
 /// Saves the timers for a particular player immediately
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
-public sealed class TimeCommand : IConsoleCommand
+public sealed class SavePlayTimeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     public string Command => "savetime";
-    public string Description => Loc.GetString("save-time-desc");
-    public string Help => Loc.GetString("save-time-help", ("command", Command));
+    public string Description => Loc.GetString("cmd-savetime-desc");
+    public string Help => Loc.GetString("cmd-savetime-help", ("command", Command));
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
-            shell.WriteLine(Loc.GetString("save-time-help-plain"));
+            shell.WriteLine(Loc.GetString("cmd-savetime-help-plain"));
             return;
         }
 
-        var pManager = IoCManager.Resolve<IPlayerManager>();
-
-        if (!pManager.TryGetUserId(args[0], out var userId))
+        var name = args[0];
+        if (!_playerManager.TryGetSessionByUsername(name, out var pSession))
         {
-            shell.WriteError(Loc.GetString("parse-userid-fail", ("userid", args[0])));
+            shell.WriteError(Loc.GetString("parse-session-fail", ("username", name)));
             return;
         }
 
-        if (!pManager.TryGetSessionById(userId, out var pSession))
+        var roles = _entitySystem.GetEntitySystem<RoleTimerSystem>();
+        roles.Save(pSession, _timing.CurTime);
+        shell.WriteLine(Loc.GetString("cmd-savetime-succeed", ("username", name)));
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
         {
-            shell.WriteError(Loc.GetString("parse-session-fail", ("userid", userId)));
-            return;
+            return CompletionResult.FromHintOptions(
+                CompletionHelper.SessionNames(players: _playerManager),
+                Loc.GetString("cmd-savetime-arg-user"));
         }
 
-        var roles = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoleTimerSystem>();
-        roles.Save(pSession, IoCManager.Resolve<IGameTiming>().CurTime);
-        shell.WriteLine(Loc.GetString("save-time-succeed", ("userid", userId)));
+        return CompletionResult.Empty;
     }
 }
