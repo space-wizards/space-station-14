@@ -14,10 +14,16 @@
       "name": "bolted_unlit"
     },
     {
+      "name": "bolted_open_unlit"
+    },
+    {
       "name": "closed"
     },
     {
       "name": "closed_unlit"
+    },
+    {
+      "name": "open_unlit"
     },
     {
       "name": "closing",
@@ -114,6 +120,9 @@
       ]
     },
     {
+      "name": "panel_closed"
+    },
+    {
       "name": "panel_opening",
       "delays": [
         [
@@ -190,6 +199,9 @@
           0.4
         ]
       ]
+    },
+    {
+      "name": "emergency_open_unlit"
     }
   ]
 }
