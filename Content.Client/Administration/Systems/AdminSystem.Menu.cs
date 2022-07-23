@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Tabs.ObjectsTab;
 using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.HUD;
 using Content.Client.Verbs;
@@ -11,13 +11,11 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Client.Administration
+namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem
     {
@@ -101,13 +99,18 @@ namespace Content.Client.Administration
             }
 
             _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
+            _window.ObjectsTabControl.OnEntryPressed += ObjectsTabEntryPressed;
             _window.OpenCentered();
         }
 
         public void Close()
         {
             if (_window != null)
+            {
                 _window.PlayerTabControl.OnEntryPressed -= PlayerTabEntryPressed;
+                _window.ObjectsTabControl.OnEntryPressed -= ObjectsTabEntryPressed;
+            }
+
             _window?.Close();
 
             foreach (var window in _commandWindows)
@@ -152,6 +155,24 @@ namespace Content.Client.Administration
                 return;
 
             var uid = button.PlayerUid.Value;
+            var function = args.Event.Function;
+
+            if (function == EngineKeyFunctions.UIClick)
+                _clientConsoleHost.ExecuteCommand($"vv {uid}");
+            else if (function == ContentKeyFunctions.OpenContextMenu)
+                _verbSystem.VerbMenu.OpenVerbMenu(uid, true);
+            else
+                return;
+
+            args.Event.Handle();
+        }
+
+        private void ObjectsTabEntryPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (args.Button is not ObjectsTabEntry button)
+                return;
+
+            var uid = button.AssocEntity;
             var function = args.Event.Function;
 
             if (function == EngineKeyFunctions.UIClick)

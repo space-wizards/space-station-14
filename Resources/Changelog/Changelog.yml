@@ -1,28 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Audio now plays signalling roundstart., type: Add}
-  id: 1492
-  time: '2022-05-10T00:44:38.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Pizzas no longer have a curse that forces them to come with a plate.
-      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
-  id: 1493
-  time: '2022-05-10T01:12:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
-      on some items within vending machines, and gave the boards a redesign. Explore
-      the new, possibly hidden options on your local vending machine today!', type: Tweak}
-  id: 1494
-  time: '2022-05-10T02:22:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Assistants no longer assist. They are merely Passengers on this great
-      station., type: Tweak}
-  id: 1495
-  time: '2022-05-10T03:35:09.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Removed drones as ghost roles for the time being, type: Remove}
@@ -2953,3 +2929,25 @@ Entries:
   - {message: Renamed the Bojevic bundle to the Bulldog bundle., type: Tweak}
   id: 1991
   time: '2022-07-20T23:50:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The zombify popup is now more noticeable., type: Tweak}
+  id: 1992
+  time: '2022-07-21T04:32:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Now any job can spawn as nukeops antag, type: Fix}
+  id: 1993
+  time: '2022-07-21T21:00:24.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Research servers are once again uniquely identified and can be selected
+      in the lathe server menu., type: Fix}
+  id: 1994
+  time: '2022-07-21T22:16:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Introduced another 15 admin smites., type: Add}
+  - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
+  id: 1995
+  time: '2022-07-21T22:30:00.0000000+00:00'
