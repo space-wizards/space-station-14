@@ -149,7 +149,6 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
-
         var count = 0;
         foreach (var entity in ev.Contents)
         {
