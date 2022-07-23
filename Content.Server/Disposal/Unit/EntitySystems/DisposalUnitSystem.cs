@@ -16,11 +16,13 @@ using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Storage.Components;
@@ -468,8 +470,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
         {
+            var popupSystem = EntitySystem.Get<SharedPopupSystem>();
+
             if (!Resolve(unitId, ref unit))
                 return false;
+
+            if (!HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            {
+                popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId));
+                return false;
+            }
 
             if (!CanInsert(unit, toInsertId))
                 return false;

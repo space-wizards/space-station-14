@@ -1,9 +1,11 @@
+disposal-unit-no-hands = You don't have hands!
+
 ## UI
 
 ui-disposal-unit-title = Disposal Unit
 
 ui-disposal-unit-label-state = State:
-ui-disposal-unit-label-pressure = Pressure: 
+ui-disposal-unit-label-pressure = Pressure:
 ui-disposal-unit-label-status = Ready
 
 ui-disposal-unit-button-flush = Flush
