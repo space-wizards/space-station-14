@@ -20,6 +20,6 @@ public sealed class MiasmicSubsumationReaction : IGasReactionEffect
         mixture.AdjustMoles(Gas.Miasma, convert);
         mixture.AdjustMoles(Gas.Freon, -convert);
 
-        return ReactionResult.NoReaction;
+        return ReactionResult.Reacting;
     }
 }

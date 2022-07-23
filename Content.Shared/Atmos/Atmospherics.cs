@@ -216,6 +216,15 @@ namespace Content.Shared.Atmos
         public const float FreonCoolEnergyReleased = -1500000f;
         public const float FreonCoolRateModifier = 20f;
 
+        public const float FreonProductionMaxEfficiencyTemperature = 73.15f;
+
+        /// <summary>
+        ///     1 mol of CO2 is required per X mol of tritium and oxygen.
+        /// </summary>
+        public const float FreonProductionCarbonDioxideRatio = 10f;
+
+        public const float FreonProductionConversionRate = 50f;
+
         /// <summary>
         ///     How many mol of freon can be converted into miasma in one cycle.
         /// </summary>
