@@ -45,8 +45,8 @@
   maximumTemperature: 73.15 # Cold tritium fire, basically.
   minimumRequirements:
   - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0.01  # carbon dioxide
+  - 0.01  # nitrogen
+  - 0     # carbon dioxide
   - 0     # plasma
   - 0.01  # tritium
   - 0     # vapor

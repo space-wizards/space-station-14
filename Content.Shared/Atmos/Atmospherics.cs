@@ -221,9 +221,9 @@ namespace Content.Shared.Atmos
         public const float FreonProductionMaxEfficiencyTemperature = 73.15f;
 
         /// <summary>
-        ///     1 mol of CO2 is required per X mol of tritium and oxygen.
+        ///     1 mol of N2 is required per X mol of tritium and oxygen.
         /// </summary>
-        public const float FreonProductionCarbonDioxideRatio = 10f;
+        public const float FreonProductionNitrogenRatio = 10f;
 
         public const float FreonProductionConversionRate = 50f;
 
