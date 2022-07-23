@@ -74147,16 +74147,6 @@ entities:
   - pos: -37.5,-29.5
     parent: 60
     type: Transform
-- uid: 6426
-  type: DrinkChangelingStingCan
-  components:
-  - pos: -39.057964,-28.344824
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
 - uid: 6427
   type: TableWood
   components:
