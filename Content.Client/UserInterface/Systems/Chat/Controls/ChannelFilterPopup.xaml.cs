@@ -16,13 +16,13 @@ public sealed partial class ChannelFilterPopup : Popup
         ChatChannel.Whisper,
         ChatChannel.Emotes,
         ChatChannel.Radio,
+        ChatChannel.LOOC,
         ChatChannel.OOC,
         ChatChannel.Dead,
         ChatChannel.Admin,
         ChatChannel.Server
     };
 
-    private readonly ChatUIController _chat;
     private readonly Dictionary<ChatChannel, ChannelFilterCheckbox> _filterStates = new();
 
     public event Action<ChatChannel, bool>? OnChannelFilter;
@@ -30,7 +30,6 @@ public sealed partial class ChannelFilterPopup : Popup
     public ChannelFilterPopup()
     {
         RobustXamlLoader.Load(this);
-        _chat = UserInterfaceManager.GetUIController<ChatUIController>();
     }
 
     public bool IsActive(ChatChannel channel)
