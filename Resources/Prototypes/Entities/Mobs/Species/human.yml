@@ -283,7 +283,7 @@
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
-  - type: LegCuffable
+  - type: Ensnareable
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
