@@ -13,8 +13,16 @@ namespace Content.Server.Clothing.Components
         [DataField("toggleAction")]
         public InstantAction? ToggleAction = null;
 
+        /// <summary>
+        /// When triggered, make the wearer say something.
+        /// </summary>
+        [DataField("maskShoutAction")]
+        public InstantAction? MaskShoutAction = null;
+
         public bool IsToggled = false;
     }
 
     public sealed class ToggleMaskEvent : InstantActionEvent { }
+
+    public sealed class MaskShoutEvent : InstantActionEvent { }
 }

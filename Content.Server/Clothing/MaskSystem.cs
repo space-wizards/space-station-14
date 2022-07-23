@@ -36,6 +36,9 @@ namespace Content.Server.Clothing
         {
             if (component.ToggleAction != null && !args.InHands)
                 args.Actions.Add(component.ToggleAction);
+
+            if (component.MaskShoutAction != null && !args.InHands)
+                args.Actions.Add(component.MaskShoutAction);
         }
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)
@@ -97,6 +100,9 @@ namespace Content.Server.Clothing
             // toggle breath tool connection (skip during equip since that is handled in LungSystem)
             if (isEquip || !TryComp<BreathToolComponent>(uid, out var breathTool))
                 return;
+
+            if (mask.MaskShoutAction != null)
+                mask.MaskShoutAction.Enabled = !mask.IsToggled;
 
             if (mask.IsToggled)
             {

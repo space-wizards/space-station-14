@@ -20,6 +20,15 @@
   name: security gas mask
   description: A standard issue Security gas mask.
   components:
+  - type: Mask
+    maskShoutAction:
+      name: action-mask-shout
+      description: action-security-mask-shout
+      speech: action-security-mask-shout
+      icon: Interface/Actions/scream.png
+      useDelay: 10
+      priority: -1
+      event: !type:MaskShoutEvent
   - type: Sprite
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
