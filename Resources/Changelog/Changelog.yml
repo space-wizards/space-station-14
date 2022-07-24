@@ -1,12 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
-      the crew as easy., type: Tweak}
-  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
-      now., type: Tweak}
-  id: 1506
-  time: '2022-05-12T07:41:18.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Animals can now escape inventory by moving, type: Add}
@@ -2947,3 +2939,8 @@ Entries:
   - {message: The clothesmate now stocks backpacks, type: Add}
   id: 2005
   time: '2022-07-24T22:41:22.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added lights for altars, type: Add}
+  id: 2006
+  time: '2022-07-24T22:57:12.0000000+00:00'
