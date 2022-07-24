@@ -497,7 +497,7 @@
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 0.6
-    sprintModifier: 0.5 #extremely slow
+    sprintModifier: 0.6 #extremely slow
   - type: Armor
     modifiers:
       coefficients:
