@@ -415,9 +415,6 @@
   id: Syndicate
 
 - type: Tag
-  id: NukeOperatives
-
-- type: Tag
   id: SyndicateSegwayKeys
 
 - type: Tag
