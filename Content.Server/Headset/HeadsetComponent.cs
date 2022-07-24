@@ -4,9 +4,7 @@ using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Headset
@@ -49,9 +47,11 @@ namespace Content.Server.Headset
 
         public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
         {
-            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container)) return;
+            if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container))
+                return;
 
-            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor)) return;
+            if (!_entMan.TryGetComponent(container.Owner, out ActorComponent? actor))
+                return;
 
             var playerChannel = actor.PlayerSession.ConnectedClient;
 
@@ -62,6 +62,18 @@ namespace Content.Server.Headset
                 //Square brackets are added here to avoid issues with escaping
                 MessageWrap = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", _entMan.GetComponent<MetaDataComponent>(source).EntityName))
             };
+
+            // If the source isn't a player, we set the chat message accordingly
+            if (!_entMan.TryGetComponent(source, out ActorComponent? _))
+            {
+                msg = new MsgChatMessage
+                {
+                    Channel = ChatChannel.Radio,
+                    Message = message,
+                    //Square brackets are added here to avoid issues with escaping
+                    MessageWrap = Loc.GetString("announcement-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"))
+                };
+            }
 
             _netManager.ServerSendMessage(msg, playerChannel);
         }
