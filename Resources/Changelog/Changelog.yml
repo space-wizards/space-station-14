@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
-  - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
-  id: 1503
-  time: '2022-05-12T00:24:01.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Can no longer hug yourself., type: Tweak}
@@ -2948,3 +2942,8 @@ Entries:
   - {message: Mobs can now open and close curtains while colliding with them., type: Fix}
   id: 2002
   time: '2022-07-24T11:35:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
+  id: 2003
+  time: '2022-07-24T11:37:29.0000000+00:00'
