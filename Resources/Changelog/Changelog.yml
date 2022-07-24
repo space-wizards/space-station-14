@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: A variety of different paintings can now be found across the station.,
-    type: Add}
-  id: 1502
-  time: '2022-05-11T23:46:22.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
@@ -2949,3 +2943,8 @@ Entries:
   - {message: You now have to to stand closer to something to eat/drink it., type: Tweak}
   id: 2001
   time: '2022-07-24T11:33:52.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Mobs can now open and close curtains while colliding with them., type: Fix}
+  id: 2002
+  time: '2022-07-24T11:35:34.0000000+00:00'
