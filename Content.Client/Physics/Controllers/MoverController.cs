@@ -24,8 +24,6 @@ namespace Content.Client.Physics.Controllers
             {
                 if (relayMover.RelayEntity != null)
                     HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
-
-                return;
             }
 
             HandleClientsideMovement(player, frameTime);
