@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Can no longer hug yourself., type: Tweak}
-  id: 1504
-  time: '2022-05-12T02:56:02.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
@@ -2947,3 +2942,8 @@ Entries:
   - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
   id: 2003
   time: '2022-07-24T11:37:29.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: You can now swap instrument styles even while playing them!, type: Tweak}
+  id: 2004
+  time: '2022-07-24T11:40:05.0000000+00:00'
