@@ -310,7 +310,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     }
 
     /// <summary>
-    ///     Adds missing nuke operative components, equips starting gear and rename.
+    ///     Adds missing nuke operative components, equips starting gear and renames the entity.
     /// </summary>
     private void SetupOperativeEntity(EntityUid mob, string name, string gear)
     {
