@@ -105,12 +105,11 @@ namespace Content.Server.Weapon.Melee
 
                     if (damageResult != null && damageResult.Total > FixedPoint2.Zero)
                     {
+                        FixedPoint2 bluntDamage;
                         // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
-                        if(damageResult.DamageDict.ContainsKey("Blunt") && HasComp<StaminaComponent>(target))
+                        if (damageResult.DamageDict.TryGetValue("Blunt", out bluntDamage))
                         {
-                            FixedPoint2 bluntDamage;
-                            damageResult.DamageDict.TryGetValue("Blunt", out bluntDamage);
-                            _staminaSystem.TakeStaminaDamage(target, bluntDamage.Float() * comp.BluntStaminaDamageFactor);
+                            _staminaSystem.TakeStaminaDamage(target, (bluntDamage * comp.BluntStaminaDamageFactor).Float());
                         }
 
                         if (args.Used == args.User)

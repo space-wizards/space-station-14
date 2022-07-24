@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Sound;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Weapon.Melee.Components
 {
@@ -55,6 +56,6 @@ namespace Content.Server.Weapon.Melee.Components
 
         [DataField("bluntStaminaDamageFactor")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BluntStaminaDamageFactor { get; set; } = 0.5f;
+        public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
     }
 }
