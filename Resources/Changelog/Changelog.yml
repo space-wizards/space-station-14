@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Fixed lighters not having a flame, type: Fix}
-  - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
-  id: 1501
-  time: '2022-05-11T20:48:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: A variety of different paintings can now be found across the station.,
@@ -2949,3 +2943,9 @@ Entries:
   - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
   id: 2000
   time: '2022-07-24T11:09:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Drinking now breaks on distance from the drink., type: Fix}
+  - {message: You now have to to stand closer to something to eat/drink it., type: Tweak}
+  id: 2001
+  time: '2022-07-24T11:33:52.0000000+00:00'
