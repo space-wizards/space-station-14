@@ -30,19 +30,23 @@ namespace Content.IntegrationTests.Tests.Construction
 
             var map = await PoolManager.CreateTestMap(pairTracker);
 
-            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+            await server.WaitAssertion(() =>
             {
-                if (!proto.Components.ContainsKey("Construction"))
-                    continue;
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.Components.ContainsKey("Construction"))
+                        continue;
 
-                var ent = entMan.SpawnEntity(proto.ID, new MapCoordinates(Vector2.Zero, map.MapId));
-                var construction = entMan.GetComponent<ConstructionComponent>(ent);
+                    var ent = entMan.SpawnEntity(proto.ID, new MapCoordinates(Vector2.Zero, map.MapId));
+                    var construction = entMan.GetComponent<ConstructionComponent>(ent);
 
-                var graph = protoMan.Index<ConstructionGraphPrototype>(construction.Graph);
-                entMan.DeleteEntity(ent);
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(construction.Graph);
+                    entMan.DeleteEntity(ent);
 
-                Assert.That(graph.Nodes.ContainsKey(construction.Node), $"Found no startNode \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
-            }
+                    Assert.That(graph.Nodes.ContainsKey(construction.Node),
+                        $"Found no startNode \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
+                }
+            });
 
             await pairTracker.CleanReturnAsync();
         }
