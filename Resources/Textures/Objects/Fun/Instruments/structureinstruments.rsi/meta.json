@@ -53,6 +53,18 @@
 	  "directions": 4
     },
     {
+      "name": "toms",
+	  "directions": 4
+    },
+    {
+      "name": "marimba",
+	  "directions": 4
+    },
+    {
+      "name": "vibraphone",
+	  "directions": 4
+    },
+    {
       "name": "tuba"
     },
     {

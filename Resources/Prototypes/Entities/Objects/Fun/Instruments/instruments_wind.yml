@@ -70,6 +70,42 @@
 
 - type: entity
   parent: BaseHandheldInstrument
+  id: ClarinetInstrument
+  name: clarinet
+  description: Skweedward tintacklays.
+  components:
+  - type: Instrument
+    program: 71
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/clarinet.rsi
+    state: icon
+  - type: Item
+    size: 20
+    sprite: Objects/Fun/Instruments/clarinet.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: FluteInstrument
+  name: flute
+  description: Reaching new heights of being horrifyingly shrill.
+  components:
+  - type: Instrument
+    program: 73
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/flute.rsi
+    state: icon
+  - type: Item
+    size: 20
+    sprite: Objects/Fun/Instruments/flute.rsi
+  - type: Tag
+    tags:
+    - WoodwindInstrument
+
+- type: entity
+  parent: BaseHandheldInstrument
   id: RecorderInstrument
   name: recorder
   components:

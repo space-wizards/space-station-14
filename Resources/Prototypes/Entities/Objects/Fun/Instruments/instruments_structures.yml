@@ -23,15 +23,25 @@
   - type: Climbable
 
 - type: entity
-  name: minimoog
+  name: vibraphone
+  id: VibraphoneInstrument
   parent: BasePlaceableInstrumentRotatable
-  id: MinimoogInstrument
-  description: This is a minimoog, like a space piano, but more spacey!
+  description: Good vibes all around.
   components:
   - type: Instrument
-    program: 81
+    program: 11
   - type: Sprite
-    state: minimoog
+    state: vibraphone
+
+- type: entity
+  name: marimba
+  id: MarimbaInstrument
+  parent: BasePlaceableInstrumentRotatable
+  components:
+  - type: Instrument
+    program: 12
+  - type: Sprite
+    state: marimba
 
 - type: entity
   name: church organ
@@ -79,7 +89,7 @@
 
 - type: entity
   id: TaikoInstrument
-  parent: BasePlaceableInstrument
+  parent: BasePlaceableInstrumentRotatable
   name: taiko
   description: A large drum. Looking at it fills you with the urge to slap it.
   components:
@@ -113,6 +123,28 @@
       - HighImpassable
       - MidImpassable
       - BulletImpassable
+
+- type: entity
+  name: minimoog
+  parent: BasePlaceableInstrumentRotatable
+  id: MinimoogInstrument
+  description: This is a minimoog, like a space piano, but more spacey!
+  components:
+  - type: Instrument
+    program: 81
+  - type: Sprite
+    state: minimoog
+
+- type: entity
+  id: TomDrumsInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: tom drums
+  description: Where'd the rest of the kit go?
+  components:
+  - type: Instrument
+    program: 117
+  - type: Sprite
+    state: toms
 
 - type: entity
   parent: BasePlaceableInstrument

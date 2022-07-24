@@ -17,6 +17,18 @@
 
 - type: entity
   parent: BaseHandheldInstrument
+  id: MusicBoxInstrument
+  name: music box
+  description: Playing this makes you feel safe from scary animatronics.
+  components:
+  - type: Instrument
+    program: 10
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/musicbox.rsi
+    state: icon
+
+- type: entity
+  parent: BaseHandheldInstrument
   id: XylophoneInstrument
   name: xylophone
   description: Rainbow colored glockenspiel.
@@ -85,6 +97,17 @@
     tags:
     - KeyedInstrument
 
+- type: entity
+  parent: BaseHandheldInstrument
+  id: WoodblockInstrument
+  name: woodblock
+  description: If you listen to this enough it'll start driving itself into your mind.
+  components:
+  - type: Instrument
+    program: 115
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/woodblock.rsi
+    state: icon
 
 - type: entity
   parent: BaseHandheldInstrument
