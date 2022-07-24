@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.GameTicking.Rules.Prototypes;
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind.Components;
@@ -50,7 +50,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override string Prototype => "Nukeops";
 
-    private NukeopsRuleConfigPrototype _nukeopsRuleConfig = new();
+    private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
 
     /// <summary>
     ///     Cached starting gear prototypes.
@@ -439,9 +439,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _operativeNames.Clear();
         _operativeMindPendingData.Clear();
 
-        var configPrototype = _cfg.GetCVar(CCVars.NukeOpsConfigProto);
-        if (configPrototype.Length != 0)
-            _nukeopsRuleConfig = _prototypeManager.Index<NukeopsRuleConfigPrototype>(configPrototype);
+        if (Configuration is not NukeopsRuleConfiguration)
+            return;
 
         // TODO: Loot table or something
         foreach (var proto in new[]

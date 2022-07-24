@@ -1,19 +1,14 @@
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Shared.Dataset;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.GameTicking.Rules.Prototypes;
+namespace Content.Server.GameTicking.Rules.Configurations;
 
-/// <summary>
-/// This is a prototype for configuring the nuke operatives game rule.
-/// </summary>
-[Prototype("nukeopsRuleConfig")]
-public sealed class NukeopsRuleConfigPrototype : IPrototype
+public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
 {
-    /// <inheritdoc/>
-    [IdDataField]
-    public string ID { get; } = default!;
+    public override string Id => "Nukeops";
 
     [DataField("spawnEntityProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnEntityPrototype = "MobHumanNukeOp";

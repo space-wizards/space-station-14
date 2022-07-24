@@ -299,9 +299,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> NukeopsPlayersPerOp =
             CVarDef.Create("nukeops.players_per_op", 5);
 
-        public static readonly CVarDef<string> NukeOpsConfigProto =
-            CVarDef.Create<string>("nukeops.config_prototype", "");
-
         /*
          * Zombie
          */
