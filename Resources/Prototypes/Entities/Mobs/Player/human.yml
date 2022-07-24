@@ -188,3 +188,13 @@
     state: ertjanitoreva
   - type: Loadout
     prototype: ERTJanitorGearEVA
+
+# Nuclear Operative
+- type: entity
+  noSpawn: true
+  name: Nuclear Operative
+  parent: MobHuman
+  id: MobHumanNukeOp
+  components:
+  - type: NukeOperative
+  - type: RandomHumanoidAppearance

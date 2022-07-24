@@ -15,6 +15,9 @@ public sealed class NukeopsRuleConfigPrototype : IPrototype
     [IdDataField]
     public string ID { get; } = default!;
 
+    [DataField("spawnEntityProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string SpawnEntityPrototype = "MobHumanNukeOp";
+
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
 

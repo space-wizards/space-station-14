@@ -25,12 +25,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
-using Content.Shared.Tag;
-using Robust.Shared.Enums;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking.Rules;
@@ -56,13 +52,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override string Prototype => "Nukeops";
 
-    private readonly NukeopsRuleConfigPrototype _nukeopsRuleConfig = new();
+    private NukeopsRuleConfigPrototype _nukeopsRuleConfig = new();
 
+    /// <summary>
+    ///     Cached starting gear prototypes.
+    /// </summary>
     private readonly Dictionary<string, StartingGearPrototype> _startingGearPrototypes = new ();
+
+    /// <summary>
+    ///     Cached operator name prototypes.
+    /// </summary>
     private readonly Dictionary<string, List<string>> _operativeNames = new();
 
     /// <summary>
-    ///     Data to be used for an operative once the Mind has been added.
+    ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     private readonly Dictionary<EntityUid, string> _operativeMindPendingData = new();
 
@@ -75,8 +78,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
-        SubscribeLocalEvent<TransformComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
-        SubscribeLocalEvent<MobStateComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
+        SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -128,36 +131,30 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SpawnOperativesForSpawningPlayers(ev.PlayerPool, ev.Profiles);
     }
 
-    private void OnPlayersGhostSpawning(EntityUid uid, TransformComponent component, GhostRoleSpawnerUsedEvent args)
+    private void OnPlayersGhostSpawning(EntityUid uid, NukeOperativeComponent component, GhostRoleSpawnerUsedEvent args)
     {
         var spawner = args.Spawner;
 
         if (!TryComp<NukeOperativeSpawnerComponent>(spawner, out var nukeOpSpawner))
             return;
 
-        EntityManager.GetComponent<MetaDataComponent>(uid).EntityName = nukeOpSpawner.OperativeName;
-        EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(uid);
-
-        if(_startingGearPrototypes.TryGetValue(nukeOpSpawner.OperativeStartingGear, out var gear))
-            _stationSpawningSystem.EquipStartingGear(uid, gear, null);
+        SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear);
 
         _aliveNukeops.Add(uid, (null, true));
         _operativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);
     }
 
-    private void OnMindAdded(EntityUid uid, MobStateComponent component, MindAddedMessage args)
+    private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!_aliveNukeops.ContainsKey(uid))
+        if (!_aliveNukeops.ContainsKey(uid) || !TryComp<MindComponent>(uid, out var mindComponent))
             return;
 
-        if (!TryComp<MindComponent>(uid, out var mindComp) || mindComp.Mind == null)
+        if (mindComponent.Mind == null)
             return;
 
-        var mind = mindComp.Mind;
+        var mind = mindComponent.Mind;
 
-        if (mindComp.Mind != null)
-            _aliveNukeops[uid] = (mind, mind.CharacterDeadIC);
-
+        _aliveNukeops[uid] = (mind, mind.CharacterDeadIC);
         if (_operativeMindPendingData.TryGetValue(uid, out var role))
         {
             mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
@@ -227,6 +224,19 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         return (name, role, gear);
     }
 
+    /// <summary>
+    ///     Adds missing nuke operative components, equips starting gear and rename.
+    /// </summary>
+    private void SetupOperativeEntity(EntityUid mob, string name, string gear)
+    {
+        EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
+        EntityManager.EnsureComponent<RandomHumanoidAppearanceComponent>(mob);
+        EntityManager.EnsureComponent<NukeOperativeComponent>(mob);
+
+        if(_startingGearPrototypes.TryGetValue(gear, out var gearPrototype))
+            _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, null);
+    }
+
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)
     {
         if (_nukieOutpost == null)
@@ -262,10 +272,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             if (sessions.TryGetValue(i, out var session))
             {
-                var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
-                EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = spawnDetails.Name;
-                EntityManager.AddComponent<RandomHumanoidAppearanceComponent>(mob);
-                _stationSpawningSystem.EquipStartingGear(mob, _startingGearPrototypes[spawnDetails.Gear], null);
+                var mob = EntityManager.SpawnEntity(_nukeopsRuleConfig.SpawnEntityPrototype, _random.Pick(spawns));
+                SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear);
 
                 var newMind = new Mind.Mind(session.UserId)
                 {
@@ -398,7 +406,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var playersPerOperative = _cfg.GetCVar(CCVars.NukeopsPlayersPerOp);
         var maxOperatives = _cfg.GetCVar(CCVars.NukeopsMaxOps);
 
-        var playerPool = Filter.GetAllPlayers(_playerSystem).ToList();
+        var playerPool = _playerSystem.ServerSessions.ToList();
         var numNukies = MathHelper.Clamp(playerPool.Count / playersPerOperative, 1, maxOperatives);
 
         var operatives = new List<IPlayerSession>();
@@ -444,9 +452,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         _startingGearPrototypes.Clear();
         _operativeNames.Clear();
+        _operativeMindPendingData.Clear();
+
+        var configPrototype = _cfg.GetCVar(CCVars.NukeOpsConfigProto);
+        if (configPrototype.Length != 0)
+            _nukeopsRuleConfig = _prototypeManager.Index<NukeopsRuleConfigPrototype>(configPrototype);
 
         // TODO: Loot table or something
-        // TODO: Some form of override for nuke ops config (CVar?).
         foreach (var proto in new[]
                  {
                      _nukeopsRuleConfig.CommanderStartGearPrototype,

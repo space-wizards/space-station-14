@@ -57,7 +57,7 @@
   parent: MarkerBase
   components:
   - type: GhostRoleMobSpawner
-    prototype: MobHuman
+    prototype: MobHumanNukeOp
     rules: You are a syndicate operative tasked with the destruction of the station. As an antagonist, do whatever is required to complete this task.
   - type: NukeOperativeSpawner
   - type: Sprite
