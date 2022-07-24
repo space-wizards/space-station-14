@@ -290,7 +290,7 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(20));
+                var actualVolume = FixedPoint2.Min(individualVolume, FixedPoint2.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
                     var pill = _entities.SpawnEntity("Pill", _entities.GetComponent<TransformComponent>(Owner).Coordinates);

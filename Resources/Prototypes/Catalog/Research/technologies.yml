@@ -28,6 +28,7 @@
     - Bucket
     - MopItem
     - SprayBottle
+    - BodyBag
 
 # Biological Technology Tree
 
@@ -144,58 +145,8 @@
 
 # Security Technology Tree
 
-- type: technology
-  name: "security technology"
-  id: SecurityTechnology
-  description: Beginning of the long hard road to exosuits.
-  icon:
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
-    state: stunbaton_off
-  requiredPoints: 10000
-  requiredTechnologies:
-    - BasicResearch
-  unlockedRecipes:
-    - Flash
-    - Handcuffs
-    - Stunbaton
-    - FlashPayload
-
-- type: technology
-  name: "non-lethal technology"
-  id: NonLethalTechnology
-  description: For the softer approach to detaining.
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: beanbag
-  requiredPoints: 8000
-  requiredTechnologies:
-     - SecurityTechnology
-  unlockedRecipes:
-    - ShellShotgunBeanbag
-    - ShellTranquilizer
-    - ShellShotgunFlash
-    - CartridgePistolRubber
-    - CartridgeMagnumRubber
-    - CartridgeCaselessRifleRubber
-    - CartridgeLightRifleRubber
-    - CartridgeRifleRubber
-
-- type: technology
-  name: "ballistic technology"
-  id: BallisticTechnology
-  description: Just a fancy term for guns.
-  icon:
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-    state: icon
-  requiredPoints: 15000
-  requiredTechnologies:
-     - SecurityTechnology
-  unlockedRecipes:
-    - CartridgePistol
-    - ShellShotgun
-    - ShellShotgunFlare
-    - CartridgeLightRifle
-    - CartridgeMagnum
+# Empty, as all the security tech is now available
+# roundstart in the security techfab.
 
 #- type: technology
 #   name: "ballistic technology"
@@ -314,6 +265,7 @@
   - IndustrialEngineering
   unlockedRecipes:
   - ThermomachineFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
 
 # Avionics Circuitry Technology Tree
 
@@ -327,6 +279,7 @@
   requiredPoints: 10000
   requiredTechnologies:
     - IndustrialEngineering
+    - RoboticsTechnology
   unlockedRecipes:
     - ShuttleConsoleCircuitboard
     - Drone
@@ -451,6 +404,21 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
+
+- type: technology
+  name: "robotics technology"
+  id: RoboticsTechnology
+  description: Robot parts.
+  icon:
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot
+  requiredPoints: 10000
+  requiredTechnologies:
+    - CompactPowerTechnology
+  unlockedRecipes:
+    - ProximitySensor
+    - LeftArmBorg
+    - RightArmBorg
 
 # Bluespace Theory Technology Tree
 

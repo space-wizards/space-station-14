@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
-            var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(injector.Owner).Coordinates, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
 
             if (environment == null)
                 return;

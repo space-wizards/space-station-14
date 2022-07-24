@@ -1,6 +1,10 @@
 using System.Threading.Tasks;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using NUnit.Framework;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Construction
@@ -10,6 +14,42 @@ namespace Content.IntegrationTests.Tests.Construction
     {
         // discount linter for construction graphs
         // TODO: Create serialization validators for these?
+        // Top test definitely can be but writing a serializer takes ages.
+
+        /// <summary>
+        /// Checks every entity prototype with a construction component has a valid start node.
+        /// </summary>
+        [Test]
+        public async Task TestStartNodeValid()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            var server = pairTracker.Pair.Server;
+
+            var entMan = server.ResolveDependency<IEntityManager>();
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
+
+            var map = await PoolManager.CreateTestMap(pairTracker);
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.Components.ContainsKey("Construction"))
+                        continue;
+
+                    var ent = entMan.SpawnEntity(proto.ID, new MapCoordinates(Vector2.Zero, map.MapId));
+                    var construction = entMan.GetComponent<ConstructionComponent>(ent);
+
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(construction.Graph);
+                    entMan.DeleteEntity(ent);
+
+                    Assert.That(graph.Nodes.ContainsKey(construction.Node),
+                        $"Found no startNode \"{construction.Node}\" on graph \"{graph.ID}\" for entity \"{proto.ID}\"!");
+                }
+            });
+
+            await pairTracker.CleanReturnAsync();
+        }
 
         [Test]
         public async Task TestStartIsValid()

@@ -90,7 +90,7 @@
   - id: WeaponXrayCannon
     amount: 0
     maxAmount: 2
-  - id: WeaponTaser
+  - id: WeaponDisabler
     amount: 0
     maxAmount: 4
 

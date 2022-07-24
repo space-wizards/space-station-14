@@ -11,6 +11,9 @@
     ClothingEyesGlassesSunglasses: 2
     ClothingBeltSecurityWebbing: 5
     Zipties: 12
+    RiotShield: 2
+    RiotLaserShield: 2
+    RiotBulletShield: 2
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12

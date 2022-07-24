@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!Resolve(uid, ref canister, ref transform))
                 return;
 
-            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
             if (environment is not null)
                 _atmosphereSystem.Merge(environment, canister.Air);
@@ -139,6 +139,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
         {
+            _atmosphereSystem.React(canister.Air, canister);
+
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
@@ -146,22 +148,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(canister.PortName, out PortablePipeNode? portNode))
                 return;
 
-            _atmosphereSystem.React(canister.Air, portNode);
-
             if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
             {
-                var buffer = new GasMixture(net.Air.Volume + canister.Air.Volume);
-
-                _atmosphereSystem.Merge(buffer, net.Air);
-                _atmosphereSystem.Merge(buffer, canister.Air);
-
-                net.Air.Clear();
-                _atmosphereSystem.Merge(net.Air, buffer);
-                net.Air.Multiply(net.Air.Volume / buffer.Volume);
-
-                canister.Air.Clear();
-                _atmosphereSystem.Merge(canister.Air, buffer);
-                canister.Air.Multiply(canister.Air.Volume / buffer.Volume);
+                MixContainerWithPipeNet(canister.Air, net.Air);
             }
 
             ContainerManagerComponent? containerManager = null;
@@ -180,7 +169,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
                 else
                 {
-                    var environment = _atmosphereSystem.GetTileMixture(EntityManager.GetComponent<TransformComponent>(canister.Owner).Coordinates, true);
+                    var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
                     _atmosphereSystem.ReleaseGasTo(canister.Air, environment, canister.ReleasePressure);
                 }
             }
@@ -274,6 +263,26 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             appearance.SetData(GasCanisterVisuals.TankInserted, false);
+        }
+
+        /// <summary>
+        /// Mix air from a gas container into a pipe net.
+        /// Useful for anything that uses connector ports.
+        /// </summary>
+        public void MixContainerWithPipeNet(GasMixture containerAir, GasMixture pipeNetAir)
+        {
+            var buffer = new GasMixture(pipeNetAir.Volume + containerAir.Volume);
+
+            _atmosphereSystem.Merge(buffer, pipeNetAir);
+            _atmosphereSystem.Merge(buffer, containerAir);
+
+            pipeNetAir.Clear();
+            _atmosphereSystem.Merge(pipeNetAir, buffer);
+            pipeNetAir.Multiply(pipeNetAir.Volume / buffer.Volume);
+
+            containerAir.Clear();
+            _atmosphereSystem.Merge(containerAir, buffer);
+            containerAir.Multiply(containerAir.Volume / buffer.Volume);
         }
     }
 }

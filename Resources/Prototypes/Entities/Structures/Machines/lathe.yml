@@ -196,6 +196,9 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh
+      - ProximitySensor
+      - LeftArmBorg
+      - RightArmBorg
   - type: ActivatableUI
     key: enum.LatheUiKey.Key #Yes only having 1 of them here doesn't break anything
   - type: ActivatableUIRequiresPower
@@ -237,6 +240,7 @@
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
+      - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
@@ -300,40 +304,25 @@
   - type: LatheVisuals
     idleState: icon
     runningState: icon
-  - type: ProtolatheDatabase
-    protolatherecipes:
+  - type: LatheDatabase
+    static: true
+    recipes:
       - Flash
+      - FlashPayload
       - Handcuffs
       - Stunbaton
+      - RiotShield
       - CartridgePistol
-      - ShellShotgun
-      - CartridgeLightRifle
       - CartridgeMagnum
-      - ShellShotgunBeanbag
-      - ShellShotgunFlare
-      - ShellShotgunFlash
       - CartridgePistolRubber
       - CartridgeMagnumRubber
+      - ShellShotgun
+      - ShellShotgunBeanbag
+      - ShellShotgunFlare
+      - CartridgeLightRifle
       - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
-      - CartridgeRifleRubber  #Everything below this is shared with other lathes
-      - FlashlightLantern
-      - Bucket
-      - MopItem
-      - SprayBottle
-      - FireExtinguisher
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
-      - TimerTrigger
-      - Signaller
-      - SignalTrigger
+      - CartridgeRifleRubber
   - type: Machine
     board: SecurityTechFabCircuitboard
   - type: Lathe
@@ -386,21 +375,8 @@
       - CryostasisBeaker
       - Dropper
       - Syringe
-      - PillCanister #Everything below this is shared with other lathes
-      - FlashlightLantern
-      - Bucket
-      - MopItem
-      - SprayBottle
-      - FireExtinguisher
-      - LightTube
-      - LightBulb
-      - SheetSteel
-      - SheetGlass1
-      - SheetRGlass
-      - SheetPlastic
-      - CableStack
-      - CableMVStack
-      - CableHVStack
+      - PillCanister
+      - BodyBag
   - type: Machine
     board: MedicalTechFabCircuitboard
 

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
@@ -19,16 +21,11 @@ namespace Content.Server.Atmos
         [DataField("moles")] [ViewVariables]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
-        public float[] MolesArchived = new float[Atmospherics.AdjustedNumberOfGases];
-
         [DataField("temperature")] [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
 
         [DataField("immutable")] [ViewVariables]
         public bool Immutable { get; private set; }
-
-        [DataField("lastShare")] [ViewVariables]
-        public float LastShare { get; set; }
 
         [ViewVariables]
         public readonly Dictionary<GasReaction, float> ReactionResults = new()
@@ -65,8 +62,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        public float TemperatureArchived { get; private set; }
-
         [DataField("volume")] [ViewVariables]
         public float Volume { get; set; }
 
@@ -85,13 +80,6 @@ namespace Content.Server.Atmos
         public void MarkImmutable()
         {
             Immutable = true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Archive()
-        {
-            Moles.AsSpan().CopyTo(MolesArchived.AsSpan());
-            TemperatureArchived = Temperature;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -192,40 +180,6 @@ namespace Content.Server.Atmos
             Temperature = sample.Temperature;
         }
 
-        public enum GasCompareResult
-        {
-            NoExchange = -2,
-            TemperatureExchange = -1,
-        }
-
-        /// <summary>
-        ///     Compares sample to self to see if within acceptable ranges that group processing may be enabled.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GasCompareResult Compare(GasMixture sample)
-        {
-            var moles = 0f;
-
-            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gasMoles = Moles[i];
-                var delta = MathF.Abs(gasMoles - sample.Moles[i]);
-                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
-                    return (GasCompareResult)i; // We can move gases!
-                moles += gasMoles;
-            }
-
-            if (moles > Atmospherics.MinimumMolesDeltaToMove)
-            {
-                var tempDelta = MathF.Abs(Temperature - sample.Temperature);
-                if (tempDelta > Atmospherics.MinimumTemperatureDeltaToSuspend)
-                    return GasCompareResult.TemperatureExchange; // There can be temperature exchange.
-            }
-
-            // No exchange at all!
-            return GasCompareResult.NoExchange;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
@@ -244,7 +198,6 @@ namespace Content.Server.Atmos
         {
             // The arrays MUST have a specific length.
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
-            Array.Resize(ref MolesArchived, Atmospherics.AdjustedNumberOfGases);
         }
 
         public override bool Equals(object? obj)
@@ -259,15 +212,13 @@ namespace Content.Server.Atmos
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Moles.SequenceEqual(other.Moles)
-                   && MolesArchived.SequenceEqual(other.MolesArchived)
                    && _temperature.Equals(other._temperature)
                    && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
-                   && LastShare.Equals(other.LastShare)
-                   && TemperatureArchived.Equals(other.TemperatureArchived)
                    && Volume.Equals(other.Volume);
         }
 
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
@@ -275,15 +226,11 @@ namespace Content.Server.Atmos
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var moles = Moles[i];
-                var molesArchived = MolesArchived[i];
                 hashCode.Add(moles);
-                hashCode.Add(molesArchived);
             }
 
             hashCode.Add(_temperature);
-            hashCode.Add(TemperatureArchived);
             hashCode.Add(Immutable);
-            hashCode.Add(LastShare);
             hashCode.Add(Volume);
 
             return hashCode.ToHashCode();
@@ -294,11 +241,8 @@ namespace Content.Server.Atmos
             var newMixture = new GasMixture()
             {
                 Moles = (float[])Moles.Clone(),
-                MolesArchived = (float[])MolesArchived.Clone(),
                 _temperature = _temperature,
                 Immutable = Immutable,
-                LastShare = LastShare,
-                TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
             };
             return newMixture;

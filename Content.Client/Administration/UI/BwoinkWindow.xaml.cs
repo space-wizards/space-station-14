@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
+using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
@@ -170,9 +171,12 @@ namespace Content.Client.Administration.UI
             if (pl.Antag)
                 sb.Append(new Rune(0x1F5E1)); // 🗡
 
-            sb.AppendFormat("\"{0}\"", pl.CharacterName)
-                .Append(' ')
-                .Append(pl.Username);
+            sb.AppendFormat("\"{0}\"", pl.CharacterName);
+
+            if (pl.IdentityName != pl.CharacterName && pl.IdentityName != string.Empty)
+                sb.Append(' ').AppendFormat("[{0}]", pl.IdentityName);
+
+            sb.Append(' ').Append(pl.Username);
 
             return sb.ToString();
         }

@@ -46,3 +46,15 @@ accent-words-generic-aggressive-1 = Grr!
 accent-words-generic-aggressive-2 = Rrrr!
 accent-words-generic-aggressive-3 = Grr...
 accent-words-generic-aggressive-4 = Grrow!!
+
+# Duck
+accent-words-duck-1 = Quack!
+accent-words-duck-2 = Quack.
+accent-words-duck-3 = Quack?
+accent-words-duck-4 = Quack quack!
+
+# Chicken
+accent-words-chicken-1 = Cluck!
+accent-words-chicken-2 = Cluck.
+accent-words-chicken-3 = Cluck?
+accent-words-chicken-4 = Cluck cluck!

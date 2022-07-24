@@ -11,6 +11,10 @@ namespace Content.Server.Weapon.Melee.Components
         public SoundSpecifier? HitSound;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("noDamageSound")]
+        public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]
         public SoundSpecifier MissSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
 
