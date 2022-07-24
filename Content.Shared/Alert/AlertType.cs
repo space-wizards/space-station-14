@@ -17,6 +17,7 @@
         Weightless,
         Stun,
         Handcuffed,
+        Ensnared,
         Buckled,
         HumanCrit,
         HumanDead,

@@ -106,6 +106,13 @@
   description: "You're [color=yellow]handcuffed[/color] and can't use your hands. If anyone drags you, you won't be able to resist."
 
 - type: alert
+  id: Ensnared
+  onClick: !type:RemoveEnsnare  { }
+  icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
+  name: "[color=yellow]Legcuffed[/color]"
+  description: "You're [color=yellow]ensnared[/color] and is impairing your ability to move."
+
+- type: alert
   id: Buckled
   category: Buckled
   onClick: !type:Unbuckle  { }

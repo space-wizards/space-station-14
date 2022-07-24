@@ -59,11 +59,13 @@ public sealed class EnsnareChangeEvent : EntityEventArgs
 {
     //TODO: Ensnare change logic here. Needs to relay movespeed info.
 
+    public readonly EntityUid User;
     public readonly float WalkSpeed;
     public readonly float SprintSpeed;
 
-    public EnsnareChangeEvent(float walkSpeed, float sprintSpeed)
+    public EnsnareChangeEvent(EntityUid user, float walkSpeed, float sprintSpeed)
     {
+        User = user;
         WalkSpeed = walkSpeed;
         SprintSpeed = sprintSpeed;
     }
