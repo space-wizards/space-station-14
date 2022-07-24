@@ -1,26 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Removed drones as ghost roles for the time being, type: Remove}
-  id: 1496
-  time: '2022-05-10T06:50:54.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Orderable from cargo `kitchen supplies crate`, that stores several
-      bags of milk and flour and other supplements.', type: Add}
-  id: 1497
-  time: '2022-05-10T08:03:13.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
-  id: 1498
-  time: '2022-05-10T15:02:40.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
-      cookies., type: Add}
-  id: 1499
-  time: '2022-05-11T07:17:25.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: You are now less likely to accidentally stuff yourself in a closet or
@@ -2951,3 +2929,24 @@ Entries:
   - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
   id: 1995
   time: '2022-07-21T22:30:00.0000000+00:00'
+- author: moony
+  changes:
+  - {message: You no longer need to give yourself carpal tunnel to move something
+      you're pulling. (Fixed ctrl+click pulling), type: Fix}
+  id: 1996
+  time: '2022-07-23T14:26:07.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
+  id: 1997
+  time: '2022-07-23T14:26:19.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: shot glass sprite has been centered, type: Tweak}
+  id: 1998
+  time: '2022-07-24T01:47:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added the current station's name to PDAs, type: Add}
+  id: 1999
+  time: '2022-07-24T01:58:29.0000000+00:00'

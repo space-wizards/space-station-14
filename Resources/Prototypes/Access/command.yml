@@ -1,8 +1,10 @@
 - type: accessLevel
   id: Command
+  name: Command
 
 - type: accessLevel
   id: Captain
+  name: Captain
 
 - type: accessLevel
   id: HeadOfPersonnel
