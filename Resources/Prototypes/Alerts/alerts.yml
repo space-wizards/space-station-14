@@ -109,7 +109,7 @@
   id: Ensnared
   onClick: !type:RemoveEnsnare  { }
   icon: /Textures/Interface/Alerts/Handcuffed/Handcuffed.png
-  name: "[color=yellow]Legcuffed[/color]"
+  name: "[color=yellow]Ensnared[/color]"
   description: "You're [color=yellow]ensnared[/color] and is impairing your ability to move."
 
 - type: alert
