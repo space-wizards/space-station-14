@@ -15,3 +15,12 @@
     - Heat
     - Shock
     - Structural # this probably should be in separate container
+
+- type: damageContainer
+  id: Shield
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+
+

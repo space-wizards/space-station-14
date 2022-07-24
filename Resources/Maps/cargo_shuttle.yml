@@ -226,8 +226,8 @@ entities:
       -4,2: 1
       -4,3: 1
       -4,7: 0
-      -4,8: 0
-      -4,9: 0
+      -4,8: 2
+      -4,9: 3
       -3,12: 0
       -3,13: 0
       -3,14: 0
@@ -238,8 +238,8 @@ entities:
       -2,4: 1
       -2,5: 1
       -2,7: 1
-      -2,8: 1
-      -2,9: 1
+      -2,8: 4
+      -2,9: 5
       -2,10: 1
       -1,0: 1
       -1,1: 1
@@ -393,13 +393,13 @@ entities:
       -3,3: 1
       -3,4: 1
       -3,5: 1
-      -3,6: 1
+      -3,6: 6
       -3,7: 1
       -3,8: 1
-      -3,9: 1
+      -3,9: 7
       -3,10: 1
       -3,11: 1
-      -2,6: 1
+      -2,6: 8
       -2,11: 1
       -2,12: 1
       -2,13: 1
@@ -480,7 +480,7 @@ entities:
       -5,8: 1
       -5,9: 1
       -4,5: 1
-      -4,6: 1
+      -4,6: 9
       -6,-4: 1
       -6,-3: 1
       -6,-2: 1
@@ -507,6 +507,94 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 147.92499
+      moles:
+      - 10.912439
+      - 41.05156
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 184.23123
+      moles:
+      - 13.64055
+      - 51.31445
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 291.44815
+      moles:
+      - 21.696999
+      - 81.62205
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 286.34256
+      moles:
+      - 21.313358
+      - 80.178825
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 268.94583
+      moles:
+      - 20.00614
+      - 75.26119
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 265.9203
+      moles:
+      - 19.778797
+      - 74.40595
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 285.08194
+      moles:
+      - 21.218632
+      - 79.82248
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 196.33333
+      moles:
+      - 14.549919
+      - 54.735413
       - 0
       - 0
       - 0
@@ -783,25 +871,25 @@ entities:
   - outputs:
       Left:
       - port: Forward
+        uid: 51
+      - port: Forward
         uid: 46
       - port: Forward
-        uid: 45
-      - port: Forward
-        uid: 44
+        uid: 167
       Right:
       - port: Reverse
+        uid: 51
+      - port: Reverse
         uid: 46
       - port: Reverse
-        uid: 45
-      - port: Reverse
-        uid: 44
+        uid: 167
       Middle:
       - port: Off
+        uid: 51
+      - port: Off
         uid: 46
       - port: Off
-        uid: 45
-      - port: Off
-        uid: 44
+        uid: 167
     type: SignalTransmitter
 - uid: 36
   type: TwoWayLever
@@ -970,46 +1058,49 @@ entities:
         uid: 34
     type: SignalReceiver
 - uid: 44
-  type: ConveyorBelt
+  type: PlasticFlapsAirtightClear
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,0.5
+  - pos: 0.5,0.5
     parent: 0
     type: Transform
-  - inputs:
-      Reverse:
-      - port: Right
-        uid: 35
-      Forward:
-      - port: Left
-        uid: 35
-      Off:
-      - port: Middle
-        uid: 35
-    type: SignalReceiver
 - uid: 45
-  type: ConveyorBelt
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.5,0.5
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,1.5
     parent: 0
     type: Transform
-  - inputs:
-      Reverse:
-      - port: Right
-        uid: 35
-      Forward:
-      - port: Left
-        uid: 35
-      Off:
-      - port: Middle
-        uid: 35
-    type: SignalReceiver
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 46
   type: ConveyorBelt
   components:
   - rot: -1.5707963267948966 rad
-    pos: 0.5,0.5
+    pos: -0.5,0.5
     parent: 0
     type: Transform
   - inputs:
@@ -1111,38 +1202,23 @@ entities:
       id: docking
     type: Fixtures
 - uid: 51
-  type: AirlockExternalGlassShuttleLocked
+  type: ConveyorBelt
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,1.5
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,0.5
     parent: 0
     type: Transform
-  - fixtures:
-    - shape: !type:PolygonShape
-        vertices:
-        - 0.49,-0.49
-        - 0.49,0.49
-        - -0.49,0.49
-        - -0.49,-0.49
-      mask:
-      - Impassable
-      - MidImpassable
-      - HighImpassable
-      - LowImpassable
-      - InteractImpassable
-      layer:
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
-      - InteractImpassable
-      - Opaque
-      mass: 100
-    - shape: !type:PhysShapeCircle
-        position: 0,-0.5
-        radius: 0.2
-      hard: False
-      id: docking
-    type: Fixtures
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 35
+      Forward:
+      - port: Left
+        uid: 35
+      Off:
+      - port: Middle
+        uid: 35
+    type: SignalReceiver
 - uid: 52
   type: AirlockExternalGlassShuttleLocked
   components:
@@ -1339,33 +1415,33 @@ entities:
     parent: 0
     type: Transform
 - uid: 68
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -3.5,8.5
+  - pos: -1.5,8.5
     parent: 0
     type: Transform
 - uid: 69
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -3.5,9.5
+  - pos: -1.5,9.5
     parent: 0
     type: Transform
 - uid: 70
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
   - pos: -2.5,9.5
     parent: 0
     type: Transform
 - uid: 71
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -1.5,9.5
+  - pos: -3.5,9.5
     parent: 0
     type: Transform
 - uid: 72
-  type: ReinforcedWindow
+  type: ShuttleWindow
   components:
-  - pos: -1.5,8.5
+  - pos: -3.5,8.5
     parent: 0
     type: Transform
 - uid: 73
@@ -1746,65 +1822,60 @@ entities:
     parent: 0
     type: Transform
 - uid: 133
-  type: CableHV
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 134
-  type: GeneratorUranium
-  components:
-  - pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-- uid: 135
-  type: CableTerminal
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -3.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 136
-  type: CableHV
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 137
-  type: CableTerminal
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 138
-  type: GeneratorUranium
-  components:
-  - pos: -2.5,-1.5
-    parent: 0
-    type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
-- uid: 139
-  type: WindowReinforcedDirectional
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -3.5,6.5
-    parent: 0
-    type: Transform
-- uid: 140
   type: Gyroscope
   components:
-  - pos: -3.5,-1.5
+  - pos: -3.5,-2.5
     parent: 0
     type: Transform
   - enabled: False
     type: AmbientSound
+- uid: 134
+  type: GasPipeBend
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 135
+  type: GasPort
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 136
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,0.5
+    parent: 0
+    type: Transform
+- uid: 137
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,1.5
+    parent: 0
+    type: Transform
+- uid: 138
+  type: GasVentPump
+  components:
+  - pos: -2.5,2.5
+    parent: 0
+    type: Transform
+- uid: 139
+  type: WindoorCargoLocked
+  components:
+  - pos: -2.5,7.5
+    parent: 0
+    type: Transform
+- uid: 140
+  type: GasPipeStraight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -2.5,-0.5
+    parent: 0
+    type: Transform
 - uid: 141
   type: ChairPilotSeat
   components:
@@ -1815,8 +1886,7 @@ entities:
 - uid: 142
   type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: -1.5,6.5
+  - pos: -1.5,7.5
     parent: 0
     type: Transform
 - uid: 143
@@ -1832,10 +1902,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 145
-  type: WindoorSecureCargoLocked
+  type: WindowReinforcedDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: -2.5,6.5
+  - pos: -3.5,7.5
     parent: 0
     type: Transform
 - uid: 146
@@ -2027,9 +2096,55 @@ entities:
     parent: 0
     type: Transform
 - uid: 167
-  type: PlasticFlapsAirtightClear
+  type: ConveyorBelt
   components:
-  - pos: 0.5,0.5
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,0.5
+    parent: 0
+    type: Transform
+  - inputs:
+      Reverse:
+      - port: Right
+        uid: 35
+      Forward:
+      - port: Left
+        uid: 35
+      Off:
+      - port: Middle
+        uid: 35
+    type: SignalReceiver
+- uid: 168
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -5.5,1.5
+    parent: 0
+    type: Transform
+- uid: 169
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: -5.5,3.5
+    parent: 0
+    type: Transform
+- uid: 170
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 171
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 172
+  type: AirCanister
+  components:
+  - pos: -3.5,-1.5
     parent: 0
     type: Transform
 ...

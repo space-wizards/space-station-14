@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
 using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.IdentityManagement;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
+using Content.Shared.IdentityManagement;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -25,6 +27,7 @@ namespace Content.Server.Administration.Systems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+            SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
@@ -44,6 +47,14 @@ namespace Content.Server.Administration.Systems
             {
                 RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
             }
+        }
+
+        private void OnIdentityChanged(IdentityChangedEvent ev)
+        {
+            if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
+                return;
+
+            UpdatePlayerList(actor.PlayerSession);
         }
 
         private void OnRoleEvent(RoleEvent ev)
@@ -106,9 +117,13 @@ namespace Content.Server.Administration.Systems
         {
             var name = session.Name;
             var username = string.Empty;
+            var identityName = string.Empty;
 
             if (session.AttachedEntity != null)
+            {
                 username = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+                identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
+            }
 
             var mind = session.ContentData()?.Mind;
 
@@ -119,7 +134,7 @@ namespace Content.Server.Administration.Systems
 
             var connected = session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
-            return new PlayerInfo(name, username, startingRole, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
+            return new PlayerInfo(name, username, identityName, startingRole, antag, session.AttachedEntity.GetValueOrDefault(), session.UserId,
                 connected);
         }
     }

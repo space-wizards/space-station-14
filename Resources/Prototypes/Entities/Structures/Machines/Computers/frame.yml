@@ -24,6 +24,7 @@
     node: frameUnsecured
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
+    drawdepth: Objects
     state: 0
   - type: Damageable
     damageContainer: Inorganic
@@ -53,6 +54,7 @@
     node: monitorBroken
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
+    drawdepth: Objects
     state: broken
   - type: Destructible
     thresholds:

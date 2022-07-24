@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
@@ -16,11 +17,12 @@ namespace Content.Client.Shuttles.UI;
 public sealed class RadarControl : Control
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     private const float ScrollSensitivity = 8f;
 
-    private const int MinimapRadius = 384;
+    public const int MinimapRadius = 320;
     private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
@@ -34,6 +36,16 @@ public sealed class RadarControl : Control
     private float _radarMinRange = 64f;
     private float _radarMaxRange = 256f;
     public float RadarRange { get; private set; } = 256f;
+
+    /// <summary>
+    /// We'll lerp between the radarrange and actual range
+    /// </summary>
+    private float _actualRadarRange = 256f;
+
+    /// <summary>
+    /// Controls the maximum distance that IFF labels will display.
+    /// </summary>
+    public float MaxRadarRange { get; private set; } = 256f * 10f;
 
     private int MidPoint => SizeFull / 2;
     private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
@@ -75,8 +87,7 @@ public sealed class RadarControl : Control
 
         if (_radarMaxRange < RadarRange)
         {
-            RadarRange = _radarMaxRange;
-            OnRadarRangeChanged?.Invoke(RadarRange);
+            _actualRadarRange = _radarMaxRange;
         }
 
         if (_radarMaxRange < _radarMinRange)
@@ -95,21 +106,25 @@ public sealed class RadarControl : Control
     protected override void MouseWheel(GUIMouseWheelEventArgs args)
     {
         base.MouseWheel(args);
-        AddRadarRange(-args.Delta.Y * ScrollSensitivity);
+        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * RadarRange);
     }
 
     public void AddRadarRange(float value)
     {
-        var oldValue = RadarRange;
-        RadarRange = MathF.Max(0f, MathF.Max(_radarMinRange, MathF.Min(RadarRange + value, _radarMaxRange)));
-
-        if (oldValue.Equals(RadarRange)) return;
-
-        OnRadarRangeChanged?.Invoke(RadarRange);
+        _actualRadarRange = Math.Clamp(_actualRadarRange + value, _radarMinRange, _radarMaxRange);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        if (!_actualRadarRange.Equals(RadarRange))
+        {
+            var diff = _actualRadarRange - RadarRange;
+            var lerpRate = 10f;
+
+            RadarRange += (float) Math.Clamp(diff, -lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds, lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds);
+            OnRadarRangeChanged?.Invoke(RadarRange);
+        }
+
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
         handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
@@ -145,33 +160,30 @@ public sealed class RadarControl : Control
 
         var mapPosition = _coordinates.Value.ToMap(_entManager);
 
-        if (mapPosition.MapId == MapId.Nullspace)
+        if (mapPosition.MapId == MapId.Nullspace || !xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform))
         {
             Clear();
             return;
         }
 
         var offset = _coordinates.Value.Position;
-        Matrix3 matrix;
+        var offsetMatrix = Matrix3.CreateInverseTransform(
+            mapPosition.Position,
+            xform.WorldRotation - _rotation.Value);
 
         // Draw our grid in detail
         var ourGridId = _coordinates.Value.GetGridUid(_entManager);
         if (ourGridId != null)
         {
-            var offsetMatrix = Matrix3.CreateInverseTransform(offset.X, offset.Y, (float) _rotation.Value.Theta);
+            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).WorldMatrix;
             var ourGridFixtures = fixturesQuery.GetComponent(ourGridId.Value);
+
+            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out var matrix);
+
             // Draw our grid; use non-filled boxes so it doesn't look awful.
-            DrawGrid(handle, offsetMatrix, ourGridFixtures, Color.Yellow);
+            DrawGrid(handle, matrix, ourGridFixtures, Color.Yellow);
 
-            DrawDocks(handle, ourGridId.Value, offsetMatrix);
-
-            var ourGridMatrix = xformQuery.GetComponent(ourGridId.Value).InvWorldMatrix;
-
-            Matrix3.Multiply(in ourGridMatrix, in offsetMatrix, out matrix);
-        }
-        else
-        {
-            matrix = Matrix3.CreateTranslation(-offset);
+            DrawDocks(handle, ourGridId.Value, matrix);
         }
 
         var invertedPosition = _coordinates.Value.Position - offset;
@@ -185,7 +197,7 @@ public sealed class RadarControl : Control
 
         // Draw other grids... differently
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
-                     new Box2(mapPosition.Position - RadarRange, mapPosition.Position + RadarRange)))
+                     new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
             if (grid.GridEntityId == ourGridId) continue;
 
@@ -205,23 +217,29 @@ public sealed class RadarControl : Control
             var gridXform = xformQuery.GetComponent(grid.GridEntityId);
             var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
             var gridMatrix = gridXform.WorldMatrix;
-            Matrix3.Multiply(in gridMatrix, in matrix, out var matty);
+            Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
 
             if (ShowIFF)
             {
+                Label label;
+
                 if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
                 {
-                    var label = new Label()
+                    label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
+                        FontColorOverride = Color.Aquamarine,
                     };
 
                     control = new PanelContainer()
                     {
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Top,
-                        Children = { label },
-                        StyleClasses  = { StyleNano.StyleClassTooltipPanel },
+                        HorizontalAlignment = HAlignment.Center,
+                        VerticalAlignment = VAlignment.Center,
+                        Children =
+                        {
+                            label
+                        },
+                        StyleClasses  = { StyleNano.StyleClassBorderedWindowPanel },
                     };
 
                     _iffControls[grid.GridEntityId] = control;
@@ -230,20 +248,17 @@ public sealed class RadarControl : Control
 
                 var gridCentre = matty.Transform(gridBody.LocalCenter);
                 gridCentre.Y = -gridCentre.Y;
+                var distance = gridCentre.Length;
 
-                // TODO: When we get IFF or whatever we can show controls at a further distance; for now
-                // we don't do that because it would immediately reveal nukies.
-                if (gridCentre.Length < RadarRange)
+                if (gridCentre.Length > RadarRange)
                 {
-                    control.Visible = true;
-                    var label = (Label) control.GetChild(0);
-                    label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{gridCentre.Length:0.0}"));
-                    LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
+                    gridCentre = gridCentre.Normalized * RadarRange;
                 }
-                else
-                {
-                    control.Visible = false;
-                }
+
+                control.Visible = true;
+                label = (Label) control.GetChild(0);
+                label.Text = Loc.GetString("shuttle-console-iff-label", ("name", name), ("distance", $"{distance:0.0}"));
+                LayoutContainer.SetPosition(control, ScalePosition(gridCentre) / UIScale);
             }
             else
             {
@@ -296,7 +311,7 @@ public sealed class RadarControl : Control
 
                 if (uiPosition.Length > RadarRange - DockScale) continue;
 
-                var color = HighlightedDock == ent ? Color.Magenta : Color.DarkViolet;
+                var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
 
                 uiPosition.Y = -uiPosition.Y;
 

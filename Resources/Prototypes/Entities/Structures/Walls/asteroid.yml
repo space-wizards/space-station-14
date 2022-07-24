@@ -2,6 +2,7 @@
   id: AsteroidRock
   parent: BaseStructure
   name: asteroid rock
+  suffix: Low Ore Yield
   description: A rocky asteroid.
   components:
   - type: Gatherable
@@ -44,8 +45,9 @@
 
 - type: entity
   id: AsteroidRockMining
-  parent: BaseStructure
+  parent: AsteroidRock
   name: asteroid rock
+  suffix: higher ore yield
   description: An asteroid.
   components:
   - type: Gatherable

@@ -8,10 +8,12 @@
   },
   "states": [
     {
-      "name": "bananalamp"
+        "name": "bananalamp",
+        "directions": 4
     },
     {
-      "name": "bananalamp_on"
+        "name": "bananalamp_on",
+        "directions": 4
     },
     {
       "name": "floodlight"

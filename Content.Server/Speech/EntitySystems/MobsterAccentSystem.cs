@@ -47,7 +47,7 @@ public sealed class MobsterAccentSystem : EntitySystem
 
         foreach (var (first, replace) in DirectReplacements)
         {
-            msg = msg.Replace(first, replace, true, CultureInfo.InvariantCulture);
+            msg = Regex.Replace(msg, $@"(?<!\w){first}(?!\w)", replace, RegexOptions.IgnoreCase);
         }
 
         // thinking -> thinkin'

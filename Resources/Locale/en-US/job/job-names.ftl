@@ -2,6 +2,7 @@
 job-name-security = security officer
 job-name-cadet = security cadet
 job-name-hos = head of security
+job-name-detective = detective
 job-name-scientist = scientist
 job-name-rd = research director
 job-name-psychologist = psychologist
@@ -15,7 +16,7 @@ job-name-atmostech = atmospheric technician
 job-name-hop = head of personnel
 job-name-captain = captain
 job-name-serviceworker = service worker
-job-name-centcomoff = centcom official
+job-name-centcomoff = CentCom official
 job-name-reporter = reporter
 job-name-musician = musician
 job-name-librarian = librarian

@@ -1,5 +1,6 @@
 using Content.Server.UserInterface;
 using Content.Shared.Communications;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Communications
@@ -7,16 +8,13 @@ namespace Content.Server.Communications
     [RegisterComponent]
     public sealed class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
+        public float UIUpdateAccumulator = 0f;
+
         /// <summary>
         /// Remaining cooldown between making announcements.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float AnnouncementCooldownRemaining;
-
-        /// <summary>
-        /// Has the UI already been refreshed after the announcement
-        /// </summary>
-        public bool AlreadyRefreshed = false;
 
         /// <summary>
         /// Fluent ID for the announcement title
@@ -52,6 +50,12 @@ namespace Content.Server.Communications
         /// </summary>
         [DataField("global")]
         public bool AnnounceGlobal = false;
+
+        /// <summary>
+        /// Announce sound file path
+        /// </summary>
+        [DataField("sound")]
+        public SoundSpecifier AnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
         public BoundUserInterface? UserInterface => Owner.GetUIOrNull(CommunicationsConsoleUiKey.Key);
     }

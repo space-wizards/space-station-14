@@ -2,7 +2,7 @@
   id: SplitStation
   mapName: 'Split Station'
   mapPath: /Maps/splitstation.yml
-  minPlayers: 40
+  minPlayers: 50
   stations:
     Split:
       mapNameTemplate: '{0} Split Station {1}'
@@ -43,3 +43,4 @@
         Quartermaster: [ 1, 1 ]
         CargoTechnician: [ 3, 6 ]
         SalvageSpecialist: [ 4, 6 ]
+        Detective: [ 1, 1 ]

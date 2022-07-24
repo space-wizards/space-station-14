@@ -12,6 +12,7 @@
   - Brig
   - Maintenance
   - Service
+  - External
 
 - type: startingGear
   id: SecurityOfficerGear

@@ -25,7 +25,7 @@
   - type: TemperatureProtection
     coefficient: 0.001
   - type: ExplosionResistance
-    resistance: 0.8
+    damageCoefficient: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
 
@@ -54,7 +54,7 @@
         Heat: 0.3
         Radiation: 0.1
   - type: ExplosionResistance
-    resistance: 0.5
+    damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
 
@@ -83,7 +83,7 @@
         Heat: 0.2
         Radiation: 0.2
   - type: ExplosionResistance
-    resistance: 0.3
+    damageCoefficient: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
 
@@ -112,7 +112,7 @@
         Heat: 0.7
         Radiation: 0.35
   - type: ExplosionResistance
-    resistance: 0.8
+    damageCoefficient: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
 
@@ -141,7 +141,7 @@
         Heat: 0.4
         Radiation: 0.25
   - type: ExplosionResistance
-    resistance: 0.8
+    damageCoefficient: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
 
@@ -251,7 +251,7 @@
     walkModifier: 0.75
     sprintModifier: 0.75
   - type: ExplosionResistance
-    resistance: 0.7
+    damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -282,7 +282,7 @@
         Heat: 0.85
         Radiation: 0.5
   - type: ExplosionResistance
-    resistance: 0.7
+    damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
 
@@ -308,7 +308,7 @@
         Heat: 0.8
         Radiation: 0.25
   - type: ExplosionResistance
-    resistance: 0.6
+    damageCoefficient: 0.4
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
@@ -337,7 +337,7 @@
         Heat: 0.8
         Radiation: 0.25
   - type: ExplosionResistance
-    resistance: 0.6
+    damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
@@ -360,13 +360,13 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.55
-        Piercing: 0.4
-        Heat: 0.4 #all the combat numbers are pumped up here
+        Blunt: 0.65
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.4
         Radiation: 0.20
   - type: ExplosionResistance
-    resistance: 0.5
+    damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
 
@@ -395,7 +395,7 @@
         Heat: 0.25
         Radiation: 0.20
   - type: ExplosionResistance
-    resistance: 0.5
+    damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
 
@@ -424,7 +424,7 @@
         Heat: 0.5
         Radiation: 0.3
   - type: ExplosionResistance
-    resistance: 0.8
+    damageCoefficient: 0.2
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
 
@@ -507,7 +507,7 @@
         Heat: 0.35
         Radiation: 0.1
   - type: ExplosionResistance
-    resistance: 0.2
+    damageCoefficient: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
 
@@ -536,7 +536,7 @@
         Heat: 0.3
         Radiation: 0.20
   - type: ExplosionResistance
-    resistance: 0.5
+    damageCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
 
@@ -567,10 +567,42 @@
         Heat: 0.2
         Radiation: 0.20
   - type: ExplosionResistance
-    resistance: 0.3
+    damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
 
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitCBURN
+  name: CBURN exosuit
+  description: A lightweight yet strong exosuit used for special cleanup operations.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: TemperatureProtection
+    coefficient: 0.001    
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.6
+        Heat: 0.05
+        Cold: 0.1
+        Shock: 0.1
+        Radiation: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetCBURN
 
 #ERT
 - type: entity

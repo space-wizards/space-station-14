@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -36,7 +37,9 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (_entities.HasComponent<IAtmosphereComponent>(euid))
+            var atmos = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+
+            if (atmos.HasAtmosphere(euid))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;

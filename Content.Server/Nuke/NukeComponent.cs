@@ -1,3 +1,4 @@
+using System.Threading;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion;
 using Content.Shared.Nuke;
@@ -18,11 +19,10 @@ namespace Content.Server.Nuke
     {
         /// <summary>
         ///     Default bomb timer value in seconds.
-        ///     Must be shorter then the nuke alarm song.
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 120;
+        public int Timer = 300;
 
         /// <summary>
         ///     How long until the bomb can arm again after deactivation.
@@ -40,13 +40,24 @@ namespace Content.Server.Nuke
         public ItemSlot DiskSlot = new();
 
         /// <summary>
-        ///     After this time nuke will play last alert sound
+        ///     When this time is left, nuke will play last alert sound
         /// </summary>
         [DataField("alertTime")]
         public float AlertSoundTime = 10.0f;
 
+        /// <summary>
+        ///     How long a user must wait to disarm the bomb.
+        /// </summary>
+        [DataField("disarmDoafterLength")]
+        public float DisarmDoafterLength = 30.0f;
+
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
+
+        /// <summary>
+        ///     This is stored so we can do a funny by making 0 shift the last played note up by 12 semitones (octave)
+        /// </summary>
+        public int LastPlayedKeypadSemitones = 0;
 
         [DataField("keypadPressSound")]
         public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
@@ -65,6 +76,9 @@ namespace Content.Server.Nuke
 
         [DataField("disarmSound")]
         public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
+
+        [DataField("armMusic")]
+        public SoundSpecifier ArmMusic = new SoundPathSpecifier("/Audio/StationEvents/countdown.ogg");
 
         // These datafields here are duplicates of those in explosive component. But I'm hesitant to use explosive
         // component, just in case at some point, somehow, when grenade crafting added in someone manages to wire up a
@@ -134,9 +148,16 @@ namespace Content.Server.Nuke
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
 
         /// <summary>
+        ///     Check if nuke has already played the nuke song so we don't do it again
+        /// </summary>
+        public bool PlayedNukeSong = false;
+
+        /// <summary>
         ///     Check if nuke has already played last alert sound
         /// </summary>
         public bool PlayedAlertSound = false;
+
+        public CancellationToken? DisarmCancelToken = null;
 
         public IPlayingAudioStream? AlertAudioStream = default;
     }

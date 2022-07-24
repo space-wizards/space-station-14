@@ -102,17 +102,6 @@
         amount: 6
 
 - type: entity
-  name: box of .40 Lamia (flash) magazines.
-  parent: BoxCardboard
-  id: BoxMagazineMagnumFlash
-  description: A box full of .40 Lamia (flash) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineMagnumFlash
-        amount: 6
-
-- type: entity
   name: box of .40 Lamia (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumHighVelocity
@@ -213,17 +202,6 @@
         amount: 6
 
 - type: entity
-  name: box of pistol .35 auto (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazinePistolFlash
-  description: A box full of pistol .35 auto (flash) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolFlash
-        amount: 6
-
-- type: entity
   name: box of pistol .35 auto (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazinePistolHighVelocity
@@ -309,17 +287,6 @@
   - type: StorageFill
     contents:
       - id: MagazinePistolSubMachineGun
-        amount: 3
-
-- type: entity
-  name: box of SMG .35 auto (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazinePistolSubMachineGunFlash
-  description: A box full of SMG .35 auto (flash) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazinePistolSubMachineGunFlash
         amount: 3
 
 - type: entity
@@ -410,17 +377,6 @@
   - type: StorageFill
     contents:
       - id: MagazineRifle
-        amount: 6
-
-- type: entity
-  name: box of .20 rifle (flash) magazines
-  parent: BoxCardboard
-  id: BoxMagazineRifleFlash
-  description: A box full of .20 rifle (flash) magazines.
-  components:
-  - type: StorageFill
-    contents:
-      - id: MagazineRifleFlash
         amount: 6
 
 - type: entity

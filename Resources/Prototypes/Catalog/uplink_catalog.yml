@@ -304,6 +304,27 @@
   itemId: DehydratedSpaceCarp
   price: 3
 
+# Job Specific
+
+- type: uplinkListing
+  id: uplinkGatfruitSeeds
+  category: Job
+  itemId: GatfruitSeeds
+  description: And who says guns don't grow on trees?
+  price: 4
+  jobWhitelist:
+  - Botanist
+
+- type: uplinkListing
+  id: uplinkNecronomicon
+  category: Job
+  itemId: BibleNecronomicon
+  description: An unholy book capable of summoning a demonic familiar.
+  price: 6
+  surplus: false
+  jobWhitelist:
+  - Chaplain
+
 # Armor
 
 # Should be cameleon shoes, change when implemented.
@@ -346,7 +367,7 @@
 - type: uplinkListing
   id: UplinkEVASyndie
   category: Armor
-  itemId: BoxSyndicateEVA
+  itemId: ClothingBackpackDuffelSyndicateEVABundle
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 
@@ -366,12 +387,6 @@
   itemId: CyberPen
   description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
   price: 4
-
-- type: uplinkListing
-  id: UplinkBalloon
-  category: Misc
-  itemId: BalloonSyn
-  price: 20
 
 - type: uplinkListing
   id: UplinkDecoyDisk
@@ -412,33 +427,6 @@
 #  price: 4
 
 - type: uplinkListing
-  id: UplinkCostumeClown
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicateCostumeClown
-  price: 4
-
-- type: uplinkListing
-  id: UplinkCostumePyjama
-  category: Misc
-  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
-  price: 4
-
-- type: uplinkListing
-  id: UplinkOutlawHat
-  category: Misc
-  itemId: ClothingHeadHatOutlawHat
-  price: 1
-
-- type: uplinkListing
-  id: UplinkCatEars
-  category: Misc
-  itemId: ClothingHeadHatCatEars
-  listingName: Cat Ears
-  description: UwU.
-  price: 21
-
-
-- type: uplinkListing
   id: UplinkGigacancerScanner
   category: Misc
   itemId: HandheldHealthAnalyzerGigacancer
@@ -454,12 +442,6 @@
   price: 5
 
 - type: uplinkListing
-  id: UplinkSyndicateStamp
-  category: Misc
-  itemId: RubberStampSyndicate
-  price: 2
-
-- type: uplinkListing
   id: UplinkSyndicateSegwayCrate
   category: Misc
   itemId: CrateFunSyndicateSegway
@@ -467,3 +449,43 @@
   description: Be an enemy of the corporation, in style!
   price: 5
   surplus: false
+
+ # Pointless
+
+- type: uplinkListing
+  id: UplinkSyndicateStamp
+  category: Pointless
+  itemId: RubberStampSyndicate
+  price: 2
+
+- type: uplinkListing
+  id: UplinkCatEars
+  category: Pointless
+  itemId: ClothingHeadHatCatEars
+  listingName: Cat Ears
+  description: UwU.
+  price: 21
+
+- type: uplinkListing
+  id: UplinkOutlawHat
+  category: Pointless
+  itemId: ClothingHeadHatOutlawHat
+  price: 1
+
+- type: uplinkListing
+  id: UplinkCostumePyjama
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicatePyjamaBundle
+  price: 4
+
+- type: uplinkListing
+  id: UplinkCostumeClown
+  category: Pointless
+  itemId: ClothingBackpackDuffelSyndicateCostumeClown
+  price: 4
+
+- type: uplinkListing
+  id: UplinkBalloon
+  category: Pointless
+  itemId: BalloonSyn
+  price: 20

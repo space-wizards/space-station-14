@@ -25,9 +25,8 @@
     damage:
       types:
         Blunt: 10
-  - type: StunOnCollide
-    stunAmount: 5
-    knockdownAmount: 3
+  - type: StaminaDamageOnCollide
+    damage: 55
 
 - type: entity
   id: PelletShotgun
@@ -42,20 +41,6 @@
     damage:
       types:
         Piercing: 5
-
-- type: entity
-  id: PelletShotgunFlash
-  name: pellet (.50 flash)
-  noSpawn: true
-  parent: BaseBulletFlash
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 2
 
 - type: entity
   id: PelletShotgunIncendiary

@@ -11,8 +11,8 @@
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: Input
     context: "human"
-  - type: PlayerMobMover
-  - type: PlayerInputMover
+  - type: MobMover
+  - type: InputMover
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
@@ -50,7 +50,7 @@
     damageContainer: Biological
   - type: MobState
     thresholds:
-      0: !type:NormalMobState {}
+      0: Alive
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
