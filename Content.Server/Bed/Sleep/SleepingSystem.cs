@@ -87,7 +87,7 @@ namespace Content.Server.Bed.Sleep
             if (!args.DamageIncreased || args.DamageDelta == null)
                 return;
 
-            if (args.DamageDelta.Total >= 2)
+            if (args.DamageDelta.Total >= component.WakeThreshold)
                 TryWaking(uid);
         }
 
