@@ -146,7 +146,7 @@
   parent: ClothingMaskBase
   id: ClothingMaskSexyClown
   name: sexy-clown mask and wig
-  description: A feminine clown mask for the dabbling crossdressers or female entertainers.
+  description: A feminine clown mask for the best clowns.
   components:
   - type: Sprite
     sprite: Clothing/Mask/sexyclown.rsi
