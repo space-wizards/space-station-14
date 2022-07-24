@@ -35,13 +35,6 @@ public abstract class SharedEnsnaringComponent : Component
     public float SprintSpeed = 0.3f;
 
     /// <summary>
-    /// Should this ensnare someone on step?
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canStepTrigger")]
-    public bool CanStepTrigger;
-
-    /// <summary>
     /// Should this ensnare someone when thrown?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]

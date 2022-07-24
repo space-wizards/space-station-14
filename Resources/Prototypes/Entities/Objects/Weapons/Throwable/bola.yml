@@ -34,3 +34,4 @@
     damage:
       types:
         Blunt: 5
+  - type: Ensnaring

@@ -2,6 +2,8 @@
 using Content.Shared.Alert;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Interaction;
+using Content.Shared.StepTrigger.Systems;
+using Content.Shared.Throwing;
 
 namespace Content.Server.Ensnaring;
 
@@ -13,17 +15,27 @@ public sealed class EnsnaringSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EnsnaringComponent, AfterInteractEvent>(OnAfterInteraction);
+        SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
+        SubscribeLocalEvent<EnsnaringComponent, StepTriggeredEvent>(OnStepTrigger);
+        SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
     }
 
-    private void OnAfterInteraction(EntityUid uid, EnsnaringComponent component, AfterInteractEvent args)
+    private void AttemptStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggerAttemptEvent args)
     {
-        //TODO: This small bit works and works with speed.
-        //Obviously once all the major logic is out of the way this needs to be nuked in favor of the steptrigger and throw
-        if (args.Target != null)
-        {
-            TryEnsnare(uid, args.Target.Value, component);
-        }
+        args.Continue = true;
+    }
+
+    private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredEvent args)
+    {
+        TryEnsnare(uid, args.Tripper, component);
+    }
+
+    private void OnThrowHit(EntityUid uid, EnsnaringComponent component, ThrowDoHitEvent args)
+    {
+        if (!component.CanThrowTrigger)
+            return;
+
+        TryEnsnare(uid, args.Target, component);
     }
 
     /// <summary>

@@ -19,7 +19,6 @@
     sprite: Clothing/Shoes/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Color/blue.rsi
-  - type: Ensnaring
 
 - type: entity
   parent: ClothingShoesBase
