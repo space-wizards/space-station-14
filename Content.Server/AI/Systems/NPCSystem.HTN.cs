@@ -35,7 +35,7 @@ public sealed partial class NPCSystem
         }
 
         // Run the existing plan still
-        var currentTask = component.Plan.CurrentTask;
+        var currentOperator = component.Plan.CurrentOperator;
 
         // Run the existing operator
     }

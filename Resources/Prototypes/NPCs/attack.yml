@@ -24,17 +24,9 @@
   # Refer to this node from other nodes
   - id: PickNearbyCoordinates
     # The underlying task to run
-    task: PickNearbyCoordinates
+    task: !type:PickNearbyCoordinates
     # Edges on the graph
     edges:
     - MoveToTarget
   - id: MoveToTarget
-    task: MoveToTask
-
-- type: htnPrimitiveTask
-  id: PickNearbyCoordinates
-  operator: !type:PickNearbyCoordinatesOperator
-
-- type: htnPrimitiveTask
-  id: MoveToTarget
-  operator: !type:MoveToOperator
+    task: !type:MoveTo

@@ -16,6 +16,8 @@ public sealed class HTNCompoundTask : HTNTask, ISerializationHooks
 
     [DataField("graph")] public List<HTNNode> Graph = new();
 
+    public IReadOnlyDictionary<string, HTNNode> NodeMap => _nodeMap;
+
     private readonly Dictionary<string, HTNNode> _nodeMap = new();
 
     public void AfterDeserialization()
