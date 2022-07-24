@@ -10,6 +10,8 @@ namespace Content.Shared.Radio
         /// </summary>
         [ViewVariables] [DataField("name")] public string Name { get; private set; } = string.Empty;
 
+        [ViewVariables(VVAccess.ReadOnly)] public string LocalizedName => Loc.GetString(Name);
+
         /// <summary>
         /// Single-character prefix to determine what channel a message should be sent to.
         /// </summary>

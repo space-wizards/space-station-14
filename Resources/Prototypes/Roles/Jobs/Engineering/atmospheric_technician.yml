@@ -1,12 +1,12 @@
 - type: job
   id: AtmosphericTechnician
-  name: "atmospheric technician"
+  name: job-name-atmostech
   startingGear: AtmosphericTechnicianGear
   departments:
   - Engineering
   icon: "AtmosphericTechnician"
-  supervisors: "the chief engineer"
-  canBeAntag: false 
+  supervisors: job-supervisors-ce
+  canBeAntag: false
   access:
   - Maintenance
   - Engineering
@@ -16,11 +16,11 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-    head: 
+    head:
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite
-    outerClothing: 
+    outerClothing:
     id: AtmosPDA
     belt: ClothingBeltUtilityFilled
     ears: ClothingHeadsetEngineering

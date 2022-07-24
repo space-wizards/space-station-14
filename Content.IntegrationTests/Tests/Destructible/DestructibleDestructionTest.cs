@@ -36,6 +36,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sTestThresholdListenerSystem.ThresholdsReached.Clear();
             });
 
             await server.WaitAssertion(() =>

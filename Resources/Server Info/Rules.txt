@@ -2,33 +2,35 @@
 
 [color=#a4885c]The[/color] [color=#ffd700]Golden[/color] [color=#a4885c]Rule.[/color] Admins can disregard any and all of these rules if they deem it in the best interest of the current round, server, and/or community at large. They will of course be held fully accountable for their actions if they exercise this privilege.
 
-[color=#a4885c]1.[/color] Don’t be a dick. We’re all here to have fun. Antagonists have leeway here since ruining the round is kind of their job, but try to keep it interesting if you’re antag.
-    - Be considerate of what other players want. If everyone is dead, don't stall the end of the round to finish your personal projects (such as building a shuttle)
+[color=#a4885c]1.[/color] Don’t be a dick. We’re all here to have fun.
+    - Antagonists have lots of leeway here since ruining the round is kind of their job, but if your actions degrade the experience for most of the server, you may be asked to refrain from doing it in the future.
+    - Be considerate of what other players want. If everyone is dead, don't stall the end of the round to finish your personal projects (such as building a shuttle), and don't call the shuttle early just because you don't feel like playing anymore or want a different gamemode.
+    - Just because the shuttle has departed does not mean the round is over. Standard rules still apply until the round summary screen pops up.
 
 [color=#a4885c]2.[/color] These are english servers. Do not speak other languages in IC or OOC, our staff cannot moderate it and you will be asked to stop.
 
 [color=#a4885c]3.[/color] These servers are "Low Roleplay", meaning that while you don't need to be perfectly in character, basic roleplaying standards like not using emoji/emoticons or textspeak (:), :D, xD, lol, etc.) in speech, and using real names for characters, are expected to be followed.
 
-[color=#a4885c]4.[/color] Follow basic common sense--you cannot murder someone because they slipped you on a banana
+[color=#a4885c]4.[/color] Follow basic common sense--you cannot murder someone because they slipped you on a banana.
     - This isn't a deathmatch, be humane.
     - What is considered a reasonable reason to escalate conflict is listed below under ESCALATION RULES and is at the discretion of admins.
     - Declaring a revolution or going on strike is an antagonist only activity. "Cargonia" and other departmental revolutions are prohibited unless admin permission is obtained.
 
-[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color].
+[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color]. This includes any direct or implied sexual acts as well as explicit mentions of sexual behavior.
 
 [color=#a4885c]6.[/color] Harassment of other players for OOC/meta reasons is [color=#ff0000]not allowed[/color].
-	- Annoying somebody in a round for IC/RP reasons is fine. Doing it consistently across multiple rounds for OOC reasons (“I don’t like this 		  player” AKA metagrudging) to the point where it becomes seriously problematic for the other player(s) is [color=#ff0000]not[/color].
+	- Annoying somebody in a round for IC/RP reasons is fine. Doing it consistently across multiple rounds for OOC reasons (“I don’t like this player” AKA metagrudging) to the point where it becomes seriously problematic for the other player(s) is [color=#ff0000]not[/color].
 
 [color=#a4885c]7.[/color] Hate speech, slurs and bigotry are not allowed.
-	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, orientation or the like is not tolerated.
+	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, sexual orientation or the like is not tolerated.
 	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
-    - Species-ism is also NOT ALLOWED. Not even for roleplay or because it's your "character".
+    - Species-ism (IC or OOC bigotry against other in-game species) is also NOT ALLOWED. Not even for roleplay or because it's your "character".
 
-[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are. 
-    - Character names should be something that a member of that species would reasonably have
+[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are.
+    - Character names should be something that a member of that species would reasonably have.
     - No famous real or fictional names of characters.
 
-[color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to powergame, slow down, or crash the server is [color=#ff0000]not allowed[/color].
+[color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to gain in-game advantages or to lag/crash the server is [color=#ff0000]not allowed[/color].
 
 [color=#a4885c]10.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
 	- Admins may ask players in possession of multiple alt accounts to choose one to play on and ban the other accounts.
@@ -36,19 +38,19 @@
 
 [color=#a4885c]11.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
 	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
-    - This is a roleplaying game, thus IC conflicts must only be resolved with IC (Local) chat, utilizing voice chat, calling across the room, OOC, or other out-of-game communication methods to coordinate in-game actions is forbidden and will result in a [color=#ff0000]appeal-only permanent ban[/color] in most cases.
-	- Preemptive spacing or destruction of high-risk items also falls under this rule.
+    - This is a roleplaying game, thus IC conflicts must only be resolved with IC (Local) chat. Utilizing voice chat, calling across the room, OOC, or other out-of-game communication methods to coordinate in-game actions is forbidden and will result in a [color=#ff0000]appeal-only permanent ban[/color] in most cases.
+    - Using emotes or LOOC to bypass IC chat restrictions (accents, unconsciousness, death) is not allowed.
+    - Preemptive spacing or destruction of high-risk items also falls under this rule.
 
-RULES FOR SECURITY
-[color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible. Ideally, do not enter combat mode, as security stun batons do not deal damage, but still stun, when outside of combat mode.
-    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned.
+[color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible.
+    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned, unless they are a confirmed antagonist. Security should make their best effort to keep criminals alive and in custody.
 
-[color=#a4885c]13.[/color] Prisoners should not be given sentences longer than 10 minutes. Certain extreme exceptions like bombers and assassins may warrant permabrigging, or [color=#ff0000]in the very worst cases[/color], execution.
-    - Note that employment at a hostile corporation (i.e. traitor status) alone [color=#ff0000]does not[/color] qualify someone for perma or execution.
+[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Antagonists or repeat offenders may be permabrigged, and only [color=#ff0000]in the very worst cases approved by the Captain[/color], executed.
+    - As there is no official space law for this server, security generally act to maintain order and safety on station and protect Nanotrasen assets.
 
 ESCALATION RULES
 
-Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense.
+Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense. Stun weapons in the hands of someone with intent to kill are considered to be of the same severity as lethal weapons for the purposes of self-defense.
 
 Minor conflicts and scuffles are allowed, given that the wronged party has reasonable justification. If you are wronged, you are expected to handle the conflict non-lethally whenever possible, escalating in severity as the conflict continues.
 As the defending party the rate of escalation increases with you, up to and including violence, while the instigator is always able to respond in kind.

@@ -73,7 +73,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Conduct with air on my tile if I have it
             if (tile.Air != null)
             {
-                tile.Temperature = TemperatureShare(tile.Air, tile.ThermalConductivity, tile.Temperature, tile.HeatCapacity);
+                tile.Temperature = TemperatureShare(tile, tile.ThermalConductivity, tile.Temperature, tile.HeatCapacity);
             }
 
             FinishSuperconduction(gridAtmosphere, tile, tile.Air?.Temperature ?? tile.Temperature);
@@ -107,7 +107,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (other.Air != null)
             {
-                TemperatureShare(other.Air, tile.Air, Atmospherics.WindowHeatTransferCoefficient);
+                TemperatureShare(other, tile, Atmospherics.WindowHeatTransferCoefficient);
             }
             else
             {
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Air == null)
                 return;
 
-            other.Temperature = TemperatureShare(tile.Air, other.ThermalConductivity, other.Temperature, other.HeatCapacity);
+            other.Temperature = TemperatureShare(tile, other.ThermalConductivity, other.Temperature, other.HeatCapacity);
         }
 
         private void TemperatureShareMutualSolid(TileAtmosphere tile, TileAtmosphere other, float conductionCoefficient)

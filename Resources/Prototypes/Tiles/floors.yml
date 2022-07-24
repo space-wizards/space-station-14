@@ -14,21 +14,6 @@
   item_drop: FloorTileItemSteel
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
-- type: tile
-  id: FloorMetalDiamond
-  name: diamond plate floor
-  texture: "metaldiamond"
-  base_turfs:
-  - plating
-  is_subfloor: false
-  can_crowbar: true
-  footstep_sounds:
-    collection: footstep_floor
-  friction: 0.30
-  item_drop: FloorTileItemMetalDiamond
-  thermalConductivity: 0.04
-  heatCapacity: 10000
 
 - type: tile
   id: floor_wood
@@ -58,7 +43,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.25
   item_drop: FloorTileItemWhite
   thermalConductivity: 0.04
@@ -75,7 +60,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemDark
   thermalConductivity: 0.04
@@ -90,7 +75,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemTechmaint
   thermalConductivity: 0.04
@@ -105,7 +90,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemReinforced
   thermalConductivity: 0.04
@@ -120,7 +105,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemMono
   thermalConductivity: 0.04
@@ -135,7 +120,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemLino
   thermalConductivity: 0.04
@@ -150,7 +135,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_plating
   friction: 0.30
   item_drop: FloorTileItemDirty
   thermalConductivity: 0.04
@@ -165,9 +150,24 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemElevatorShaft
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMetalDiamond
+  name: diamond plate floor
+  texture: "metaldiamond"
+  base_turfs:
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds:
+    collection: footstep_hull
+  friction: 0.30
+  item_drop: FloorTileItemMetalDiamond
   thermalConductivity: 0.04
   heatCapacity: 10000
 
@@ -180,7 +180,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_asteroid
   friction: 0.30
   item_drop: FloorTileItemRockVault
   thermalConductivity: 0.04
@@ -195,7 +195,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemBlue
   thermalConductivity: 0.04
@@ -211,7 +211,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemFreezer
   thermalConductivity: 0.04
@@ -303,7 +303,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemKitchen
   thermalConductivity: 0.04
@@ -318,7 +318,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemLaundry
   thermalConductivity: 0.04
@@ -334,7 +334,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemArcadeBlue
   thermalConductivity: 0.04
@@ -349,7 +349,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemArcadeBlue2
   thermalConductivity: 0.04
@@ -364,7 +364,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemArcadeRed
   thermalConductivity: 0.04
@@ -379,12 +379,12 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemEighties
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorCarpetClown
   name: clown carpet floor
@@ -394,12 +394,12 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemCarpetClown
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorCarpetOffice
   name: office carpet floor
@@ -409,12 +409,12 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_carpet
   friction: 0.40
   item_drop: FloorTileItemCarpetOffice
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorBoxing
   name: boxing ring floor
@@ -431,7 +431,7 @@
   item_drop: FloorTileItemBoxing
   thermalConductivity: 0.04
   heatCapacity: 10000
-  
+
 - type: tile
   id: FloorGym
   name: gym floor
@@ -536,7 +536,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemGold
   thermalConductivity: 0.04
@@ -551,7 +551,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: FloorTileItemSilver
   thermalConductivity: 0.04
@@ -566,7 +566,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: SheetGlass1
   thermalConductivity: 0.04
@@ -581,7 +581,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_tile
   friction: 0.30
   item_drop: SheetRGlass1
   thermalConductivity: 0.04
@@ -597,7 +597,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemGCircuit
   thermalConductivity: 0.04
@@ -612,7 +612,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_hull
   friction: 0.30
   item_drop: FloorTileItemBCircuit
   thermalConductivity: 0.04
@@ -643,7 +643,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_grass
   friction: 0.30
   item_drop: FloorTileItemGrass
   thermalConductivity: 0.04
@@ -658,7 +658,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
-    collection: footstep_floor
+    collection: footstep_grass
   friction: 0.30
   item_drop: FloorTileItemGrassJungle
   thermalConductivity: 0.04

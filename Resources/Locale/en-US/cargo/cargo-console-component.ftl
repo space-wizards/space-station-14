@@ -4,7 +4,8 @@ cargo-console-menu-account-name-label = Account name:{" "}
 cargo-console-menu-account-name-none-text = None
 cargo-console-menu-shuttle-name-label = Shuttle name:{" "}
 cargo-console-menu-shuttle-name-none-text = None
-cargo-console-menu-points-label = Points:{" "}
+cargo-console-menu-points-label = Spacebucks:{" "}
+cargo-console-menu-points-amount = ${$amount}
 cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
 cargo-console-menu-order-capacity-label = Order capacity:{" "}
@@ -31,6 +32,7 @@ cargo-console-insufficient-funds = Insufficient funds (require {$cost})
 cargo-console-paper-print-name = Order #{$orderNumber}
 cargo-console-paper-print-text =
     Order #{$orderNumber}
+    Item: {$itemName}
     Requested by: {$requester}
     Reason: {$reason}
     Approved by: {$approver}
@@ -39,5 +41,5 @@ cargo-console-paper-print-text =
 cargo-shuttle-console-menu-title = Cargo shuttle console
 cargo-shuttle-console-station-unknown = Unknown
 cargo-shuttle-console-shuttle-not-found = Not found
-cargo-shuttle-console-proximity = Too close to nearby objects
 cargo-shuttle-console-organics = Detected organic lifeforms on the shuttle
+cargo-no-shuttle = No cargo shuttle found!

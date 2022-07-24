@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Content.Server.Popups;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
 
 using static Content.Shared.Paper.SharedPaperComponent;
@@ -89,9 +90,9 @@ namespace Content.Server.Paper
             if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
-                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", args.User),("target", args.Target),("stamp", args.Used));
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.Pvs(args.User, entityManager: EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
-                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", args.Target),("stamp", args.Used));
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
                     _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, Filter.Entities(args.User));
             }
         }

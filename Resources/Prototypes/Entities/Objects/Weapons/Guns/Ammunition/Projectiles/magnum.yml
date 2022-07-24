@@ -10,17 +10,6 @@
         Piercing: 22
 
 - type: entity
-  id: BulletMagnumFlash
-  name: bullet (.40 magnum flash)
-  parent: BaseBulletFlash
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-
-- type: entity
   id: BulletMagnumHighVelocity
   name: bullet (.40 magnum high-velocity)
   parent: BaseBulletHighVelocity

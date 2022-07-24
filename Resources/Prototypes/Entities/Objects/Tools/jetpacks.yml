@@ -23,6 +23,12 @@
   name: Jetpack
   description: It's a jetpack.
   components:
+    - type: InputMover
+      toParent: true
+    - type: MovementSpeedModifier
+      weightlessAcceleration: 1
+      weightlessFriction: 0.3
+      weightlessModifier: 1.2
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon
@@ -53,8 +59,8 @@
           sprite: Objects/Tanks/Jetpacks/blue.rsi
           state: icon-on
         name: action-name-jetpack-toggle
-        description: action-decription-jetpack-toggle
-        itemIconStyle: NoItem
+        description: action-description-jetpack-toggle
+        useDelay: 1.0
         event: !type:ToggleJetpackEvent
     - type: Appearance
 

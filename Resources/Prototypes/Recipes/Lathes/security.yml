@@ -20,6 +20,17 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: RiotShield
+  icon:
+    sprite: Objects/Weapons/Melee/shields.rsi
+    state: riot-icon
+  result: RiotShield
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
+
+- type: latheRecipe
   id: Flash
   icon:
     sprite: Objects/Weapons/Melee/flash.rsi
@@ -159,14 +170,3 @@
     Plastic: 15
     Steel: 10
     Glass: 5
-
-- type: latheRecipe
-  id: ShellShotgunFlash
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: flash
-  result: ShellShotgunFlash
-  completetime: 2
-  materials:
-    Plastic: 20
-    Steel: 5

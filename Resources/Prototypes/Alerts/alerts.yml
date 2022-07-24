@@ -63,6 +63,7 @@
   name: "[color=red]On Fire[/color]"
   description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
+
 - type: alert
   id: Cold
   category: Temperature
@@ -150,13 +151,6 @@
   description: You are piloting a shuttle. Click the alert to stop.
 
 - type: alert
-  id: Overfed
-  category: Hunger
-  icon: /Textures/Interface/Alerts/Hunger/Overfed.png
-  name: "[color=yellow]Overfed[/color]"
-  description: You ate too much food, lardass. Run around the station and lose some weight.
-
-- type: alert
   id: Peckish
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Peckish.png
@@ -164,18 +158,22 @@
   description: Some food would be good right about now.
 
 - type: alert
+  id: Stamina
+  category: Stamina
+  icon:
+    sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina
+  name: Stamina
+  description: "Stuns you if it is too low."
+  minSeverity: 0
+  maxSeverity: 6
+
+- type: alert
   id: Starving
   category: Hunger
   icon: /Textures/Interface/Alerts/Hunger/Starving.png
   name: "[color=red]Starving[/color]"
   description: You're severely malnourished. The hunger pains make moving around a chore.
-
-- type: alert
-  id: Overhydrated
-  category: Thirst
-  icon: /Textures/Interface/Alerts/Thirst/OverHydrated.png
-  name: "[color=yellow]Overhydrated[/color]"
-  description: You drank too much.
 
 - type: alert
   id: Thirsty

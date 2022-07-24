@@ -81,20 +81,6 @@
     proto: PelletShotgun
 
 - type: entity
-  id: ShellShotgunFlash
-  name: shell (.50 flash)
-  parent: BaseShellShotgun
-  components:
-  - type: Sprite
-    layers:
-      - state: flash
-        map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: CartridgeAmmo
-    proto: PelletShotgunFlash
-  - type: SpentAmmoVisuals
-    state: "flash"
-
-- type: entity
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
   parent: BaseShellShotgun
@@ -118,7 +104,7 @@
       - state: practice
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
-    proto: PelletShotgun
+    proto: PelletShotgunPractice
   - type: SpentAmmoVisuals
     state: "practice"
 

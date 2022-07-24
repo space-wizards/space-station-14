@@ -26,6 +26,10 @@
   components:
   - type: Instrument
     program: 62
+  - type: SwappableInstrument
+    instrumentList:
+      "Electro": {62: 0} #i needed generic sounding synth presets, sue me
+      "Bubbles": {63: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
@@ -43,7 +47,11 @@
   description: Anyway, here's Wonderwall.
   components:
   - type: Instrument
-    program: 25
+    program: 24
+  - type: SwappableInstrument
+    instrumentList:
+      "Nylon": {24: 0}
+      "Steel": {25: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
@@ -82,6 +90,10 @@
   components:
   - type: Instrument
     program: 56
+  - type: SwappableInstrument
+    instrumentList:
+      "Standard": {56: 0}
+      "Muted": {59: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/trumpet.rsi
     state: icon
@@ -117,6 +129,11 @@
   components:
   - type: Instrument
     program: 27
+  - type: SwappableInstrument
+    instrumentList:
+      "Clean": {27: 0}
+      "Jazz": {25: 0}
+      "Muted": {28: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
     state: icon
@@ -134,6 +151,10 @@
   components:
   - type: Instrument
     program: 21
+  - type: SwappableInstrument
+    instrumentList:
+      "Standard": {21: 0}
+      "Tango": {23: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
@@ -240,7 +261,13 @@
   description: An instrument. You could probably grind this into raw jazz.
   components:
   - type: Instrument
-    program: 67
+    program: 66
+  - type: SwappableInstrument
+    instrumentList:
+      "Soprano": {64: 0}
+      "Alto": {65: 0}
+      "Tenor": {66: 0}
+      "Baritone": {67: 0} 
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon

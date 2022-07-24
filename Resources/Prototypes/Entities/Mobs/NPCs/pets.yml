@@ -82,6 +82,8 @@
       types:
         Piercing: 5
         Slash: 5
+  - type: InputMover
+  - type: MobMover
   - type: UtilityAI
     behaviorSets:
     - UnarmedAttackHostiles

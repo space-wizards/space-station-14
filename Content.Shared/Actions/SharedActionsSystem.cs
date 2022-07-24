@@ -409,7 +409,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var provided = comp.Actions.Where(act => act.Provider == provider).ToList();
 
-        RemoveActions(uid, provided, comp);
+        if (provided.Count > 0)
+            RemoveActions(uid, provided, comp);
     }
 
     public virtual void RemoveActions(EntityUid uid, IEnumerable<ActionType> actions, ActionsComponent? comp = null, bool dirty = true)

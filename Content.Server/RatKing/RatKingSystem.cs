@@ -6,6 +6,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
@@ -17,6 +18,7 @@ namespace Content.Server.RatKing
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly TransformSystem _xform = default!;
 
         public override void Initialize()
         {
@@ -79,9 +81,10 @@ namespace Content.Server.RatKing
 
             _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid));
 
-            var tileMix = _atmos.GetTileMixture(Transform(uid).Coordinates);
-            if (tileMix != null)
-                tileMix.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
+            var transform = Transform(uid);
+            var indices = _xform.GetGridOrMapTilePosition(uid, transform);
+            var tileMix = _atmos.GetTileMixture(transform.GridUid, transform.MapUid, indices, true);
+            tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
     }
 

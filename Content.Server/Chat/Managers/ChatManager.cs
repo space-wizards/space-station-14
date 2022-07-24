@@ -207,7 +207,7 @@ namespace Content.Server.Chat.Managers
 
         #region Utility
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client)
+        public void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null)
         {
             var msg = new MsgChatMessage();
             msg.Channel = channel;
@@ -215,6 +215,10 @@ namespace Content.Server.Chat.Managers
             msg.MessageWrap = messageWrap;
             msg.SenderEntity = source;
             msg.HideChat = hideChat;
+            if (colorOverride != null)
+            {
+                msg.MessageColorOverride = colorOverride.Value;
+            }
             _netManager.ServerSendMessage(msg, client);
         }
 
