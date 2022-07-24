@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
-  id: 1505
-  time: '2022-05-12T06:10:16.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: All mobs will now slow down when damaged enough. No more carps terrorising
@@ -2947,3 +2942,8 @@ Entries:
   - {message: You can now swap instrument styles even while playing them!, type: Tweak}
   id: 2004
   time: '2022-07-24T11:40:05.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: The clothesmate now stocks backpacks, type: Add}
+  id: 2005
+  time: '2022-07-24T22:41:22.0000000+00:00'
