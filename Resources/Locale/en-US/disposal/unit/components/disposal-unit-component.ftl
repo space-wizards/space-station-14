@@ -1,5 +1,3 @@
-disposal-unit-no-hands = You don't have hands!
-
 ## UI
 
 ui-disposal-unit-title = Disposal Unit
