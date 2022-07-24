@@ -10,6 +10,7 @@ using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.MobState;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -49,6 +50,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     private const int VoiceRange = 7; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
@@ -153,7 +155,12 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         message = SanitizeInGameOOCMessage(message);
 
-        switch (type)
+        var sendType = type;
+        // If we have OOC disabled for players during the round, redirect dead/ghost LOOC to dead chat.
+        if (!_configurationManager.GetCVar(CCVars.OocEnableDuringRound) && (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
+            sendType = InGameOOCChatType.Dead;
+
+        switch (sendType)
         {
             case InGameOOCChatType.Dead:
                 SendDeadChat(source, player, message, hideChat);
