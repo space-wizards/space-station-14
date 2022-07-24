@@ -114,7 +114,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
         {
@@ -130,8 +131,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
         return gridUid == null ||
-               (TryComp<GravityComponent>(gridUid, out var gravity) &&
-                !gravity.Enabled);
+               (!HasComp<GravityComponent>(gridUid));
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
