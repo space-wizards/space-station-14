@@ -6,47 +6,36 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Content.Server.Database.Migrations.Postgres
 {
-    public partial class RoleTimers : Migration
+    public partial class PlayTime : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<TimeSpan>(
-                name: "overall_playtime",
-                table: "player",
-                type: "interval",
-                nullable: false,
-                defaultValue: new TimeSpan(0, 0, 0, 0, 0));
-
             migrationBuilder.CreateTable(
-                name: "role_timers",
+                name: "play_time",
                 columns: table => new
                 {
-                    role_timers_id = table.Column<int>(type: "integer", nullable: false)
+                    play_time_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     player_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    role = table.Column<string>(type: "text", nullable: false),
+                    tracker = table.Column<string>(type: "text", nullable: false),
                     time_spent = table.Column<TimeSpan>(type: "interval", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_role_timers", x => x.role_timers_id);
+                    table.PrimaryKey("PK_play_time", x => x.play_time_id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_role_timers_player_id_role",
-                table: "role_timers",
-                columns: new[] { "player_id", "role" },
+                name: "IX_play_time_player_id_tracker",
+                table: "play_time",
+                columns: new[] { "player_id", "tracker" },
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "role_timers");
-
-            migrationBuilder.DropColumn(
-                name: "overall_playtime",
-                table: "player");
+                name: "play_time");
         }
     }
 }

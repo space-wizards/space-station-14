@@ -6,7 +6,6 @@ using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using Content.Shared.GameTicking;
@@ -179,21 +178,18 @@ namespace Content.Server.GameTicking
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
 
+#if DEBUG
+            foreach (var player in readyPlayers)
+            {
+                DebugTools.Assert(_userDb.IsLoadComplete(player), $"Player was readied up but didn't have user DB data loaded yet??");
+            }
+#endif
+
             readyPlayers.RemoveAll(p =>
             {
                 if (_roleBanManager.GetRoleBans(p.UserId) != null)
                     return false;
                 Logger.ErrorS("RoleBans", $"Role bans for player {p} {p.UserId} have not been loaded yet.");
-                return true;
-            });
-
-            var roleTimerManager = IoCManager.Resolve<RoleTimerManager>();
-
-            readyPlayers.RemoveAll(p =>
-            {
-                if (roleTimerManager.IsRoleTimeCachedYet(p.UserId))
-                    return false;
-                Logger.ErrorS("RoleTimers", $"Role timers for player {p} {p.UserId} have not been loaded yet.");
                 return true;
             });
 

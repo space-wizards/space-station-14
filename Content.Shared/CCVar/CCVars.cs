@@ -186,7 +186,7 @@ namespace Content.Shared.CCVar
         /// Autosave frequency for role timers in seconds.
         /// </summary>
         public static readonly CVarDef<float>
-            GameRoleTimersSaveFrequency = CVarDef.Create("game.role_timers_save_frequency", 900f, CVar.SERVER);
+            GameRoleTimersSaveInterval = CVarDef.Create("game.role_timers_save_interval", 900f, CVar.SERVER);
 
         /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.

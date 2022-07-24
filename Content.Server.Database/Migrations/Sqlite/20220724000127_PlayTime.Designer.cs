@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20220630015220_RoleTimers")]
-    partial class RoleTimers
+    [Migration("20220724000127_PlayTime")]
+    partial class PlayTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -452,10 +452,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("last_seen_user_name");
 
-                    b.Property<TimeSpan>("OverallPlaytime")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("overall_playtime");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
@@ -472,6 +468,35 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("player", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("play_time_id");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_id");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time_spent");
+
+                    b.Property<string>("Tracker")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("tracker");
+
+                    b.HasKey("Id")
+                        .HasName("PK_play_time");
+
+                    b.HasIndex("PlayerId", "Tracker")
+                        .IsUnique();
+
+                    b.ToTable("play_time", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
@@ -605,35 +630,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("profile", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.RoleTimer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("role_timers_id");
-
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_id");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("role");
-
-                    b.Property<TimeSpan>("TimeSpent")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("time_spent");
-
-                    b.HasKey("Id")
-                        .HasName("PK_role_timers");
-
-                    b.HasIndex("PlayerId", "Role")
-                        .IsUnique();
-
-                    b.ToTable("role_timers", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

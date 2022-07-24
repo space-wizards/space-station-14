@@ -123,29 +123,27 @@ namespace Content.Server.Database
         /// <param name="player">The player to get the role timer from.</param>
         /// <param name="role">The role that's being timed.</param>
         /// <returns>A role timer for the passed role.</returns>
-        Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role);
+        Task<PlayTime> CreateOrGetPlayTime(Guid player, string role);
 
         /// <summary>
         /// Look up a player's role timers.
         /// </summary>
         /// <param name="player">The player to get the role timer information from.</param>
         /// <returns>All role timers belonging to the player.</returns>
-        Task<List<RoleTimer>> GetRoleTimers(Guid player);
+        Task<List<PlayTime>> GetPlayTimes(Guid player);
 
         /// <summary>
         /// Set the time value of a RoleTimer database object.
         /// </summary>
         /// <param name="id">Numerical ID for the roletimer object</param>
         /// <param name="time">New value for time spent on the role</param>
-        Task<RoleTimer?> SetRoleTime(int id, TimeSpan time);
+        Task<PlayTime?> SetPlayTimes(int id, TimeSpan time);
 
-        Task<RoleTimer?> AddRoleTime(int id, TimeSpan time);
-
-        Task<TimeSpan> GetOverallPlayTime(Guid player);
-
-        Task SetOverallPlayTime(Guid player, TimeSpan time);
-
-        Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time);
+        /// <summary>
+        /// Update play time information in bulk.
+        /// </summary>
+        /// <param name="updates">The list of all updates to apply to the database.</param>
+        Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates);
 
         #endregion
 
@@ -402,7 +400,7 @@ namespace Content.Server.Database
 
         #region Playtime
 
-        public async Task<RoleTimer> CreateOrGetRoleTimer(Guid player, string role)
+        public async Task<PlayTime> CreateOrGetPlayTime(Guid player, string role)
         {
             var (data, existed) = await _db.CreateOrGetRoleTimer(player, role);
             if (existed)
@@ -413,40 +411,28 @@ namespace Content.Server.Database
             return data;
         }
 
-        public Task<List<RoleTimer>> GetRoleTimers(Guid player)
+        public Task<List<PlayTime>> GetPlayTimes(Guid player)
         {
             DbReadOpsMetric.Inc();
             return _db.GetRoleTimers(player);
         }
 
-        public Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
+        public Task<PlayTime?> SetPlayTimes(int id, TimeSpan time)
         {
             DbWriteOpsMetric.Inc();
             return _db.SetRoleTime(id, time);
         }
 
-        public Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        public Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
+        {
+            DbWriteOpsMetric.Inc();
+            return _db.UpdatePlayTimes(updates);
+        }
+
+        public Task<PlayTime?> AddPlayTimes(int id, TimeSpan time)
         {
             DbWriteOpsMetric.Inc();
             return _db.AddRoleTime(id, time);
-        }
-
-        public Task<TimeSpan> GetOverallPlayTime(Guid player)
-        {
-            DbReadOpsMetric.Inc();
-            return _db.GetOverallPlayTime(player);
-        }
-
-        public Task SetOverallPlayTime(Guid player, TimeSpan time)
-        {
-            DbWriteOpsMetric.Inc();
-            return _db.SetOverallPlayTime(player, time);
-        }
-
-        public Task<TimeSpan> AddOverallPlayTime(Guid player, TimeSpan time)
-        {
-            DbWriteOpsMetric.Inc();
-            return _db.AddOverallPlayTime(player, time);
         }
 
         #endregion
@@ -798,4 +784,6 @@ namespace Content.Server.Database
             }
         }
     }
+
+    public sealed record PlayTimeUpdate(NetUserId User, string Tracker, TimeSpan Time);
 }

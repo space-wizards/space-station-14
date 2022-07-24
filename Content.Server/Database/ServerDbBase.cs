@@ -360,23 +360,23 @@ namespace Content.Server.Database
         #endregion
 
         #region Playtime
-        public async Task<(RoleTimer, bool existed)> CreateOrGetRoleTimer(Guid player, string role)
+        public async Task<(PlayTime, bool existed)> CreateOrGetRoleTimer(Guid player, string role)
         {
             await using var db = await GetDb();
 
-            RoleTimer result;
-            var query = await db.DbContext.RoleTimer
+            PlayTime result;
+            var query = await db.DbContext.PlayTime
                 .Where(v => v.PlayerId == player)
-                .Where(v => v.Role == role)
+                .Where(v => v.Tracker == role)
                 .SingleOrDefaultAsync();
 
             if (query != null)
                 return (query, true);
 
-            result = new RoleTimer()
+            result = new PlayTime()
             {
                 PlayerId = player,
-                Role = role,
+                Tracker = role,
                 TimeSpent = TimeSpan.Zero
             };
             db.DbContext.Add(result);
@@ -384,20 +384,20 @@ namespace Content.Server.Database
             return (result, false);
         }
 
-        public async Task<List<RoleTimer>> GetRoleTimers(Guid player)
+        public async Task<List<PlayTime>> GetRoleTimers(Guid player)
         {
             await using var db = await GetDb();
 
-            return await db.DbContext.RoleTimer
+            return await db.DbContext.PlayTime
                 .Where(p => p.PlayerId == player)
                 .ToListAsync();
         }
 
-        public async Task<RoleTimer?> SetRoleTime(int id, TimeSpan time)
+        public async Task<PlayTime?> SetRoleTime(int id, TimeSpan time)
         {
             await using var db = await GetDb();
 
-            var newTimer = await db.DbContext.RoleTimer
+            var newTimer = await db.DbContext.PlayTime
                 .SingleAsync(timer => timer.Id == id);
             newTimer.TimeSpent = time;
 
@@ -405,46 +405,56 @@ namespace Content.Server.Database
             return newTimer;
         }
 
-        public async Task<RoleTimer?> AddRoleTime(int id, TimeSpan time)
+        public async Task<PlayTime?> AddRoleTime(int id, TimeSpan time)
         {
             await using var db = await GetDb();
 
-            var newTimer = await db.DbContext.RoleTimer.SingleAsync(timer => timer.Id == id);
+            var newTimer = await db.DbContext.PlayTime.SingleAsync(timer => timer.Id == id);
             newTimer.TimeSpent += time;
 
             await db.DbContext.SaveChangesAsync();
             return newTimer;
         }
 
-        public async Task<TimeSpan> GetOverallPlayTime(Guid id)
+        public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
         {
             await using var db = await GetDb();
 
-            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
+            // Ideally I would just be able to send a bunch of UPSERT commands, but EFCore is a pile of garbage.
+            // So... In the interest of not making this take forever at high update counts...
+            // Bulk-load play time objects for all players involved.
+            // This allows us to semi-efficiently load all entities we need in a single DB query.
+            // Then we can update & insert without further round-trips to the DB.
 
-            return player.OverallPlaytime;
-        }
+            var players = updates.Select(u => u.User.UserId).Distinct().ToArray();
+            var dbTimes = (await db.DbContext.PlayTime
+                    .Where(p => players.Contains(p.PlayerId))
+                    .ToArrayAsync())
+                .GroupBy(p => p.PlayerId)
+                .ToDictionary(g => g.Key, g => g.ToDictionary(p => p.Tracker, p => p));
 
-        public async Task SetOverallPlayTime(Guid id, TimeSpan time)
-        {
-            await using var db = await GetDb();
+            foreach (var (user, tracker, time) in updates)
+            {
+                if (dbTimes.TryGetValue(user.UserId, out var userTimes)
+                    && userTimes.TryGetValue(tracker, out var ent))
+                {
+                    // Already have a tracker in the database, update it.
+                    ent.TimeSpent = time;
+                    continue;
+                }
 
-            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
-            player.OverallPlaytime = time;
+                // No tracker, make a new one.
+                var playTime = new PlayTime
+                {
+                    Tracker = tracker,
+                    PlayerId = user.UserId,
+                    TimeSpent = time
+                };
+
+                db.DbContext.PlayTime.Add(playTime);
+            }
 
             await db.DbContext.SaveChangesAsync();
-        }
-
-        public async Task<TimeSpan> AddOverallPlayTime(Guid id, TimeSpan time)
-        {
-            await using var db = await GetDb();
-
-            var player = await db.DbContext.Player.SingleAsync(player => player.UserId == id);
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            player.OverallPlaytime.Add(time);
-
-            await db.DbContext.SaveChangesAsync();
-            return player.OverallPlaytime;
         }
 
         #endregion
@@ -1012,5 +1022,6 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
+
     }
 }

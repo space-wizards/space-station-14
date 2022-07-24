@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20220630015226_RoleTimers")]
-    partial class RoleTimers
+    [Migration("20220724000132_PlayTime")]
+    partial class PlayTime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -488,10 +488,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("last_seen_user_name");
 
-                    b.Property<TimeSpan>("OverallPlaytime")
-                        .HasColumnType("interval")
-                        .HasColumnName("overall_playtime");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
@@ -510,6 +506,37 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("player", (string)null);
 
                     b.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("play_time_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_id");
+
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("interval")
+                        .HasColumnName("time_spent");
+
+                    b.Property<string>("Tracker")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("tracker");
+
+                    b.HasKey("Id")
+                        .HasName("PK_play_time");
+
+                    b.HasIndex("PlayerId", "Tracker")
+                        .IsUnique();
+
+                    b.ToTable("play_time", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
@@ -647,37 +674,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsUnique();
 
                     b.ToTable("profile", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.RoleTimer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("role_timers_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("player_id");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("role");
-
-                    b.Property<TimeSpan>("TimeSpent")
-                        .HasColumnType("interval")
-                        .HasColumnName("time_spent");
-
-                    b.HasKey("Id")
-                        .HasName("PK_role_timers");
-
-                    b.HasIndex("PlayerId", "Role")
-                        .IsUnique();
-
-                    b.ToTable("role_timers", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Round", b =>

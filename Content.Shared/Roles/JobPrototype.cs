@@ -1,4 +1,5 @@
 using Content.Shared.Access;
+using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -15,7 +16,7 @@ namespace Content.Shared.Roles
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
-        [ViewVariables, DataField("roleTimer", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<RoleTimerPrototype>))]
+        [ViewVariables, DataField("roleTimer", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string RoleTimer { get; } = string.Empty;
 
         [DataField("supervisors")]

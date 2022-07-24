@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -14,6 +15,7 @@ namespace Content.Server.Database;
 public sealed class UserDbDataManager
 {
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
     private readonly Dictionary<NetUserId, UserData> _users = new();
 
@@ -40,11 +42,14 @@ public sealed class UserDbDataManager
         data.Cancel.Dispose();
 
         _prefs.OnClientDisconnected(session);
+        _playTimeTracking.ClientDisconnected(session);
     }
 
     private async Task Load(IPlayerSession session, CancellationToken cancel)
     {
-        await _prefs.LoadData(session, cancel);
+        await Task.WhenAll(
+            _prefs.LoadData(session, cancel),
+            _playTimeTracking.LoadData(session, cancel));
     }
 
     public Task WaitLoadComplete(IPlayerSession session)

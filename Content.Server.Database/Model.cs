@@ -33,7 +33,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
-        public DbSet<RoleTimer> RoleTimer { get; set; } = default!;
+        public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
 
@@ -95,8 +95,8 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminLog>()
                 .HasIndex(log => log.Date);
 
-            modelBuilder.Entity<RoleTimer>()
-                .HasIndex(v => new { v.PlayerId, v.Role })
+            modelBuilder.Entity<PlayTime>()
+                .HasIndex(v => new { v.PlayerId, Role = v.Tracker })
                 .IsUnique();
 
             modelBuilder.Entity<AdminLogPlayer>()
@@ -286,7 +286,6 @@ namespace Content.Server.Database
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
-        public TimeSpan OverallPlaytime { get; set; }
 
         public DateTime? LastReadRules { get; set; }
 
@@ -507,8 +506,8 @@ namespace Content.Server.Database
         public DateTime UnbanTime { get; set; }
     }
 
-    [Table("role_timers")]
-    public sealed class RoleTimer
+    [Table("play_time")]
+    public sealed class PlayTime
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -516,7 +515,7 @@ namespace Content.Server.Database
         [Required, ForeignKey("player")]
         public Guid PlayerId { get; set; }
 
-        public string Role { get; set; } = null!;
+        public string Tracker { get; set; } = null!;
 
         public TimeSpan TimeSpent { get; set; }
     }

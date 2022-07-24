@@ -1,16 +1,19 @@
 using System.Linq;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
-using Content.Server.GameTicking;
 using Content.Server.Players;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -18,22 +21,18 @@ namespace Content.Server.Roles;
 
 /// <summary>
 /// This handles issuing saves of role / overall times to the DB during the regular course of play.
-/// <see cref="RoleTimerManager"/> handles the actual data.
+/// <see cref="PlayTimeTrackingManager"/> handles the actual data.
 /// </summary>
-public sealed class RoleTimerSystem : SharedRoleTimerSystem
+public sealed class RoleTimerSystem : EntitySystem
 {
     [Dependency] private readonly IAfkManager _afk = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly RoleTimerManager _roleTimers = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
-    /// <summary>
-    /// Autosave regularly in case of server crash.
-    /// </summary>
-    private float _autosaveDelay = 900;
-
-    private float _autoSaveAccumulator;
+    private ISawmill _sawmill = default!;
 
     /// <summary>
     /// If someone just joined track the last time we set their times so the autosave doesn't round up.
@@ -44,8 +43,11 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
     {
         base.Initialize();
 
-        ConfigManager.OnValueChanged(CCVars.GameRoleTimersSaveFrequency, SetAutosaveDelay, true);
+        _sawmill = Logger.GetSawmill("play_time");
+
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+        _playTimeTracking.BeforeSave += FullSave;
+
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
@@ -55,56 +57,57 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+
+        FullSave();
+
+        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+        _playTimeTracking.BeforeSave -= FullSave;
+    }
+
+
     public IEnumerable<string> GetTimedRoles(Mind.Mind mind)
     {
         foreach (var role in mind.AllRoles)
         {
-            if (role is not IRoleTimer timer) continue;
-            yield return ProtoManager.Index<RoleTimerPrototype>(timer.Timer).ID;
+            if (role is not IRoleTimer timer)
+                continue;
+
+            yield return _prototypes.Index<PlayTimeTrackerPrototype>(timer.Timer).ID;
         }
     }
 
-    private List<string> GetTimedRoles(IPlayerSession session)
+    private IEnumerable<string> GetTimedRoles(IPlayerSession session)
     {
-        var roles = new List<string>();
         var contentData = _playerManager.GetPlayerData(session.UserId).ContentData();
 
-        if (contentData?.Mind == null) return roles;
+        if (contentData?.Mind == null)
+            return Enumerable.Empty<string>();
 
-        foreach (var mindRole in GetTimedRoles(contentData.Mind))
-        {
-            roles.Add(mindRole);
-        }
-
-        return roles;
+        return GetTimedRoles(contentData.Mind);
     }
 
     private void OnRoleRemove(RoleRemovedEvent ev)
     {
-        if (ev.Mind.Session == null) return;
-        Save(ev.Mind.Session, _timing.CurTime);
+        if (ev.Mind.Session == null)
+            return;
+
+        Save(ev.Mind.Session);
     }
 
     private void OnRoleAdd(RoleAddedEvent ev)
     {
-        if (ev.Mind.Session == null) return;
+        if (ev.Mind.Session == null)
+            return;
 
         var time = "";
         if (ev.Role is IRoleTimer timer)
-            time = ProtoManager.Index<RoleTimerPrototype>(timer.Timer).ID;
+            time = _prototypes.Index<PlayTimeTrackerPrototype>(timer.Timer).ID;
 
         // Save all but the current role.
-        SaveRoles(ev.Mind.Session, _timing.CurTime, GetTimedRoles(ev.Mind).Where(r => r != time));
-    }
-
-    private void SetAutosaveDelay(float value) => _autosaveDelay = value;
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ConfigManager.UnsubValueChanged(CCVars.GameRoleTimersSaveFrequency, SetAutosaveDelay);
-        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-        FullSave();
+        SaveRoles(ev.Mind.Session, GetTimedRoles(ev.Mind).Where(r => r != time));
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
@@ -112,106 +115,68 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
         switch (args.NewStatus)
         {
             case SessionStatus.Connected:
-                _roleTimers.CreatePlayer(args.Session.UserId);
-                _lastSetTime[args.Session] = _timing.CurTime;
+                _lastSetTime[args.Session] = _timing.RealTime;
                 break;
+
             case SessionStatus.Disconnected:
-                Save(args.Session, _timing.CurTime);
+                Save(args.Session);
                 _lastSetTime.Remove(args.Session);
-                _roleTimers.RemovePlayer(args.Session.UserId);
                 break;
         }
     }
 
     private void OnRoundEnd(RoundRestartCleanupEvent ev)
     {
-        _autoSaveAccumulator = 0f;
-        FullSave();
-    }
-
-    public override void Update(float frameTime)
-    {
-        if (_ticker.RunLevel != GameRunLevel.InRound || _autosaveDelay < 1f)
-        {
-            _autoSaveAccumulator = 0f;
-            return;
-        }
-
-        _autoSaveAccumulator += frameTime;
-
-        if (_autoSaveAccumulator < _autosaveDelay) return;
-
-        _autoSaveAccumulator -= _autosaveDelay;
-        FullSave();
+        _playTimeTracking.Save();
     }
 
     private void OnUnAFK(ref UnAFKEvent ev)
     {
-        _lastSetTime[ev.Session] = _timing.CurTime;
+        _lastSetTime[ev.Session] = _timing.RealTime;
     }
 
     private void OnAFK(ref AFKEvent ev)
     {
-        // Don't just write to the DB every time someone goes AFK.
-        Save(ev.Session, _timing.CurTime, false);
+        Save(ev.Session);
     }
 
     private void FullSave()
     {
-        Sawmill.Info("Running full save of role timers");
-        var currentTime = _timing.CurTime;
+        _sawmill.Info("Running full save of role timers");
 
         // This is gonna have rounding if someone changes their jobs but it's only 5 minutes anyway, not like we need to track
         // per second values every time they get a new job.
         foreach (var player in Filter.GetAllPlayers())
         {
             var pSession = (IPlayerSession) player;
-            if (_afk.IsAfk(pSession)) continue;
-            Save(pSession, currentTime);
-            _roleTimers.SendRoleTimers(pSession);
+            if (_afk.IsAfk(pSession))
+                continue;
+
+            Save(pSession);
+            _playTimeTracking.SendRoleTimers(pSession);
         }
     }
 
-    public void Save(IPlayerSession pSession, TimeSpan currentTime, bool dbSave = true)
+    public void Save(IPlayerSession pSession)
     {
-        if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
-        {
-            lastSave = currentTime;
-        }
-
-        if (currentTime <= lastSave) return;
-
-        var addedTime = currentTime - lastSave;
-        var roles = GetTimedRoles(pSession);
-        Sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
-
-        foreach (var role in roles)
-        {
-            _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime, dbSave);
-        }
-
-        _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
-        _lastSetTime[pSession] = currentTime;
+        SaveRoles(pSession, GetTimedRoles(pSession));
     }
 
-    private void SaveRoles(IPlayerSession pSession, TimeSpan currentTime, IEnumerable<string> roles, bool dbSave = true)
+    private void SaveRoles(IPlayerSession pSession, IEnumerable<string> roles)
     {
+        var currentTime = _timing.RealTime;
         if (!_lastSetTime.TryGetValue(pSession, out var lastSave))
-        {
             lastSave = currentTime;
-        }
-
-        if (currentTime <= lastSave) return;
 
         var addedTime = currentTime - lastSave;
-        Sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
+        _sawmill.Info($"Adding {addedTime.TotalSeconds:0} seconds to {pSession} playtime");
 
         foreach (var role in roles)
         {
-            _roleTimers.AddTimeToRole(pSession.UserId, role, addedTime, dbSave);
+            _playTimeTracking.AddTimeToTracker(pSession.UserId, role, addedTime);
         }
 
-        _roleTimers.AddTimeToOverallPlaytime(pSession.UserId, addedTime, dbSave);
+        _playTimeTracking.AddTimeToOverallPlaytime(pSession.UserId, addedTime);
         _lastSetTime[pSession] = currentTime;
     }
 
@@ -228,31 +193,33 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
     public bool IsAllowed(NetUserId id, string role)
     {
-        if (!ProtoManager.TryIndex<JobPrototype>(role, out var job) ||
+        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
-            !ConfigManager.GetCVar(CCVars.GameRoleTimers)) return true;
+            !_cfg.GetCVar(CCVars.GameRoleTimers))
+            return true;
 
-        TimeSpan? overall = null;
-        Dictionary<string, TimeSpan>? roles = null;
+        var playTimes = _playTimeTracking.GetTrackerTimes(id);
 
-        return TryRequirementMet(id, job, ref overall, ref roles, out _);
+        return JobRequirements.TryRequirementsMet(id, job, playTimes, out _, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(NetUserId id)
     {
         var roles = new HashSet<string>();
-        if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return roles;
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            return roles;
 
-        TimeSpan? overallPlaytime = null;
-        Dictionary<string, TimeSpan>? rolePlaytimes = null;
+        var playTimes = _playTimeTracking.GetTrackerTimes(id);
 
-        foreach (var job in ProtoManager.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
             if (job.Requirements != null)
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (TryRequirementMet(id, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
+                    if (JobRequirements.TryRequirementMet(id, requirement, playTimes, out _, _prototypes))
+                        continue;
+
                     goto NoRole;
                 }
             }
@@ -266,22 +233,24 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
     public void RemoveDisallowedJobs(NetUserId id, ref List<string> jobs)
     {
-        if (!ConfigManager.GetCVar(CCVars.GameRoleTimers)) return;
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            return;
 
-        TimeSpan? overallPlaytime = null;
-        Dictionary<string, TimeSpan>? rolePlaytimes = null;
+        var playTimes = _playTimeTracking.GetTrackerTimes(id);
 
         for (var i = 0; i < jobs.Count; i++)
         {
             var job = jobs[i];
 
-            if (!ProtoManager.TryIndex<JobPrototype>(job, out var jobber) ||
+            if (!_prototypes.TryIndex<JobPrototype>(job, out var jobber) ||
                 jobber.Requirements == null ||
-                jobber.Requirements.Count == 0) continue;
+                jobber.Requirements.Count == 0)
+                continue;
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (TryRequirementMet(id, requirement, ref overallPlaytime, ref rolePlaytimes, out _)) continue;
+                if (JobRequirements.TryRequirementMet(id, requirement, playTimes, out _, _prototypes))
+                    continue;
 
                 jobs.RemoveSwap(i);
                 i--;
@@ -291,20 +260,6 @@ public sealed class RoleTimerSystem : SharedRoleTimerSystem
 
     public void PlayerRolesChanged(IPlayerSession player)
     {
-        Save(player, _timing.CurTime);
-    }
-
-    protected override TimeSpan GetOverallPlaytime(NetUserId id)
-    {
-#pragma warning disable RA0004
-        return _roleTimers.GetOverallPlaytime(id).Result;
-#pragma warning restore RA0004
-    }
-
-    protected override Dictionary<string, TimeSpan> GetRolePlaytimes(NetUserId id)
-    {
-#pragma warning disable RA0004
-        return _roleTimers.GetRolePlaytimes(id).Result;
-#pragma warning restore RA0004
+        Save(player);
     }
 }

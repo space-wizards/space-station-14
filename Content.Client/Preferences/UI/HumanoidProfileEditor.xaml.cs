@@ -5,7 +5,7 @@ using Content.Client.CharacterAppearance;
 using Content.Client.HUD.UI;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
-using Content.Client.Roles;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
@@ -345,7 +345,7 @@ namespace Content.Client.Preferences.UI
             _jobCategories = new Dictionary<string, BoxContainer>();
 
             var firstCategory = true;
-            var roleTimers = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<RoleTimerSystem>();
+            var roleTimers = IoCManager.Resolve<PlayTimeTrackingManager>();
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
