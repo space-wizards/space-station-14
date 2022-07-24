@@ -43,9 +43,6 @@
     whitelist:
       components:
       - Body
-    blacklist:
-      tags:
-      - Carp # can't re-polymorph
 
 - type: entity
   id: ProjectilePolyboltMonkey
@@ -59,9 +56,6 @@
     whitelist:
       components:
       - Body
-    blacklist:
-      tags:
-      - Monkey # can't re-polymorph
 
 - type: entity
   id: ProjectilePolyboltDoor

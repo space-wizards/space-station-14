@@ -309,9 +309,6 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
-  id: Monkey
-
-- type: Tag
   id: MonkeyCube
 
 - type: Tag
