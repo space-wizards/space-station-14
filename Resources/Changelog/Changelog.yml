@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
-      cookies., type: Add}
-  id: 1499
-  time: '2022-05-11T07:17:25.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: You are now less likely to accidentally stuff yourself in a closet or
@@ -2951,3 +2945,8 @@ Entries:
   - {message: shot glass sprite has been centered, type: Tweak}
   id: 1998
   time: '2022-07-24T01:47:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added the current station's name to PDAs, type: Add}
+  id: 1999
+  time: '2022-07-24T01:58:29.0000000+00:00'
