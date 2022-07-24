@@ -1,9 +1,4 @@
 Entries:
-- author: Tomeno
-  changes:
-  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
-  id: 1498
-  time: '2022-05-10T15:02:40.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
@@ -2951,3 +2946,8 @@ Entries:
   - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
   id: 1997
   time: '2022-07-23T14:26:19.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: shot glass sprite has been centered, type: Tweak}
+  id: 1998
+  time: '2022-07-24T01:47:02.0000000+00:00'
