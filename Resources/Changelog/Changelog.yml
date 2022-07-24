@@ -1,10 +1,4 @@
 Entries:
-- author: HoofedEar
-  changes:
-  - {message: You are now less likely to accidentally stuff yourself in a closet or
-      crate., type: Tweak}
-  id: 1500
-  time: '2022-05-11T20:46:59.0000000+00:00'
 - author: ike709
   changes:
   - {message: Fixed lighters not having a flame, type: Fix}
@@ -2950,3 +2944,8 @@ Entries:
   - {message: Added the current station's name to PDAs, type: Add}
   id: 1999
   time: '2022-07-24T01:58:29.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
+  id: 2000
+  time: '2022-07-24T11:09:33.0000000+00:00'
