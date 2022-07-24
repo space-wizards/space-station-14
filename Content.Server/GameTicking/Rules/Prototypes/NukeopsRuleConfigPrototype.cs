@@ -25,10 +25,10 @@ public sealed class NukeopsRuleConfigPrototype : IPrototype
     public string GhostSpawnPointProto = "SpawnPointGhostNukeOperative";
 
     [DataField("commanderRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-    public string CommanderRolePrototype = "Nukeops";
+    public string CommanderRolePrototype = "NukeopsCommander";
 
     [DataField("operativeRoleProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-    public string OperativeRoleProto = "NukeopsCommander";
+    public string OperativeRoleProto = "Nukeops";
 
     [DataField("commanderStartingGearProto", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
     public string CommanderStartGearPrototype = "SyndicateCommanderGearFull";

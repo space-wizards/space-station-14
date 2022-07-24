@@ -25,8 +25,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
-using Content.Shared.Preferences;
-using Robust.Shared.Network;
 using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking.Rules;
@@ -44,7 +42,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
 
-    private Dictionary<EntityUid, (Mind.Mind? mind, bool alive)> _aliveNukeops = new();
+    private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
 
     private MapId? _nukiePlanet;
@@ -75,7 +73,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnPlayersSpawning);
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
@@ -100,24 +98,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _aliveNukeops)
         {
-            ev.AddLine($"- {nukeop.Value.mind?.Session?.Name}");
+            ev.AddLine($"- {nukeop.Key?.Session?.Name}");
         }
     }
 
-    private void OnMobStateChanged(MobStateChangedEvent ev)
+    private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
         if (!RuleAdded)
             return;
 
-        if (!_aliveNukeops.TryFirstOrNull(x => x.Value.mind?.OwnedEntity == ev.Entity, out var op))
+        if (!_aliveNukeops.TryFirstOrNull(x => x.Key?.OwnedEntity == ev.Entity, out var op))
             return;
 
-        var state = op.Value.Value;
-        var alive = state.mind?.CharacterDeadIC ?? ev.CurrentMobState is DamageState.Critical or DamageState.Dead;
+        _aliveNukeops[op.Value.Key] = !op.Value.Key.CharacterDeadIC;
 
-        _aliveNukeops[ev.Entity] = (state.mind, alive);
-
-        if (_aliveNukeops.Values.All(x => x.mind != null && !x.alive))
+        if (_aliveNukeops.Values.All(x => !x))
         {
             _roundEndSystem.EndRound();
         }
@@ -234,26 +229,22 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         SetupOperativeEntity(uid, nukeOpSpawner.OperativeName, nukeOpSpawner.OperativeStartingGear);
 
-        _aliveNukeops.Add(uid, (null, true));
         _operativeMindPendingData.Add(uid, nukeOpSpawner.OperativeRolePrototype);
     }
 
     private void OnMindAdded(EntityUid uid, NukeOperativeComponent component, MindAddedMessage args)
     {
-        if (!_aliveNukeops.ContainsKey(uid) || !TryComp<MindComponent>(uid, out var mindComponent))
-            return;
-
-        if (mindComponent.Mind == null)
+        if (!TryComp<MindComponent>(uid, out var mindComponent) || mindComponent.Mind == null)
             return;
 
         var mind = mindComponent.Mind;
+        _aliveNukeops.Add(mindComponent.Mind, !mind.CharacterDeadIC);
 
-        _aliveNukeops[uid] = (mind, mind.CharacterDeadIC);
-        if (_operativeMindPendingData.TryGetValue(uid, out var role))
-        {
-            mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
-            _operativeMindPendingData.Remove(uid);
-        }
+        if (!_operativeMindPendingData.TryGetValue(uid, out var role))
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(role)));
+        _operativeMindPendingData.Remove(uid);
     }
 
     private bool SpawnMap()
@@ -377,7 +368,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 newMind.AddRole(new TraitorRole(newMind, nukeOpsAntag));
 
                 newMind.TransferTo(mob);
-                _aliveNukeops.Add(mob, (newMind, true));
             } else if (addSpawnPoints)
             {
                 var spawnPoint = EntityManager.SpawnEntity(_nukeopsRuleConfig.GhostSpawnPointProto, _random.Pick(spawns));
@@ -391,11 +381,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 nukeOpSpawner.OperativeStartingGear = spawnDetails.Gear;
             }
         }
-    }
-
-    private void SpawnOperativesForSpawningPlayers(List<IPlayerSession> playerPool, IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles)
-    {
-
     }
 
     private void SpawnOperativesForGhostRoles()
