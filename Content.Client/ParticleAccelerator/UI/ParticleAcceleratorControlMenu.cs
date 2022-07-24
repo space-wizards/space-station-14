@@ -334,6 +334,8 @@ namespace Content.Client.ParticleAccelerator.UI
             {
                 return new(this, resourceCache, name, state);
             }
+
+            UpdateUI(false, false, false, false);
         }
 
         private bool StrengthSpinBoxValid(int n)
