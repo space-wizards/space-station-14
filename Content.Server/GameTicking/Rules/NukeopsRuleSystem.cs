@@ -293,13 +293,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var shuttlePath = "/Maps/infiltrator.yml";
         var mapId = _mapManager.CreateMap();
 
-        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
+        var (_, loadedOutpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
 
-        if (outpost == null)
+        if (loadedOutpost == null)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return;
         }
+        _outpost = loadedOutpost;
 
         // Listen I just don't want it to overlap.
         var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
@@ -309,7 +310,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, _outpost.Value);
         }
     }
 
