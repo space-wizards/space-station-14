@@ -1,9 +1,8 @@
 ﻿using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Parallax;
@@ -13,10 +12,11 @@ namespace Content.Client.Parallax;
 /// </summary>
 public sealed class ParallaxControl : Control
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IParallaxManager _parallaxManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    [ViewVariables(VVAccess.ReadWrite)] public Vector2i Offset { get; set; }
+    [ViewVariables(VVAccess.ReadWrite)] public Vector2 Offset { get; set; }
 
     public ParallaxControl()
     {
@@ -24,20 +24,24 @@ public sealed class ParallaxControl : Control
 
         Offset = (_random.Next(0, 1000), _random.Next(0, 1000));
         RectClipContent = true;
+        _parallaxManager.LoadParallaxByName("FastSpace");
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        foreach (var layer in _parallaxManager.ParallaxLayers)
+        foreach (var layer in _parallaxManager.GetParallaxLayers("FastSpace"))
         {
             var tex = layer.Texture;
-            var texSize = tex.Size * layer.Config.Scale.Floored();
+            var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * layer.Config.Scale.Floored() / 540;
             var ourSize = PixelSize;
+
+            var currentTime = (float) _timing.RealTime.TotalSeconds;
+            var offset = Offset + new Vector2(currentTime * 100f, currentTime * 0f);
 
             if (layer.Config.Tiled)
             {
                 // Multiply offset by slowness to match normal parallax
-                var scaledOffset = (Offset * layer.Config.Slowness).Floored();
+                var scaledOffset = (offset * layer.Config.Slowness).Floored();
 
                 // Then modulo the scaled offset by the size to prevent drawing a bunch of offscreen tiles for really small images.
                 scaledOffset.X %= texSize.X;
