@@ -146,10 +146,11 @@ public sealed class BlockingSystem : EntitySystem
                 var intersecting = _lookup.GetEntitiesIntersecting(playerTileRef.Value);
                 var mobQuery = GetEntityQuery<MobStateComponent>();
                 var doorQuery = GetEntityQuery<DoorComponent>();
+                var xformQuery = GetEntityQuery<TransformComponent>();
 
                 foreach (var uid in intersecting)
                 {
-                    if (uid != user && mobQuery.HasComponent(uid) || Transform(uid).Anchored && doorQuery.HasComponent(uid))
+                    if (uid != user && mobQuery.HasComponent(uid) || xformQuery.GetComponent(uid).Anchored && doorQuery.HasComponent(uid))
                     {
                         TooCloseError(user);
                         return false;
