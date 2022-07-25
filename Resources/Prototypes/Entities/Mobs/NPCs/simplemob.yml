@@ -14,7 +14,7 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     # - Clothing
     - Idle
@@ -159,7 +159,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach

@@ -78,7 +78,7 @@
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: Centcom bedsheet
+  name: CentCom bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite

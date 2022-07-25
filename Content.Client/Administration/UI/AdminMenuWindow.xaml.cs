@@ -25,6 +25,7 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(3, Loc.GetString("admin-menu-round-tab"));
             MasterTabContainer.SetTabTitle(4, Loc.GetString("admin-menu-server-tab"));
             MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
+            MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-objects-tab"));
         }
 
         protected override void EnteredTree()

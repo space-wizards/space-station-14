@@ -70,8 +70,8 @@ namespace Content.IntegrationTests.Tests
                 var grid1Entity = grid1.GridEntityId;
                 var grid2Entity = grid2.GridEntityId;
 
-                Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).Enabled);
-                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).Enabled);
+                Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).EnabledVV);
+                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV);
 
                 // Re-enable needs power so it turns off again.
                 // Charge rate is ridiculously high so it finishes in one tick.
@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests
 
                 var grid2Entity = grid2.GridEntityId;
 
-                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).Enabled, Is.False);
+                Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV, Is.False);
             });
 
             await pairTracker.CleanReturnAsync();
