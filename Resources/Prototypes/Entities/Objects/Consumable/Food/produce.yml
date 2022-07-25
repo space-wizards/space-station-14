@@ -506,6 +506,8 @@
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Allicin
+          Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
@@ -528,6 +530,8 @@
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Allicin
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
@@ -596,6 +600,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: red onion slice
@@ -605,6 +620,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
 
 - type: entity
   name: chili
