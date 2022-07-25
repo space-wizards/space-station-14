@@ -49,7 +49,7 @@ namespace Content.Shared.Movement.Components
             var gridId = transform.GridUid;
 
             if ((entityManager.TryGetComponent<GravityComponent>(transform.GridUid, out var gravity) ||
-                 entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.Enabled)
+                 entityManager.TryGetComponent(transform.MapUid, out gravity)) && gravity.EnabledVV)
                 return false;
 
             if (gridId == null)
@@ -67,7 +67,7 @@ namespace Content.Shared.Movement.Components
                     return false;
             }
 
-            if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
+            if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).EnabledVV)
             {
                 return true;
             }

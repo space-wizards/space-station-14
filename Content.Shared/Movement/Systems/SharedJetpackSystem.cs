@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
@@ -17,10 +16,11 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
+    [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     public override void Initialize()
@@ -36,7 +36,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackUserComponent, ComponentGetState>(OnJetpackUserGetState);
         SubscribeLocalEvent<JetpackUserComponent, ComponentHandleState>(OnJetpackUserHandleState);
 
-        SubscribeLocalEvent<GravityChangedMessage>(OnJetpackUserGravityChanged);
+        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
     }
 
     private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)
@@ -44,7 +44,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.CanMove = true;
     }
 
-    private void OnJetpackUserGravityChanged(GravityChangedMessage ev)
+    private void OnJetpackUserGravityChanged(GravityChangedEvent ev)
     {
         var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();
@@ -114,7 +114,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
     {
-        if (args.Handled) return;
+        if (args.Handled)
+            return;
 
         if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
         {
@@ -130,8 +131,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
         return gridUid == null ||
-               (TryComp<GravityComponent>(gridUid, out var gravity) &&
-                !gravity.Enabled);
+               (!HasComp<GravityComponent>(gridUid));
     }
 
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
@@ -178,7 +178,7 @@ public abstract class SharedJetpackSystem : EntitySystem
                 RemoveUser(user.Value);
             }
 
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
+            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
