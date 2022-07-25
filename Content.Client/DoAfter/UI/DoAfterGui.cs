@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Content.Client.IoC;
-using Content.Client.Resources;
 using Content.Shared.DoAfter;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -21,14 +14,12 @@ namespace Content.Client.DoAfter.UI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private readonly Dictionary<byte, PanelContainer> _doAfterControls = new();
-        private readonly Dictionary<byte, DoAfterBar> _doAfterBars = new();
+        private readonly Dictionary<byte, DoAfterControl> _doAfterControls = new();
 
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
         private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new();
 
         public EntityUid AttachedEntity { get; set; }
-        private ScreenCoordinates _playerPosition;
 
         public DoAfterGui()
         {
@@ -53,7 +44,6 @@ namespace Content.Client.DoAfter.UI
             }
 
             _doAfterControls.Clear();
-            _doAfterBars.Clear();
             _cancelledDoAfters.Clear();
         }
 
@@ -66,30 +56,11 @@ namespace Content.Client.DoAfter.UI
             if (_doAfterControls.ContainsKey(message.ID))
                 return;
 
-            var doAfterBar = new DoAfterBar
-            {
-                VerticalAlignment = VAlignment.Center
-            };
+            var doAfterBar = new DoAfterControl();
+            doAfterBar.Coordinates = message.UserGrid;
 
-            _doAfterBars[message.ID] = doAfterBar;
-
-            var control = new PanelContainer
-            {
-                Children =
-                {
-                    new TextureRect
-                    {
-                        Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png"),
-                        TextureScale = Vector2.One * DoAfterBar.DoAfterBarScale,
-                        VerticalAlignment = VAlignment.Center,
-                    },
-
-                    doAfterBar
-                }
-            };
-
-            AddChild(control);
-            _doAfterControls.Add(message.ID, control);
+            AddChild(doAfterBar);
+            _doAfterControls.Add(message.ID, doAfterBar);
         }
 
         // NOTE THAT THE BELOW ONLY HANDLES THE UI SIDE
@@ -107,7 +78,6 @@ namespace Content.Client.DoAfter.UI
             RemoveChild(control);
             control.DisposeAllChildren();
             _doAfterControls.Remove(id);
-            _doAfterBars.Remove(id);
 
             _cancelledDoAfters.Remove(id);
         }
@@ -122,23 +92,13 @@ namespace Content.Client.DoAfter.UI
             if (_cancelledDoAfters.ContainsKey(id))
                 return;
 
-            DoAfterBar doAfterBar;
-
             if (!_doAfterControls.TryGetValue(id, out var doAfterControl))
             {
-                doAfterControl = new PanelContainer();
+                doAfterControl = new DoAfterControl();
                 AddChild(doAfterControl);
-                DebugTools.Assert(!_doAfterBars.ContainsKey(id));
-                doAfterBar = new DoAfterBar();
-                doAfterControl.AddChild(doAfterBar);
-                _doAfterBars[id] = doAfterBar;
-            }
-            else
-            {
-                doAfterBar = _doAfterBars[id];
             }
 
-            doAfterBar.Cancelled = true;
+            doAfterControl.Cancelled = true;
             _cancelledDoAfters.Add(id, _gameTiming.CurTime);
         }
 
@@ -195,15 +155,16 @@ namespace Content.Client.DoAfter.UI
                 if (_cancelledDoAfters.ContainsKey(id) || !_doAfterControls.ContainsKey(id))
                     continue;
 
-                var doAfterBar = _doAfterBars[id];
+                var control = _doAfterControls[id];
                 var ratio = (currentTime - message.StartTime).TotalSeconds;
-                doAfterBar.Ratio = MathF.Min(1.0f,
+                control.Ratio = MathF.Min(1.0f,
                     (float) ratio / message.Delay);
 
                 // Just in case it doesn't get cleaned up by the system for whatever reason.
                 if (ratio > message.Delay + DoAfterSystem.ExcessTime)
                 {
                     toRemove.Add(id);
+                    continue;
                 }
             }
 
@@ -211,10 +172,6 @@ namespace Content.Client.DoAfter.UI
             {
                 RemoveDoAfter(id);
             }
-
-            var screenCoordinates = _eyeManager.CoordinatesToScreen(transform.Coordinates);
-            _playerPosition = new ScreenCoordinates(screenCoordinates.Position / UIScale, screenCoordinates.Window);
-            LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
         }
     }
 }
