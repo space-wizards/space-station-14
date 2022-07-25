@@ -9,15 +9,24 @@ namespace Content.Server.Ensnaring;
 
 public sealed class EnsnaringSystem : EntitySystem
 {
-    //TODO: AfterInteractionEvent is for testing purposes only, needs to be reworked into a rightclick verb
     [Dependency] private readonly EnsnareableSystem _ensnareable = default!;
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EnsnaringComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggeredEvent>(OnStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
+    }
+
+    private void OnComponentRemove(EntityUid uid, EnsnaringComponent component, ComponentRemove args)
+    {
+        if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnared))
+            return;
+
+        if (ensnared.IsEnsnared)
+            ForceFree(component);
     }
 
     private void AttemptStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggerAttemptEvent args)
@@ -50,6 +59,7 @@ public sealed class EnsnaringSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return;
 
+        component.Ensnared = target;
         ensnareable.EnsnaringEntity = ensnaringEntity;
         ensnareable.Container.Insert(ensnaringEntity);
         ensnareable.IsEnsnared = true;
@@ -57,5 +67,23 @@ public sealed class EnsnaringSystem : EntitySystem
         _ensnareable.UpdateAlert(ensnareable);
         var ev = new EnsnareChangeEvent(ensnaringEntity, component.WalkSpeed, component.SprintSpeed);
         RaiseLocalEvent(target, ev, false);
+    }
+
+    /// <summary>
+    /// Used to force free someone for things like if the <see cref="EnsnaringComponent"/> is removed
+    /// </summary>
+    public void ForceFree(EnsnaringComponent component)
+    {
+        if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnareable))
+            return;
+
+        component.Ensnared = null;
+        ensnareable.EnsnaringEntity = null;
+        ensnareable.Container.ForceRemove(component.Owner);
+        ensnareable.IsEnsnared = false;
+
+        _ensnareable.UpdateAlert(ensnareable);
+        var ev = new EnsnareChangeEvent(component.Owner, component.WalkSpeed, component.SprintSpeed);
+        RaiseLocalEvent(component.Owner, ev, false);
     }
 }

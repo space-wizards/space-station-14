@@ -13,5 +13,5 @@ public sealed class EnsnaringComponent : SharedEnsnaringComponent
     [DataField("canMoveBreakout")]
     public bool CanMoveBreakout;
 
-    public CancellationTokenSource? CancelToken = null;
+    public CancellationTokenSource? CancelToken;
 }

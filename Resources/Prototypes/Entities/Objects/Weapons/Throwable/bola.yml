@@ -35,3 +35,6 @@
       types:
         Blunt: 5
   - type: Ensnaring
+    canThrowTrigger: true
+    canMoveBreakout: true
+

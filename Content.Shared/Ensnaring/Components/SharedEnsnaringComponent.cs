@@ -40,6 +40,13 @@ public abstract class SharedEnsnaringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("canThrowTrigger")]
     public bool CanThrowTrigger;
+
+    /// <summary>
+    /// What is ensnared?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("ensnared")]
+    public EntityUid? Ensnared;
 }
 
 public sealed class EnsnareAttemptEvent : CancellableEntityEventArgs
