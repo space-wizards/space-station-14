@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Bots
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!_entMan.TryGetComponent(owner, out AiControllerComponent? controller)
+            if (!_entMan.TryGetComponent(owner, out NPCComponent? controller)
                 || !_entMan.TryGetComponent(owner, out MedibotComponent? bot))
             {
                 throw new InvalidOperationException();
