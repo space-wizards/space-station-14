@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ConveyorBelt
   name: conveyor belt
   description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
@@ -20,11 +20,10 @@
   - type: ExtensionCableReceiver
   - type: Conveyor
   - type: Appearance
-    visuals:
-    - type: ConveyorVisualizer
-      state_running: conveyor_started_cw
-      state_stopped: conveyor_stopped_cw
-      state_reversed: conveyor_started_cw_r
+  - type: ConveyorVisuals
+    state_running: conveyor_started_cw
+    state_stopped: conveyor_stopped_cw
+    state_reversed: conveyor_started_cw_r
   - type: Construction
     graph: ConveyorGraph
     node: entity
