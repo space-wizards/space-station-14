@@ -8,7 +8,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     startingGear: PassengerGear
     behaviorSets:
     - PathingDummy
