@@ -1,10 +1,4 @@
 Entries:
-- author: Ripmorld
-  changes:
-  - {message: Pie will now transfer a small part of their solutions into whoever was
-      hit without a helmet, type: Add}
-  id: 1512
-  time: '2022-05-12T10:59:03.0000000+00:00'
 - author: UKNOWH
   changes:
   - {message: 'Added tranqulizer, flare, & flash shotgun shell recipes. You can now
@@ -2943,3 +2937,8 @@ Entries:
   - {message: Fixed gravity mispredict., type: Fix}
   id: 2011
   time: '2022-07-25T06:55:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more magboots in space., type: Fix}
+  id: 2012
+  time: '2022-07-25T07:35:35.0000000+00:00'
