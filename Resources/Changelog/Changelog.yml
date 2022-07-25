@@ -1,9 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Adds power sinks, type: Add}
-  id: 1514
-  time: '2022-05-12T13:12:35.0000000+00:00'
 - author: TimrodDX
   changes:
   - {message: Several areas on Delta Station now have decals., type: Add}
@@ -2942,3 +2937,8 @@ Entries:
     type: Fix}
   id: 2013
   time: '2022-07-25T08:58:23.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: Ported medibots from Nyanotrasen MRP., type: Add}
+  id: 2014
+  time: '2022-07-25T15:33:32.0000000+00:00'
