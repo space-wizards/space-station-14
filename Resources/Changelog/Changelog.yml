@@ -1,10 +1,4 @@
 Entries:
-- author: UKNOWH
-  changes:
-  - {message: 'Added tranqulizer, flare, & flash shotgun shell recipes. You can now
-      print them at the sec tech fab and med tech fab!', type: Add}
-  id: 1513
-  time: '2022-05-12T12:24:02.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Adds power sinks, type: Add}
@@ -2942,3 +2936,9 @@ Entries:
   - {message: No more magboots in space., type: Fix}
   id: 2012
   time: '2022-07-25T07:35:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cursor popups now show at the correct spot for non-100% UI scales.,
+    type: Fix}
+  id: 2013
+  time: '2022-07-25T08:58:23.0000000+00:00'
