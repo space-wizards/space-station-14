@@ -94,14 +94,6 @@ namespace Content.Shared.Decals
         }
 
         protected virtual bool RemoveDecalHook(EntityUid gridId, uint uid) => true;
-
-        protected (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid, TransformComponent xform)
-        {
-            var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
-            var map = xform.MapID;
-
-            return (view, map);
-        }
     }
 
     // TODO: Pretty sure paul was moving this somewhere but just so people know

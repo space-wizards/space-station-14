@@ -1,56 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
-  id: 1505
-  time: '2022-05-12T06:10:16.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
-      the crew as easy., type: Tweak}
-  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
-      now., type: Tweak}
-  id: 1506
-  time: '2022-05-12T07:41:18.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Animals can now escape inventory by moving, type: Add}
-  id: 1507
-  time: '2022-05-12T07:58:27.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
-  id: 1508
-  time: '2022-05-12T09:44:17.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: Cargo ordering computers and telepads now use machine linking. Be sure
-      to link them together before starting your shift!, type: Tweak}
-  id: 1509
-  time: '2022-05-12T10:24:24.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Added the salami lid (won't fit), type: Add}
-  id: 1510
-  time: '2022-05-12T10:24:49.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
-      salvage crate or traitor uplink.', type: Add}
-  id: 1511
-  time: '2022-05-12T10:53:01.0000000+00:00'
-- author: Ripmorld
-  changes:
-  - {message: Pie will now transfer a small part of their solutions into whoever was
-      hit without a helmet, type: Add}
-  id: 1512
-  time: '2022-05-12T10:59:03.0000000+00:00'
-- author: UKNOWH
-  changes:
-  - {message: 'Added tranqulizer, flare, & flash shotgun shell recipes. You can now
-      print them at the sec tech fab and med tech fab!', type: Add}
-  id: 1513
-  time: '2022-05-12T12:24:02.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Adds power sinks, type: Add}
@@ -2947,3 +2895,50 @@ Entries:
   - {message: You can now swap instrument styles even while playing them!, type: Tweak}
   id: 2004
   time: '2022-07-24T11:40:05.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: The clothesmate now stocks backpacks, type: Add}
+  id: 2005
+  time: '2022-07-24T22:41:22.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added lights for altars, type: Add}
+  id: 2006
+  time: '2022-07-24T22:57:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Gas tank internals now have an alert, type: Add}
+  id: 2007
+  time: '2022-07-25T04:42:25.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You can no longer clip people into walls with riot shields., type: Fix}
+  - {message: You can no longer hide behind doors while using a shield., type: Fix}
+  id: 2008
+  time: '2022-07-25T04:54:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nukie planet now has its own parallax., type: Add}
+  id: 2009
+  time: '2022-07-25T05:10:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
+  id: 2010
+  time: '2022-07-25T05:47:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed gravity mispredict., type: Fix}
+  id: 2011
+  time: '2022-07-25T06:55:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: No more magboots in space., type: Fix}
+  id: 2012
+  time: '2022-07-25T07:35:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Cursor popups now show at the correct spot for non-100% UI scales.,
+    type: Fix}
+  id: 2013
+  time: '2022-07-25T08:58:23.0000000+00:00'

@@ -139,7 +139,7 @@
         Piercing: 1
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
     - Idle
@@ -670,7 +670,7 @@
         Blunt: 10
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -1151,7 +1151,7 @@
     baseSprintSpeed : 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -1319,7 +1319,7 @@
         - Xeno
     - type: InputMover
     - type: MobMover
-    - type: UtilityAI
+    - type: UtilityNPC
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles
