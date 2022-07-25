@@ -1,87 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: Pizzas no longer have a curse that forces them to come with a plate.
-      The number of plates trashed in disposal has decreased by 1000%., type: Tweak}
-  id: 1493
-  time: '2022-05-10T01:12:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen vending machine vendors appear to have changed their policies
-      on some items within vending machines, and gave the boards a redesign. Explore
-      the new, possibly hidden options on your local vending machine today!', type: Tweak}
-  id: 1494
-  time: '2022-05-10T02:22:58.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Assistants no longer assist. They are merely Passengers on this great
-      station., type: Tweak}
-  id: 1495
-  time: '2022-05-10T03:35:09.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Removed drones as ghost roles for the time being, type: Remove}
-  id: 1496
-  time: '2022-05-10T06:50:54.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: 'Orderable from cargo `kitchen supplies crate`, that stores several
-      bags of milk and flour and other supplements.', type: Add}
-  id: 1497
-  time: '2022-05-10T08:03:13.0000000+00:00'
-- author: Tomeno
-  changes:
-  - {message: Atmos yeets should make a lot more sense now, type: Tweak}
-  id: 1498
-  time: '2022-05-10T15:02:40.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added a new vending machine for snacks. Mr Changs! Enjoy the fortune
-      cookies., type: Add}
-  id: 1499
-  time: '2022-05-11T07:17:25.0000000+00:00'
-- author: HoofedEar
-  changes:
-  - {message: You are now less likely to accidentally stuff yourself in a closet or
-      crate., type: Tweak}
-  id: 1500
-  time: '2022-05-11T20:46:59.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Fixed lighters not having a flame, type: Fix}
-  - {message: Welders/Lighters now say if they're lit while you're holding them, type: Tweak}
-  id: 1501
-  time: '2022-05-11T20:48:07.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: A variety of different paintings can now be found across the station.,
-    type: Add}
-  id: 1502
-  time: '2022-05-11T23:46:22.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed vending machines colliding and pushing out vended items., type: Fix}
-  - {message: Fixed climbing onto tables to bypass windoors and firelocks., type: Fix}
-  id: 1503
-  time: '2022-05-12T00:24:01.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Can no longer hug yourself., type: Tweak}
-  id: 1504
-  time: '2022-05-12T02:56:02.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Chapel's carpet doesn't block movement anymore., type: Fix}
-  id: 1505
-  time: '2022-05-12T06:10:16.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: All mobs will now slow down when damaged enough. No more carps terrorising
-      the crew as easy., type: Tweak}
-  - {message: Lots of mobs now can't pull things. Carps and ticks should be less abusive
-      now., type: Tweak}
-  id: 1506
-  time: '2022-05-12T07:41:18.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Animals can now escape inventory by moving, type: Add}
@@ -2953,3 +2870,77 @@ Entries:
   - {message: The zombify popup is now more noticeable., type: Tweak}
   id: 1992
   time: '2022-07-21T04:32:05.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Now any job can spawn as nukeops antag, type: Fix}
+  id: 1993
+  time: '2022-07-21T21:00:24.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Research servers are once again uniquely identified and can be selected
+      in the lathe server menu., type: Fix}
+  id: 1994
+  time: '2022-07-21T22:16:15.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Introduced another 15 admin smites., type: Add}
+  - {message: Introduced a bunch of admin "tricks" for common tasks., type: Add}
+  id: 1995
+  time: '2022-07-21T22:30:00.0000000+00:00'
+- author: moony
+  changes:
+  - {message: You no longer need to give yourself carpal tunnel to move something
+      you're pulling. (Fixed ctrl+click pulling), type: Fix}
+  id: 1996
+  time: '2022-07-23T14:26:07.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Thrusters now kill you with Heat type damage specifically., type: Fix}
+  id: 1997
+  time: '2022-07-23T14:26:19.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: shot glass sprite has been centered, type: Tweak}
+  id: 1998
+  time: '2022-07-24T01:47:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Added the current station's name to PDAs, type: Add}
+  id: 1999
+  time: '2022-07-24T01:58:29.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Shotgun shell boxes now come with 12 shells instead of 6., type: Tweak}
+  id: 2000
+  time: '2022-07-24T11:09:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Drinking now breaks on distance from the drink., type: Fix}
+  - {message: You now have to to stand closer to something to eat/drink it., type: Tweak}
+  id: 2001
+  time: '2022-07-24T11:33:52.0000000+00:00'
+- author: HoofedEar
+  changes:
+  - {message: Mobs can now open and close curtains while colliding with them., type: Fix}
+  id: 2002
+  time: '2022-07-24T11:35:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Glass can no longer be duplicated using lathes and plating., type: Fix}
+  id: 2003
+  time: '2022-07-24T11:37:29.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: You can now swap instrument styles even while playing them!, type: Tweak}
+  id: 2004
+  time: '2022-07-24T11:40:05.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: The clothesmate now stocks backpacks, type: Add}
+  id: 2005
+  time: '2022-07-24T22:41:22.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added lights for altars, type: Add}
+  id: 2006
+  time: '2022-07-24T22:57:12.0000000+00:00'

@@ -4,9 +4,11 @@
 
 - type: accessLevel
   id: Engineering
-  
+  name: Engineering
+
 - type: accessLevel
   id: Atmospherics
+  name: Atmospherics
 
 - type: accessGroup
   id: Engineering

@@ -115,7 +115,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in everyone)
         {
-            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;

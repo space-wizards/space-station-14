@@ -1,7 +1,10 @@
 using Content.Shared.Actions;
+using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Slippery;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Clothing;
 
@@ -9,6 +12,8 @@ public abstract class SharedMagbootsSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
     public override void Initialize()
     {
@@ -17,7 +22,32 @@ public abstract class SharedMagbootsSystem : EntitySystem
         SubscribeLocalEvent<MagbootsComponent, GetVerbsEvent<ActivationVerb>>(AddToggleVerb);
         SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
+        SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
     }
+
+    private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+        component.On = !component.On;
+
+        if (_sharedContainer.TryGetContainingContainer(uid, out var container) &&
+            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
+            UpdateMagbootEffects(container.Owner, uid, true, component);
+
+        if (TryComp<SharedItemComponent>(uid, out var item))
+            item.EquippedPrefix = component.On ? "on" : null;
+
+        if (TryComp(uid, out AppearanceComponent? appearance))
+            appearance.SetData(ToggleVisuals.Toggled, component.On);
+
+        OnChanged(component);
+        Dirty(component);
+    }
+
+    protected virtual void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component) { }
 
     protected void OnChanged(MagbootsComponent component)
     {
