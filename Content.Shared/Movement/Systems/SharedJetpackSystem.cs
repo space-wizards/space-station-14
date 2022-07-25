@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
@@ -17,10 +16,11 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
+    [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected readonly MovementSpeedModifierSystem MovementSpeedModifier = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     public override void Initialize()
@@ -178,7 +178,7 @@ public abstract class SharedJetpackSystem : EntitySystem
                 RemoveUser(user.Value);
             }
 
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
+            MovementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
