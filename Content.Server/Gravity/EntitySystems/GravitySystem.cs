@@ -46,21 +46,28 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void EnableGravity(GravityComponent comp)
         {
-            if (comp.Enabled) return;
+            if (comp.Enabled)
+                return;
 
             var gridId = Transform(comp.Owner).GridUid;
+            Dirty(comp);
+
             if (gridId == null)
                 return;
 
             comp.Enabled = true;
             var message = new GravityChangedEvent(gridId.Value, true);
             RaiseLocalEvent(message);
+
         }
 
         public void DisableGravity(GravityComponent comp)
         {
-            if (!comp.Enabled) return;
+            if (!comp.Enabled)
+                return;
+
             comp.Enabled = false;
+            Dirty(comp);
 
             var gridId = Transform(comp.Owner).GridUid;
             if (gridId == null)
