@@ -4,18 +4,20 @@
   parent: BaseStorageItem
   id: Bible
   components:
+  - type: UseDelay
+    delay: 10.0
   - type: Bible
     damage:
       groups:
-        Brute: -35
-        Burn: -35
+        Brute: -5
+        Burn: -5
     damageOnFail:
       groups:
-        Brute: 15
-        Airloss: 25
+        Brute: 5
+        Airloss: 5
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
-        Burn: 30
+        Burn: 10
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: ItemCooldown
