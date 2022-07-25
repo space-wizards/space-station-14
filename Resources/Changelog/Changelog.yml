@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Animals can now escape inventory by moving, type: Add}
-  id: 1507
-  time: '2022-05-12T07:58:27.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Added lights for altars, type: Add}
   id: 2006
   time: '2022-07-24T22:57:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Gas tank internals now have an alert, type: Add}
+  id: 2007
+  time: '2022-07-25T04:42:25.0000000+00:00'
