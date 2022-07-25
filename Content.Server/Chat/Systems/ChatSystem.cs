@@ -156,9 +156,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         message = SanitizeInGameOOCMessage(message);
 
         var sendType = type;
-        // If we have OOC disabled for players, redirect dead/ghost LOOC to dead chat.
-        if (!_adminManager.IsAdmin(player) && !_configurationManager.GetCVar(CCVars.OocEnabled)
-            && (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
+        // Unless you are an aghost, send dead messages to dead chat
+        if (!_adminManager.IsAdmin(player) && (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
             sendType = InGameOOCChatType.Dead;
 
         switch (sendType)
