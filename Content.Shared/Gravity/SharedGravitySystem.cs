@@ -11,7 +11,6 @@ namespace Content.Shared.Gravity
 {
     public abstract class SharedGravitySystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
@@ -25,22 +24,15 @@ namespace Content.Shared.Gravity
             if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
                 return ignoreGravityComponent.Weightless;
 
-            if (!Resolve(uid, ref xform)) return true;
-
-            bool gravityEnabled = false;
+            if (!Resolve(uid, ref xform))
+                return true;
 
             // If grid / map has gravity
             if ((TryComp<GravityComponent>(xform.GridUid, out var gravity) ||
-                 TryComp(xform.MapUid, out gravity)) && gravity.EnabledVV)
+                 TryComp(xform.MapUid, out gravity)) && gravity.Enabled)
             {
-                gravityEnabled = gravity.EnabledVV;
-
-                if (gravityEnabled) return false;
+                return false;
             }
-
-            // On the map then always weightless (unless it has gravity comp obv).
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
-                return true;
 
             // Something holding us down
             if (_inventory.TryGetSlotEntity(uid, "shoes", out var ent))
@@ -49,10 +41,7 @@ namespace Content.Shared.Gravity
                     return false;
             }
 
-            if (!gravityEnabled || !xform.Coordinates.IsValid(EntityManager)) return true;
-
-            var tile = grid.GetTileRef(xform.Coordinates).Tile;
-            return tile.IsEmpty;
+            return true;
         }
 
         public override void Initialize()
@@ -85,7 +74,7 @@ namespace Content.Shared.Gravity
             {
                 if (xform.GridUid != ev.ChangedGridIndex) continue;
 
-                if (ev.HasGravity || !IsWeightless(comp.Owner, xform: xform))
+                if (!ev.HasGravity)
                 {
                     _alerts.ShowAlert(comp.Owner, AlertType.Weightless);
                 }
