@@ -7,7 +7,5 @@ namespace Content.Server.Abilities.Boxer
     /// </summary>
     [RegisterComponent]
     public sealed class BoxingGlovesComponent : Component
-    {
-        public bool IsActive = false;
-    }
+    {}
 }

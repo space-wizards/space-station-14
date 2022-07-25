@@ -33,6 +33,12 @@ namespace Content.Server.Abilities.Boxer
         }
         private void ApplyBoxerModifiers(EntityUid uid, BoxerComponent component, MeleeHitEvent args)
         {
+            if (component.UnarmedModifiers == default!)
+            {
+                Logger.Warning("BoxerComponent on " + uid + " couldn't get damage modifiers. Know that adding components with damage modifiers through VV or similar is unsupported.");
+                return;
+            }
+
             args.ModifiersList.Add(component.UnarmedModifiers);
         }
         private void OnStamHit(EntityUid uid, BoxingGlovesComponent component, StaminaMeleeHitEvent args)
