@@ -156,3 +156,22 @@
         maxVol: 30
   - type: DrainableSolution
     solution: drainBuffer
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: UtilityNPC
+    behaviorSets:
+    - MediBot
+  - type: Medibot
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: Speech
+  - type: Construction
+    graph: MediBot
+    node: bot
