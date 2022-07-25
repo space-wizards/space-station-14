@@ -114,7 +114,8 @@ namespace Content.Shared.Movement.Systems
             }
 
             UsedMobMovement[mover.Owner] = true;
-            var weightless = _gravity.IsWeightless(mover.Owner, physicsComponent, xform);
+            // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
+            var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 

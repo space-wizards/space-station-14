@@ -24,8 +24,6 @@ namespace Content.Client.Physics.Controllers
             {
                 if (relayMover.RelayEntity != null)
                     HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
-
-                return;
             }
 
             HandleClientsideMovement(player, frameTime);
@@ -34,13 +32,26 @@ namespace Content.Client.Physics.Controllers
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
             if (!TryComp(player, out InputMoverComponent? mover) ||
-                !TryComp(player, out TransformComponent? xform)) return;
+                !TryComp(player, out TransformComponent? xform))
+            {
+                return;
+            }
 
             PhysicsComponent? body = null;
+            TransformComponent? xformMover = xform;
 
             if (mover.ToParent && HasComp<RelayInputMoverComponent>(xform.ParentUid))
             {
-                if (!TryComp(xform.ParentUid, out body)) return;
+                if (!TryComp(xform.ParentUid, out body) ||
+                    !TryComp(xform.ParentUid, out xformMover))
+                {
+                    return;
+                }
+
+                if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
+                {
+                    mover.LastGridAngle = parentMover.LastGridAngle;
+                }
             }
             else if (!TryComp(player, out body))
             {
@@ -84,7 +95,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xform, frameTime);
+            HandleMobMovement(mover, body, xformMover, frameTime);
         }
 
         protected override Filter GetSoundPlayers(EntityUid mover)
