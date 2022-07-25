@@ -13,8 +13,6 @@ namespace Content.Server.VendingMachines
     {
         public bool Ejecting;
 
-        public TimeSpan AnimationDuration = TimeSpan.Zero;
-
         public bool Broken;
 
         /// <summary>

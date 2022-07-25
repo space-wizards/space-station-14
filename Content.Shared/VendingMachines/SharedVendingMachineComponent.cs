@@ -11,6 +11,8 @@ namespace Content.Shared.VendingMachines
         [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
         public string PackPrototypeId = string.Empty;
 
+        public TimeSpan AnimationDuration = TimeSpan.Zero;
+
         [ViewVariables] public List<VendingMachineInventoryEntry> Inventory = new();
         [ViewVariables] public List<VendingMachineInventoryEntry> EmaggedInventory = new();
         [ViewVariables] public List<VendingMachineInventoryEntry> ContrabandInventory = new();
