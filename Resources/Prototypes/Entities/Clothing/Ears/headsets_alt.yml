@@ -66,7 +66,7 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate overear-headset
-  description: A Syndicate overear headset, designed for work in special operations, has access to the Syndicate frequencies, sadly, not Nanotrasen ones.
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys. Protects ears from flashbangs.
   components:
   - type: Headset
     channels:
