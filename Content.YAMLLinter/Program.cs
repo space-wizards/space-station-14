@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,13 +90,22 @@ namespace Content.YAMLLinter
             {
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
                 if (clientErrors.TryGetValue(key, out var clientVal))
-                {
                     newErrors.UnionWith(val.Intersect(clientVal));
-                    newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
-                }
 
-                if (newErrors.Count == 0) continue;
-                allErrors[key] = newErrors;
+                if (newErrors.Count != 0)
+                    allErrors[key] = newErrors;
+            }
+
+            foreach (var (key, val) in clientErrors)
+            {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+                if (newErrors.Count == 0)
+                    continue;
+
+                if (allErrors.TryGetValue(key, out var errors))
+                    errors.UnionWith(val.Where(n => n.AlwaysRelevant));
+                else
+                    allErrors[key] = newErrors;
             }
 
             return allErrors;
