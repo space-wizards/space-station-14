@@ -39,6 +39,7 @@ namespace Content.Server.Entry
             "FireVisuals",
             "CrematoriumVisuals",
             "ConveyorVisuals",
+            "TwoWayLeverVisuals",
         };
     }
 }
