@@ -91,7 +91,7 @@ public sealed class EnsnareableSystem : SharedEnsnareableSystem
                 uid, Filter.Entities(uid), PopupType.Large);
 
             UpdateAlert(component);
-            var ev = new EnsnareChangeEvent(args.EnsnaringComponent.Owner, component.WalkSpeed, component.SprintSpeed);
+            var ev = new EnsnareRemoveEvent();
             RaiseLocalEvent(uid, ev, false);
 
             args.EnsnaringComponent.CancelToken = null;

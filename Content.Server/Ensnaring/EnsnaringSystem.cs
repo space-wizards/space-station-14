@@ -65,7 +65,7 @@ public sealed class EnsnaringSystem : EntitySystem
         ensnareable.IsEnsnared = true;
 
         _ensnareable.UpdateAlert(ensnareable);
-        var ev = new EnsnareChangeEvent(ensnaringEntity, component.WalkSpeed, component.SprintSpeed);
+        var ev = new EnsnareChangeEvent(component.WalkSpeed, component.SprintSpeed);
         RaiseLocalEvent(target, ev, false);
     }
 
@@ -83,7 +83,7 @@ public sealed class EnsnaringSystem : EntitySystem
         ensnareable.IsEnsnared = false;
 
         _ensnareable.UpdateAlert(ensnareable);
-        var ev = new EnsnareChangeEvent(component.Owner, component.WalkSpeed, component.SprintSpeed);
+        var ev = new EnsnareRemoveEvent();
         RaiseLocalEvent(component.Owner, ev, false);
     }
 }

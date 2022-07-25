@@ -9,14 +9,14 @@ public abstract class SharedEnsnaringComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("freeTime")]
-    public float freeTime = 6f;
+    public float FreeTime = 1.0f;
 
     /// <summary>
     /// How long it should take for an entity to free themselves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("breakoutTime")]
-    public float BreakoutTime = 10f;
+    public float BreakoutTime = 3.0f;
 
     //TODO: Raise default value, make datafield required.
     /// <summary>
@@ -49,23 +49,18 @@ public abstract class SharedEnsnaringComponent : Component
     public EntityUid? Ensnared;
 }
 
-public sealed class EnsnareAttemptEvent : CancellableEntityEventArgs
+public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
 {
-    //TODO: Ensnare targeting logic here
-    //Might be better off changed to an unensnare event
+
 }
 
 public sealed class EnsnareChangeEvent : EntityEventArgs
 {
-    //TODO: Ensnare change logic here. Needs to relay movespeed info.
-
-    public readonly EntityUid User;
     public readonly float WalkSpeed;
     public readonly float SprintSpeed;
 
-    public EnsnareChangeEvent(EntityUid user, float walkSpeed, float sprintSpeed)
+    public EnsnareChangeEvent(float walkSpeed, float sprintSpeed)
     {
-        User = user;
         WalkSpeed = walkSpeed;
         SprintSpeed = sprintSpeed;
     }

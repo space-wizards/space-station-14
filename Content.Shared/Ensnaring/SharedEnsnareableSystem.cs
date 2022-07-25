@@ -13,6 +13,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         SubscribeLocalEvent<SharedEnsnareableComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedModify);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareChangeEvent>(OnEnsnareChange);
+        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
     }
 
     private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnareChangeEvent args)
@@ -23,9 +24,13 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         _speedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
+    private void OnEnsnareRemove(EntityUid uid, SharedEnsnareableComponent component, EnsnareRemoveEvent args)
+    {
+        _speedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
     private void MovementSpeedModify(EntityUid uid, SharedEnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        //This works perfectly with the event.
         if (!component.IsEnsnared)
             return;
 
