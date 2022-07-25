@@ -3,10 +3,12 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Mind.Components;
 using Content.Server.RoundEnd;
 using Content.Server.Traitor;
-using Content.Server.Weapon.Melee;
+using Content.Server.Station.Systems;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
+using Content.Shared.Traitor.Uplink;
 using Content.Shared.CCVar;
 using Content.Shared.Roles;
 using Content.Shared.Sound;
@@ -30,6 +32,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveRevoHeads = new();
     private Dictionary<Mind.Mind, bool> _aliveCommandHeads = new();
@@ -45,14 +48,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
 
     public override void Initialize()
     {
-        base.Initialize();
+        base.Initialize();        
 
         //SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt); // Commented for testing purposes
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(GetHead);
-        SubscribeLocalEvent<MeleeHitEvent>(Revert);
     }
 
     private void GetHead(PlayerSpawnCompleteEvent ev) // ;)
@@ -157,26 +159,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
             mind.AddRole(revoHeadRole);
             _revoHeads.Add(mind);
             _aliveRevoHeads.Add(mind, true);
+            
+            if (mind.OwnedEntity != null)
+            {
+                _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("RevoHeadGear"), null);
+            }
         }
 
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
-    }
-
-    private void Revert(MeleeHitEvent ev)
-    {
-        foreach (var entity in ev.HitEntities)
-        {
-            if (!TryComp<MindComponent>(entity, out MindComponent? mind) || mind.Mind is null)
-                return;
-            var rnd = new Random();
-            foreach (var role in mind.Mind.AllRoles)
-            {
-                if (role.Name == "Revolutionary" && rnd.Next(10) > 5)
-                    mind.Mind.RemoveRole(role);
-
-                SoundSystem.Play("/Audio/Magic/staff_change.ogg", Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
-            }
-        }
     }
 
     private void OnMobStateChanged(MobStateChangedEvent ev) 

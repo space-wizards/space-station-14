@@ -158,3 +158,10 @@
   innerclothingskirt: ClothingUniformJumpsuitColorBrown
   satchel: ClothingBackpackDuffelCBURN
   duffelbag: ClothingBackpackDuffelCBURN
+
+#Revolutionary Head - Just Uplink
+- type: startingGear
+  id: RevoHeadGear
+  equipment:
+    pocket1: RevolutionaryFlash
+    eyes: ClothingEyesGlassesSunglasses

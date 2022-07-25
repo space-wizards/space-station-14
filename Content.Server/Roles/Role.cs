@@ -1,4 +1,5 @@
-﻿// Hey look,
+using Content.Server.Chat.Managers;
+// Hey look,
 // Antag Datums.
 
 namespace Content.Server.Roles
@@ -38,7 +39,6 @@ namespace Content.Server.Roles
         /// </summary>
         public virtual void Greet()
         {
-
         }
     }
 }
