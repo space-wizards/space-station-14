@@ -227,7 +227,7 @@
   parent: ClothingHandsBase
   id: ThievingGloves
   name: black gloves #Intentionally named after regular gloves, they're meant to be sneaky.
-  description: Regular black gloves that do not keep you from frying. #Same description as normal gloves for the above reason
+  description: Seemingly regular black gloves. The fingertips are outfitted with nanotech that makes stealing a breeze.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Gloves/Color/black.rsi
