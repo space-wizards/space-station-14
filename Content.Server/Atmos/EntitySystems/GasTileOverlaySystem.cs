@@ -275,7 +275,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if (previousChunks != null &&
                         previousChunks.Contains(index) &&
-                        value.LastUpdate == curTick) // TODO: track the last time that a given chunk was sent to a player? Is it even worth it?
+                        value.LastUpdate != curTick)
                         continue;
 
                     dataToSend.Add(value);
