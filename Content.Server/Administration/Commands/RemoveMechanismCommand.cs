@@ -1,6 +1,6 @@
-using Content.Server.Body.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Part;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -32,10 +32,12 @@ namespace Content.Server.Administration.Commands
 
             var parent = transform.ParentUid;
 
-            if (entityManager.TryGetComponent<BodyPartComponent>(parent, out var body) &&
-                entityManager.TryGetComponent<MechanismComponent>(entityUid, out var part))
+            var bodyPartSys = EntitySystem.Get<SharedBodyPartSystem>();
+
+            if (entityManager.TryGetComponent<SharedBodyPartComponent>(parent, out var part) &&
+                entityManager.TryGetComponent<MechanismComponent>(entityUid, out var mechanism))
             {
-                body.RemoveMechanism(part);
+                bodyPartSys.RemoveMechanism(parent, mechanism, part);
             }
             else
             {

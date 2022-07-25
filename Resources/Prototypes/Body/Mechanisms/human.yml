@@ -36,6 +36,7 @@
     baseSprintSpeed: 0
   - type: GhostOnMove
   - type: Brain
+  - type: VitalOrgan
 
 - type: entity
   id: OrganHumanEyes
@@ -133,6 +134,7 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: VitalOrgan
 
 - type: entity
   id: OrganHumanStomach

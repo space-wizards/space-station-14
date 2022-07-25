@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
@@ -15,6 +16,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     public override void Update(float frameTime)
     {
@@ -94,7 +96,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
                 Filter.Pvs(uid), PopupType.LargeCaution);
-            body.Gib();
+            _bodySystem.Gib(ent, false, body);
         }
 
         QueueDel(ent);

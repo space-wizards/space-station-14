@@ -4,6 +4,7 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems.Body;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
@@ -268,12 +269,13 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.NotNull(hands.ActiveHandEntity);
                 }
 
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySys = EntitySystem.Get<SharedBodySystem>();
+                var legs = bodySys.GetPartsOfType(human, BodyPartType.Leg, body);
 
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    bodySys.RemovePart(human, leg, body);
                 }
             });
 

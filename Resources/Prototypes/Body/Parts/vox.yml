@@ -25,12 +25,12 @@
       partType: Torso
       size: 14
       compatibility: Biological
-      mechanisms:
-        - OrganHumanHeart
-        - OrganVoxLungs
-        - OrganHumanStomach
-        - OrganHumanLiver
-        - OrganHumanKidneys
+      initialMechanisms:
+      - OrganHumanHeart
+      - OrganVoxLungs
+      - OrganHumanStomach
+      - OrganHumanLiver
+      - OrganHumanKidneys
       # TODO BODY DettachableDamageableComponent?
 #    criticalThreshold: 100
 #    deadThreshold: 150
@@ -51,10 +51,9 @@
       partType: Head
       size: 7
       compatibility: Biological
-      vital: true
-      mechanisms:
-        - OrganHumanBrain
-        - OrganHumanEyes
+      initialMechanisms:
+      - OrganHumanBrain
+      - OrganHumanEyes
     #    criticalThreshold: 50
     #    deadThreshold: 120
     - type: Input

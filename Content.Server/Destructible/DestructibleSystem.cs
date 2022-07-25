@@ -11,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Destructible;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Destructible
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
+        [Dependency] public readonly BodySystem BodySystem = default!;
 
         public override void Initialize()
         {

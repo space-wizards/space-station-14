@@ -225,6 +225,7 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
+  - type: FallDownNoLegs
   - type: Damageable
     damageContainer: Biological
   - type: ThermalRegulator

@@ -13,20 +13,20 @@
   name: "slime torso"
   parent: PartSlime
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "torso_m"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "torso_m"
-    - type: BodyPart
-      partType: Torso
-      size: 14
-      compatibility: Slime
-      mechanisms:
-        - SentientSlimeCore
-        - OrganSlimeLungs
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: "torso_m"
+  - type: Icon
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: "torso_m"
+  - type: BodyPart
+    partType: Torso
+    size: 14
+    compatibility: Slime
+    initialMechanisms:
+    - SentientSlimeCore
+    - OrganSlimeLungs
 #    criticalThreshold: 100
 #    deadThreshold: 150
 

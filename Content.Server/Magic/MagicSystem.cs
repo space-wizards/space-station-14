@@ -1,5 +1,6 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Decals;
 using Content.Server.DoAfter;
@@ -39,6 +40,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     public override void Initialize()
     {
@@ -280,7 +282,7 @@ public sealed class MagicSystem : EntitySystem
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
-        var ents = body.Gib(true);
+        var ents = _bodySystem.Gib(ev.Target, true, body);
 
         if (!ev.DeleteNonBrainParts)
             return;
@@ -288,7 +290,7 @@ public sealed class MagicSystem : EntitySystem
         foreach (var part in ents)
         {
             // just leaves a brain and clothes
-            if ((HasComp<BodyPartComponent>(part) || HasComp<MechanismComponent>(part))
+            if ((HasComp<SharedBodyPartComponent>(part) || HasComp<MechanismComponent>(part))
                 && !HasComp<BrainComponent>(part))
             {
                 QueueDel(part);

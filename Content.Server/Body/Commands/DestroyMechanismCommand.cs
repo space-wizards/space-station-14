@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Part;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Random;
@@ -51,7 +52,8 @@ namespace Content.Server.Body.Commands
             {
                 if (mechanism.Name.ToLowerInvariant() == mechanismName)
                 {
-                    part.DeleteMechanism(mechanism);
+                    var bodyPartSys = EntitySystem.Get<SharedBodyPartSystem>();
+                    bodyPartSys.DeleteMechanism(attached, mechanism, part);
                     shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");
                     return;
                 }

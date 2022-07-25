@@ -6,6 +6,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Actions;
+using Content.Shared.Body.Events;
 using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;

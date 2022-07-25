@@ -11,7 +11,7 @@ using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Item;
 using Content.Shared.Emoting;
-using Content.Shared.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Server.Mind.Components;
 using Content.Server.Ghost.Components;
@@ -25,6 +25,7 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.IdentityManagement;
+using Content.Server.Body.Systems;
 
 namespace Content.Server.Drone
 {
@@ -37,6 +38,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {
@@ -91,7 +93,7 @@ namespace Content.Server.Drone
         {
             if (args.Component.IsDead())
             {
-                var body = Comp<SharedBodyComponent>(uid); //There's no way something can have a mobstate but not a body...
+                var body = Comp<BodyComponent>(uid); //There's no way something can have a mobstate but not a body...
 
                 foreach (var item in drone.ToolUids)
                 {
@@ -105,7 +107,7 @@ namespace Content.Server.Drone
                     }
                 }
 
-                body.Gib();
+                _bodySystem.Gib(uid, false, body);
                 Del(uid);
             }
         }

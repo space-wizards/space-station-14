@@ -1,4 +1,3 @@
-using Content.Shared.Body.Part;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
@@ -80,44 +79,6 @@ namespace Content.Shared.CharacterAppearance.Systems
                 return;
 
             UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender, state.Species, state.Age);
-        }
-
-        // Scaffolding until Body is moved to ECS.
-        public void BodyPartAdded(EntityUid uid, BodyPartAddedEventArgs args)
-        {
-            RaiseLocalEvent(new HumanoidAppearanceBodyPartAddedEvent(uid, args));
-        }
-
-        public void BodyPartRemoved(EntityUid uid, BodyPartRemovedEventArgs args)
-        {
-            RaiseLocalEvent(new HumanoidAppearanceBodyPartRemovedEvent(uid, args));
-        }
-
-        // Scaffolding until Body is moved to ECS.
-        [Serializable, NetSerializable]
-        public sealed class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
-        {
-            public EntityUid Uid { get; }
-            public BodyPartAddedEventArgs Args { get; }
-
-            public HumanoidAppearanceBodyPartAddedEvent(EntityUid uid, BodyPartAddedEventArgs args)
-            {
-                Uid = uid;
-                Args = args;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public sealed class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
-        {
-            public EntityUid Uid { get; }
-            public BodyPartRemovedEventArgs Args { get; }
-
-            public HumanoidAppearanceBodyPartRemovedEvent(EntityUid uid, BodyPartRemovedEventArgs args)
-            {
-                Uid = uid;
-                Args = args;
-            }
         }
 
         [Serializable, NetSerializable]

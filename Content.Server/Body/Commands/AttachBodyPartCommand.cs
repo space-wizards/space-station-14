@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Body;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -89,13 +90,14 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            if (body.HasPart(part))
+            var bodySys = EntitySystem.Get<SharedBodySystem>();
+            if (bodySys.HasPart(entity, part, body))
             {
                 shell.WriteLine($"Body part {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
                 return;
             }
 
-            body.SetPart($"AttachBodyPartVerb-{partUid}", part);
+            bodySys.AddPart(entity, $"AttachBodyPartVerb-{partUid}", part, body);
         }
     }
 }

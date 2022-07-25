@@ -1,9 +1,10 @@
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
@@ -34,6 +35,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -245,9 +247,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
 
         if (!HasComp<ClimbingComponent>(user)
-            || !TryComp(user, out SharedBodyComponent? body)
-            || !body.HasPartOfType(BodyPartType.Leg)
-            || !body.HasPartOfType(BodyPartType.Foot))
+            || !TryComp(user, out BodyComponent? body)
+            || !_bodySystem.HasPartOfType(user, BodyPartType.Leg, body)
+            || !_bodySystem.HasPartOfType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;

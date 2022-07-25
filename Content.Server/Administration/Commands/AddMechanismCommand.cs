@@ -1,6 +1,6 @@
-using Content.Server.Body.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems.Part;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -33,11 +33,12 @@ namespace Content.Server.Administration.Commands
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var bodyPartSys = EntitySystem.Get<SharedBodyPartSystem>();
 
-            if (entityManager.TryGetComponent<BodyPartComponent>(storageUid, out var storage)
-                && entityManager.TryGetComponent<MechanismComponent>(entityUid, out var bodyPart))
+            if (entityManager.TryGetComponent<SharedBodyPartComponent>(storageUid, out var storage)
+                && entityManager.TryGetComponent<MechanismComponent>(entityUid, out var mechanism))
             {
-                if (storage.TryAddMechanism(bodyPart))
+                if (bodyPartSys.TryAddMechanism(storageUid, mechanism, false, storage))
                 {
                     shell.WriteLine($@"Added {entityUid} to {storageUid}.");
                 }

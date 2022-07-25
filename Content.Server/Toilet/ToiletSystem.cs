@@ -1,3 +1,5 @@
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Buckle.Components;
 using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
@@ -5,7 +7,6 @@ using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
 using Content.Shared.Audio;
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
@@ -26,6 +27,7 @@ namespace Content.Server.Toilet
         [Dependency] private readonly SecretStashSystem _secretStash = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {
@@ -45,8 +47,8 @@ namespace Content.Server.Toilet
             if (args.Handled) return;
 
             // Check that victim has a head
-            if (EntityManager.TryGetComponent<SharedBodyComponent>(args.Victim, out var body) &&
-                body.HasPartOfType(BodyPartType.Head))
+            if (EntityManager.TryGetComponent<BodyComponent>(args.Victim, out var body) &&
+                _bodySystem.HasPartOfType(args.Victim, BodyPartType.Head, body))
             {
                 var othersMessage = Loc.GetString("toilet-component-suicide-head-message-others",
                     ("victim", Identity.Entity(args.Victim, EntityManager)), ("owner", uid));

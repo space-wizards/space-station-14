@@ -11,6 +11,7 @@ using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.IdentityManagement;
+using System.Linq;
 
 namespace Content.Server.Medical
 {
@@ -30,7 +31,7 @@ namespace Content.Server.Medical
         {
             /// Main requirement: You have a stomach
             var stomachList = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(uid);
-            if (stomachList.Count == 0)
+            if (stomachList.Count() == 0)
             {
                 return;
             }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -26,7 +26,6 @@ using Content.Server.Tabletop;
 using Content.Server.Tabletop.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -56,6 +55,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly BodyPartSystem _bodyPartSystem = default!;
     [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
@@ -99,9 +99,9 @@ public sealed partial class AdminVerbSystem
                         4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                     CancellationToken.None);
 
-                if (TryComp(args.Target, out SharedBodyComponent? body))
+                if (TryComp(args.Target, out BodyComponent? body))
                 {
-                    body.Gib();
+                    _bodySystem.Gib(args.Target, false, body);
                 }
             },
             Impact = LogImpact.Extreme,
@@ -308,10 +308,11 @@ public sealed partial class AdminVerbSystem
                     var baseXform = Transform(args.Target);
                     foreach (var (xform, mechanism) in organs)
                     {
-                        if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner))
+                        
+                        if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner) || mechanism.Part == null)
                             continue;
 
-                        mechanism.Part?.RemoveMechanism(mechanism);
+                        _bodyPartSystem.RemoveMechanism(mechanism.Part.Owner, mechanism);
                         xform.Coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f,0.75f));
                     }
 
@@ -333,9 +334,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in body.GetPartsOfType(BodyPartType.Hand))
+                    foreach (var part in _bodySystem.GetPartsOfType(args.Target, BodyPartType.Hand, body))
                     {
-                        body.RemovePart(part);
+                        _bodySystem.RemovePart(args.Target, part, body);
                         Transform(part.Owner).Coordinates = baseXform.Coordinates;
                     }
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-remove-hands-self"), args.Target,
@@ -356,9 +357,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    foreach (var part in body.GetPartsOfType(BodyPartType.Hand))
+                    foreach (var part in _bodySystem.GetPartsOfType(args.Target, BodyPartType.Hand, body))
                     {
-                        body.RemovePart(part);
+                        _bodySystem.RemovePart(args.Target, part, body);
                         Transform(part.Owner).Coordinates = baseXform.Coordinates;
                         break;
                     }

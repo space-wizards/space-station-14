@@ -10,6 +10,9 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
+using Content.Shared.Body.Part;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -57,6 +60,8 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, PullStartedMessage>(HandlePullStarted);
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
+            SubscribeLocalEvent<HandsComponent, PartAddedToBodyEvent>(OnPartAdded);
+            SubscribeLocalEvent<HandsComponent, PartRemovedFromBodyEvent>(OnPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
 
@@ -180,6 +185,42 @@ namespace Content.Server.Hands.Systems
                 break;
             }
         }
+        #endregion
+
+        #region body
+
+        private void OnPartAdded(EntityUid uid, HandsComponent component, PartAddedToBodyEvent args)
+        {
+            if (!TryComp<SharedBodyPartComponent>(args.BodyPartUid, out var part))
+                return;
+
+            if (part.PartType != BodyPartType.Hand)
+                return;
+
+            // If this annoys you, which it should.
+            // Ping Smugleaf.
+            var location = part.Symmetry switch
+            {
+                BodyPartSymmetry.None => HandLocation.Middle,
+                BodyPartSymmetry.Left => HandLocation.Left,
+                BodyPartSymmetry.Right => HandLocation.Right,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            AddHand(uid, args.SlotId, location);
+        }
+
+        private void OnPartRemoved(EntityUid uid, HandsComponent component, PartRemovedFromBodyEvent args)
+        {
+            if (!TryComp<SharedBodyPartComponent>(args.BodyPartUid, out var part))
+                return;
+
+            if (part.PartType != BodyPartType.Hand)
+                return;
+
+            RemoveHand(uid, args.SlotId);
+        }
+
         #endregion
 
         #region interactions

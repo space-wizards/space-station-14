@@ -1,6 +1,7 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
+using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
@@ -17,6 +18,7 @@ public sealed class SharpSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     public override void Initialize()
     {
@@ -90,9 +92,9 @@ public sealed class SharpSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
             popupEnt, Filter.Entities(ev.User), PopupType.LargeCaution);
 
-        if (TryComp<SharedBodyComponent>(ev.Entity, out var body))
+        if (TryComp<BodyComponent>(ev.Entity, out var body))
         {
-            body.Gib();
+            _bodySystem.Gib(ev.Entity, false, body);
         }
         else
         {

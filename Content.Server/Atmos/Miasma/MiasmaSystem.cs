@@ -3,12 +3,12 @@ using Content.Shared.Damage;
 using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Systems;
-using Content.Server.Body.Components;
 using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Content.Shared.Body.Events;
 
 namespace Content.Server.Atmos.Miasma
 {

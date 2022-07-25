@@ -13,21 +13,21 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrainComponent, AddedToBodyEvent>((uid, _, args) => HandleMind((args.Body).Owner, uid));
-            SubscribeLocalEvent<BrainComponent, AddedToPartEvent>((uid, _, args) => HandleMind((args.Part).Owner, uid));
-            SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind((args.Body).Owner, uid));
-            SubscribeLocalEvent<BrainComponent, RemovedFromBodyEvent>(OnRemovedFromBody);
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartEvent>((uid, _, args) => HandleMind(uid, (args.Old).Owner));
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind((args.OldBody).Owner, uid));
+            SubscribeLocalEvent<BrainComponent, MechanismAddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
+            SubscribeLocalEvent<BrainComponent, MechanismAddedToPartEvent>((uid, _, args) => HandleMind(args.Part, uid));
+            SubscribeLocalEvent<BrainComponent, MechanismAddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
+            SubscribeLocalEvent<BrainComponent, MechanismRemovedFromBodyEvent>(OnRemovedFromBody);
+            SubscribeLocalEvent<BrainComponent, MechanismRemovedFromPartEvent>((uid, _, args) => HandleMind(uid, args.Part));
+            SubscribeLocalEvent<BrainComponent, MechanismRemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
         }
 
-        private void OnRemovedFromBody(EntityUid uid, BrainComponent component, RemovedFromBodyEvent args)
+        private void OnRemovedFromBody(EntityUid uid, BrainComponent component, MechanismRemovedFromBodyEvent args)
         {
             // This one needs to be special, okay?
             if (!EntityManager.TryGetComponent(uid, out MechanismComponent? mech))
                 return;
 
-            HandleMind((mech.Part!).Owner, (args.Old).Owner);
+            HandleMind((mech.Part!).Owner, args.Body);
         }
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)

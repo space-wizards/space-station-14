@@ -1,4 +1,4 @@
-using Content.Shared.Body.Components;
+using Content.Server.Body.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -11,9 +11,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         public void Execute(EntityUid owner, DestructibleSystem system)
         {
-            if (system.EntityManager.TryGetComponent(owner, out SharedBodyComponent? body))
+            if (system.EntityManager.TryGetComponent(owner, out BodyComponent? body))
             {
-                body.Gib(_recursive);
+                system.BodySystem.Gib(owner, _recursive, body);
             }
         }
     }

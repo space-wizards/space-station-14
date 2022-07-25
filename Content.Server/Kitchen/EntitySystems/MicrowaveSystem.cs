@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Popups;
+using Content.Shared.Body.Systems.Body;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -19,6 +20,7 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class MicrowaveSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedBodySystem _bodySystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -38,14 +40,14 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (TryComp<SharedBodyComponent?>(victim, out var body))
             {
-                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+                var headSlots = _bodySystem.GetSlotsOfType(victim, BodyPartType.Head, body);
 
                 foreach (var slot in headSlots)
                 {
                     var part = slot.Part;
 
                     if (part == null ||
-                        !body.TryDropPart(slot, out var dropped))
+                        !_bodySystem.TryRemovePart(victim, slot, out var dropped, body))
                     {
                         continue;
                     }

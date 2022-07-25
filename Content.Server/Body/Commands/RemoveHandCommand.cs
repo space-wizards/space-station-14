@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems.Body;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Random;
@@ -40,7 +41,8 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            var hand = body.GetPartsOfType(BodyPartType.Hand).FirstOrDefault();
+            var bodySys = EntitySystem.Get<SharedBodySystem>();
+            var hand = bodySys.GetPartsOfType(player.AttachedEntity.Value, BodyPartType.Hand, body).FirstOrDefault();
 
             if (hand == null)
             {
@@ -48,7 +50,7 @@ namespace Content.Server.Body.Commands
             }
             else
             {
-                body.RemovePart(hand);
+                bodySys.RemovePart(player.AttachedEntity.Value, hand, body);
             }
         }
     }

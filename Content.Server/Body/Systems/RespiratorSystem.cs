@@ -12,6 +12,7 @@ using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.Body.Systems
 {
@@ -109,8 +110,8 @@ namespace Content.Server.Body.Systems
             var ratio = (Atmospherics.BreathVolume / ev.Gas.Volume);
             var actualGas = ev.Gas.RemoveRatio(ratio);
 
-            var lungRatio = 1.0f / organs.Count;
-            var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
+            var lungRatio = 1.0f / organs.Count();
+            var gas = organs.Count() == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
             foreach (var (lung, _) in organs)
             {
                 // Merge doesn't remove gas from the giver.

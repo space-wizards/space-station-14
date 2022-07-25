@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Components;
 
 namespace Content.Shared.Body.Events
 {
@@ -8,11 +8,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body.
     /// </summary>
-    public sealed class AddedToBodyEvent : EntityEventArgs
+    public sealed class MechanismAddedToBodyEvent : EntityEventArgs
     {
-        public SharedBodyComponent Body;
+        public EntityUid Body;
 
-        public AddedToBodyEvent(SharedBodyComponent body)
+        public MechanismAddedToBodyEvent(EntityUid body)
         {
             Body = body;
         }
@@ -21,11 +21,11 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part.
     /// </summary>
-    public sealed class AddedToPartEvent : EntityEventArgs
+    public sealed class MechanismAddedToPartEvent : EntityEventArgs
     {
-        public SharedBodyPartComponent Part;
+        public EntityUid Part;
 
-        public AddedToPartEvent(SharedBodyPartComponent part)
+        public MechanismAddedToPartEvent(EntityUid part)
         {
             Part = part;
         }
@@ -34,12 +34,12 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is added to a body part within a body.
     /// </summary>
-    public sealed class AddedToPartInBodyEvent : EntityEventArgs
+    public sealed class MechanismAddedToPartInBodyEvent : EntityEventArgs
     {
-        public SharedBodyComponent Body;
-        public SharedBodyPartComponent Part;
+        public EntityUid Body;
+        public EntityUid Part;
 
-        public AddedToPartInBodyEvent(SharedBodyComponent body, SharedBodyPartComponent part)
+        public MechanismAddedToPartInBodyEvent(EntityUid body, EntityUid part)
         {
             Body = body;
             Part = part;
@@ -49,41 +49,41 @@ namespace Content.Shared.Body.Events
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body.
     /// </summary>
-    public sealed class RemovedFromBodyEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromBodyEvent : EntityEventArgs
     {
-        public SharedBodyComponent Old;
+        public EntityUid Body;
 
-        public RemovedFromBodyEvent(SharedBodyComponent old)
+        public MechanismRemovedFromBodyEvent(EntityUid body)
         {
-            Old = old;
+            Body = body;
         }
     }
 
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part.
     /// </summary>
-    public sealed class RemovedFromPartEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromPartEvent : EntityEventArgs
     {
-        public SharedBodyPartComponent Old;
+        public EntityUid Part;
 
-        public RemovedFromPartEvent(SharedBodyPartComponent old)
+        public MechanismRemovedFromPartEvent(EntityUid part)
         {
-            Old = old;
+            Part = part;
         }
     }
 
     /// <summary>
     ///     Raised on a mechanism when it is removed from a body part within a body.
     /// </summary>
-    public sealed class RemovedFromPartInBodyEvent : EntityEventArgs
+    public sealed class MechanismRemovedFromPartInBodyEvent : EntityEventArgs
     {
-        public SharedBodyComponent OldBody;
-        public SharedBodyPartComponent OldPart;
+        public EntityUid Body;
+        public EntityUid Part;
 
-        public RemovedFromPartInBodyEvent(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
+        public MechanismRemovedFromPartInBodyEvent(EntityUid body, EntityUid part)
         {
-            OldBody = oldBody;
-            OldPart = oldPart;
+            Body = body;
+            Part = part;
         }
     }
 }
