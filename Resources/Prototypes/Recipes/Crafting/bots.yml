@@ -1,4 +1,17 @@
 - type: construction
+  name: cleanbot
+  id: cleanbot
+  graph: CleanBot
+  startNode: start
+  targetNode: bot
+  category: Utilities
+  objectType: Item
+  description: This bot wanders around the station, mopping up any puddles it sees.
+  icon:
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+
+- type: construction
   name: honkbot
   id: honkbot
   graph: HonkBot

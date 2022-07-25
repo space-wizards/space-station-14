@@ -9,6 +9,7 @@ namespace Content.Server.Body.Systems;
 
 public sealed class LungSystem : EntitySystem
 {
+    [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -24,7 +25,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(EntityUid uid, BreathToolComponent component, GotUnequippedEvent args)
     {
-        component.DisconnectInternals();
+        _atmosphereSystem.DisconnectInternals(component);
     }
 
     private void OnGotEquipped(EntityUid uid, BreathToolComponent component, GotEquippedEvent args)
@@ -36,7 +37,7 @@ public sealed class LungSystem : EntitySystem
         if (TryComp(args.Equipee, out InternalsComponent? internals))
         {
             component.ConnectedInternalsEntity = args.Equipee;
-            internals.ConnectBreathTool(uid);
+            _internals.ConnectBreathTool(internals, uid);
         }
     }
 

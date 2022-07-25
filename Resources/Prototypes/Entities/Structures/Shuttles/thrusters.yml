@@ -16,8 +16,8 @@
       rotateWhileAnchored: true
     - type: Thruster
       damage:
-        groups:
-          Burn: 40
+        types:
+          Heat: 40
     - type: InteractionOutline
     - type: Sprite
       netsync: false

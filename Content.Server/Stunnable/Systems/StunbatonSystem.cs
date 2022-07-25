@@ -14,6 +14,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
+using Content.Shared.Toggleable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -87,13 +88,11 @@ namespace Content.Server.Stunnable.Systems
             if (!comp.Activated)
                 return;
 
-            // TODO stunbaton visualizer
-            if (TryComp<SpriteComponent>(comp.Owner, out var sprite) &&
-                TryComp<SharedItemComponent>(comp.Owner, out var item))
-            {
+            if (TryComp<SharedItemComponent>(comp.Owner, out var item))
                 item.EquippedPrefix = "off";
-                sprite.LayerSetState(0, "stunbaton_off");
-            }
+
+            if (TryComp(comp.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(ToggleVisuals.Toggled, false);
 
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
@@ -113,12 +112,12 @@ namespace Content.Server.Stunnable.Systems
                 return;
             }
 
-            if (EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite) &&
-                EntityManager.TryGetComponent<SharedItemComponent?>(comp.Owner, out var item))
-            {
+
+            if (TryComp<SharedItemComponent>(comp.Owner, out var item))
                 item.EquippedPrefix = "on";
-                sprite.LayerSetState(0, "stunbaton_on");
-            }
+
+            if (TryComp(comp.Owner, out AppearanceComponent? appearance))
+                appearance.SetData(ToggleVisuals.Toggled, true);
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;

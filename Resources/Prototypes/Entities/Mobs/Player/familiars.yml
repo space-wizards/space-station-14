@@ -43,9 +43,9 @@
       types:
         Piercing: 8
         Slash: 7
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: AiFactionTag

@@ -12,9 +12,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     # - Clothing
     - Idle
@@ -157,9 +157,9 @@
   parent: SimpleSpaceMobBase
   suffix: AI
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     # - Hunger TODO: eating on the floor and fix weird AI endless stomach
