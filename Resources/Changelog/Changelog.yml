@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: Added suppermatter. Goes great with a glass of syndicate bomb!, type: Add}
-  id: 1508
-  time: '2022-05-12T09:44:17.0000000+00:00'
 - author: HoofedEar
   changes:
   - {message: Cargo ordering computers and telepads now use machine linking. Be sure
@@ -2944,3 +2939,9 @@ Entries:
   - {message: Gas tank internals now have an alert, type: Add}
   id: 2007
   time: '2022-07-25T04:42:25.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: You can no longer clip people into walls with riot shields., type: Fix}
+  - {message: You can no longer hide behind doors while using a shield., type: Fix}
+  id: 2008
+  time: '2022-07-25T04:54:18.0000000+00:00'
