@@ -83,6 +83,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
     }
+
     private void OnDeadLoocEnabledChanged(bool val)
     {
         if (_deadLoocEnabled == val) return;
