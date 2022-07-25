@@ -35,7 +35,9 @@ namespace Content.Shared.Gravity
             }
 
             // Something holding us down
-            if (_inventory.TryGetSlotEntity(uid, "shoes", out var ent))
+            // If the planet has gravity component and no gravity it will still give gravity
+            // If there's no gravity comp at all (i.e. space) then they don't work.
+            if (gravity != null && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
             {
                 if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
                     return false;
