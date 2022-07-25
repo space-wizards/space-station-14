@@ -1,10 +1,7 @@
 ﻿using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Parallax;
 
@@ -28,7 +25,7 @@ public sealed class ParallaxControl : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        foreach (var layer in _parallaxManager.ParallaxLayers)
+        foreach (var layer in _parallaxManager.GetParallaxLayers("Default"))
         {
             var tex = layer.Texture;
             var texSize = tex.Size * layer.Config.Scale.Floored();
