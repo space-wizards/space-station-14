@@ -27,7 +27,7 @@ namespace Content.Server.Zombies
         [ViewVariables]
         public float MinZombieInfectionChance = 0.1f;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float ZombieMovementSpeedDebuff = 0.75f;
 
         /// <summary>
