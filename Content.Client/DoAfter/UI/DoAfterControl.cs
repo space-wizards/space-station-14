@@ -1,4 +1,5 @@
 using Content.Client.Resources;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Map;
@@ -8,8 +9,6 @@ namespace Content.Client.DoAfter.UI;
 
 public sealed class DoAfterControl : PanelContainer
 {
-    [Dependency] private
-
     public float Ratio
     {
         get => _bar.Ratio;
@@ -23,8 +22,6 @@ public sealed class DoAfterControl : PanelContainer
     }
 
     private DoAfterBar _bar;
-
-    public EntityCoordinates Coordinates;
 
     public DoAfterControl()
     {
@@ -40,13 +37,9 @@ public sealed class DoAfterControl : PanelContainer
         });
 
         _bar = new DoAfterBar();
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        var screenCoordinates = _eyeManager.CoordinatesToScreen()
-        LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
+        AddChild(_bar);
+        VerticalAlignment = VAlignment.Bottom;
+        _bar.Measure(Vector2.Infinity);
+        Measure(Vector2.Infinity);
     }
 }

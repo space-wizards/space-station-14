@@ -2,9 +2,7 @@ using Content.Shared.DoAfter;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.DoAfter.UI
 {
@@ -19,7 +17,7 @@ namespace Content.Client.DoAfter.UI
         // We'll store cancellations for a little bit just so we can flash the graphic to indicate it's cancelled
         private readonly Dictionary<byte, TimeSpan> _cancelledDoAfters = new();
 
-        public EntityUid AttachedEntity { get; set; }
+        public EntityUid? AttachedEntity { get; set; }
 
         public DoAfterGui()
         {
@@ -28,8 +26,6 @@ namespace Content.Client.DoAfter.UI
             IoCManager.InjectDependencies(this);
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
             SeparationOverride = 0;
-
-            LayoutContainer.SetGrowVertical(this, LayoutContainer.GrowDirection.Begin);
         }
 
         protected override void Dispose(bool disposing)
@@ -50,17 +46,15 @@ namespace Content.Client.DoAfter.UI
         /// <summary>
         ///     Add the necessary control for a DoAfter progress bar.
         /// </summary>
-        /// <param name="message"></param>
         public void AddDoAfter(ClientDoAfter message)
         {
             if (_doAfterControls.ContainsKey(message.ID))
                 return;
 
             var doAfterBar = new DoAfterControl();
-            doAfterBar.Coordinates = message.UserGrid;
-
             AddChild(doAfterBar);
             _doAfterControls.Add(message.ID, doAfterBar);
+            Measure(Vector2.Infinity);
         }
 
         // NOTE THAT THE BELOW ONLY HANDLES THE UI SIDE
@@ -78,7 +72,6 @@ namespace Content.Client.DoAfter.UI
             RemoveChild(control);
             control.DisposeAllChildren();
             _doAfterControls.Remove(id);
-
             _cancelledDoAfters.Remove(id);
         }
 
@@ -106,32 +99,29 @@ namespace Content.Client.DoAfter.UI
         {
             base.FrameUpdate(args);
 
-            if (!AttachedEntity.IsValid() ||
-                !_entityManager.TryGetComponent(AttachedEntity, out DoAfterComponent? doAfterComponent))
+            if (!_entityManager.TryGetComponent(AttachedEntity, out DoAfterComponent? doAfterComponent))
             {
                 Visible = false;
                 return;
             }
 
             var doAfters = doAfterComponent.DoAfters;
+
             if (doAfters.Count == 0)
             {
                 Visible = false;
                 return;
             }
 
-            var transform = _entityManager.GetComponent<TransformComponent>(AttachedEntity);
+            var transform = _entityManager.GetComponent<TransformComponent>(AttachedEntity.Value);
 
             if (_eyeManager.CurrentMap != transform.MapID || !transform.Coordinates.IsValid(_entityManager))
             {
                 Visible = false;
                 return;
             }
-            else
-            {
-                Visible = true;
-            }
 
+            Visible = true;
             var currentTime = _gameTiming.CurTime;
             var toRemove = new List<byte>();
 
@@ -172,6 +162,15 @@ namespace Content.Client.DoAfter.UI
             {
                 RemoveDoAfter(id);
             }
+
+            UpdatePosition(transform);
+        }
+
+        public void UpdatePosition(TransformComponent xform)
+        {
+            var screenCoordinates = _eyeManager.CoordinatesToScreen(xform.Coordinates);
+            var position = screenCoordinates.Position / UIScale - DesiredSize / 2f;
+            LayoutContainer.SetPosition(this, position - new Vector2(0, 40f));
         }
     }
 }
