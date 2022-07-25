@@ -163,7 +163,7 @@
   name: medibot
   description: No substitute for a doctor, but better than nothing.
   components:
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - MediBot
   - type: Medibot
