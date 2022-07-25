@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
-      salvage crate or traitor uplink.', type: Add}
-  id: 1511
-  time: '2022-05-12T10:53:01.0000000+00:00'
 - author: Ripmorld
   changes:
   - {message: Pie will now transfer a small part of their solutions into whoever was
@@ -2944,3 +2938,8 @@ Entries:
   - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
   id: 2010
   time: '2022-07-25T05:47:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fixed gravity mispredict., type: Fix}
+  id: 2011
+  time: '2022-07-25T06:55:25.0000000+00:00'
