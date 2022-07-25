@@ -8,6 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedVendingMachineComponent))]
     public sealed class VendingMachineComponent : SharedVendingMachineComponent
     {
         public bool Ejecting;

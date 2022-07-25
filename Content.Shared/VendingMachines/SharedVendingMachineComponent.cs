@@ -5,9 +5,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.VendingMachines
 {
-    [Virtual]
     [NetworkedComponent()]
-    public class SharedVendingMachineComponent : Component
+    public abstract class SharedVendingMachineComponent : Component
     {
         [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
         public string PackPrototypeId = string.Empty;
