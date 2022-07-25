@@ -1,9 +1,4 @@
 Entries:
-- author: Daemon
-  changes:
-  - {message: Added the salami lid (won't fit), type: Add}
-  id: 1510
-  time: '2022-05-12T10:24:49.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Cat Ears have arrived. Gives you the UwUs. Find it in a maint spawner,
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Nukie planet now has its own parallax., type: Add}
   id: 2009
   time: '2022-07-25T05:10:23.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Reptilians have two new markings: Axolotl and cobra hood!', type: Add}
+  id: 2010
+  time: '2022-07-25T05:47:04.0000000+00:00'
