@@ -12,17 +12,16 @@ namespace Content.Client.MobState;
 
 public sealed partial class MobStateSystem : SharedMobStateSystem
 {
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     private Overlays.DamageOverlay _overlay = default!;
-
-    public const short Levels = 7;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _overlay = new Overlays.DamageOverlay();
-        IoCManager.Resolve<IOverlayManager>().AddOverlay(_overlay);
+        _overlayManager.AddOverlay(_overlay);
 
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetach);
@@ -32,7 +31,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
     public override void Shutdown()
     {
         base.Shutdown();
-        IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_overlay);
+        _overlayManager.RemoveOverlay(_overlay);
     }
 
     private void OnMobHandleState(EntityUid uid, MobStateComponent component, ref ComponentHandleState args)
@@ -56,11 +55,21 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
     {
         if (TryComp<MobStateComponent>(ev.Entity, out var mobState) && TryComp<DamageableComponent>(ev.Entity, out var damageable))
         {
+            _overlay.DeadLevel = 0f;
             SetLevel(mobState, damageable.TotalDamage);
+        }
+        else
+        {
+            ClearOverlay();
         }
     }
 
     private void OnPlayerDetach(PlayerDetachedEvent ev)
+    {
+        ClearOverlay();
+    }
+
+    private void ClearOverlay()
     {
         _overlay.State = DamageState.Alive;
         _overlay.BruteLevel = 0f;
@@ -80,10 +89,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
         if (_playerManager.LocalPlayer?.ControlledEntity != uid) return;
 
-        _overlay.State = DamageState.Alive;
-        _overlay.BruteLevel = 0f;
-        _overlay.OxygenLevel = 0f;
-        _overlay.CritLevel = 0f;
+        ClearOverlay();
 
         if (!TryComp<DamageableComponent>(uid, out var damageable))
             return;

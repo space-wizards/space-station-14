@@ -4,8 +4,8 @@
   animationDuration: 1.3
   spriteName: seeds
   startingInventory:
-    AloeSeeds: 5
-    AmbrosiaVulgarisSeeds: 5
+    AloeSeeds: 3
+    AmbrosiaVulgarisSeeds: 3
     AppleSeeds: 5
     BananaSeeds: 5
     CarrotSeeds: 5
@@ -13,12 +13,12 @@
     ChiliSeeds: 5
     CornSeeds: 5
     EggplantSeeds: 5
-    GalaxythistleSeeds: 5
+    GalaxythistleSeeds: 3
 #   LemonSeeds: 5 No recipes
-    LingzhiSeeds: 5
+    LingzhiSeeds: 3
 #   OatSeeds: 5 No recipes
     OnionSeeds: 5
-    PoppySeeds: 5
+    PoppySeeds: 3
     PotatoSeeds: 5
     SugarcaneSeeds: 5
     TomatoSeeds: 5

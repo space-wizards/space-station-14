@@ -27,7 +27,9 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
 using Content.Shared.Zombies;
+using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
+using Content.Server.IdentityManagement;
 
 namespace Content.Server.Zombies
 {
@@ -45,6 +47,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
+        [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -75,7 +78,7 @@ namespace Content.Server.Zombies
         /// <remarks>
         ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
-        ///     attempted to label everything thouroughly for your sanity. I have attempted to 
+        ///     attempted to label everything thouroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
         ///     -emo
         /// </remarks>
@@ -140,10 +143,10 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target));
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target), PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
-            if (!HasComp<SharedDummyInputMoverComponent>(target)) //this component is cursed and fucks shit up
+            if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
             //Make the zombie not die in the cold. Good for space zombies
@@ -157,6 +160,8 @@ namespace Content.Server.Zombies
             //gives it the funny "Zombie ___" name.
             if (TryComp<MetaDataComponent>(target, out var meta))
                 meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
+
+            _identity.QueueIdentityUpdate(target);
 
             //He's gotta have a mind
             var mindcomp = EnsureComp<MindComponent>(target);
@@ -178,7 +183,7 @@ namespace Content.Server.Zombies
             }
 
             ///Goes through every hand, drops the items in it, then removes the hand
-            ///may become the source of various bugs. 
+            ///may become the source of various bugs.
             foreach (var hand in _sharedHands.EnumerateHands(target))
             {
                 _sharedHands.SetActiveHand(target, hand);

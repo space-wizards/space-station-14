@@ -2,9 +2,9 @@
   id: packedstation
   mapName: 'Packedstation'
   mapPath: /Maps/packedstation.yml
-  minPlayers: 15
-  maxPlayers: 55
-  votable: false
+  minPlayers: 0
+  maxPlayers: 35
+  votable: true
   stations:
     Packed:
       mapNameTemplate: '{0} Packedstation {1}'
@@ -14,7 +14,7 @@
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 2, 3 ]
+        CargoTechnician: [ 2, 2 ]
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
         Botanist: [ 2, 2 ]
@@ -25,16 +25,23 @@
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 4, 6 ]
+        StationEngineer: [ 3, 3 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 3, 4 ]
+        MedicalDoctor: [ 3, 3 ]
         Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
-        Scientist: [ 3, 4 ]
+        Scientist: [ 3, 3 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 2, 3 ]
+        SecurityOfficer: [ 3, 3 ]
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Lawyer: [ 1, 2 ]
-        Musician: [1, 1]
+        Lawyer: [ 2, 2 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        Detective: [ 1, 1 ]
+        TechnicalAssistant: [ 2, 2 ]
+        MedicalIntern: [ 2, 2 ]
+        ServiceWorker: [ 2, 2 ]
+        SecurityCadet: [ 2, 2 ]
+        SalvageSpecialist: [ 2, 2 ]

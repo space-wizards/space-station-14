@@ -554,7 +554,7 @@
 - type: entity
   parent: PassengerPDA
   id: CentcomPDA
-  name: centcom PDA
+  name: CentCom PDA
   description: Colored the numbing grey of bureaucracy.
   components:
   - type: PDA

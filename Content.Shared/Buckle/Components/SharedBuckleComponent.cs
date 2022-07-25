@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
+using Content.Shared.Standing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -8,6 +9,8 @@ namespace Content.Shared.Buckle.Components
     [NetworkedComponent()]
     public abstract class SharedBuckleComponent : Component, IDraggable
     {
+        [Dependency] protected readonly IEntityManager EntMan = default!;
+
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="SharedStrapComponent"/>.
         /// </summary>
@@ -34,6 +37,33 @@ namespace Content.Shared.Buckle.Components
         bool IDraggable.Drop(DragDropEvent args)
         {
             return TryBuckle(args.User, args.Target);
+        }
+
+        /// <summary>
+        ///     Reattaches this entity to the strap, modifying its position and rotation.
+        /// </summary>
+        /// <param name="strap">The strap to reattach to.</param>
+        public void ReAttach(SharedStrapComponent strap)
+        {
+            var ownTransform = EntMan.GetComponent<TransformComponent>(Owner);
+            var strapTransform = EntMan.GetComponent<TransformComponent>(strap.Owner);
+
+            ownTransform.AttachParent(strapTransform);
+            ownTransform.LocalRotation = Angle.Zero;
+
+            switch (strap.Position)
+            {
+                case StrapPosition.None:
+                    break;
+                case StrapPosition.Stand:
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                    break;
+                case StrapPosition.Down:
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
+                    break;
+            }
+
+            ownTransform.LocalPosition = strap.BuckleOffset;
         }
     }
 

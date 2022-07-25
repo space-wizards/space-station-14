@@ -4,6 +4,7 @@
 
 - type: accessLevel
   id: Research
+  name: Research
 
 - type: accessGroup
   id: Research

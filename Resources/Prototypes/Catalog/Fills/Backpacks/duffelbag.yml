@@ -47,7 +47,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Bojevic bundle
+  name: Bulldog bundle
   description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
@@ -97,17 +97,15 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
-  description: "An old China-Lake grenade launcher bundled with 9 rounds of various destruction capability."
+  description: "An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability."
   components:
   - type: StorageFill
     contents:
       - id: WeaponLauncherChinaLake
       - id: GrenadeBlast
-        amount: 3
-      - id: GrenadeFlash
-        amount: 3
+        amount: 4
       - id: GrenadeFrag
-        amount: 3
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
@@ -130,7 +128,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: Centcom official costume duffel bag
+  name: CentCom official costume duffel bag
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. The headset comes without an encryption key."
   components:
   - type: StorageFill
@@ -196,6 +194,17 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateEVABundle
+  name: syndicate EVA bundle
+  description: "Contains the Syndicate approved EVA suit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: ClothingOuterHardsuitSyndicate
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."
@@ -229,6 +238,7 @@
       - id: SurvivalKnife
       - id: WeaponPistolViper
       - id: BaseUplinkRadio40TC
+      - id: PinpointerNuclear
 
 
 - type: entity
@@ -249,3 +259,4 @@
       - id: BoxSurvivalSyndicate
       - id: SurvivalKnife
       - id: WeaponPistolViper
+      - id: PinpointerNuclear

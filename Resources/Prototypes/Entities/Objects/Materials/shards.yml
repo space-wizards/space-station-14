@@ -19,6 +19,23 @@
         Slash: 5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+      - LowImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+      - ItemMask
   - type: DamageOtherOnHit
     damage:
       types:
@@ -39,12 +56,25 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: ShoesRequiredStepTrigger
+  - type: Slippery
+    slipSound:
+      path: /Audio/Effects/glass_step.ogg
+    launchForwardsMultiplier: 0
+  - type: TriggerOnStepTrigger
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   parent: ShardBase
   id: ShardGlass
   name: glass shard
-  description: A small piece of glass. It looks sharp, you wouldn't want to step on it barefoot.
+  description: A small piece of glass.
   components:
   - type: Sprite
     color: "#bbeeff"
@@ -53,12 +83,16 @@
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
 
 - type: entity
   parent: ShardBase
   id: ShardGlassReinforced
   name: reinforced glass shard
-  description: A small piece of reinforced glass. It looks sharp, you wouldn't want to step on it barefoot.
+  description: A small piece of reinforced glass.
   components:
   - type: Sprite
     color: "#96cdef"
@@ -67,13 +101,17 @@
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
-    - SheetSteel1
+    - PartRodMetal1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 10
 
 - type: entity
   parent: ShardBase
   id: ShardGlassPlasma
   name: plasma glass shard
-  description: A small piece of plasma glass. It looks sharp, you wouldn't want to step on it barefoot.
+  description: A small piece of plasma glass.
   components:
   - type: Sprite
     color: "#f3b489"
@@ -83,3 +121,7 @@
     refineResult:
     - SheetGlass1
     - SheetPlasma1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 15

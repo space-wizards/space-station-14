@@ -158,8 +158,9 @@
       layers:
         - state: pipeHalf
           sprite: Structures/Piping/Atmospherics/pipe.rsi
-          map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: injector
+          map: [ "enum.SubfloorLayers.FirstLayer" ]
         - state: injector-unshaded
           shader: unshaded
           map: [ "unshaded" ]
@@ -177,6 +178,10 @@
     - type: Construction
       graph: GasUnary
       node: outletinjector
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
+      - unshaded
 
 - type: entity
   parent: BaseMachinePowered

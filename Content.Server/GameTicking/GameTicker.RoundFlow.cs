@@ -156,11 +156,13 @@ namespace Content.Server.GameTicking
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
+#pragma warning disable RA0004
             RoundId = Task.Run(async () =>
             {
                 var server = await _db.AddOrGetServer(serverName);
                 return await _db.AddNewRound(server, playerIds);
             }).Result;
+#pragma warning restore RA0004
 
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
@@ -376,7 +378,7 @@ namespace Content.Server.GameTicking
                 ReqWindowAttentionAll();
             }
         }
-        
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -425,6 +427,7 @@ namespace Content.Server.GameTicking
             ClearGameRules();
 
             _addedGameRules.Clear();
+            _allPreviousGameRules.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
@@ -483,7 +486,7 @@ namespace Content.Server.GameTicking
                 if (!proto.GamePresets.Contains(Preset.ID)) continue;
 
                 if (proto.Message != null)
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playDefaultSound: true);
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(proto.Message), playSound: true);
 
                 if (proto.Sound != null)
                     SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
