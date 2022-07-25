@@ -778,7 +778,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
 
-
         /*
          * Entity Menu Grouping Types
          */
