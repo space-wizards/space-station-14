@@ -53,9 +53,9 @@ namespace Content.Server.Atmos.EntitySystems
                 new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
 
         /// <summary>
-        ///     Overlay update ticks per second.
+        ///     Overlay update interval, in seconds.
         /// </summary>
-        private float _updateCooldown;
+        private float _updateInterval;
 
         private int _thresholds;
 
@@ -78,7 +78,7 @@ namespace Content.Server.Atmos.EntitySystems
             _confMan.UnsubValueChanged(CCVars.GasOverlayThresholds, UpdateThresholds);
         }
 
-        private void UpdateTickRate(float value) => _updateCooldown = value > 0.0f ? 1 / value : float.MaxValue;
+        private void UpdateTickRate(float value) => _updateInterval = value > 0.0f ? 1 / value : float.MaxValue;
         private void UpdateThresholds(int value) => _thresholds = value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -192,8 +192,8 @@ namespace Content.Server.Atmos.EntitySystems
             base.Update(frameTime);
             AccumulatedFrameTime += frameTime;
 
-            if (AccumulatedFrameTime < _updateCooldown) return;
-            AccumulatedFrameTime -= _updateCooldown;
+            if (AccumulatedFrameTime < _updateInterval) return;
+            AccumulatedFrameTime -= _updateInterval;
 
             var curTick = _gameTiming.CurTick;
 
