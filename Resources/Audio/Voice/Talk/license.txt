@@ -14,6 +14,9 @@ speak_3.ogg
 speak_4_ask.ogg
 speak_4_exclaim.ogg
 speak_4.ogg
+lizard.ogg
+lizard_ask.ogg
+lizard_exclaim.ogg
 all taken from
 https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk
 licensed under CC BY-NC-SA 3.0
