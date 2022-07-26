@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Naming machine fixed, now you can get a reptilian name when clicking
-      randomize on character selection.', type: Tweak}
-  id: 1519
-  time: '2022-05-12T23:43:15.0000000+00:00'
 - author: Ripmorld
   changes:
   - {message: You can now print various powercells in protolathes, type: Add}
@@ -2941,3 +2935,8 @@ Entries:
   - {message: Waystation has been pulled from rotation., type: Remove}
   id: 2018
   time: '2022-07-26T02:41:06.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Lizards and slimes now have different speech sounds!, type: Add}
+  id: 2019
+  time: '2022-07-26T09:13:12.0000000+00:00'
