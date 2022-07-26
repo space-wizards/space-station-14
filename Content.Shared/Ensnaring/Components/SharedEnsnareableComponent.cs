@@ -5,25 +5,15 @@
 public abstract class SharedEnsnareableComponent : Component
 {
     /// <summary>
-    /// How slow should the ensnared entities walk be?
-    /// Data retrieved from the <see cref="EnsnareChangeEvent"/>
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("walkSpeed")]
-    public float WalkSpeed = 1.0f;
-
-    /// <summary>
-    /// How slow should the ensnared entities sprint be?
-    /// Data retrieved from the <see cref="EnsnareChangeEvent"/>
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("sprintSpeed")]
-    public float SprintSpeed = 1.0f;
-
-    /// <summary>
     /// Is this entity currently ensnared?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isEnsnared")]
     public bool IsEnsnared;
+
+    public enum EnsnareableVisuals : byte
+    {
+        NotEnsnared,
+        IsEnsnared
+    }
 }
