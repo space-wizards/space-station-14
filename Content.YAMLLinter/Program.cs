@@ -88,7 +88,10 @@ namespace Content.YAMLLinter
 
             foreach (var (key, val) in serverErrors)
             {
+                // Include all server errors marked as always relevant
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+
+                // We include sometimes-relevant errors if they exist both for the client & server
                 if (clientErrors.TryGetValue(key, out var clientVal))
                     newErrors.UnionWith(val.Intersect(clientVal));
 
@@ -96,6 +99,7 @@ namespace Content.YAMLLinter
                     allErrors[key] = newErrors;
             }
 
+            // Finally add any always-relevant client errors.
             foreach (var (key, val) in clientErrors)
             {
                 var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
