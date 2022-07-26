@@ -31,3 +31,13 @@ public abstract class SharedEnsnareableComponent : Component
         IsEnsnared
     }
 }
+
+public sealed class EnsnaredChangedEvent : EntityEventArgs
+{
+    public readonly bool IsEnsnared;
+
+    public EnsnaredChangedEvent(bool isEnsnared)
+    {
+        IsEnsnared = isEnsnared;
+    }
+}
