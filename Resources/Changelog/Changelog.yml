@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Filing cabinets now have proper collision and an outline., type: Fix}
-  id: 1516
-  time: '2022-05-12T22:04:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Barratry has received a small update., type: Tweak}
   id: 1517
   time: '2022-05-12T22:05:02.0000000+00:00'
@@ -2941,3 +2936,9 @@ Entries:
     type: Fix}
   id: 2015
   time: '2022-07-26T01:31:25.0000000+00:00'
+- author: BurninDreamer
+  changes:
+  - {message: The Syndicate headset no longer misinforms you in the description!,
+    type: Fix}
+  id: 2016
+  time: '2022-07-26T01:38:30.0000000+00:00'
