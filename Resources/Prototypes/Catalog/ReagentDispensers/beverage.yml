@@ -1,67 +1,71 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
+  - Water
   - Ice
   - Coffee
   - Cream
   - Tea
-  - GreenTea
   - IcedTea
-  - IcedGreenTea
   - Cola
   - SpaceMountainWind
   - DrGibb
-  - RootBeer
   - SpaceUp
   - TonicWater
   - SodaWater
   - LemonLime
+  - PwrGame
+  - ShamblersJuice
   - Sugar
+  - JuicePineapple
   - JuiceOrange
+  - Grenadine
   - JuiceLime
-  - JuiceWatermelon
-  ###Hacked
-  #- Fourteen Loko
-  #- GrapeSoda
+  - JuiceTomato
+  - JuiceLemon
+  - Menthol
+
+- type: reagentDispenserInventory
+  id: SodaDispenserEmagInventory
+  inventory:
+    - FourteenLoko
+    - WhiskeyCola
+    - MindbreakerToxin
+    #- StaminaToxin
+    - Ephedrine
+    - Histamine
 
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
-  - LemonLime
-  - Sugar
-  - JuiceOrange
-  - JuiceLime
-  - SodaWater
-  - TonicWater
   - Beer
+  - MaltLiquor
   - Kahlua
   - Whiskey
   - Wine
   - Vodka
   - Gin
   - Rum
+  - NavyRum
   - Tequila
   - Vermouth
   - Cognac
   - Ale
-  - Mead
-  ###Hacked
-  #- Goldschlager
-  #- Patron
-  #- JuiceWatermelon
-  #- JuiceBerry
-
-
-- type: reagentDispenserInventory
-  id: SodaDispenserEmagInventory
-  inventory:
-    - FourteenLoko
-    - Ephedrine
-    - Histamine
+  - Absinthe
+  - HardCider
+  - CremeDeMenthe
+  - CremeDeCacao
+  - CremeDeCoconut
+  - TripleSec
+  - Curacao
+  - Sake
+  - Applejack
 
 - type: reagentDispenserInventory
   id: BoozeDispenserEmagInventory
   inventory:
-    - AtomicBomb
     - Ethanol
     - Iron
+    #- MintToxin ????
+    - AtomicBomb
+    - Fernet
