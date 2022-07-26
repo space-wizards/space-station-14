@@ -18,7 +18,7 @@ public abstract class SharedEnsnaringComponent : Component
     [DataField("breakoutTime")]
     public float BreakoutTime = 3.0f;
 
-    //TODO: Raise default value, make datafield required.
+    //TODO: Raise default value
     /// <summary>
     /// How much should this slow down the entities walk?
     /// </summary>
@@ -26,7 +26,7 @@ public abstract class SharedEnsnaringComponent : Component
     [DataField("walkSpeed")]
     public float WalkSpeed = 0.3f;
 
-    //TODO: Raise default value, make datafield required.
+    //TODO: Raise default value
     /// <summary>
     /// How much should this slow down the entities sprint?
     /// </summary>
@@ -49,19 +49,25 @@ public abstract class SharedEnsnaringComponent : Component
     public EntityUid? Ensnared;
 }
 
-public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
-{
-
-}
-
-public sealed class EnsnareChangeEvent : EntityEventArgs
+/// <summary>
+/// Used whenever you want to do something when someone becomes ensnared by the <see cref="SharedEnsnaringComponent"/>
+/// </summary>
+public sealed class EnsnareEvent : EntityEventArgs
 {
     public readonly float WalkSpeed;
     public readonly float SprintSpeed;
 
-    public EnsnareChangeEvent(float walkSpeed, float sprintSpeed)
+    public EnsnareEvent(float walkSpeed, float sprintSpeed)
     {
         WalkSpeed = walkSpeed;
         SprintSpeed = sprintSpeed;
     }
+}
+
+/// <summary>
+/// Used whenever you want to do something when someone is freed by the <see cref="SharedEnsnaringComponent"/>
+/// </summary>
+public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
+{
+
 }

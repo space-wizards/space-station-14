@@ -12,11 +12,11 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SharedEnsnareableComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedModify);
-        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareChangeEvent>(OnEnsnareChange);
+        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareEvent>(OnEnsnareChange);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
     }
 
-    private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnareChangeEvent args)
+    private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnareEvent args)
     {
         component.WalkSpeed = args.WalkSpeed;
         component.SprintSpeed = args.SprintSpeed;

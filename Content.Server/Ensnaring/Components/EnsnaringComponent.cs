@@ -15,3 +15,29 @@ public sealed class EnsnaringComponent : SharedEnsnaringComponent
 
     public CancellationTokenSource? CancelToken;
 }
+
+/// <summary>
+/// Used for the do after event to free the entity that owns the <see cref="EnsnareableComponent"/>
+/// </summary>
+public sealed class FreeEnsnareDoAfterComplete : EntityEventArgs
+{
+    public readonly EnsnaringComponent? EnsnaringComponent;
+
+    public FreeEnsnareDoAfterComplete(EnsnaringComponent ensnaringComponent)
+    {
+        EnsnaringComponent = ensnaringComponent;
+    }
+}
+
+/// <summary>
+/// Used for the do after event when it fails to free the entity that owns the <see cref="EnsnareableComponent"/>
+/// </summary>
+public sealed class FreeEnsnareDoAfterCancel : EntityEventArgs
+{
+    public readonly EnsnaringComponent? EnsnaringComponent;
+
+    public FreeEnsnareDoAfterCancel(EnsnaringComponent ensnaringComponent)
+    {
+        EnsnaringComponent = ensnaringComponent;
+    }
+}

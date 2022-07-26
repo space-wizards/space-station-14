@@ -12,10 +12,13 @@ public sealed class RemoveEnsnare : IAlertClick
     {
         if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out EnsnareableComponent? ensnareableComponent))
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ensnareableComponent.EnsnaringEntity, out EnsnaringComponent? ensnaringComponent))
-                return;
+            foreach (var ensnare in ensnareableComponent.Container.ContainedEntities)
+            {
+                if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(ensnare, out EnsnaringComponent? ensnaringComponent))
+                    return;
 
-            EntitySystem.Get<EnsnareableSystem>().TryFree(ensnareableComponent.EnsnaringEntity.Value, player, ensnaringComponent);
+                EntitySystem.Get<EnsnaringSystem>().TryFree(player, ensnaringComponent);
+            }
         }
     }
 }

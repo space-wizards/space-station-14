@@ -1,15 +1,21 @@
-﻿using Content.Server.Ensnaring.Components;
+﻿using System.Threading;
+using Content.Server.DoAfter;
+using Content.Server.Ensnaring.Components;
+using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Ensnaring.Components;
-using Content.Shared.Interaction;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Throwing;
+using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 
 public sealed class EnsnaringSystem : EntitySystem
 {
-    [Dependency] private readonly EnsnareableSystem _ensnareable = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -36,7 +42,7 @@ public sealed class EnsnaringSystem : EntitySystem
 
     private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredEvent args)
     {
-        TryEnsnare(uid, args.Tripper, component);
+        TryEnsnare(args.Tripper, component);
     }
 
     private void OnThrowHit(EntityUid uid, EnsnaringComponent component, ThrowDoHitEvent args)
@@ -44,7 +50,7 @@ public sealed class EnsnaringSystem : EntitySystem
         if (!component.CanThrowTrigger)
             return;
 
-        TryEnsnare(uid, args.Target, component);
+        TryEnsnare(args.Target, component);
     }
 
     /// <summary>
@@ -53,20 +59,51 @@ public sealed class EnsnaringSystem : EntitySystem
     /// <param name="ensnaringEntity">The entity that will be used to ensnare</param>
     /// <param name="target">The entity that will be ensnared</param>
     /// <param name="component">The ensnaring component</param>
-    public void TryEnsnare(EntityUid ensnaringEntity, EntityUid target, EnsnaringComponent component)
+    public void TryEnsnare(EntityUid target, EnsnaringComponent component)
     {
         //Don't do anything if they don't have the ensnareable component.
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
             return;
 
         component.Ensnared = target;
-        ensnareable.EnsnaringEntity = ensnaringEntity;
-        ensnareable.Container.Insert(ensnaringEntity);
+        ensnareable.Container.Insert(component.Owner);
         ensnareable.IsEnsnared = true;
 
-        _ensnareable.UpdateAlert(ensnareable);
-        var ev = new EnsnareChangeEvent(component.WalkSpeed, component.SprintSpeed);
+        UpdateAlert(ensnareable);
+        var ev = new EnsnareEvent(component.WalkSpeed, component.SprintSpeed);
         RaiseLocalEvent(target, ev, false);
+    }
+
+    /// <summary>
+    /// Used where you want to try to free an entity with the <see cref="EnsnareableComponent"/>
+    /// </summary>
+    /// <param name="target">The entity that will be free</param>
+    /// <param name="component">The ensnaring component</param>
+    public void TryFree(EntityUid target, EnsnaringComponent component)
+    {
+        //Don't do anything if they don't have the ensnareable component.
+        if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
+            return;
+
+        if (component.CancelToken != null)
+            return;
+
+        component.CancelToken = new CancellationTokenSource();
+
+        var doAfterEventArgs = new DoAfterEventArgs(target, component.BreakoutTime, component.CancelToken.Token, target)
+        {
+            BreakOnUserMove = !component.CanMoveBreakout,
+            BreakOnTargetMove = !component.CanMoveBreakout,
+            BreakOnDamage = false,
+            BreakOnStun = true,
+            NeedHand = true,
+            TargetFinishedEvent = new FreeEnsnareDoAfterComplete(component),
+            TargetCancelledEvent = new FreeEnsnareDoAfterCancel(component),
+        };
+
+        _doAfter.DoAfter(doAfterEventArgs);
+
+        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, Filter.Entities(target));
     }
 
     /// <summary>
@@ -77,13 +114,24 @@ public sealed class EnsnaringSystem : EntitySystem
         if (!TryComp<EnsnareableComponent>(component.Ensnared, out var ensnareable))
             return;
 
-        component.Ensnared = null;
-        ensnareable.EnsnaringEntity = null;
         ensnareable.Container.ForceRemove(component.Owner);
         ensnareable.IsEnsnared = false;
+        component.Ensnared = null;
 
-        _ensnareable.UpdateAlert(ensnareable);
+        UpdateAlert(ensnareable);
         var ev = new EnsnareRemoveEvent();
         RaiseLocalEvent(component.Owner, ev, false);
+    }
+
+    public void UpdateAlert(EnsnareableComponent component)
+    {
+        if (!component.IsEnsnared)
+        {
+            _alerts.ClearAlert(component.Owner, AlertType.Ensnared);
+        }
+        else
+        {
+            _alerts.ShowAlert(component.Owner, AlertType.Ensnared);
+        }
     }
 }

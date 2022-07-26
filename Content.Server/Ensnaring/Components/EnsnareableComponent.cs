@@ -12,11 +12,4 @@ public sealed class EnsnareableComponent : SharedEnsnareableComponent
     [ViewVariables]
     [DataField("container")]
     public Container Container = default!;
-
-    /// <summary>
-    /// The entity that the owns the <see cref="EnsnareableComponent"/>
-    /// </summary>
-    [ViewVariables]
-    [DataField("ensnaringEntity")]
-    public EntityUid? EnsnaringEntity;
 }
