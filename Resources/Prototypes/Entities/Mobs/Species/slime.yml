@@ -104,6 +104,8 @@
   - type: HumanoidAppearance
     hairMatchesSkin: true
     hairAlpha: 0.5
+  - type: Speech
+    speechSounds: Slime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
