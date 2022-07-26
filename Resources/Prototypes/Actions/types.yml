@@ -8,6 +8,13 @@
   checkCanInteract: false
 
 - type: instantAction
+  id: TurnUndead
+  name: turn-undead-action-name
+  description: turn-undead-action-description
+  icon: Interface/Actions/zombie-turn.png
+  event: !type:ZombifySelfActionEvent
+
+- type: instantAction
   id: ToggleLight
   name: action-name-toggle-light
   description: action-description-toggle-light
@@ -62,3 +69,11 @@
   icon: Objects/Weapons/Melee/shields.rsi/teleriot-icon.png
   iconOn: Objects/Weapons/Melee/shields.rsi/teleriot-on.png
   event: !type:ToggleActionEvent
+
+- type: instantAction
+  id: AnimalLayEgg
+  name: action-name-lay-egg
+  description: action-description-lay-egg
+  icon: Objects/Consumable/Food/egg.rsi/icon.png
+  useDelay: 60
+  serverEvent: !type:EggLayInstantActionEvent

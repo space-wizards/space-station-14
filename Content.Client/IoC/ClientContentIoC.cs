@@ -13,7 +13,6 @@ using Content.Client.Module;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
 using Content.Client.Screenshot;
-using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
@@ -37,7 +36,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
-            IoCManager.Register<IStationEventManager, StationEventManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();

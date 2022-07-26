@@ -20,12 +20,12 @@ namespace Content.Server.Chemistry.TileReactions
 
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, tile.GridIndices, true);
+            var environment = atmosphereSystem.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
             if (environment == null || !atmosphereSystem.IsHotspotActive(tile.GridUid, tile.GridIndices))
                 return FixedPoint2.Zero;
 
             environment.Temperature *= MathF.Max(_temperatureMultiplier * reactVolume.Float(), 1f);
-            atmosphereSystem.React(tile.GridUid, tile.GridIndices);
+            atmosphereSystem.ReactTile(tile.GridUid, tile.GridIndices);
 
             return reactVolume;
         }

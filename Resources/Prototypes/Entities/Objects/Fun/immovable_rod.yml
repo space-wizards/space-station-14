@@ -13,6 +13,8 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+  - type: TimedDespawn
+    lifetime: 30.0
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0

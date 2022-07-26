@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -83,11 +84,19 @@ public sealed partial class AtmosphereSystem
                continue;
            }
 
+           var transform = Transform(euid);
+
            foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
            {
                var tile = tileMain.Air;
                if (tile == null)
                    continue;
+
+               if (tile.Immutable && !IsTileSpace(euid, transform.MapUid, indices, gridComp))
+               {
+                   tile = new GasMixture(tile.Volume) { Temperature = tile.Temperature };
+                   tileMain.Air = tile;
+               }
 
                tile.Clear();
                var mixtureId = 0;
@@ -102,7 +111,7 @@ public sealed partial class AtmosphereSystem
                Merge(tile, mixture);
                tile.Temperature = mixture.Temperature;
 
-               InvalidateTile(gridAtmosphere, indices);
+               gridAtmosphere.InvalidatedCoords.Add(indices);
            }
        }
     }

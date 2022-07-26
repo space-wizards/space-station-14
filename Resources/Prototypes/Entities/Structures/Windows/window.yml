@@ -106,7 +106,7 @@
     tags:
       - Window
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: Mobs
     netsync: false
     sprite: Structures/Windows/directional.rsi
     state: window

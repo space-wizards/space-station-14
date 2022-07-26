@@ -13,6 +13,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
@@ -92,10 +93,10 @@ namespace Content.Server.Hands.Systems
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
-            var targetName = Name(args.Target);
-
-            var msgOther = Loc.GetString("hands-component-disarm-success-others-message", ("disarmer", Name(args.Source)), ("disarmed", targetName));
-            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targetName));
+            var targEnt = Identity.Entity(args.Target, EntityManager);
+            var msgOther = Loc.GetString("hands-component-disarm-success-others-message",
+                ("disarmer", Identity.Entity(args.Source, EntityManager)), ("disarmed", targEnt));
+            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targEnt));
 
             var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
             _popupSystem.PopupEntity(msgOther, args.Source, filter);
@@ -111,9 +112,6 @@ namespace Content.Server.Hands.Systems
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
-
-            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
-                sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
         public override void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)

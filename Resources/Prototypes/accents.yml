@@ -62,3 +62,19 @@
   - accent-words-generic-aggressive-2
   - accent-words-generic-aggressive-3
   - accent-words-generic-aggressive-4
+
+- type: accent
+  id: duck
+  words:
+  - accent-words-duck-1
+  - accent-words-duck-2
+  - accent-words-duck-3
+  - accent-words-duck-4
+
+- type: accent
+  id: chicken
+  words:
+  - accent-words-chicken-1
+  - accent-words-chicken-2
+  - accent-words-chicken-3
+  - accent-words-chicken-4

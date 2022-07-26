@@ -1,5 +1,4 @@
 ﻿using Content.Shared.MobState.Components;
-using Content.Shared.MobState.State;
 
 namespace Content.Shared.MobState
 {
@@ -7,8 +6,8 @@ namespace Content.Shared.MobState
     {
         public MobStateChangedEvent(
             MobStateComponent component,
-            IMobState? oldMobState,
-            IMobState currentMobState)
+            DamageState? oldMobState,
+            DamageState currentMobState)
         {
             Component = component;
             OldMobState = oldMobState;
@@ -19,8 +18,35 @@ namespace Content.Shared.MobState
 
         public MobStateComponent Component { get; }
 
-        public IMobState? OldMobState { get; }
+        public DamageState? OldMobState { get; }
 
-        public IMobState CurrentMobState { get; }
+        public DamageState CurrentMobState { get; }
+    }
+
+    public static class A
+    {
+        [Obsolete("Just check for the enum value instead")]
+        public static bool IsAlive(this DamageState state)
+        {
+            return state == DamageState.Alive;
+        }
+
+        [Obsolete("Just check for the enum value instead")]
+        public static bool IsCritical(this DamageState state)
+        {
+            return state == DamageState.Critical;
+        }
+
+        [Obsolete("Just check for the enum value instead")]
+        public static bool IsDead(this DamageState state)
+        {
+            return state == DamageState.Dead;
+        }
+
+        [Obsolete("Just check for the enum value instead")]
+        public static bool IsIncapacitated(this DamageState state)
+        {
+            return state is DamageState.Dead or DamageState.Critical;
+        }
     }
 }

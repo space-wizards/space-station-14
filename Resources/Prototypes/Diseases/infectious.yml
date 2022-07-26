@@ -30,6 +30,7 @@
     - !type:DiseasePopUp
       probability: 0.025
       message: generic-reagent-effect-burning-insides
+      visualType: Medium
     - !type:DiseaseSnough
       probability: 0.025
       snoughMessage: disease-cough
@@ -117,33 +118,95 @@
   id: AMIV
   name: AMIV
   cureResist: 0.10
+  stages:
+    - 0
+    - 120
+    - 780
   effects:
+    # compulsion pop ups
     - !type:DiseasePopUp
       probability: 0.015
       type: Pvs
       message: disease-beat-chest-compulsion
+      visualType: Medium
+      stages:
+        - 0
+        - 1
+        - 2
     - !type:DiseasePopUp
       probability: 0.03
       message: disease-banana-compulsion
+      visualType: Medium
+      stages:
+        - 0
+        - 1
+        - 2
+    # Screeches - spreads disease
+    - !type:DiseaseSnough
+      probability: 0.01
+      snoughMessage: disease-screech
+      snoughSound:
+        collection: MonkeyScreeches
+      stages:
+        - 0
     - !type:DiseaseSnough
       probability: 0.02
       snoughMessage: disease-screech
       snoughSound:
         collection: MonkeyScreeches
+      stages:
+        - 1
+    - !type:DiseaseSnough
+      probability: 0.04
+      snoughMessage: disease-screech
+      snoughSound:
+        collection: MonkeyScreeches
+      stages:
+        - 2
+    # monkey accent chance when speaking
     - !type:DiseaseGenericStatusEffect
-      probability: 0.3
+      probability: 0.2
       key: Stutter
       component: MonkeyAccent
+      stages:
+        - 1
+    - !type:DiseaseGenericStatusEffect
+      probability: 0.5
+      key: Stutter
+      component: MonkeyAccent
+      stages:
+        - 2
+    # asphyxiation damage, probably from all the screeching
     - !type:DiseaseHealthChange
       probability: 0.53
       damage:
         types:
           Asphyxiation: 1
+      stages:
+        - 1
+        - 2
+    # possible monkefication if ignored too long
+    - !type:DiseasePolymorph
+      probability: 0.000427 ## ~5% chance over 120 secs
+      polymorphId: AMIVMorph
+      polymorphMessage: disease-polymorph
+      polymorphSound: 
+        path: /Audio/Animals/monkey_scream.ogg
+      stages:
+        - 2
   cures:
     - !type:DiseaseJustWaitCure
-      maxLength: 1600
+      maxLength: 900
+      stages:
+        - 0
+        - 1
+        - 2
     - !type:DiseaseReagentCure
       reagent: BananaHonk
+      stages:
+        - 0
+        - 1
+        - 2
 
 - type: disease
   id: BleedersBite
@@ -160,6 +223,7 @@
     - !type:DiseasePopUp
       probability: 0.05
       message: disease-eaten-inside
+      visualType: Medium
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 900

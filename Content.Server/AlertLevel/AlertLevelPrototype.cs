@@ -59,6 +59,16 @@ public sealed class AlertLevelDetail
     [DataField("color")] public Color Color { get; } = Color.White;
 
     /// <summary>
+    /// The color to turn emergency lights on this station when they are active.
+    /// </summary>
+    [DataField("emergencyLightColor")] public Color EmergencyLightColor { get; } = Color.FromHex("#FF4020");
+
+    /// <summary>
+    /// Will this alert level force emergency lights on for the station that's active?
+    /// </summary>
+    [DataField("forceEnableEmergencyLights")] public bool ForceEnableEmergencyLights { get; } = false;
+
+    /// <summary>
     /// How long it takes for the shuttle to arrive when called.
     /// </summary>
     [DataField("shuttleTime")] public TimeSpan ShuttleTime { get; } = TimeSpan.FromMinutes(5);

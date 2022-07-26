@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Tests;
+using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.IntegrationTests.Tests.Networking;
@@ -106,6 +107,7 @@ public static class PoolManager
             IoCManager.Resolve<IEntitySystemManager>()
                 .LoadExtraSystemType<InteractionSystemTests.TestInteractionSystem>();
             IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<DeviceNetworkTestSystem>();
+            IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestDestructibleListenerSystem>();
             IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
         };
 
