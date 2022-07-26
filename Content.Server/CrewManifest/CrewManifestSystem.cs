@@ -6,6 +6,7 @@ using Content.Server.StationRecords;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
+using Content.Shared.GameTicking;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -39,7 +40,21 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        foreach (var (_, euis) in _openEuis)
+        {
+            foreach (var (_, eui) in euis)
+            {
+                eui.Close();
+            }
+        }
+
+        _openEuis.Clear();
     }
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
