@@ -1,4 +1,12 @@
 - type: reagent
+  id: JuiceAloe
+  name: reagent-name-juice-aloe
+  parent: BaseDrink
+  desc: reagent-desc-juice-aloe
+  physicalDesc: reagent-physical-desc-crisp
+  color: "#A3C48B"
+
+- type: reagent
   id: JuiceApple
   name: reagent-name-juice-apple
   parent: BaseDrink
@@ -39,16 +47,21 @@
           types:
             Poison: 1
 
-#TODO: restore eyesight
-#if(..())
-#return 1
-# M.eye_blurry = max(M.eye_blurry - 1 , 0)
-# M.eye_blind = max(M.eye_blind - 1 , 0)
-# switch(data)
-# if(21 to INFINITY)
-# if(prob(data - 10))
-# M.disabilities &= ~NEARSIGHTED
-# data++
+- type: reagent
+  id: JuiceBlumpkin
+  name: reagent-name-juice-blumpkin
+  parent: BaseDrink
+  desc: reagent-desc-juice-blumpkin
+  physicalDesc: reagent-physical-desc-sweet
+  color: "#00BFFF"
+
+- type: reagent
+  id: JuiceBungo
+  name: reagent-name-juice-bungo
+  parent: BaseDrink
+  desc: reagent-desc-juice-bungo
+  physicalDesc: reagent-physical-desc-sweet
+  color: "#F9E43D"
 
 - type: reagent
   id: JuiceCarrot
@@ -57,6 +70,14 @@
   desc: reagent-desc-juice-carrot
   physicalDesc: reagent-physical-desc-crisp
   color: "#FF8820"
+
+- type: reagent
+  id: JuiceGarlic
+  name: reagent-name-juice-garlic
+  parent: BaseDrink
+  desc: reagent-desc-juice-garlic
+  physicalDesc: reagent-physical-desc-crisp
+  color: "#FEFEFE"
 
 - type: reagent
   id: JuiceGrape
@@ -82,20 +103,28 @@
   physicalDesc: reagent-physical-desc-citric
   color: "#99bb43"
 
-# /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
-
-# if(..())
-# return 1
-
-# if(M.getToxLoss() && prob(20))
-# M.adjustToxLoss(-REM)
-
 - type: reagent
   id: JuiceOrange
   name: reagent-name-juice-orange
   parent: BaseDrink
   desc: reagent-desc-juice-orange
   physicalDesc: reagent-physical-desc-citric
+  color: "#E78108"
+
+- type: reagent
+  id: JuiceParsnip
+  name: reagent-name-juice-parsnip
+  parent: BaseDrink
+  desc: reagent-desc-juice-parsnip
+  physicalDesc: reagent-physical-desc-crisp
+  color: "#FFA500"
+
+- type: reagent
+  id: JuicePeach
+  name: reagent-name-juice-peach
+  parent: BaseDrink
+  desc: reagent-desc-juice-peach
+  physicalDesc: reagent-physical-desc-crisp
   color: "#E78108"
 
 - type: reagent
@@ -106,6 +135,14 @@
   physicalDesc: reagent-physical-desc-tropical
   color: yellow
 
+  - type: reagent
+  id: JuicePlum
+  name: reagent-name-juice-plum
+  parent: BaseDrink
+  desc: reagent-desc-juice-plum
+  physicalDesc: reagent-physical-desc-crisp
+  color: "#b6062c"
+
 - type: reagent
   id: JuicePotato
   name: reagent-name-juice-potato
@@ -113,6 +150,22 @@
   desc: reagent-desc-juice-potato
   physicalDesc: reagent-physical-desc-starchy
   color: "#302000"
+
+  - type: reagent
+  id: JuicePumpkin
+  name: reagent-name-juice-pumpkin
+  parent: BaseDrink
+  desc: reagent-desc-juice-pumpkin
+  physicalDesc: reagent-physical-desc-crisp
+  color: "#FFA500"
+
+- type: reagent
+  id: JuiceTochtause
+  name: reagent-name-juice-tochtause
+  parent: BaseDrink
+  desc: reagent-desc-juice-tochtause
+  physicalDesc: reagent-physical-desc-sickly
+  color: "#554862"
 
 - type: reagent
   id: JuiceTomato
