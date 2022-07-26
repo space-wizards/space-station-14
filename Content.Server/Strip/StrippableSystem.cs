@@ -97,7 +97,7 @@ namespace Content.Server.Strip
                     if (entity != args.Ensnare)
                         continue;
 
-                    _ensnaring.TryFree(user, ensnaring);
+                    _ensnaring.TryFree(component.Owner, ensnaring, user);
                     return;
                 }
             }

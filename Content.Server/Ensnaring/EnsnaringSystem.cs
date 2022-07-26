@@ -4,6 +4,7 @@ using Content.Server.Ensnaring.Components;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Ensnaring.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Player;
@@ -79,7 +80,7 @@ public sealed class EnsnaringSystem : EntitySystem
     /// </summary>
     /// <param name="target">The entity that will be free</param>
     /// <param name="component">The ensnaring component</param>
-    public void TryFree(EntityUid target, EnsnaringComponent component)
+    public void TryFree(EntityUid target, EnsnaringComponent component, EntityUid? user = null)
     {
         //Don't do anything if they don't have the ensnareable component.
         if (!TryComp<EnsnareableComponent>(target, out var ensnareable))
@@ -90,10 +91,19 @@ public sealed class EnsnaringSystem : EntitySystem
 
         component.CancelToken = new CancellationTokenSource();
 
-        var doAfterEventArgs = new DoAfterEventArgs(target, component.BreakoutTime, component.CancelToken.Token, target)
+        var isOwner = !(user != null && target != user);
+        var freeTime = isOwner ? component.BreakoutTime : component.FreeTime;
+        bool breakOnMove;
+
+        if (isOwner)
+            breakOnMove = !component.CanMoveBreakout;
+        else
+            breakOnMove = true;
+
+        var doAfterEventArgs = new DoAfterEventArgs(target, freeTime, component.CancelToken.Token, target)
         {
-            BreakOnUserMove = !component.CanMoveBreakout,
-            BreakOnTargetMove = !component.CanMoveBreakout,
+            BreakOnUserMove = breakOnMove,
+            BreakOnTargetMove = breakOnMove,
             BreakOnDamage = false,
             BreakOnStun = true,
             NeedHand = true,
@@ -103,7 +113,13 @@ public sealed class EnsnaringSystem : EntitySystem
 
         _doAfter.DoAfter(doAfterEventArgs);
 
-        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, Filter.Entities(target));
+        if (isOwner)
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, Filter.Entities(target));
+
+        if (!isOwner && user != null)
+        {
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", component.Owner), ("user", Identity.Entity(target, EntityManager))), user.Value, Filter.Entities(user.Value));
+        }
     }
 
     /// <summary>
