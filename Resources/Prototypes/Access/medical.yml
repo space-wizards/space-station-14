@@ -4,9 +4,11 @@
 
 - type: accessLevel
   id: Medical
+  name: Medical
 
 - type: accessLevel
   id: Chemistry
+  name: Chemistry
 
 - type: accessGroup
   id: Medical

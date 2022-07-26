@@ -328,7 +328,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
-            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", args.Climber)), args.Climber,
+            Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
             Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
     }
 

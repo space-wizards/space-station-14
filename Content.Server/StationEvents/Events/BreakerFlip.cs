@@ -18,7 +18,7 @@ public sealed class BreakerFlip : StationEventSystem
         base.Added();
 
         var str = Loc.GetString("station-event-breaker-flip-announcement", ("data", Loc.GetString(Loc.GetString($"random-sentience-event-data-{RobustRandom.Next(1, 6)}"))));
-        ChatSystem.DispatchGlobalAnnouncement(str, playDefaultSound: false, colorOverride: Color.Gold);
+        ChatSystem.DispatchGlobalAnnouncement(str, playSound: false, colorOverride: Color.Gold);
     }
 
     public override void Started()

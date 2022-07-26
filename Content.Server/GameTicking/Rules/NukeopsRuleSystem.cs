@@ -6,6 +6,8 @@ using Content.Server.Nuke;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -20,6 +22,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Server.Traitor;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -111,7 +115,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in everyone)
         {
-            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;
@@ -185,43 +188,28 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // TODO: Make this a prototype
-        var map = "/Maps/infiltrator.yml";
+        // so true PAUL!
+        var path = "/Maps/nukieplanet.yml";
+        var shuttlePath = "/Maps/infiltrator.yml";
+        var mapId = _mapManager.CreateMap();
 
-        var center = new Vector2();
-        var minRadius = 0f;
-        Box2? aabb = null;
+        var (_, outpost) = _mapLoader.LoadBlueprint(mapId, "/Maps/nukieplanet.yml");
 
-        foreach (var uid in _stationSystem.Stations)
+        if (outpost == null)
         {
-            if (TryComp<StationDataComponent>(uid, out var stationData))
-            {
-                foreach (var grid in stationData.Grids)
-                {
-                    if (TryComp<IMapGridComponent>(grid, out var gridComp))
-                        aabb = aabb?.Union(gridComp.Grid.WorldAABB) ?? gridComp.Grid.WorldAABB;
-                }
-            }
+            Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
+            return;
         }
 
-        if (aabb != null)
+        // Listen I just don't want it to overlap.
+        var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
         {
-            center = aabb.Value.Center;
-            minRadius = MathF.Max(aabb.Value.Width, aabb.Value.Height);
-        }
-
-        var (_, gridUid) = _mapLoader.LoadBlueprint(GameTicker.DefaultMap, map, new MapLoadOptions
-        {
-            Offset = center + MathF.Max(minRadius, minRadius) + 1000f,
+            Offset = Vector2.One * 1000f,
         });
 
-        if (!gridUid.HasValue)
+        if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            Logger.ErrorS("NUKEOPS", $"Gridid was null when loading \"{map}\", aborting.");
-            foreach (var session in operatives)
-            {
-                ev.PlayerPool.Add(session);
-            }
-            return;
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, outpost.Value);
         }
 
         // TODO: Loot table or something
@@ -236,14 +224,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // Forgive me for hardcoding prototypes
         foreach (var (_, meta, xform) in EntityManager.EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != "SpawnPointNukies" || xform.ParentUid != gridUid) continue;
+            if (meta.EntityPrototype?.ID != "SpawnPointNukies") continue;
 
-            spawns.Add(xform.Coordinates);
+            if (xform.ParentUid == outpost)
+            {
+                spawns.Add(xform.Coordinates);
+                break;
+            }
         }
 
         if (spawns.Count == 0)
         {
-            spawns.Add(EntityManager.GetComponent<TransformComponent>(gridUid.Value).Coordinates);
+            spawns.Add(EntityManager.GetComponent<TransformComponent>(outpost.Value).Coordinates);
             Logger.WarningS("nukies", $"Fell back to default spawn for nukies!");
         }
 
@@ -251,20 +243,24 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         for (var i = 0; i < operatives.Count; i++)
         {
             string name;
+            string role;
             StartingGearPrototype gear;
 
             switch (i)
             {
                 case 0:
                     name = $"Commander " + _random.PickAndTake<string>(syndicateNamesElite);
+                    role = NukeopsCommanderPrototypeId;
                     gear = commanderGear;
                     break;
                 case 1:
                     name = $"Agent " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = medicGear;
                     break;
                 default:
                     name = $"Operator " + _random.PickAndTake<string>(syndicateNamesNormal);
+                    role = NukeopsPrototypeId;
                     gear = starterGear;
                     break;
             }
@@ -275,6 +271,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 CharacterName = name
             };
             newMind.ChangeOwningPlayer(session.UserId);
+            newMind.AddRole(new TraitorRole(newMind, _prototypeManager.Index<AntagPrototype>(role)));
 
             var mob = EntityManager.SpawnEntity("MobHuman", _random.Pick(spawns));
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
@@ -288,6 +285,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

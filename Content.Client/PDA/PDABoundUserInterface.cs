@@ -79,13 +79,15 @@ namespace Content.Client.PDA
                     if (msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null)
                     {
                         _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui",
-                            ("Owner",msg.PDAOwnerInfo.IdOwner ?? "Unknown"),
-                            ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? "Unassigned")));
+                            ("Owner",msg.PDAOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown")),
+                            ("JobTitle",msg.PDAOwnerInfo.JobTitle ?? Loc.GetString("comp-pda-ui-unassigned"))));
                     }
                     else
                     {
                         _menu.IdInfoLabel.SetMarkup(Loc.GetString("comp-pda-ui-blank"));
                     }
+
+                    _menu.StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station", ("Station",msg.StationName ?? Loc.GetString("comp-pda-ui-unknown"))));
 
                     _menu.EjectIdButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
