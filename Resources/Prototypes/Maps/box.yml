@@ -4,7 +4,7 @@
   mapPath: /Maps/box.yml
   minPlayers: 35
   stations:
-    Bagel:
+    Box:
       mapNameTemplate: '{0} Box Station {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
