@@ -1,7 +1,8 @@
 using Robust.Client.GameObjects;
 using Content.Shared.Conveyor;
+using Content.Client.Conveyor.Components;
 
-namespace Content.Client.Conveyor.Visualizers;
+namespace Content.Client.Conveyor;
 
 public sealed class ConveyorVisualizerSystem : VisualizerSystem<ConveyorVisualsComponent>
 {

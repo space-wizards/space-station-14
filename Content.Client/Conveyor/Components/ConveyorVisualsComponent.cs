@@ -1,4 +1,4 @@
-namespace Content.Client.Conveyor;
+namespace Content.Client.Conveyor.Components;
 
 [RegisterComponent]
 public sealed class ConveyorVisualsComponent : Component

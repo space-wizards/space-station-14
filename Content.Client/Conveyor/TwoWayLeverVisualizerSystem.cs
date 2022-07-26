@@ -1,5 +1,8 @@
-﻿using Content.Shared.MachineLinking;
+using Content.Shared.MachineLinking;
 using Robust.Client.GameObjects;
+using Content.Client.Conveyor.Components;
+
+namespace Content.Client.Conveyor;
 
 public sealed class TwoWayLeverVisualizerSystem : VisualizerSystem<TwoWayLeverVisualsComponent>
 {

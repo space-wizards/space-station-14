@@ -1,4 +1,7 @@
-﻿public sealed class TwoWayLeverVisualsComponent : Component
+namespace Content.Client.Conveyor.Components;
+
+[RegisterComponent]
+public sealed class TwoWayLeverVisualsComponent : Component
 {
     [DataField("state_forward")]
     public string? StateForward;
