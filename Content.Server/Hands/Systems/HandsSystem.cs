@@ -190,7 +190,7 @@ namespace Content.Server.Hands.Systems
                 player.IsInContainer() ||
                 !TryComp(player, out SharedHandsComponent? hands) ||
                 hands.ActiveHandEntity is not EntityUid throwEnt ||
-                !_actionBlockerSystem.CanThrow(player))
+                !_actionBlockerSystem.CanThrow(player, throwEnt))
                 return false;
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
@@ -202,8 +202,6 @@ namespace Content.Server.Hands.Systems
 
                 throwEnt = splitStack.Value;
             }
-            else if (!TryDrop(player, throwEnt, handsComp: hands))
-                return false;
 
             var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
@@ -212,11 +210,23 @@ namespace Content.Server.Hands.Systems
             direction = direction.Normalized * Math.Min(direction.Length, hands.ThrowRange);
 
             var throwStrength = hands.ThrowForceMultiplier;
-            _throwingSystem.TryThrow(throwEnt, direction, throwStrength, player);
+
+            // Let other systems change the thrown entity (useful for virtual items)
+            // or the throw strength.
+            var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
+            RaiseLocalEvent(player, ev, false);
+
+            if (ev.Handled)
+                return true;
+
+            // This can grief the above event so we raise it afterwards
+            if (!TryDrop(player, throwEnt, handsComp: hands))
+                return false;
+
+            _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowStrength, ev.PlayerUid);
 
             return true;
         }
-
         private void HandleSmartEquipBackpack(ICommonSession? session)
         {
             HandleSmartEquip(session, "back");
