@@ -2372,7 +2372,7 @@
   id: SeaBreeze
   name: reagent-name-sea-breeze
   parent: BaseAlcohol
-  desc: reagent-desc-sea-breese
+  desc: reagent-desc-sea-breeze
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#cfffe5"
   spritePath: glass_sea_breeze.rsi
