@@ -9,131 +9,160 @@ public sealed partial class NPCSystem
     private HTNPlan GetPlan(HTNComponent component)
     {
         DebugTools.Assert(component.Plan == null);
-        var nodes = new Queue<HTNNode>();
-        var plan = new Queue<HTNPrimitiveTask>();
 
         /*
-         * There's 3 parts to a HTN.
-         * 1. There's the overall HTN nodes that comprise the entire thing. These are mapped by IDs via compound tasks
-         * 2. There's the underlying tasks which can be primitive or compound. These are wrapped in HTN nodes.
-         * This means the primitive / compound tasks can be re-used across many graphs and their wrapping node would change.
-         *
          * Really the best reference for what a HTN looks like is http://www.gameaipro.com/GameAIPro/GameAIPro_Chapter12_Exploring_HTN_Planners_through_Example.pdf
+         * It's kinda like a behaviour tree but also can consider multiple actions in sequence.
+         *
+         * Methods have been renamed to branches
          */
 
         var decompHistory = new Stack<DecompositionState>();
-        var mtr = new List<int>();
+
+        // method traversal record. Whenever we find a new compound task this updates.
+        var mtrIndex = 0;
 
         var currentBlackboard = component.BlackboardA.ShallowClone();
         var tasksToProcess = new Stack<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
         tasksToProcess.Push(component.RootTask);
 
+        // How many primitive tasks we've added since last record.
+        var primitiveCount = 0;
+
         while (tasksToProcess.TryPop(out var currentTask))
         {
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
-                    if (TryFindSatisfiedMethod(compound))
+                    if (TryFindSatisfiedMethod(compound, tasksToProcess, currentBlackboard, ref mtrIndex))
                     {
-                        RecordDecompositionOfTask(currentTask, finalPlan, decompHistory);
+                        // Need to copy worldstate to roll it back
+                        // Don't need to copy taskstoprocess as we can just clear it and set it to the compound task we roll back to.
+                        // Don't need to copy finalplan as we can just count how many primitives we've added since last record
+
+                        decompHistory.Push(new DecompositionState()
+                        {
+                            Blackboard = currentBlackboard.ShallowClone(),
+                            CompoundTask = compound,
+                            MethodTraversal = mtrIndex,
+                            PrimitiveCount = primitiveCount,
+                        });
+
+                        primitiveCount = 0;
+                        // Reset method traversal
+                        mtrIndex = 0;
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask();
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref currentBlackboard,
+                            ref mtrIndex);
                     }
-
-                    // TODO: Satisfied method
-                    // TODO: Insert subtasks to taskstoprocess
-
-                    // TODO: If not satisfied restore to last decomposed
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (PrimitiveConditionMet(primitive))
+                    if (PrimitiveConditionMet(primitive, currentBlackboard))
                     {
+                        primitiveCount++;
                         // TODO: If conditions met
                         finalPlan.Add(primitive);
                         // TODO: Apply effects to world state
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask();
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref currentBlackboard, ref mtrIndex);
                     }
-
 
                     break;
             }
         }
 
-        // TODO: Make this per task.
-        var recursionLimit = 100;
-        var recursion = 0;
-
-        while (recursion < recursionLimit)
-        {
-            var node = nodes.Peek();
-
-            // TODO: Assumed autosucceed for now.
-            plan.Enqueue(node.Task);
-
-            if (node.Edges.Count == 0)
-                break;
-
-            foreach (var edge in node.Edges)
-            {
-                nodes.Enqueue(map[edge]);
-            }
-
-            recursion++;
-        }
-
-        return new HTNPlan(plan.ToArray());
+        return new HTNPlan(finalPlan);
     }
 
-    private bool PrimitiveConditionMet(HTNTask primitive)
+    private bool PrimitiveConditionMet(HTNPrimitiveTask primitive, Dictionary<string, object> blackboard)
     {
+        foreach (var con in primitive.Preconditions)
+        {
+            if (con.IsMet(blackboard)) continue;
+            return false;
+        }
+
         return true;
     }
 
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compound)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Stack<HTNTask> tasksToProcess, Dictionary<string, object> blackboard, ref int mtrIndex)
     {
-        // Find the first method that has its preconditions met.
-    }
-
-    private void RecordDecompositionOfTask(Stack<HTNTask> tasksToProcess, HTNTask currentTask, List<HTNPrimitiveTask> finalPlan, Stack<DecompositionState> decompHistory)
-    {
-        decompHistory.Push(new DecompositionState()
+        for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
-            TasksToProcess = new Stack<HTNTask>(tasksToProcess),
-            FinalPlan = new List<HTNPrimitiveTask>(finalPlan),
+            var branch = compound.Branches[i];
+            var isValid = true;
 
-        });
+            foreach (var con in branch.Preconditions)
+            {
+                if (con.IsMet(blackboard)) continue;
+                isValid = false;
+                break;
+            }
+
+            if (!isValid) continue;
+
+            foreach (var task in branch.Tasks)
+            {
+                tasksToProcess.Push(task);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
-    private void RestoreTolastDecomposedTask()
+    /// <summary>
+    /// Restores the planner state.
+    /// </summary>
+    private void RestoreTolastDecomposedTask(Stack<DecompositionState> decompHistory,
+        Stack<HTNTask> tasksToProcess,
+        List<HTNPrimitiveTask> finalPlan,
+        ref Dictionary<string, object> blackboard,
+        ref int mtrIndex)
     {
+        tasksToProcess.Clear();
 
-    }
+        // No plan found so this will just break normally.
+        if (!decompHistory.TryPop(out var lastDecomp))
+            return;
 
-    private HTNTask GetTask(string id)
-    {
-        if (_prototypeManager.TryIndex<HTNCompoundTask>(id, out var compound))
-            return compound;
-        else if (_prototypeManager.TryIndex<HTNPrimitiveTask>(id, out var primitive))
-            return primitive;
+        // Increment MTR so next time we try the next method on the compound task.
+        mtrIndex = lastDecomp.MethodTraversal++;
 
-        throw new InvalidOperationException();
+        // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
+        finalPlan.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
+
+        blackboard = lastDecomp.Blackboard;
+        tasksToProcess.Push(lastDecomp.CompoundTask);
     }
 
     private sealed class DecompositionState
     {
-        public Stack<HTNTask> TasksToProcess = new();
-        public List<HTNPrimitiveTask> FinalPlan = new();
-        public HTNTask Chosen;
+        /// <summary>
+        /// Blackboard as at decomposition.
+        /// </summary>
+        public Dictionary<string, object> Blackboard = default!;
+
+        /// <summary>
+        /// How many primitive tasks we've added since last decompositionstate.
+        /// </summary>
+        public int PrimitiveCount;
 
         /// <summary>
         /// The compound task that owns this decomposition.
         /// </summary>
-        public HTNCompoundTask CompoundTask;
+        public HTNCompoundTask CompoundTask = default!;
+
+        /// <summary>
+        /// Which method (AKA branch) we took of the compound task. Whenever we rollback the decomposition state
+        /// this gets incremented by 1 so we check the next method.
+        /// </summary>
+        public int MethodTraversal;
     }
 }

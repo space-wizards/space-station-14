@@ -7,24 +7,10 @@ namespace Content.Server.AI.HTN;
 /// Represents a network of multiple tasks. This gets expanded out to its relevant nodes.
 /// </summary>
 [Prototype("htnCompoundTask")]
-public sealed class HTNCompoundTask : HTNTask, ISerializationHooks
+public sealed class HTNCompoundTask : HTNTask
 {
     /// <summary>
-    /// A descriptor of the field, to be used for debugging.
+    /// The available branches for this compound task.
     /// </summary>
-    [DataField("desc")] public string? Desc;
-
-    [DataField("graph")] public List<HTNNode> Graph = new();
-
-    public IReadOnlyDictionary<string, HTNNode> NodeMap => _nodeMap;
-
-    private readonly Dictionary<string, HTNNode> _nodeMap = new();
-
-    public void AfterDeserialization()
-    {
-        foreach (var node in Graph)
-        {
-            _nodeMap.Add(node.ID, node);
-        }
-    }
+    [DataField("branches")] public List<HTNBranch> Branches = new();
 }

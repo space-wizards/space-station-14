@@ -7,15 +7,15 @@ namespace Content.Server.AI.HTN;
 /// </summary>
 public sealed class HTNPlan
 {
-    public HTNPrimitiveTask[] Tasks;
+    public List<HTNPrimitiveTask> Tasks;
 
     public int Index = 0;
 
-    public HTNPrimitiveTask CurrentTask => Tasks[0];
+    public HTNPrimitiveTask CurrentTask => Tasks[Index];
 
     public HTNOperator CurrentOperator => CurrentTask.Operator;
 
-    public HTNPlan(HTNPrimitiveTask[] tasks)
+    public HTNPlan(List<HTNPrimitiveTask> tasks)
     {
         Tasks = tasks;
     }
