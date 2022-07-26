@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Barratry has received a small update., type: Tweak}
-  id: 1517
-  time: '2022-05-12T22:05:02.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Added Skeletons, your lovely local undead spesspals. 97% less murderous
       than zombies and much easier to kill.', type: Add}
   id: 1518
@@ -2942,3 +2937,8 @@ Entries:
     type: Fix}
   id: 2016
   time: '2022-07-26T01:38:30.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The bread has been unplated., type: Remove}
+  id: 2017
+  time: '2022-07-26T02:37:51.0000000+00:00'
