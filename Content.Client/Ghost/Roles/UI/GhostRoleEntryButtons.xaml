@@ -4,10 +4,18 @@
             Access="Public"
             Text="{Loc 'ghost-roles-window-request-role-button'}"
             StyleClasses="OpenRight"
+            Visible="False"
+            HorizontalAlignment="Left"/>
+    <Button Name="CancelButton"
+            Access="Public"
+            Text="Cancel"
+            StyleClasses="Caution"
+            Visible="False"
             HorizontalAlignment="Left"/>
     <Button Name="FollowButton"
             Access="Public"
             Text="{Loc 'ghost-roles-window-follow-role-button'}"
             StyleClasses="OpenLeft"
             HorizontalAlignment="Right"/>
+    <ProgressBar Name="TimeRemaining" MinSize="200 2" MaxHeight="2" Margin="10 10 10 0" Page="0"/>
 </BoxContainer>

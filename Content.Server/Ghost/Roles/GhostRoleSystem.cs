@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
@@ -18,6 +19,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost.Roles
@@ -30,15 +32,18 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
-        private readonly Dictionary<uint, GhostRoleComponent> _ghostRoles = new();
+        private readonly Dictionary<uint, GhostRoleEntry> _ghostRoles = new();
+
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
-        [ViewVariables]
-        public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
+        // TODO: Reimplement this.
+        // [ViewVariables]
+        // public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
 
         public override void Initialize()
         {
@@ -142,6 +147,30 @@ namespace Content.Server.Ghost.Roles
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            var needsUpdating = false;
+
+            foreach (var (identifier, entry) in _ghostRoles)
+            {
+                if (_gameTiming.CurTime < entry.ExpiresAt)
+                    continue;
+
+                if (entry.Component != null)
+                {
+                    ProcessGhostRoleEntryWithRoleComponent(identifier, entry);
+                    entry.AddedAt = _gameTiming.CurTime;
+                    entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
+                }
+
+                else
+                    ProcessGhostRoleEntryWithRequest(identifier, entry);
+
+                needsUpdating = true;
+            }
+
+            if (needsUpdating)
+                UpdateAllEui();
+
             if (_needsUpdateGhostRoleCount)
             {
                 _needsUpdateGhostRoleCount = false;
@@ -151,6 +180,35 @@ namespace Content.Server.Ghost.Roles
                     RaiseNetworkEvent(response, player.ConnectedClient);
                 }
             }
+        }
+
+        private void ProcessGhostRoleEntryWithRoleComponent(uint identifier, GhostRoleEntry entry)
+        {
+            var component = entry.Component;
+            var playerCount = entry.PendingPlayerSessions.Count;
+
+            if (playerCount == 0 || component == null)
+                return;
+
+            var sessions = new List<IPlayerSession>(entry.PendingPlayerSessions);
+            _random.Shuffle(sessions);
+            while (sessions.Count > 0)
+            {
+                var session = sessions.Pop();
+                if (session.Status != SessionStatus.InGame || !component.Take(session))
+                    continue;
+
+                if (session.AttachedEntity != null)
+                    _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{session:player} took the {entry.Component?.RoleName:roleName} ghost role {ToPrettyString(session.AttachedEntity.Value):entity}");
+
+                RemovePlayerTakeoverRequests(session);
+                CloseEui(session);
+            }
+        }
+
+        private void ProcessGhostRoleEntryWithRequest(uint identifier, GhostRoleEntry entry)
+        {
+
         }
 
         private void PlayerStatusChanged(object? blah, SessionStatusEventArgs args)
@@ -164,41 +222,83 @@ namespace Content.Server.Ghost.Roles
 
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            if (_ghostRoles.ContainsValue(role)) return;
-            _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = role;
-            UpdateAllEui();
+            if (_ghostRoles.Any(e => e.Value.Component == role))
+                return;
 
+            var entry =  GhostRoleEntry.MakeForGhostRole(role);
+            entry.AddedAt = _gameTiming.CurTime;
+            entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
+
+            _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = entry;
+            UpdateAllEui();
         }
 
         public void UnregisterGhostRole(GhostRoleComponent role)
         {
-            if (!_ghostRoles.ContainsKey(role.Identifier) || _ghostRoles[role.Identifier] != role) return;
+            if (!_ghostRoles.ContainsKey(role.Identifier))
+                return;
+
             _ghostRoles.Remove(role.Identifier);
             UpdateAllEui();
         }
 
-        public void Takeover(IPlayerSession player, uint identifier)
+        public void RegisterRequest(IGhostRoleRequester requester, int minPlayers, int maxPlayers, TimeSpan timeLimit)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (!role.Take(player)) return;
+            if (_ghostRoles.Any(v => v.Value.Requester == requester))
+                return;
 
-            if (player.AttachedEntity != null)
-                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+            // _ghostRoles.Add(GetNextRoleIdentifier(), new GhostRoleEntry()
+            // {
+            //     Requester = requester,
+            //     MinimumPlayers = minPlayers,
+            //     MaximumPlayers = maxPlayers,
+            //     ElapseTime = timeLimit,
+            //     ExpiresAt = _gameTiming.CurTime + timeLimit
+            // });
+            //
+            // UpdateAllEui();
+        }
 
-            CloseEui(player);
+        public void UnregisterRequest(IGhostRoleRequester requester)
+        {
+
+        }
+
+        public void RequestTakeover(IPlayerSession player, uint identifier)
+        {
+            if (_ghostRoles.TryGetValue(identifier, out var entry))
+            {
+                entry.PendingPlayerSessions.Add(player);
+                _openUis[player].StateDirty();
+
+                // TODO: Close takeover popup.
+            }
+        }
+
+        public void CancelTakeover(IPlayerSession player, uint identifier)
+        {
+            if (_ghostRoles.TryGetValue(identifier, out var entry))
+            {
+                entry.PendingPlayerSessions.Remove(player);
+                _openUis[player].StateDirty();
+            }
         }
 
         public void Follow(IPlayerSession player, uint identifier)
         {
-            if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
-            if (player.AttachedEntity == null) return;
+            if (!_ghostRoles.TryGetValue(identifier, out var role) || role.Component == null)
+                return;
 
-            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Owner);
+            if (player.AttachedEntity == null)
+                return;
+
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Component.Owner);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
         {
-            if (!Resolve(roleUid, ref role)) return;
+            if (!Resolve(roleUid, ref role))
+                return;
 
             var contentData = player.ContentData();
 
@@ -214,15 +314,33 @@ namespace Content.Server.Ghost.Roles
             newMind.TransferTo(mob);
         }
 
-        public GhostRoleInfo[] GetGhostRolesInfo()
+        public void RemovePlayerTakeoverRequests(IPlayerSession session)
+        {
+            foreach (var (identifier, entry) in _ghostRoles)
+            {
+                entry.PendingPlayerSessions.Remove(session);
+            }
+        }
+
+        public GhostRoleInfo[] GetGhostRolesInfo(IPlayerSession session)
         {
             var roles = new GhostRoleInfo[_ghostRoles.Count];
 
             var i = 0;
 
-            foreach (var (id, role) in _ghostRoles)
+            foreach (var (id, request) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
+                roles[i] = new GhostRoleInfo()
+                {
+                    Identifier = id,
+                    Name = request.Name,
+                    Description = request.Description,
+                    Rules = request.Rules,
+                    ExpiresAt = request.ExpiresAt,
+                    AddedAt = request.AddedAt,
+                    NumSignUps = request.PendingPlayerSessions.Count,
+                    IsRequested = request.PendingPlayerSessions.Contains(session),
+                };
                 i++;
             }
 
@@ -235,6 +353,8 @@ namespace Content.Server.Ghost.Roles
             if (!_openUis.ContainsKey(message.Player)) return;
             if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
             CloseEui(message.Player);
+
+            // TODO: Remove player from any pending ghost role requests.
         }
 
         private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
@@ -261,7 +381,6 @@ namespace Content.Server.Ghost.Roles
             }
 
             _openUis.Clear();
-            _ghostRoles.Clear();
             _nextRoleIdentifier = 0;
         }
 
@@ -281,6 +400,45 @@ namespace Content.Server.Ghost.Roles
         private void OnShutdown(EntityUid uid, GhostRoleComponent role, ComponentShutdown args)
         {
             UnregisterGhostRole(role);
+        }
+    }
+
+    public sealed class GhostRoleEntry
+    {
+        public string Name = "Role Request Placeholder";
+
+        public string Description = "Testing lottery role allocation";
+
+        public string Rules = "";
+
+        public TimeSpan ElapseTime = TimeSpan.Zero;
+
+        public TimeSpan ExpiresAt = TimeSpan.Zero;
+
+        public TimeSpan AddedAt = TimeSpan.Zero;
+
+        public int MinimumPlayers = 1;
+
+        public int MaximumPlayers = 1;
+
+        public readonly HashSet<IPlayerSession> PendingPlayerSessions = new();
+
+        public GhostRoleComponent? Component = null;
+
+        public IGhostRoleRequester? Requester = null;
+
+        public static GhostRoleEntry MakeForGhostRole(GhostRoleComponent component)
+        {
+            var inst = new GhostRoleEntry
+            {
+                Name = component.RoleName,
+                Description = component.RoleDescription,
+                Rules = component.RoleRules,
+                Component = component,
+                ElapseTime = TimeSpan.FromSeconds(30),
+            };
+
+            return inst;
         }
     }
 

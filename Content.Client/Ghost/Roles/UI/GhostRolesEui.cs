@@ -3,18 +3,22 @@ using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
     public sealed class GhostRolesEui : BaseEui
     {
+        private readonly IGameTiming _timing;
+
         private readonly GhostRolesWindow _window;
         private GhostRoleRulesWindow? _windowRules = null;
         private uint _windowRulesId = 0;
 
         public GhostRolesEui()
         {
+            _timing = IoCManager.Resolve<IGameTiming>();
             _window = new GhostRolesWindow();
 
             _window.OnRoleRequested += info =>
@@ -31,6 +35,11 @@ namespace Content.Client.Ghost.Roles.UI
                     _windowRules = null;
                 };
                 _windowRules.OpenCentered();
+            };
+
+            _window.OnRoleCancelled += info =>
+            {
+               SendMessage(new GhostRoleCancelTakeoverRequestMessage(info.Identifier));
             };
 
             _window.OnRoleFollow += info =>
@@ -61,7 +70,9 @@ namespace Content.Client.Ghost.Roles.UI
         {
             base.HandleState(state);
 
-            if (state is not GhostRolesEuiState ghostState) return;
+            if (state is not GhostRolesEuiState ghostState)
+                return;
+
             _window.ClearEntries();
 
             var groupedRoles = ghostState.GhostRoles.GroupBy(
@@ -71,7 +82,7 @@ namespace Content.Client.Ghost.Roles.UI
                 var name = group.Key.Name;
                 var description = group.Key.Description;
 
-                _window.AddEntry(name, description, group);
+                _window.AddEntry(name, description, group, _timing);
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);

@@ -8,7 +8,7 @@ namespace Content.Server.Ghost.Roles.UI
     {
         public override GhostRolesEuiState GetNewState()
         {
-            return new(EntitySystem.Get<GhostRoleSystem>().GetGhostRolesInfo());
+            return new(EntitySystem.Get<GhostRoleSystem>().GetGhostRolesInfo(Player));
         }
 
         public override void HandleMessage(EuiMessageBase msg)
@@ -18,7 +18,10 @@ namespace Content.Server.Ghost.Roles.UI
             switch (msg)
             {
                 case GhostRoleTakeoverRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().Takeover(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSystem>().RequestTakeover(Player, req.Identifier);
+                    break;
+                case GhostRoleCancelTakeoverRequestMessage req:
+                    EntitySystem.Get<GhostRoleSystem>().CancelTakeover(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);
