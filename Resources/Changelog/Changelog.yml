@@ -1,23 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Skeleton skulls look more skeleton-y and skeletons also take slightly
-      less blunt damage., type: Tweak}
-  - {message: skeletons can now disarm, type: Fix}
-  id: 1523
-  time: '2022-05-13T02:20:43.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: The rules have been slightly modified to make escalation rules for conflict
-      clearer., type: Tweak}
-  id: 1524
-  time: '2022-05-13T04:58:51.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: Salvage mobs will now die if they're off the salvage wreck when it despawns.,
-    type: Tweak}
-  id: 1525
-  time: '2022-05-13T19:01:30.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Added character descriptions., type: Add}
@@ -2936,3 +2917,19 @@ Entries:
   - {message: Observers now have a warp for the nuke disk., type: Add}
   id: 2022
   time: '2022-07-26T13:55:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: do_after bar no longer flickers for a frame., type: Fix}
+  id: 2023
+  time: '2022-07-26T13:57:31.0000000+00:00'
+- author: Elijahrane
+  changes:
+  - {message: 'If OOC is disabled in the middle of a round, dead players lose the
+      ability to talk in LOOC.', type: Add}
+  id: 2024
+  time: '2022-07-26T13:58:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
+  id: 2025
+  time: '2022-07-26T13:58:40.0000000+00:00'
