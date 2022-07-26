@@ -112,9 +112,6 @@ namespace Content.Server.Hands.Systems
 
             // update gui of anyone stripping this entity.
             _strippableSystem.SendUpdate(uid);
-
-            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
-                sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
         public override void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
