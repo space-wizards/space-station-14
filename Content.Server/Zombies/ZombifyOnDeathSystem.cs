@@ -29,6 +29,7 @@ using Content.Server.Traitor;
 using Content.Shared.Zombies;
 using Content.Server.Atmos.Miasma;
 using Content.Server.IdentityManagement;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -47,6 +48,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -195,6 +197,8 @@ namespace Content.Server.Zombies
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
+            //zombies get slowdown once they convert
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
         }
     }
 }
