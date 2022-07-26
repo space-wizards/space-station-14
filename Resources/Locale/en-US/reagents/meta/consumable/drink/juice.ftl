@@ -22,7 +22,7 @@ reagent-desc-juice-bungo = Exotic! You feel like you are on vacation already.
 reagent-name-juice-carrot = carrot juice
 reagent-desc-juice-carrot = It's like a carrot, but less crunchy.
 
-reagent-name-juice-garlic = Garlic Juice
+reagent-name-juice-garlic = garlic juice
 reagent-desc-juice-garlic = Crushed garlic. Chefs love it, but it can make you smell bad.
 
 reagent-name-juice-grape = grape juice
