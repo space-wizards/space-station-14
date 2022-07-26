@@ -1,11 +1,4 @@
 Entries:
-- author: TimrodDX
-  changes:
-  - {message: Several areas on Delta Station now have decals., type: Add}
-  - {message: Interns can now spawn on Delta Station., type: Add}
-  - {message: Delta Station's wiring should be more stable than before., type: Tweak}
-  id: 1515
-  time: '2022-05-12T13:30:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Filing cabinets now have proper collision and an outline., type: Fix}
@@ -2942,3 +2935,9 @@ Entries:
   - {message: Ported medibots from Nyanotrasen MRP., type: Add}
   id: 2014
   time: '2022-07-25T15:33:32.0000000+00:00'
+- author: zerorulez
+  changes:
+  - {message: Entities without hands can no longer open/close storage and toggle locks.,
+    type: Fix}
+  id: 2015
+  time: '2022-07-26T01:31:25.0000000+00:00'
