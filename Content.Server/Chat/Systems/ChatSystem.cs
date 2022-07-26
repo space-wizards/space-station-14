@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -244,16 +245,21 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false)
     {
-        if (!_actionBlocker.CanSpeak(source)) return;
+        if (!_actionBlocker.CanSpeak(source))
+            return;
 
         var (message, channel) = GetRadioPrefix(source, originalMessage);
+
+        if (channel != null)
+        {
+            _listener.PingListeners(source, message, channel);
+            SendEntityWhisper(source, message, hideChat);
+            return;
+        }
 
         message = TransformSpeech(source, message);
         if (message.Length == 0)
             return;
-
-        if (channel != null)
-            _listener.PingListeners(source, message, channel);
 
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
@@ -271,7 +277,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat = false)
     {
-        if (!_actionBlocker.CanSpeak(source)) return;
+        if (!_actionBlocker.CanSpeak(source))
+            return;
 
         var message = TransformSpeech(source, originalMessage);
         if (message.Length == 0)
