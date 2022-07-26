@@ -1,7 +1,7 @@
 - type: gameMap
   id: Atlas
   mapName: 'Atlas'
-  mapPath: /Maps/atlas.yml
+  mapPath: /Maps/Stations/atlas.yml
   minPlayers: 0
   maxPlayers: 35
   votable: False

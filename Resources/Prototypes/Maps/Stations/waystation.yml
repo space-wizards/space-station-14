@@ -1,7 +1,7 @@
 - type: gameMap
   id: Way
   mapName: 'Waystation'
-  mapPath: /Maps/waystation.yml
+  mapPath: /Maps/Stations/waystation.yml
   minPlayers: 15
   maxPlayers: 50
   votable: false

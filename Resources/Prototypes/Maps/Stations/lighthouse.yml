@@ -1,7 +1,7 @@
 ﻿- type: gameMap
   id: Lighthouse
   mapName: 'Lighthouse'
-  mapPath: /Maps/lighthouse.yml
+  mapPath: /Maps/Stations/lighthouse.yml
   minPlayers: 35
   maxPlayers: 70
   stations:
