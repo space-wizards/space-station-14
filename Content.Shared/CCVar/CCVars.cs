@@ -918,7 +918,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.recall_turning_point", 0.5f, CVar.SERVERONLY);
 
         /// <summary>
-        /// The map to load for centcomm for the emergency shuttle to dock to.
+        /// The map to load for CentCom for the emergency shuttle to dock to.
         /// </summary>
         public static readonly CVarDef<string> CentcommMap =
             CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);
