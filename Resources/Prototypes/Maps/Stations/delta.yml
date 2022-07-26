@@ -1,5 +1,5 @@
 - type: gameMap
-  id: delta
+  id: Delta
   mapName: 'Delta Station'
   mapPath: /Maps/delta.yml
   minPlayers: 60

@@ -1,23 +1,23 @@
 - type: gameMap
-  id: atlas
-  mapName: 'Atlas'
-  mapPath: /Maps/atlas.yml
-  minPlayers: 0
-  maxPlayers: 35
-  votable: False
+  id: Way
+  mapName: 'Waystation'
+  mapPath: /Maps/waystation.yml
+  minPlayers: 15
+  maxPlayers: 50
+  votable: false
   stations:
-    Atlas: 
-      mapNameTemplate: '{0} Atlas {1}'
+    Waystation:
+      mapNameTemplate: '{0} Waystation {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
-        prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
+        prefixCreator: 'VG'
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 2, 2 ]
+        CargoTechnician: [ 3, 3 ]
         Passenger: [ -1, -1 ]
         Bartender: [ 1, 1 ]
-        Botanist: [ 2, 2]
+        Botanist: [ 3, 3 ]
         Chef: [ 1, 1 ]
         Clown: [ 1, 1 ]
         Janitor: [ 1, 1 ]
@@ -25,18 +25,18 @@
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 3, 3 ]
+        StationEngineer: [ 4, 4 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 2, 2 ]
+        MedicalDoctor: [ 4, 4 ]
         Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
-        Scientist: [ 3, 3 ]
+        Scientist: [ 4, 4 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 2, 2 ]
-        Warden: [ 1, 1 ]
+        SecurityOfficer: [ 4, 4 ]
         Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Lawyer: [ 1, 1 ]
+        Lawyer: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 2, 2 ]
         Musician: [ 1, 1 ]

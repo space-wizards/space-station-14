@@ -1,5 +1,5 @@
 ﻿- type: gameMap
-  id: packedstation
+  id: Packed
   mapName: 'Packedstation'
   mapPath: /Maps/packedstation.yml
   minPlayers: 0
