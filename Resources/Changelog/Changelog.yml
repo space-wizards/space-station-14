@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added Skeletons, your lovely local undead spesspals. 97% less murderous
-      than zombies and much easier to kill.', type: Add}
-  id: 1518
-  time: '2022-05-12T23:35:55.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'Naming machine fixed, now you can get a reptilian name when clicking
@@ -2942,3 +2936,8 @@ Entries:
   - {message: The bread has been unplated., type: Remove}
   id: 2017
   time: '2022-07-26T02:37:51.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Waystation has been pulled from rotation., type: Remove}
+  id: 2018
+  time: '2022-07-26T02:41:06.0000000+00:00'
