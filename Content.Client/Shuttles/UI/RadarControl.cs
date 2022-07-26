@@ -73,6 +73,7 @@ public sealed class RadarControl : Control
     {
         IoCManager.InjectDependencies(this);
         MinSize = (SizeFull, SizeFull);
+        RectClipContent = true;
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)

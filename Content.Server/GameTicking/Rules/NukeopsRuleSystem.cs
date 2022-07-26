@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
+using System.Data;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -114,7 +115,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var player in everyone)
         {
-            if(player.ContentData()?.Mind?.AllRoles.All(role => role is not Job {CanBeAntag: false}) ?? false) continue;
             if (!ev.Profiles.ContainsKey(player.UserId))
             {
                 continue;
@@ -285,6 +285,16 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
             GameTicker.PlayerJoinGame(session);
         }
+    }
+
+    //For admins forcing someone to nukeOps.
+    public void MakeLoneNukie(Mind.Mind mind)
+    {
+        if (!mind.OwnedEntity.HasValue)
+            return;
+
+        mind.AddRole(new TraitorRole(mind, _prototypeManager.Index<AntagPrototype>(NukeopsPrototypeId)));
+        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>("SyndicateOperativeGearFull"), null);
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)

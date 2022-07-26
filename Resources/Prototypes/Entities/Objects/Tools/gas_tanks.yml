@@ -20,9 +20,14 @@
     toggleAction:
       name: action-name-internals-toggle
       description: action-description-internals-toggle
-      icon: Interface/Actions/internal0.png
-      iconOn: Interface/Actions/internal1.png
+      icon:
+        sprite: Interface/Alerts/internals.rsi
+        state: internal2
+      iconOn:
+        sprite: Interface/Alerts/internals.rsi
+        state: internal1
       event: !type:ToggleActionEvent
+      useDelay: 1.0
   - type: Explosive
     explosionType: Default
     maxIntensity: 20

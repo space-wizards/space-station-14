@@ -142,7 +142,7 @@ grids:
   - ind: -1,-4
     tiles: DwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAA0AAAAHgAAATQAAAA2AAAAAAAAADcAAAAxAAADMQAAARMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAPAAAANAAAAh4AAAI0AAADNgAAAAAAAAA3AAAANwAAADEAAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAADQAAAEeAAAANAAAAjYAAAAAAAAANwAAADEAAAExAAADEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAAA8AAAA0AAAAHgAAATQAAAEAAAAAAAAAADcAAAAxAAADMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAATAAAANwAAADcAAAA2AAAAAAAAAAAAAAA3AAAAMQAAADEAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAADcAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAMxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAATEAAAIxAAABMQAAAjEAAAMxAAABMQAAAjcAAAAxAAABNwAAADEAAAAxAAABMQAAADEAAAIxAAAAMQAAAzEAAAExAAAAMQAAAzEAAAExAAABMQAAADEAAAMxAAAAMQAAATEAAAMxAAADMQAAAzEAAAMxAAADMQAAAjEAAAMxAAAAMQAAAjEAAAAxAAADMQAAADEAAAExAAADMQAAADEAAAMxAAABMQAAAjEAAAAxAAACMQAAATEAAAIxAAABMQAAADEAAAAxAAADMQAAADEAAAExAAAAMQAAADEAAAExAAABMQAAATEAAAAxAAAAMQAAAzEAAAM3AAAAMQAAATEAAAA3AAAANQAAADEAAAExAAADMQAAAjcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADNwAAADUAAAA1AAADNQAAADUAAAI3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAAzcAAAA1AAAANQAAAzUAAAI1AAABNwAAADMAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAIxAAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAAMwAAADcAAAAxAAAAMQAAAg==
   - ind: -2,-4
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAABMAAAATAAAAEwAAABMAAAAPAAAADwAAAA8AAAAPAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAADwAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAEwAAABMAAAATAAAAEwAAAA8AAAAPAAAADwAAAA8AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAABMAAAATAAAAEwAAABMAAAAPAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAAEwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAM3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAxAAABNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAAjEAAAE3AAAAMQAAAzcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAMxAAACMQAAATEAAAIxAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAADcAAAAxAAADMQAAAzEAAAAxAAABMQAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAA3AAAAMQAAAjEAAAAxAAABMQAAAzEAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAABMAAAATAAAANwAAABMAAAAPAAAADwAAAA8AAAAPAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAADwAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAEwAAABMAAAA3AAAAEwAAAA8AAAAPAAAADwAAAA8AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAABMAAAATAAAAEwAAABMAAAAPAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAAEwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAM3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAxAAABNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAAjEAAAE3AAAAMQAAAzcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAMxAAACMQAAATEAAAIxAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAADcAAAAxAAADMQAAAzEAAAAxAAABMQAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAA3AAAAMQAAAjEAAAAxAAABMQAAAzEAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAAA==
   - ind: -1,-5
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANgAAADcAAAAxAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAADcAAAAxAAACMQAAADYAAAA2AAAANgAAADYAAAA2AAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAAAAAAAAAAAAA3AAAAMQAAAjEAAAIAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADEAAAMxAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAAxAAACMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAIxAAADMQAAAjEAAAExAAAAMQAAATEAAAIxAAAAMQAAADEAAAMxAAADMQAAAjEAAAAxAAADNwAAADEAAAIxAAACMQAAADEAAAMxAAABMQAAATEAAAAxAAAAMQAAAzEAAAIxAAADMQAAAzEAAAExAAAAMQAAAzEAAAAxAAACMQAAATEAAAIxAAAAMQAAADEAAAAxAAAAMQAAAjEAAAAxAAAAMQAAATEAAAExAAACMQAAATEAAAIxAAACMQAAATEAAAAxAAABMQAAAzEAAAAxAAADMQAAAjEAAAM3AAAAMQAAAjEAAAMxAAABMQAAATEAAAMxAAABMQAAATEAAAExAAABNwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACMQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAxAAAANwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAAzEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAEwAAADcAAAA3AAAANgAAAAAAAAAAAAAANwAAADEAAAIxAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAAA8AAAA0AAABHgAAADQAAAAAAAAAAAAAADcAAAAxAAADMQAAAA==
   - ind: 0,-5
@@ -36463,15 +36463,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1616
-  type: DrinkMugMetal
+  type: ShuttleWindow
   components:
-  - pos: -33.37802,-0.4769459
+  - pos: -22.5,-61.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1617
   type: CableMV
   components:
@@ -36503,15 +36499,11 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 1621
-  type: DrinkMugRed
+  type: ShuttleWindow
   components:
-  - pos: -33.59677,-0.3050709
+  - pos: -22.5,-63.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1622
   type: FoodBoxDonut
   components:
@@ -37091,9 +37083,17 @@ entities:
 - uid: 1700
   type: Lamp
   components:
-  - pos: -34.28861,-3.3921857
+  - pos: -34.421402,-3.2097733
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 1701
@@ -37907,15 +37907,15 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1803
-  type: DrinkShinyFlask
+  type: ComputerCriminalRecords
   components:
-  - pos: -27.50749,-7.7898693
+  - pos: -3.5,-44.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1804
   type: Grille
   components:
@@ -39894,25 +39894,23 @@ entities:
     parent: 60
     type: Transform
 - uid: 2042
-  type: DrinkWhiskeyBottleFull
+  type: Lamp
   components:
-  - pos: -22.611002,-28.12298
+  - pos: -22.39201,0.9298079
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 2043
-  type: DrinkWhiskeyBottleFull
+  type: WallmountTelescreen
   components:
-  - pos: -22.329752,-28.201105
+  - pos: -19.5,3.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2044
   type: FirelockGlass
   components:
@@ -40685,21 +40683,12 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 2130
-  type: Lamp
+  type: GasOutletInjector
   components:
-  - pos: -22.480726,0.7378293
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,42.5
     parent: 60
     type: Transform
-  - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      keywords: []
-      event: !type:ToggleActionEvent {}
-    type: HandheldLight
-  - canCollide: False
-    type: Physics
 - uid: 2131
   type: GasPipeStraight
   components:
@@ -50904,15 +50893,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 3423
-  type: DrinkDoctorsDelightGlass
+  type: GasOutletInjector
   components:
-  - pos: 35.894176,-13.228425
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,32.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 3424
   type: WallSolid
   components:
@@ -51568,15 +51554,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 3523
-  type: DrinkVodkaBottleFull
+  type: GasOutletInjector
   components:
-  - pos: 45.749363,-37.486095
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,36.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 3524
   type: MaintenanceToolSpawner
   components:
@@ -53048,7 +53031,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -7651.8643
+  - SecondsUntilStateChange: -8729.462
     state: Opening
     type: Door
 - uid: 3729
@@ -57642,16 +57625,6 @@ entities:
   - pos: -68.5,7.5
     parent: 60
     type: Transform
-- uid: 4325
-  type: DrinkMugDog
-  components:
-  - pos: -66.3564,6.522929
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 4326
   type: PoweredSmallLight
   components:
@@ -58066,15 +58039,12 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 4376
-  type: DrinkWhiskeyBottleFull
+  type: GasOutletInjector
   components:
-  - pos: -64.5399,0.81645834
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,40.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 4377
   type: HatBandSkull
   components:
@@ -63378,17 +63348,17 @@ entities:
     parent: 60
     type: Transform
 - uid: 5090
-  type: Window
+  type: GasOutletInjector
   components:
   - rot: 1.5707963267948966 rad
-    pos: -22.5,-63.5
+    pos: -43.5,44.5
     parent: 60
     type: Transform
 - uid: 5091
-  type: Window
+  type: GasOutletInjector
   components:
   - rot: 1.5707963267948966 rad
-    pos: -22.5,-61.5
+    pos: -43.5,38.5
     parent: 60
     type: Transform
 - uid: 5092
@@ -65060,15 +65030,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 5298
-  type: DrinkFlaskOld
+  type: GasOutletInjector
   components:
-  - pos: -22.657877,-28.46673
+  - rot: 1.5707963267948966 rad
+    pos: -43.5,34.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5299
   type: GasPipeStraight
   components:
@@ -65279,15 +65246,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5325
-  type: DrinkDetFlask
+  type: CableApcExtension
   components:
-  - pos: -24.49899,-30.183874
+  - pos: -71.5,18.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5326
   type: Lamp
   components:
@@ -69152,8 +69115,6 @@ entities:
   components:
   - parent: 6448
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5813
   type: Barricade
   components:
@@ -74186,16 +74147,6 @@ entities:
   - pos: -37.5,-29.5
     parent: 60
     type: Transform
-- uid: 6426
-  type: DrinkChangelingStingCan
-  components:
-  - pos: -39.057964,-28.344824
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
 - uid: 6427
   type: TableWood
   components:
@@ -74320,9 +74271,17 @@ entities:
 - uid: 6446
   type: LampGold
   components:
-  - pos: 16.50441,-49.42838
+  - pos: 16.535465,-49.13737
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 6447
@@ -76701,31 +76660,31 @@ entities:
     parent: 60
     type: Transform
 - uid: 6767
-  type: WindowReinforcedDirectional
+  type: AtmosDeviceFanTiny
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-63.5
+  - anchored: True
+    pos: 44.5,31.5
     parent: 60
     type: Transform
 - uid: 6768
-  type: WindowReinforcedDirectional
+  type: AtmosDeviceFanTiny
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-61.5
+  - anchored: True
+    pos: 46.5,31.5
     parent: 60
     type: Transform
 - uid: 6769
-  type: WindowReinforcedDirectional
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-61.5
+  - anchored: True
+    pos: 52.5,31.5
     parent: 60
     type: Transform
 - uid: 6770
-  type: WindowReinforcedDirectional
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-63.5
+  - anchored: True
+    pos: 54.5,31.5
     parent: 60
     type: Transform
 - uid: 6771
@@ -76903,15 +76862,12 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6788
-  type: DrinkDetFlask
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 19.684816,-50.49055
+  - anchored: True
+    pos: 59.5,14.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6789
   type: SpawnPointLatejoin
   components:
@@ -82542,25 +82498,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7581
-  type: DrinkMugRed
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -34.95712,-41.37509
+  - anchored: True
+    pos: 59.5,12.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7582
-  type: DrinkMugRed
+  type: WallmountTelescreen
   components:
-  - pos: -49.492313,-42.32916
+  - rot: -1.5707963267948966 rad
+    pos: 14.5,19.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7583
   type: RandomSpawner
   components:
@@ -85843,15 +85797,14 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8028
-  type: DrinkSyndicatebomb
+  type: ExtinguisherCabinetFilled
   components:
-  - pos: -49.468544,-41.654823
+  - pos: 14.5,20.5
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      ItemCabinet: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 8029
   type: MaintenanceWeaponSpawner
   components:
@@ -86760,17 +86713,13 @@ entities:
     parent: 60
     type: Transform
 - uid: 8144
-  type: ComputerId
+  type: PlushieLamp
   components:
-  - pos: -3.5,-44.5
+  - pos: -8.538639,25.673088
     parent: 60
     type: Transform
-  - containers:
-      IdCardConsole-privilegedId: !type:ContainerSlot {}
-      IdCardConsole-targetId: !type:ContainerSlot {}
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
+  - canCollide: False
+    type: Physics
 - uid: 8145
   type: ChairOfficeDark
   components:
@@ -86858,16 +86807,6 @@ entities:
   - containers:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 8158
-  type: DrinkMugRed
-  components:
-  - pos: -5.1717057,-44.471844
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 8159
   type: WindowReinforcedDirectional
   components:
@@ -88625,26 +88564,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 8401
-  type: DrinkSakeGlass
-  components:
-  - pos: -11.479933,-50.196045
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 8402
-  type: DrinkSakeGlass
-  components:
-  - pos: -11.339308,-50.36792
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 8403
   type: PoweredSmallLight
   components:
@@ -91127,16 +91046,6 @@ entities:
   - pos: 31.5,-59.5
     parent: 60
     type: Transform
-- uid: 8773
-  type: DrinkMugMoebius
-  components:
-  - pos: -66.6064,6.726054
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 8774
   type: GasVentPump
   components:
@@ -96664,16 +96573,6 @@ entities:
     pos: -43.5,3.5
     parent: 60
     type: Transform
-- uid: 9532
-  type: DrinkHotCoffee
-  components:
-  - pos: -42.59354,4.4881296
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 9533
   type: Lamp
   components:
@@ -96924,16 +96823,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 9562
-  type: DrinkHotCoffee
-  components:
-  - pos: -49.477966,-7.454712
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 9563
   type: PottedPlantBioluminscent
   components:
@@ -108725,16 +108614,6 @@ entities:
   - pos: 33.5,6.5
     parent: 60
     type: Transform
-- uid: 11432
-  type: DrinkAmasecGlass
-  components:
-  - pos: -22.106472,0.69601834
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 11433
   type: SignDirectionalMed
   components:
@@ -117106,16 +116985,6 @@ entities:
     pos: 24.5,-39.5
     parent: 60
     type: Transform
-- uid: 12753
-  type: DrinkWineBottleFull
-  components:
-  - pos: 23.536352,-39.12696
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 12754
   type: WallReinforced
   components:
@@ -122264,16 +122133,6 @@ entities:
   - pos: 49.5,16.5
     parent: 60
     type: Transform
-- uid: 13490
-  type: DrinkMugMetal
-  components:
-  - pos: 47.60663,17.564785
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 13491
   type: ClothingHeadHatCargosoftFlipped
   components:
@@ -122282,16 +122141,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 13492
-  type: DrinkMugOne
-  components:
-  - pos: 47.38788,17.79916
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 13493
   type: Table
   components:
@@ -124719,16 +124568,6 @@ entities:
   - pos: 6.5,29.5
     parent: 60
     type: Transform
-- uid: 13825
-  type: DrinkWaterBottleFull
-  components:
-  - pos: 4.247008,21.736326
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 13826
   type: PosterLegitNanotrasenLogo
   components:
@@ -127419,14 +127258,6 @@ entities:
   - pos: -8.5,24.5
     parent: 60
     type: Transform
-- uid: 14185
-  type: LampGold
-  components:
-  - pos: -8.542841,25.577087
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 14186
   type: TableWood
   components:
@@ -129953,7 +129784,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -1164.7632
+  - SecondsUntilStateChange: -2242.361
     state: Closing
     type: Door
   - canCollide: False
@@ -130102,16 +129933,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 14545
-  type: DrinkWineBottleFull
-  components:
-  - pos: -22.523077,19.739557
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 14546
   type: DisposalUnit
   components:
@@ -132620,13 +132441,6 @@ entities:
     pos: -45.5,37.5
     parent: 60
     type: Transform
-- uid: 14896
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,42.5
-    parent: 60
-    type: Transform
 - uid: 14897
   type: GasPipeStraight
   components:
@@ -133276,20 +133090,6 @@ entities:
   - pos: -40.5,34.5
     parent: 60
     type: Transform
-- uid: 14989
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,32.5
-    parent: 60
-    type: Transform
-- uid: 14990
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,36.5
-    parent: 60
-    type: Transform
 - uid: 14991
   type: GasPipeStraight
   components:
@@ -133313,13 +133113,6 @@ entities:
     type: Transform
   - open: False
     type: GasValve
-- uid: 14994
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,40.5
-    parent: 60
-    type: Transform
 - uid: 14995
   type: GasPipeStraight
   components:
@@ -133386,13 +133179,6 @@ entities:
     pos: -42.5,44.5
     parent: 60
     type: Transform
-- uid: 15004
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,44.5
-    parent: 60
-    type: Transform
 - uid: 15005
   type: GasMixerFlipped
   components:
@@ -133402,13 +133188,6 @@ entities:
   - inletTwoConcentration: 0
     inletOneConcentration: 1
     type: GasMixer
-- uid: 15006
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,38.5
-    parent: 60
-    type: Transform
 - uid: 15007
   type: GasPipeBend
   components:
@@ -134054,13 +133833,6 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -44.5,39.5
-    parent: 60
-    type: Transform
-- uid: 15100
-  type: GasPassiveVent
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -43.5,34.5
     parent: 60
     type: Transform
 - uid: 15101
@@ -141270,46 +141042,6 @@ entities:
   - pos: -1.5,22.5
     parent: 60
     type: Transform
-- uid: 16100
-  type: DrinkMugRainbow
-  components:
-  - pos: 4.99697,21.690666
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 16101
-  type: DrinkMugHeart
-  components:
-  - pos: 4.77822,21.565666
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 16102
-  type: DrinkMugOne
-  components:
-  - pos: 9.590719,18.628166
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 16103
-  type: DrinkMugMetal
-  components:
-  - pos: 4.575133,21.709621
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 16104
   type: WaterCooler
   components:
@@ -149966,16 +149698,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 17386
-  type: DrinkWhiskeyBottleFull
-  components:
-  - pos: -65.60689,25.867188
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 17387
   type: Pen
   components:
@@ -152121,9 +151843,17 @@ entities:
 - uid: 17675
   type: Lamp
   components:
-  - pos: -53.47904,19.64194
+  - pos: -53.539146,19.787207
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 17676
@@ -152174,9 +151904,17 @@ entities:
 - uid: 17683
   type: LampGold
   components:
-  - pos: -47.44779,23.595064
+  - pos: -47.45724,23.765757
     parent: 60
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 17684
@@ -157725,16 +157463,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 18456
-  type: DrinkGoldschlagerBottleFull
-  components:
-  - pos: 6.3908696,-5.6800957
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 18457
   type: DrinkGoldenCup
   components:
@@ -157889,16 +157617,6 @@ entities:
     type: HandheldLight
   - canCollide: False
     type: Physics
-- uid: 18476
-  type: DrinkFlask
-  components:
-  - pos: -8.369689,-5.424922
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 18477
   type: ComfyChair
   components:
@@ -167074,16 +166792,6 @@ entities:
   - pos: 34.5,13.5
     parent: 60
     type: Transform
-- uid: 19696
-  type: DrinkHotCoffee
-  components:
-  - pos: 34.45484,15.5771265
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19697
   type: BoxFolderGrey
   components:
@@ -169682,16 +169390,6 @@ entities:
   - pos: 30.5,-2.5
     parent: 60
     type: Transform
-- uid: 20074
-  type: DrinkMugBlue
-  components:
-  - pos: 29.347176,-1.4443841
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 20075
   type: SignElectricalMed
   components:
@@ -175729,6 +175427,11 @@ entities:
     pos: 37.5,17.5
     parent: 60
     type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraEntertainment
+    nameSet: True
+    id: 'CHANNEL 13 '
+    type: SurveillanceCamera
   - containers:
     - machine_parts
     - machine_board
@@ -177620,20 +177323,6 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
-- uid: 21247
-  type: Poweredlight
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -71.5,18.5
-    parent: 60
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 21248
   type: CableApcExtension
   components:
@@ -177728,12 +177417,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: -72.5,17.5
-    parent: 60
-    type: Transform
-- uid: 21264
-  type: CableApcExtension
-  components:
-  - pos: -71.5,18.5
     parent: 60
     type: Transform
 - uid: 21265
