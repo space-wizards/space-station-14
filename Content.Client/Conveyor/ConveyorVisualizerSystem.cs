@@ -1,6 +1,5 @@
 using Robust.Client.GameObjects;
 using Content.Shared.Conveyor;
-using Content.Client.Conveyor.Components;
 
 namespace Content.Client.Conveyor;
 
