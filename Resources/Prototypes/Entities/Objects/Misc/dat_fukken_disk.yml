@@ -15,8 +15,6 @@
     state: icon
   - type: StaticPrice
     price: 2000
-  - type: WarpPoint
-    location: nuke disk
 
 - type: entity
   name: nuclear authentication disk
