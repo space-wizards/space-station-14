@@ -1,18 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Added character descriptions., type: Add}
-  id: 1526
-  time: '2022-05-13T22:58:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Skeleton reassembly now works as intended and won't leave behind body
-      parts., type: Fix}
-  - {message: Skeletons no longer have eyes or eye colors., type: Fix}
-  - {message: Skeletons take slightly less barotrauma to scale with their increased
-      blunt vulnerability., type: Tweak}
-  id: 1527
-  time: '2022-05-14T01:31:34.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed grabbing things through airlocks and windoors., type: Fix}
@@ -2933,3 +2919,17 @@ Entries:
   - {message: Bumped pulling modified speed from 0.75 to 0.9, type: Tweak}
   id: 2025
   time: '2022-07-26T13:58:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: People with empty-name ID cards no longer show up as having an empty
+      identity., type: Fix}
+  id: 2026
+  time: '2022-07-26T23:49:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Radio messages will properly capitalize the first letter of your message
+      again., type: Fix}
+  - {message: Sending a radio message will now make you whisper locally instead of
+      speak., type: Add}
+  id: 2027
+  time: '2022-07-26T23:49:23.0000000+00:00'
