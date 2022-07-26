@@ -2663,7 +2663,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-tiltaellen
   physicalDesc: reagent-physical-desc-strong-smelling
-  color: "#"
+  color: "#f4efe2"
   spritePath: glass_tiltaellen.rsi
   metabolisms:
     Drink:
