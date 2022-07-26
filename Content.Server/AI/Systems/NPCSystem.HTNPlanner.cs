@@ -21,6 +21,9 @@ public sealed partial class NPCSystem
          * Really the best reference for what a HTN looks like is http://www.gameaipro.com/GameAIPro/GameAIPro_Chapter12_Exploring_HTN_Planners_through_Example.pdf
          */
 
+        var decompHistory = new Stack<DecompositionState>();
+        var mtr = new List<int>();
+
         var currentBlackboard = component.BlackboardA.ShallowClone();
         var tasksToProcess = new Stack<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
@@ -31,7 +34,14 @@ public sealed partial class NPCSystem
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
-                    if (TryFindSatisfied(compound))
+                    if (TryFindSatisfiedMethod(compound))
+                    {
+                        RecordDecompositionOfTask(currentTask, finalPlan, decompHistory);
+                    }
+                    else
+                    {
+                        RestoreTolastDecomposedTask();
+                    }
 
                     // TODO: Satisfied method
                     // TODO: Insert subtasks to taskstoprocess
@@ -39,9 +49,18 @@ public sealed partial class NPCSystem
                     // TODO: If not satisfied restore to last decomposed
                     break;
                 case HTNPrimitiveTask primitive:
-                    // TODO: If conditions met
-                    finalPlan.Add(primitive);
-                    // TODO: Apply effects to world state
+                    if (PrimitiveConditionMet(primitive))
+                    {
+                        // TODO: If conditions met
+                        finalPlan.Add(primitive);
+                        // TODO: Apply effects to world state
+                    }
+                    else
+                    {
+                        RestoreTolastDecomposedTask();
+                    }
+
+
                     break;
             }
         }
@@ -71,12 +90,30 @@ public sealed partial class NPCSystem
         return new HTNPlan(plan.ToArray());
     }
 
-    private void RecordDecompositionOfTask(HTNTask currentTask, List<HTNTask> finalPlan, decompHistory)
+    private bool PrimitiveConditionMet(HTNTask primitive)
+    {
+        return true;
+    }
+
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compound)
+    {
+        // Find the first method that has its preconditions met.
+    }
+
+    private void RecordDecompositionOfTask(Stack<HTNTask> tasksToProcess, HTNTask currentTask, List<HTNPrimitiveTask> finalPlan, Stack<DecompositionState> decompHistory)
+    {
+        decompHistory.Push(new DecompositionState()
+        {
+            TasksToProcess = new Stack<HTNTask>(tasksToProcess),
+            FinalPlan = new List<HTNPrimitiveTask>(finalPlan),
+
+        });
+    }
+
+    private void RestoreTolastDecomposedTask()
     {
 
     }
-
-    private void
 
     private HTNTask GetTask(string id)
     {
@@ -86,5 +123,17 @@ public sealed partial class NPCSystem
             return primitive;
 
         throw new InvalidOperationException();
+    }
+
+    private sealed class DecompositionState
+    {
+        public Stack<HTNTask> TasksToProcess = new();
+        public List<HTNPrimitiveTask> FinalPlan = new();
+        public HTNTask Chosen;
+
+        /// <summary>
+        /// The compound task that owns this decomposition.
+        /// </summary>
+        public HTNCompoundTask CompoundTask;
     }
 }
