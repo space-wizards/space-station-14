@@ -1,10 +1,4 @@
 Entries:
-- author: Ripmorld
-  changes:
-  - {message: You can now print various powercells in protolathes, type: Add}
-  - {message: You get more Licoxide the bigger the powercell you juice, type: Tweak}
-  id: 1520
-  time: '2022-05-12T23:49:52.0000000+00:00'
 - author: ShuttleEnjoyer
   changes:
   - {message: 'Added a new Cargo crate with a shuttle console board, shuttle power
@@ -2940,3 +2934,8 @@ Entries:
   - {message: Lizards and slimes now have different speech sounds!, type: Add}
   id: 2019
   time: '2022-07-26T09:13:12.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Syndicate layoffs., type: Tweak}
+  id: 2020
+  time: '2022-07-26T09:50:18.0000000+00:00'
