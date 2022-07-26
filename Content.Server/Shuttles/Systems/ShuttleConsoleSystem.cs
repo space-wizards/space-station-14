@@ -73,7 +73,10 @@ namespace Content.Server.Shuttles.Systems
             if (entity == null || dest.Whitelist?.IsValid(entity.Value, EntityManager) == false) return;
 
             if (!TryComp<TransformComponent>(entity, out var xform) ||
-                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle)) return;
+                !TryComp<ShuttleComponent>(xform.GridUid, out var shuttle))
+            {
+                return;
+            }
 
             if (HasComp<FTLComponent>(xform.GridUid))
             {
@@ -91,7 +94,10 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
+            if (args.Destination == _shuttle.Centcomm)
+                _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
+            else
+                _shuttle.FTLTravel(shuttle, args.Destination);
         }
 
         private void OnDock(DockEvent ev)

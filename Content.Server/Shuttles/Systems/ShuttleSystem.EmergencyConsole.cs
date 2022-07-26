@@ -50,7 +50,17 @@ public sealed partial class ShuttleSystem
     private readonly TimeSpan _bufferTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// <see cref="CCVars.EmergencyShuttleTransitTime"/>
+    /// <see cref="CCVars.EmergencyShuttleMinTransitTime"/>
+    /// </summary>
+    public float MinimumTransitTime { get; private set; }
+
+    /// <summary>
+    /// <see cref="CCVars.EmergencyShuttleMaxTransitTime"/>
+    /// </summary>
+    public float MaximumTransitTime { get; private set; }
+
+    /// <summary>
+    /// How long it will take for the emergency shuttle to arrive at CentComm.
     /// </summary>
     public float TransitTime { get; private set; }
 
@@ -76,7 +86,8 @@ public sealed partial class ShuttleSystem
 
     private void InitializeEmergencyConsole()
     {
-        _configManager.OnValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime, true);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime, true);
+        _configManager.OnValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime, true);
         _configManager.OnValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime, true);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ComponentStartup>(OnEmergencyStartup);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
@@ -89,15 +100,21 @@ public sealed partial class ShuttleSystem
         _authorizeTime = obj;
     }
 
-    private void SetTransitTime(float obj)
+    private void SetMinTransitTime(float obj)
     {
-        TransitTime = obj;
+        MinimumTransitTime = obj;
+    }
+
+    private void SetMaxTransitTime(float obj)
+    {
+        MaximumTransitTime = obj;
     }
 
     private void ShutdownEmergencyConsole()
     {
         _configManager.UnsubValueChanged(CCVars.EmergencyShuttleAuthorizeTime, SetAuthorizeTime);
-        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleTransitTime, SetTransitTime);
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMinTransitTime, SetMinTransitTime);
+        _configManager.UnsubValueChanged(CCVars.EmergencyShuttleMaxTransitTime, SetMaxTransitTime);
     }
 
     private void OnEmergencyStartup(EntityUid uid, EmergencyShuttleConsoleComponent component, ComponentStartup args)
@@ -107,7 +124,8 @@ public sealed partial class ShuttleSystem
 
     private void UpdateEmergencyConsole(float frameTime)
     {
-        if (_consoleAccumulator <= 0f) return;
+        if (_consoleAccumulator <= 0f)
+            return;
 
         _consoleAccumulator -= frameTime;
 
@@ -127,9 +145,13 @@ public sealed partial class ShuttleSystem
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
-                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
+                    if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle))
+                        continue;
 
-                    if (Deleted(_centcomm))
+                    // Round up to the nearest ten
+                    TransitTime = MathF.Ceiling(_random.NextFloat(MinimumTransitTime, MaximumTransitTime) / 10f) * 10f;
+
+                    if (Deleted(Centcomm))
                     {
                         // TODO: Need to get non-overlapping positions.
                         FTLTravel(shuttle,
@@ -140,7 +162,7 @@ public sealed partial class ShuttleSystem
                     else
                     {
                         FTLTravel(shuttle,
-                            _centcomm.Value, _consoleAccumulator, TransitTime, dock: true);
+                            Centcomm.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
@@ -156,8 +178,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (_centcomm != null)
-                AddFTLDestination(_centcomm.Value, true);
+            if (Centcomm != null)
+                AddFTLDestination(Centcomm.Value, true);
 
         }
     }
@@ -238,6 +260,8 @@ public sealed partial class ShuttleSystem
         _consoleAccumulator = 0f;
         EarlyLaunchAuthorized = false;
         EmergencyShuttleArrived = false;
+        // Just default to the average.
+        TransitTime = MinimumTransitTime + (MaximumTransitTime - MinimumTransitTime) / 2f;
     }
 
     private void UpdateAllEmergencyConsoles()
