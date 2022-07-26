@@ -103,5 +103,6 @@
         - WeaponFlareGun
         - Spear
         - LidSalami
+        - ClothingEyesBlindfold
       chance: 0.6
       offset: 0.0

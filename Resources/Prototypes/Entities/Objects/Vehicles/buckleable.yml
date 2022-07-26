@@ -1,5 +1,5 @@
 - type: entity
-  id: VehicleBase
+  id: BaseVehicle
   save: false
   abstract: true
   name: Vehicle
@@ -10,13 +10,18 @@
   - type: AmbientSound
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
-    volume: -1
-  - type: PlayerInputMover
+    volume: -5
+    enabled: false
+  - type: InputMover
   - type: InteractionOutline
   - type: Vehicle
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
+    weightlessModifier: 0
+    acceleration: 2
+    friction: 2
+    frictionNoInput: 6
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
   - type: Eye
   - type: Tag
   - type: Pullable
@@ -62,13 +67,16 @@
           requireAll: true
           tags:
           - VehicleKey
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
   - type: StaticPrice
     price: 750 # Grand Theft Auto.
 
 - type: entity
   id: VehiclePussyWagon
-  parent: VehicleBase
+  parent: BaseVehicle
   name: janicart
   description: The janitor's trusty steed.
   components:
@@ -125,7 +133,10 @@
           tags:
           - VehicleKey
           - PussyWagonKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
       trashbag_slot:
         name: Bag
         whitelist:
@@ -155,7 +166,7 @@
 
 - type: entity
   id: VehicleSecway
-  parent: VehicleBase
+  parent: BaseVehicle
   name: secway
   description: The future of transportation. Popularized by St. James, the patron saint of security officers and internet forum moderators.
   components:
@@ -165,13 +176,6 @@
     southOverride: 0.1
     hornSound:
       path: /Audio/Effects/Vehicle/policesiren.ogg
-    hornAction:
-      name: action-name-siren
-      description: action-desc-siren
-      icon: Objects/Fun/bikehorn.rsi/icon.png
-      iconOn: Objects/Fun/bikehorn.rsi/icon.png
-      event: !type:ToggleActionEvent
-    hornIsSiren: true
   - type: Sprite
     sprite: Objects/Vehicles/secway.rsi
     layers:
@@ -189,8 +193,10 @@
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
   - type: MovementSpeedModifier
-    baseWalkSpeed : 8
-    baseSprintSpeed : 8
+    acceleration: 1
+    friction: 1
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
   - type: Armor
     modifiers:
       coeffecients:
@@ -206,10 +212,13 @@
           tags:
           - VehicleKey
           - SecwayKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
 
 - type: entity
-  parent: VehicleBase
+  parent: BaseVehicle
   id: VehicleATV
   name: ATV
   description: All-Tile Vehicle.
@@ -231,8 +240,10 @@
   - type: RandomMetadata
     descriptionSet: ATVDescriptions
   - type: MovementSpeedModifier
-    baseWalkSpeed : 8
-    baseSprintSpeed : 8
+    acceleration: 1
+    friction: 1
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 7
   - type: Strap
     buckleOffset: "0.1, -0.05"
     maxBuckleDistance: 1
@@ -258,11 +269,14 @@
           tags:
           - VehicleKey
           - ATVKeys
-        insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -3
 
 - type: entity
   id: VehicleSyndicateSegway
-  parent: VehicleBase
+  parent: BaseVehicle
   name: syndicate segway
   description: Be an enemy of the corporation, in style.
   components:
@@ -272,13 +286,6 @@
       southOverride: 0.1
       hornSound:
         path: /Audio/Effects/Vehicle/policesiren.ogg
-      hornAction:
-        name: action-name-siren
-        description: action-desc-siren
-        icon: Objects/Fun/bikehorn.rsi/icon.png
-        iconOn: Objects/Fun/bikehorn.rsi/icon.png
-        event: !type:ToggleActionEvent
-      hornIsSiren: true
     - type: Sprite
       sprite: Objects/Vehicles/syndicatesegway.rsi
       layers:
@@ -293,9 +300,6 @@
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
-    - type: MovementSpeedModifier
-      baseWalkSpeed : 8
-      baseSprintSpeed : 8
     - type: Armor
       modifiers:
         coeffecients:
@@ -311,4 +315,7 @@
             tags:
               - VehicleKey
               - SyndicateSegwayKeys
-          insertSound: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          insertSound:
+            path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+            params:
+              volume: -3

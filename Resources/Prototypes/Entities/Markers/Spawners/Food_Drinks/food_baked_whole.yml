@@ -1,0 +1,58 @@
+- type: entity
+  id: RandomFoodBakedWhole
+  name: random baked food spawner
+  suffix: Whole
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - texture: Objects/Consumable/Food/Baked/pie.rsi/plain.png 
+  - type: RandomSpawner
+  #small item
+    prototypes:
+      - FoodBreadVolcanic
+      - FoodBreadPlain
+      - FoodBreadMeat
+      - FoodBreadBanana
+      - FoodBreadTofu
+      - FoodBreadCreamcheese
+      - FoodBreadBaguette
+      - FoodCakeBlueberry
+      - FoodCakePlain
+      - FoodCakeCheese
+      - FoodCakeCarrot
+      - FoodCakeOrange
+      - FoodCakeLime
+      - FoodCakeLemon
+      - FoodCakeChocolate
+      - FoodCakeApple
+      - FoodCakeSlime
+      - FoodCakePumpkin
+      - FoodCakeChristmas
+      - FoodCakeBirthday
+      - FoodCakeVanilla
+      - FoodPieApple
+      - FoodPieBaklava
+      - FoodPieBananaCream
+      - FoodPieClafoutis
+      - FoodPieCherry
+      - FoodPieMeat
+      - FoodPieFrosty
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBreadMeatSpider
+      - FoodBreadMimana
+      - FoodCakeBrain
+      - FoodCakeClown
+      - FoodCakeSpaceman
+      - FoodPieXeno
+      - FoodPieAmanita
+      - FoodPiePlump
+      - FoodBreadMeatXeno
+      - FoodPieXeno
+    rareChance: 0.05

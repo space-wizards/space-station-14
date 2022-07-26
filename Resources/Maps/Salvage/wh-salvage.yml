@@ -1364,13 +1364,13 @@ entities:
   - solution: drink
     type: DrainableSolution
 - uid: 127
-  type: SpawnMobBear
+  type: SpawnMobBearSalvage
   components:
   - pos: -3.5,2.5
     parent: 0
     type: Transform
 - uid: 128
-  type: SpawnMobBear
+  type: SpawnMobBearSalvage
   components:
   - pos: 2.5,2.5
     parent: 0
@@ -2503,7 +2503,7 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 280
-  type: SpawnMobBear
+  type: SpawnMobBearSalvage
   components:
   - rot: 3.141592653589793 rad
     pos: 8.5,7.5

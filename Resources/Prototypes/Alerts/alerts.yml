@@ -5,6 +5,8 @@
   id: BaseAlertOrder
   order:
     - category: Health
+    - category: Stamina
+    - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
     - category: Buckled
@@ -143,19 +145,24 @@
   maxSeverity: 6
 
 - type: alert
+  id: Internals
+  category: Internals
+  onClick: !type:ToggleInternals {}
+  icon:
+    sprite: /Textures/Interface/Alerts/internals.rsi
+    state: internal
+  name: Toggle internals
+  description: "Toggles your gas tank internals on or off."
+  minSeverity: 0
+  maxSeverity: 2
+
+- type: alert
   id: PilotingShuttle
   category: Piloting
   onClick: !type:StopPiloting { }
   icon: /Textures/Interface/Alerts/piloting.png
   name: Piloting Shuttle
   description: You are piloting a shuttle. Click the alert to stop.
-
-- type: alert
-  id: Overfed
-  category: Hunger
-  icon: /Textures/Interface/Alerts/Hunger/Overfed.png
-  name: "[color=yellow]Overfed[/color]"
-  description: You ate too much food, lardass. Run around the station and lose some weight.
 
 - type: alert
   id: Peckish
@@ -181,13 +188,6 @@
   icon: /Textures/Interface/Alerts/Hunger/Starving.png
   name: "[color=red]Starving[/color]"
   description: You're severely malnourished. The hunger pains make moving around a chore.
-
-- type: alert
-  id: Overhydrated
-  category: Thirst
-  icon: /Textures/Interface/Alerts/Thirst/OverHydrated.png
-  name: "[color=yellow]Overhydrated[/color]"
-  description: You drank too much.
 
 - type: alert
   id: Thirsty

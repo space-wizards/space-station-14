@@ -13,8 +13,8 @@ public sealed partial class ConstructionSystem
 
     private void OnMachineInit(EntityUid uid, MachineComponent component, ComponentInit args)
     {
-        component.BoardContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.BoardContainer);
-        component.PartContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.PartContainer);
+        component.BoardContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.BoardContainerName);
+        component.PartContainer = _container.EnsureContainer<Container>(uid, MachineFrameComponent.PartContainerName);
     }
 
     private void OnMachineMapInit(EntityUid uid, MachineComponent component, MapInitEvent args)
@@ -47,8 +47,8 @@ public sealed partial class ConstructionSystem
     public void CreateBoardAndStockParts(MachineComponent component)
     {
         // Entity might not be initialized yet.
-        var boardContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.BoardContainer);
-        var partContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.PartContainer);
+        var boardContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.BoardContainerName);
+        var partContainer = _container.EnsureContainer<Container>(component.Owner, MachineFrameComponent.PartContainerName);
 
         if (string.IsNullOrEmpty(component.BoardPrototype))
             return;

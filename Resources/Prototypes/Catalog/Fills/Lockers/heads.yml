@@ -39,7 +39,7 @@
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
       - id: ClothingMaskGasCaptain
-      - id: WeaponTaser
+      - id: WeaponDisabler
       - id: CommsComputerCircuitboard
       - id: ClothingHeadsetAltCommand
       - id: SpaceCash1000
@@ -73,7 +73,7 @@
       - id: BoxPDA
       - id: BoxID
       - id: IDComputerCircuitboard
-      - id: WeaponTaser
+      - id: WeaponDisabler
       - id: ClothingShoesColorBlack
         prob: 0.7
       - id: PlushieLizard
@@ -158,7 +158,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: WeaponTaser
+      - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos

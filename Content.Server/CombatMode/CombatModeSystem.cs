@@ -1,4 +1,5 @@
 using Content.Server.Actions.Events;
+using Content.Server.Administration.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Hands.Components;
@@ -9,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -81,14 +83,12 @@ namespace Content.Server.CombatMode
             {
                 SoundSystem.Play(component.DisarmFailSound.GetSound(), Filter.Pvs(args.Performer), args.Performer, AudioHelpers.WithVariation(0.025f));
 
-                var targetName = Name(args.Target);
-
                 var msgOther = Loc.GetString(
                     "disarm-action-popup-message-other-clients",
-                    ("performerName", Name(args.Performer)),
-                    ("targetName", targetName));
+                    ("performerName", Identity.Entity(args.Performer, EntityManager)),
+                    ("targetName", Identity.Entity(args.Target, EntityManager)));
 
-                var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", targetName ));
+                var msgUser = Loc.GetString("disarm-action-popup-message-cursor", ("targetName", Identity.Entity(args.Target, EntityManager)));
 
                 _popupSystem.PopupEntity(msgOther, args.Performer, filterOther);
                 _popupSystem.PopupEntity(msgUser, args.Performer, Filter.Entities(args.Performer));
@@ -101,7 +101,7 @@ namespace Content.Server.CombatMode
             SoundSystem.Play(component.DisarmSuccessSound.GetSound(), filterAll, args.Performer, AudioHelpers.WithVariation(0.025f));
             _adminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(args.Performer):user} used disarm on {ToPrettyString(args.Target):target}");
 
-            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = chance };
+            var eventArgs = new DisarmedEvent() { Target = args.Target, Source = args.Performer, PushProbability = HasComp<DisarmProneComponent>(args.Target) ? 1.0f : chance };
             RaiseLocalEvent(args.Target, eventArgs, true);
         }
 
@@ -109,6 +109,13 @@ namespace Content.Server.CombatMode
         private float CalculateDisarmChance(EntityUid disarmer, EntityUid disarmed, EntityUid? inTargetHand, SharedCombatModeComponent disarmerComp)
         {
             float healthMod = 0;
+
+            if (HasComp<DisarmProneComponent>(disarmer))
+                return 1.0f;
+
+            if (HasComp<DisarmProneComponent>(disarmed))
+                return 0.0f;
+
             if (TryComp<DamageableComponent>(disarmer, out var disarmerDamage) && TryComp<DamageableComponent>(disarmed, out var disarmedDamage))
             {
                 // I wanted this to consider their mob state thresholds too but I'm not touching that shitcode after having a go at this.
