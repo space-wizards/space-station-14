@@ -544,7 +544,6 @@
 
 - type: reaction
   id: HotRamen
-  minTemp: 323.15
   reactants:
     DryRamen:
       amount: 3
