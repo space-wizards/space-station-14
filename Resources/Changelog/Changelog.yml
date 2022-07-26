@@ -1,11 +1,4 @@
 Entries:
-- author: ShuttleEnjoyer
-  changes:
-  - {message: 'Added a new Cargo crate with a shuttle console board, shuttle power
-      boards, a handheld GPS, and a single inflatable door.', type: Add}
-  - {message: Shuttle thrusters and gyroscopes cost less., type: Tweak}
-  id: 1521
-  time: '2022-05-13T00:11:36.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Lobby music now plays from round end summary, type: Tweak}
@@ -2939,3 +2932,8 @@ Entries:
   - {message: Syndicate layoffs., type: Tweak}
   id: 2020
   time: '2022-07-26T09:50:18.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
+  id: 2021
+  time: '2022-07-26T09:56:56.0000000+00:00'
