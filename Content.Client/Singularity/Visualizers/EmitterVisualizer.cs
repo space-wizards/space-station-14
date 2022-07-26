@@ -13,6 +13,8 @@ namespace Content.Client.Singularity.Visualizers
     {
         private const string OverlayBeam = "beam";
         private const string OverlayUnderPowered = "underpowered";
+        private const string OverlayLocked = "lock";
+        private const string OverlayUnlocked = "unlock";
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -48,7 +50,7 @@ namespace Content.Client.Singularity.Visualizers
                     throw new ArgumentOutOfRangeException();
             }
 
-            sprite.LayerSetVisible(2, locked);
+            sprite.LayerSetState(2, locked ? OverlayLocked : OverlayUnlocked);
         }
     }
 }

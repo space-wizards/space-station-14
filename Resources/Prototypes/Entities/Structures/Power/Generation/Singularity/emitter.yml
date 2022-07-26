@@ -25,13 +25,12 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     netsync: false
     layers:
-    - state: emitter2
+    - state: emitter
     - state: beam
       shader: unshaded
       visible: false
-    - state: lock
+    - state: unlock
       shader: unshaded
-      visible: false
   - type: Emitter
   - type: PowerConsumer
     voltage: Medium

@@ -1,1 +1,39 @@
-{"version":1,"size":{"x":96,"y":96},"copyright":"Taken from https://github.com/vgstation-coders/vgstation13/blob/8eef5a676f66551bd0fb40d506486a6b3b2b0f1a/icons/effects/96x96.dmi","license":"CC-BY-SA-3.0","states":[{"name":"singularity_2","directions":1,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]]}]}
+{
+  "version": 1,
+  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/39bf2edc0b9aab3db8f4b088cab38e492e439f61",
+  "license": "CC-BY-SA-3.0",
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "singularity_2",
+      "directions": 1,
+      "delays": [
+        [
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08
+        ]
+      ]
+    }
+  ]
+}

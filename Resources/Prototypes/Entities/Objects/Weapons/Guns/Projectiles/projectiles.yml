@@ -161,7 +161,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    color: "#ffff33"
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
       - state: projectile
