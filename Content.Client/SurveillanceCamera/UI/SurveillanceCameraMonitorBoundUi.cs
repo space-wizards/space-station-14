@@ -74,7 +74,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
-        if (_window == null || state is not SurveillanceCameraMonitorUiState cast)
+        if (_window == null || state is not SurveillanceCameraMonitorUiState cast || cast.Monitor != Owner.Owner)
         {
             return;
         }
