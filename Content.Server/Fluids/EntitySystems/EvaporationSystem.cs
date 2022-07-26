@@ -2,58 +2,68 @@
 using Content.Server.Fluids.Components;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems
 {
     [UsedImplicitly]
     public sealed class EvaporationSystem : EntitySystem
     {
+        [Dependency] private readonly TimedEventSystem _timedEventSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        private const string EvaporationUpdateKey = nameof(EvaporationUpdateKey);
 
-        public override void Update(float frameTime)
+        public override void Initialize()
         {
-            base.Update(frameTime);
-            var queueDelete = new RemQueue<EvaporationComponent>();
-            foreach (var evaporationComponent in EntityManager.EntityQuery<EvaporationComponent>())
+            SubscribeLocalEvent<EvaporationComponent, ComponentInit>(OnEvaporateInit);
+            SubscribeLocalEvent<EvaporationComponent, ComponentTimedEvent>(OnEvaporated);
+        }
+        private void OnEvaporateInit(EntityUid uid, EvaporationComponent component, ComponentInit args)
+        {
+            EvaporationUpdate(uid, component);
+        }
+
+        private void OnEvaporated(EntityUid uid, EvaporationComponent component, ComponentTimedEvent args)
+        {
+            EvaporationUpdate(uid, component);
+        }
+
+        private void EvaporationUpdate(EntityUid uid, EvaporationComponent component)
+        {
+            if (IsEvaporated(uid, component))
             {
-                var uid = evaporationComponent.Owner;
-                evaporationComponent.Accumulator += frameTime;
+                EntityManager.QueueDeleteEntity(uid);
+            }
+            else
+            {
+                _timedEventSystem.AddTimedEvent(component, TimeSpan.FromSeconds(component.EvaporateTime), EvaporationUpdateKey);
+            }
+        }
 
-                if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
-                {
-                    // If no solution, delete the entity
-                    EntityManager.QueueDeleteEntity(uid);
-                    continue;
-                }
-
-                if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
-                    continue;
-
-                evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
-
-                if (evaporationComponent.EvaporationToggle == true)
-                {
-                    _solutionContainerSystem.SplitSolution(uid, solution,
-                        FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume)); // removes 1 unit, or solution current volume, whichever is lower.
-                }
-
-                if (solution.CurrentVolume <= 0)
-                {
-                    EntityManager.QueueDeleteEntity(uid);
-                }
-                else if (solution.CurrentVolume <= evaporationComponent.LowerLimit // if puddle is too big or too small to evaporate.
-                         || solution.CurrentVolume >= evaporationComponent.UpperLimit)
-                {
-                    evaporationComponent.EvaporationToggle = false; // pause evaporation
-                }
-                else evaporationComponent.EvaporationToggle = true; // unpause evaporation, e.g. if a puddle previously above evaporation UpperLimit was brought down below evaporation UpperLimit via mopping.
+        private bool IsEvaporated(EntityUid uid, EvaporationComponent component)
+        {
+            if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
+            {
+                return true;
             }
 
-            foreach (var evaporationComponent in queueDelete)
+            if (component.EvaporationToggle)
             {
-                EntityManager.RemoveComponent(evaporationComponent.Owner, evaporationComponent);
+                _solutionContainerSystem.SplitSolution(uid, solution,
+                    FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume)); // removes 1 unit, or solution current volume, whichever is lower.
             }
+
+            if (solution.CurrentVolume <= 0)
+            {
+                return true;
+            }
+
+            // If the puddle is too big or too small to evaporate, evaporation is turned off
+            component.EvaporationToggle =
+                solution.CurrentVolume > component.LowerLimit ||
+                solution.CurrentVolume < component.UpperLimit;
+
+            return false;
         }
     }
 }

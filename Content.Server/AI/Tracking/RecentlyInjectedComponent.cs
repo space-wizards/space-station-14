@@ -5,8 +5,6 @@ namespace Content.Server.AI.Tracking
     [RegisterComponent]
     public sealed class RecentlyInjectedComponent : Component
     {
-        public float Accumulator = 0f;
-
         public TimeSpan RemoveTime = TimeSpan.FromMinutes(1);
     }
 }

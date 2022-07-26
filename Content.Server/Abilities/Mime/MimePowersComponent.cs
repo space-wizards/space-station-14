@@ -40,7 +40,6 @@ namespace Content.Server.Abilities.Mime
 
         public bool VowBroken = false;
 
-
         /// <summary>
         /// Whether this mime is ready to take the vow again.
         /// Note that if they already have the vow, this is also false.
@@ -48,15 +47,8 @@ namespace Content.Server.Abilities.Mime
         public bool ReadyToRepent = false;
 
         /// <summary>
-        /// Accumulator for when the mime breaks their vows
-        /// </summary>
-
-        [DataField("accumulator")]
-        public float Accumulator = 0f;
-
-        /// <summary>
         /// How long it takes the mime to get their powers back
-
+        /// </summary>
         [DataField("vowCooldown")]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
     }

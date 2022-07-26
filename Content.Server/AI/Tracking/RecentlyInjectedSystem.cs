@@ -1,25 +1,25 @@
+using Robust.Shared.Timing;
+
 namespace Content.Server.AI.Tracking
 {
     public sealed class RecentlyInjectedSystem : EntitySystem
     {
-
-        Queue<EntityUid> RemQueue = new();
-        public override void Update(float frameTime)
+        [Dependency] private readonly TimedEventSystem _timedEventSystem = default!;
+        private const string InjectExpiredKey = nameof(InjectExpiredKey);
+        public override void Initialize()
         {
-            base.Update(frameTime);
-            foreach (var toRemove in RemQueue)
-            {
-                RemComp<RecentlyInjectedComponent>(toRemove);
-            }
-            RemQueue.Clear();
-            foreach (var entity in EntityQuery<RecentlyInjectedComponent>())
-            {
-                entity.Accumulator += frameTime;
-                if (entity.Accumulator < entity.RemoveTime.TotalSeconds)
-                    continue;
-                entity.Accumulator = 0;
-                RemQueue.Enqueue(entity.Owner);
-            }
+            SubscribeLocalEvent<RecentlyInjectedComponent, ComponentInit>(OnInjectInit);
+            SubscribeLocalEvent<RecentlyInjectedComponent, ComponentTimedEvent>(OnInjectExpired);
+        }
+
+        private void OnInjectInit(EntityUid uid, RecentlyInjectedComponent component, ComponentInit args)
+        {
+            _timedEventSystem.AddTimedEvent(component, component.RemoveTime, InjectExpiredKey);
+        }
+
+        private void OnInjectExpired(EntityUid uid, RecentlyInjectedComponent component, ComponentTimedEvent args)
+        {
+            RemComp<RecentlyInjectedComponent>(uid);
         }
     }
 }

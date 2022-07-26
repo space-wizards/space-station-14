@@ -9,6 +9,7 @@ using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -17,30 +18,23 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-
+        [Dependency] private readonly TimedEventSystem _timedEventSystem = default!;
+        private const string MimeVowCooldownKey = nameof(MimeVowCooldownKey);
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MimePowersComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
+            SubscribeLocalEvent<MimePowersComponent, ComponentTimedEvent>(OnMimeCooldown);
         }
-        public override void Update(float frameTime)
+
+        private void OnMimeCooldown(EntityUid uid, MimePowersComponent mimePower, ComponentTimedEvent args)
         {
-            base.Update(frameTime);
-            // Queue to track whether mimes can retake vows yet
-            foreach (var mime in EntityQuery<MimePowersComponent>())
-            {
-                if (!mime.VowBroken || mime.ReadyToRepent)
-                    continue;
-
-                mime.Accumulator += frameTime;
-                if (mime.Accumulator < mime.VowCooldown.TotalSeconds)
-                    continue;
-
-                mime.ReadyToRepent = true;
-                _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), mime.Owner, Filter.Entities(mime.Owner));
-            }
+            if (args.Key != MimeVowCooldownKey)
+                return;
+            mimePower.ReadyToRepent = true;
+            _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), mimePower.Owner, Filter.Entities(mimePower.Owner));
         }
 
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
@@ -48,6 +42,7 @@ namespace Content.Server.Abilities.Mime
             _actionsSystem.AddAction(uid, component.InvisibleWallAction, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
         }
+
         private void OnSpeakAttempt(EntityUid uid, MimePowersComponent component, SpeakAttemptEvent args)
         {
             if (!component.Enabled)
@@ -101,6 +96,7 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
+            _timedEventSystem.AddTimedEvent(mimePowers, mimePowers.VowCooldown, MimeVowCooldownKey);
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
@@ -123,7 +119,6 @@ namespace Content.Server.Abilities.Mime
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
-            mimePowers.Accumulator = 0f;
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
             _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);
