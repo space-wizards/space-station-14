@@ -10,6 +10,7 @@ using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.MobState;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
@@ -49,18 +50,21 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     private const int VoiceRange = 7; // how far voice goes in world units
     private const int WhisperRange = 2; // how far whisper goes in world units
     private const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     private bool _loocEnabled = true;
+    private bool _deadLoocEnabled = false;
     private readonly bool _adminLoocEnabled = true;
 
     public override void Initialize()
     {
         InitializeRadio();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
+        _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
@@ -78,6 +82,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         _loocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
+    }
+
+    private void OnDeadLoocEnabledChanged(bool val)
+    {
+        if (_deadLoocEnabled == val) return;
+
+        _deadLoocEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
@@ -153,7 +166,13 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         message = SanitizeInGameOOCMessage(message);
 
-        switch (type)
+        var sendType = type;
+        // If dead player LOOC is disabled, unless you are an aghost, send dead messages to dead chat
+        if (!_adminManager.IsAdmin(player) && !_deadLoocEnabled &&
+            (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
+            sendType = InGameOOCChatType.Dead;
+
+        switch (sendType)
         {
             case InGameOOCChatType.Dead:
                 SendDeadChat(source, player, message, hideChat);
