@@ -229,7 +229,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-rum
   physicalDesc: reagent-physical-desc-strong-smelling
-  color: "c9c07e"
+  color: "#c9c07e"
   spritePath: glass_rum.rsi
   metabolisms:
     Drink:
