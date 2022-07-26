@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Lobby music now plays from round end summary, type: Tweak}
-  - {message: Sound effects on lobby start, type: Add}
-  id: 1522
-  time: '2022-05-13T00:13:07.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Skeleton skulls look more skeleton-y and skeletons also take slightly
@@ -2937,3 +2931,8 @@ Entries:
   - {message: The emergency boxes now have tinned meat instead of chocolate., type: Tweak}
   id: 2021
   time: '2022-07-26T09:56:56.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Observers now have a warp for the nuke disk., type: Add}
+  id: 2022
+  time: '2022-07-26T13:55:15.0000000+00:00'
