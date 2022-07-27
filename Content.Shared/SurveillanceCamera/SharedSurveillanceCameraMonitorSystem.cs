@@ -7,7 +7,6 @@ namespace Content.Shared.SurveillanceCamera;
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
 {
-    public EntityUid Monitor { get; }
     // The active camera on the monitor. If this is null, the part of the UI
     // that contains the monitor should clear.
     public EntityUid? ActiveCamera { get; }
@@ -24,9 +23,8 @@ public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
     // Known cameras, by address and name.
     public Dictionary<string, string> Cameras { get; }
 
-    public SurveillanceCameraMonitorUiState(EntityUid monitor, EntityUid? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
+    public SurveillanceCameraMonitorUiState(EntityUid? activeCamera, HashSet<string> subnets, string activeAddress, string activeSubnet, Dictionary<string, string> cameras)
     {
-        Monitor = monitor;
         ActiveCamera = activeCamera;
         Subnets = subnets;
         ActiveAddress = activeAddress;

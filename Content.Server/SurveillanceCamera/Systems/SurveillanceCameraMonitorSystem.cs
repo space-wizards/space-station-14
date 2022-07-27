@@ -491,7 +491,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             session = actor.PlayerSession;
         }
 
-        var state = new SurveillanceCameraMonitorUiState(uid, monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
+        var state = new SurveillanceCameraMonitorUiState(monitor.ActiveCamera, monitor.KnownSubnets.Keys.ToHashSet(), monitor.ActiveCameraAddress, monitor.ActiveSubnet, monitor.KnownCameras);
         _userInterface.TrySetUiState(uid, SurveillanceCameraMonitorUiKey.Key, state);
     }
 }
