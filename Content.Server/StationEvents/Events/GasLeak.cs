@@ -20,7 +20,7 @@ namespace Content.Server.StationEvents.Events
             Gas.Miasma,
             Gas.Plasma,
             Gas.Tritium,
-            Gas.Freon,
+            Gas.Frezon,
         };
 
         /// <summary>

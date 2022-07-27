@@ -12,7 +12,7 @@
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
       sprite: Effects/atmospherics.rsi
-      state: freon_old
+      state: frezon_old
   - type: EffectVisuals
   - type: AnimationPlayer
 

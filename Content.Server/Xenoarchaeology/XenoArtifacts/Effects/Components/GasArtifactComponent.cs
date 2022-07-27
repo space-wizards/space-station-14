@@ -29,7 +29,7 @@ public sealed class GasArtifactComponent : Component
         Gas.Tritium,
         Gas.Miasma,
         Gas.NitrousOxide,
-        Gas.Freon
+        Gas.Frezon
     };
 
     /// <summary>

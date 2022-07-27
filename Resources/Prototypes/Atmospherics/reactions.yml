@@ -24,7 +24,7 @@
     - !type:TritiumFireReaction {}
 
 - type: gasReaction
-  id: FreonCoolant
+  id: FrezonCoolant
   priority: 1
   minimumTemperature: 23.15
   minimumRequirements:
@@ -35,12 +35,12 @@
   - 0     # tritium
   - 0     # vapor
   - 0     # miasma
-  - 0.01  # freon
+  - 0.01  # frezon
   effects:
-  - !type:FreonCoolantReaction {}
+  - !type:FrezonCoolantReaction {}
 
 - type: gasReaction
-  id: FreonProduction
+  id: FrezonProduction
   priority: 2
   maximumTemperature: 73.15 # Cold tritium fire, basically.
   minimumRequirements:
@@ -51,9 +51,9 @@
   - 0.01  # tritium
   - 0     # vapor
   - 0     # miasma
-  - 0     # freon
+  - 0     # frezon
   effects:
-  - !type:FreonProductionReaction {}
+  - !type:FrezonProductionReaction {}
 
 - type: gasReaction
   id: MiasmicSubsumation
@@ -67,7 +67,7 @@
   - 0     # tritium
   - 0     # vapor
   - 0.01  # miasma
-  - 0.01  # freon
+  - 0.01  # frezon
   effects:
   - !type:MiasmicSubsumationReaction {}
 

@@ -5,10 +5,10 @@ using JetBrains.Annotations;
 namespace Content.Server.Atmos.Reactions;
 
 /// <summary>
-///     Takes in nitrogen and freon and cools down the surrounding area.
+///     Takes in nitrogen and frezon and cools down the surrounding area.
 /// </summary>
 [UsedImplicitly]
-public sealed class FreonCoolantReaction : IGasReactionEffect
+public sealed class FrezonCoolantReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
     {
@@ -16,13 +16,13 @@ public sealed class FreonCoolantReaction : IGasReactionEffect
         var temperature = mixture.Temperature;
 
         var energyModifier = 1f;
-        var scale = (temperature - Atmospherics.FreonCoolLowerTemperature) /
-                    (Atmospherics.FreonCoolMidTemperature - Atmospherics.FreonCoolLowerTemperature);
+        var scale = (temperature - Atmospherics.FrezonCoolLowerTemperature) /
+                    (Atmospherics.FrezonCoolMidTemperature - Atmospherics.FrezonCoolLowerTemperature);
 
         if (scale > 1f)
         {
-            // Scale energy but not freon usage if we're in a very, very hot place
-            energyModifier = Math.Min(scale, Atmospherics.FreonCoolMaximumEnergyModifier);
+            // Scale energy but not frezon usage if we're in a very, very hot place
+            energyModifier = Math.Min(scale, Atmospherics.FrezonCoolMaximumEnergyModifier);
             scale = 1f;
         }
 
@@ -30,20 +30,20 @@ public sealed class FreonCoolantReaction : IGasReactionEffect
             return ReactionResult.NoReaction;
 
         var initialNit = mixture.GetMoles(Gas.Nitrogen);
-        var initialFreon = mixture.GetMoles(Gas.Freon);
+        var initialFrezon = mixture.GetMoles(Gas.Frezon);
 
-        var burnRate = initialFreon * scale / Atmospherics.FreonCoolRateModifier;
+        var burnRate = initialFrezon * scale / Atmospherics.FrezonCoolRateModifier;
 
         var energyReleased = 0f;
         if (burnRate > Atmospherics.MinimumHeatCapacity)
         {
-            var nitAmt = Math.Min(burnRate * Atmospherics.FreonNitrogenCoolRatio, initialNit);
-            var freonAmt = Math.Min(burnRate, initialFreon);
+            var nitAmt = Math.Min(burnRate * Atmospherics.FrezonNitrogenCoolRatio, initialNit);
+            var frezonAmt = Math.Min(burnRate, initialFrezon);
             mixture.AdjustMoles(Gas.Nitrogen, -nitAmt);
-            mixture.AdjustMoles(Gas.Freon, -freonAmt);
+            mixture.AdjustMoles(Gas.Frezon, -frezonAmt);
             // TODO nitrous oxide
-            mixture.AdjustMoles(Gas.CarbonDioxide, nitAmt + freonAmt);
-            energyReleased = burnRate * Atmospherics.FreonCoolEnergyReleased * energyModifier;
+            mixture.AdjustMoles(Gas.CarbonDioxide, nitAmt + frezonAmt);
+            energyReleased = burnRate * Atmospherics.FrezonCoolEnergyReleased * energyModifier;
         }
 
         if (energyReleased >= 0f)

@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.Portable
             Gas.WaterVapor,
             Gas.Miasma,
             Gas.NitrousOxide,
-            Gas.Freon
+            Gas.Frezon
         };
 
         /// <summary>

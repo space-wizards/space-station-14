@@ -430,13 +430,13 @@
 
 - type: entity
   parent: GasCanister
-  id: FreonCanister
-  name: freon canister
+  id: FrezonCanister
+  name: frezon canister
   description: A coolant with light hallucinogenic properties. Proceed.
   components:
   - type: Sprite
     layers:
-    - state: freon
+    - state: frezon
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -448,7 +448,7 @@
       - 0 # Tritium
       - 0 #  Water vapor
       - 0 # Miasma
-      - 1871.71051 # Freon
+      - 1871.71051 # Frezon
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -461,7 +461,7 @@
           path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
-          FreonCanisterBroken:
+          FrezonCanisterBroken:
             min: 1
             max: 1
       - !type:DoActsBehavior
@@ -603,9 +603,9 @@
 
 - type: entity
   parent: GasCanisterBrokenBase
-  id: FreonCanisterBroken
-  name: broken freon canister
+  id: FrezonCanisterBroken
+  name: broken frezon canister
   noSpawn: true
   components:
   - type: Sprite
-    state: freon-1
+    state: frezon-1

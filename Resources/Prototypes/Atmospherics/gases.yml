@@ -80,12 +80,12 @@
 
 - type: gas
   id: 8
-  name: Freon
+  name: Frezon
   specificHeat: 600 # Strongest by far
   heatCapacityRatio: 1.33
   molarMass: 50
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: freon
+  gasOverlayState: frezon
   gasMolesVisible: 0.6
   color: 3a758c
-  reagent: Freon
+  reagent: Frezon
