@@ -155,7 +155,7 @@ namespace Content.Shared.CCVar
         ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
         /// </summary>
         public static readonly CVarDef<string>
-            GameMap = CVarDef.Create("game.map", "saltern", CVar.SERVERONLY);
+            GameMap = CVarDef.Create("game.map", "Saltern", CVar.SERVERONLY);
 
         /// <summary>
         ///     Controls if the game should obey map criteria or not. Overriden if a map vote or similar occurs.
