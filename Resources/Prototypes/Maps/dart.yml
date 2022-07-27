@@ -1,7 +1,7 @@
 - type: gameMap
   id: Dart
   mapName: 'Dart ERT'
-  mapPath: /Maps/Shuttles/dart.yml
+  mapPath: /Maps/dart.yml
   minPlayers: 0
   votable: false
   stations:
