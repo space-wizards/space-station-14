@@ -12,6 +12,9 @@ namespace Content.Server.Bed.Components
         [DataField("healTime", required: false)]
         [ViewVariables(VVAccess.ReadWrite)]
         public float HealTime = 1f; // How often the bed applies the damage
+
+        [DataField("sleepMultiplier")]
+        public float SleepMultiplier = 3f;
         public float Accumulator = 0f; //Time accumulated
     }
 }
