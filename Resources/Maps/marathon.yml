@@ -32255,15 +32255,12 @@ entities:
     parent: 30
     type: Transform
 - uid: 1402
-  type: DrinkMugMoebius
+  type: Morgue
   components:
-  - pos: -43.53058,-2.4147248
+  - rot: 1.5707963267948966 rad
+    pos: -52.5,51.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1403
   type: BoxFolderGrey
   components:
@@ -32582,15 +32579,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1443
-  type: DrinkWhiskeyBottleFull
+  type: FirelockGlass
   components:
-  - pos: -43.554337,33.874928
+  - pos: -42.5,45.5
     parent: 30
     type: Transform
+  - airBlocked: False
+    type: Airtight
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1444
   type: DrinkGlass
   components:
@@ -38031,25 +38028,17 @@ entities:
     parent: 30
     type: Transform
 - uid: 2233
-  type: Morgue
+  type: RandomFoodSingle
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -52.5,51.5
+  - pos: -4.5,9.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 2234
-    type: ContainerContainer
 - uid: 2234
-  type: MorgueTray
+  type: RandomFoodSingle
   components:
-  - parent: 2233
+  - pos: -0.5,8.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2235
   type: TableGlass
   components:
@@ -55245,9 +55234,17 @@ entities:
 - uid: 4443
   type: LampGold
   components:
-  - pos: 4.5164165,10.525761
+  - pos: 4.5292673,10.977108
     parent: 30
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 4444
@@ -59227,15 +59224,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 5003
-  type: DrinkFlask
+  type: RandomFoodMeal
   components:
-  - pos: -21.474657,30.65415
+  - pos: -10.5,8.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5004
   type: PinpointerNuclear
   components:
@@ -59641,15 +59634,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 5055
-  type: DrinkCognacBottleFull
+  type: RandomFoodMeal
   components:
-  - pos: -26.560759,35.937252
+  - pos: -10.5,11.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5056
   type: DrinkGlass
   components:
@@ -61595,26 +61584,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 5350
-  type: DrinkMugOne
-  components:
-  - pos: -9.006596,35.666164
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 5351
-  type: DrinkMugHeart
-  components:
-  - pos: -11.365971,35.228664
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5352
   type: WallReinforced
   components:
@@ -63355,16 +63324,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 5625
-  type: DrinkGoldschlagerBottleFull
-  components:
-  - pos: 7.45675,42.886192
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5626
   type: ClothingHeadHatHairflower
   components:
@@ -65056,16 +65015,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 5841
-  type: DrinkMugMoebius
-  components:
-  - pos: -5.4045205,43.483574
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5842
   type: ToolboxEmergencyFilled
   components:
@@ -70276,16 +70225,6 @@ entities:
   - containers:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 6573
-  type: DrinkMugRed
-  components:
-  - pos: 12.599404,22.817696
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6574
   type: Table
   components:
@@ -71873,16 +71812,6 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 6791
-  type: DrinkMugBlue
-  components:
-  - pos: -14.393166,-3.348785
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6792
   type: BoxFolderWhite
   components:
@@ -73384,16 +73313,6 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 6998
-  type: DrinkDoctorsDelightGlass
-  components:
-  - pos: -13.000066,-14.266357
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6999
   type: Lamp
   components:
@@ -89207,16 +89126,6 @@ entities:
   - pos: -0.5,-28.5
     parent: 30
     type: Transform
-- uid: 9178
-  type: DrinkWaterBottleFull
-  components:
-  - pos: -0.080818176,-28.226078
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 9179
   type: hydroponicsSoil
   components:
@@ -105249,16 +105158,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 11369
-  type: DrinkDetFlask
-  components:
-  - pos: 3.675384,-15.173689
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 11370
   type: ClothingHeadHatFedoraBrown
   components:
@@ -137218,16 +137117,6 @@ entities:
   - pos: 60.5,39.5
     parent: 30
     type: Transform
-- uid: 15382
-  type: DrinkShotGlass
-  components:
-  - pos: 15.757429,60.801353
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 15383
   type: Sink
   components:
@@ -140257,16 +140146,6 @@ entities:
   - pos: 63.5,27.5
     parent: 30
     type: Transform
-- uid: 15859
-  type: DrinkShotGlass
-  components:
-  - pos: 15.554304,60.91073
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 15860
   type: Barricade
   components:
@@ -146224,16 +146103,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 16752
-  type: DrinkWineGlass
-  components:
-  - pos: -40.301033,22.896976
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 16753
   type: PosterLegitHighClassMartini
   components:
@@ -148691,28 +148560,6 @@ entities:
   - pos: -60.5,44.5
     parent: 30
     type: Transform
-- uid: 17108
-  type: DrinkVodkaBottleFull
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.409187,44.67379
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 17109
-  type: DrinkVodkaBottleFull
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.393562,44.533165
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 17110
   type: ClothingHeadHatUshanka
   components:
@@ -151026,18 +150873,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 17477
-  type: DrinkBottleWine
-  components:
-  - pos: -57.464348,-43.09291
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 17478
   type: SolarTracker
   components:
@@ -152236,18 +152071,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 17652
-  type: DrinkBottlePatron
-  components:
-  - pos: -82.53516,-45.268623
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 17653
   type: PaintingMonkey
   components:
@@ -165417,26 +165240,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 19525
-  type: DrinkMugGreen
-  components:
-  - pos: -71.575066,-52.318336
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 19526
-  type: DrinkMugBlack
-  components:
-  - pos: -72.24694,-52.474586
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19527
   type: PottedPlantRandom
   components:
@@ -167378,17 +167181,6 @@ entities:
   - pos: -40.5,-2.5
     parent: 30
     type: Transform
-- uid: 19790
-  type: DrinkVodkaBottleFull
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.409187,44.76754
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19791
   type: YellowOxygenTankFilled
   components:
@@ -167790,16 +167582,6 @@ entities:
     pos: -48.5,63.5
     parent: 30
     type: Transform
-- uid: 19844
-  type: DrinkChangelingStingCan
-  components:
-  - pos: -42.46064,-22.560078
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
 - uid: 19845
   type: FoamBlade
   components:
@@ -178399,36 +178181,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 21337
-  type: DrinkMug
-  components:
-  - pos: -0.38949347,-9.49394
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21338
-  type: DrinkMug
-  components:
-  - pos: -0.35824347,-9.290815
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21339
-  type: DrinkMug
-  components:
-  - pos: -0.42074347,-9.11894
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21340
   type: TableGlass
   components:
@@ -178490,46 +178242,6 @@ entities:
   type: DrinkCreamCarton
   components:
   - pos: -0.6569953,-8.6031685
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21350
-  type: DrinkIrishCoffeeGlass
-  components:
-  - pos: -0.6569953,-8.2281685
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21351
-  type: DrinkIrishCoffeeGlass
-  components:
-  - pos: -0.6726203,-8.0250435
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21352
-  type: DrinkIcedCoffeeGlass
-  components:
-  - pos: -0.4028604,-8.289953
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21353
-  type: DrinkIcedCoffeeGlass
-  components:
-  - pos: -0.4497354,-8.008703
     parent: 30
     type: Transform
   - canCollide: False
@@ -178645,16 +178357,6 @@ entities:
   type: DrinkBeepskySmashGlass
   components:
   - pos: 5.473156,-7.310885
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 21366
-  type: DrinkMugDog
-  components:
-  - pos: 5.551281,-11.404634
     parent: 30
     type: Transform
   - canCollide: False

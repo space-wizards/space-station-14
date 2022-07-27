@@ -35,7 +35,7 @@ namespace Content.Client.Communications.UI
                 SizeFlagsStretchRatio = 1
             };
             AnnounceButton = new Button();
-            AnnounceButton.Text = "Announce";
+            AnnounceButton.Text = Loc.GetString("comms-console-menu-announcement-button");
             AnnounceButton.OnPressed += (_) => Owner.AnnounceButtonPressed(_messageInput.Text.Trim());
             AnnounceButton.Disabled = !owner.CanAnnounce;
 

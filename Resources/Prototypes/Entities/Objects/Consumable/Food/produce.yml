@@ -118,7 +118,6 @@
   - type: Item
     size: 10
     sprite: Objects/Specific/Hydroponics/nettle.rsi
-    prefix: inhand
   - type: MeleeWeapon
     damage:
       types:
@@ -175,7 +174,7 @@
     state: peel
   - type: Item
     sprite: Objects/Specific/Hydroponics/banana.rsi
-    HeldPrefix: peel
+    heldPrefix: peel
   - type: Slippery
     launchForwardsMultiplier: 1.5
   - type: StepTrigger
@@ -723,7 +722,7 @@
     grindableSolutionName: food
   - type: Clothing
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
-    Slots:
+    slots:
     - HEAD
 
 - type: entity

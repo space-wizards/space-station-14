@@ -15,12 +15,14 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 
 namespace Content.Server.Zombies
 {
     public sealed class ZombieSystem : EntitySystem
     {
+        [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly DiseaseSystem _disease = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
@@ -35,6 +37,7 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
             SubscribeLocalEvent<ZombieComponent, DamageChangedEvent>(OnDamage);
         }
 
@@ -52,6 +55,12 @@ namespace Content.Server.Zombies
                 _vocal.TryScream(uid);
 
             component.LastDamageGroanAccumulator = 2;
+        }
+
+        private void OnRefreshSpeed(EntityUid uid, ZombieComponent component, RefreshMovementSpeedModifiersEvent args)
+        {
+            var mod = component.ZombieMovementSpeedDebuff;
+            args.ModifySpeed(mod, mod);
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
