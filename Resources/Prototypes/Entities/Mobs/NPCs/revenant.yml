@@ -65,6 +65,7 @@
   id: RevenantEctoplasm
   name: ectoplasm
   description: A weird bit of goo. You probably shouldn't leave it lying around like this.
+  noSpawn: true
   components:
   - type: Sprite
     noRot: true

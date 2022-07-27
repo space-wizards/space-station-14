@@ -17,14 +17,17 @@ using Content.Shared.Throwing;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
+using Content.Server.Disease;
+using Content.Server.Disease.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly DiseaseSystem _disease = default!;
 
     public void InitializeAbilities()
     {
@@ -32,8 +35,10 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
         SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
+
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
     }
 
@@ -80,7 +85,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         revenant.HarvestCancelToken = new();
-        var doAfter = new DoAfterEventArgs(uid, revenant.HarvestDuration, revenant.HarvestCancelToken.Token, target)
+        var doAfter = new DoAfterEventArgs(uid, revenant.HarvestDebuffs.X, revenant.HarvestCancelToken.Token, target)
         {
             DistanceThreshold = 2,
             BreakOnUserMove = true,
@@ -95,7 +100,7 @@ public sealed partial class RevenantSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
             target, Filter.Pvs(target), PopupType.Large);
 
-        CanUseAbility(uid, revenant, 0, revenant.HarvestDuration, revenant.HarvestDuration);
+        CanUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
         _doAfter.DoAfter(doAfter);
     }
 
@@ -142,7 +147,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.DefileUseCost, component.DefileStunDuration, component.DefileCorporealDuration))
+        if (!CanUseAbility(uid, component, component.DefileCost, component.DefileDebuffs))
             return;
 
         args.Handled = true;
@@ -191,8 +196,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.OverloadLightsUseCost,
-            component.OverloadLightsStunDuration, component.OverloadLightsCorporealDuration))
+        if (!CanUseAbility(uid, component, component.OverloadCost, component.OverloadDebuffs))
             return;
 
         args.Handled = true;
@@ -207,19 +211,19 @@ public sealed partial class RevenantSystem : EntitySystem
             var ev = new GhostBooEvent(); //light go flicker
             RaiseLocalEvent(ent, ev);
 
-            if (_random.Prob(component.OverloadLightsBreakChance))
+            if (_random.Prob(component.OverloadBreakChance))
             {
                 //smack dem lights
                 var dspec = new DamageSpecifier();
                 dspec.DamageDict.Add("Blunt", 15);
                 _damage.TryChangeDamage(ent, dspec);
 
-                if (_random.Prob(component.OverloadLightsProjectileChance))
+                if (_random.Prob(component.OverloadProjectileChance))
                 {
                     //sparks
                     for (var i = 0; i < _random.Next(1, 3); i++)
                     {
-                        var proj = Spawn(component.OverloadLightsProjectileId, Transform(ent).Coordinates);
+                        var proj = Spawn(component.OverloadProjectileId, Transform(ent).Coordinates);
                         _throwing.TryThrow(proj, _random.NextVector2(), 15);
                     }
                 }
@@ -227,12 +231,29 @@ public sealed partial class RevenantSystem : EntitySystem
         }
     }
 
+    private void OnBlightAction(EntityUid uid, RevenantComponent component, RevenantBlightActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!CanUseAbility(uid, component, component.BlightCost, component.BlightDebuffs))
+            return;
+
+        args.Handled = true;
+
+        var emo = GetEntityQuery<DiseaseCarrierComponent>();
+
+        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.BlightRadius))
+            if (emo.TryGetComponent(ent, out var comp))
+                _disease.TryInfect(comp, component.BlightDiseasePrototypeId);
+    }
+
     private void OnMalfunctionAction(EntityUid uid, RevenantComponent component, RevenantMalfunctionActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!CanUseAbility(uid, component, component.MalfuncitonUseCost, component.MalfunctionStunDuration, component.MalfunctionCorporealDuration))
+        if (!CanUseAbility(uid, component, component.MalfuncitonCost, component.MalfunctionDebuffs))
             return;
 
         args.Handled = true;

@@ -12,7 +12,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
 using Content.Server.MobState;
-using Content.Shared.Speech;
 using Content.Server.Visible;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
@@ -20,7 +19,6 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Player;
-using Content.Server.Storage.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -172,7 +170,7 @@ public sealed partial class RevenantSystem : EntitySystem
         return true;
     }
 
-    private bool CanUseAbility(EntityUid uid, RevenantComponent component, float abilityCost, float stunDuration, float corporealDuration)
+    private bool CanUseAbility(EntityUid uid, RevenantComponent component, float abilityCost, Vector2 debuffs)
     {
         if (!ChangeEssenceAmount(uid, abilityCost, component, false))
         {
@@ -180,8 +178,8 @@ public sealed partial class RevenantSystem : EntitySystem
             return false;
         }
 
-        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(corporealDuration), false);
-        _stun.TryStun(uid, TimeSpan.FromSeconds(stunDuration), false);
+        _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
+        _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
 
         return true;
     }
@@ -194,13 +192,13 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             rev.Accumulator += frameTime;
 
-            if (rev.Accumulator <= 1)
+            if (rev.Accumulator <= rev.TickDuration)
                 continue;
-            rev.Accumulator -= 1;
+            rev.Accumulator -= rev.TickDuration;
 
             if (rev.Essence < rev.MaxEssence)
             {
-                ChangeEssenceAmount(rev.Owner, rev.EssencePerSecond, rev);
+                ChangeEssenceAmount(rev.Owner, rev.EssencePerTick, rev);
             }
         }
     }

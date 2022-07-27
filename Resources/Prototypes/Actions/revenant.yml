@@ -9,7 +9,7 @@
   id: RevenantDefile
   icon: Interface/Actions/scream.png #replace
   name: Defile
-  description: Costs 30 Essence. Defiles the surrounding area, ripping up floors and damaging windows.
+  description: Costs 30 Essence.
   serverEvent: !type:RevenantDefileActionEvent
   useDelay: 15
 
@@ -17,14 +17,22 @@
   id: RevenantOverloadLights
   icon: Interface/Actions/scream.png #replace
   name: Overload Lights
-  description: Costs 40 Essence. Causes nearby lights to overload and break, sending off sparks
+  description: Costs 40 Essence.
   serverEvent: !type:RevenantOverloadLightsActionEvent
+  useDelay: 20
+
+- type: instantAction
+  id: RevenantBlight
+  icon: Interface/Actions/scream.png #replace
+  name: Blight
+  description: Costs 50 Essence.
+  serverEvent: !type:RevenantBlightActionEvent
   useDelay: 20
 
 - type: instantAction
   id: RevenantMalfunction
   icon: Interface/Actions/scream.png #replace
   name: Malfunction
-  description: Costs 60 Essence. Causes electronics in the surrounding area to malfunction.
+  description: Costs 60 Essence.
   serverEvent: !type:RevenantMalfunctionActionEvent
   useDelay: 20
