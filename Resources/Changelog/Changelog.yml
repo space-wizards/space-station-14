@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Asteroids are now more robust. Use a pickaxe to break them instead of
-      a welder...please., type: Tweak}
-  id: 1533
-  time: '2022-05-15T02:07:59.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
@@ -2948,3 +2942,9 @@ Entries:
     type: Add}
   id: 2032
   time: '2022-07-27T09:55:28.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Ramens description points out you need to use boiling water, not just
+      any water.', type: Fix}
+  id: 2033
+  time: '2022-07-27T14:18:16.0000000+00:00'
