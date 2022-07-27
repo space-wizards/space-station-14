@@ -58,7 +58,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Devices/communication.rsi
-    HeldPrefix: old-radio
+    heldPrefix: old-radio
   - type: UserInterface
     interfaces:
     - key: enum.UplinkUiKey.Key

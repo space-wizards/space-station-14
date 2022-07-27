@@ -5,6 +5,8 @@
   id: BaseAlertOrder
   order:
     - category: Health
+    - category: Stamina
+    - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
     - category: Buckled
@@ -141,6 +143,18 @@
   description: "[color=green]Green[/color] good. [color=red]Red[/color] bad."
   minSeverity: 0
   maxSeverity: 6
+
+- type: alert
+  id: Internals
+  category: Internals
+  onClick: !type:ToggleInternals {}
+  icon:
+    sprite: /Textures/Interface/Alerts/internals.rsi
+    state: internal
+  name: Toggle internals
+  description: "Toggles your gas tank internals on or off."
+  minSeverity: 0
+  maxSeverity: 2
 
 - type: alert
   id: PilotingShuttle

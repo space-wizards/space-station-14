@@ -36,23 +36,33 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var (mover, xform) in EntityQuery<InputMoverComponent, TransformComponent>(true))
             {
-                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed != null)
+                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed.RelayEntity != null)
                 {
                     continue;
                 }
 
                 PhysicsComponent? body = null;
+                TransformComponent? xformMover = xform;
 
                 if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
                 {
-                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body)) continue;
+                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body) ||
+                        !TryComp(xform.ParentUid, out xformMover))
+                    {
+                        continue;
+                    }
+
+                    if (TryComp<InputMoverComponent>(xform.ParentUid, out var parentMover))
+                    {
+                        mover.LastGridAngle = parentMover.LastGridAngle;
+                    }
                 }
                 else if (!bodyQuery.TryGetComponent(mover.Owner, out body))
                 {
                     continue;
                 }
 
-                HandleMobMovement(mover, body, xform, frameTime);
+                HandleMobMovement(mover, body, xformMover, frameTime);
             }
 
             HandleShuttleMovement(frameTime);

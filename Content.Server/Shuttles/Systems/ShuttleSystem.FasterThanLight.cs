@@ -5,6 +5,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
+using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
@@ -195,6 +196,8 @@ public sealed partial class ShuttleSystem
         component = AddComp<FTLComponent>(uid);
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
+        // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
+        SetupHyperspace();
         return true;
     }
 
@@ -217,7 +220,6 @@ public sealed partial class ShuttleSystem
                     DoTheDinosaur(xform);
 
                     comp.State = FTLState.Travelling;
-                    SetupHyperspace();
 
                     var width = Comp<IMapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
@@ -352,6 +354,8 @@ public sealed partial class ShuttleSystem
         _hyperSpaceMap = _mapManager.CreateMap();
         _sawmill.Info($"Setup hyperspace map at {_hyperSpaceMap.Value}");
         DebugTools.Assert(!_mapManager.IsMapPaused(_hyperSpaceMap.Value));
+        var parallax = EnsureComp<ParallaxComponent>(_mapManager.GetMapEntityId(_hyperSpaceMap.Value));
+        parallax.Parallax = "FastSpace";
     }
 
     private void CleanupHyperspace()
