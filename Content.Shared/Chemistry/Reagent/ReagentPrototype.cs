@@ -30,6 +30,12 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("group")]
         public string Group { get; } = "Unknown";
 
+        /// <summary>
+        /// Used for ReagentDispensers with point cost enabled.
+        /// </summary>
+        [DataField("pointCost")]
+        public int Cost { get; }
+
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
 

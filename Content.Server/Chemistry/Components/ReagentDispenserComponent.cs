@@ -213,12 +213,12 @@ namespace Content.Server.Chemistry.Components
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, FixedPoint2.New(0),
                     FixedPoint2.New(0),
-                    string.Empty, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, null, _dispenseAmount);
+                    string.Empty, UsesPointLimit, MaxPoints, CurrentPoints, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, null, _dispenseAmount);
             }
 
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
                 solution.MaxVolume,
-                _entities.GetComponent<MetaDataComponent>(beaker).EntityName, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, solution.Contents.ToList(), _dispenseAmount);
+                _entities.GetComponent<MetaDataComponent>(beaker).EntityName, UsesPointLimit, MaxPoints, CurrentPoints, Inventory, _entities.GetComponent<MetaDataComponent>(Owner).EntityName, solution.Contents.ToList(), _dispenseAmount);
         }
 
         public void UpdateUserInterface()

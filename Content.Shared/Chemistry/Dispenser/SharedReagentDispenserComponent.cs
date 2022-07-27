@@ -23,6 +23,15 @@ namespace Content.Shared.Chemistry.Dispenser
         /// </summary>
         public readonly List<ReagentDispenserInventoryEntry> Inventory = new();
 
+        [DataField("pointLimitEnabled")]
+        public bool UsesPointLimit;
+        [DataField("maxPoints")]
+        public int MaxPoints;
+        [DataField("startingPoints")]
+        public int CurrentPoints;
+        [DataField("pointIncreasePerTick")]
+        public int PointIncreasePerTick;
+
         [Serializable, NetSerializable]
         public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
@@ -31,6 +40,10 @@ namespace Content.Shared.Chemistry.Dispenser
             public readonly FixedPoint2 BeakerCurrentVolume;
             public readonly FixedPoint2 BeakerMaxVolume;
             public readonly string ContainerName;
+            public readonly bool ShowPointsBar;
+            public readonly int MaxPoints;
+            public readonly int CurrentPoints;
+
             /// <summary>
             /// A list of the reagents which this dispenser can dispense.
             /// </summary>
@@ -43,13 +56,16 @@ namespace Content.Shared.Chemistry.Dispenser
             public readonly FixedPoint2 SelectedDispenseAmount;
 
             public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Components.Solution.ReagentQuantity>? containerReagents, FixedPoint2 selectedDispenseAmount)
+                bool showPointsBar, int maxPoints, int currentPoints, List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Components.Solution.ReagentQuantity>? containerReagents, FixedPoint2 selectedDispenseAmount)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
                 BeakerCurrentVolume = beakerCurrentVolume;
                 BeakerMaxVolume = beakerMaxVolume;
                 ContainerName = containerName;
+                ShowPointsBar = showPointsBar;
+                MaxPoints = maxPoints;
+                CurrentPoints = currentPoints;
                 Inventory = inventory;
                 DispenserName = dispenserName;
                 ContainerReagents = containerReagents;
