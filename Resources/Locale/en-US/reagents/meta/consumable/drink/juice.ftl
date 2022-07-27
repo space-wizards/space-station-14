@@ -58,5 +58,5 @@ reagent-desc-juice-tochtause = An unpleasant juice made from töchtaüse berries
 reagent-name-juice-tomato = tomato juice
 reagent-desc-juice-tomato = Tomatoes made into juice. What a waste of good tomatoes, huh?
 
-reagent-name-juice-watermelon = water melon juice
+reagent-name-juice-watermelon = watermelon juice
 reagent-desc-juice-watermelon = The delicious juice of a watermelon.
