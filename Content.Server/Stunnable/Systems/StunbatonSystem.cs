@@ -24,6 +24,8 @@ namespace Content.Server.Stunnable.Systems
 {
     public sealed class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly SharedItemSystem _item = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -88,11 +90,12 @@ namespace Content.Server.Stunnable.Systems
             if (!comp.Activated)
                 return;
 
-            if (TryComp<SharedItemComponent>(comp.Owner, out var item))
-                item.EquippedPrefix = "off";
-
-            if (TryComp(comp.Owner, out AppearanceComponent? appearance))
+            if (TryComp<AppearanceComponent>(comp.Owner, out var appearance) &&
+                TryComp<ItemComponent>(comp.Owner, out var item))
+            {
+                _item.SetHeldPrefix(comp.Owner, "off", item);
                 appearance.SetData(ToggleVisuals.Toggled, false);
+            }
 
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
@@ -112,12 +115,12 @@ namespace Content.Server.Stunnable.Systems
                 return;
             }
 
-
-            if (TryComp<SharedItemComponent>(comp.Owner, out var item))
-                item.EquippedPrefix = "on";
-
-            if (TryComp(comp.Owner, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent<AppearanceComponent>(comp.Owner, out var appearance) &&
+                EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
+            {
+                _item.SetHeldPrefix(comp.Owner, "on", item);
                 appearance.SetData(ToggleVisuals.Toggled, true);
+            }
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
