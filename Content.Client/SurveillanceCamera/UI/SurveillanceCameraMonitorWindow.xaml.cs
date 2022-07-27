@@ -139,7 +139,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         var eyeChanged = eye != CameraView.Eye || CameraView.Eye == null;
         CameraView.Eye = eye ?? _defaultEye;
         CameraView.Visible = !eyeChanged && !_isSwitching;
-        CameraViewBackground.Visible = eyeChanged && _isSwitching;
         CameraDisconnectButton.Disabled = eye == null;
 
         if (eye != null)
@@ -150,6 +149,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
             }
 
             _isSwitching = true;
+            CameraViewBackground.Visible = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                 ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
                 ("address", _currentAddress));
@@ -157,6 +157,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         }
         else
         {
+            CameraViewBackground.Visible = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status-disconnected");
         }
     }
