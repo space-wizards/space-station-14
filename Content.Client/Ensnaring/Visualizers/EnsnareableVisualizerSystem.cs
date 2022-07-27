@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Ensnaring;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Ensnaring.Visualizers;
 
@@ -24,6 +25,10 @@ public sealed class EnsnareableVisualizerSystem : VisualizerSystem<EnsnareableVi
     {
         if (TryComp<SpriteComponent>(uid, out var sprite) && args.Component.TryGetData(EnsnareableVisuals.IsEnsnared, out bool isEnsnared))
         {
+            if (component.Sprite != null)
+            {
+                sprite.LayerSetRSI(EnsnaredVisualLayers.Ensnared, component.Sprite);
+            }
             sprite.LayerSetState(EnsnaredVisualLayers.Ensnared, component.State);
             sprite.LayerSetVisible(EnsnaredVisualLayers.Ensnared, isEnsnared);
         }
