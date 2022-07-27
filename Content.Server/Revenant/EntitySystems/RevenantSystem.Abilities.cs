@@ -16,6 +16,7 @@ using Robust.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -25,12 +26,24 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
+    public void InitializeAbilities()
+    {
+        SubscribeLocalEvent<RevenantComponent, InteractNoHandEvent>(OnInteract);
+        SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
+        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
+        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
+        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+    }
+
     public void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
     {
         _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, Filter.Entities(uid), PopupType.Medium);
         var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, target: target)
         {
             BreakOnUserMove = true,
+            DistanceThreshold = 2,
             UserFinishedEvent = new SoulSearchDoAfterComplete(target),
         };
         _doAfter.DoAfter(searchDoAfter);
@@ -69,8 +82,7 @@ public sealed partial class RevenantSystem : EntitySystem
         revenant.HarvestCancelToken = new();
         var doAfter = new DoAfterEventArgs(uid, revenant.HarvestDuration, revenant.HarvestCancelToken.Token, target)
         {
-            BreakOnDamage = true,
-            BreakOnTargetMove = false,
+            DistanceThreshold = 2,
             BreakOnUserMove = true,
             NeedHand = false,
             UserFinishedEvent = new HarvestDoAfterComplete(target),
@@ -151,20 +163,17 @@ public sealed partial class RevenantSystem : EntitySystem
         foreach (var ent in lookup)
         {
             //break windows
-            if (HasComp<TagComponent>(ent))
+            if (HasComp<TagComponent>(ent) && _tag.HasAnyTag(ent, "Window"))
             {
-                if (_tag.HasAnyTag(ent, "Window"))
-                {
-                    //hardcoded damage specifiers til i die.
-                    var dspec = new DamageSpecifier();
-                    dspec.DamageDict.Add("Structural", 15);
-                    _damage.TryChangeDamage(ent, dspec);
-                }
+                //hardcoded damage specifiers til i die.
+                var dspec = new DamageSpecifier();
+                dspec.DamageDict.Add("Structural", 15);
+                _damage.TryChangeDamage(ent, dspec);
             }
 
             //randomly opens some lockers and such.
             if (_random.Prob(component.DefileEffectChance) && HasComp<EntityStorageComponent>(ent))
-                _entityStorage.TryOpenStorage(ent, ent, true); //the locker opening itself doesn't matter because of the specific logic.
+                _entityStorage.OpenStorage(ent);
 
             //chucks shit
             if (_random.Prob(component.DefileEffectChance) && HasComp<SharedItemComponent>(ent) &&

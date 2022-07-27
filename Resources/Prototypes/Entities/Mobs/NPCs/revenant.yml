@@ -50,6 +50,14 @@
   - type: NameIdentifier
     group: GenericNumber
   - type: Revenant
+  - type: PointLight
+    color: MediumPurple
+    radius: 1.5
+    softness: 0.75
+  - type: UserInterface
+    interfaces:
+    - key: enum.RevenantUiKey.Key
+      type: RevenantBoundUserInterface
   - type: MobState
 
 - type: entity

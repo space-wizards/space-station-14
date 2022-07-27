@@ -31,7 +31,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
-    [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -54,13 +53,8 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, StatusEffectAddedEvent>(OnStatusAdded);
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
 
-        SubscribeLocalEvent<RevenantComponent, InteractNoHandEvent>(OnInteract);
-        SubscribeLocalEvent<RevenantComponent, SoulSearchDoAfterComplete>(OnSoulSearchComplete);
-        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterComplete>(OnHarvestComplete);
-        SubscribeLocalEvent<RevenantComponent, HarvestDoAfterCancelled>(OnHarvestCancelled);
-        SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
-        SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        InitializeAbilities();
+        InitializeShop();
     }
 
     private void OnInit(EntityUid uid, RevenantComponent component, ComponentStartup args)
@@ -83,13 +77,16 @@ public sealed partial class RevenantSystem : EntitySystem
         _visibility.RemoveLayer(visibility, (int) VisibilityFlags.Normal, false);
         _visibility.RefreshVisibility(visibility);
 
+        //ghost vision
         if (TryComp(component.Owner, out EyeComponent? eye))
-        {
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
-        }
+
+        //get all the abilities
+        foreach (var listing in _proto.EnumeratePrototypes<RevenantStoreListingPrototype>())
+            component.Listings.Add(listing);
 
         //TODO: kill
-        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantOverloadLights"));
+        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
         _action.AddAction(uid, action, null);
     }
 
@@ -171,6 +168,7 @@ public sealed partial class RevenantSystem : EntitySystem
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
         }
 
+        UpdateUserInterface(component);
         return true;
     }
 

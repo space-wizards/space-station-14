@@ -1,0 +1,32 @@
+#TODO: generic shop system
+- type: revenantListing
+  id: Defile
+  actionId: RevenantDefile
+  listingName: Defile
+  description: TEST TEST
+  icon: Interface/Actions/scream.png #replace
+  price: 10
+
+- type: revenantListing
+  id: OverloadLights
+  actionId: RevenantOverloadLights
+  listingName: Overload Lights
+  description: TEST TEST
+  icon: Interface/Actions/scream.png #replace
+  price: 25
+
+- type: revenantListing
+  id: Blight
+  actionId: RevenantBlight
+  listingName: Blight
+  description: TEST TEST
+  icon: Interface/Actions/scream.png #replace
+  price: 75
+
+- type: revenantListing
+  id: Malfunction
+  actionId: RevenantMalfunction
+  listingName: Malfunction
+  description: TEST TEST
+  icon: Interface/Actions/scream.png #replace
+  price: 125

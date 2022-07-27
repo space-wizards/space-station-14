@@ -1,4 +1,11 @@
 - type: instantAction
+  id: RevenantShop
+  icon: Interface/Actions/scream.png #replace
+  name: Shop
+  description: Opens the ability shop.
+  serverEvent: !type:RevenantShopActionEvent
+
+- type: instantAction
   id: RevenantDefile
   icon: Interface/Actions/scream.png #replace
   name: Defile

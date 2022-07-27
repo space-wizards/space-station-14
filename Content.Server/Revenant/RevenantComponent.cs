@@ -1,6 +1,7 @@
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Disease;
 using Content.Shared.Physics;
+using Content.Shared.Revenant;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
@@ -32,6 +33,9 @@ public sealed class RevenantComponent : Component
 
     [ViewVariables]
     public float Accumulator = 0;
+
+    [ViewVariables]
+    public List<RevenantStoreListingPrototype> Listings = new();
 
     #region Harvest Ability
     [DataField("soulSearchDuration")] public float SoulSearchDuration = 2.5f;

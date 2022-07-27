@@ -30,11 +30,6 @@ public sealed class CorporealSystem : EntitySystem
         if (TryComp<AppearanceComponent>(uid, out var app))
             app.SetData(RevenantVisuals.Corporeal, true);
 
-        var light = EnsureComp<PointLightComponent>(uid);
-        light.Color = Color.MediumPurple;
-        light.Radius = 1.5f;
-        light.Softness = 0.75f;
-
         if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
             var fixture = fixtures.Fixtures.Values.First();
@@ -55,8 +50,6 @@ public sealed class CorporealSystem : EntitySystem
     {
         if (TryComp<AppearanceComponent>(uid, out var app))
             app.SetData(RevenantVisuals.Corporeal, false);
-
-        RemComp<PointLightComponent>(uid);
 
         if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
