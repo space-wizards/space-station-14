@@ -165,8 +165,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public void OnSwitchTimerComplete()
     {
         _isSwitching = false;
-        CameraView.Visible = true;
-        CameraViewBackground.Visible = false;
+        CameraView.Visible = CameraView.Eye != _defaultEye;
+        CameraViewBackground.Visible = CameraView.Eye == _defaultEye;
         CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                             ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connected")),
                             ("address", _currentAddress));
