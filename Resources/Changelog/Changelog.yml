@@ -1,10 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Closed airlocks now trap air in their tile, meaning mice can now go
-      under airlocks safely.', type: Tweak}
-  id: 1531
-  time: '2022-05-14T04:05:04.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: made lobby background keep aspect when stretching, type: Tweak}
@@ -2941,3 +2935,9 @@ Entries:
       that forensics do. No more edge cases where you don't check anything., type: Fix}
   id: 2030
   time: '2022-07-27T04:46:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Transylvanian vampire cloak is now available rarely in the maint fluff
+      spawner., type: Add}
+  id: 2031
+  time: '2022-07-27T08:15:47.0000000+00:00'
