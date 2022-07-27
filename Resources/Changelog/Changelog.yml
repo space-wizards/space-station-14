@@ -1,10 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Entities with bodies that are microwaved will now violently explode.,
-    type: Tweak}
-  id: 1530
-  time: '2022-05-14T04:04:45.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: 'Closed airlocks now trap air in their tile, meaning mice can now go
@@ -2938,3 +2932,12 @@ Entries:
   - {message: Map-specific jobs no longer clog up the preference menu., type: Fix}
   id: 2029
   time: '2022-07-27T01:34:20.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added sleeping., type: Add}
+  - {message: Added nitrous oxide., type: Add}
+  - {message: Slimes exhale nitrous oxide., type: Tweak}
+  - {message: Disease interaction infection checks now use the same robust method
+      that forensics do. No more edge cases where you don't check anything., type: Fix}
+  id: 2030
+  time: '2022-07-27T04:46:24.0000000+00:00'
