@@ -30,6 +30,8 @@
       solution: canister
     - type: InjectableSolution
       solution: canister
+    - type: ExaminableSolution
+      solution: canister
     - type: Spillable
       solution: canister
     - type: DamageOtherOnHit
@@ -37,7 +39,7 @@
         types:
           Blunt: 1
     - type: Damageable
-      damagecanister: Inorganic
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
         - trigger:
@@ -278,8 +280,8 @@
 - type: entity
   id: RadiumCanister
   parent: ReagentCanisterBase
-  name: "canister of radium powder"
-  description: "A canister of radium powder. It's probably best to keep it out of your lungs."
+  name: "canister of radium gas"
+  description: "A canister of radium gas. It's probably best to keep it out of your lungs."
   components:
     - type: SolutionContainerManager
       solutions:
@@ -344,4 +346,18 @@
           maxVol: 150
           reagents:
             - ReagentId: Sulfur
+              Quantity: 150
+
+- type: entity
+  id: SulfuricAcidCanister
+  parent: ReagentCanisterBase
+  name: "canister of sulfuric acid"
+  description: "A corrosion-resistant canister of sulfuric acid."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: SulfuricAcid
               Quantity: 150

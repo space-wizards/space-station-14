@@ -86,27 +86,35 @@
     - type: StorageFill
       contents:
         - id: AluminiumCanister
-          amount: 1
+          amount: 2
         - id: CarbonCanister
-          amount: 1
+          amount: 4
         - id: CopperCanister
-          amount: 1
-        - id: GoldCanister
-          amount: 1
+          amount: 2
+        - id: EthanolCanister
+          amount: 2
+        - id: HydrogenCanister
+          amount: 4
         - id: IodineCanister
-          amount: 1
+          amount: 2
         - id: IronCanister
-          amount: 1
+          amount: 2
         - id: LithiumCanister
-          amount: 1
+          amount: 2
+        - id: NitrogenCanister
+          amount: 4
+        - id: OilCanister
+          amount: 2
+        - id: OxygenCanister
+          amount: 4
         - id: PotassiumCanister
-          amount: 1
+          amount: 2
         - id: PhosphorusCanister
-          amount: 1
+          amount: 2
+        - id: SodiumCanister
+          amount: 2
         - id: SiliconCanister
-          amount: 1
-        - id: SilverCanister
-          amount: 1
+          amount: 2
 
 - type: entity
   id: CrateAluminiumCanister
@@ -306,4 +314,24 @@
     - type: StorageFill
       contents:
         - id: SilverCanister
+          amount: 6
+
+- type: entity
+  id: CrateSulfurCanister
+  name: sulfur chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SulfurCanister
+          amount: 6
+
+- type: entity
+  id: CrateSulfuricAcidCanister
+  name: sulfuric acid chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SulfuricAcidCanister
           amount: 6

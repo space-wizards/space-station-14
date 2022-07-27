@@ -1,4 +1,15 @@
 - type: cargoProduct
+  name: "crate of assorted chemical canisters"
+  id: ChemicalAssortedCanisters
+  description: "A crate of various chemical canisters."
+  icon:
+    entity: CarbonCanister
+  product: CrateAssortedChems
+  cost: 2000
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
   name: "crate of aluminium chemical canisters"
   id: ChemicalAluminiumCanister
   description: "A crate of 6 aluminium chemical canisters."
@@ -76,7 +87,7 @@
   group: canisters
 
 - type: cargoProduct
-  name: "crate of Iodine chemical canisters"
+  name: "crate of iodine chemical canisters"
   id: ChemicalIodineCanister
   description: "A crate of 6 iodine chemical canisters."
   icon:
@@ -215,5 +226,27 @@
     entity: SilverCanister
   product: CrateSilverCanister
   cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of sulfur chemical canisters"
+  id: ChemicalSilverCanister
+  description: "A crate of 6 sulfur chemical canisters."
+  icon:
+    entity: SilverCanister
+  product: CrateSilverCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of sulfuric acid chemical canisters"
+  id: ChemicalSulfuricAcidCanister
+  description: "A crate of 6 sulfuric acid chemical canisters."
+  icon:
+    entity: SulfuricAcidCanister
+  product: CrateSulfuricAcidCanister
+  cost: 1000
   category: Chemicals
   group: canisters
