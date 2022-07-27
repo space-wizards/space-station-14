@@ -10,26 +10,49 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesEntry : BoxContainer
     {
+        private readonly IGameTiming _gameTiming = default!;
+
+        private readonly TimeSpan _expiresAt;
+
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
-        public event Action<GhostRoleInfo>? OnRoleFollow;
 
-        public GhostRolesEntry(string name, string description, IEnumerable<GhostRoleInfo> roles, IGameTiming timing)
+        public GhostRolesEntry(string name, string description, GhostRoleInfo role, IGameTiming timing)
         {
             RobustXamlLoader.Load(this);
+
+            _gameTiming = timing;
+            _expiresAt = role.ExpiresAt;
 
             Title.Text = name;
             Description.SetMessage(description);
 
-            foreach (var role in roles)
-            {
-                var button = new GhostRoleEntryButtons(role, timing);
-                button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
-                button.CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
-                button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+            TimeRemaining.MinValue = 0;
+            TimeRemaining.MaxValue = (float)(role.ExpiresAt.TotalSeconds - role.AddedAt.TotalSeconds);
+            TimeRemaining.Value = (float)(role.ExpiresAt.TotalSeconds - _gameTiming.CurTime.TotalSeconds);
 
-                Buttons.AddChild(button);
-            }
+            RequestButton.Visible = !role.IsRequested;
+            CancelButton.Visible = role.IsRequested;
+
+            RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
+            CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
+
+
+            // foreach (var role in roles)
+            // {
+            //     var button = new GhostRoleEntryButtons(role, timing);
+            //     button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
+            //     button.CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
+            //     button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
+            //
+            //     Buttons.AddChild(button);
+            // }
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            TimeRemaining.Value = (float)(_expiresAt.TotalSeconds - _gameTiming.CurTime.TotalSeconds);
         }
     }
 }

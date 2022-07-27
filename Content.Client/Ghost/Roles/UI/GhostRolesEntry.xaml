@@ -4,13 +4,14 @@
               Margin="0 0 8 8">
     <Label Name="Title"
            StyleClasses="LabelKeyText"/>
-    <PanelContainer StyleClasses="HighDivider" />
+    <ProgressBar Name="TimeRemaining" MinHeight="2"/>
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
     <BoxContainer Name="Buttons"
                   HorizontalAlignment="Left"
-                  Orientation="Vertical"
+                  Orientation="Horizontal"
                   SeparationOverride="5">
-        <!-- Buttons are added here by code -->
+        <Button Name="RequestButton" Text="Request"/>
+        <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
     </BoxContainer>
 </BoxContainer>

@@ -23,18 +23,20 @@ namespace Content.Client.Ghost.Roles.UI
 
             _window.OnRoleRequested += info =>
             {
-                if (_windowRules != null)
-                    _windowRules.Close();
-                _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
-                {
-                    SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
-                });
-                _windowRulesId = info.Identifier;
-                _windowRules.OnClose += () =>
-                {
-                    _windowRules = null;
-                };
-                _windowRules.OpenCentered();
+                SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
+
+                // if (_windowRules != null)
+                //     _windowRules.Close();
+                // _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
+                // {
+                //     SendMessage(new GhostRoleTakeoverRequestMessage(info.Identifier));
+                // });
+                // _windowRulesId = info.Identifier;
+                // _windowRules.OnClose += () =>
+                // {
+                //     _windowRules = null;
+                // };
+                // _windowRules.OpenCentered();
             };
 
             _window.OnRoleCancelled += info =>
@@ -77,12 +79,12 @@ namespace Content.Client.Ghost.Roles.UI
 
             var groupedRoles = ghostState.GhostRoles.GroupBy(
                 role => (role.Name, role.Description));
-            foreach (var group in groupedRoles)
+            foreach (var role in ghostState.GhostRoles)
             {
-                var name = group.Key.Name;
-                var description = group.Key.Description;
+                var name = role.Name;
+                var description = role.Description;
 
-                _window.AddEntry(name, description, group, _timing);
+                _window.AddEntry(name, description, role, _timing);
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);

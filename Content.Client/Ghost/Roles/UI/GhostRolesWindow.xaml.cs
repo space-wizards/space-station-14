@@ -19,14 +19,13 @@ namespace Content.Client.Ghost.Roles.UI
             EntryContainer.DisposeAllChildren();
         }
 
-        public void AddEntry(string name, string description, IEnumerable<GhostRoleInfo> roles, IGameTiming timing)
+        public void AddEntry(string name, string description, GhostRoleInfo role, IGameTiming timing)
         {
             NoRolesMessage.Visible = false;
 
-            var entry = new GhostRolesEntry(name, description, roles, timing);
+            var entry = new GhostRolesEntry(name, description, role, timing);
             entry.OnRoleSelected += OnRoleRequested;
             entry.OnRoleCancelled += OnRoleCancelled;
-            entry.OnRoleFollow += OnRoleFollow;
             EntryContainer.AddChild(entry);
         }
     }

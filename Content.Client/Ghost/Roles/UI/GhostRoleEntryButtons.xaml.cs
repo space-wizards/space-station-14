@@ -24,15 +24,7 @@ public sealed partial class GhostRoleEntryButtons : BoxContainer
 
         RequestButton.Visible = !_requested;
         CancelButton.Visible = _requested;
-
-        TimeRemaining.MinValue = 0;
-        TimeRemaining.MaxValue = (float)(role.ExpiresAt.TotalSeconds - role.AddedAt.TotalSeconds);
-        TimeRemaining.Value = (float)(role.ExpiresAt.TotalSeconds - _gameTiming.CurTime.TotalSeconds);
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-        TimeRemaining.Value = (float)(_expiresAt.TotalSeconds - _gameTiming.CurTime.TotalSeconds);
-    }
+
 }
