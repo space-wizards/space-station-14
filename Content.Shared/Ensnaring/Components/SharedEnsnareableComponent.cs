@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Ensnaring.Components;
+﻿using Robust.Shared.Serialization;
+
+namespace Content.Shared.Ensnaring.Components;
 /// <summary>
 /// Use this on an entity that you would like to be ensnared by anything that has the <see cref="SharedEnsnaringComponent"/>
 /// </summary>
@@ -24,12 +26,6 @@ public abstract class SharedEnsnareableComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isEnsnared")]
     public bool IsEnsnared;
-
-    public enum EnsnareableVisuals : byte
-    {
-        NotEnsnared,
-        IsEnsnared
-    }
 }
 
 public sealed class EnsnaredChangedEvent : EntityEventArgs

@@ -284,6 +284,9 @@
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
+  - type: EnsnareableVisualizer
+    sprite: Objects/Misc/ensnare.rsi
+    state: icon
   - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle

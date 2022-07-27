@@ -14,6 +14,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         SubscribeLocalEvent<SharedEnsnareableComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedModify);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareEvent>(OnEnsnare);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
+        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
     }
 
     private void OnEnsnare(EntityUid uid, SharedEnsnareableComponent component, EnsnareEvent args)
@@ -33,6 +34,19 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         var ev = new EnsnaredChangedEvent(component.IsEnsnared);
         RaiseLocalEvent(uid, ev, true);
+    }
+
+    private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnaredChangedEvent args)
+    {
+        UpdateAppearance(uid, component);
+    }
+
+    private void UpdateAppearance(EntityUid uid, SharedEnsnareableComponent? component, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref component, ref appearance))
+            return;
+
+        appearance.SetData(EnsnareableVisuals.IsEnsnared, component.IsEnsnared);
     }
 
     private void MovementSpeedModify(EntityUid uid, SharedEnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
