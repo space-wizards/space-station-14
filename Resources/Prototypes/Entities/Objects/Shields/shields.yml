@@ -12,7 +12,7 @@
     - type: Item
       sprite: Objects/Weapons/Melee/shields.rsi
       size: 100
-      HeldPrefix: riot
+      heldPrefix: riot
     - type: Blocking
       passiveBlockModifier: PassiveRiotShieldBlock
       activeBlockModifier: ActiveRiotShieldBlock
@@ -60,7 +60,7 @@
     - type: Sprite
       state: riot_laser-icon
     - type: Item
-      HeldPrefix: riot_laser
+      heldPrefix: riot_laser
     - type: Blocking
       passiveBlockModifier: PassiveRiotLaserShieldBlock
       activeBlockModifier: ActiveRiotLaserShieldBlock
@@ -74,7 +74,7 @@
     - type: Sprite
       state: riot_bullet-icon
     - type: Item
-      HeldPrefix: riot_bullet
+      heldPrefix: riot_bullet
     - type: Blocking
       passiveBlockModifier: PassiveRiotBulletShieldBlock
       activeBlockModifier: ActiveRiotBulletShieldBlock
@@ -90,7 +90,7 @@
     - type: Sprite
       state: buckler-icon
     - type: Item
-      HeldPrefix: buckler
+      heldPrefix: buckler
     - type: Blocking
       passiveBlockModifier: PassiveBucklerBlock
       activeBlockModifier: ActiveBucklerBlock
@@ -122,7 +122,7 @@
     - type: Sprite
       state: makeshift-icon
     - type: Item
-      HeldPrefix: metal
+      heldPrefix: metal
     - type: Blocking
       passiveBlockModifier: PassiveMakeshiftBlock
       activeBlockModifier: ActiveMakeshiftBlock
@@ -156,7 +156,7 @@
     - type: Sprite
       state: ratvarian-icon
     - type: Item
-      HeldPrefix: ratvarian
+      heldPrefix: ratvarian
     - type: Blocking
       passiveBlockModifier: PassiveClockworkShieldBlock
       activeBlockModifier: ActiveClockworkShieldBlock
@@ -171,7 +171,7 @@
     - type: Sprite
       state: mirror-icon
     - type: Item
-      HeldPrefix: mirror
+      heldPrefix: mirror
     - type: Blocking
       passiveBlockModifier: PassiveMirrorShieldBlock
       activeBlockModifier: ActiveMirrorShieldBlock

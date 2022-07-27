@@ -5,7 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -196,6 +196,9 @@ namespace Content.Shared.Stunnable
         private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
         {
             if (args.Handled || knocked.HelpTimer > 0f)
+                return;
+
+            if (HasComp<SleepingComponent>(uid))
                 return;
 
             // Set it to half the help interval so helping is actually useful...
