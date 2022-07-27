@@ -45,7 +45,7 @@
         Slash: 7
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: AiFactionTag

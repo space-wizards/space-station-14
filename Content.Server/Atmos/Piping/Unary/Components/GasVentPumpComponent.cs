@@ -33,6 +33,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("pressureChecks")]
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
 
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("underPressureLockout")]
+        public bool UnderPressureLockout { get; set; } = false;
+
+        /// <summary>
+        ///     In releasing mode, do not pump when environment pressure is below this limit.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("underPressureLockoutThreshold")]
+        public float UnderPressureLockoutThreshold = 1;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
         public float ExternalPressureBound

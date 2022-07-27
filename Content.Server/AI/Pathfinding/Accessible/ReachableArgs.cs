@@ -1,4 +1,5 @@
 using Content.Server.AI.Components;
+using Content.Server.AI.EntitySystems;
 using Content.Shared.Access.Systems;
 using Robust.Shared.Physics;
 
@@ -33,7 +34,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             var access = accessSystem.FindAccessTags(entity);
-            var visionRadius = entMan.GetComponent<AiControllerComponent>(entity).VisionRadius;
+            var visionRadius = entMan.GetComponent<NPCComponent>(entity).VisionRadius;
 
             return new ReachableArgs(visionRadius, access, collisionMask);
         }

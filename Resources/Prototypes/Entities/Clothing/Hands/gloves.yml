@@ -8,13 +8,23 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
+  - type: BoxingGloves
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0.6
+    hitSound:
+      collection: BoxingHit
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingBlue
   name: blue boxing gloves
   description: Blue gloves for competitive boxing.
@@ -31,7 +41,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingGreen
   name: green boxing gloves
   description: Green gloves for competitive boxing.
@@ -48,7 +58,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingYellow
   name: yellow boxing gloves
   description: Yellow gloves for competitive boxing.

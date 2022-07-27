@@ -1,7 +1,7 @@
 stamp-component-stamped-name-default = A very important person
 stamp-component-stamped-name-mime = Mime
 stamp-component-stamped-name-captain = Captain
-stamp-component-stamped-name-centcom = Centcom
+stamp-component-stamped-name-centcom = CentCom
 stamp-component-stamped-name-chaplain = Chaplain
 stamp-component-stamped-name-clown = Clown
 stamp-component-stamped-name-cmo = Chief Medical Officer
