@@ -9,7 +9,6 @@ using Robust.Shared.Map;
 using Content.Shared.Tag;
 using Content.Shared.Maps;
 using Content.Server.Storage.Components;
-using Content.Shared.Item;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Shared.Physics;
@@ -19,6 +18,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
+using Content.Shared.Item;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -181,7 +181,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 _entityStorage.OpenStorage(ent);
 
             //chucks shit
-            if (_random.Prob(component.DefileEffectChance) && HasComp<SharedItemComponent>(ent) &&
+            if (_random.Prob(component.DefileEffectChance) && HasComp<ItemComponent>(ent) &&
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
 
