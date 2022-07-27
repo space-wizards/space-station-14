@@ -476,7 +476,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
-                _popupSystem.PopupEntity(Loc.GetString("general-failure-no-hands"), userId, Filter.Entities(userId));
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId));
                 return false;
             }
 

@@ -43,7 +43,3 @@ comp-window-knock = *knock knock*
 hugging-success-generic = You hug {THE($target)}.
 hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
 hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
-
-## No hands
-
-general-failure-no-hands = You don't have hands!
