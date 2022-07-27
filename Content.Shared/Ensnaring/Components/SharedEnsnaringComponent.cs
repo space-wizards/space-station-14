@@ -5,34 +5,32 @@
 public abstract class SharedEnsnaringComponent : Component
 {
     /// <summary>
-    /// How long it should take to free someone.
+    /// How long it should take to free someone else.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("freeTime")]
-    public float FreeTime = 1.0f;
+    public float FreeTime = 3.5f;
 
     /// <summary>
     /// How long it should take for an entity to free themselves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("breakoutTime")]
-    public float BreakoutTime = 3.0f;
+    public float BreakoutTime = 30.0f;
 
-    //TODO: Raise default value
     /// <summary>
     /// How much should this slow down the entities walk?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("walkSpeed")]
-    public float WalkSpeed = 0.3f;
+    public float WalkSpeed = 0.9f;
 
-    //TODO: Raise default value
     /// <summary>
     /// How much should this slow down the entities sprint?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprintSpeed")]
-    public float SprintSpeed = 0.3f;
+    public float SprintSpeed = 0.9f;
 
     /// <summary>
     /// Should this ensnare someone when thrown?
