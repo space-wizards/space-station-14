@@ -22,21 +22,20 @@
   branches:
   # Continue waiting
   - tasks:
-    - id: IdlePrimitive
+    - operator: !type:WaitOperator
+        key: IdleTIme
+
   # Pick a new spot and wait there.
   - tasks:
+    - operator: !type:PickAccessibleOperator
+        range: IdleRange
+        resultKey: MovementTarget
+
+    - operator: !type:MoveToOperator
     - id: PickAccessiblePrimitive
     - id: MoveToPrimitive
     - id: IdleRandomPrimitive
     - id: IdlePrimitive
-
-
-- type: htnPrimitive
-  id: PickAccessiblePrimitive
-  desc: Picks a nearby accessible location
-  operator: !type:PickAccessibleOperator
-    range: IdleRange
-    resultKey: MovementTarget
 
 - type: htnPrimitive
   id: MoveToPrimitive
