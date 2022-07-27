@@ -85,135 +85,135 @@
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderBag
+        - id: AluminiumPowderCanister
           amount: 1
-        - id: CarbonPowderBag
+        - id: CarbonPowderCanister
           amount: 1
-        - id: CopperPowderBag
+        - id: CopperPowderCanister
           amount: 1
-        - id: GoldPowderBag
+        - id: GoldPowderCanister
           amount: 1
-        - id: IodinePowderBag
+        - id: IodinePowderCanister
           amount: 1
-        - id: IronPowderBag
+        - id: IronPowderCanister
           amount: 1
-        - id: LithiumPowderBag
+        - id: LithiumPowderCanister
           amount: 1
-        - id: PotassiumPowderBag
+        - id: PotassiumPowderCanister
           amount: 1
-        - id: PhosphorusPowderBag
+        - id: PhosphorusPowderCanister
           amount: 1
-        - id: SiliconPowderBag
+        - id: SiliconPowderCanister
           amount: 1
-        - id: SilverPowderBag
+        - id: SilverPowderCanister
           amount: 1
 
 - type: entity
-  id: CrateAluminiumPowderBag
+  id: CrateAluminiumPowderCanister
   name: aluminium powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderBag
+        - id: AluminiumPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateCarbonPowderBag
+  id: CrateCarbonPowderCanister
   name: carbon powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CarbonPowderBag
+        - id: CarbonPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateCopperPowderBag
+  id: CrateCopperPowderCanister
   name: copper powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CopperPowderBag
+        - id: CopperPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateGoldPowderBag
+  id: CrateGoldPowderCanister
   name: gold powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: GoldPowderBag
+        - id: GoldPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateIodinePowderBag
+  id: CrateIodinePowderCanister
   name: iodine powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IodinePowderBag
+        - id: IodinePowderCanister
           amount: 6
 
 - type: entity
-  id: CrateIronPowderBag
+  id: CrateIronPowderCanister
   name: iron powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IronPowderBag
+        - id: IronPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateLithiumPowderBag
+  id: CrateLithiumPowderCanister
   name: lithium powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: LithiumPowderBag
+        - id: LithiumPowderCanister
           amount: 6
 
 - type: entity
-  id: CratePotassiumPowderBag
+  id: CratePotassiumPowderCanister
   name: potassium powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderBag
+        - id: AluminiumPowderCanister
           amount: 6
 
 - type: entity
-  id: CratePhosphorusPowderBag
+  id: CratePhosphorusPowderCanister
   name: phosphorus powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: PhosphorusPowderBag
+        - id: PhosphorusPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateSiliconPowderBag
+  id: CrateSiliconPowderCanister
   name: silicon powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SiliconPowderBag
+        - id: SiliconPowderCanister
           amount: 6
 
 - type: entity
-  id: CrateSilverPowderBag
+  id: CrateSilverPowderCanister
   name: silver powder crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SilverPowderBag
+        - id: SilverPowderCanister
           amount: 6

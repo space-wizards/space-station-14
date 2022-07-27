@@ -72,10 +72,10 @@
         - SheetSteel
         - SheetPlastic
         - ResearchDisk
-        - IronPowderBag
-        - CopperPowderBag
-        - CarbonPowderBag
-        - PotassiumPowderBag
+        - IronPowderCanister
+        - CopperPowderCanister
+        - CarbonPowderCanister
+        - PotassiumPowderCanister
       chance: 0.6
       offset: 0.0
 

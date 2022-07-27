@@ -1,49 +1,54 @@
-﻿# Abstract prototype for bags of reagents
+﻿# Abstract prototype for canisters of reagents
 - type: entity
-  id: ReagentBagBase
+  id: ReagentCanisterBase
   parent: BaseItem
   abstract: true
-  name: bag of material
-  description: "A bag for storing powdered somethings."
+  name: canister of material
+  description: "A container for various things you probably don't want in your body."
   components:
     - type: Sprite
+      sprite: Objects/Specific/Chemistry/canister.rsi
       netsync: false
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: flour-big
+      layers:
+      - state: canister
+      - state: canister1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+    - type: Appearance
+      visuals:
+      - type: SolutionContainerVisualizer
+        maxFillLevels: 1
+        fillBaseName: canister
     - type: SolutionContainerManager
       solutions:
-        bag:
+        canister:
           maxVol: 50
     - type: SolutionTransfer
-      # This is potentially badly-handled due to 'drink opening',
-      #  but it lets the flour be tampered with, refilled, etc.
     - type: RefillableSolution
-      solution: bag
+      solution: canister
     - type: DrainableSolution
-      solution: bag
+      solution: canister
+    - type: ExaminableSolution
+      solution: canister
+    - type: DrawableSolution
+      solution: canister
+    - type: InjectableSolution
+      solution: canister
     - type: Drink
-      solution: bag
-      openSounds:
-        collection: packetOpenSounds
-      useSound:
-        path: /Audio/Items/eating_1.ogg
+      solution: canister
     - type: Spillable
-      solution: food
-    - type: DamageOnLand
-      damage:
-        types:
-          Blunt: 1
+      solution: canister
     - type: DamageOtherOnHit
       damage:
         types:
           Blunt: 1
     - type: Damageable
-      damageContainer: Inorganic
+      damagecanister: Inorganic
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 2
+            damage: 6
           behaviors:
             - !type:PlaySoundBehavior
               sound:
@@ -53,154 +58,154 @@
 
 # Bags of basic materials
 - type: entity
-  id: AluminiumPowderBag
-  parent: ReagentBagBase
-  name: "bag of aluminium powder"
-  description: "A bag of finely powdered aluminium. Don't breathe it in."
+  id: AluminiumPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of aluminium powder"
+  description: "A canister of finely powdered aluminium. Don't breathe it in."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Aluminium
               Quantity: 50
 
 - type: entity
-  id: CarbonPowderBag
-  parent: ReagentBagBase
-  name: "bag of carbon powder"
-  description: "A bag of carbon powder gathered from incinerated biomass."
+  id: CarbonPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of carbon powder"
+  description: "A canister of carbon powder gathered from incinerated biomass."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Carbon
               Quantity: 50
 
 - type: entity
-  id: CopperPowderBag
-  parent: ReagentBagBase
-  name: "bag of copper powder"
-  description: "A bag of copper powder."
+  id: CopperPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of copper powder"
+  description: "A canister of copper powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Copper
               Quantity: 50
 
 - type: entity
-  id: GoldPowderBag
-  parent: ReagentBagBase
-  name: "bag of gold powder"
-  description: "A bag of sparkling gold powder."
+  id: GoldPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of gold powder"
+  description: "A canister of sparkling gold powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Gold
               Quantity: 50
 
 - type: entity
-  id: IodinePowderBag
-  parent: ReagentBagBase
-  name: "bag of iodine powder"
-  description: "A bag of iodine powder."
+  id: IodinePowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of iodine powder"
+  description: "A canister of iodine powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Iodine
               Quantity: 50
 
 - type: entity
-  id: IronPowderBag
-  parent: ReagentBagBase
-  name: "bag of iron powder"
-  description: "A bag of iron powder."
+  id: IronPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of iron powder"
+  description: "A canister of iron powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Iron
               Quantity: 50
 
 - type: entity
-  id: LithiumPowderBag
-  parent: ReagentBagBase
-  name: "bag of lithium powder"
-  description: "A bag of highly toxic lithium powder."
+  id: LithiumPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of lithium powder"
+  description: "A canister of highly toxic lithium powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Lithium
               Quantity: 50
 
 - type: entity
-  id: PotassiumPowderBag
-  parent: ReagentBagBase
-  name: "bag of potassium powder"
-  description: "A bag of potassium powder."
+  id: PotassiumPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of potassium powder"
+  description: "A canister of potassium powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Potassium
               Quantity: 50
 
 - type: entity
-  id: PhosphorusPowderBag
-  parent: ReagentBagBase
-  name: "bag of phosphorus powder"
-  description: "A bag of phosphorus powder."
+  id: PhosphorusPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of phosphorus powder"
+  description: "A small canister of phosphorus powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Phosphorus
               Quantity: 50
 
 - type: entity
-  id: SiliconPowderBag
-  parent: ReagentBagBase
-  name: "bag of silicon powder"
-  description: "A bag of silicon powder."
+  id: SiliconPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of silicon powder"
+  description: "A canister of silicon powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Silicon
               Quantity: 50
 
 - type: entity
-  id: SilverPowderBag
-  parent: ReagentBagBase
-  name: "bag of silver powder"
-  description: "A bag of anti-microbial silver powder."
+  id: SilverPowderCanister
+  parent: ReagentCanisterBase
+  name: "canister of silver powder"
+  description: "A canister of anti-microbial silver powder."
   components:
     - type: SolutionContainerManager
       solutions:
-        food:
+        canister:
           maxVol: 50
           reagents:
             - ReagentId: Silver

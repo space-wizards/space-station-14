@@ -71,133 +71,122 @@
   group: liquids
 
 - type: cargoProduct
-  name: "crate of aluminium powder bags"
+  name: "crate of aluminium powder canisters"
   id: MaterialAluminiumPowderCrate
-  description: "A crate of 6 aluminium powder bags, for medicine production."
+  description: "A crate of 6 aluminium powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateAluminiumPowderBag
+    entity: AluminiumPowderCanister
+  product: CrateAluminiumPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of carbon powder bags"
+  name: "crate of carbon powder canisters"
   id: MaterialCarbonPowderCrate
-  description: "A crate of 6 carbon powder bags, for medicine production."
+  description: "A crate of 6 carbon powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateCarbonPowderBag
+    entity: CarbonPowderCanister
+  product: CrateCarbonPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of copper powder bags"
+  name: "crate of copper powder canisters"
   id: MaterialCopperPowderCrate
-  description: "A crate of 6 copper powder bags, for medicine production."
+  description: "A crate of 6 copper powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateCopperPowderBag
+    entity: CopperPowderCanister
+  product: CrateCopperPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of gold powder bags"
+  name: "crate of gold powder canisters"
   id: MaterialGoldPowderCrate
-  description: "A crate of 6 gold powder bags, for medicine production."
+  description: "A crate of 6 gold powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateGoldPowderBag
+    entity: GoldPowderCanister
+  product: CrateGoldPowderCanister
   cost: 1200
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of iodine powder bags"
+  name: "crate of iodine powder canisters"
   id: MaterialIodinePowderCrate
-  description: "A crate of 6 iodine powder bags, for medicine production."
+  description: "A crate of 6 iodine powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateIodinePowderBag
+    entity: IodinePowderCanister
+  product: CrateIodinePowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of iron powder bags"
+  name: "crate of iron powder canisters"
   id: MaterialIronPowderCrate
-  description: "A crate of 6 iron powder bags, for medicine production."
+  description: "A crate of 6 iron powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateIronPowderBag
+    entity: IronPowderCanister
+  product: CrateIronPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of lithium powder bags"
+  name: "crate of lithium powder canisters"
   id: MaterialLithiumPowderCrate
-  description: "A crate of 6 aluminium powder bags, for medicine production."
+  description: "A crate of 6 aluminium powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateLithiumPowderBag
+    entity: LithiumPowderCanister
+  product: CrateLithiumPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of potassium powder bags"
+  name: "crate of potassium powder canisters"
   id: MaterialPotassiumPowderCrate
-  description: "A crate of 6 potassium powder bags, for medicine production."
+  description: "A crate of 6 potassium powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CratePotassiumPowderBag
+    entity: PotassiumPowderCanister
+  product: CratePotassiumPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of phosphorus powder bags"
+  name: "crate of phosphorus powder canisters"
   id: MaterialPhosphorusPowderCrate
-  description: "A crate of 6 phosphorus powder bags, for medicine production."
+  description: "A crate of 6 phosphorus powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CratePhosphorusPowderBag
+    entity: PhosphorusPowderCanister
+  product: CratePhosphorusPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of silicon powder bags"
+  name: "crate of silicon powder canisters"
   id: MaterialSiliconPowderCrate
-  description: "A crate of 6 silicon powder bags, for medicine production."
+  description: "A crate of 6 silicon powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateSiliconPowderBag
+    entity: SiliconPowderCanister
+  product: CrateSiliconPowderCanister
   cost: 800
   category: Chemicals
   group: powders
 
 - type: cargoProduct
-  name: "crate of silver powder bags"
+  name: "crate of silver powder canisters"
   id: MaterialSilverPowderCrate
-  description: "A crate of 6 silver powder bags, for medicine production."
+  description: "A crate of 6 silver powder canisters, for medicine production."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateSilverPowderBag
+    entity: SilverPowderCanister
+  product: CrateSilverPowderCanister
   cost: 800
   category: Chemicals
   group: powders
