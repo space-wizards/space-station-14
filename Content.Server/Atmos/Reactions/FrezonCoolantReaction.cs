@@ -41,8 +41,7 @@ public sealed class FrezonCoolantReaction : IGasReactionEffect
             var frezonAmt = Math.Min(burnRate, initialFrezon);
             mixture.AdjustMoles(Gas.Nitrogen, -nitAmt);
             mixture.AdjustMoles(Gas.Frezon, -frezonAmt);
-            // TODO nitrous oxide
-            mixture.AdjustMoles(Gas.CarbonDioxide, nitAmt + frezonAmt);
+            mixture.AdjustMoles(Gas.NitrousOxide, nitAmt + frezonAmt);
             energyReleased = burnRate * Atmospherics.FrezonCoolEnergyReleased * energyModifier;
         }
 
