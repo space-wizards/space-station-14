@@ -17,4 +17,4 @@ deprecated.png made by 20kdc, licensed under SS14's MIT license - don't remove i
 
 carptclown is licensed under CC-BY-NC-SA-3.0, made by WALPVRGIS, taken from Goonstation at commit https://github.com/goonstation/goonstation/commit/236551b95a5b24917c72f3069223026b2dc4e690 from floors.dmi
 
-arcadeblue2, boxing, carpetoffice, and gym are licensed under CC-BY-NC-SA-3.0, by Goonstation (no explicit author information was present), taken from Goonstation at commit https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e from floors.dmi
+arcadeblue2, boxing, carpetoffice, and gym are licensed under CC-BY-NC-SA-3.0, by Goonstation made by WALPVRGIS, taken from Goonstation at commit https://github.com/goonstation/goonstation/blob/4059e4be90832b02b1228b1bee3db342094e4f1e from floors.dmi
