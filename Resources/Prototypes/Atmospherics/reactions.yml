@@ -35,6 +35,7 @@
   - 0     # tritium
   - 0     # vapor
   - 0     # miasma
+  - 0     # n2o
   - 0.01  # frezon
   effects:
   - !type:FrezonCoolantReaction {}
@@ -51,6 +52,7 @@
   - 0.01  # tritium
   - 0     # vapor
   - 0     # miasma
+  - 0     # n2o
   - 0     # frezon
   effects:
   - !type:FrezonProductionReaction {}
@@ -67,6 +69,7 @@
   - 0     # tritium
   - 0     # vapor
   - 0.01  # miasma
+  - 0     # n2o
   - 0.01  # frezon
   effects:
   - !type:MiasmicSubsumationReaction {}
