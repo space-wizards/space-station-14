@@ -16,6 +16,8 @@
             <Button Name="DispenseButton30" Access="Public" Text="30" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth"/>
             <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
+            <Control MinSize="20 0"></Control>
+            <Label Name="PointLabel" />
         </BoxContainer>
         <Control MinSize="0 10"/>
         <GridContainer Name="ChemicalList" Access="Public" Columns="4">

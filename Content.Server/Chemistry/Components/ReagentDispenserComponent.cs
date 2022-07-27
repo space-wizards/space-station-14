@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -171,9 +173,9 @@ namespace Content.Server.Chemistry.Components
                 case UiButton.Dispense:
                     if (BeakerSlot.HasItem)
                     {
-                        TryDispense(msg.DispenseIndex);
+                        TryDispense(obj.Session.AttachedEntity, msg.DispenseIndex);
                     }
-                    Logger.Info($"User {obj.Session.UserId.UserId} ({obj.Session.Name}) dispensed {_dispenseAmount}u of {Inventory[msg.DispenseIndex].ID}");
+                    Logger.Info($"User {obj.Session.UserId.UserId} ({obj.Session.Name}) tried to dispense {_dispenseAmount}u of {Inventory[msg.DispenseIndex].ID}");
 
                     break;
                 default:
@@ -247,17 +249,34 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// If this component contains an entity with a <see cref="SolutionHolder"/>, attempt to dispense the specified reagent to it.
         /// </summary>
+        /// <param name="user">The entity trying to dispense the reagent.</param>
         /// <param name="dispenseIndex">The index of the reagent in <c>Inventory</c>.</param>
-        private void TryDispense(int dispenseIndex)
+        private void TryDispense(EntityUid? user, int dispenseIndex)
         {
             if (BeakerSlot.Item is not {Valid: true} beaker ||
                 !_entities.TryGetComponent(beaker, out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution)) return;
 
-            EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(beaker, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+            var reagent = IoCManager.Resolve<IPrototypeManager>().Index<ReagentPrototype>(Inventory[dispenseIndex].ID);
+            var reagentCost = reagent.PointCost * _dispenseAmount;
+            if (UsesPointLimit && reagentCost > CurrentPoints)
+            {
+                if (user != null)
+                {
+                    EntitySystem.Get<PopupSystem>()
+                        .PopupEntity(Loc.GetString("reagent-dispenser-component-not-enough-points"), Owner,
+                            Filter.Entities(user.Value));
+                }
+            }
+            else
+            {
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .TryAddReagent(beaker, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
-            UpdateUserInterface();
+                CurrentPoints -= reagentCost;
+
+                UpdateUserInterface();
+            }
         }
 
         private void ClickSound()

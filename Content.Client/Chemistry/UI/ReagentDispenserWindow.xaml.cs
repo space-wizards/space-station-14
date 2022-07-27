@@ -94,6 +94,8 @@ namespace Content.Client.Chemistry.UI
                 EjectButton.Disabled = true;
             }
 
+            PointLabel.Text = castState.ShowPoints ? $"{castState.CurrentPoints}/{castState.MaxPoints}" : "";
+
             switch (castState.SelectedDispenseAmount.Int())
             {
                 case 1:

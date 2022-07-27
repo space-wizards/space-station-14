@@ -2,6 +2,7 @@
 
 reagent-dispenser-component-activate-no-hands = You have no hands.
 reagent-dispenser-component-cannot-put-entity-message = You can't put this in the dispenser!
+reagent-dispenser-component-not-enough-points = Not enough points.
 
 ## Bound UI
 

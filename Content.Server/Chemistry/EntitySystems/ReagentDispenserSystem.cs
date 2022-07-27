@@ -19,6 +19,20 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ReagentDispenserComponent, GotEmaggedEvent>(OnEmagged);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var components = EntityQuery<ReagentDispenserComponent>();
+            foreach (var component in components)
+            {
+                if(!component.UsesPointLimit) { continue; }
+                var nb = component.CurrentPoints += frameTime;
+                component.CurrentPoints = nb >= component.MaxPoints ? component.MaxPoints : nb;
+                // Can't update the user interface because it clears the selection, which is super annoying.
+            }
+        }
+
         private void OnEmagged(EntityUid uid, ReagentDispenserComponent comp, GotEmaggedEvent args)
         {
             if (!comp.AlreadyEmagged)

@@ -31,10 +31,10 @@ namespace Content.Shared.Chemistry.Reagent
         public string Group { get; } = "Unknown";
 
         /// <summary>
-        /// Used for ReagentDispensers with point cost enabled.
+        /// Used for ReagentDispensers with point cost enabled. Completely arbitrary.
         /// </summary>
         [DataField("pointCost")]
-        public int Cost { get; }
+        public int PointCost { get; } = 10;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdSerializer<ReagentPrototype>))]
         public string? Parent { get; private set; }
