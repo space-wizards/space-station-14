@@ -103,10 +103,10 @@ public sealed partial class RevenantSystem : EntitySystem
         string message;
         switch (essence.EssenceAmount)
         {
-            case <= 30:
+            case <= 45:
                 message = "revenant-soul-yield-low";
                 break;
-            case >= 50:
+            case >= 90:
                 message = "revenant-soul-yield-high";
                 break;
             default:

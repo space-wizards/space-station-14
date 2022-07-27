@@ -27,16 +27,16 @@ public sealed class EssenceSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, EssenceComponent component, ExaminedEvent args)
     {
-        if (!component.SearchComplete)
+        if (!component.SearchComplete || !HasComp<RevenantComponent>(args.Examiner))
             return;
 
         string message;
         switch (component.EssenceAmount)
         {
-            case <= 30:
+            case <= 45:
                 message = "revenant-soul-yield-low";
                 break;
-            case >= 50:
+            case >= 90:
                 message = "revenant-soul-yield-high";
                 break;
             default:
@@ -44,7 +44,7 @@ public sealed class EssenceSystem : EntitySystem
                 break;
         }
 
-        args.PushText(Loc.GetString(message));
+        args.PushMarkup(Loc.GetString(message, ("target", uid)));
     }
 
     private void UpdateEssenceAmount(EntityUid uid, EssenceComponent component, EntityEventArgs args)
