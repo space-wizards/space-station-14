@@ -45,7 +45,7 @@ namespace Content.Server.Headset
             return Channels.Contains(prototype.ID) && RadioRequested;
         }
 
-        public void Receive(string message, RadioChannelPrototype channel, EntityUid source)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid source, bool announcement = false)
         {
             if (!Channels.Contains(channel.ID) || !Owner.TryGetContainer(out var container))
                 return;
@@ -64,7 +64,7 @@ namespace Content.Server.Headset
             };
 
             // If the source isn't a player, we set the chat message accordingly
-            if (!_entMan.TryGetComponent(source, out ActorComponent? _))
+            if (announcement)
             {
                 msg = new MsgChatMessage
                 {

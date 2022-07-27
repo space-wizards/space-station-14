@@ -311,7 +311,7 @@ namespace Content.Server.Salvage
 
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
             var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
-            _radioSystem.SpreadMessage(radio, source, message, channel);
+            _radioSystem.SpreadMessage(radio, source, message, channel, true);
         }
 
         private void Transition(SalvageMagnetComponent magnet, TimeSpan currentTime)

@@ -21,7 +21,7 @@ namespace Content.Server.Ghost.Components
         [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>), required: true)]
         private HashSet<string> _channels = new();
 
-        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
+        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker, bool announcement = false)
         {
             if (!_channels.Contains(channel.ID) || !_entMan.TryGetComponent(Owner, out ActorComponent? actor))
                 return;
