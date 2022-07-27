@@ -5,6 +5,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using static Content.Shared.Clothing.MagbootsComponent;
 
@@ -13,9 +14,6 @@ namespace Content.Server.Clothing;
 public sealed class MagbootsSystem : SharedMagbootsSystem
 {
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
-    [Dependency] private readonly SharedClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
