@@ -1,11 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation big update. Lots of minor fixes, lots of new maint rooms
-      and a new hidden area in the rocks. More drip, medbay changes and redesign of
-      west station maint.', type: Tweak}
-  id: 1529
-  time: '2022-05-14T04:04:19.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Entities with bodies that are microwaved will now violently explode.,
@@ -2938,3 +2931,10 @@ Entries:
   - {message: Zombies no longer take damage over time from rotting., type: Fix}
   id: 2028
   time: '2022-07-27T00:35:35.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Boxers and boxing gloves have been ported from Nyanotrasen MRP! The
+      role is only selectable on Lighthouse, but all boxing gloves work.', type: Add}
+  - {message: Map-specific jobs no longer clog up the preference menu., type: Fix}
+  id: 2029
+  time: '2022-07-27T01:34:20.0000000+00:00'
