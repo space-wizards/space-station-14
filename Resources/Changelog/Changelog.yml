@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed not being able to climb after being cloned or ejected from a medical
-      scanner., type: Fix}
-  id: 1535
-  time: '2022-05-15T09:57:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
@@ -2944,3 +2938,8 @@ Entries:
   - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
   id: 2034
   time: '2022-07-27T23:15:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
+  id: 2035
+  time: '2022-07-27T23:32:43.0000000+00:00'
