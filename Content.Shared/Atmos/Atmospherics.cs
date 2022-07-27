@@ -316,6 +316,7 @@ namespace Content.Shared.Atmos
         Tritium = 4,
         WaterVapor = 5,
         Miasma = 6,
-        Freon = 7
+        NitrousOxide = 7,
+        Freon = 8
     }
 }

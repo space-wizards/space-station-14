@@ -21,6 +21,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.Tritium,
             Gas.WaterVapor,
             Gas.Miasma,
+            Gas.NitrousOxide,
             Gas.Freon
         };
 

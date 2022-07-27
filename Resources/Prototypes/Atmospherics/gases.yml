@@ -71,6 +71,15 @@
 
 - type: gas
   id: 7
+  name: NitrousOxide
+  specificHeat: 40
+  heatCapacityRatio: 1.3
+  molarMass: 44
+  color: 2887E8
+  reagent: NitrousOxide
+
+- type: gas
+  id: 8
   name: Freon
   specificHeat: 600 # Strongest by far
   heatCapacityRatio: 1.33

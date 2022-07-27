@@ -44,7 +44,7 @@ namespace Content.Server.Mind.Commands
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager)
         {
-            entityManager.RemoveComponent<AiControllerComponent>(uid);
+            entityManager.RemoveComponent<NPCComponent>(uid);
 
             entityManager.EnsureComponent<MindComponent>(uid);
             entityManager.EnsureComponent<InputMoverComponent>(uid);
