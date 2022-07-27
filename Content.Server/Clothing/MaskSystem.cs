@@ -13,6 +13,7 @@ using Content.Server.Disease.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Player;
 
@@ -26,6 +27,7 @@ namespace Content.Server.Clothing
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
 
         public override void Initialize()
         {
@@ -79,11 +81,10 @@ namespace Content.Server.Clothing
         private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
         {
             //toggle visuals
-            if (TryComp<SharedItemComponent>(mask.Owner, out var item))
+            if (TryComp<ClothingComponent>(mask.Owner, out var clothing))
             {
                 //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
-                item.EquippedPrefix = mask.IsToggled ? "toggled" : null;
-                Dirty(item);
+                _clothing.SetEquippedPrefix(uid, mask.IsToggled ? "toggled" : null, clothing);
             }
 
             // toggle ingestion blocking

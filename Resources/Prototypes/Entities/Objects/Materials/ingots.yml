@@ -41,7 +41,7 @@
   - type: Sprite
     state: gold_3
   - type: Item
-    HeldPrefix: gold
+    heldPrefix: gold
   - type: Appearance
     visuals:
     - type: StackVisualizer
@@ -75,7 +75,7 @@
   - type: Sprite
     state: silver_3
   - type: Item
-    HeldPrefix: silver
+    heldPrefix: silver
   - type: Appearance
     visuals:
     - type: StackVisualizer

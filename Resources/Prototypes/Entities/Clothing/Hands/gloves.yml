@@ -34,7 +34,7 @@
     state: icon-blue
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
@@ -51,7 +51,7 @@
     state: icon-green
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: green
+    heldPrefix: green
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-green
@@ -68,7 +68,7 @@
     state: icon-yellow
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
@@ -84,7 +84,8 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
@@ -148,7 +149,8 @@
     sprite: Clothing/Hands/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-brown
@@ -193,7 +195,8 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
@@ -212,7 +215,8 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative

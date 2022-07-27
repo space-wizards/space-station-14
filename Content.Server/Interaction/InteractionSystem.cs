@@ -252,7 +252,7 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && target != null && HasComp<SharedItemComponent>(target.Value))
+                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
                     InteractHand(user, target.Value);

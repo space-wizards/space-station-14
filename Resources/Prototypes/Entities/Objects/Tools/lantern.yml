@@ -16,7 +16,7 @@
           map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       netsync: false
       enabled: false
