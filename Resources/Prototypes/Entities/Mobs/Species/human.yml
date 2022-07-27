@@ -81,7 +81,6 @@
     - SlurredSpeech
     - PressureImmunity
     - Muted
-    - ForcedSleep
   - type: DiseaseCarrier
   - type: Blindable
   # Other

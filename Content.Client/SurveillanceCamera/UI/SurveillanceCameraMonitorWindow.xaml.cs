@@ -27,7 +27,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraDisconnect;
 
     private string _currentAddress = string.Empty;
-    private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
 
@@ -136,37 +135,27 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void SetCameraView(IEye? eye)
     {
-        var eyeChanged = eye != CameraView.Eye || CameraView.Eye == null;
         CameraView.Eye = eye ?? _defaultEye;
-        CameraView.Visible = !eyeChanged && !_isSwitching;
+        CameraView.Visible = eye != null;
+        CameraViewBackground.Visible = true;
         CameraDisconnectButton.Disabled = eye == null;
 
         if (eye != null)
         {
-            if (!eyeChanged)
-            {
-                return;
-            }
-
-            _isSwitching = true;
-            CameraViewBackground.Visible = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
-                ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
-                ("address", _currentAddress));
+                    ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
+                    ("address", _currentAddress));
             CameraSwitchTimer!();
         }
         else
         {
-            CameraViewBackground.Visible = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status-disconnected");
         }
     }
 
     public void OnSwitchTimerComplete()
     {
-        _isSwitching = false;
-        CameraView.Visible = CameraView.Eye != _defaultEye;
-        CameraViewBackground.Visible = CameraView.Eye == _defaultEye;
+        CameraViewBackground.Visible = false;
         CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                             ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connected")),
                             ("address", _currentAddress));

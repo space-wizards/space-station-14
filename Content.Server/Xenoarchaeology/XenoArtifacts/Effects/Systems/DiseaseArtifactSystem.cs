@@ -28,7 +28,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems
             "OwOnavirus",
             "BleedersBite",
             "Ultragigacancer",
-            "MemeticAmirmir",
             "AMIV"
         };
 

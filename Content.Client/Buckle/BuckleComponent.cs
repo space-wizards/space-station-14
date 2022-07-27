@@ -46,18 +46,14 @@ namespace Content.Client.Buckle
                 return;
             }
 
-            // TODO when ECSing, make this a visualizer
-            if (_buckled &&
-                LastEntityBuckledTo != null &&
-                EntMan.GetComponent<TransformComponent>(LastEntityBuckledTo.Value).LocalRotation.GetCardinalDir() == Direction.North &&
-                EntMan.TryGetComponent<SpriteComponent>(LastEntityBuckledTo, out var buckledSprite))
+            if (_buckled && buckle.DrawDepth.HasValue)
             {
                 _originalDrawDepth ??= ownerSprite.DrawDepth;
-                ownerSprite.DrawDepth = buckledSprite.DrawDepth - 1;
+                ownerSprite.DrawDepth = buckle.DrawDepth.Value;
                 return;
             }
 
-            if (_originalDrawDepth.HasValue && !_buckled)
+            if (_originalDrawDepth.HasValue && !buckle.DrawDepth.HasValue)
             {
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;

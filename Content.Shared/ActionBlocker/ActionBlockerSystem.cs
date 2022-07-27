@@ -181,10 +181,8 @@ namespace Content.Shared.ActionBlocker
 
         private void InteractWithItem(EntityUid user, EntityUid item)
         {
-            var userEvent = new UserInteractedWithItemEvent(user, item);
-            RaiseLocalEvent(user, userEvent);
-            var itemEvent = new ItemInteractedWithEvent(user, item);
-            RaiseLocalEvent(item, itemEvent);
+            var itemEvent = new UserInteractedWithItemEvent(user, item);
+            RaiseLocalEvent(user, itemEvent);
         }
     }
 }

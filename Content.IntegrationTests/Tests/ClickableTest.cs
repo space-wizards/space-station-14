@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
 using NUnit.Framework;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -60,6 +60,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var ent = serverEntManager.SpawnEntity(prototype, testMap.GridCoords);
                 serverEntManager.GetComponent<TransformComponent>(ent).WorldRotation = angle;
+                serverEntManager.GetComponent<SpriteComponent>(ent).Scale = (scale, scale);
                 entity = ent;
             });
 
@@ -70,8 +71,6 @@ namespace Content.IntegrationTests.Tests
 
             await client.WaitPost(() =>
             {
-                clientEntManager.GetComponent<SpriteComponent>(entity).Scale = (scale, scale);
-
                 // these tests currently all assume player eye is 0
                 eyeManager.CurrentEye.Rotation = 0;
 

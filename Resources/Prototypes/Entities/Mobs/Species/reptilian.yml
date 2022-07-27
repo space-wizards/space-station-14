@@ -123,8 +123,6 @@
     template: HumanoidTemplate
     preset: ReptilianPreset
   - type: LizardAccent
-  - type: Speech
-    speechSounds: Lizard
   - type: DiseaseCarrier
     diseaseResist: 0.1
   - type: Damageable

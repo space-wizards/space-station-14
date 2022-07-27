@@ -47,8 +47,6 @@
       - id: UniformScrubsColorPurple
         prob: 0.05
         orGroup: Surgshrubs
-      - id: NitrousOxideTankFilled
-        prob: 0.3
       - id: ClothingMaskSterile
 
 - type: entity

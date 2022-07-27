@@ -1,19 +1,22 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
+using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
+using SpriteComponent = Robust.Server.GameObjects.SpriteComponent;
 
 namespace Content.MapRenderer.Painters
 {
@@ -37,7 +40,7 @@ namespace Content.MapRenderer.Painters
 
             await client.WaitPost(() =>
             {
-                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out SpriteComponent? sprite))
+                if (cEntityManager.TryGetComponent(cPlayerManager.LocalPlayer!.ControlledEntity!, out Robust.Client.GameObjects.SpriteComponent? sprite))
                 {
                     sprite.Visible = false;
                 }
@@ -45,6 +48,14 @@ namespace Content.MapRenderer.Painters
 
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
+
+            await server.WaitPost(() =>
+            {
+                if (sEntityManager.TryGetComponent(sPlayerManager.ServerSessions.Single().AttachedEntity!, out SpriteComponent? sprite))
+                {
+                    sprite.Visible = false;
+                }
+            });
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());

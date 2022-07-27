@@ -45,8 +45,7 @@ namespace Content.Server.Atmos.Miasma
             "VanAusdallsRobovirus",
             "BleedersBite",
             "Plague",
-            "TongueTwister",
-            "MemeticAmirmir"
+            "TongueTwister"
         };
 
         /// <summary>
@@ -100,14 +99,11 @@ namespace Content.Server.Atmos.Miasma
 
                 EnsureComp<FliesComponent>(perishable.Owner);
 
-                if (rotting.DealDamage)
-                {
-                    DamageSpecifier damage = new();
-                    damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
-                    damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
+                DamageSpecifier damage = new();
+                damage.DamageDict.Add("Blunt", 0.3); // Slowly accumulate enough to gib after like half an hour
+                damage.DamageDict.Add("Cellular", 0.3); // Cloning rework might use this eventually
 
-                    _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
-                }
+                _damageableSystem.TryChangeDamage(perishable.Owner, damage, true, true);
 
                 if (!TryComp<PhysicsComponent>(perishable.Owner, out var physics))
                     continue;

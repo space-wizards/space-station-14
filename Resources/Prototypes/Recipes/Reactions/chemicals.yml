@@ -312,17 +312,4 @@
     Carbon:
       amount: 1
   products:
-    MuteToxin: 2
-
-- type: reaction
-  id: ChloralHydrate
-  impact: Medium
-  reactants:
-    Chlorine:
-      amount: 3
-    Ethanol:
-      amount: 1
-    Water:
-      amount: 1
-  products:
-    ChloralHydrate: 1
+    MuteToxin: 2 #Lower yield is intentional

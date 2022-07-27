@@ -35,6 +35,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     public void RemoveTimer(EntityUid uid)
     {
-        EntityManager.RemoveComponentDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
+        EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
     }
 }

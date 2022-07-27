@@ -14,9 +14,5 @@ namespace Content.Server.Sound.Components
 
         [DataField("playChance")]
         public float PlayChance = 0.5f;
-
-        // Always Pvs.
-        [DataField("popUp")]
-        public string? PopUp;
     }
 }

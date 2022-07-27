@@ -6,7 +6,6 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    /// <inheritdoc/>
     [UsedImplicitly]
     public sealed class ItemMapperSystem : SharedItemMapperSystem
     {
