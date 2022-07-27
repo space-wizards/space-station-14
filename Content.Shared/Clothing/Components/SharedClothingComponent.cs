@@ -15,6 +15,7 @@ public abstract class SharedClothingComponent : Component
     [DataField("clothingVisuals")]
     public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
 
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("quickEquip")]
     public bool QuickEquip = true;
 
@@ -30,7 +31,7 @@ public abstract class SharedClothingComponent : Component
     [DataField("unequipSound")]
     public SoundSpecifier? UnequipSound;
 
-    [Access(typeof(SharedClothingSystem))]
+    [Access(typeof(ClothingSystem))]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("equippedPrefix")]
     public string? EquippedPrefix;

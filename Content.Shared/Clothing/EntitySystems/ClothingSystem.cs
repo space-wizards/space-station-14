@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class SharedClothingSystem : EntitySystem
+public sealed class ClothingSystem : EntitySystem
 {
     public override void Initialize()
     {

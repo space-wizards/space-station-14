@@ -15,7 +15,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedClothingSystem _clothing = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
     public override void Initialize()

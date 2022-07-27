@@ -27,7 +27,7 @@ namespace Content.Server.Clothing
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
-        [Dependency] private readonly SharedClothingSystem _clothing = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
 
         public override void Initialize()
         {
