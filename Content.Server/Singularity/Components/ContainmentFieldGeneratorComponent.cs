@@ -56,7 +56,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     public float Threshold = 10f;
 
     /// <summary>
-    /// How far should this field check before giving up?
+    /// How many tiles should this field check before giving up?
     /// </summary>
     [ViewVariables]
     [DataField("maxLength")]

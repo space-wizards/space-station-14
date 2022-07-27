@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Player;
 
@@ -86,7 +87,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
                 return;
             }
             else
@@ -106,7 +107,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
             args.Cancel();
         }
     }
@@ -155,7 +156,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         component.IsConnected = false;
         ChangeOnLightVisualizer(component);
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
     }
 
     #endregion

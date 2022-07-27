@@ -7,7 +7,8 @@ namespace Content.Server.Singularity.Components;
 public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
 {
     /// <summary>
-    /// The throw force for the field if a player collides with it
+    /// The throw force for the field if an entity collides with it
+    /// The lighter the mass the further it will throw. 5 mass will go about 4 tiles out, 70 mass goes only a couple tiles.
     /// </summary>
     [ViewVariables]
     [DataField("throwForce")]
@@ -19,5 +20,5 @@ public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
     /// </summary>
     [ViewVariables]
     [DataField("maxMass")]
-    public float MaxMass = 100f;
+    public float MaxMass = 10000f;
 }

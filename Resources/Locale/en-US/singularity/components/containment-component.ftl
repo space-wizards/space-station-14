@@ -2,7 +2,7 @@
 comp-containment-turned-off = The containment field generator shuts down.
 
 comp-containment-on = It's switched [color=green]on[/color], ready to generate a connection.
-comp-containment-off = It's switched [color=red]off[/color] and cannot generate a connection.
+comp-containment-off = It's switched [color=red]off[/color].
 
 comp-containment-connected = The containment field generator shoots out a light as it establishes a connection!
 comp-containment-disconnected = The containment field generator light fades away, severing the connection.
