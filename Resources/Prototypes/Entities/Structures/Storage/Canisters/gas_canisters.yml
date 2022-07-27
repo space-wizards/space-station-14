@@ -360,7 +360,7 @@
   components:
     - type: Sprite
       layers:
-        - state: redws
+        - state: greenys
     - type: GasCanister
       gasMixture:
         volume: 1000
@@ -385,6 +385,44 @@
         - !type:SpawnEntitiesBehavior
           spawn:
             MiasmaCanisterBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+
+- type: entity
+  parent: GasCanister
+  id: NitrousOxideCanister
+  name: nitrous oxide canister
+  components:
+    - type: Sprite
+      layers:
+        - state: redws
+    - type: GasCanister
+      gasMixture:
+        volume: 1000
+        moles:
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 0 # CO2
+          - 0 # Plasma
+          - 0 # Tritium
+          - 0 #  Water vapor
+          - 0 # Miasma
+          - 1871.71051 # N2O
+        temperature: 293.15
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            NitrousOxideCanisterBroken:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -511,6 +549,15 @@
   parent: GasCanisterBrokenBase
   id: MiasmaCanisterBroken
   name: broken miasma canister
+  noSpawn: true
+  components:
+    - type: Sprite
+      state: greenys-1
+
+- type: entity
+  parent: GasCanisterBrokenBase
+  id: NitrousOxideCanisterBroken
+  name: broken nitrous oxide canister
   noSpawn: true
   components:
     - type: Sprite

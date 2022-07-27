@@ -45,7 +45,8 @@ namespace Content.Server.Atmos.Miasma
             "VanAusdallsRobovirus",
             "BleedersBite",
             "Plague",
-            "TongueTwister"
+            "TongueTwister",
+            "MemeticAmirmir"
         };
 
         /// <summary>
