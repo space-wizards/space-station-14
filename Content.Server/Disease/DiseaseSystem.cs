@@ -199,7 +199,7 @@ namespace Content.Server.Disease
             if (!TryComp<ClothingComponent>(uid, out var clothing))
                 return;
             // Is the clothing in its actual slot?
-            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
                 return;
             // Give the user the component's disease resist
             if(TryComp<DiseaseCarrierComponent>(args.Equipee, out var carrier))

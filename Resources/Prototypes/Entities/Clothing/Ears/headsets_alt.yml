@@ -9,7 +9,7 @@
   - type: Sprite
     state: icon_alt
   - type: Clothing
-    Slots:
+    slots:
     - ears
 
 - type: entity

@@ -1,21 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: 'Closed airlocks now trap air in their tile, meaning mice can now go
-      under airlocks safely.', type: Tweak}
-  id: 1531
-  time: '2022-05-14T04:05:04.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: made lobby background keep aspect when stretching, type: Tweak}
-  id: 1532
-  time: '2022-05-15T02:06:07.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Asteroids are now more robust. Use a pickaxe to break them instead of
-      a welder...please., type: Tweak}
-  id: 1533
-  time: '2022-05-15T02:07:59.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
@@ -2941,3 +2924,27 @@ Entries:
       that forensics do. No more edge cases where you don't check anything., type: Fix}
   id: 2030
   time: '2022-07-27T04:46:24.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Transylvanian vampire cloak is now available rarely in the maint fluff
+      spawner., type: Add}
+  id: 2031
+  time: '2022-07-27T08:15:47.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Freon has been added. It is a refrigerant gas which reacts with nitrogen
+      to rapidly cool down areas, increasing in effectiveness with temperature. It''s
+      also a hallucinogenic, and you may feel woozy (and just a little brain damaged)
+      after breathing it in.', type: Add}
+  - {message: 'Freon can be produced by combining tritium, oxygen, and nitrogen as
+      catalyst at temperatures below 73.15 kelvin.', type: Add}
+  - {message: Miasma reacts with freon to subsume and convert it into more miasma.,
+    type: Add}
+  id: 2032
+  time: '2022-07-27T09:55:28.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: 'Ramens description points out you need to use boiling water, not just
+      any water.', type: Fix}
+  id: 2033
+  time: '2022-07-27T14:18:16.0000000+00:00'

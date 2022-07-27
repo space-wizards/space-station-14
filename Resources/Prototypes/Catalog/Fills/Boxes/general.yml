@@ -177,7 +177,7 @@
       - state: box_hug
       - state: heart
   - type: Item
-    HeldPrefix: hug
+    heldPrefix: hug
   - type: StorageFill
     contents:
       - id: Brutepack

@@ -77,3 +77,15 @@
   molarMass: 44
   color: 2887E8
   reagent: NitrousOxide
+
+- type: gas
+  id: 8
+  name: Frezon
+  specificHeat: 600 # Strongest by far
+  heatCapacityRatio: 1.33
+  molarMass: 50
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: frezon
+  gasMolesVisible: 0.6
+  color: 3a758c
+  reagent: Frezon
