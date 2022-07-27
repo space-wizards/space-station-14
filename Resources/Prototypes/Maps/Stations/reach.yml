@@ -1,7 +1,7 @@
 - type: gameMap
-  id: ssreach
+  id: Reach
   mapName: 'Reach'
-  mapPath: /Maps/ssreach.yml
+  mapPath: /Maps/Stations/ssreach.yml
   minPlayers: 0
   maxPlayers: 15
   votable: false

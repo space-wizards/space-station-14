@@ -1,32 +1,34 @@
 - type: gameMap
-  id: bagelstation
-  mapName: 'Bagel Station'
-  mapPath: /Maps/bagel.yml
-  minPlayers: 35
+  id: Way
+  mapName: 'Waystation'
+  mapPath: /Maps/Stations/waystation.yml
+  minPlayers: 15
+  maxPlayers: 50
+  votable: false
   stations:
-    Bagel:
-      mapNameTemplate: '{0} Bagel Station {1}'
+    Waystation:
+      mapNameTemplate: '{0} Waystation {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
-        prefixCreator: '14'
+        prefixCreator: 'VG'
       overflowJobs:
         - Passenger
       availableJobs:
         CargoTechnician: [ 3, 3 ]
         Passenger: [ -1, -1 ]
-        Bartender: [ 2, 2 ]
+        Bartender: [ 1, 1 ]
         Botanist: [ 3, 3 ]
-        Chef: [ 2, 2 ]
+        Chef: [ 1, 1 ]
         Clown: [ 1, 1 ]
-        Janitor: [ 3, 3 ]
+        Janitor: [ 1, 1 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 4, 4 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 3, 3 ]
-        Chemist: [ 2, 3 ]
+        MedicalDoctor: [ 4, 4 ]
+        Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 4, 4 ]
         HeadOfSecurity: [ 1, 1 ]
@@ -36,12 +38,11 @@
         Librarian: [ 1, 1 ]
         Lawyer: [ 2, 2 ]
         Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 3, 3 ]
+        SalvageSpecialist: [ 2, 2 ]
         Musician: [ 1, 1 ]
-        AtmosphericTechnician: [ 3, 3 ]
-        TechnicalAssistant: [ 2, 2 ]
-        MedicalIntern: [ 2, 2 ]
-        ServiceWorker: [ 2, 2 ]
-        SecurityCadet: [ 2, 2 ]
-        Reporter: [ 1, 1 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        TechnicalAssistant: [ 1, 1 ]
+        MedicalIntern: [ 1, 1 ]
+        ServiceWorker: [ 1, 1 ]
+        SecurityCadet: [ 1, 1 ]
         Detective: [ 1, 1 ]

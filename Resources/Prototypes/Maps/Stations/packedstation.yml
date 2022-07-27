@@ -1,48 +1,47 @@
 ﻿- type: gameMap
-  id: lighthouse
-  mapName: 'Lighthouse'
-  mapPath: /Maps/lighthouse.yml
-  minPlayers: 35
-  maxPlayers: 70
+  id: Packed
+  mapName: 'Packedstation'
+  mapPath: /Maps/Stations/packedstation.yml
+  minPlayers: 0
+  maxPlayers: 35
+  votable: true
   stations:
-    Lighthouse:
-      mapNameTemplate: '{0} Lighthouse {1}'
+    Packed:
+      mapNameTemplate: '{0} Packedstation {1}'
       nameGenerator:
         !type:NanotrasenNameGenerator
-        prefixCreator: '14'
+        prefixCreator: 'VG'
       overflowJobs:
         - Passenger
       availableJobs:
-        CargoTechnician: [ 2, 3 ]
+        CargoTechnician: [ 2, 2 ]
         Passenger: [ -1, -1 ]
-        Bartender: [ 1, 2 ]
+        Bartender: [ 1, 1 ]
         Botanist: [ 2, 2 ]
-        Boxer: [ 2, 2 ] #Wildcard for this map
-        Chef: [ 2, 3 ]
+        Chef: [ 1, 1 ]
         Clown: [ 1, 1 ]
-        Janitor: [ 1, 2 ]
+        Janitor: [ 1, 1 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
-        StationEngineer: [ 3, 5 ]
+        StationEngineer: [ 3, 3 ]
         ChiefMedicalOfficer: [ 1, 1 ]
-        MedicalDoctor: [ 3, 5 ]
+        MedicalDoctor: [ 3, 3 ]
         Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
-        Scientist: [ 3, 4 ]
+        Scientist: [ 3, 3 ]
         HeadOfSecurity: [ 1, 1 ]
-        SecurityOfficer: [ 4, 5 ]
+        SecurityOfficer: [ 3, 3 ]
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
         Lawyer: [ 2, 2 ]
-        Quartermaster: [ 1, 1 ]
-        SalvageSpecialist: [ 2, 3 ]
-        Musician: [1, 2]
-        AtmosphericTechnician: [ 1, 2 ]
+        Musician: [ 1, 1 ]
+        AtmosphericTechnician: [ 2, 2 ]
+        Detective: [ 1, 1 ]
         TechnicalAssistant: [ 2, 2 ]
         MedicalIntern: [ 2, 2 ]
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
-        Detective: [ 1, 1 ]
+        SalvageSpecialist: [ 2, 2 ]
