@@ -28,11 +28,11 @@ public sealed class EntityStorageComponent : Component
     public int RemovedMasks;
 
     [ViewVariables]
-    [DataField("Capacity")]
-    public int StorageCapacityMax = 30;
+    [DataField("capacity")]
+    public int Capacity = 30;
 
     [ViewVariables]
-    [DataField("IsCollidableWhenOpen")]
+    [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage. 
@@ -44,8 +44,8 @@ public sealed class EntityStorageComponent : Component
     public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     [ViewVariables]
-    [DataField("EnteringRange")]
-    public float EnteringRange = -0.18f;
+    [DataField("enteringRange")]
+    public float EnteringRange = 0.18f;
 
     [DataField("showContents")]
     public bool ShowContents;

@@ -16,8 +16,8 @@
     showExamineInfo: true
   - type: Input
     context: "human"
-  - type: PlayerMobMover
-  - type: PlayerInputMover
+  - type: MobMover
+  - type: InputMover
   - type: Respirator
     damage:
       types:
@@ -36,7 +36,7 @@
     - NanoTrasen
 
 - type: entity
-  name: centcom official
+  name: CentCom official
   parent: MobHuman
   id: MobHumanCentcomOfficial
   components:
@@ -44,7 +44,7 @@
     sprite: Markers/jobs.rsi
     state: centcom
   - type: GhostTakeoverAvailable
-    name: centcom official
+    name: CentCom official
     description: Inspect the station, jot down performance reviews for heads of staff, bug the Captain.
   - type: Loadout
     prototype: CentcomGear

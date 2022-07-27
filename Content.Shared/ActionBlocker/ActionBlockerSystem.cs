@@ -22,20 +22,20 @@ namespace Content.Shared.ActionBlocker
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<IMoverComponent, ComponentStartup>(OnMoverStartup);
+            SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
         }
 
-        private void OnMoverStartup(EntityUid uid, IMoverComponent component, ComponentStartup args)
+        private void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
         {
             UpdateCanMove(uid, component);
         }
 
-        public bool CanMove(EntityUid uid, IMoverComponent? component = null)
+        public bool CanMove(EntityUid uid, InputMoverComponent? component = null)
         {
             return Resolve(uid, ref component, false) && component.CanMove;
         }
 
-        public bool UpdateCanMove(EntityUid uid, IMoverComponent? component = null)
+        public bool UpdateCanMove(EntityUid uid, InputMoverComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
                 return false;
@@ -181,8 +181,10 @@ namespace Content.Shared.ActionBlocker
 
         private void InteractWithItem(EntityUid user, EntityUid item)
         {
-            var itemEvent = new UserInteractedWithItemEvent(user, item);
-            RaiseLocalEvent(user, itemEvent);
+            var userEvent = new UserInteractedWithItemEvent(user, item);
+            RaiseLocalEvent(user, userEvent);
+            var itemEvent = new ItemInteractedWithEvent(user, item);
+            RaiseLocalEvent(item, itemEvent);
         }
     }
 }
