@@ -86,35 +86,35 @@
     - type: StorageFill
       contents:
         - id: AluminiumReagentCanister
-        - amount: 2
+          amount: 2
         - id: CarbonReagentCanister
-        - amount: 4
+          amount: 4
         - id: CopperReagentCanister
-        - amount: 2
+          amount: 2
         - id: EthanolReagentCanister
-        - amount: 2
+          amount: 2
         - id: HydrogenReagentCanister
-        - amount: 4
+          amount: 4
         - id: IodineReagentCanister
-        - amount: 2
+          amount: 2
         - id: IronReagentCanister
-        - amount: 2
+          amount: 2
         - id: LithiumReagentCanister
-        - amount: 2
+          amount: 2
         - id: NitrogenReagentCanister
-        - amount: 4
+          amount: 4
         - id: OilReagentCanister
-        - amount: 2
+          amount: 2
         - id: OxygenReagentCanister
-        - amount: 4
+          amount: 4
         - id: PotassiumReagentCanister
-        - amount: 2
+          amount: 2
         - id: PhosphorusReagentCanister
-        - amount: 2
+          amount: 2
         - id: SodiumReagentCanister
-        - amount: 2
+          amount: 2
         - id: SiliconReagentCanister
-        - amount: 2
+          amount: 2
 
 - type: entity
   id: CrateAluminiumReagentCanister
@@ -124,7 +124,7 @@
     - type: StorageFill
       contents:
         - id: AluminiumReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateCarbonReagentCanister
@@ -134,7 +134,7 @@
     - type: StorageFill
       contents:
         - id: CarbonReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateCopperReagentCanister
@@ -144,7 +144,7 @@
     - type: StorageFill
       contents:
         - id: CopperReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateEthanolReagentCanister
@@ -154,7 +154,7 @@
     - type: StorageFill
       contents:
         - id: EthanolReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateFluorineReagentCanister
@@ -164,7 +164,7 @@
     - type: StorageFill
       contents:
         - id: FluorineReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateHydrogenReagentCanister
@@ -174,7 +174,7 @@
     - type: StorageFill
       contents:
         - id: HydrogenReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateGoldReagentCanister
@@ -184,7 +184,7 @@
     - type: StorageFill
       contents:
         - id: GoldReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateIodineReagentCanister
@@ -194,7 +194,7 @@
     - type: StorageFill
       contents:
         - id: IodineReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateIronReagentCanister
@@ -204,7 +204,7 @@
     - type: StorageFill
       contents:
         - id: IronReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateLithiumReagentCanister
@@ -214,7 +214,7 @@
     - type: StorageFill
       contents:
         - id: LithiumReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateMercuryReagentCanister
@@ -224,7 +224,7 @@
     - type: StorageFill
       contents:
         - id: MercuryReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateNitrogenReagentCanister
@@ -234,7 +234,7 @@
     - type: StorageFill
       contents:
         - id: NitrogenReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateOilReagentCanister
@@ -244,7 +244,7 @@
     - type: StorageFill
       contents:
         - id: OilReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateOxygenReagentCanister
@@ -254,7 +254,7 @@
     - type: StorageFill
       contents:
         - id: OxygenReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CratePhosphorusReagentCanister
@@ -264,7 +264,7 @@
     - type: StorageFill
       contents:
         - id: PhosphorusReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CratePotassiumReagentCanister
@@ -274,7 +274,7 @@
     - type: StorageFill
       contents:
         - id: PotassiumReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateRadiumReagentCanister
@@ -284,7 +284,7 @@
     - type: StorageFill
       contents:
         - id: RadiumReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateSiliconReagentCanister
@@ -294,7 +294,7 @@
     - type: StorageFill
       contents:
         - id: SiliconReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateSodiumReagentCanister
@@ -304,7 +304,7 @@
     - type: StorageFill
       contents:
         - id: SodiumReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateSilverReagentCanister
@@ -314,7 +314,7 @@
     - type: StorageFill
       contents:
         - id: SilverReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateSulfurReagentCanister
@@ -324,7 +324,7 @@
     - type: StorageFill
       contents:
         - id: SulfurReagentCanister
-        - amount: 6
+          amount: 6
 
 - type: entity
   id: CrateSulfuricAcidReagentCanister
@@ -334,4 +334,4 @@
     - type: StorageFill
       contents:
         - id: SulfuricAcidReagentCanister
-        - amount: 6
+          amount: 6
