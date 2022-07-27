@@ -22,19 +22,13 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
     - type: SolutionTransfer
-    - type: RefillableSolution
-      solution: canister
     - type: DrainableSolution
-      solution: canister
-    - type: ExaminableSolution
       solution: canister
     - type: DrawableSolution
       solution: canister
     - type: InjectableSolution
-      solution: canister
-    - type: Drink
       solution: canister
     - type: Spillable
       solution: canister
@@ -58,21 +52,21 @@
 
 # Bags of basic materials
 - type: entity
-  id: AluminiumPowderCanister
+  id: AluminiumCanister
   parent: ReagentCanisterBase
   name: "canister of aluminium powder"
-  description: "A canister of finely powdered aluminium. Don't breathe it in."
+  description: "A canister of finely powdered aluminium."
   components:
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Aluminium
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: CarbonPowderCanister
+  id: CarbonCanister
   parent: ReagentCanisterBase
   name: "canister of carbon powder"
   description: "A canister of carbon powder gathered from incinerated biomass."
@@ -80,13 +74,13 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Carbon
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: CopperPowderCanister
+  id: CopperCanister
   parent: ReagentCanisterBase
   name: "canister of copper powder"
   description: "A canister of copper powder."
@@ -94,13 +88,55 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Copper
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: GoldPowderCanister
+  id: EthanolCanister
+  parent: ReagentCanisterBase
+  name: "canister of liquid ethanol"
+  description: "A canister of liquid ethanol. It's recommended to mix this with something else before drinking it."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 150
+
+- type: entity
+  id: FluorineCanister
+  parent: ReagentCanisterBase
+  name: "canister of fluorine gas"
+  description: "A canister of fluorine gas."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 150
+
+- type: entity
+  id: HydrogenCanister
+  parent: ReagentCanisterBase
+  name: "canister of hydrogen gas"
+  description: "A canister of hydrogen."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Hydrogen
+              Quantity: 150
+
+- type: entity
+  id: GoldCanister
   parent: ReagentCanisterBase
   name: "canister of gold powder"
   description: "A canister of sparkling gold powder."
@@ -108,13 +144,13 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Gold
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: IodinePowderCanister
+  id: IodineCanister
   parent: ReagentCanisterBase
   name: "canister of iodine powder"
   description: "A canister of iodine powder."
@@ -122,13 +158,13 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Iodine
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: IronPowderCanister
+  id: IronCanister
   parent: ReagentCanisterBase
   name: "canister of iron powder"
   description: "A canister of iron powder."
@@ -136,13 +172,13 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Iron
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: LithiumPowderCanister
+  id: LithiumCanister
   parent: ReagentCanisterBase
   name: "canister of lithium powder"
   description: "A canister of highly toxic lithium powder."
@@ -150,41 +186,111 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Lithium
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: PotassiumPowderCanister
+  id: MercuryCanister
   parent: ReagentCanisterBase
-  name: "canister of potassium powder"
-  description: "A canister of potassium powder."
+  name: "canister of liquid mercury"
+  description: "A canister of liquid mercury. It's very heavy."
   components:
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
-            - ReagentId: Potassium
-              Quantity: 50
+            - ReagentId: Mercury
+              Quantity: 150
 
 - type: entity
-  id: PhosphorusPowderCanister
+  id: NitrogenCanister
+  parent: ReagentCanisterBase
+  name: "canister of nitrogen gas"
+  description: "A canister of nitrogen gas."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 150
+
+- type: entity
+  id: OilCanister
+  parent: ReagentCanisterBase
+  name: "canister of oil"
+  description: "A canister of oil. Not for cooking."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Oil
+              Quantity: 150
+
+- type: entity
+  id: OxygenCanister
+  parent: ReagentCanisterBase
+  name: "canister of oxygen gas"
+  description: "A canister of oxygen gas."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Oxygen
+              Quantity: 150
+
+- type: entity
+  id: PhosphorusCanister
   parent: ReagentCanisterBase
   name: "canister of phosphorus powder"
-  description: "A small canister of phosphorus powder."
+  description: "A canister of highly reactive phosphorus powder."
   components:
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Phosphorus
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: SiliconPowderCanister
+  id: PotassiumCanister
+  parent: ReagentCanisterBase
+  name: "canister of potassium metal"
+  description: "A canister of highly reactive potassium metal."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Potassium
+              Quantity: 150
+
+- type: entity
+  id: RadiumCanister
+  parent: ReagentCanisterBase
+  name: "canister of radium powder"
+  description: "A canister of radium powder. It's probably best to keep it out of your lungs."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 150
+
+- type: entity
+  id: SiliconCanister
   parent: ReagentCanisterBase
   name: "canister of silicon powder"
   description: "A canister of silicon powder."
@@ -192,13 +298,28 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Silicon
-              Quantity: 50
+              Quantity: 150
 
 - type: entity
-  id: SilverPowderCanister
+  id: SodiumCanister
+  parent: ReagentCanisterBase
+  name: "canister of sodium metal"
+  description: "A canister of highly reactive sodium metal. While it sounds similar, this definitely isn't table salt."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Sodium
+              Quantity: 150
+
+
+- type: entity
+  id: SilverCanister
   parent: ReagentCanisterBase
   name: "canister of silver powder"
   description: "A canister of anti-microbial silver powder."
@@ -206,8 +327,21 @@
     - type: SolutionContainerManager
       solutions:
         canister:
-          maxVol: 50
+          maxVol: 150
           reagents:
             - ReagentId: Silver
-              Quantity: 50
+              Quantity: 150
 
+- type: entity
+  id: SulfurCanister
+  parent: ReagentCanisterBase
+  name: "canister of sulfur powder"
+  description: "A canister of vibrant-looking sulfur powder."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        canister:
+          maxVol: 150
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 150

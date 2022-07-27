@@ -85,135 +85,225 @@
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderCanister
+        - id: AluminiumCanister
           amount: 1
-        - id: CarbonPowderCanister
+        - id: CarbonCanister
           amount: 1
-        - id: CopperPowderCanister
+        - id: CopperCanister
           amount: 1
-        - id: GoldPowderCanister
+        - id: GoldCanister
           amount: 1
-        - id: IodinePowderCanister
+        - id: IodineCanister
           amount: 1
-        - id: IronPowderCanister
+        - id: IronCanister
           amount: 1
-        - id: LithiumPowderCanister
+        - id: LithiumCanister
           amount: 1
-        - id: PotassiumPowderCanister
+        - id: PotassiumCanister
           amount: 1
-        - id: PhosphorusPowderCanister
+        - id: PhosphorusCanister
           amount: 1
-        - id: SiliconPowderCanister
+        - id: SiliconCanister
           amount: 1
-        - id: SilverPowderCanister
+        - id: SilverCanister
           amount: 1
 
 - type: entity
-  id: CrateAluminiumPowderCanister
-  name: aluminium powder crate
+  id: CrateAluminiumCanister
+  name: aluminium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderCanister
+        - id: AluminiumCanister
           amount: 6
 
 - type: entity
-  id: CrateCarbonPowderCanister
-  name: carbon powder crate
+  id: CrateCarbonCanister
+  name: carbon chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CarbonPowderCanister
+        - id: CarbonCanister
           amount: 6
 
 - type: entity
-  id: CrateCopperPowderCanister
-  name: copper powder crate
+  id: CrateCopperCanister
+  name: copper chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CopperPowderCanister
+        - id: CopperCanister
           amount: 6
 
 - type: entity
-  id: CrateGoldPowderCanister
-  name: gold powder crate
+  id: CrateEthanolCanister
+  name: ethanol chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: GoldPowderCanister
+        - id: EthanolCanister
           amount: 6
 
 - type: entity
-  id: CrateIodinePowderCanister
-  name: iodine powder crate
+  id: CrateFluorineCanister
+  name: fluorine chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IodinePowderCanister
+        - id: FluorineCanister
           amount: 6
 
 - type: entity
-  id: CrateIronPowderCanister
-  name: iron powder crate
+  id: CrateHydrogenCanister
+  name: hydrogen chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IronPowderCanister
+        - id: HydrogenCanister
           amount: 6
 
 - type: entity
-  id: CrateLithiumPowderCanister
-  name: lithium powder crate
+  id: CrateGoldCanister
+  name: gold chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: LithiumPowderCanister
+        - id: GoldCanister
           amount: 6
 
 - type: entity
-  id: CratePotassiumPowderCanister
-  name: potassium powder crate
+  id: CrateIodineCanister
+  name: iodine chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumPowderCanister
+        - id: IodineCanister
           amount: 6
 
 - type: entity
-  id: CratePhosphorusPowderCanister
-  name: phosphorus powder crate
+  id: CrateIronCanister
+  name: iron chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: PhosphorusPowderCanister
+        - id: IronCanister
           amount: 6
 
 - type: entity
-  id: CrateSiliconPowderCanister
-  name: silicon powder crate
+  id: CrateLithiumCanister
+  name: lithium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SiliconPowderCanister
+        - id: LithiumCanister
           amount: 6
 
 - type: entity
-  id: CrateSilverPowderCanister
-  name: silver powder crate
+  id: CrateMercuryCanister
+  name: mercury chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SilverPowderCanister
+        - id: MercuryCanister
+          amount: 6
+
+- type: entity
+  id: CrateNitrogenCanister
+  name: nitrogen chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: NitrogenCanister
+          amount: 6
+
+- type: entity
+  id: CrateOilCanister
+  name: oil chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: OilCanister
+          amount: 6
+
+- type: entity
+  id: CrateOxygenCanister
+  name: oxygen chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: OxygenCanister
+          amount: 6
+
+- type: entity
+  id: CratePhosphorusCanister
+  name: phosphorus chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: PhosphorusCanister
+          amount: 6
+
+- type: entity
+  id: CratePotassiumCanister
+  name: potassium chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: PotassiumCanister
+          amount: 6
+
+- type: entity
+  id: CrateRadiumCanister
+  name: radium chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: RadiumCanister
+          amount: 6
+
+- type: entity
+  id: CrateSiliconCanister
+  name: silicon chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SiliconCanister
+          amount: 6
+
+- type: entity
+  id: CrateSodiumCanister
+  name: sodium chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SodiumCanister
+          amount: 6
+
+- type: entity
+  id: CrateSilverCanister
+  name: silver chemical crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SilverCanister
           amount: 6

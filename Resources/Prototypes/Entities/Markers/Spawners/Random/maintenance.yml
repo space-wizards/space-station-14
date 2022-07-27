@@ -72,10 +72,17 @@
         - SheetSteel
         - SheetPlastic
         - ResearchDisk
-        - IronPowderCanister
-        - CopperPowderCanister
-        - CarbonPowderCanister
-        - PotassiumPowderCanister
+        - AluminiumCanister
+        - CarbonCanister
+        - CopperCanister
+        - GoldCanister
+        - IodineCanister
+        - IronCanister
+        - LithiumCanister
+        - PotassiumCanister
+        - PhosphorusCanister
+        - SiliconCanister
+        - SilverCanister
       chance: 0.6
       offset: 0.0
 

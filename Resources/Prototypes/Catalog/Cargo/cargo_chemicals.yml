@@ -1,192 +1,219 @@
 - type: cargoProduct
-  name: "chemistry starter kit"
-  id: MaterialAluminiumPowderCrate
-  description: "A crate of several assorted powder bags and chemical bottles, for the up and coming chemist and/or biowarfare expert."
+  name: "crate of aluminium chemical canisters"
+  id: ChemicalAluminiumCanister
+  description: "A crate of 6 aluminium chemical canisters."
   icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: CrateAssortedChems
-  cost: 1000
-  category: Materials
-  group: assorted
-
-- type: cargoProduct
-  name: "chlorine tank"
-  id: MaterialChlorineTank
-  description: "A tank of highly toxic chlorine, for chemical production."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: ChlorineTankFull
-  cost: 3000
-  category: Chemicals
-  group: liquids
-
-- type: cargoProduct
-  name: "fluorine tank"
-  id: MaterialFluorineTank
-  description: "A tank of highly toxic fluorine, for chemical production."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: FluorineTankFull
-  cost: 3000
-  category: Chemicals
-  group: liquids
-
-- type: cargoProduct
-  name: "mercury tank"
-  id: MaterialMercuryTank
-  description: "A tank of mercury, for chemical production."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: MercuryTankFull
-  cost: 2800
-  category: Chemicals
-  group: liquids
-
-- type: cargoProduct
-  name: "sulfuric acid tank"
-  id: MaterialSulfuricAcidTank
-  description: "A tank of sulfuric acid, for chemical production."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: SulfuricAcidTankFull
-  cost: 2000
-  category: Chemicals
-  group: liquids
-
-- type: cargoProduct
-  name: "ethanol tank"
-  id: MaterialEthanolTank
-  description: "A tank of ethanol, for chemical production."
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: EthanolTankFull
-  cost: 1400
-  category: Chemicals
-  group: liquids
-
-- type: cargoProduct
-  name: "crate of aluminium powder canisters"
-  id: MaterialAluminiumPowderCrate
-  description: "A crate of 6 aluminium powder canisters, for medicine production."
-  icon:
-    entity: AluminiumPowderCanister
-  product: CrateAluminiumPowderCanister
+    entity: AluminiumCanister
+  product: CrateAluminiumCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of carbon powder canisters"
-  id: MaterialCarbonPowderCrate
-  description: "A crate of 6 carbon powder canisters, for medicine production."
+  name: "crate of carbon chemical canisters"
+  id: ChemicalCarbonCanister
+  description: "A crate of 6 carbon chemical canisters."
   icon:
-    entity: CarbonPowderCanister
-  product: CrateCarbonPowderCanister
+    entity: CarbonCanister
+  product: CrateCarbonCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of copper powder canisters"
-  id: MaterialCopperPowderCrate
-  description: "A crate of 6 copper powder canisters, for medicine production."
+  name: "crate of copper chemical canisters"
+  id: ChemicalCopperCanister
+  description: "A crate of 6 copper chemical canisters."
   icon:
-    entity: CopperPowderCanister
-  product: CrateCopperPowderCanister
+    entity: CopperCanister
+  product: CrateCopperCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of gold powder canisters"
-  id: MaterialGoldPowderCrate
-  description: "A crate of 6 gold powder canisters, for medicine production."
+  name: "crate of ethanol chemical canisters"
+  id: ChemicalEthanolCanister
+  description: "A crate of 6 ethanol chemical canisters."
   icon:
-    entity: GoldPowderCanister
-  product: CrateGoldPowderCanister
-  cost: 1200
-  category: Chemicals
-  group: powders
-
-- type: cargoProduct
-  name: "crate of iodine powder canisters"
-  id: MaterialIodinePowderCrate
-  description: "A crate of 6 iodine powder canisters, for medicine production."
-  icon:
-    entity: IodinePowderCanister
-  product: CrateIodinePowderCanister
+    entity: EthanolCanister
+  product: CrateEthanolCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of iron powder canisters"
-  id: MaterialIronPowderCrate
-  description: "A crate of 6 iron powder canisters, for medicine production."
+  name: "crate of fluorine chemical canisters"
+  id: ChemicalFluorineCanister
+  description: "A crate of 6 fluorine chemical canisters."
   icon:
-    entity: IronPowderCanister
-  product: CrateIronPowderCanister
+    entity: FluorineCanister
+  product: CrateFluorineCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of lithium powder canisters"
-  id: MaterialLithiumPowderCrate
-  description: "A crate of 6 aluminium powder canisters, for medicine production."
+  name: "crate of hydrogen chemical canisters"
+  id: ChemicalHydrogenCanister
+  description: "A crate of 6 hydrogen chemical canisters."
   icon:
-    entity: LithiumPowderCanister
-  product: CrateLithiumPowderCanister
+    entity: HydrogenCanister
+  product: CrateHydrogenCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of potassium powder canisters"
-  id: MaterialPotassiumPowderCrate
-  description: "A crate of 6 potassium powder canisters, for medicine production."
+  name: "crate of gold chemical canisters"
+  id: ChemicalGoldCanister
+  description: "A crate of 6 gold chemical canisters."
   icon:
-    entity: PotassiumPowderCanister
-  product: CratePotassiumPowderCanister
+    entity: GoldCanister
+  product: CrateGoldCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of phosphorus powder canisters"
-  id: MaterialPhosphorusPowderCrate
-  description: "A crate of 6 phosphorus powder canisters, for medicine production."
+  name: "crate of Iodine chemical canisters"
+  id: ChemicalIodineCanister
+  description: "A crate of 6 iodine chemical canisters."
   icon:
-    entity: PhosphorusPowderCanister
-  product: CratePhosphorusPowderCanister
+    entity: IodineCanister
+  product: CrateIodineCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of silicon powder canisters"
-  id: MaterialSiliconPowderCrate
-  description: "A crate of 6 silicon powder canisters, for medicine production."
+  name: "crate of iron chemical canisters"
+  id: ChemicalIronCanister
+  description: "A crate of 6 iron chemical canisters."
   icon:
-    entity: SiliconPowderCanister
-  product: CrateSiliconPowderCanister
+    entity: IronCanister
+  product: CrateIronCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
 
 - type: cargoProduct
-  name: "crate of silver powder canisters"
-  id: MaterialSilverPowderCrate
-  description: "A crate of 6 silver powder canisters, for medicine production."
+  name: "crate of lithium chemical canisters"
+  id: ChemicalLithiumCanister
+  description: "A crate of 6 lithium chemical canisters."
   icon:
-    entity: SilverPowderCanister
-  product: CrateSilverPowderCanister
+    entity: LithiumCanister
+  product: CrateLithiumCanister
   cost: 800
   category: Chemicals
-  group: powders
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of mercury chemical canisters"
+  id: ChemicalMercuryCanister
+  description: "A crate of 6 mercury chemical canisters."
+  icon:
+    entity: MercuryCanister
+  product: CrateMercuryCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of nitrogen chemical canisters"
+  id: ChemicalNitrogenCanister
+  description: "A crate of 6 nitrogen chemical canisters."
+  icon:
+    entity: NitrogenCanister
+  product: CrateNitrogenCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of oil chemical canisters"
+  id: ChemicalOilCanister
+  description: "A crate of 6 oil chemical canisters."
+  icon:
+    entity: OilCanister
+  product: CrateOilCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of oxygen chemical canisters"
+  id: ChemicalOxygenCanister
+  description: "A crate of 6 oxygen chemical canisters."
+  icon:
+    entity: OxygenCanister
+  product: CrateOxygenCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of phosphorus chemical canisters"
+  id: ChemicalPhosphorusCanister
+  description: "A crate of 6 phosphorus chemical canisters."
+  icon:
+    entity: PhosphorusCanister
+  product: CratePhosphorusCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of potassium chemical canisters"
+  id: ChemicalPotassiumCanister
+  description: "A crate of 6 potassium chemical canisters."
+  icon:
+    entity: PotassiumCanister
+  product: CratePotassiumCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of radium chemical canisters"
+  id: ChemicalRadiumCanister
+  description: "A crate of 6 radium chemical canisters."
+  icon:
+    entity: RadiumCanister
+  product: CrateRadiumCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of silicon chemical canisters"
+  id: ChemicalSiliconCanister
+  description: "A crate of 6 silicon chemical canisters."
+  icon:
+    entity: SiliconCanister
+  product: CrateSiliconCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of sodium chemical canisters"
+  id: ChemicalSodiumCanister
+  description: "A crate of 6 sodium chemical canisters."
+  icon:
+    entity: SodiumCanister
+  product: CrateSodiumCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
+
+- type: cargoProduct
+  name: "crate of silver chemical canisters"
+  id: ChemicalSilverCanister
+  description: "A crate of 6 silver chemical canisters."
+  icon:
+    entity: SilverCanister
+  product: CrateSilverCanister
+  cost: 800
+  category: Chemicals
+  group: canisters
