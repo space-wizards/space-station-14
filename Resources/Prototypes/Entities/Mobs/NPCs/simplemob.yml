@@ -111,6 +111,7 @@
     - SlowedDown
     - Stutter
     - Electrocution
+    - ForcedSleep
   - type: Body
     template: AnimalTemplate
     preset: AnimalPreset
@@ -177,6 +178,7 @@
       - SlowedDown
       - Stutter
       - Electrocution
+      - ForcedSleep
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
