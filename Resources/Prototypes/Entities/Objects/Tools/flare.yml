@@ -37,8 +37,7 @@
     state: icon
   - type: Item
     sprite: Objects/Misc/flare.rsi
-    color: "#FF0000"
-    HeldPrefix: unlit
+    heldPrefix: unlit
   - type: Appearance
     visuals:
       - type: ExpendableLightVisualizer
