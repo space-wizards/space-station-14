@@ -91,7 +91,7 @@ public sealed class RevenantComponent : Component
     public float OverloadProjectileChance = 0.33f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadProjectileId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string OverloadProjectileId = "BulletKinetic";
+    public string OverloadProjectileId = "ProjectileElectricZap";
     #endregion
 
     #region Blight Ability
@@ -105,7 +105,7 @@ public sealed class RevenantComponent : Component
     public float BlightRadius = 3.5f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("blightDiseasePrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<DiseasePrototype>))]
-    public string BlightDiseasePrototypeId = "Plague";
+    public string BlightDiseasePrototypeId = "SpectralTiredness";
     #endregion
 
     #region Malfunction Ability

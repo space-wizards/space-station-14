@@ -19,6 +19,9 @@ using Content.Shared.Interaction;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Shared.Item;
+using Content.Server.Bed.Sleep;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.MobState;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -26,6 +29,7 @@ public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly SleepingSystem _sleeping = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly DiseaseSystem _disease = default!;
 
@@ -81,6 +85,12 @@ public sealed partial class RevenantSystem : EntitySystem
         if (essence.Harvested)
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-harvested"), target, Filter.Entities(uid), PopupType.SmallCaution);
+            return;
+        }
+
+        if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == DamageState.Alive && !HasComp<SleepingComponent>(target))
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, Filter.Entities(uid), PopupType.Small);
             return;
         }
 
@@ -260,6 +270,6 @@ public sealed partial class RevenantSystem : EntitySystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
             if (_random.Prob(component.MalfunctionEffectChance))
-                RaiseLocalEvent(ent, new GotEmaggedEvent(ent)); //it is going to emag itself to bypass popups and weird checks
+                RaiseLocalEvent(ent, new GotEmaggedEvent(ent));
     }
 }

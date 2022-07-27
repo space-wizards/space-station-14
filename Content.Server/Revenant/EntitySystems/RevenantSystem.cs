@@ -83,9 +83,8 @@ public sealed partial class RevenantSystem : EntitySystem
         foreach (var listing in _proto.EnumeratePrototypes<RevenantStoreListingPrototype>())
             component.Listings.Add(listing);
 
-        //TODO: kill
-        var action = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
-        _action.AddAction(uid, action, null);
+        var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
+        _action.AddAction(uid, shopaction, null);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)

@@ -4,7 +4,7 @@
   actionId: RevenantDefile
   listingName: Defile
   description: Costs 30 Essence per use. Defiles the surrounding area, ripping up floors, damaging windows, opening containers, and throwing items. Using it leaves you vulnerable to attacks for a short period of time.
-  icon: Interface/Actions/scream.png #replace
+  icon: Interface/Actions/defile.png
   price: 10
 
 - type: revenantListing
@@ -12,15 +12,15 @@
   actionId: RevenantOverloadLights
   listingName: Overload Lights
   description: Costs 40 Essence per use. Overloads all nearby lights, causing the bulbs to shatter and sending out damaging sparks. Using it leaves you vulnerable to attacks for a long period of time.
-  icon: Interface/Actions/scream.png #replace
+  icon: Interface/Actions/overloadlight.png
   price: 25
 
 - type: revenantListing
   id: Blight
   actionId: RevenantBlight
   listingName: Blight
-  description: Costs 50 Essence per use. Infects all nearby organisms with an infectious disease. Using it leaves you vulnerable to attacks for a medium period of time.
-  icon: Interface/Actions/scream.png #replace
+  description: Costs 50 Essence per use. Infects all nearby organisms with an infectious disease that causes poison and tiredness. Using it leaves you vulnerable to attacks for a medium period of time.
+  icon: Interface/Actions/blight.png
   price: 75
 
 - type: revenantListing
@@ -28,5 +28,5 @@
   actionId: RevenantMalfunction
   listingName: Malfunction
   description: Costs 60 Essence per use. Makes most nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
-  icon: Interface/Actions/scream.png #replace
+  icon: Interface/Actions/malfunction.png
   price: 125
