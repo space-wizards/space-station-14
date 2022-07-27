@@ -42,7 +42,10 @@ namespace Content.IntegrationTests.Tests.DoAfter
             });
 
             await server.WaitRunTicks(1);
+            Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
+#pragma warning disable RA0004
             Assert.That(task.Result == DoAfterStatus.Finished);
+#pragma warning restore RA0004
 
             await pairTracker.CleanReturnAsync();
         }
@@ -69,7 +72,10 @@ namespace Content.IntegrationTests.Tests.DoAfter
             });
 
             await server.WaitRunTicks(3);
-            Assert.That(task.Result == DoAfterStatus.Cancelled, $"Result was {task.Result}");
+            Assert.That(task.Status, Is.EqualTo(TaskStatus.RanToCompletion));
+#pragma warning disable RA0004
+            Assert.That(task.Result, Is.EqualTo(DoAfterStatus.Cancelled), $"Result was {task.Result}");
+#pragma warning restore RA0004
 
             await pairTracker.CleanReturnAsync();
         }

@@ -17,7 +17,7 @@
       groups:
         Burn: 30
   - type: Summonable
-    specialItem: MobBatRemilia
+    specialItem: SpawnPointGhostRemilia
   - type: ItemCooldown
   - type: Sprite
     netsync: false
@@ -58,7 +58,7 @@
     healSound: "/Audio/Effects/lightburn.ogg"
     cooldownTime: 1.3
   - type: Summonable
-    specialItem: MobCorgiCerberus
+    specialItem: SpawnPointGhostCerberus
     respawnTime: 300
   - type: Sprite
     netsync: false

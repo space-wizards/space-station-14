@@ -39,7 +39,7 @@
       sprite: Structures/Storage/Crates/artifact.rsi
       state: artifact_container_icon
     - type: EntityStorage
-      Capacity: 1
+      capacity: 1
       whitelist:
         components:
         - Artifact

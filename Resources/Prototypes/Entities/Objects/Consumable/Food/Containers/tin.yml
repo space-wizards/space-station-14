@@ -17,6 +17,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
+    size: 3
   - type: DamageOnLand
     damage:
       types:
@@ -41,6 +42,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
+    size: 3
 
 # Tins
 
@@ -196,7 +198,6 @@
   components:
   - type: Sprite
     state: beans-empty
-
 # MRE can
 
 - type: entity
@@ -223,6 +224,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
 
 - type: entity
   parent: FoodTinBase

@@ -307,6 +307,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var mapManager = server.ResolveDependency<IMapManager>();
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
+            var conSystem = sysMan.GetEntitySystem<SharedContainerSystem>();
 
             var mapId = MapId.Nullspace;
             var coords = MapCoordinates.Nullspace;
@@ -332,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
                 item = sEntities.SpawnEntity(null, coords);
                 item.EnsureComponent<ItemComponent>();
                 containerEntity = sEntities.SpawnEntity(null, coords);
-                container = containerEntity.EnsureContainer<Container>("InteractionTestContainer");
+                container = conSystem.EnsureContainer<Container>(containerEntity, "InteractionTestContainer");
             });
 
             await server.WaitRunTicks(1);

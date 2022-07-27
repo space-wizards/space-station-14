@@ -12,7 +12,7 @@ namespace Content.Server.Zombies
         /// attacks another zombie. longe name
         /// </summary>
         [ViewVariables]
-        public float OtherZombieDamageCoefficient = 0.5f;
+        public float OtherZombieDamageCoefficient = 0.25f;
 
         /// <summary>
         /// The baseline infection chance you have if you are completely nude
@@ -26,6 +26,9 @@ namespace Content.Server.Zombies
         /// </summary>
         [ViewVariables]
         public float MinZombieInfectionChance = 0.1f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ZombieMovementSpeedDebuff = 0.75f;
 
         /// <summary>
         /// The skin color of the zombie

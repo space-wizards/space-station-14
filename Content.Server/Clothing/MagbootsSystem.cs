@@ -5,10 +5,6 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
-using Content.Shared.Toggleable;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using static Content.Shared.Clothing.MagbootsComponent;
 
@@ -27,11 +23,10 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
 
         SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<MagbootsComponent, ToggleActionEvent>(OnToggleAction);
         SubscribeLocalEvent<MagbootsComponent, ComponentGetState>(OnGetState);
     }
 
-    private void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
+    protected override void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -50,28 +45,6 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         {
             _alertsSystem.ClearAlert(parent, AlertType.Magboots);
         }
-    }
-
-    private void OnToggleAction(EntityUid uid, MagbootsComponent component, ToggleActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-        component.On = !component.On;
-
-        if (_sharedContainer.TryGetContainingContainer(uid, out var container) &&
-            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
-            UpdateMagbootEffects(container.Owner, component.Owner, true, component);
-
-        if (TryComp<ClothingComponent>(component.Owner, out var item))
-            _clothing.SetEquippedPrefix(uid, component.On ? "on" : null, item);
-
-        if (TryComp<SpriteComponent>(component.Owner, out var sprite))
-            sprite.LayerSetState(0, component.On ? "icon-on" : "icon");
-
-        OnChanged(component);
-        Dirty(component);
     }
 
     private void OnGotUnequipped(EntityUid uid, MagbootsComponent component, GotUnequippedEvent args)
