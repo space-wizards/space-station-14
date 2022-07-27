@@ -1,6 +1,6 @@
 - type: entity
   id: CrateMaterialGlass
-  name:  glass sheet crate
+  name: glass sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -10,7 +10,7 @@
 
 - type: entity
   id: CrateMaterialSteel
-  name:  steel sheet crate
+  name: steel sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -20,7 +20,7 @@
 
 - type: entity
   id: CrateMaterialPlastic
-  name:  plastic sheet crate
+  name: plastic sheet crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -30,7 +30,7 @@
 
 - type: entity
   id: CrateMaterialWood
-  name:  wood crate
+  name: wood crate
   parent: CrateGenericSteel
   components:
   - type: StorageFill
@@ -77,3 +77,143 @@
     contents:
       - id: SheetPlasma
         amount: 3
+
+- type: entity
+  id: CrateAssortedChems
+  name: assorted chemicals crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: AluminiumPowderBag
+          amount: 1
+        - id: CarbonPowderBag
+          amount: 1
+        - id: CopperPowderBag
+          amount: 1
+        - id: GoldPowderBag
+          amount: 1
+        - id: IodinePowderBag
+          amount: 1
+        - id: IronPowderBag
+          amount: 1
+        - id: LithiumPowderBag
+          amount: 1
+        - id: PotassiumPowderBag
+          amount: 1
+        - id: PhosphorusPowderBag
+          amount: 1
+        - id: SiliconPowderBag
+          amount: 1
+        - id: SilverPowderBag
+          amount: 1
+
+- type: entity
+  id: CrateAluminiumPowderBag
+  name: aluminium powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: AluminiumPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateCarbonPowderBag
+  name: carbon powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: CarbonPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateCopperPowderBag
+  name: copper powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: CopperPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateGoldPowderBag
+  name: gold powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: GoldPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateIodinePowderBag
+  name: iodine powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: IodinePowderBag
+          amount: 6
+
+- type: entity
+  id: CrateIronPowderBag
+  name: iron powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: IronPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateLithiumPowderBag
+  name: lithium powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: LithiumPowderBag
+          amount: 6
+
+- type: entity
+  id: CratePotassiumPowderBag
+  name: potassium powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: AluminiumPowderBag
+          amount: 6
+
+- type: entity
+  id: CratePhosphorusPowderBag
+  name: phosphorus powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: PhosphorusPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateSiliconPowderBag
+  name: silicon powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SiliconPowderBag
+          amount: 6
+
+- type: entity
+  id: CrateSilverPowderBag
+  name: silver powder crate
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: SilverPowderBag
+          amount: 6

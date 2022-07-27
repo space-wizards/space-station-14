@@ -23,6 +23,176 @@
   group: market
 
 - type: cargoProduct
+  name: "chlorine tank"
+  id: MaterialChlorineTank
+  description: "A tank of highly toxic chlorine, for chemical production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: ChlorineTankFull
+  cost: 3000
+
+- type: cargoProduct
+  name: "fluorine tank"
+  id: MaterialFluorineTank
+  description: "A tank of highly toxic fluorine, for chemical production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: FluorineTankFull
+  cost: 3000
+
+- type: cargoProduct
+  name: "mercury tank"
+  id: MaterialMercuryTank
+  description: "A tank of mercury, for chemical production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: MercuryTankFull
+  cost: 2800
+
+- type: cargoProduct
+  name: "sulfuric acid tank"
+  id: MaterialSulfuricAcidTank
+  description: "A tank of sulfuric acid, for chemical production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: SulfuricAcidTankFull
+  cost: 2000
+
+- type: cargoProduct
+  name: "ethanol tank"
+  id: MaterialEthanolTank
+  description: "A tank of ethanol, for chemical production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: EthanolTankFull
+  cost: 1400
+
+- type: cargoProduct
+  name: "chemistry starter kit"
+  id: MaterialAluminiumPowderCrate
+  description: "A crate of several assorted powder bags and chemical bottles, for the up and coming chemist and/or biowarfare expert."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateAssortedChems
+  cost: 1000
+
+- type: cargoProduct
+  name: "crate of aluminium powder bags"
+  id: MaterialAluminiumPowderCrate
+  description: "A crate of 6 aluminium powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateAluminiumPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of carbon powder bags"
+  id: MaterialCarbonPowderCrate
+  description: "A crate of 6 carbon powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateCarbonPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of copper powder bags"
+  id: MaterialCopperPowderCrate
+  description: "A crate of 6 copper powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateCopperPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of gold powder bags"
+  id: MaterialGoldPowderCrate
+  description: "A crate of 6 gold powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateGoldPowderBag
+  cost: 1200
+
+- type: cargoProduct
+  name: "crate of iodine powder bags"
+  id: MaterialIodinePowderCrate
+  description: "A crate of 6 iodine powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateIodinePowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of iron powder bags"
+  id: MaterialIronPowderCrate
+  description: "A crate of 6 iron powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateIronPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of lithium powder bags"
+  id: MaterialLithiumPowderCrate
+  description: "A crate of 6 aluminium powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateLithiumPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of potassium powder bags"
+  id: MaterialPotassiumPowderCrate
+  description: "A crate of 6 potassium powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CratePotassiumPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of phosphorus powder bags"
+  id: MaterialPhosphorusPowderCrate
+  description: "A crate of 6 phosphorus powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CratePhosphorusPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of silicon powder bags"
+  id: MaterialSiliconPowderCrate
+  description: "A crate of 6 silicon powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateSiliconPowderBag
+  cost: 800
+
+- type: cargoProduct
+  name: "crate of silver powder bags"
+  id: MaterialSilverPowderCrate
+  description: "A crate of 6 silver powder bags, for medicine production."
+  icon:
+    sprite: Structures/Storage/tanks.rsi
+    state: watertank
+  product: CrateSilverPowderBag
+  cost: 800
+
+- type: cargoProduct
   name: "crate of glass sheets"
   id: MaterialGlass
   description: "90 sheets of glass, packed with care."

@@ -130,3 +130,139 @@
           reagents:
             - ReagentId: Kvass
               Quantity: 1500
+
+#Reagent tanks
+- type: entity
+  id: ChlorineTank
+  parent: StorageTank
+  name: chlorine tank
+  suffix: Empty
+  description: "A tank filled with chlorine."
+  components:
+    - type: StaticPrice
+      price: 1600
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      state: watertank
+
+- type: entity
+  id: ChlorineTankFull
+  parent: ChlorineTank
+  name: chlorine tank
+  suffix: Full
+  description: "A tank filled with chlorine."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 500
+
+- type: entity
+  id: FluorineTank
+  parent: StorageTank
+  name: fluorine tank
+  suffix: Empty
+  description: "A tank filled with fluorine."
+  components:
+    - type: StaticPrice
+      price: 1600
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      state: watertank
+
+- type: entity
+  id: FluorineTankFull
+  parent: FluorineTank
+  name: fluorine tank
+  suffix: Full
+  description: "A tank filled with fluorine."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 500
+
+- type: entity
+  id: MercuryTank
+  parent: StorageTank
+  name: mercury tank
+  suffix: Empty
+  description: "A tank filled with liquid mercury."
+  components:
+    - type: StaticPrice
+      price: 4600
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      state: watertank
+
+- type: entity
+  id: MercuryTankFull
+  parent: MercuryTank
+  name: mercury tank
+  suffix: Full
+  description: "A tank filled with mercury."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Mercury
+              Quantity: 600
+
+- type: entity
+  id: SulfuricAcidTank
+  parent: StorageTank
+  name: sulfuric acid tank
+  suffix: Empty
+  description: "A corrosion-resistant tank filled with sulfuric acid."
+  components:
+    - type: StaticPrice
+      price: 4000
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      state: watertank
+
+- type: entity
+  id: SulfuricAcidTankFull
+  parent: SulfuricAcidTank
+  name: sulfuric acid tank
+  suffix: Full
+  description: "A corrosion-resistant tank filled with sulfuric acid."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: SulfuricAcid
+              Quantity: 800
+
+- type: entity
+  id: EthanolTank
+  parent: StorageTank
+  name: ethanol tank
+  suffix: Empty
+  description: "A tank filled with ethanol."
+  components:
+    - type: StaticPrice
+      price: 2000
+    - type: Sprite
+      sprite: Structures/Storage/tanks.rsi
+      state: watertank
+
+- type: entity
+  id: EthanolTankFull
+  parent: EthanolTank
+  name: ethanol tank
+  suffix: Full
+  description: "A tank filled with ethanol."
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          reagents:
+            - ReagentId: Ethanol
+              Quantity: 1000
