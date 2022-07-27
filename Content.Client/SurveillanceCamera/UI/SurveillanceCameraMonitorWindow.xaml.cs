@@ -139,7 +139,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         var eyeChanged = eye != CameraView.Eye || CameraView.Eye == null;
         CameraView.Eye = eye ?? _defaultEye;
         CameraView.Visible = !eyeChanged && !_isSwitching;
-        CameraViewBackground.Visible = eyeChanged && isSwitching;
+        CameraViewBackground.Visible = eyeChanged && _isSwitching;
         CameraDisconnectButton.Disabled = eye == null;
 
         if (eye != null)
