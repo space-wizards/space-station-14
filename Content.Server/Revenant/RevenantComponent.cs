@@ -17,17 +17,17 @@ public sealed class RevenantComponent : Component
     public float Essence = 75;
 
     /// <summary>
+    /// Used for purchasing shop items.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float StolenEssence = 0;
+
+    /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssence")]
-    public float MaxEssence = 75;
-
-    /// <summary>
-    /// The actual max amount of essence that the entity can have
-    /// </summary>
-    [DataField("essenceCap")]
-    public float EssenceCap = 150;
+    public float EssenceRegenCap = 75;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damageToEssenceCoefficient")]
     public float DamageToEssenceCoefficient = 1f;
@@ -47,9 +47,6 @@ public sealed class RevenantComponent : Component
 
     [ViewVariables, DataField("harvestDebuffs")]
     public Vector2 HarvestDebuffs = (5, 5);
-
-    [ViewVariables, DataField("perfectSoulChance")]
-    public float PerfectSoulChance = 0.35f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
     public float MaxEssenceUpgradeAmount = 10;
@@ -86,9 +83,6 @@ public sealed class RevenantComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadBreakChance")]
     public float OverloadBreakChance = 0.5f;
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("overloadProjectileChance")]
-    public float OverloadProjectileChance = 0.33f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadProjectileId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string OverloadProjectileId = "ProjectileElectricZap";

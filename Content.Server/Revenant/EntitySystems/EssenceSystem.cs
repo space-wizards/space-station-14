@@ -1,4 +1,5 @@
 using Content.Server.Mind.Components;
+using Content.Shared.Examine;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Random;
@@ -21,6 +22,29 @@ public sealed class EssenceSystem : EntitySystem
         SubscribeLocalEvent<EssenceComponent, MobStateChangedEvent>(UpdateEssenceAmount);
         SubscribeLocalEvent<EssenceComponent, MindAddedMessage>(UpdateEssenceAmount);
         SubscribeLocalEvent<EssenceComponent, MindRemovedMessage>(UpdateEssenceAmount);
+        SubscribeLocalEvent<EssenceComponent, ExaminedEvent>(OnExamine);
+    }
+
+    private void OnExamine(EntityUid uid, EssenceComponent component, ExaminedEvent args)
+    {
+        if (!component.SearchComplete)
+            return;
+
+        string message;
+        switch (component.EssenceAmount)
+        {
+            case <= 30:
+                message = "revenant-soul-yield-low";
+                break;
+            case >= 50:
+                message = "revenant-soul-yield-high";
+                break;
+            default:
+                message = "revenant-soul-yield-average";
+                break;
+        }
+
+        args.PushText(Loc.GetString(message));
     }
 
     private void UpdateEssenceAmount(EntityUid uid, EssenceComponent component, EntityEventArgs args)

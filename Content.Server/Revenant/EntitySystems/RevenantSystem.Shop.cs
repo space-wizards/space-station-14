@@ -23,8 +23,9 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnBuy(EntityUid uid, RevenantComponent component, RevenantBuyListingMessage ev)
     {
-        if (!ChangeEssenceAmount(uid, -ev.Listing.Price, component, false))
+        if (component.StolenEssence < ev.Listing.Price)
             return;
+        component.StolenEssence -= ev.Listing.Price;
 
         if (!_proto.TryIndex<InstantActionPrototype>(ev.Listing.ActionId, out var action))
             return;
@@ -59,6 +60,6 @@ public sealed partial class RevenantSystem : EntitySystem
         if (ui == null)
             return;
 
-        ui.SetState(new RevenantUpdateState(component.Essence, component.Listings));
+        ui.SetState(new RevenantUpdateState(component.StolenEssence, component.Listings));
     }
 }

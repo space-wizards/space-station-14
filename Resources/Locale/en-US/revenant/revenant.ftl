@@ -1,4 +1,4 @@
-revenant-essence-amount = You have [color=plum]{$current} Essence[/color]. Your max amount is [color=plum]{$max} Essence[/color].
+revenant-essence-amount = You have [color=plum]{$current} Essence[/color]. Your regen amount is [color=plum]{$max} Essence[/color].
 revenant-max-essence-increased = Your max essence has increased!
 
 revenant-not-enough-essence = Not enough essence!
@@ -17,4 +17,4 @@ revenant-soul-finish-harvest = {CAPITALIZE(THE($target))} slumps onto the ground
 
 #UI
 revenant-user-interface-title = Ability Shop
-revenant-user-interface-essence-amount = {$amount} Essence
+revenant-user-interface-essence-amount = [color=plum]{$amount}[/color] Stolen Essence

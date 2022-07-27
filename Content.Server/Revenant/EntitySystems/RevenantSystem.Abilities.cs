@@ -22,6 +22,8 @@ using Content.Shared.Item;
 using Content.Server.Bed.Sleep;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.MobState;
+using Content.Server.Explosion.EntitySystems;
+using System.Linq;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -32,6 +34,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SleepingSystem _sleeping = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly DiseaseSystem _disease = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     public void InitializeAbilities()
     {
@@ -44,6 +47,39 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+    }
+
+    private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
+    {
+        var target = args.Target;
+        if (target == args.User)
+            return;
+
+        if (!_interact.InRangeUnobstructed(uid, target))
+            return;
+
+        if (HasComp<PoweredLightComponent>(args.Target))
+        {
+            var ev = new GhostBooEvent();
+            RaiseLocalEvent(args.Target, ev);
+            args.Handled = true;
+            return;
+        }
+
+        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
+            return;
+
+        args.Handled = true;
+        if (!TryComp<EssenceComponent>(target, out var essence) || !essence.SearchComplete)
+        {
+            if (essence == null)
+                essence = EnsureComp<EssenceComponent>(target);
+            BeginSoulSearchDoAfter(uid, target, component, essence);
+        }
+        else
+        {
+            BeginHarvestDoAfter(uid, target, component, essence);
+        }
     }
 
     public void BeginSoulSearchDoAfter(EntityUid uid, EntityUid target, RevenantComponent revenant, EssenceComponent essence)
@@ -127,11 +163,12 @@ public sealed partial class RevenantSystem : EntitySystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
+        component.StolenEssence += essence.EssenceAmount;
 
-        if (_mobState.IsAlive(args.Target) && _random.Prob(component.PerfectSoulChance))
+        if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
         {
             _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
-            component.MaxEssence = Math.Min(component.MaxEssence + component.MaxEssenceUpgradeAmount, component.EssenceCap);
+            component.EssenceRegenCap += component.MaxEssenceUpgradeAmount;
         }
 
         if (TryComp<MobStateComponent>(args.Target, out var mobstate))
@@ -212,10 +249,13 @@ public sealed partial class RevenantSystem : EntitySystem
         args.Handled = true;
 
         var poweredLights = GetEntityQuery<PoweredLightComponent>();
+        var lookup = _lookup.GetEntitiesInRange(uid, 5).ToArray();
 
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, 5))
+        for (var i = 0; i < lookup.Length; i++)
         {
-            if (!poweredLights.HasComponent(ent))
+            var ent = lookup[i];
+
+            if (!poweredLights.TryGetComponent(ent, out var light))
                 continue;
 
             var ev = new GhostBooEvent(); //light go flicker
@@ -223,20 +263,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (_random.Prob(component.OverloadBreakChance))
             {
-                //smack dem lights
-                var dspec = new DamageSpecifier();
-                dspec.DamageDict.Add("Blunt", 15);
-                _damage.TryChangeDamage(ent, dspec);
-
-                if (_random.Prob(component.OverloadProjectileChance))
-                {
-                    //sparks
-                    for (var i = 0; i < _random.Next(1, 3); i++)
-                    {
-                        var proj = Spawn(component.OverloadProjectileId, Transform(ent).Coordinates);
-                        _throwing.TryThrow(proj, _random.NextVector2(), 15);
-                    }
-                }
+                //values
+                _explosion.QueueExplosion(ent, "RevenantElectric", 15, 3, 5, canCreateVacuum: false);
             }
         }
     }

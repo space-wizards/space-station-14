@@ -111,23 +111,3 @@
     damage:
       types:
         Blunt: 10
-
-- type: entity
-  id: ProjectileElectricZap
-  name: electric zap
-  description: Z-Z-Z-ZZZAP!
-  parent: BaseBullet
-  noSpawn: false
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
-    scale: 0.5, 0.5
-    layers:
-    - state: chronobolt
-      color: yellow
-  - type: Projectile
-    damage:
-      types:
-        Shock: 15
-  - type: TimedDespawn
-    lifetime: 0.5

@@ -1,10 +1,12 @@
 using Content.Server.Visible;
 using Content.Shared.Physics;
 using Content.Shared.Revenant;
+using Content.Shared.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Physics;
 using System.Linq;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -16,6 +18,7 @@ namespace Content.Server.Revenant.EntitySystems;
 public sealed class CorporealSystem : EntitySystem
 {
     [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
 
     public override void Initialize()
     {
@@ -23,8 +26,14 @@ public sealed class CorporealSystem : EntitySystem
 
         SubscribeLocalEvent<CorporealComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CorporealComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<CorporealComponent, RefreshMovementSpeedModifiersEvent>(OnRefresh);
     }
 
+    private void OnRefresh(EntityUid uid, CorporealComponent component, RefreshMovementSpeedModifiersEvent args)
+    {
+        args.ModifySpeed(component.MovementSpeedDebuff, component.MovementSpeedDebuff);
+    }
+    
     private void OnStartup(EntityUid uid, CorporealComponent component, ComponentStartup args)
     {
         if (TryComp<AppearanceComponent>(uid, out var app))
@@ -44,6 +53,7 @@ public sealed class CorporealSystem : EntitySystem
             _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
             _visibilitySystem.RefreshVisibility(visibility);
         }
+        _movement.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnShutdown(EntityUid uid, CorporealComponent component, ComponentShutdown args)

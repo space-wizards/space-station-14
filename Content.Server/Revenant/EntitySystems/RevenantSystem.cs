@@ -19,6 +19,8 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Player;
+using Content.Server.Light.Components;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -38,6 +40,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
 
     public override void Initialize()
@@ -103,6 +106,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
         if (args.Key == "Stun")
             app.SetData(RevenantVisuals.Stunned, false);
+        else if (args.Key == "Corporeal")
+            _movement.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnExamine(EntityUid uid, RevenantComponent component, ExaminedEvent args)
@@ -110,31 +115,7 @@ public sealed partial class RevenantSystem : EntitySystem
         if (args.Examiner == args.Examined)
         {
             args.PushMarkup(Loc.GetString("revenant-essence-amount",
-                ("current", Math.Round(component.Essence)), ("max", Math.Round(component.MaxEssence))));
-        }
-    }
-
-    private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
-    {
-        var target = args.Target;
-        if (target == args.User)
-            return;
-
-        if (!HasComp<MobStateComponent>(target) || HasComp<RevenantComponent>(target))
-            return;
-
-        if (!_interact.InRangeUnobstructed(uid, target))
-            return;
-
-        if (!TryComp<EssenceComponent>(target, out var essence) || !essence.SearchComplete)
-        {
-            if (essence == null)
-                essence = EnsureComp<EssenceComponent>(target);
-            BeginSoulSearchDoAfter(uid, target, component, essence);
-        }
-        else
-        {
-            BeginHarvestDoAfter(uid, target, component, essence);
+                ("current", Math.Round(component.Essence)), ("max", Math.Round(component.EssenceRegenCap))));
         }
     }
 
@@ -147,7 +128,7 @@ public sealed partial class RevenantSystem : EntitySystem
         ChangeEssenceAmount(uid, essenceDamage, component);
     }
 
-    public bool ChangeEssenceAmount(EntityUid uid, float amount, RevenantComponent? component = null, bool allowDeath = true)
+    public bool ChangeEssenceAmount(EntityUid uid, float amount, RevenantComponent? component = null, bool allowDeath = true, bool regenCap = false)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -155,13 +136,16 @@ public sealed partial class RevenantSystem : EntitySystem
         if (!allowDeath && component.Essence + amount <= 0)
             return false;
 
-        component.Essence = Math.Min(component.Essence + amount, component.MaxEssence);
+        component.Essence += amount;
 
-        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Round(component.Essence / 10f));
+        if (regenCap)
+            component.Essence = Math.Min(component.Essence, component.EssenceRegenCap);
+
+        _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence / 10f), 0, 16));
 
         if (component.Essence <= 0)
         {
-            component.Essence = component.MaxEssence;
+            component.Essence = component.EssenceRegenCap;
             _polymorphable.PolymorphEntity(uid, "Ectoplasm");
         }
 
@@ -195,9 +179,9 @@ public sealed partial class RevenantSystem : EntitySystem
                 continue;
             rev.Accumulator -= rev.TickDuration;
 
-            if (rev.Essence < rev.MaxEssence)
+            if (rev.Essence < rev.EssenceRegenCap)
             {
-                ChangeEssenceAmount(rev.Owner, rev.EssencePerTick, rev);
+                ChangeEssenceAmount(rev.Owner, rev.EssencePerTick, rev, regenCap: true);
             }
         }
     }
