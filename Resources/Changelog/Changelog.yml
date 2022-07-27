@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed grabbing things through airlocks and windoors., type: Fix}
-  id: 1528
-  time: '2022-05-14T02:54:37.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Splitstation big update. Lots of minor fixes, lots of new maint rooms
@@ -2933,3 +2928,13 @@ Entries:
       speak., type: Add}
   id: 2027
   time: '2022-07-26T23:49:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Zombies now move slower than normal people., type: Tweak}
+  - {message: Zombies now do a bit of structure damage., type: Tweak}
+  - {message: Zombies now do further decreased damage to other zombies., type: Tweak}
+  - {message: Zombies that were cuffed before turning now behave properly after being
+      uncuffed., type: Fix}
+  - {message: Zombies no longer take damage over time from rotting., type: Fix}
+  id: 2028
+  time: '2022-07-27T00:35:35.0000000+00:00'
