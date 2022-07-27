@@ -38,7 +38,7 @@
       probability: 0.02
       damage:
         types:
-          Toxin: 4
+          Poison: 4
   cures:
     - !type:DiseaseJustWaitCure
       maxLength: 240
