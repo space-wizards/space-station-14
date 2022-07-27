@@ -1,13 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
-  - {message: 'Stunbatons will no longer hurt people in combat mode, if they successfully
-      stun them. Harmbatoning is no longer possible while stunning at the same time.',
-    type: Tweak}
-  - {message: Stunbaton damage reduced., type: Tweak}
-  id: 1534
-  time: '2022-05-15T02:10:34.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed not being able to climb after being cloned or ejected from a medical
@@ -2948,3 +2939,8 @@ Entries:
       any water.', type: Fix}
   id: 2033
   time: '2022-07-27T14:18:16.0000000+00:00'
+- author: FunkySphere
+  changes:
+  - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
+  id: 2034
+  time: '2022-07-27T23:15:04.0000000+00:00'
