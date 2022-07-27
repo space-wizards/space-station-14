@@ -30972,7 +30972,7 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 943
-  type: SawAdvanced
+  type: SawElectric
   components:
   - pos: 38.567486,-14.251746
     parent: 60
