@@ -1,21 +1,3 @@
-#- type: htnCompoundTask
-#  id: XenoRootNode
-#  graph:
-#  # Node class
-#  - name: Select attack target
-#    # Refer to this node from other nodes
-#    id: PickMeleeTarget
-#    preconditions:
-#    - BlackboardKeyNull:
-#        MeleeTarget
-#    # The underlying task to run
-#    task: PickMeleeTarget
-#      resultKey: MeleeTarget
-#      factions:
-#        - A
-#        - B
-#  - name:
-
 - type: htnCompound
   id: IdleCompound
   desc: Picks a random location for the NPC to move to and idle.
@@ -38,36 +20,12 @@
       onExit:
         clearKey: MovementTarget
 
-    - id: IdleRandomPrimitive
-    - id: IdlePrimitive
+    - operator: !type:RandomOperator
+        targetKey: IdleTime
+        minKey: MinimumIdleTime
+        maxKey: MaximumIdleTime
 
-- type: htnPrimitive
-  id: MoveToPrimitive
-  desc: Moves the NPC towards the MovementTarget blackboard key then clears the key.
-  # These are what need to be true for this primitive task to be able to run.
-  preconditions:
-    - keyExists: MovementTarget
-  # This is what code actually gets run when the primitive runs.
-  # You can re-use the same operator across multiple primitive tasks.
-  operator: !type:MoveToOperator
-    target: MovementTarget
-  # This code gets run whenever the MoveToOperator exits. By clearing the key we ensure it won't be re-used later.
-  onExit:
-    clearKey: MovementTarget
-
-- type: htnPrimitive
-  id: IdleRandomPrimitive
-  desc: Picks a random time range and inserts it into the IdleTime key.
-  operator: !type:RandomOperator
-    targetKey: IdleTime
-    minKey: MinimumIdleTime
-    maxKey: MaximumIdleTime
-
-- type: htnPrimitive
-  id: IdlePrimitive
-  preconditions:
-    - keyExists: IdleTime
-  operator: !type:WaitOperator
-    targetKey: IdleTime
-  onExit:
-    clearKey: IdleTime
+    - operator: !type:WaitOperator
+        targetKey: IdleTime
+      onFinish:
+        clearKey: IdleTime
