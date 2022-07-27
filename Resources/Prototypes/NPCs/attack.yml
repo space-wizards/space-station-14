@@ -23,7 +23,7 @@
   # Continue waiting
   - tasks:
     - operator: !type:WaitOperator
-        key: IdleTIme
+        key: IdleTime
 
   # Pick a new spot and wait there.
   - tasks:
@@ -32,8 +32,12 @@
         resultKey: MovementTarget
 
     - operator: !type:MoveToOperator
-    - id: PickAccessiblePrimitive
-    - id: MoveToPrimitive
+        targetKey: MovementTarget
+      preconditions:
+        keyExists: MovementTarget
+      onExit:
+        clearKey: MovementTarget
+
     - id: IdleRandomPrimitive
     - id: IdlePrimitive
 
