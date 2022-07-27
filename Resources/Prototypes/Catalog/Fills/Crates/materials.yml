@@ -85,253 +85,253 @@
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumCanister
-          amount: 2
-        - id: CarbonCanister
-          amount: 4
-        - id: CopperCanister
-          amount: 2
-        - id: EthanolCanister
-          amount: 2
-        - id: HydrogenCanister
-          amount: 4
-        - id: IodineCanister
-          amount: 2
-        - id: IronCanister
-          amount: 2
-        - id: LithiumCanister
-          amount: 2
-        - id: NitrogenCanister
-          amount: 4
-        - id: OilCanister
-          amount: 2
-        - id: OxygenCanister
-          amount: 4
-        - id: PotassiumCanister
-          amount: 2
-        - id: PhosphorusCanister
-          amount: 2
-        - id: SodiumCanister
-          amount: 2
-        - id: SiliconCanister
-          amount: 2
+        - id: AluminiumReagentCanister
+        - amount: 2
+        - id: CarbonReagentCanister
+        - amount: 4
+        - id: CopperReagentCanister
+        - amount: 2
+        - id: EthanolReagentCanister
+        - amount: 2
+        - id: HydrogenReagentCanister
+        - amount: 4
+        - id: IodineReagentCanister
+        - amount: 2
+        - id: IronReagentCanister
+        - amount: 2
+        - id: LithiumReagentCanister
+        - amount: 2
+        - id: NitrogenReagentCanister
+        - amount: 4
+        - id: OilReagentCanister
+        - amount: 2
+        - id: OxygenReagentCanister
+        - amount: 4
+        - id: PotassiumReagentCanister
+        - amount: 2
+        - id: PhosphorusReagentCanister
+        - amount: 2
+        - id: SodiumReagentCanister
+        - amount: 2
+        - id: SiliconReagentCanister
+        - amount: 2
 
 - type: entity
-  id: CrateAluminiumCanister
+  id: CrateAluminiumReagentCanister
   name: aluminium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: AluminiumCanister
-          amount: 6
+        - id: AluminiumReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateCarbonCanister
+  id: CrateCarbonReagentCanister
   name: carbon chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CarbonCanister
-          amount: 6
+        - id: CarbonReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateCopperCanister
+  id: CrateCopperReagentCanister
   name: copper chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: CopperCanister
-          amount: 6
+        - id: CopperReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateEthanolCanister
+  id: CrateEthanolReagentCanister
   name: ethanol chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: EthanolCanister
-          amount: 6
+        - id: EthanolReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateFluorineCanister
+  id: CrateFluorineReagentCanister
   name: fluorine chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: FluorineCanister
-          amount: 6
+        - id: FluorineReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateHydrogenCanister
+  id: CrateHydrogenReagentCanister
   name: hydrogen chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: HydrogenCanister
-          amount: 6
+        - id: HydrogenReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateGoldCanister
+  id: CrateGoldReagentCanister
   name: gold chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: GoldCanister
-          amount: 6
+        - id: GoldReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateIodineCanister
+  id: CrateIodineReagentCanister
   name: iodine chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IodineCanister
-          amount: 6
+        - id: IodineReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateIronCanister
+  id: CrateIronReagentCanister
   name: iron chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: IronCanister
-          amount: 6
+        - id: IronReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateLithiumCanister
+  id: CrateLithiumReagentCanister
   name: lithium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: LithiumCanister
-          amount: 6
+        - id: LithiumReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateMercuryCanister
+  id: CrateMercuryReagentCanister
   name: mercury chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: MercuryCanister
-          amount: 6
+        - id: MercuryReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateNitrogenCanister
+  id: CrateNitrogenReagentCanister
   name: nitrogen chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: NitrogenCanister
-          amount: 6
+        - id: NitrogenReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateOilCanister
+  id: CrateOilReagentCanister
   name: oil chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: OilCanister
-          amount: 6
+        - id: OilReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateOxygenCanister
+  id: CrateOxygenReagentCanister
   name: oxygen chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: OxygenCanister
-          amount: 6
+        - id: OxygenReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CratePhosphorusCanister
+  id: CratePhosphorusReagentCanister
   name: phosphorus chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: PhosphorusCanister
-          amount: 6
+        - id: PhosphorusReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CratePotassiumCanister
+  id: CratePotassiumReagentCanister
   name: potassium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: PotassiumCanister
-          amount: 6
+        - id: PotassiumReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateRadiumCanister
+  id: CrateRadiumReagentCanister
   name: radium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: RadiumCanister
-          amount: 6
+        - id: RadiumReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateSiliconCanister
+  id: CrateSiliconReagentCanister
   name: silicon chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SiliconCanister
-          amount: 6
+        - id: SiliconReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateSodiumCanister
+  id: CrateSodiumReagentCanister
   name: sodium chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SodiumCanister
-          amount: 6
+        - id: SodiumReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateSilverCanister
+  id: CrateSilverReagentCanister
   name: silver chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SilverCanister
-          amount: 6
+        - id: SilverReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateSulfurCanister
+  id: CrateSulfurReagentCanister
   name: sulfur chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SulfurCanister
-          amount: 6
+        - id: SulfurReagentCanister
+        - amount: 6
 
 - type: entity
-  id: CrateSulfuricAcidCanister
+  id: CrateSulfuricAcidReagentCanister
   name: sulfuric acid chemical crate
   parent: CrateGenericSteel
   components:
     - type: StorageFill
       contents:
-        - id: SulfuricAcidCanister
-          amount: 6
+        - id: SulfuricAcidReagentCanister
+        - amount: 6

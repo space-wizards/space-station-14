@@ -54,7 +54,7 @@
 
 # Bags of basic materials
 - type: entity
-  id: AluminiumCanister
+  id: AluminiumReagentCanister
   parent: ReagentCanisterBase
   name: "canister of aluminium powder"
   description: "A canister of finely powdered aluminium."
@@ -68,7 +68,7 @@
               Quantity: 150
 
 - type: entity
-  id: CarbonCanister
+  id: CarbonReagentCanister
   parent: ReagentCanisterBase
   name: "canister of carbon powder"
   description: "A canister of carbon powder gathered from incinerated biomass."
@@ -82,7 +82,7 @@
               Quantity: 150
 
 - type: entity
-  id: CopperCanister
+  id: CopperReagentCanister
   parent: ReagentCanisterBase
   name: "canister of copper powder"
   description: "A canister of copper powder."
@@ -96,7 +96,7 @@
               Quantity: 150
 
 - type: entity
-  id: EthanolCanister
+  id: EthanolReagentCanister
   parent: ReagentCanisterBase
   name: "canister of liquid ethanol"
   description: "A canister of liquid ethanol. It's recommended to mix this with something else before drinking it."
@@ -110,7 +110,7 @@
               Quantity: 150
 
 - type: entity
-  id: FluorineCanister
+  id: FluorineReagentCanister
   parent: ReagentCanisterBase
   name: "canister of fluorine gas"
   description: "A canister of fluorine gas."
@@ -124,7 +124,7 @@
               Quantity: 150
 
 - type: entity
-  id: HydrogenCanister
+  id: HydrogenReagentCanister
   parent: ReagentCanisterBase
   name: "canister of hydrogen gas"
   description: "A canister of hydrogen."
@@ -138,7 +138,7 @@
               Quantity: 150
 
 - type: entity
-  id: GoldCanister
+  id: GoldReagentCanister
   parent: ReagentCanisterBase
   name: "canister of gold powder"
   description: "A canister of sparkling gold powder."
@@ -152,7 +152,7 @@
               Quantity: 150
 
 - type: entity
-  id: IodineCanister
+  id: IodineReagentCanister
   parent: ReagentCanisterBase
   name: "canister of iodine powder"
   description: "A canister of iodine powder."
@@ -166,7 +166,7 @@
               Quantity: 150
 
 - type: entity
-  id: IronCanister
+  id: IronReagentCanister
   parent: ReagentCanisterBase
   name: "canister of iron powder"
   description: "A canister of iron powder."
@@ -180,7 +180,7 @@
               Quantity: 150
 
 - type: entity
-  id: LithiumCanister
+  id: LithiumReagentCanister
   parent: ReagentCanisterBase
   name: "canister of lithium powder"
   description: "A canister of highly toxic lithium powder."
@@ -194,7 +194,7 @@
               Quantity: 150
 
 - type: entity
-  id: MercuryCanister
+  id: MercuryReagentCanister
   parent: ReagentCanisterBase
   name: "canister of liquid mercury"
   description: "A canister of liquid mercury. It's very heavy."
@@ -208,7 +208,7 @@
               Quantity: 150
 
 - type: entity
-  id: NitrogenCanister
+  id: NitrogenReagentCanister
   parent: ReagentCanisterBase
   name: "canister of nitrogen gas"
   description: "A canister of nitrogen gas."
@@ -222,7 +222,7 @@
               Quantity: 150
 
 - type: entity
-  id: OilCanister
+  id: OilReagentCanister
   parent: ReagentCanisterBase
   name: "canister of oil"
   description: "A canister of oil. Not for cooking."
@@ -236,7 +236,7 @@
               Quantity: 150
 
 - type: entity
-  id: OxygenCanister
+  id: OxygenReagentCanister
   parent: ReagentCanisterBase
   name: "canister of oxygen gas"
   description: "A canister of oxygen gas."
@@ -250,7 +250,7 @@
               Quantity: 150
 
 - type: entity
-  id: PhosphorusCanister
+  id: PhosphorusReagentCanister
   parent: ReagentCanisterBase
   name: "canister of phosphorus powder"
   description: "A canister of highly reactive phosphorus powder."
@@ -264,7 +264,7 @@
               Quantity: 150
 
 - type: entity
-  id: PotassiumCanister
+  id: PotassiumReagentCanister
   parent: ReagentCanisterBase
   name: "canister of potassium metal"
   description: "A canister of highly reactive potassium metal."
@@ -278,7 +278,7 @@
               Quantity: 150
 
 - type: entity
-  id: RadiumCanister
+  id: RadiumReagentCanister
   parent: ReagentCanisterBase
   name: "canister of radium gas"
   description: "A canister of radium gas. It's probably best to keep it out of your lungs."
@@ -292,7 +292,7 @@
               Quantity: 150
 
 - type: entity
-  id: SiliconCanister
+  id: SiliconReagentCanister
   parent: ReagentCanisterBase
   name: "canister of silicon powder"
   description: "A canister of silicon powder."
@@ -306,7 +306,7 @@
               Quantity: 150
 
 - type: entity
-  id: SodiumCanister
+  id: SodiumReagentCanister
   parent: ReagentCanisterBase
   name: "canister of sodium metal"
   description: "A canister of highly reactive sodium metal. While it sounds similar, this definitely isn't table salt."
@@ -321,7 +321,7 @@
 
 
 - type: entity
-  id: SilverCanister
+  id: SilverReagentCanister
   parent: ReagentCanisterBase
   name: "canister of silver powder"
   description: "A canister of anti-microbial silver powder."
@@ -335,7 +335,7 @@
               Quantity: 150
 
 - type: entity
-  id: SulfurCanister
+  id: SulfurReagentCanister
   parent: ReagentCanisterBase
   name: "canister of sulfur powder"
   description: "A canister of vibrant-looking sulfur powder."
@@ -349,7 +349,7 @@
               Quantity: 150
 
 - type: entity
-  id: SulfuricAcidCanister
+  id: SulfuricAcidReagentCanister
   parent: ReagentCanisterBase
   name: "canister of sulfuric acid"
   description: "A corrosion-resistant canister of sulfuric acid."

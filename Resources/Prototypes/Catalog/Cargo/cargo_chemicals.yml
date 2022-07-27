@@ -3,7 +3,7 @@
   id: ChemicalAssortedCanisters
   description: "A crate of various chemical canisters."
   icon:
-    entity: CarbonCanister
+    entity: CarbonReagentCanister
   product: CrateAssortedChems
   cost: 2000
   category: Chemicals
@@ -14,8 +14,8 @@
   id: ChemicalAluminiumCanister
   description: "A crate of 6 aluminium chemical canisters."
   icon:
-    entity: AluminiumCanister
-  product: CrateAluminiumCanister
+    entity: AluminiumReagentCanister
+  product: CrateAluminiumReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -25,8 +25,8 @@
   id: ChemicalCarbonCanister
   description: "A crate of 6 carbon chemical canisters."
   icon:
-    entity: CarbonCanister
-  product: CrateCarbonCanister
+    entity: CarbonReagentCanister
+  product: CrateCarbonReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -36,8 +36,8 @@
   id: ChemicalCopperCanister
   description: "A crate of 6 copper chemical canisters."
   icon:
-    entity: CopperCanister
-  product: CrateCopperCanister
+    entity: CopperReagentCanister
+  product: CrateCopperReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -47,8 +47,8 @@
   id: ChemicalEthanolCanister
   description: "A crate of 6 ethanol chemical canisters."
   icon:
-    entity: EthanolCanister
-  product: CrateEthanolCanister
+    entity: EthanolReagentCanister
+  product: CrateEthanolReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -58,8 +58,8 @@
   id: ChemicalFluorineCanister
   description: "A crate of 6 fluorine chemical canisters."
   icon:
-    entity: FluorineCanister
-  product: CrateFluorineCanister
+    entity: FluorineReagentCanister
+  product: CrateFluorineReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -69,8 +69,8 @@
   id: ChemicalHydrogenCanister
   description: "A crate of 6 hydrogen chemical canisters."
   icon:
-    entity: HydrogenCanister
-  product: CrateHydrogenCanister
+    entity: HydrogenReagentCanister
+  product: CrateHydrogenReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -80,8 +80,8 @@
   id: ChemicalGoldCanister
   description: "A crate of 6 gold chemical canisters."
   icon:
-    entity: GoldCanister
-  product: CrateGoldCanister
+    entity: GoldReagentCanister
+  product: CrateGoldReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -91,8 +91,8 @@
   id: ChemicalIodineCanister
   description: "A crate of 6 iodine chemical canisters."
   icon:
-    entity: IodineCanister
-  product: CrateIodineCanister
+    entity: IodineReagentCanister
+  product: CrateIodineReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -102,8 +102,8 @@
   id: ChemicalIronCanister
   description: "A crate of 6 iron chemical canisters."
   icon:
-    entity: IronCanister
-  product: CrateIronCanister
+    entity: IronReagentCanister
+  product: CrateIronReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -113,8 +113,8 @@
   id: ChemicalLithiumCanister
   description: "A crate of 6 lithium chemical canisters."
   icon:
-    entity: LithiumCanister
-  product: CrateLithiumCanister
+    entity: LithiumReagentCanister
+  product: CrateLithiumReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -124,8 +124,8 @@
   id: ChemicalMercuryCanister
   description: "A crate of 6 mercury chemical canisters."
   icon:
-    entity: MercuryCanister
-  product: CrateMercuryCanister
+    entity: MercuryReagentCanister
+  product: CrateMercuryReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -135,8 +135,8 @@
   id: ChemicalNitrogenCanister
   description: "A crate of 6 nitrogen chemical canisters."
   icon:
-    entity: NitrogenCanister
-  product: CrateNitrogenCanister
+    entity: NitrogenReagentCanister
+  product: CrateNitrogenReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -146,8 +146,8 @@
   id: ChemicalOilCanister
   description: "A crate of 6 oil chemical canisters."
   icon:
-    entity: OilCanister
-  product: CrateOilCanister
+    entity: OilReagentCanister
+  product: CrateOilReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -157,8 +157,8 @@
   id: ChemicalOxygenCanister
   description: "A crate of 6 oxygen chemical canisters."
   icon:
-    entity: OxygenCanister
-  product: CrateOxygenCanister
+    entity: OxygenReagentCanister
+  product: CrateOxygenReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -168,8 +168,8 @@
   id: ChemicalPhosphorusCanister
   description: "A crate of 6 phosphorus chemical canisters."
   icon:
-    entity: PhosphorusCanister
-  product: CratePhosphorusCanister
+    entity: PhosphorusReagentCanister
+  product: CratePhosphorusReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -179,8 +179,8 @@
   id: ChemicalPotassiumCanister
   description: "A crate of 6 potassium chemical canisters."
   icon:
-    entity: PotassiumCanister
-  product: CratePotassiumCanister
+    entity: PotassiumReagentCanister
+  product: CratePotassiumReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -190,8 +190,8 @@
   id: ChemicalRadiumCanister
   description: "A crate of 6 radium chemical canisters."
   icon:
-    entity: RadiumCanister
-  product: CrateRadiumCanister
+    entity: RadiumReagentCanister
+  product: CrateRadiumReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -201,8 +201,8 @@
   id: ChemicalSiliconCanister
   description: "A crate of 6 silicon chemical canisters."
   icon:
-    entity: SiliconCanister
-  product: CrateSiliconCanister
+    entity: SiliconReagentCanister
+  product: CrateSiliconReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -212,8 +212,8 @@
   id: ChemicalSodiumCanister
   description: "A crate of 6 sodium chemical canisters."
   icon:
-    entity: SodiumCanister
-  product: CrateSodiumCanister
+    entity: SodiumReagentCanister
+  product: CrateSodiumReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -223,8 +223,8 @@
   id: ChemicalSilverCanister
   description: "A crate of 6 silver chemical canisters."
   icon:
-    entity: SilverCanister
-  product: CrateSilverCanister
+    entity: SilverReagentCanister
+  product: CrateSilverReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -234,8 +234,8 @@
   id: ChemicalSilverCanister
   description: "A crate of 6 sulfur chemical canisters."
   icon:
-    entity: SilverCanister
-  product: CrateSilverCanister
+    entity: SilverReagentCanister
+  product: CrateSilverReagentCanister
   cost: 800
   category: Chemicals
   group: canisters
@@ -245,8 +245,8 @@
   id: ChemicalSulfuricAcidCanister
   description: "A crate of 6 sulfuric acid chemical canisters."
   icon:
-    entity: SulfuricAcidCanister
-  product: CrateSulfuricAcidCanister
+    entity: SulfuricAcidReagentCanister
+  product: CrateSulfuricAcidReagentCanister
   cost: 1000
   category: Chemicals
   group: canisters
