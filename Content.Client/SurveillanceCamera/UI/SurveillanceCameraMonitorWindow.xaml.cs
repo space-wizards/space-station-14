@@ -27,6 +27,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     public event Action? CameraDisconnect;
 
     private string _currentAddress = string.Empty;
+    private bool _isSwitching;
     private readonly FixedEye _defaultEye = new();
     private readonly Dictionary<string, int> _subnetMap = new();
 
@@ -137,8 +138,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
     {
         var eyeChanged = eye != CameraView.Eye || CameraView.Eye == null;
         CameraView.Eye = eye ?? _defaultEye;
-        CameraView.Visible = !eyeChanged;
-        CameraViewBackground.Visible = eyeChanged;
+        CameraView.Visible = !eyeChanged && !_isSwitching;
+        CameraViewBackground.Visible = eyeChanged && isSwitching;
         CameraDisconnectButton.Disabled = eye == null;
 
         if (eye != null)
@@ -148,6 +149,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
                 return;
             }
 
+            _isSwitching = true;
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
                 ("status", Loc.GetString("surveillance-camera-monitor-ui-status-connecting")),
                 ("address", _currentAddress));
@@ -161,6 +163,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     public void OnSwitchTimerComplete()
     {
+        _isSwitching = false;
         CameraView.Visible = true;
         CameraViewBackground.Visible = false;
         CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",
