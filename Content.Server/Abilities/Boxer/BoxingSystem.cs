@@ -45,7 +45,7 @@ namespace Content.Server.Abilities.Boxer
         {
             _containerSystem.TryGetContainingContainer(uid, out var equipee);
             if (TryComp<BoxerComponent>(equipee?.Owner, out var boxer))
-                args.Multipliers.Add(boxer.BoxingGlovesModifier);
+                args.Multiplier *= boxer.BoxingGlovesModifier;
         }
     }
 }

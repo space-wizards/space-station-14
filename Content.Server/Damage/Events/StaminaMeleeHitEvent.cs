@@ -14,14 +14,14 @@ public sealed class StaminaMeleeHitEvent : HandledEntityEventArgs
     public ValueList<StaminaComponent> HitList;
 
     /// <summmary>
-    /// Add multiplicative stamina damage multipliers here.
+    /// The multiplier. Generally, try to use *= or /= instead of overwriting.
     /// </summary>
-    public List<float> Multipliers = new();
+    public float Multiplier = 1;
 
     /// <summary>
-    /// Add flat stamina damage modifiers here.
+    /// The flat modifier. Generally, try to use += or -= instead of overwriting.
     /// </summary>
-    public List<float> FlatModifiers = new();
+    public float FlatModifier = 0;
 
     public StaminaMeleeHitEvent(ValueList<StaminaComponent> hitList)
     {

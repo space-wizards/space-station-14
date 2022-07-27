@@ -81,15 +81,9 @@ public sealed class StaminaSystem : EntitySystem
 
         var damage = component.Damage;
 
-        foreach (var multiplier in hitEvent.Multipliers)
-        {
-            damage *= multiplier;
-        }
+        damage *= hitEvent.Multiplier;
 
-        foreach (var flatMod in hitEvent.FlatModifiers)
-        {
-            damage += flatMod;
-        }
+        damage += hitEvent.FlatModifier;
 
         foreach (var comp in toHit)
         {
