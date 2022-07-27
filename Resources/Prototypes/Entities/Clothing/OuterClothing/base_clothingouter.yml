@@ -14,9 +14,10 @@
   parent: ClothingOuterBase
   id: ClothingOuterBaseLarge
   components:
+  - type: Item
+    size: 80
   - type: Clothing
-    Size: 80
-    Slots:
+    slots:
     - outerClothing
   - type: ClothingSpeedModifier
     walkModifier: 0.9
