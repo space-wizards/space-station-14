@@ -168,7 +168,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 8;
+        public const int TotalNumberOfGases = 9;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
