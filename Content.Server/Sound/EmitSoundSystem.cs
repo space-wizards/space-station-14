@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Content.Server.Popups;
 
 namespace Content.Server.Sound
 {
@@ -24,6 +25,7 @@ namespace Content.Server.Sound
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         /// <inheritdoc />
 
@@ -41,6 +43,8 @@ namespace Content.Server.Sound
 
                 if (_random.Prob(soundSpammer.PlayChance))
                 {
+                    if (soundSpammer.PopUp != null)
+                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner, Filter.Pvs(soundSpammer.Owner));
                     TryEmitSound(soundSpammer);
                 }
             }

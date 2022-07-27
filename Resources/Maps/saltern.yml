@@ -1111,15 +1111,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 123
-  type: DrinkTeacup
+  type: RandomDrinkGlass
   components:
-  - pos: -2.553536,-1.3362706
+  - pos: -3.5,-4.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 124
   type: AirlockMedicalGlassLocked
   components:
@@ -4128,15 +4124,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 425
-  type: DrinkFlask
+  type: WallmountTelescreen
   components:
-  - pos: 10.669014,23.580288
+  - pos: -9.5,22.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 426
   type: RandomSpawner
   components:
@@ -6301,8 +6297,7 @@ entities:
 - uid: 737
   type: SpawnPointChiefMedicalOfficer
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,-14.5
+  - pos: 23.5,-14.5
     parent: 852
     type: Transform
 - uid: 738
@@ -13611,8 +13606,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -14299,6 +14294,14 @@ entities:
           color: '#FFFFFFFF'
           id: Arrows
           coordinates: 20,17
+        626:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 30,8
+        627:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 30,9
       -1,0:
         9:
           color: '#334E6DC8'
@@ -17716,6 +17719,8 @@ entities:
 - uid: 1052
   type: HighSecCommandLocked
   components:
+  - name: Vault
+    type: MetaData
   - pos: 0.5,17.5
     parent: 852
     type: Transform
@@ -18541,15 +18546,11 @@ entities:
     parent: 852
     type: Transform
 - uid: 1158
-  type: DrinkHotCoffee
+  type: RandomFoodSingle
   components:
-  - pos: -3.3885732,8.831585
+  - pos: -2.5,-1.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1159
   type: CableApcExtension
   components:
@@ -19696,33 +19697,19 @@ entities:
       Toggle: []
     type: SignalReceiver
 - uid: 1289
-  type: Poweredlight
+  type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,8.5
+  - rot: -1.5707963267948966 rad
+    pos: 32.5,8.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1290
-  type: Poweredlight
+  type: GasPipeTJunction
   components:
   - rot: 3.141592653589793 rad
-    pos: 30.5,8.5
+    pos: 31.5,8.5
     parent: 852
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 1291
   type: WallSolid
   components:
@@ -39499,7 +39486,6 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 4203
         - 4213
     type: ContainerContainer
 - uid: 4037
@@ -40344,15 +40330,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4145
-  type: DrinkGoldschlagerBottleFull
+  type: RandomFoodMeal
   components:
-  - pos: -3.522485,18.33099
+  - pos: -10.5,1.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 4146
   type: AirlockMedicalLocked
   components:
@@ -40808,14 +40790,15 @@ entities:
     parent: 852
     type: Transform
 - uid: 4203
-  type: DrinkShinyFlask
+  type: WallmountTelescreen
   components:
-  - parent: 4036
+  - pos: -0.5,9.5
+    parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4204
   type: Chair
   components:
@@ -41472,15 +41455,14 @@ entities:
     parent: 852
     type: Transform
 - uid: 4293
-  type: DrinkMugMoebius
+  type: WeaponCapacitorRecharger
   components:
-  - pos: 24.469133,13.720518
+  - pos: -2.5,7.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      charger-slot: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 4294
   type: ClothingHeadHelmetRiot
   components:
@@ -44229,6 +44211,12 @@ entities:
     pos: -9.5,22.5
     parent: 852
     type: Transform
+- uid: 4699
+  type: AirlockMedicalGlassLocked
+  components:
+  - pos: 8.5,-10.5
+    parent: 852
+    type: Transform
 - uid: 4700
   type: Carpet
   components:
@@ -44281,6 +44269,12 @@ entities:
   - containers:
       cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 4706
+  type: AirlockMedicalGlassLocked
+  components:
+  - pos: 8.5,-8.5
+    parent: 852
+    type: Transform
 - uid: 4707
   type: SurveillanceCameraCommand
   components:
@@ -44293,6 +44287,13 @@ entities:
     nameSet: True
     id: Bridge West
     type: SurveillanceCamera
+- uid: 4708
+  type: GasPipeTJunction
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,8.5
+    parent: 852
+    type: Transform
 - uid: 4709
   type: PoweredSmallLight
   components:
@@ -44486,9 +44487,9 @@ entities:
     parent: 852
     type: Transform
 - uid: 4735
-  type: AirlockMedicalLocked
+  type: GasPipeBend
   components:
-  - pos: 8.5,-8.5
+  - pos: 31.5,9.5
     parent: 852
     type: Transform
 - uid: 4736
@@ -47460,9 +47461,10 @@ entities:
     parent: 852
     type: Transform
 - uid: 5140
-  type: AirlockMedicalLocked
+  type: GasPort
   components:
-  - pos: 8.5,-10.5
+  - rot: 1.5707963267948966 rad
+    pos: 30.5,8.5
     parent: 852
     type: Transform
 - uid: 5141
@@ -56101,17 +56103,15 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 6180
-  type: GasPipeStraight
+  type: AltarToolbox
   components:
-  - pos: 33.5,8.5
+  - pos: -36.5,13.5
     parent: 852
     type: Transform
-  - color: '#FF1212FF'
-    type: AtmosPipeColor
 - uid: 6181
-  type: NitrogenCanister
+  type: OperatingTable
   components:
-  - pos: 30.5,9.5
+  - pos: 18.5,-20.5
     parent: 852
     type: Transform
 - uid: 6182
@@ -58965,11 +58965,13 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6587
-  type: NitrogenCanister
+  type: HospitalCurtainsOpen
   components:
-  - pos: 30.5,8.5
+  - pos: 8.5,-8.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6588
   type: CableMV
   components:
@@ -59669,15 +59671,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6694
-  type: DrinkWineGlass
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 3.7816217,-30.082186
+  - anchored: True
+    pos: -44.5,0.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6695
   type: Lamp
   components:
@@ -62081,8 +62080,8 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 9055
         - 4585
+        - 9055
     type: ContainerContainer
 - uid: 7058
   type: ClosetMaintenanceFilledRandom
@@ -62489,6 +62488,35 @@ entities:
         - 7098
         - 7108
     type: ContainerContainer
+- uid: 7111
+  type: HospitalCurtainsOpen
+  components:
+  - pos: 8.5,-10.5
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 7112
+  type: GasPort
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 30.5,9.5
+    parent: 852
+    type: Transform
+- uid: 7113
+  type: PortableScrubber
+  components:
+  - pos: 30.5,8.5
+    parent: 852
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7114
   type: Table
   components:
@@ -62663,15 +62691,12 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 7138
-  type: DrinkDoctorsDelightGlass
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 22.430195,-13.166515
+  - anchored: True
+    pos: -44.5,2.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7139
   type: CrateFilledSpawner
   components:
@@ -64167,15 +64192,12 @@ entities:
     parent: 852
     type: Transform
 - uid: 7346
-  type: DrinkBottleOfNothingFull
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -17.293661,-9.346272
+  - anchored: True
+    pos: -44.5,8.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7347
   type: FoodBanana
   components:
@@ -65903,35 +65925,19 @@ entities:
     parent: 852
     type: Transform
 - uid: 7566
-  type: DrinkVodkaBottleFull
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -15.680162,-10.396274
+  - anchored: True
+    pos: -44.5,10.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7567
-  type: DrinkVodkaBottleFull
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -15.508287,-10.396274
+  - anchored: True
+    pos: 21.5,22.5
     parent: 852
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 7568
-  type: DrinkVodkaBottleFull
-  components:
-  - pos: -15.320787,-10.396274
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7569
   type: ClothingHeadHatUshanka
   components:
@@ -66847,12 +66853,19 @@ entities:
     parent: 852
     type: Transform
 - uid: 7706
-  type: ChairWood
+  type: PortableScrubber
   components:
-  - rot: 3.141592653589793 rad
-    pos: -36.5,13.5
+  - pos: 30.5,9.5
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7707
   type: ChairWood
   components:
@@ -67189,17 +67202,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-- uid: 7748
-  type: WallWeaponCapacitorRecharger
-  components:
-  - pos: -0.5,9.5
-    parent: 852
-    type: Transform
-  - fixtures: []
-    type: Fixtures
-  - containers:
-      charger-slot: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 7749
   type: ReinforcedWindow
   components:
@@ -68513,26 +68515,6 @@ entities:
   - pos: 20.5,22.5
     parent: 852
     type: Transform
-- uid: 7946
-  type: DrinkWhiskeyBottleFull
-  components:
-  - pos: -23.917706,-23.088701
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
-- uid: 7947
-  type: DrinkShotGlass
-  components:
-  - pos: -23.448956,-23.260576
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 7948
   type: ClosetMaintenanceFilledRandom
   components:
@@ -70259,16 +70241,6 @@ entities:
   - pos: 43.5,-23.5
     parent: 852
     type: Transform
-- uid: 8203
-  type: DrinkShotGlass
-  components:
-  - pos: -23.261456,-23.119951
-    parent: 852
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 8204
   type: Bucket
   components:
@@ -71443,8 +71415,8 @@ entities:
     type: Transform
   - index: 1
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71480,8 +71452,8 @@ entities:
     type: Transform
   - index: 2
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71540,8 +71512,8 @@ entities:
     type: Transform
   - index: 3
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -71559,8 +71531,8 @@ entities:
     type: Transform
   - index: 4
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -76658,11 +76630,13 @@ entities:
     parent: 852
     type: Transform
 - uid: 9093
-  type: StasisBed
+  type: BrbSign
   components:
-  - pos: 18.5,-20.5
+  - pos: 8.736744,18.337376
     parent: 852
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 9094
   type: Poweredlight
   components:

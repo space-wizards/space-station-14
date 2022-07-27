@@ -54,7 +54,7 @@ namespace Content.Server.Storage.EntitySystems
         /// </summary>
         /// <returns>True if item was hidden inside stash</returns>
         public bool TryHideItem(EntityUid uid, EntityUid userUid, EntityUid itemToHideUid,
-            SecretStashComponent? component = null, SharedItemComponent? item = null,
+            SecretStashComponent? component = null, ItemComponent? item = null,
             MetaDataComponent? itemMeta = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref component))

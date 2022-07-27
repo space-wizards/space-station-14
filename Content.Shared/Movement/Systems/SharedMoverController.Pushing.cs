@@ -22,18 +22,18 @@ public abstract partial class SharedMoverController
 
         if (_pushingEnabled)
         {
-            _physics.KinematicControllerCollision += OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision += OnMobCollision;
         }
         else
         {
-            _physics.KinematicControllerCollision -= OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision -= OnMobCollision;
         }
     }
 
     private void ShutdownPushing()
     {
         if (_pushingEnabled)
-            _physics.KinematicControllerCollision -= OnMobCollision;
+            PhysicsSystem.KinematicControllerCollision -= OnMobCollision;
 
         _configManager.UnsubValueChanged(CCVars.MobPushing, SetPushing);
     }

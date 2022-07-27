@@ -34,7 +34,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
             foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ClothingComponent? clothing) &&
-                    (clothing.SlotFlags & SlotFlags.HEAD) != 0)
+                    (clothing.Slots & SlotFlags.HEAD) != 0)
                 {
                     yield return new EquipHead {Owner = owner, Target = entity, Bonus = Bonus};
                 }
