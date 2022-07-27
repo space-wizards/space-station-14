@@ -16,17 +16,55 @@
 #        - B
 #  - name:
 
-- type: htnCompoundTask
-  id: IdleCompoundTask
-  description: Picks a random location for the NPC to move to and idle.
-  graph:
-  # Node class
-  # Refer to this node from other nodes
-  - id: PickNearbyCoordinates
-    # The underlying task to run
-    task: !type:PickNearbyCoordinates
-    # Edges on the graph
-    edges:
-    - MoveToTarget
-  - id: MoveToTarget
-    task: !type:MoveTo
+- type: htnCompound
+  id: IdleCompound
+  desc: Picks a random location for the NPC to move to and idle.
+  branches:
+  # Continue waiting
+  - tasks:
+    - id: IdlePrimitive
+  # Pick a new spot and wait there.
+  - tasks:
+    - id: PickAccessiblePrimitive
+    - id: MoveToPrimitive
+    - id: IdleRandomPrimitive
+    - id: IdlePrimitive
+
+
+- type: htnPrimitive
+  id: PickAccessiblePrimitive
+  desc: Picks a nearby accessible location
+  operator: !type:PickAccessibleOperator
+    range: IdleRange
+    resultKey: MovementTarget
+
+- type: htnPrimitive
+  id: MoveToPrimitive
+  desc: Moves the NPC towards the MovementTarget blackboard key then clears the key.
+  # These are what need to be true for this primitive task to be able to run.
+  preconditions:
+    - keyExists: MovementTarget
+  # This is what code actually gets run when the primitive runs.
+  # You can re-use the same operator across multiple primitive tasks.
+  operator: !type:MoveToOperator
+    target: MovementTarget
+  # This code gets run whenever the MoveToOperator exits. By clearing the key we ensure it won't be re-used later.
+  onExit:
+    clearKey: MovementTarget
+
+- type: htnPrimitive
+  id: IdleRandomPrimitive
+  desc: Picks a random time range and inserts it into the IdleTime key.
+  operator: !type:RandomOperator
+    targetKey: IdleTime
+    minKey: MinimumIdleTime
+    maxKey: MaximumIdleTime
+
+- type: htnPrimitive
+  id: IdlePrimitive
+  preconditions:
+    - keyExists: IdleTime
+  operator: !type:WaitOperator
+    targetKey: IdleTime
+  onExit:
+    clearKey: IdleTime

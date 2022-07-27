@@ -8,8 +8,11 @@ public sealed partial class NPCSystem
 {
     private HTNPlan GetPlan(HTNComponent component)
     {
-        DebugTools.Assert(component.Plan == null);
+        return GetPlan(component.RootTask, component.BlackboardA.ShallowClone());
+    }
 
+    private HTNPlan GetPlan(HTNCompoundTask rootTask, Dictionary<string, object> blackboard)
+    {
         /*
          * Really the best reference for what a HTN looks like is http://www.gameaipro.com/GameAIPro/GameAIPro_Chapter12_Exploring_HTN_Planners_through_Example.pdf
          * It's kinda like a behaviour tree but also can consider multiple actions in sequence.
@@ -22,10 +25,12 @@ public sealed partial class NPCSystem
         // method traversal record. Whenever we find a new compound task this updates.
         var mtrIndex = 0;
 
-        var currentBlackboard = component.BlackboardA.ShallowClone();
+        // TODO: Need to store method traversal record
+        // This is so we can know if a new plan is better than an old plan.
+
         var tasksToProcess = new Stack<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
-        tasksToProcess.Push(component.RootTask);
+        tasksToProcess.Push(rootTask);
 
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
@@ -35,7 +40,7 @@ public sealed partial class NPCSystem
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
-                    if (TryFindSatisfiedMethod(compound, tasksToProcess, currentBlackboard, ref mtrIndex))
+                    if (TryFindSatisfiedMethod(compound, tasksToProcess, blackboard, ref mtrIndex))
                     {
                         // Need to copy worldstate to roll it back
                         // Don't need to copy taskstoprocess as we can just clear it and set it to the compound task we roll back to.
@@ -43,7 +48,7 @@ public sealed partial class NPCSystem
 
                         decompHistory.Push(new DecompositionState()
                         {
-                            Blackboard = currentBlackboard.ShallowClone(),
+                            Blackboard = blackboard.ShallowClone(),
                             CompoundTask = compound,
                             MethodTraversal = mtrIndex,
                             PrimitiveCount = primitiveCount,
@@ -55,12 +60,12 @@ public sealed partial class NPCSystem
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref currentBlackboard,
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref blackboard,
                             ref mtrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (PrimitiveConditionMet(primitive, currentBlackboard))
+                    if (PrimitiveConditionMet(primitive, blackboard))
                     {
                         primitiveCount++;
                         // TODO: If conditions met
@@ -69,7 +74,7 @@ public sealed partial class NPCSystem
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref currentBlackboard, ref mtrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref blackboard, ref mtrIndex);
                     }
 
                     break;
