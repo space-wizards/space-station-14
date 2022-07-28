@@ -56,7 +56,7 @@ public sealed class SpillableSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        var isCorrectSlot = clothing.SlotFlags.HasFlag(args.SlotFlags);
+        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
 
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))

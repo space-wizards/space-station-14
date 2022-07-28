@@ -7,6 +7,7 @@ using Content.Server.Clothing.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Smoking;
@@ -24,6 +25,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
+
         private const float UpdateTimer = 3f;
 
         private float _timer = 0f;
@@ -50,12 +53,14 @@ namespace Content.Server.Nutrition.EntitySystems
             smokable.State = state;
             appearance.SetData(SmokingVisuals.Smoking, state);
 
-            clothing.EquippedPrefix = state switch
+            var newState = state switch
             {
                 SmokableState.Lit => smokable.LitPrefix,
                 SmokableState.Burnt => smokable.BurntPrefix,
                 _ => smokable.UnlitPrefix
             };
+
+            _clothing.SetEquippedPrefix(uid, newState, clothing);
 
             if (state == SmokableState.Lit)
                 _active.Add(uid);

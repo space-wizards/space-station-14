@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests
   id: InventoryJumpsuitJanitorDummy
   components:
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
 
 - type: entity
   name: InventoryIDCardDummy
@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Clothing
     QuickEquip: false
-    Slots:
+    slots:
     - idcard
   - type: PDA
 ";
