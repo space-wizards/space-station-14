@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
-      is also set to 5 minutes., type: Tweak}
-  id: 1536
-  time: '2022-05-16T03:33:14.0000000+00:00'
 - author: themias
   changes:
   - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
@@ -2943,3 +2937,9 @@ Entries:
   - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
   id: 2035
   time: '2022-07-27T23:32:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug preventing the Identity system from working for most players.,
+    type: Fix}
+  id: 2036
+  time: '2022-07-28T23:21:48.0000000+00:00'
