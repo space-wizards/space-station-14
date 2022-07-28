@@ -321,6 +321,7 @@
   itemId: BibleNecronomicon
   description: An unholy book capable of summoning a demonic familiar.
   price: 6
+  surplus: false
   jobWhitelist:
   - Chaplain
 

@@ -9100,73 +9100,73 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 0,-2
-        686:
+        683:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 3,-4
-        687:
+        684:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 3,-5
-        688:
+        685:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 3,-7
-        689:
+        686:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 4,-7
-        690:
+        687:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 6,-7
-        691:
+        688:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 3,-6
-        692:
+        689:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 5,-4
-        693:
+        690:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 6,-4
-        694:
+        691:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 6,-5
-        695:
+        692:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 2,-30
-        697:
+        694:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 2,-32
-        698:
+        695:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 2,-31
-        699:
+        696:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 3,-30
-        701:
+        698:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 3,-32
-        702:
+        699:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 3,-31
-        704:
+        701:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Delivery
@@ -9453,50 +9453,26 @@ entities:
           color: '#FED83DFF'
           id: WarnCornerFlipped
           coordinates: 13,-42
-        696:
+        693:
           angle: 4.71238898038469 rad
           color: '#FFFFFFFF'
           id: WarnCornerFlipped
           coordinates: 2,-33
-        700:
+        697:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: WarnCorner
           coordinates: 3,-33
-        703:
+        700:
           angle: 1.5707963267948966 rad
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 2,-33
-        705:
-          color: '#5A5A5AFF'
-          id: HalfTileOverlayGreyscale90
-          coordinates: 13,-36
-        707:
-          color: '#5A5A5AFF'
-          id: FullTileOverlayGreyscale
-          coordinates: 13,-37
-        708:
-          color: '#5A5A5AFF'
-          id: FullTileOverlayGreyscale
-          coordinates: 13,-34
         709:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
-          coordinates: 13,-35
-        710:
-          color: '#5A5A5AFF'
-          id: HalfTileOverlayGreyscale90
-          coordinates: 12,-34
-        711:
-          color: '#5A5A5AFF'
-          id: HalfTileOverlayGreyscale90
-          coordinates: 12,-37
-        712:
-          color: '#5A5A5AFF'
-          id: HalfTileOverlayGreyscale90
           coordinates: 12,-35
-        713:
+        710:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
           coordinates: 12,-36
@@ -9681,35 +9657,35 @@ entities:
           color: '#52B4E996'
           id: CheckerNESW
           coordinates: 63,-12
-        716:
+        713:
           color: '#AAAAAAFF'
           id: CheckerNESW
           coordinates: 32,-10
-        719:
+        716:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 57,-2
-        720:
+        717:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 61,-2
-        721:
+        718:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale90
           coordinates: 61,-1
-        722:
+        719:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: 57,-1
-        723:
+        720:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 58,-2
-        724:
+        721:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 59,-2
-        725:
+        722:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale180
           coordinates: 60,-2
@@ -9791,15 +9767,15 @@ entities:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: -2,-6
-        706:
+        703:
           color: '#5A5A5AFF'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-31
-        714:
+        711:
           color: '#FFFFFFFF'
           id: Caution
           coordinates: -7,-13
-        715:
+        712:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -7,-12
@@ -10701,23 +10677,23 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 36,24
-        717:
+        714:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 61,0
-        718:
+        715:
           color: '#52B4E996'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 57,0
-        726:
+        723:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 60,0
-        727:
+        724:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 59,0
-        728:
+        725:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 58,0
@@ -10980,11 +10956,11 @@ entities:
           color: '#FFFFFFFF'
           id: WarningLine
           coordinates: 67,3
-        684:
+        681:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 80,2
-        685:
+        682:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: 81,2
@@ -11573,116 +11549,116 @@ entities:
           id: HalfTileOverlayGreyscale180
           coordinates: 78,-6
       0,1:
-        729:
+        726:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 13,37
-        730:
+        727:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 14,37
-        731:
+        728:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 15,37
-        741:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale90
-          coordinates: 26,40
-        740:
+        729:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,39
-        742:
+        730:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale90
+          coordinates: 26,40
+        731:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,41
-        743:
+        732:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale90
           coordinates: 26,42
-        747:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 28,42
-        746:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 28,41
-        745:
-          color: '#334E6DC8'
-          id: QuarterTileOverlayGreyscale
-          coordinates: 28,40
-        744:
+        733:
           color: '#334E6DC8'
           id: QuarterTileOverlayGreyscale
           coordinates: 28,39
-        748:
+        734:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 28,40
+        735:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 28,41
+        736:
+          color: '#334E6DC8'
+          id: QuarterTileOverlayGreyscale
+          coordinates: 28,42
+        737:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 27,46
-        749:
+        738:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 28,46
-        750:
+        739:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 26,46
-        751:
+        740:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 29,47
-        752:
+        741:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 30,47
-        753:
+        742:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 31,47
-        754:
+        743:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 25,47
-        755:
+        744:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 24,47
-        756:
+        745:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 23,47
-        757:
+        746:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 22,47
-        762:
+        751:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 21,46
-        763:
+        752:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 20,46
-        764:
+        753:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 19,46
       1,1:
-        758:
+        747:
           color: '#334E6DC8'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 32,47
-        759:
+        748:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 33,46
-        760:
+        749:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 34,46
-        761:
+        750:
           color: '#334E6DC8'
           id: HalfTileOverlayGreyscale
           coordinates: 35,46
@@ -12304,9 +12280,9 @@ entities:
     parent: 2
     type: Transform
 - uid: 93
-  type: Chair
+  type: ClosetEmergencyFilledRandom
   components:
-  - pos: -7.5,0.5
+  - pos: 1.5,2.5
     parent: 2
     type: Transform
 - uid: 94
@@ -48326,15 +48302,13 @@ entities:
     parent: 2
     type: Transform
 - uid: 5420
-  type: DrinkFlask
+  type: BrbSign
   components:
-  - pos: 37.654526,43.61892
+  - pos: 18.768038,-3.577662
     parent: 2
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5421
   type: WallReinforced
   components:
@@ -89543,15 +89517,15 @@ entities:
     parent: 2
     type: Transform
 - uid: 10831
-  type: DrinkCoffee
+  type: WallmountTelescreen
   components:
-  - pos: 70.78138,11.553896
+  - pos: 31.5,43.5
     parent: 2
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 10832
   type: FoodCakeChocolateSlice
   components:
@@ -97404,6 +97378,18 @@ entities:
     type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
+- uid: 11862
+  type: SurveillanceCameraSecurity
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 29.5,29.5
+    parent: 2
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSecurity
+    nameSet: True
+    id: Interrogation
+    type: SurveillanceCamera
 - uid: 11863
   type: TraitorDMRedemptionMachineSpawner
   components:
@@ -97411,9 +97397,10 @@ entities:
     parent: 2
     type: Transform
 - uid: 11864
-  type: TraitorDMRedemptionMachineSpawner
+  type: Chair
   components:
-  - pos: 56.5,6.5
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,6.5
     parent: 2
     type: Transform
 - uid: 11865
@@ -98151,6 +98138,13 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -6.5,9.5
+    parent: 2
+    type: Transform
+- uid: 11981
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,5.5
     parent: 2
     type: Transform
 - uid: 11982
@@ -98942,6 +98936,13 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 12084
+  type: Chair
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,8.5
+    parent: 2
+    type: Transform
 - uid: 12085
   type: FirelockGlass
   components:
@@ -99056,15 +99057,12 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 12096
-  type: DrinkGoldschlagerBottleFull
+  type: Chair
   components:
-  - pos: 19.365185,41.182175
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,9.5
     parent: 2
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 12097
   type: DrinkGoldenCup
   components:
@@ -100808,6 +100806,12 @@ entities:
   - pos: 7.5,17.5
     parent: 2
     type: Transform
+- uid: 12293
+  type: PottedPlantRandom
+  components:
+  - pos: -5.5,-9.5
+    parent: 2
+    type: Transform
 - uid: 12294
   type: Pickaxe
   components:
@@ -101390,4 +101394,10 @@ entities:
       board: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 12372
+  type: PottedPlantRandom
+  components:
+  - pos: -5.5,0.5
+    parent: 2
+    type: Transform
 ...

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.AI.Components;
+using Content.Server.AI.EntitySystems;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Shared.Administration;
@@ -35,22 +36,22 @@ namespace Content.Server.AI.Commands
                 return;
             }
 
-            if (_entities.HasComponent<AiControllerComponent>(entId))
+            if (_entities.HasComponent<NPCComponent>(entId))
             {
                 shell.WriteLine("Entity already has an AI component.");
                 return;
             }
 
-            var comp = _entities.AddComponent<UtilityAi>(entId);
-            var behaviorManager = IoCManager.Resolve<INpcBehaviorManager>();
+            var comp = _entities.AddComponent<UtilityNPCComponent>(entId);
+            var npcSystem = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<NPCSystem>();
 
             for (var i = 1; i < args.Length; i++)
             {
                 var bSet = args[i];
-                behaviorManager.AddBehaviorSet(comp, bSet, false);
+                npcSystem.AddBehaviorSet(comp, bSet, false);
             }
 
-            behaviorManager.RebuildActions(comp);
+            npcSystem.RebuildActions(comp);
             shell.WriteLine("AI component added.");
         }
     }

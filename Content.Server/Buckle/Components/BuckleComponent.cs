@@ -18,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Bed.Sleep;
 
 namespace Content.Server.Buckle.Components
 {
@@ -264,6 +265,9 @@ namespace Content.Server.Buckle.Components
                 {
                     return false;
                 }
+
+                if (EntMan.TryGetComponent<SleepingComponent>(Owner, out var sleeping) && Owner == user)
+                    return false;
                 // If the strap is a vehicle and the rider is not the person unbuckling, return.
                 if (EntMan.TryGetComponent<VehicleComponent>(oldBuckledTo.Owner, out var vehicle) &&
                         vehicle.Rider != user)
@@ -356,16 +360,7 @@ namespace Content.Server.Buckle.Components
 
         public override ComponentState GetComponentState()
         {
-            int? drawDepth = null;
-
-            if (BuckledTo != null &&
-                EntMan.GetComponent<TransformComponent>(BuckledTo.Owner).LocalRotation.GetCardinalDir() == Direction.North &&
-                EntMan.TryGetComponent<SpriteComponent>(BuckledTo.Owner, out var spriteComponent))
-            {
-                drawDepth = spriteComponent.DrawDepth - 1;
-            }
-
-            return new BuckleComponentState(Buckled, drawDepth, LastEntityBuckledTo, DontCollide);
+            return new BuckleComponentState(Buckled, LastEntityBuckledTo, DontCollide);
         }
     }
 }

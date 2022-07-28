@@ -26,7 +26,8 @@ namespace Content.IntegrationTests.Tests
   id: UniformDummy
   components:
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
+  - type: Item
     size: 5
 
 - type: entity
@@ -34,8 +35,9 @@ namespace Content.IntegrationTests.Tests
   id: IDCardDummy
   components:
   - type: Clothing
-    Slots:
+    slots:
     - idcard
+  - type: Item
     size: 5
   - type: IdCard
 

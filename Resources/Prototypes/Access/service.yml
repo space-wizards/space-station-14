@@ -1,23 +1,30 @@
 - type: accessLevel
   id: Bar
+  name: Bar
 
 - type: accessLevel
   id: Kitchen
+  name: Kitchen
 
 - type: accessLevel
   id: Hydroponics
+  name: Hydroponics
 
 - type: accessLevel
   id: Service
+  name: Service
 
 - type: accessLevel
   id: Janitor
+  name: Janitor
 
 - type: accessLevel
   id: Theatre
+  name: Theatre
 
 - type: accessLevel
   id: Chapel
+  name: Chapel
 
 - type: accessGroup
   id: Service

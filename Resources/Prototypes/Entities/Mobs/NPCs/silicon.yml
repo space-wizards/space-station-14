@@ -39,7 +39,7 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: AiFactionTag
@@ -99,7 +99,7 @@
   - type: SpamEmitSound
     sound:
       collection: BikeHorn
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: Sprite
@@ -139,7 +139,7 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - CleanBot
   - type: Drain
@@ -156,3 +156,22 @@
         maxVol: 30
   - type: DrainableSolution
     solution: drainBuffer
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: UtilityNPC
+    behaviorSets:
+    - MediBot
+  - type: Medibot
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: Speech
+  - type: Construction
+    graph: MediBot
+    node: bot
