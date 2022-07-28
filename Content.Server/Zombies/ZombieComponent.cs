@@ -50,14 +50,5 @@ namespace Content.Server.Zombies
         /// </summary>
         [ViewVariables, DataField("zombieRoldId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float GroanChance = 0.1f;
-
-        [ViewVariables]
-        public float Accumulator = 0f;
-
-        [ViewVariables]
-        public float LastDamageGroanAccumulator = 0f;
     }
 }

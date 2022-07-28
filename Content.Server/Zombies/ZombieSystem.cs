@@ -9,8 +9,6 @@ using Content.Shared.MobState.Components;
 using Content.Server.Disease;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
-using Content.Server.Popups;
-using Robust.Shared.Player;
 using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
@@ -35,23 +33,22 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<ZombieComponent, DamageChangedEvent>(OnDamage);
+            SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
+            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
         }
 
-        private void OnDamage(EntityUid uid, ZombieComponent component, DamageChangedEvent args)
+        private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
-            if (!args.DamageIncreased)
-                return;
-
-            if (component.LastDamageGroanAccumulator > 0)
-                return;
-
-            if (_robustRandom.Prob(0.50f))
-                _chat.TrySendInGameICMessage(uid, "generic automated groan", InGameICChatType.Speak, false);
+            if (args.CurrentMobState == DamageState.Alive)
+                EnsureComp<ActiveZombieComponent>(uid);
             else
-                _vocal.TryScream(uid);
+                RemComp<ActiveZombieComponent>(uid);
+        }
 
-            component.LastDamageGroanAccumulator = 2;
+        private void OnDamage(EntityUid uid, ActiveZombieComponent component, DamageChangedEvent args)
+        {
+            if (args.DamageIncreased)
+                DoGroan(uid, component);
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
@@ -126,27 +123,37 @@ namespace Content.Server.Zombies
             }
         }
 
+        public void DoGroan(EntityUid uid, ActiveZombieComponent component)
+        {
+            if (component.LastDamageGroanCooldown > 0)
+                return;
+
+            if (_robustRandom.Prob(0.5f)) //this message is never seen by players so it just says this for admins
+                _chat.TrySendInGameICMessage(uid, "[automated zombie groan]", InGameICChatType.Speak, false);
+            else
+                _vocal.TryScream(uid);
+
+            component.LastDamageGroanCooldown = component.GroanCooldown;
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var zombiecomp in EntityQuery<ZombieComponent>())
+            foreach (var zombiecomp in EntityQuery<ActiveZombieComponent>())
             {
                 zombiecomp.Accumulator += frameTime;
-                zombiecomp.LastDamageGroanAccumulator -= frameTime;
+                zombiecomp.LastDamageGroanCooldown -= frameTime;
 
-                if (zombiecomp.Accumulator < 5) //generic number
+                if (zombiecomp.Accumulator < zombiecomp.RandomGroanAttempt)
                     continue;
+                zombiecomp.Accumulator -= zombiecomp.RandomGroanAttempt;
 
                 if (!_robustRandom.Prob(zombiecomp.GroanChance))
                     continue;
-                zombiecomp.Accumulator -= 5; //same generic number
 
                 //either do a random accent line or scream
-                if (_robustRandom.Prob(0.5f))
-                    _chat.TrySendInGameICMessage(zombiecomp.Owner, "generic automated groan", InGameICChatType.Speak, false);
-                else
-                    _vocal.TryScream(zombiecomp.Owner);
+                DoGroan(zombiecomp.Owner, zombiecomp);
             }
         }
     }
