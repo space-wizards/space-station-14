@@ -68,9 +68,12 @@ public sealed partial class NPCSystem
                     if (PrimitiveConditionMet(primitive, blackboard))
                     {
                         primitiveCount++;
-                        // TODO: If conditions met
                         finalPlan.Add(primitive);
-                        // TODO: Apply effects to world state
+
+                        foreach (var effect in primitive.Effects)
+                        {
+                            effect.Effect(blackboard);
+                        }
                     }
                     else
                     {

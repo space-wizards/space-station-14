@@ -10,22 +10,25 @@
   # Pick a new spot and wait there.
   - tasks:
     - operator: !type:PickAccessibleOperator
-        range: IdleRange
-        resultKey: MovementTarget
+        idleRangeKey: IdleRange
+        key: MovementTarget
 
     - operator: !type:MoveToOperator
-        targetKey: MovementTarget
+        key: MovementTarget
       preconditions:
-        keyExists: MovementTarget
-      onExit:
-        clearKey: MovementTarget
+        - !type:KeyExistsPrecondition
+            key: MovementTarget
+      onShutdown:
+      - !type:ClearKeyEffect
+          key: MovementTarget
 
     - operator: !type:RandomOperator
-        targetKey: IdleTime
+        key: IdleTime
         minKey: MinimumIdleTime
         maxKey: MaximumIdleTime
 
     - operator: !type:WaitOperator
-        targetKey: IdleTime
-      onFinish:
-        clearKey: IdleTime
+        key: IdleTime
+      onShutdown:
+        - !type:ClearKeyEffect
+            Key: IdleTime

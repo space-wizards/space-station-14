@@ -11,4 +11,9 @@ public sealed class HTNPrimitiveTask : HTNTask
     [DataField("preconditions")] public List<HTNPrecondition> Preconditions = new();
 
     [DataField("operator", required:true)] public HTNOperator Operator = default!;
+
+    /// <summary>
+    /// Effects that get run whenever this primitive task shuts down for any reason.
+    /// </summary>
+    [DataField("onShutdown")] public List<HTNEffect> Effects = new();
 }
