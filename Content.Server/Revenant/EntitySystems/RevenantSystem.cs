@@ -21,6 +21,9 @@ using Content.Server.Polymorph.Systems;
 using Robust.Shared.Player;
 using Content.Server.Light.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Maps;
+using Robust.Shared.Physics;
+using Content.Shared.Physics;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -35,6 +38,7 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphable = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -159,6 +163,16 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
             return false;
+        }
+
+        var tileref = Transform(uid).Coordinates.GetTileRef();
+        if (tileref != null)
+        {
+            if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+            {
+                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, Filter.Entities(uid));
+                return false;
+            }
         }
 
         _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
