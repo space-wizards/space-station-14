@@ -1,4 +1,5 @@
 using Content.Server.AI.Components;
+using Content.Server.AI.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
@@ -18,6 +19,7 @@ namespace Content.Server.AI.Systems
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly HTNSystem _htn = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -35,7 +37,6 @@ namespace Content.Server.AI.Systems
         {
             base.Initialize();
             _sawmill = Logger.GetSawmill("npc");
-            InitializeHTN();
             InitializeUtility();
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, ComponentInit>(OnNPCInit);
@@ -94,10 +95,12 @@ namespace Content.Server.AI.Systems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            if (!Enabled) return;
+
+            if (!Enabled)
+                return;
 
             _count = 0;
-            UpdateHTN(frameTime);
+            _htn.UpdateNPC(ref _count, _maxUpdates, frameTime);
             UpdateUtility(frameTime);
         }
 

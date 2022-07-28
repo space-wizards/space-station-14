@@ -15,12 +15,10 @@
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:PickAccessibleOperator
-        idleRangeKey: IdleRange
-        key: MovementTarget
 
     - !type:HTNPrimitiveTask
       operator: !type:MoveToOperator
-        key: MovementTarget
+        pathfindInPlanning: false
       preconditions:
       - !type:KeyExistsPrecondition
           key: MovementTarget

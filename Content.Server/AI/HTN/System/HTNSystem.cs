@@ -1,14 +1,21 @@
 using System.Threading;
 using Content.Server.AI.Components;
-using Content.Server.AI.HTN;
+using Content.Server.AI.Pathfinding.Accessible;
+using Content.Server.AI.Systems;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
-namespace Content.Server.AI.Systems;
+namespace Content.Server.AI.HTN;
 
-public sealed partial class NPCSystem
+public sealed partial class HTNSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AiReachableSystem _reachable = default!;
+    [Dependency] private readonly NPCSystem _npc = default!;
+
     private readonly HashSet<EntityUid> _planning = new();
     private readonly JobQueue _planQueue = new(0.005);
 
@@ -16,8 +23,9 @@ public sealed partial class NPCSystem
     private readonly Dictionary<EntityUid, (HTNPlanJob Job, CancellationTokenSource CancelToken)> _jobs = new();
 
     // Hierarchical Task Network
-    private void InitializeHTN()
+    public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
     }
 
@@ -32,13 +40,13 @@ public sealed partial class NPCSystem
         _planning.Remove(uid);
     }
 
-    private void UpdateHTN(float frameTime)
+    public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
     {
         _planQueue.Process();
 
         foreach (var (_, comp) in EntityQuery<ActiveNPCComponent, HTNComponent>())
         {
-            if (_count >= _maxUpdates)
+            if (count >= maxUpdates)
                 break;
 
             if (_jobs.TryGetValue(comp.Owner, out var job))
@@ -51,7 +59,7 @@ public sealed partial class NPCSystem
             }
 
             Update(comp, frameTime);
-            _count++;
+            count++;
         }
     }
 
@@ -68,6 +76,7 @@ public sealed partial class NPCSystem
         var currentOperator = component.Plan.CurrentOperator;
 
         // Run the existing operator
+        var status = Update(component.BlackboardA, currentOperator, frameTime);
     }
 
     private void RequestPlan(HTNComponent component)
@@ -76,8 +85,10 @@ public sealed partial class NPCSystem
 
         var cancelToken = new CancellationTokenSource();
 
-        var job = new HTNPlanJob(0.02, _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
-            (NPCBlackboard) component.BlackboardA.ShallowClone(), cancelToken.Token);
+        var job = new HTNPlanJob(
+            0.02,
+            _prototypeManager.Index<HTNCompoundTask>(component.RootTask),
+            component.BlackboardA.ShallowClone(), cancelToken.Token);
 
         _planQueue.EnqueueJob(job);
         _jobs.Add(component.Owner, (job, cancelToken));

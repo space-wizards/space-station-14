@@ -63,7 +63,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
                         decompHistory.Push(new DecompositionState()
                         {
-                            Blackboard = (NPCBlackboard) _blackboard.ShallowClone(),
+                            Blackboard = _blackboard.ShallowClone(),
                             CompoundTask = compound,
                             MethodTraversal = mtrIndex,
                             PrimitiveCount = primitiveCount,
@@ -80,7 +80,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (PrimitiveConditionMet(primitive, _blackboard))
+                    if (await PrimitiveConditionMet(primitive, _blackboard))
                     {
                         primitiveCount++;
                         finalPlan.Add(primitive);
@@ -102,13 +102,17 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         return new HTNPlan(finalPlan);
     }
 
-    private bool PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard)
+    private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard)
     {
         foreach (var con in primitive.Preconditions)
         {
-            if (con.IsMet(blackboard)) continue;
+            if (con.IsMet(blackboard))
+                continue;
+
             return false;
         }
+
+        await primitive.Operator.PlanUpdate(blackboard);
 
         return true;
     }

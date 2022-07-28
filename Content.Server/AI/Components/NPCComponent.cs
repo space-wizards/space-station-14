@@ -2,7 +2,6 @@ using Content.Server.AI.Systems;
 
 namespace Content.Server.AI.Components
 {
-    [Access(typeof(NPCSystem))]
     public abstract class NPCComponent : Component
     {
         /// <summary>
