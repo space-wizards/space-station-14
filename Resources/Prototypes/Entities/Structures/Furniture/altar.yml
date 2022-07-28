@@ -114,6 +114,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: space-christian
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarSatana
@@ -129,6 +133,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: satana
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#ff6347"
 
 - type: entity
   id: AltarTechnology
@@ -144,7 +152,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
     state: technology
-
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#e0ffff"
 
 - type: entity
   id: AltarConvertFestival
@@ -202,6 +213,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: maint
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertBlue
@@ -217,6 +232,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: blue
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertBurden
@@ -232,6 +251,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: convertaltar
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvert
@@ -247,6 +270,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: convertaltar
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertOrange
@@ -262,6 +289,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: orange
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertRed
@@ -277,6 +308,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: red
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertWhite
@@ -292,6 +327,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: white
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarConvertYellow
@@ -307,6 +346,10 @@
   - type: Icon
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
     state: yellow
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#fbceb1"
 
 - type: entity
   id: AltarHeaven
@@ -338,6 +381,10 @@
             max: 5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#f08080"
 
 - type: entity
   id: AltarFangs

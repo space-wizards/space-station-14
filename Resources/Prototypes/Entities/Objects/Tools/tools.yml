@@ -154,7 +154,7 @@
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
     size: 10
-    HeldPrefix: red
+    heldPrefix: red
 
 - type: entity
   name: multitool
@@ -171,11 +171,12 @@
     - state: icon
     - state: green-unlit
       shader: unshaded
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     sprite: Objects/Tools/multitool.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Belt
   - type: Tool
     qualities:
@@ -248,11 +249,12 @@
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Tools/rcd.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Belt
 
 - type: entity
@@ -267,7 +269,7 @@
     state: ammo
   - type: Item
     sprite: Objects/Tools/rcd.rsi
-    HeldPrefix: ammo
+    heldPrefix: ammo
 
 - type: entity
   name: shovel

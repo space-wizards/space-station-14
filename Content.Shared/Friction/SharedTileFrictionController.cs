@@ -25,6 +25,7 @@ namespace Content.Shared.Friction
 
         private float _stopSpeed;
         private float _frictionModifier;
+        private const float DefaultFriction = 0.3f;
 
         public override void Initialize()
         {
@@ -168,15 +169,19 @@ namespace Content.Shared.Friction
         private float GetTileFriction(PhysicsComponent body, TransformComponent xform)
         {
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (_gravity.IsWeightless(body.Owner, body, xform) ||
-                !_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (_gravity.IsWeightless(body.Owner, body, xform))
                 return 0.0f;
 
             if (!xform.Coordinates.IsValid(EntityManager)) return 0.0f;
 
-            var tile = grid.GetTileRef(xform.Coordinates);
-            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-            return tileDef.Friction;
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            {
+                var tile = grid.GetTileRef(xform.Coordinates);
+                var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
+                return tileDef.Friction;
+            }
+
+            return TryComp<TileFrictionModifierComponent>(xform.MapUid, out var friction) ? friction.Modifier : DefaultFriction;
         }
 
         [NetSerializable, Serializable]

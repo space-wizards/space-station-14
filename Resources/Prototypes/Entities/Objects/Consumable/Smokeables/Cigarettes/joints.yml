@@ -16,8 +16,9 @@
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
     size: 1
   - type: Construction
     graph: smokeableJoint
@@ -48,8 +49,9 @@
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/blunt.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
     size: 1
   - type: Construction
     graph: smokeableBlunt

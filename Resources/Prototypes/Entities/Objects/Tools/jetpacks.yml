@@ -12,7 +12,7 @@
     - shader: unshaded
       map: ["enum.EffectLayers.Unshaded"]
       sprite: Effects/atmospherics.rsi
-      state: freon_old
+      state: frezon_old
   - type: EffectVisuals
   - type: AnimationPlayer
 
@@ -43,7 +43,7 @@
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       QuickEquip: false
       size: 100
-      Slots:
+      slots:
         - Back
     - type: GasTank
       outputPressure: 21.27825
@@ -75,7 +75,7 @@
     sprite: Objects/Tanks/Jetpacks/blue.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/blue.rsi
-    Slots:
+    slots:
       - Back
 
 # Filled blue
@@ -104,7 +104,7 @@
     sprite: Objects/Tanks/Jetpacks/black.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/black.rsi
-    Slots:
+    slots:
       - Back
 
 # Filled black
@@ -134,7 +134,7 @@
   - type: Clothing
     size: 30
     sprite: Objects/Tanks/Jetpacks/captain.rsi
-    Slots:
+    slots:
       - Back
 
 # Filled captain
@@ -164,7 +164,7 @@
     - type: Clothing
       size: 50
       sprite: Objects/Tanks/Jetpacks/mini.rsi
-      Slots:
+      slots:
         - Back
 
 # Filled mini
@@ -193,7 +193,7 @@
     sprite: Objects/Tanks/Jetpacks/security.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/security.rsi
-    Slots:
+    slots:
       - Back
 
 #Filled security
@@ -222,7 +222,7 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
   - type: Clothing
     sprite: Objects/Tanks/Jetpacks/void.rsi
-    Slots:
+    slots:
       - Back
 
 # Filled void
