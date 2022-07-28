@@ -249,4 +249,10 @@ namespace Content.Shared.Atmos.Monitor
         Pressure,
         Gas
     }
+
+    public enum AtmosMonitorVisuals : byte
+    {
+        Offset,
+        AlarmType,
+    }
 }
