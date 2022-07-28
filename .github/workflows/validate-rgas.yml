@@ -12,5 +12,5 @@ jobs:
       uses: space-wizards/submodule-dependency@v0.1.5
     - uses: PaulRitter/yaml-schema-validator@v1
       with:
-        schema: .github/workflows/rga.yaml
+        schema: .github/workflows/rga.yml
         path_pattern: .*assignment.yaml$
