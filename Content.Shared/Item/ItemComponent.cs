@@ -15,6 +15,7 @@ public sealed class ItemComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
+    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     public int Size = 5;
 
     [DataField("inhandVisuals")]
