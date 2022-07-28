@@ -108,6 +108,7 @@
   parent: BaseHandheldInstrument
   id: RecorderInstrument
   name: recorder
+  description: Comes in various colors of fashionable plastic!
   components:
   - type: Instrument
     program: 74

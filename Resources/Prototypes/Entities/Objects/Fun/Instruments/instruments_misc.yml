@@ -1,5 +1,19 @@
 ﻿- type: entity
   parent: BaseHandheldInstrument
+  id: MusicalLungInstrument
+  name: musical lung
+  description: The spiritual and magical lung of a former opera singer. Though, to be honest, the vocal chords make the performance.
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lung-l
+  - type: Instrument
+    program: 121
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: BaseHandheldInstrument
   id: SeashellInstrument
   name: seashell
   description: For laying down the shoreline beat.

@@ -111,6 +111,18 @@
 
 - type: entity
   parent: BaseHandheldInstrument
+  id: ReverseCymbalsInstrument
+  name: reverse cymbals
+  description: I think you have it the wrong way around?
+  components:
+  - type: Instrument
+    program: 119
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/reversecymbal.rsi
+    state: icon
+
+- type: entity
+  parent: BaseHandheldInstrument
   id: SuperSynthesizerInstrument
   name: super synthesizer
   description: Blasting the ghetto with Touhou MIDIs since 2020.
