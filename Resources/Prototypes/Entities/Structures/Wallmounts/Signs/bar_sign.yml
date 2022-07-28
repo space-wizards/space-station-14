@@ -140,7 +140,7 @@
     current: TheCoderbus
     
 - type: entity
-  parent: BarSignBases
+  parent: BarSignBase
   id: BarSignTheDrunkCarp
   name: The Drunk Carp
   description: Don't drink and swim.
