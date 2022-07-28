@@ -400,7 +400,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId:
+        - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
