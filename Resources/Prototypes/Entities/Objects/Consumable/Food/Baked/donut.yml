@@ -400,8 +400,21 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId:
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
+
+# Poison donut
+- type: entity
+  parent: FoodDonutPink
+  id: FoodDonutPoison
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 10
