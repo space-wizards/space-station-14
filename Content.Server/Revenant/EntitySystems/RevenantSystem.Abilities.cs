@@ -31,7 +31,6 @@ public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SleepingSystem _sleeping = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;

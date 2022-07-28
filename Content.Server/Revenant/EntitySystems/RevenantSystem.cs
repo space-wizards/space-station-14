@@ -1,10 +1,8 @@
 using Content.Server.Actions;
-using Content.Server.Disease;
 using Content.Shared.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Stunnable;
 using Content.Shared.Revenant;
@@ -19,10 +17,8 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Content.Server.Polymorph.Systems;
 using Robust.Shared.Player;
-using Content.Server.Light.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
-using Robust.Shared.Physics;
 using Content.Shared.Physics;
 
 namespace Content.Server.Revenant.EntitySystems;
