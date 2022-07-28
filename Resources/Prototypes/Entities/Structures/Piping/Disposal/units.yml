@@ -136,6 +136,6 @@
   - type: UserInterface
     interfaces:
     - key: enum.MailingUnitUiKey.Key
-      type: MailingUnitBoundUserInterface
+      type: DisposalUnitBoundUserInterface
     - key: enum.ConfigurationUiKey.Key
       type: ConfigurationBoundUserInterface

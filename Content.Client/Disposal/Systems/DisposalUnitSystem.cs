@@ -47,15 +47,9 @@ namespace Content.Client.Disposal.Systems
 
             foreach (var inter in userInterface.Interfaces)
             {
-                if (inter is DisposalUnitBoundUserInterface disposals)
+                if (inter is DisposalUnitBoundUserInterface boundInterface)
                 {
-                    return disposals.Window?.UpdateState(state) != false;
-                }
-
-                //Bandaid to get the pressure ui to work on mailing units
-                if (inter is MailingUnitBoundUserInterface mailing)
-                {
-                    return mailing.Window?.UpdatePressure(state.FullPressureTime) != false;
+                    return boundInterface.UpdateWindowState(state) != false;
                 }
             }
 
