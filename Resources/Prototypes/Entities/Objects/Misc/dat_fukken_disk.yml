@@ -9,10 +9,6 @@
     netsync: false
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
-  - type: Item
-    size: 5
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
   - type: StaticPrice
     price: 2000
 
@@ -25,10 +21,6 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Misc/nukedisk.rsi
-    state: icon
-  - type: Item
-    size: 5
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: StaticPrice
