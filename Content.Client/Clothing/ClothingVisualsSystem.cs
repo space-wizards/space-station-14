@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.Inventory;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -16,7 +17,7 @@ using static Robust.Shared.GameObjects.SharedSpriteComponent;
 
 namespace Content.Client.Clothing;
 
-public sealed class ClothingSystem : EntitySystem
+public sealed class ClothingVisualsSystem : EntitySystem
 {
     /// <summary>
     /// This is a shitty hotfix written by me (Paul) to save me from renaming all files.
@@ -52,13 +53,13 @@ public sealed class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
 
-        SubscribeLocalEvent<SharedItemComponent, GetEquipmentVisualsEvent>(OnGetVisuals);
+        SubscribeLocalEvent<ClothingComponent, GetEquipmentVisualsEvent>(OnGetVisuals);
 
         SubscribeLocalEvent<ClientInventoryComponent, VisualsChangedEvent>(OnVisualsChanged);
         SubscribeLocalEvent<SpriteComponent, DidUnequipEvent>(OnDidUnequip);
     }
 
-    private void OnGetVisuals(EntityUid uid, SharedItemComponent item, GetEquipmentVisualsEvent args)
+    private void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVisualsEvent args)
     {
         if (!TryComp(args.Equipee, out ClientInventoryComponent? inventory))
             return;
@@ -99,15 +100,15 @@ public sealed class ClothingSystem : EntitySystem
     /// <remarks>
     ///     Useful for lazily adding clothing sprites without modifying yaml. And for backwards compatibility.
     /// </remarks>
-    private bool TryGetDefaultVisuals(EntityUid uid, SharedItemComponent item, string slot, string? speciesId,
+    private bool TryGetDefaultVisuals(EntityUid uid, ClothingComponent clothing, string slot, string? speciesId,
         [NotNullWhen(true)] out List<PrototypeLayerData>? layers)
     {
         layers = null;
 
         RSI? rsi = null;
 
-        if (item.RsiPath != null)
-            rsi = _cache.GetResource<RSIResource>(TextureRoot / item.RsiPath).RSI;
+        if (clothing.RsiPath != null)
+            rsi = _cache.GetResource<RSIResource>(TextureRoot / clothing.RsiPath).RSI;
         else if (TryComp(uid, out SpriteComponent? sprite))
             rsi = sprite.BaseRSI;
 
@@ -117,9 +118,9 @@ public sealed class ClothingSystem : EntitySystem
         var correctedSlot = slot;
         TemporarySlotMap.TryGetValue(correctedSlot, out correctedSlot);
 
-        var state = (item.EquippedPrefix == null)
+        var state = (clothing.EquippedPrefix == null)
             ? $"equipped-{correctedSlot}"
-            : $"{item.EquippedPrefix}-equipped-{correctedSlot}";
+            : $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
 
         // species specific
         if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))

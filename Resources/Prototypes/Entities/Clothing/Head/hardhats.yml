@@ -12,7 +12,7 @@
       visible: false
       map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    equippedPrefix: off
   - type: PointLight
     netsync: false
     enabled: false
