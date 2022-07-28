@@ -18,8 +18,87 @@
   - type: Anchorable
   - type: Pullable
   - type: Sprite
-    sprite: Structures/Hydroponics/containers.rsi
-    state: hydrotray3
+    layers:
+      - sprite: Structures/Hydroponics/containers.rsi
+        state: hydrotray3
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowhealth3
+        map: [ "health_alert" ]
+        visible: false
+        shader: unshaded
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowwater3
+        map: [ "water_alert" ]
+        visible: false
+        shader: unshaded
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lownutri3
+        map: [ "nutri_alert" ]
+        visible: false
+        shader: unshaded
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: alert3
+        map: [ "undefined_alert" ]
+        visible: false
+        shader: unshaded
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: harvest3
+        map: [ "harvest_alert" ]
+        visible: false
+        shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PlantHolderVisuals.HealthLight:
+        health_alert:
+          True:
+            state: lowhealth3
+            visible: true
+            shader: shaded
+          False:
+            state: lowhealth3 
+            visible: false
+            shader: unshaded
+      enum.PlantHolderVisuals.WaterLight:
+        water_alert:
+          True:
+            state: lowwater3
+            visible: true
+            shader: shaded
+          False:
+            state: lowwater3 
+            visible: false
+            shader: unshaded
+      enum.PlantHolderVisuals.NutritionLight:
+        nutri_alert:
+          True:
+            state: lownutri3
+            visible: true
+            shader: shaded
+          False:
+            state: lownutri3 
+            visible: false
+            shader: unshaded
+      enum.PlantHolderVisuals.AlertLight:
+        undefined_alert:
+          True:
+            state: alert3
+            visible: true
+            shader: shaded
+          False:
+            state: alert3 
+            visible: false
+            shader: unshaded
+      enum.PlantHolderVisuals.HarvestLight:
+        harvest_alert:
+          True:
+            state: harvest3
+            visible: true
+            shader: shaded
+          False:
+            state: harvest3 
+            visible: false
+            shader: unshaded
   - type: PlantHolder
     drawWarnings: true
   - type: Construction
