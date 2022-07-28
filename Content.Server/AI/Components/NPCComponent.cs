@@ -9,7 +9,7 @@ namespace Content.Server.AI.Components
         /// Contains all of the world data for a particular NPC in terms of how it sees the world.
         /// </summary>
         [ViewVariables, DataField("blackboard")]
-        public Dictionary<string, object> BlackboardA = new()
+        public NPCBlackboard BlackboardA = new()
         {
             { "visionRadius", 7f }
         };

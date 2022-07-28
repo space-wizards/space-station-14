@@ -1,17 +1,30 @@
-using Content.Server.AI.HTN;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.AI.HTN.PrimitiveTasks;
+using Content.Server.CPUJob.JobQueues;
 using Robust.Shared.Utility;
 
-namespace Content.Server.AI.Systems;
+namespace Content.Server.AI.HTN;
 
-public sealed partial class NPCSystem
+/// <summary>
+/// A time-sliced job that will retrieve an HTN plan eventually.
+/// </summary>
+public sealed class HTNPlanJob : Job<HTNPlan>
 {
-    private HTNPlan GetPlan(HTNComponent component)
+    private HTNCompoundTask _rootTask;
+    private NPCBlackboard _blackboard;
+
+    public HTNPlanJob(
+        double maxTime,
+        HTNCompoundTask rootTask,
+        NPCBlackboard blackboard,
+        CancellationToken cancellationToken = default) : base(maxTime, cancellationToken)
     {
-        return GetPlan(_prototypeManager.Index<HTNCompoundTask>(component.RootTask), component.BlackboardA.ShallowClone());
+        _rootTask = rootTask;
+        _blackboard = blackboard;
     }
 
-    private HTNPlan GetPlan(HTNCompoundTask rootTask, Dictionary<string, object> blackboard)
+    protected override async Task<HTNPlan?> Process()
     {
         /*
          * Really the best reference for what a HTN looks like is http://www.gameaipro.com/GameAIPro/GameAIPro_Chapter12_Exploring_HTN_Planners_through_Example.pdf
@@ -30,7 +43,7 @@ public sealed partial class NPCSystem
 
         var tasksToProcess = new Queue<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
-        tasksToProcess.Enqueue(rootTask);
+        tasksToProcess.Enqueue(_rootTask);
 
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
@@ -40,7 +53,9 @@ public sealed partial class NPCSystem
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
-                    if (TryFindSatisfiedMethod(compound, tasksToProcess, blackboard, ref mtrIndex))
+                    await SuspendIfOutOfTime();
+
+                    if (TryFindSatisfiedMethod(compound, tasksToProcess, _blackboard, ref mtrIndex))
                     {
                         // Need to copy worldstate to roll it back
                         // Don't need to copy taskstoprocess as we can just clear it and set it to the compound task we roll back to.
@@ -48,7 +63,7 @@ public sealed partial class NPCSystem
 
                         decompHistory.Push(new DecompositionState()
                         {
-                            Blackboard = blackboard.ShallowClone(),
+                            Blackboard = (NPCBlackboard) _blackboard.ShallowClone(),
                             CompoundTask = compound,
                             MethodTraversal = mtrIndex,
                             PrimitiveCount = primitiveCount,
@@ -60,24 +75,24 @@ public sealed partial class NPCSystem
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref blackboard,
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard,
                             ref mtrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (PrimitiveConditionMet(primitive, blackboard))
+                    if (PrimitiveConditionMet(primitive, _blackboard))
                     {
                         primitiveCount++;
                         finalPlan.Add(primitive);
 
                         foreach (var effect in primitive.Effects)
                         {
-                            effect.Effect(blackboard);
+                            effect.Effect(_blackboard);
                         }
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref blackboard, ref mtrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard, ref mtrIndex);
                     }
 
                     break;
@@ -87,7 +102,7 @@ public sealed partial class NPCSystem
         return new HTNPlan(finalPlan);
     }
 
-    private bool PrimitiveConditionMet(HTNPrimitiveTask primitive, Dictionary<string, object> blackboard)
+    private bool PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard)
     {
         foreach (var con in primitive.Preconditions)
         {
@@ -131,7 +146,7 @@ public sealed partial class NPCSystem
     private void RestoreTolastDecomposedTask(Stack<DecompositionState> decompHistory,
         Queue<HTNTask> tasksToProcess,
         List<HTNPrimitiveTask> finalPlan,
-        ref Dictionary<string, object> blackboard,
+        ref NPCBlackboard blackboard,
         ref int mtrIndex)
     {
         tasksToProcess.Clear();
@@ -155,7 +170,7 @@ public sealed partial class NPCSystem
         /// <summary>
         /// Blackboard as at decomposition.
         /// </summary>
-        public Dictionary<string, object> Blackboard = default!;
+        public NPCBlackboard Blackboard = default!;
 
         /// <summary>
         /// How many primitive tasks we've added since last decompositionstate.
