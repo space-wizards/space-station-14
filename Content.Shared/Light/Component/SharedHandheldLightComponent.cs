@@ -1,14 +1,43 @@
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Sound;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Light.Component
+namespace Content.Shared.Light
 {
     [NetworkedComponent]
-    public abstract class SharedHandheldLightComponent : Robust.Shared.GameObjects.Component
+    [RegisterComponent]
+    [Access(typeof(SharedHandheldLightSystem))]
+    public sealed class HandheldLightComponent : Robust.Shared.GameObjects.Component
     {
-        [DataField("toggleActionId", customTypeSerializer:typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+        public byte? Level;
+        public bool Activated;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("wattage")]
+        public float Wattage { get; set; } = .8f;
+
+        [DataField("turnOnSound")]
+        public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
+
+        [DataField("turnOnFailSound")]
+        public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
+        [DataField("turnOffSound")]
+        public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off.ogg");
+
+        /// <summary>
+        ///     Whether to automatically set item-prefixes when toggling the flashlight.
+        /// </summary>
+        /// <remarks>
+        ///     Flashlights should probably be using explicit unshaded sprite, in-hand and clothing layers, this is
+        ///     mostly here for backwards compatibility.
+        /// </remarks>
+        [DataField("addPrefix")]
+        public bool AddPrefix = false;
+
+        [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
         public string ToggleActionId = "ToggleLight";
 
         [DataField("toggleAction")]

@@ -1,10 +1,13 @@
-﻿using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
 public sealed class ClothingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedItemSystem _itemSys = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,17 +24,21 @@ public sealed class ClothingSystem : EntitySystem
     private void OnHandleState(EntityUid uid, SharedClothingComponent component, ref ComponentHandleState args)
     {
         if (args.Current is ClothingComponentState state)
-            component.EquippedPrefix = state.EquippedPrefix;
+            SetEquippedPrefix(uid, state.EquippedPrefix, component);
     }
 
     #region Public API
 
     public void SetEquippedPrefix(EntityUid uid, string? prefix, SharedClothingComponent? clothing = null)
     {
-        if (!Resolve(uid, ref clothing))
+        if (!Resolve(uid, ref clothing, false))
+            return;
+
+        if (clothing.EquippedPrefix == prefix)
             return;
 
         clothing.EquippedPrefix = prefix;
+        _itemSys.VisualsChanged(uid);
         Dirty(clothing);
     }
 

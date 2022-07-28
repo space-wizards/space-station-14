@@ -1,4 +1,4 @@
-﻿using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Sound;
 using Robust.Shared.GameStates;
@@ -10,6 +10,7 @@ namespace Content.Shared.Clothing.Components;
 ///     This handles entities which can be equipped.
 /// </summary>
 [NetworkedComponent]
+[Access(typeof(ClothingSystem))]
 public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
