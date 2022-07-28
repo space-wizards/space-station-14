@@ -38,7 +38,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         if (component.HeldPrefix == heldPrefix)
