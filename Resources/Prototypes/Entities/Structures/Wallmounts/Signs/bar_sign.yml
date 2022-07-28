@@ -2,6 +2,7 @@
   id: BarSignBase
   parent: BaseStructure
   name: bar sign
+  abstract: true
   components:
   - type: MeleeSound
     soundGroups:
