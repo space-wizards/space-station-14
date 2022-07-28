@@ -7,10 +7,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup Submodule
-      run: git submodule update --init --recursive
+      run: git submodule update --init
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
     - uses: PaulRitter/yaml-schema-validator@v1
       with:
-        schema: RobustToolbox/Schemas/rga.yaml
+        schema: .github/workflows/rga.yaml
         path_pattern: .*assignment.yaml$
