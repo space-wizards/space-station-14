@@ -1,14 +1,26 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.AI.Components;
+
 namespace Content.Server.AI.Systems;
 
 public sealed partial class NPCSystem
 {
-    /*
+    private readonly Dictionary<string, object> _blackboardDefaults = new()
+    {
+        {"VisionRadius", 7f}
+    };
+
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>
     public T? GetValueOrDefault<T>(NPCComponent component, string key)
     {
         if (component.BlackboardA.TryGetValue(key, out var value))
+        {
+            return (T) value;
+        }
+
+        if (_blackboardDefaults.TryGetValue(key, out value))
         {
             return (T) value;
         }

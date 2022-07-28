@@ -14,9 +14,6 @@
   - type: MobMover
   - type: HTN
     rootTask: IdleCompound
-    blackboard:
-      visionRadius:
-        !type:float: 7
   - type: Tool
     speed: 0.3
     qualities:

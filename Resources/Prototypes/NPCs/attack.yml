@@ -7,6 +7,9 @@
     - !type:HTNPrimitiveTask
       operator: !type:WaitOperator
         key: IdleTime
+      preconditions:
+        - !type:KeyExistsPrecondition
+          key: IdleTime
 
   # Pick a new spot and wait there.
   - tasks:
@@ -23,7 +26,7 @@
           key: MovementTarget
       onShutdown:
       - !type:ClearKeyEffect
-          key: MovementTarget
+        key: MovementTarget
 
     - !type:HTNPrimitiveTask
       operator: !type:RandomOperator
@@ -36,4 +39,4 @@
         key: IdleTime
       onShutdown:
       - !type:ClearKeyEffect
-        Key: IdleTime
+        key: IdleTime

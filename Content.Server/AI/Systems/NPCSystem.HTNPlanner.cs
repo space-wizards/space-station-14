@@ -8,7 +8,7 @@ public sealed partial class NPCSystem
 {
     private HTNPlan GetPlan(HTNComponent component)
     {
-        return GetPlan(component.RootTask, component.BlackboardA.ShallowClone());
+        return GetPlan(_prototypeManager.Index<HTNCompoundTask>(component.RootTask), component.BlackboardA.ShallowClone());
     }
 
     private HTNPlan GetPlan(HTNCompoundTask rootTask, Dictionary<string, object> blackboard)
@@ -28,14 +28,14 @@ public sealed partial class NPCSystem
         // TODO: Need to store method traversal record
         // This is so we can know if a new plan is better than an old plan.
 
-        var tasksToProcess = new Stack<HTNTask>();
+        var tasksToProcess = new Queue<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
-        tasksToProcess.Push(rootTask);
+        tasksToProcess.Enqueue(rootTask);
 
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
 
-        while (tasksToProcess.TryPop(out var currentTask))
+        while (tasksToProcess.TryDequeue(out var currentTask))
         {
             switch (currentTask)
             {
@@ -98,7 +98,7 @@ public sealed partial class NPCSystem
         return true;
     }
 
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Stack<HTNTask> tasksToProcess, Dictionary<string, object> blackboard, ref int mtrIndex)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, Dictionary<string, object> blackboard, ref int mtrIndex)
     {
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {
@@ -116,7 +116,7 @@ public sealed partial class NPCSystem
 
             foreach (var task in branch.Tasks)
             {
-                tasksToProcess.Push(task);
+                tasksToProcess.Enqueue(task);
             }
 
             return true;
@@ -129,7 +129,7 @@ public sealed partial class NPCSystem
     /// Restores the planner state.
     /// </summary>
     private void RestoreTolastDecomposedTask(Stack<DecompositionState> decompHistory,
-        Stack<HTNTask> tasksToProcess,
+        Queue<HTNTask> tasksToProcess,
         List<HTNPrimitiveTask> finalPlan,
         ref Dictionary<string, object> blackboard,
         ref int mtrIndex)
@@ -141,13 +141,13 @@ public sealed partial class NPCSystem
             return;
 
         // Increment MTR so next time we try the next method on the compound task.
-        mtrIndex = lastDecomp.MethodTraversal++;
+        mtrIndex = lastDecomp.MethodTraversal + 1;
 
         // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
         finalPlan.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
 
         blackboard = lastDecomp.Blackboard;
-        tasksToProcess.Push(lastDecomp.CompoundTask);
+        tasksToProcess.Enqueue(lastDecomp.CompoundTask);
     }
 
     private sealed class DecompositionState

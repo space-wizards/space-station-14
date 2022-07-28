@@ -24,13 +24,11 @@ public sealed partial class NPCSystem
 
     private void Update(HTNComponent component, float frameTime)
     {
-        // TODO: Need a plan class to track things. Needs to track:
-        // Full plan
-        // Current step in plan
-
         // Get a new plan
         if (component.Plan == null)
         {
+            // TODO: Use an event and get it whenever.
+            component.Plan = GetPlan(component);
             return;
         }
 

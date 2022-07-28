@@ -11,7 +11,7 @@ public sealed class RandomOperator : HTNOperator
     /// </summary>
     [DataField("key")] public string TargetKey = string.Empty;
 
-    [DataField("minKey")] public float MinKey = 0f;
+    [DataField("minKey", required: true)] public string MinKey = string.Empty;
 
-    [DataField("maxKey")] public float MaxKey = 1f;
+    [DataField("maxKey", required: true)] public string MaxKey = string.Empty;
 }
