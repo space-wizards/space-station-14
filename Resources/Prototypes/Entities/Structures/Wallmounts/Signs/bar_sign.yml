@@ -27,7 +27,7 @@
         acts: ["Destruction"]
         
 - type: entity
-  parent: BaseSignBase
+  parent: BarSignBase
   id: BarSign
   name: bar sign
   suffix: Random
