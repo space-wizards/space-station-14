@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.AI.Components;
 
 namespace Content.Server.AI;
 
+[DataDefinition]
 public sealed class NPCBlackboard : Dictionary<string, object>
 {
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
@@ -17,17 +17,15 @@ public sealed class NPCBlackboard : Dictionary<string, object>
         var dict = new NPCBlackboard();
         foreach (var item in this)
         {
-            dict[item.Key] = item.Value;
+            dict.SetValue(item.Key, item.Value);
         }
         return dict;
     }
 
-    #region NPC Blackboard
-
     /// <summary>
     /// Get the blackboard data for a particular key.
     /// </summary>
-    public T? GetValue<T>(string key)
+    public T GetValue<T>(string key)
     {
         return (T) this[key];
     }
@@ -69,8 +67,6 @@ public sealed class NPCBlackboard : Dictionary<string, object>
     {
         this[key] = value;
     }
-
-    #endregion
 
     /*
     * Constants to make development easier

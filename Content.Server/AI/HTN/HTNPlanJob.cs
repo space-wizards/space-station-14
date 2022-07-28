@@ -84,11 +84,6 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     {
                         primitiveCount++;
                         finalPlan.Add(primitive);
-
-                        foreach (var effect in primitive.Effects)
-                        {
-                            effect.Effect(_blackboard);
-                        }
                     }
                     else
                     {
@@ -117,7 +112,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         return true;
     }
 
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, Dictionary<string, object> blackboard, ref int mtrIndex)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compound, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         for (var i = mtrIndex; i < compound.Branches.Count; i++)
         {

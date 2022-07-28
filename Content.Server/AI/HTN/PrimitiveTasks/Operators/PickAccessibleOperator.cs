@@ -12,12 +12,18 @@ public sealed class PickAccessibleOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AiReachableSystem _reachable = default!;
+    private AiReachableSystem _reachable = default!;
 
     [DataField("idleRangeKey")] public string IdleRangeKey = "IdleRange";
 
     [ViewVariables, DataField("targetKey")]
     public string TargetKey = "MovementTarget";
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _reachable = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiReachableSystem>();
+    }
 
     /// <inheritdoc/>
     public override async Task PlanUpdate(NPCBlackboard blackboard)

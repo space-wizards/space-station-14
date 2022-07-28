@@ -28,6 +28,7 @@
   <ItemGroup>
     <Compile Remove="AI\HTN\System\HTNSystem.PlanUpdate.cs" />
     <Compile Remove="AI\Systems\NPCSystem.Blackboard.cs" />
+    <Compile Remove="AI\HTN\System\HTNSystem.Update.cs" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
 

@@ -13,6 +13,6 @@ namespace Content.Server.AI.Components
             { "visionRadius", 7f }
         };
 
-        public float VisionRadius => (float) BlackboardA["visionRadius"];
+        public float VisionRadius => BlackboardA.GetValue<float>("visionRadius");
     }
 }

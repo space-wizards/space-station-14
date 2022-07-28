@@ -10,7 +10,7 @@ public sealed class RandomOperator : HTNOperator
     /// <summary>
     /// Target blackboard key to set the value to
     /// </summary>
-    [DataField("key")] public string TargetKey = string.Empty;
+    [DataField("targetKey", required: true)] public string TargetKey = string.Empty;
 
     [DataField("minKey", required: true)] public string MinKey = string.Empty;
 
@@ -19,6 +19,6 @@ public sealed class RandomOperator : HTNOperator
     public override async Task PlanUpdate(NPCBlackboard blackboard)
     {
         // TODO: Need some way of being able to replay blackboard states
-        blackboard[TargetKey] = _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey), blackboard.GetValueOrDefault<float>(MaxKey));
+        blackboard.SetValue(TargetKey, _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey), blackboard.GetValueOrDefault<float>(MaxKey)));
     }
 }

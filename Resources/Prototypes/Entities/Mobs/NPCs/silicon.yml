@@ -39,9 +39,6 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
   - type: AiFactionTag
     factions:
     - SimpleNeutral
@@ -99,9 +96,6 @@
   - type: SpamEmitSound
     sound:
       collection: BikeHorn
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/honkbot.rsi
@@ -139,9 +133,6 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: UtilityNPC
-    behaviorSets:
-    - CleanBot
   - type: Drain
     range: 1
     unitsDestroyedPerSecond: 6
@@ -163,9 +154,6 @@
   name: medibot
   description: No substitute for a doctor, but better than nothing.
   components:
-  - type: UtilityNPC
-    behaviorSets:
-    - MediBot
   - type: Medibot
   - type: Sprite
     drawdepth: Mobs

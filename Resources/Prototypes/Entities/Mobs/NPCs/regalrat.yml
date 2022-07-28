@@ -125,10 +125,6 @@
     baseSprintSpeed : 3.5
   - type: InputMover
   - type: MobMover
-  - type: UtilityNPC
-    behaviorSets:
-    - Idle
-    - UnarmedAttackHostiles
   - type: Reactive
     groups:
       Flammable: [Touch]

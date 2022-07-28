@@ -2,15 +2,6 @@
   id: IdleCompound
   desc: Picks a random location for the NPC to move to and idle.
   branches:
-  # Continue waiting
-  - tasks:
-    - !type:HTNPrimitiveTask
-      operator: !type:WaitOperator
-        key: IdleTime
-      preconditions:
-        - !type:KeyExistsPrecondition
-          key: IdleTime
-
   # Pick a new spot and wait there.
   - tasks:
     - !type:HTNPrimitiveTask
@@ -22,19 +13,13 @@
       preconditions:
       - !type:KeyExistsPrecondition
           key: MovementTarget
-      onShutdown:
-      - !type:ClearKeyEffect
-        key: MovementTarget
 
     - !type:HTNPrimitiveTask
       operator: !type:RandomOperator
-        key: IdleTime
+        targetKey: IdleTime
         minKey: MinimumIdleTime
         maxKey: MaximumIdleTime
 
     - !type:HTNPrimitiveTask
       operator: !type:WaitOperator
-        key: IdleTime
-      onShutdown:
-      - !type:ClearKeyEffect
         key: IdleTime

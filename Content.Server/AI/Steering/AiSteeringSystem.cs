@@ -228,6 +228,11 @@ namespace Content.Server.AI.Steering
                 }
             }
 
+            foreach (var comp in EntityQuery<NPCSteeringComponent>())
+            {
+                comp.Status = Steer(comp.Owner, comp.Request, frameTime);
+            }
+
             _listIndex = (_listIndex + 1) % _agentLists.Count;
         }
 
@@ -731,7 +736,7 @@ namespace Content.Server.AI.Steering
         #endregion
     }
 
-    public enum SteeringStatus
+    public enum SteeringStatus : byte
     {
         Pending,
         NoPath,
