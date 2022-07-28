@@ -5,17 +5,26 @@ using Content.Server.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Bed;
+using Content.Shared.Bed.Sleep;
+using Content.Server.Bed.Sleep;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.MobState.Components;
+using Content.Server.Actions;
+using Content.Server.MobState;
+using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bed
 {
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
+        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -27,12 +36,19 @@ namespace Content.Server.Bed
 
         private void ManageUpdateList(EntityUid uid, HealOnBuckleComponent component, BuckleChangeEvent args)
         {
+            _prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction);
             if (args.Buckling)
             {
                 AddComp<HealOnBuckleHealingComponent>(uid);
+                if (sleepAction != null)
+                    _actionsSystem.AddAction(args.BuckledEntity, new InstantAction(sleepAction), null);
                 return;
             }
 
+            if (sleepAction != null)
+                _actionsSystem.RemoveAction(args.BuckledEntity, sleepAction, null);
+
+            _sleepingSystem.TryWaking(args.BuckledEntity);
             RemComp<HealOnBuckleHealingComponent>(uid);
             component.Accumulator = 0;
         }
@@ -52,12 +68,15 @@ namespace Content.Server.Bed
 
                 if (strapComponent.BuckledEntities.Count == 0) continue;
 
-                var mobStateQuery = GetEntityQuery<MobStateComponent>();
-
                 foreach (var healedEntity in strapComponent.BuckledEntities)
                 {
-                    if (mobStateQuery.TryGetComponent(healedEntity, out var state) && state.IsDead())
+                    if (_mobStateSystem.IsDead(healedEntity))
                         continue;
+
+                    var damage = bedComponent.Damage;
+
+                    if (HasComp<SleepingComponent>(healedEntity))
+                        damage *= bedComponent.SleepMultiplier;
 
                     _damageableSystem.TryChangeDamage(healedEntity, bedComponent.Damage, true);
                 }
