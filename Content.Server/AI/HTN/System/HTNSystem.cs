@@ -132,10 +132,12 @@ public sealed partial class HTNSystem : EntitySystem
             case HTNOperatorStatus.Continuing:
                 break;
             case HTNOperatorStatus.Failed:
+                currentOperator.Shutdown(blackboard, status);
                 component.Plan = null;
                 break;
             // Operator completed so go to the next one.
             case HTNOperatorStatus.Finished:
+                currentOperator.Shutdown(blackboard, status);
                 component.Plan.Index++;
 
                 // Plan finished!

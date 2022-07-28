@@ -33,10 +33,10 @@ public sealed class MoveToOperator : HTNOperator
         _pathfind = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
     }
 
-    public override async Task PlanUpdate(NPCBlackboard blackboard)
+    public override async Task<Dictionary<string, object>?> PlanUpdate(NPCBlackboard blackboard)
     {
         if (!PathfindInPlanning)
-            return;
+            return null;
 
         var movementToken = new CancellationTokenSource();
         blackboard.SetValue(MovementCancelToken, movementToken);
@@ -51,9 +51,12 @@ public sealed class MoveToOperator : HTNOperator
         blackboard.Remove(MovementCancelToken);
 
         if (job.Result == null)
-            return;
+            return null;
 
-        blackboard.SetValue(TargetKey, job.Result);
+        return new Dictionary<string, object>()
+        {
+            { TargetKey, job.Result }
+        };
     }
 
     // Given steering is complicated we'll hand it off to a dedicated system rather than this singleton operator.

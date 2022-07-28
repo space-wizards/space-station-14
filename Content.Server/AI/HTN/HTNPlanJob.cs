@@ -43,7 +43,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // e.g. pathfind to a target before deciding to attack it.
         // Given all of the primitive tasks are singletons we need to store the data somewhere
         // hence we'll store it here.
-        var appliedStates = new List<Dictionary<string, object>>();
+        var appliedStates = new List<Dictionary<string, object>?>();
 
         var tasksToProcess = new Queue<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
@@ -79,19 +79,18 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard,
-                            ref btrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref _blackboard, ref btrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (await PrimitiveConditionMet(primitive, _blackboard))
+                    if (await PrimitiveConditionMet(primitive, _blackboard, appliedStates))
                     {
                         primitiveCount++;
                         finalPlan.Add(primitive);
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard, ref btrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref _blackboard, ref btrIndex);
                     }
 
                     break;
@@ -100,10 +99,10 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
         var branchTraversalRecord = decompHistory.Select(o => o.MethodTraversal).ToList();
 
-        return new HTNPlan(finalPlan, branchTraversalRecord);
+        return new HTNPlan(finalPlan, branchTraversalRecord, appliedStates);
     }
 
-    private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard)
+    private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard, List<Dictionary<string, object>?> appliedStates)
     {
         foreach (var con in primitive.Preconditions)
         {
@@ -113,7 +112,8 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return false;
         }
 
-        await primitive.Operator.PlanUpdate(blackboard);
+        var effects = await primitive.Operator.PlanUpdate(blackboard);
+        appliedStates.Add(effects);
 
         return true;
     }
@@ -127,12 +127,15 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
             foreach (var con in branch.Preconditions)
             {
-                if (con.IsMet(blackboard)) continue;
+                if (con.IsMet(blackboard))
+                    continue;
+
                 isValid = false;
                 break;
             }
 
-            if (!isValid) continue;
+            if (!isValid)
+                continue;
 
             foreach (var task in branch.Tasks)
             {
@@ -151,6 +154,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     private void RestoreTolastDecomposedTask(
         Stack<DecompositionState> decompHistory,
         Queue<HTNTask> tasksToProcess,
+        List<Dictionary<string, object>?> appliedStates,
         List<HTNPrimitiveTask> finalPlan,
         ref NPCBlackboard blackboard,
         ref int mtrIndex)
@@ -166,6 +170,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
         // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
         finalPlan.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
+        appliedStates.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
 
         blackboard = lastDecomp.Blackboard;
         tasksToProcess.Enqueue(lastDecomp.CompoundTask);
