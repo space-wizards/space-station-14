@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
@@ -39,6 +40,15 @@ public sealed class ClothingSystem : EntitySystem
 
         clothing.EquippedPrefix = prefix;
         _itemSys.VisualsChanged(uid);
+        Dirty(clothing);
+    }
+
+    public void SetSlots(EntityUid uid, SlotFlags slots, SharedClothingComponent? clothing = null)
+    {
+        if (!Resolve(uid, ref clothing))
+            return;
+
+        clothing.Slots = slots;
         Dirty(clothing);
     }
 
