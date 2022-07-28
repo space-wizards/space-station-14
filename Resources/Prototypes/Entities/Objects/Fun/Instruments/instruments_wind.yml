@@ -11,7 +11,7 @@
       "Soprano": {64: 0}
       "Alto": {65: 0}
       "Tenor": {66: 0}
-      "Baritone": {67: 0} 
+      "Baritone": {67: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
