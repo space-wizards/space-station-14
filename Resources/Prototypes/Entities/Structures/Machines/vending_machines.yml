@@ -887,6 +887,41 @@
     energy: 1.6
     color: "#ffe599"
 
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSalvage
+  name: salvage vendor
+  description: A dwarves best friend!
+  components:
+  - type: VendingMachine
+    pack: SalvageEquipmentInventory
+#  - type: Advertise
+#    pack: VendomatAds
+#  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/salvagevend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      eject: true
+      ejectUnshaded: true
+      denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#9dc5c9"
+
 # job clothing
 
 - type: entity
