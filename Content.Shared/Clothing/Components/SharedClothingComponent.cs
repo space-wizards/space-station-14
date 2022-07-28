@@ -10,7 +10,7 @@ namespace Content.Shared.Clothing.Components;
 ///     This handles entities which can be equipped.
 /// </summary>
 [NetworkedComponent]
-[Access(typeof(ClothingSystem))]
+[Access(typeof(ClothingSystem), typeof(InventorySystem))]
 public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
