@@ -1,0 +1,95 @@
+# /obj/machinery/telecomms/allinone
+- type: entity
+  id: tcomms_allinone
+  parent: BaseTelecomms
+  name: telecommunications mainframe
+  description: A compact machine used for portable subspace telecommunications processing.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/telecomms.rsi
+    netsync: false
+    layers:
+    - state: relay
+      map: ["enum.TelecommsMachineVisualLayers.Machine"]
+  - type: TelecommsAllInOne
+    network: tcommsat
+  - type: Appearance
+  - type: TelecommsMachineVisuals
+    onState: relay
+    offState: relay_off
+  - type: ApcPowerReceiver
+    powerLoad: 100 # balance, by default the power pull of this is none
+
+# Map Helpers
+- type: entity
+  id: tcomms_allinone_common
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Common)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    # Only the 1441 to 1489 range is freely available for general conversation.
+    listeningFrequencyRange: [1441, 1489]
+
+- type: entity
+  id: tcomms_allinone_cargo
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Supply)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1347]
+
+- type: entity
+  id: tcomms_allinone_service
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Service)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1349]
+
+- type: entity
+  id: tcomms_allinone_science
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Science)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1351]
+
+- type: entity
+  id: tcomms_allinone_command
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Command)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1353]
+
+- type: entity
+  id: tcomms_allinone_medical
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Medical)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1355]
+
+- type: entity
+  id: tcomms_allinone_engineering
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Engineering)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1357]
+
+- type: entity
+  id: tcomms_allinone_security
+  parent: tcomms_allinone
+  name: telecommunications mainframe (Security)
+  components:
+  - type: TelecommsAllInOne
+    network: tcommsat
+    listeningFrequency: [1359]

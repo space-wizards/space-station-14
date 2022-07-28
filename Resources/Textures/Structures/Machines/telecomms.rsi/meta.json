@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broadcast receiver",
+      "delays": [
+        [
+          1,
+          0.2,
+          0.2,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "broadcast receiver_off"
+    },
+    {
+      "name": "broadcast receiver_o",
+      "delays": [
+        [
+          1,
+          0.2,
+          0.2,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "broadcast receiver_o_off"
+    },
+    {
+      "name": "broadcaster"
+    },
+    {
+      "name": "broadcaster_off"
+    },
+    {
+      "name": "broadcaster_send",
+      "delays": [
+        [
+          1,
+          0.1,
+          0.3,
+          0.1,
+          0.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "broadcaster_o"
+    },
+    {
+      "name": "broadcaster_o_off"
+    },
+    {
+      "name": "relay_off"
+    },
+    {
+      "name": "relay",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "relay_o",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "relay_o_off"
+    },
+    {
+      "name": "processor",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "processor_off"
+    },
+    {
+      "name": "processor_o",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "processor_o_off"
+    },
+    {
+      "name": "bus",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bus_off"
+    },
+    {
+      "name": "bus_o",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bus_o_off"
+    },
+    {
+      "name": "hub",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "hub_off"
+    },
+    {
+      "name": "hub_o",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "hub_o_off"
+    },
+    {
+      "name": "AAS_On",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "AAS_Off"
+    },
+    {
+      "name": "AAS_On_Open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "AAS_Off_Open"
+    },
+    {
+      "name": "Light_Green"
+    },
+    {
+      "name": "Error_Red"
+    },
+    {
+      "name": "Light_Pink"
+    },
+    {
+      "name": "comm_server",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "comm_server_off"
+    },
+    {
+      "name": "comm_server_o",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "comm_server_o_off"
+    }
+  ]
+}

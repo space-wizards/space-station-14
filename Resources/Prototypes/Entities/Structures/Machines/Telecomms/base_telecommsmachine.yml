@@ -1,0 +1,34 @@
+# /obj/machinery/telecomms
+- type: entity
+  abstract: true
+  id: BaseTelecomms
+  parent: BaseMachinePowered
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Physics
+    bodyType: Static
+  # - type: Fixtures
+  #   fixtures:
+  #   - shape:
+  #       !type:PhysShapeAabb
+  #         bounds: "-0.25,-0.4,0.25,0.4"
+  #     mass: 25
+  #     mask:
+  #     - SmallImpassable
+  #     layer:
+  #     - Opaque
+  #     - MobImpassable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Machine
+    node: machine
