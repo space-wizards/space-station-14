@@ -10,7 +10,7 @@ jobs:
       run: git submodule update --init --recursive
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
-    - uses: PaulRitter/yaml-schema-validator@v1
+    - uses: PaulRitter/yaml-schema-validator@v2
       with:
         schema: RobustToolbox/Schemas/rga.yaml
         path_pattern: .*assignment.yaml$
