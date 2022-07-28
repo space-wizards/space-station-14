@@ -1,8 +1,6 @@
-using Robust.Shared.Prototypes;
-
 namespace Content.Server.AI.HTN.PrimitiveTasks;
 
-[Prototype("htnPrimitiveTask")]
+[DataDefinition]
 public sealed class HTNPrimitiveTask : HTNTask
 {
     /// <summary>

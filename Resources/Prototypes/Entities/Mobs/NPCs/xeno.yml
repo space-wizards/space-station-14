@@ -13,7 +13,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootNode: IdleCompoundTask
+    rootTask: IdleCompound
     blackboardA:
       visionRadius: 7
   - type: Tool

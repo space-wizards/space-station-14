@@ -2,10 +2,8 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.AI.HTN;
 
-[ImplicitDataDefinitionForInheritors()]
-public abstract class HTNTask : IPrototype
+public abstract class HTNTask
 {
-    [IdDataFieldAttribute] public string ID { get; } = default!;
 
     /// <summary>
     /// A descriptor of the field, to be used for debugging.

@@ -4,31 +4,36 @@
   branches:
   # Continue waiting
   - tasks:
-    - operator: !type:WaitOperator
-        key: IdleTime
+    - !type:HTNPrimitiveTask
+        operator: !type:WaitOperator
+          key: IdleTime
 
   # Pick a new spot and wait there.
   - tasks:
-    - operator: !type:PickAccessibleOperator
-        idleRangeKey: IdleRange
-        key: MovementTarget
-
-    - operator: !type:MoveToOperator
-        key: MovementTarget
-      preconditions:
-        - !type:KeyExistsPrecondition
-            key: MovementTarget
-      onShutdown:
-      - !type:ClearKeyEffect
+    - !type:HTNPrimitiveTask
+        operator: !type:PickAccessibleOperator
+          idleRangeKey: IdleRange
           key: MovementTarget
 
-    - operator: !type:RandomOperator
-        key: IdleTime
-        minKey: MinimumIdleTime
-        maxKey: MaximumIdleTime
-
-    - operator: !type:WaitOperator
-        key: IdleTime
-      onShutdown:
+    - !type:HTNPrimitiveTask
+        operator: !type:MoveToOperator
+          key: MovementTarget
+        preconditions:
+        - !type:KeyExistsPrecondition
+            key: MovementTarget
+        onShutdown:
         - !type:ClearKeyEffect
-            Key: IdleTime
+            key: MovementTarget
+
+    - !type:HTNPrimitiveTask
+        operator: !type:RandomOperator
+          key: IdleTime
+          minKey: MinimumIdleTime
+          maxKey: MaximumIdleTime
+
+    - !type:HTNPrimitiveTask
+        operator: !type:WaitOperator
+          key: IdleTime
+        onShutdown:
+        - !type:ClearKeyEffect
+          Key: IdleTime

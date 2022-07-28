@@ -6,12 +6,6 @@ namespace Content.Server.AI.HTN;
 public sealed class HTNComponent : NPCComponent
 {
     /// <summary>
-    /// The base node to use for planning.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("rootNode", required: true)]
-    public HTNNode RootNode = default!;
-
-    /// <summary>
     /// The base task to use for planning
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("rootTask", required: true)]

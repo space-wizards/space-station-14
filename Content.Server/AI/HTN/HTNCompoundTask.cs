@@ -5,9 +5,11 @@ namespace Content.Server.AI.HTN;
 /// <summary>
 /// Represents a network of multiple tasks. This gets expanded out to its relevant nodes.
 /// </summary>
-[Prototype("htnCompoundTask")]
-public sealed class HTNCompoundTask : HTNTask
+[Prototype("htnCompound")]
+public sealed class HTNCompoundTask : HTNTask, IPrototype
 {
+    [IdDataFieldAttribute] public string ID { get; } = default!;
+
     /// <summary>
     /// The available branches for this compound task.
     /// </summary>
