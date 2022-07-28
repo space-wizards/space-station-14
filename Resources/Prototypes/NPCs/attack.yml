@@ -5,35 +5,35 @@
   # Continue waiting
   - tasks:
     - !type:HTNPrimitiveTask
-        operator: !type:WaitOperator
-          key: IdleTime
+      operator: !type:WaitOperator
+        key: IdleTime
 
   # Pick a new spot and wait there.
   - tasks:
     - !type:HTNPrimitiveTask
-        operator: !type:PickAccessibleOperator
-          idleRangeKey: IdleRange
+      operator: !type:PickAccessibleOperator
+        idleRangeKey: IdleRange
+        key: MovementTarget
+
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        key: MovementTarget
+      preconditions:
+      - !type:KeyExistsPrecondition
+          key: MovementTarget
+      onShutdown:
+      - !type:ClearKeyEffect
           key: MovementTarget
 
     - !type:HTNPrimitiveTask
-        operator: !type:MoveToOperator
-          key: MovementTarget
-        preconditions:
-        - !type:KeyExistsPrecondition
-            key: MovementTarget
-        onShutdown:
-        - !type:ClearKeyEffect
-            key: MovementTarget
+      operator: !type:RandomOperator
+        key: IdleTime
+        minKey: MinimumIdleTime
+        maxKey: MaximumIdleTime
 
     - !type:HTNPrimitiveTask
-        operator: !type:RandomOperator
-          key: IdleTime
-          minKey: MinimumIdleTime
-          maxKey: MaximumIdleTime
-
-    - !type:HTNPrimitiveTask
-        operator: !type:WaitOperator
-          key: IdleTime
-        onShutdown:
-        - !type:ClearKeyEffect
-          Key: IdleTime
+      operator: !type:WaitOperator
+        key: IdleTime
+      onShutdown:
+      - !type:ClearKeyEffect
+        Key: IdleTime
