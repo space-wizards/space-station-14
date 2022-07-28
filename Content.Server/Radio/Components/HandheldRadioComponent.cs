@@ -1,12 +1,5 @@
-using Content.Server.Chat;
-using Content.Server.Chat.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Content.Shared.Radio;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components
 {
@@ -14,94 +7,68 @@ namespace Content.Server.Radio.Components
     [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    [ComponentReference(typeof(IActivate))]
-#pragma warning disable 618
-    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate
-#pragma warning restore 618
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio
     {
-        private ChatSystem _chatSystem = default!;
         private RadioSystem _radioSystem = default!;
-
-        private bool _radioOn;
-        [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-        private HashSet<string> _channels = new();
-
-        public int BroadcastFrequency => IoCManager.Resolve<IPrototypeManager>()
-            .Index<RadioChannelPrototype>(BroadcastChannel).Frequency;
-
-        // TODO: Assert in componentinit that channels has this.
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-        public string BroadcastChannel { get; set; } = "Common";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("frequency")] public int Frequency = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
 
+        // handheld radios and wall radios are slightly more configurable than headsets (UI CONFIGURABLE)
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool RadioOn
+        public bool TXOn
         {
-            get => _radioOn;
+            get => _txOn;
             private set
             {
-                _radioOn = value;
+                _txOn = value;
                 Dirty();
             }
         }
+
+        [DataField("sendOn")]
+        private bool _txOn;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool RXOn
+        {
+            get => _rxOn;
+            private set
+            {
+                _rxOn = value;
+                Dirty();
+            }
+        }
+
+        [DataField("receiveOn")]
+        private bool _rxOn;
 
         protected override void Initialize()
         {
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
-            _chatSystem = EntitySystem.Get<ChatSystem>();
 
-            RadioOn = false;
+            TXOn = false;
+            RXOn = false;
         }
 
-        public void Speak(string message)
+        public bool CanListen(string message, EntityUid source, int? freq)
         {
-            _chatSystem.TrySendInGameICMessage(Owner, message, InGameICChatType.Speak, false);
-        }
-
-        public bool Use(EntityUid user)
-        {
-            RadioOn = !RadioOn;
-
-            var message = Loc.GetString("handheld-radio-component-on-use",
-                                        ("radioState", Loc.GetString(RadioOn ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state")));
-            Owner.PopupMessage(user, message);
-
-            return true;
-        }
-
-        public bool CanListen(string message, EntityUid source, RadioChannelPrototype prototype)
-        {
-            if (!_channels.Contains(prototype.ID)) return false;
-
-            return RadioOn &&
+            // iirc radios have one radiokey but its only being used for nukeop borgs for some reason. Didnt implement that here.
+            return TXOn &&
                    EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(Owner, source, range: ListenRange);
         }
 
-        public void Receive(string message, RadioChannelPrototype channel, EntityUid speaker)
+        public void Listen(MessagePacket message)
         {
-            if (_channels.Contains(channel.ID) && RadioOn)
-            {
-                Speak(message);
-            }
+            Broadcast(message);
         }
 
-        public void Listen(string message, EntityUid speaker, RadioChannelPrototype channel)
+        public void Broadcast(MessagePacket message)
         {
-            Broadcast(message, speaker, channel);
+            _radioSystem.SpreadMessage(message);
         }
 
-        public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
-        {
-            _radioSystem.SpreadMessage(this, speaker, message, channel);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            Use(eventArgs.User);
-        }
     }
 }

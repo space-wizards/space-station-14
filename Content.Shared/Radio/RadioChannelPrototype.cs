@@ -19,6 +19,11 @@ namespace Content.Shared.Radio
 
         [ViewVariables] [DataField("color")] public Color Color { get; private set; } = Color.Lime;
 
+        /// <summary>
+        /// Should this radiochannel skip telecomms entirely (no logging or anything)? Used for private channels like syndie or cc
+        /// </summary>
+        [ViewVariables] [DataField("skipTelecomms")] public bool SkipTelecomms { get; private set; } = false;
+
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;

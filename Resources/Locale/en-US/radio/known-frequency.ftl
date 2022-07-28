@@ -1,0 +1,11 @@
+known-frequency-syndicate = Syndicate
+known-frequency-centcom = CentCom
+known-frequency-supply = Supply
+known-frequency-service = Service
+known-frequency-science = Science
+known-frequency-command = Command
+known-frequency-medical = Medical
+known-frequency-engineering = Engineering
+known-frequency-security = Security
+known-frequency-common = Common
+known-frequency-ai_private = AI Private

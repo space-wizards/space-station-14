@@ -3,6 +3,8 @@
   parent: BaseItem
   id: RadioBase
   abstract: true
+  components:
+    - type: Radio
 
 - type: entity
   name: handheld radio
@@ -10,7 +12,6 @@
   parent: RadioBase
   id: RadioHandheld
   components:
-  - type: Radio
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
     layers:

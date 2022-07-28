@@ -1,0 +1,46 @@
+- type: radioKey
+  id: syn_cypherkey
+  frequency: [1213]
+  syndie: true
+
+- type: radioKey
+  id: bin_cypherkey
+  frequency: []
+  translateBinary: true
+
+- type: radioKey
+  id: sec_cypherkey
+  frequency: [1359]
+
+- type: radioKey
+  id: eng_cypherkey
+  frequency: [1357]
+
+- type: radioKey
+  id: med_cypherkey
+  frequency: [1355]
+- type: radioKey
+  id: sci_cypherkey
+  frequency: [1351]
+
+- type: radioKey
+  id: medsci_cypherkey
+  frequency: [1351, 1355]
+
+# Command
+
+- type: radioKey
+  id: com_cypherkey
+  frequency: [1353]
+
+- type: radioKey
+  id: cap_cypherkey
+  frequency: [1353, 1359, 1357, 1351, 1355, 1347, 1349]
+
+- type: radioKey
+  id: rd_cypherkey
+  frequency: [1353, 1351]
+
+- type: radioKey
+  id: hos_cypherkey
+  frequency: [1353, 1359]

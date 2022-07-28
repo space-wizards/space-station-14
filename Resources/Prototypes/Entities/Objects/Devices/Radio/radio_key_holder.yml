@@ -1,0 +1,33 @@
+
+- type: entity
+  name: standard encryption key
+  description: An encryption key for a radio headset.
+  parent: BaseItem
+  abstract: true
+  id: BaseRadioKey
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/communication.rsi
+      layers:
+        - state: walkietalkie
+        - state: walkietalkie-on
+      state: walkietalkie
+    - type: Item
+      sprite: Objects/Devices/communication.rsi
+      HeldPrefix: walkietalkie
+
+- type: entity
+  name: the captain's encryption key
+  parent: BaseRadioKey
+  id: cap_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: cap_cypherkey
+
+- type: entity
+  name: the head of security's encryption key
+  parent: BaseRadioKey
+  id: hos_cypherkey
+  components:
+    - type: RadioKeyHolder
+      radioKeyPrototype: hos_cypherkey

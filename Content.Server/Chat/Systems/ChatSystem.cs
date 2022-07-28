@@ -7,6 +7,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Popups;
+using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -162,6 +163,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
+    /// <summary>
+    /// Special function for sending radio messages making them appear as a regular radio transmission.
+    /// </summary>
+    public void SendRadioSpeak(EntityUid source, string message, string messageWrap, bool hideChat = false)
+    {
+        SendInVoiceRange(ChatChannel.Local, message, messageWrap, source, hideChat);
+    }
+
     #region Announcements
 
     /// <summary>
@@ -226,14 +235,18 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendEntitySpeak(EntityUid source, string originalMessage, bool hideChat = false)
     {
-        if (!_actionBlocker.CanSpeak(source)) return;
+        if (!_actionBlocker.CanSpeak(source) || HasComp<IRadio>(source)) return;
 
         var (message, channel) = GetRadioPrefix(source, originalMessage);
 
         message = TransformSpeech(source, message);
 
-        if (channel != null)
-            _listener.PingListeners(source, message, channel);
+        // message can be blank or null on this stage (or can be resanitized to emotes like lol or lmao)
+        if (string.IsNullOrEmpty(message))
+            return;
+
+        // feature. if you left a radio on then we can hear you (it's your fault)
+        _listener.PingListeners(source, message, channel);
 
         var messageWrap = Loc.GetString("chat-manager-entity-say-wrap-message",
             ("entityName", Name(source)));
@@ -446,7 +459,6 @@ public sealed partial class ChatSystem : SharedChatSystem
                 !ghosts.HasComponent(playerEntity) &&
                 !sourceCoords.InRange(EntityManager, transformEntity.Coordinates, voiceRange))
                 continue;
-
             playerSessions.Add(player);
         }
     }
