@@ -97,9 +97,9 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanThrow(EntityUid user)
+        public bool CanThrow(EntityUid user, EntityUid itemUid)
         {
-            var ev = new ThrowAttemptEvent(user);
+            var ev = new ThrowAttemptEvent(user, itemUid);
             RaiseLocalEvent(user, ev, true);
 
             return !ev.Cancelled;
