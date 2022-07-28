@@ -5,8 +5,6 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Examine;
-using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
@@ -22,7 +20,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<GasPassiveGateComponent, AtmosDeviceUpdateEvent>(OnPassiveGateUpdated);
-            SubscribeLocalEvent<GasPassiveGateComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+            SubscribeLocalEvent<GasPassiveGateComponent, ExaminedEvent>(OnExamined);
         }
 
         private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, AtmosDeviceUpdateEvent args)
@@ -80,26 +78,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             gate.FlowRate = a*dV/tau + (1-a)*gate.FlowRate; // in L/sec
         }
 
-        private void OnGetExamineVerbs(EntityUid uid, GasPassiveGateComponent component, GetVerbsEvent<ExamineVerb> args)
+        private void OnExamined(EntityUid uid, GasPassiveGateComponent gate, ExaminedEvent args)
         {
-            if (_examineSystem.IsInDetailsRange(args.User, args.Target))
-            {
-                var verb = new ExamineVerb
-                {
-                    Disabled = false,
-                    Message = Loc.GetString("gas-passive-gate-component-tooltip"),
-                    Text = Loc.GetString("verb-categories-examine"),
-                    Category = VerbCategory.Examine,
-                    IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png",
-                    Act = () =>
-                    {
-                        var markup = FormattedMessage.FromMarkup(
-                            Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{component.FlowRate:0.#}")));
-                        _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
-                    }
-                };
-                args.Verbs.Add(verb);
-            }
+            if (!EntityManager.GetComponent<TransformComponent>(gate.Owner).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+                return;
+
+            var str = Loc.GetString("gas-passive-gate-examined", ("flowRate", $"{gate.FlowRate:0.#}"));
+            args.PushMarkup(str);
         }
     }
 }
