@@ -357,11 +357,20 @@
   materials:
     Steel: 100
     Glass: 900
-    
+
 - type: latheRecipe
   id: EmitterCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: EmitterCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: AllInOneCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: AllInOneCircuitboard
   completetime: 4
   materials:
     Steel: 100

@@ -396,7 +396,7 @@
       materialRequirements:
         Glass: 2
         Cable: 2
-        
+
 - type: entity
   id: EmitterCircuitboard
   parent: BaseMachineCircuitboard
@@ -463,3 +463,25 @@
       materialRequirements:
         Glass: 2
         Cable: 2
+
+# Telecomms Machinery
+- type: entity
+  id: AllInOneCircuitboard
+  parent: BaseMachineCircuitboard
+  name: telecommunications mainframe machine board
+  description: A machine printed circuit board for an telecommunications mainframe
+  components:
+    - type: MachineBoard
+      prototype: tcomms_allinone
+      requirements:
+        # TODO: add tcomms mats
+        Manipulator: 2
+        Laser: 2
+        Ansible: 1
+        Filter: 3 # 1 - rx 2 - tx 3 - bus
+        Amplifier: 1
+        Treatment: 1
+        Analyzer: 1
+        Crystal: 1
+      materialRequirements:
+        Cable: 1

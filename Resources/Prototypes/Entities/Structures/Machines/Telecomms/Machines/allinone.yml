@@ -19,6 +19,8 @@
     offState: relay_off
   - type: ApcPowerReceiver
     powerLoad: 100 # balance, by default the power pull of this is none
+  - type: Machine
+    board: AllInOneCircuitboard
 
 # Map Helpers
 - type: entity
