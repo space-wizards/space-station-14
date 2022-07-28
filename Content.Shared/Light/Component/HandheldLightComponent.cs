@@ -73,6 +73,4 @@ namespace Content.Shared.Light
         LowPower,
         Dying,
     }
-
-
 }
