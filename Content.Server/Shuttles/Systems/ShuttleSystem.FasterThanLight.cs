@@ -466,7 +466,7 @@ public sealed partial class ShuttleSystem
         var lastCount = 1;
         var mapId = targetXform.MapID;
 
-        while (iteration < 3)
+        while (iteration < FTLProximityIterations)
         {
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
             {
@@ -487,7 +487,8 @@ public sealed partial class ShuttleSystem
             lastCount = nearbyGrids.Count;
 
             // Mishap moment, dense asteroid field or whatever
-            if (iteration != 3) continue;
+            if (iteration != FTLProximityIterations)
+                continue;
 
             foreach (var grid in _mapManager.GetAllGrids())
             {
