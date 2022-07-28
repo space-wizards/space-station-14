@@ -162,7 +162,6 @@ public sealed partial class ShuttleSystem
         if (!TrySetupFTL(component, out var hyperspace))
             return;
 
-        hyperspace.State = FTLState.Starting;
         hyperspace.StartupTime = startupTime;
         hyperspace.TravelTime = hyperspaceTime;
         hyperspace.Accumulator = hyperspace.StartupTime;
@@ -194,6 +193,7 @@ public sealed partial class ShuttleSystem
         SetDocks(uid, false);
 
         component = AddComp<FTLComponent>(uid);
+        component.State = FTLState.Starting;
         // TODO: Need BroadcastGrid to not be bad.
         SoundSystem.Play(_startupSound.GetSound(), Filter.Empty().AddInRange(Transform(uid).MapPosition, GetSoundRange(component.Owner)), _startupSound.Params);
         // Make sure the map is setup before we leave to avoid pop-in (e.g. parallax).
@@ -314,7 +314,9 @@ public sealed partial class ShuttleSystem
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    _sawmill.Error($"Found invalid FTL state {comp.State} for {comp.Owner}");
+                    RemComp<FTLComponent>(comp.Owner);
+                    break;
             }
         }
     }
