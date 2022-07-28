@@ -98,6 +98,12 @@ public sealed partial class HTNSystem : EntitySystem
                 comp.Plan = comp.PlanningJob.Result;
                 comp.PlanningJob = null;
                 comp.PlanningToken = null;
+
+                // Startup the first task and anything else we need to do.
+                if (comp.Plan != null)
+                {
+                    comp.Plan.Tasks[comp.Plan.Index].Operator.Startup(comp.BlackboardA);
+                }
             }
 
             Update(comp, frameTime);
@@ -136,7 +142,10 @@ public sealed partial class HTNSystem : EntitySystem
                 if (component.Plan.Tasks.Count <= component.Plan.Index)
                 {
                     component.Plan = null;
+                    break;
                 }
+
+                component.Plan.Tasks[component.Plan.Index].Operator.Startup(component.BlackboardA);
                 break;
             default:
                 throw new InvalidOperationException();

@@ -61,7 +61,9 @@ public sealed class MoveToOperator : HTNOperator
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);
-        _entManager.EnsureComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        var comp = _entManager.EnsureComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+
+        comp.Request = new GridTargetSteeringRequest(blackboard.GetValue<EntityCoordinates>(TargetKey), 1f);
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
