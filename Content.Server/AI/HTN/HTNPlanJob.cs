@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.AI.HTN.PrimitiveTasks;
@@ -35,11 +36,14 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
         var decompHistory = new Stack<DecompositionState>();
 
-        // method traversal record. Whenever we find a new compound task this updates.
-        var mtrIndex = 0;
+        // branch traversal record. Whenever we find a new compound task this updates.
+        var btrIndex = 0;
 
-        // TODO: Need to store method traversal record
-        // This is so we can know if a new plan is better than an old plan.
+        // For some tasks we may do something expensive or want to re-use the planning result.
+        // e.g. pathfind to a target before deciding to attack it.
+        // Given all of the primitive tasks are singletons we need to store the data somewhere
+        // hence we'll store it here.
+        var appliedStates = new List<Dictionary<string, object>>();
 
         var tasksToProcess = new Queue<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
@@ -55,7 +59,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                 case HTNCompoundTask compound:
                     await SuspendIfOutOfTime();
 
-                    if (TryFindSatisfiedMethod(compound, tasksToProcess, _blackboard, ref mtrIndex))
+                    if (TryFindSatisfiedMethod(compound, tasksToProcess, _blackboard, ref btrIndex))
                     {
                         // Need to copy worldstate to roll it back
                         // Don't need to copy taskstoprocess as we can just clear it and set it to the compound task we roll back to.
@@ -65,18 +69,18 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                         {
                             Blackboard = _blackboard.ShallowClone(),
                             CompoundTask = compound,
-                            MethodTraversal = mtrIndex,
+                            MethodTraversal = btrIndex,
                             PrimitiveCount = primitiveCount,
                         });
 
                         primitiveCount = 0;
                         // Reset method traversal
-                        mtrIndex = 0;
+                        btrIndex = 0;
                     }
                     else
                     {
                         RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard,
-                            ref mtrIndex);
+                            ref btrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
@@ -87,14 +91,16 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard, ref mtrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, finalPlan, ref _blackboard, ref btrIndex);
                     }
 
                     break;
             }
         }
 
-        return new HTNPlan(finalPlan);
+        var branchTraversalRecord = decompHistory.Select(o => o.MethodTraversal).ToList();
+
+        return new HTNPlan(finalPlan, branchTraversalRecord);
     }
 
     private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard)
@@ -142,7 +148,8 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// <summary>
     /// Restores the planner state.
     /// </summary>
-    private void RestoreTolastDecomposedTask(Stack<DecompositionState> decompHistory,
+    private void RestoreTolastDecomposedTask(
+        Stack<DecompositionState> decompHistory,
         Queue<HTNTask> tasksToProcess,
         List<HTNPrimitiveTask> finalPlan,
         ref NPCBlackboard blackboard,

@@ -7,6 +7,8 @@ namespace Content.Server.AI.HTN;
 /// </summary>
 public sealed class HTNPlan
 {
+    public List<int> BranchTraversalRecord;
+
     public List<HTNPrimitiveTask> Tasks;
 
     public int Index = 0;
@@ -15,8 +17,9 @@ public sealed class HTNPlan
 
     public HTNOperator CurrentOperator => CurrentTask.Operator;
 
-    public HTNPlan(List<HTNPrimitiveTask> tasks)
+    public HTNPlan(List<HTNPrimitiveTask> tasks, List<int> branchTraversalRecord)
     {
         Tasks = tasks;
+        BranchTraversalRecord = branchTraversalRecord;
     }
 }
