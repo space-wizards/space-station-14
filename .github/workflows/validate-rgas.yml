@@ -13,4 +13,4 @@ jobs:
     - uses: PaulRitter/yaml-schema-validator@v1
       with:
         schema: .github/workflows/rga.yml
-        path_pattern: .*assignment.yaml$
+        path_pattern: .*attributions.ya?ml$
