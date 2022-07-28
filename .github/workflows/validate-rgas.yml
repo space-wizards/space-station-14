@@ -1,0 +1,18 @@
+name: YAML schema validator
+on: [push]
+
+jobs:
+  yaml-schema-validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Submodule
+      run: git submodule update --init --recursive
+    - name: Pull engine updates
+      uses: space-wizards/submodule-dependency@v0.1.5
+    - uses: nrkno/yaml-schema-validator-github-action@v4
+      with:
+        schema: RobustToolbox/Schemas/rga.yaml
+        target: target.yaml
+        # Uncomment to disable strict checks
+        # no-strict: true
