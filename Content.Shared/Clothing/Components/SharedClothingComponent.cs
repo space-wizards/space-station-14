@@ -14,6 +14,7 @@ namespace Content.Shared.Clothing.Components;
 public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
+    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
     public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
