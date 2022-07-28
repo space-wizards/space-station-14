@@ -22,6 +22,7 @@ public abstract class SharedClothingComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slots", required: true)]
+    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
     [ViewVariables(VVAccess.ReadWrite)]
