@@ -1,9 +1,10 @@
+using System.Threading;
 using Content.Server.AI.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.AI.HTN;
 
-[RegisterComponent]
+[RegisterComponent, ComponentReference(typeof(NPCComponent))]
 public sealed class HTNComponent : NPCComponent
 {
     /// <summary>
@@ -18,4 +19,15 @@ public sealed class HTNComponent : NPCComponent
     /// </summary>
     [ViewVariables]
     public HTNPlan? Plan;
+
+    [ViewVariables]
+    public HTNPlanJob? PlanningJob = null;
+
+    [ViewVariables]
+    public CancellationTokenSource? PlanningToken = null;
+
+    /// <summary>
+    /// Is this NPC currently planning?
+    /// </summary>
+    [ViewVariables] public bool Planning => PlanningJob != null;
 }

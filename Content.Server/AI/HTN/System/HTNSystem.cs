@@ -1,12 +1,9 @@
 using System.Threading;
 using Content.Server.AI.Components;
 using Content.Server.AI.HTN.PrimitiveTasks;
-using Content.Server.AI.Pathfinding.Accessible;
-using Content.Server.AI.Systems;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.AI.HTN;
 
@@ -14,11 +11,9 @@ public sealed partial class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private readonly HashSet<EntityUid> _planning = new();
     private readonly JobQueue _planQueue = new(0.005);
 
     // TODO: Move this onto JobQueue as a finishedjobs thing we can flush.
-    private readonly Dictionary<EntityUid, (HTNPlanJob Job, CancellationTokenSource CancelToken)> _jobs = new();
 
     // Hierarchical Task Network
     public override void Initialize()
@@ -75,18 +70,15 @@ public sealed partial class HTNSystem : EntitySystem
 
     private void OnHTNStartup(EntityUid uid, HTNComponent component, ComponentStartup args)
     {
+        EnsureComp<ActiveNPCComponent>(uid);
         component.BlackboardA.SetValue(NPCBlackboard.Owner, uid);
     }
 
     private void OnHTNShutdown(EntityUid uid, HTNComponent component, ComponentShutdown args)
     {
-        if (_jobs.TryGetValue(uid, out var job))
-        {
-            job.CancelToken.Cancel();
-            _jobs.Remove(uid);
-        }
+        RemComp<ActiveNPCComponent>(uid);
 
-        _planning.Remove(uid);
+        component.PlanningToken?.Cancel();
     }
 
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
@@ -98,13 +90,14 @@ public sealed partial class HTNSystem : EntitySystem
             if (count >= maxUpdates)
                 break;
 
-            if (_jobs.TryGetValue(comp.Owner, out var job))
+            if (comp.PlanningJob != null)
             {
-                if (job.Job.Status != JobStatus.Finished)
+                if (comp.PlanningJob.Status != JobStatus.Finished)
                     continue;
 
-                comp.Plan = job.Job.Result;
-                _jobs.Remove(comp.Owner);
+                comp.Plan = comp.PlanningJob.Result;
+                comp.PlanningJob = null;
+                comp.PlanningToken = null;
             }
 
             Update(comp, frameTime);
@@ -140,7 +133,7 @@ public sealed partial class HTNSystem : EntitySystem
                 component.Plan.Index++;
 
                 // Plan finished!
-                if (component.Plan.Tasks.Count >= component.Plan.Index)
+                if (component.Plan.Tasks.Count <= component.Plan.Index)
                 {
                     component.Plan = null;
                 }
@@ -152,8 +145,6 @@ public sealed partial class HTNSystem : EntitySystem
 
     private void RequestPlan(HTNComponent component)
     {
-        if (!_planning.Add(component.Owner)) return;
-
         var cancelToken = new CancellationTokenSource();
 
         var job = new HTNPlanJob(
@@ -162,7 +153,8 @@ public sealed partial class HTNSystem : EntitySystem
             component.BlackboardA.ShallowClone(), cancelToken.Token);
 
         _planQueue.EnqueueJob(job);
-        _jobs.Add(component.Owner, (job, cancelToken));
+        component.PlanningJob = job;
+        component.PlanningToken = cancelToken;
     }
 }
 
