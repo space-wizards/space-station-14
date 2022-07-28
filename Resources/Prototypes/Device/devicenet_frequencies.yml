@@ -66,6 +66,6 @@
   frequency: 1173
 
 - type: deviceFrequency
-  id: MailingUnit #used by powered lights.
+  id: MailingUnit
   name: device-frequency-prototype-name-mailing-units
   frequency: 2300

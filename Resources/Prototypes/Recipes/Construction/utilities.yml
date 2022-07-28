@@ -12,7 +12,7 @@
     state: camera
   objectType: Structure
   placementMode: SnapgridCenter
-  
+
 - type: construction
   name: telescreen
   id: WallmountTelescreen
@@ -146,7 +146,6 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: "mailing"
-
 
 - type: construction
   name: disposal pipe

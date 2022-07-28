@@ -16,11 +16,6 @@
                   HorizontalExpand="True"
                   Margin="0 0 0 16">
         </ItemList>
-        <!--<BoxContainer Orientation="Horizontal" SeparationOverride="8">
-            <Label Text="{Loc 'ui-mailing-unit-self-reference-label'}" />
-            <Label Name="UnitTag"
-                   Text="" />
-        </BoxContainer>-->
         <BoxContainer Orientation="Horizontal" SeparationOverride="4">
             <Label Text="{Loc 'ui-disposal-unit-label-state'}" />
             <Label Name="UnitState"
