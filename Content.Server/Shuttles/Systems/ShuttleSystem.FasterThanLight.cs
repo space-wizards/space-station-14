@@ -411,7 +411,11 @@ public sealed partial class ShuttleSystem
     {
         if (!TryComp<TransformComponent>(component.Owner, out var xform) ||
             !TryComp<TransformComponent>(targetUid, out var targetXform) ||
-            targetXform.MapUid == null) return false;
+            targetXform.MapUid == null ||
+            !targetXform.MapUid.Value.IsValid())
+        {
+            return false;
+        }
 
         var config = GetDockingConfig(component, targetUid);
 
@@ -439,7 +443,13 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryFTLProximity(ShuttleComponent component, EntityUid targetUid, TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
-        if (!Resolve(targetUid, ref targetXform) || targetXform.MapUid == null || !Resolve(component.Owner, ref xform)) return false;
+        if (!Resolve(targetUid, ref targetXform) ||
+            targetXform.MapUid == null ||
+            !targetXform.MapUid.Value.IsValid() ||
+            !Resolve(component.Owner, ref xform))
+        {
+            return false;
+        }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
