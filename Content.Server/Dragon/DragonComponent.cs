@@ -89,7 +89,7 @@ namespace Content.Server.Dragon
                 Params = AudioParams.Default.WithVolume(-3f),
             };
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("soundDragonBreath")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundBreathFire")]
         public SoundSpecifier? SoundBreathFire =
             new SoundPathSpecifier("/Audio/Effects/fire.ogg")
             {

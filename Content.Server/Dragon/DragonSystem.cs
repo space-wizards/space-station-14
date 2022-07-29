@@ -262,7 +262,7 @@ namespace Content.Server.Dragon
             var projectile = EnsureComp<ProjectileComponent>(uid);
             _projectileSystem.SetShooter(projectile, user);
 
-            Transform(uid).WorldRotation = direction.ToWorldAngle() - Angle.FromDegrees(180);
+            Transform(uid).WorldRotation = direction.ToWorldAngle();
         }
 
         private sealed class DragonFirebreath
