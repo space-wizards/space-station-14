@@ -42,9 +42,9 @@ namespace Content.Server.Ghost.Roles
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
 
-        // TODO: Reimplement this?
-        // [ViewVariables]
-        // public IReadOnlyCollection<GhostRoleComponent> GhostRoles => _ghostRoles.Values;
+        [ViewVariables]
+        public IReadOnlyCollection<GhostRoleEntry> GhostRoleEntries => _ghostRoles.Values;
+
 
         public override void Initialize()
         {
@@ -434,11 +434,11 @@ namespace Content.Server.Ghost.Roles
 
     public sealed class GhostRoleEntry
     {
-        public string Name = "";
+        [ViewVariables] public string Name = "";
 
-        public string Description = "";
+        [ViewVariables] public string Description = "";
 
-        public string Rules = "";
+        [ViewVariables] public string Rules = "";
 
         public TimeSpan ElapseTime = TimeSpan.Zero;
 
@@ -448,7 +448,7 @@ namespace Content.Server.Ghost.Roles
 
         public readonly HashSet<IPlayerSession> PendingPlayerSessions = new();
 
-        public readonly List<GhostRoleComponent> Components = new();
+        [ViewVariables] public readonly List<GhostRoleComponent> Components = new();
 
         private uint _nextComponentIdentifier;
 
