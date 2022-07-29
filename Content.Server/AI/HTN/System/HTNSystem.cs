@@ -95,15 +95,37 @@ public sealed partial class HTNSystem : EntitySystem
                 if (comp.PlanningJob.Status != JobStatus.Finished)
                     continue;
 
-                comp.Plan = comp.PlanningJob.Result;
+                var newPlanBetter = true;
+
+                if (comp.Plan != null && comp.PlanningJob.Result != null)
+                {
+                    var oldMtr = comp.Plan.BranchTraversalRecord;
+                    var mtr = comp.PlanningJob.Result.BranchTraversalRecord;
+
+                    // If old traversal is better than new traversal then ignore the new plan
+                    for (var i = 0; i < oldMtr.Count; i++)
+                    {
+                        if (i >= mtr.Count || oldMtr[i] < mtr[i])
+                        {
+                            newPlanBetter = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (newPlanBetter)
+                {
+                    comp.Plan = comp.PlanningJob.Result;
+
+                    // Startup the first task and anything else we need to do.
+                    if (comp.Plan != null)
+                    {
+                        StartupTask(comp.Plan.Tasks[comp.Plan.Index], comp.BlackboardA, comp.Plan.Effects[comp.Plan.Index]);
+                    }
+                }
+
                 comp.PlanningJob = null;
                 comp.PlanningToken = null;
-
-                // Startup the first task and anything else we need to do.
-                if (comp.Plan != null)
-                {
-                    comp.Plan.Tasks[comp.Plan.Index].Operator.Startup(comp.BlackboardA);
-                }
             }
 
             Update(comp, frameTime);
@@ -120,42 +142,73 @@ public sealed partial class HTNSystem : EntitySystem
             return;
         }
 
-        // Run the existing plan still
-        var currentOperator = component.Plan.CurrentOperator;
-        var blackboard = component.BlackboardA;
-
-        // Run the existing operator
-        var status = currentOperator.Update(blackboard, frameTime);
-
-        switch (status)
+        // We'll still try re-planning occasionally even when we're updating in case new data comes in.
+        if (component.PlanAccumulator <= 0f)
         {
-            case HTNOperatorStatus.Continuing:
-                break;
-            case HTNOperatorStatus.Failed:
-                currentOperator.Shutdown(blackboard, status);
-                component.Plan = null;
-                break;
-            // Operator completed so go to the next one.
-            case HTNOperatorStatus.Finished:
-                currentOperator.Shutdown(blackboard, status);
-                component.Plan.Index++;
+            RequestPlan(component);
+        }
+        else
+        {
+            component.PlanAccumulator -= frameTime;
+        }
 
-                // Plan finished!
-                if (component.Plan.Tasks.Count <= component.Plan.Index)
-                {
+        // Run the existing plan still
+        var status = HTNOperatorStatus.Finished;
+
+        // Continuously run operators until we can't anymore.
+        while (status != HTNOperatorStatus.Continuing && component.Plan != null)
+        {
+            // Run the existing operator
+            var currentOperator = component.Plan.CurrentOperator;
+            var blackboard = component.BlackboardA;
+            status = currentOperator.Update(blackboard, frameTime);
+
+            switch (status)
+            {
+                case HTNOperatorStatus.Continuing:
+                    break;
+                case HTNOperatorStatus.Failed:
+                    currentOperator.Shutdown(blackboard, status);
                     component.Plan = null;
                     break;
-                }
+                // Operator completed so go to the next one.
+                case HTNOperatorStatus.Finished:
+                    currentOperator.Shutdown(blackboard, status);
+                    component.Plan.Index++;
 
-                component.Plan.Tasks[component.Plan.Index].Operator.Startup(component.BlackboardA);
-                break;
-            default:
-                throw new InvalidOperationException();
+                    // Plan finished!
+                    if (component.Plan.Tasks.Count <= component.Plan.Index)
+                    {
+                        component.Plan = null;
+                        break;
+                    }
+
+                    StartupTask(component.Plan.Tasks[component.Plan.Index], component.BlackboardA, component.Plan.Effects[component.Plan.Index]);
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
         }
+    }
+
+    private void StartupTask(HTNPrimitiveTask primitive, NPCBlackboard blackboard, Dictionary<string, object>? effects)
+    {
+        // We may have planner only tasks where we want to reuse their data during update
+        // e.g. if we pathfind to an enemy to know if we can attack it, we don't want to do another pathfind immediately
+        if (effects != null && primitive.ApplyEffectsOnStartup)
+        {
+            foreach (var (key, value) in effects)
+            {
+                blackboard.SetValue(key, value);
+            }
+        }
+
+        primitive.Operator.Startup(blackboard);
     }
 
     private void RequestPlan(HTNComponent component)
     {
+        component.PlanAccumulator += component.PlanCooldown;
         var cancelToken = new CancellationTokenSource();
 
         var job = new HTNPlanJob(

@@ -16,9 +16,15 @@ public sealed class RandomOperator : HTNOperator
 
     [DataField("maxKey", required: true)] public string MaxKey = string.Empty;
 
-    public override async Task PlanUpdate(NPCBlackboard blackboard)
+    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
     {
-        // TODO: Need some way of being able to replay blackboard states
-        blackboard.SetValue(TargetKey, _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey), blackboard.GetValueOrDefault<float>(MaxKey)));
+        return new Dictionary<string, object>()
+        {
+            {
+                TargetKey,
+                _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey),
+                    blackboard.GetValueOrDefault<float>(MaxKey))
+            }
+        };
     }
 }

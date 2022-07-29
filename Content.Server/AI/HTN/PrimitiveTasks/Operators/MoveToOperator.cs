@@ -33,7 +33,7 @@ public sealed class MoveToOperator : HTNOperator
         _pathfind = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
     }
 
-    public override async Task<Dictionary<string, object>?> PlanUpdate(NPCBlackboard blackboard)
+    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
     {
         if (!PathfindInPlanning)
             return null;

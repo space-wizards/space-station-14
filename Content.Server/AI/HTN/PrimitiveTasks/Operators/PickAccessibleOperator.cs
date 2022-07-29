@@ -26,13 +26,13 @@ public sealed class PickAccessibleOperator : HTNOperator
     }
 
     /// <inheritdoc/>
-    public override async Task PlanUpdate(NPCBlackboard blackboard)
+    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
     {
         // Very inefficient (should weight each region by its node count) but better than the old system
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
-            return;
+            return null;
 
         var reachableArgs = ReachableArgs.GetArgs(owner);
         reachableArgs.VisionRadius = blackboard.GetValueOrDefault<float>(IdleRangeKey);
@@ -40,7 +40,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
 
         if (reachableRegions.Count == 0)
-            return;
+            return null;
 
         var reachableNodes = new List<PathfindingNode>();
 
@@ -55,6 +55,9 @@ public sealed class PickAccessibleOperator : HTNOperator
         var targetNode = _random.Pick(reachableNodes);
 
         var target = grid.Grid.GridTileToLocal(targetNode.TileRef.GridIndices);
-        blackboard.SetValue(TargetKey, target);
+        return new Dictionary<string, object>()
+        {
+            { TargetKey, target },
+        };
     }
 }

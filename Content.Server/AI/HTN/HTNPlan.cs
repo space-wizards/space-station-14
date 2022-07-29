@@ -7,7 +7,10 @@ namespace Content.Server.AI.HTN;
 /// </summary>
 public sealed class HTNPlan
 {
-    public List<Dictionary<string, object>?> AppliedStates;
+    /// <summary>
+    /// Effects that were applied for each primitive task in the plan.
+    /// </summary>
+    public readonly List<Dictionary<string, object>?> Effects;
 
     public List<int> BranchTraversalRecord;
 
@@ -19,10 +22,10 @@ public sealed class HTNPlan
 
     public HTNOperator CurrentOperator => CurrentTask.Operator;
 
-    public HTNPlan(List<HTNPrimitiveTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> appliedStates)
+    public HTNPlan(List<HTNPrimitiveTask> tasks, List<int> branchTraversalRecord, List<Dictionary<string, object>?> effects)
     {
         Tasks = tasks;
         BranchTraversalRecord = branchTraversalRecord;
-        AppliedStates = appliedStates;
+        Effects = effects;
     }
 }

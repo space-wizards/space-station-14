@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 namespace Content.Server.AI;
 
@@ -11,6 +12,14 @@ public sealed class NPCBlackboard : Dictionary<string, object>
         {"MinimumIdleTime", 2f},
         {"VisionRadius", 7f},
     };
+
+    /// <summary>
+    /// Should we allow setting values on the blackboard. This is true when we are planning.
+    /// <remarks>
+    /// The effects get stored separately so they can potentially be re-applied during execution.
+    /// </remarks>
+    /// </summary>
+    public bool ReadOnly = false;
 
     public NPCBlackboard ShallowClone()
     {
@@ -65,7 +74,18 @@ public sealed class NPCBlackboard : Dictionary<string, object>
 
     public void SetValue(string key, object value)
     {
+        if (ReadOnly)
+        {
+            AssertReadonly();
+            return;
+        }
+
         this[key] = value;
+    }
+
+    private void AssertReadonly()
+    {
+        DebugTools.Assert(false, $"Tried to write to an NPC blackboard that is readonly!");
     }
 
     /*

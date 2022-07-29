@@ -15,6 +15,7 @@ public sealed class WaitOperator : HTNOperator
         }
 
         timer -= frameTime;
+        blackboard.SetValue(Key, timer);
 
         return timer <= 0f ? HTNOperatorStatus.Finished : HTNOperatorStatus.Continuing;
     }

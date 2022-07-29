@@ -112,7 +112,18 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return false;
         }
 
-        var effects = await primitive.Operator.PlanUpdate(blackboard);
+        blackboard.ReadOnly = true;
+        var effects = await primitive.Operator.Plan(blackboard);
+        blackboard.ReadOnly = false;
+
+        if (effects != null)
+        {
+            foreach (var (key, value) in effects)
+            {
+                blackboard.SetValue(key, value);
+            }
+        }
+
         appliedStates.Add(effects);
 
         return true;

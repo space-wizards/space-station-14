@@ -14,9 +14,11 @@ public abstract class HTNOperator
     }
 
     /// <summary>
-    /// Called during planning. Returns the effects applied to the world state.
+    /// Called during planning.
     /// </summary>
-    public virtual async Task<Dictionary<string, object>?> PlanUpdate(NPCBlackboard blackboard)
+    /// <param name="blackboard">The blackboard for the NPC.</param>
+    /// <returns>The effects to apply to the blackboard.</returns>
+    public virtual async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
     {
         return null;
     }
