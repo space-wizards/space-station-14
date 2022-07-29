@@ -41,7 +41,7 @@ namespace Content.Server.Medical
 
             SubscribeLocalEvent<MedicalScannerComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MedicalScannerComponent, ActivateInWorldEvent>(OnActivated);
-            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<MedicalScannerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
@@ -65,7 +65,7 @@ namespace Content.Server.Medical
             UpdateUserInterface(uid, scannerComponent);
         }
 
-        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)
         {
             if (!_blocker.CanInteract(args.Entity, scannerComponent.Owner))
                 return;

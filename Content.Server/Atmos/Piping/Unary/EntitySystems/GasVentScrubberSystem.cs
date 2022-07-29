@@ -15,6 +15,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -26,6 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {
@@ -54,19 +56,24 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!scrubber.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
-            {
                 return;
-            }
 
             var xform = Transform(uid);
-            var environment = _atmosphereSystem.GetTileMixture(xform.Coordinates, true);
+
+            if (xform.GridUid == null)
+                return;
+
+            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
+
+            var environment = _atmosphereSystem.GetTileMixture(xform.GridUid, xform.MapUid, position, true);
 
             Scrub(timeDelta, scrubber, environment, outlet);
 
-            if (!scrubber.WideNet) return;
+            if (!scrubber.WideNet)
+                return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true))
             {
                 Scrub(timeDelta, scrubber, adjacent, outlet);
             }
@@ -80,32 +87,41 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
+            Scrub(timeDelta, scrubber.TransferRate, scrubber.PumpDirection, scrubber.FilterGases, tile, outlet.Air);
+        }
+
+        /// <summary>
+        /// True if we were able to scrub, false if we were not.
+        /// </summary>
+        public bool Scrub(float timeDelta, float transferRate, ScrubberPumpDirection mode, HashSet<Gas> filterGases, GasMixture? tile, GasMixture destination)
+        {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
-                || outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
+                || destination.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
             {
-                return;
+                return false;
             }
 
             // Take a gas sample.
-            var ratio = MathF.Min(1f, timeDelta * scrubber.TransferRate / tile.Volume);
+            var ratio = MathF.Min(1f, timeDelta * transferRate / tile.Volume);
             var removed = tile.RemoveRatio(ratio);
 
             // Nothing left to remove from the tile.
             if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
-                return;
+                return false;
 
-            if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
+            if (mode == ScrubberPumpDirection.Scrubbing)
             {
-                _atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);
+                _atmosphereSystem.ScrubInto(removed, destination, filterGases);
 
                 // Remix the gases.
                 _atmosphereSystem.Merge(tile, removed);
             }
-            else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
+            else if (mode == ScrubberPumpDirection.Siphoning)
             {
-                _atmosphereSystem.Merge(outlet.Air, removed);
+                _atmosphereSystem.Merge(destination, removed);
             }
+            return true;
         }
 
         private void OnAtmosAlarm(EntityUid uid, GasVentScrubberComponent component, AtmosMonitorAlarmEvent args)

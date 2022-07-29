@@ -5,9 +5,14 @@ using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Station;
 using JetBrains.Annotations;
+using Robust.Server.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Station.Systems;
@@ -24,9 +29,11 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -58,6 +65,22 @@ public sealed class StationSystem : EntitySystem
         _configurationManager.OnValueChanged(CCVars.StationOffset, x => _randomStationOffset = x, true);
         _configurationManager.OnValueChanged(CCVars.MaxStationOffset, x => _maxRandomStationOffset = x, true);
         _configurationManager.OnValueChanged(CCVars.StationRotation, x => _randomStationRotation = x, true);
+
+        _player.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _player.PlayerStatusChanged -= OnPlayerStatusChanged;
+    }
+
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus == SessionStatus.Connected)
+        {
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+        }
     }
 
     #region Event handlers
@@ -65,11 +88,15 @@ public sealed class StationSystem : EntitySystem
     private void OnStationStartup(EntityUid uid, StationDataComponent component, ComponentAdd args)
     {
         _stations.Add(uid);
+
+        RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.Broadcast());
     }
 
     private void OnStationDeleted(EntityUid uid, StationDataComponent component, ComponentShutdown args)
     {
         _stations.Remove(uid);
+
+        RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.Broadcast());
     }
 
     private void OnPreGameMapLoad(PreGameMapLoad ev)
@@ -153,12 +180,71 @@ public sealed class StationSystem : EntitySystem
 
     #endregion Event handlers
 
+    public Filter GetInStation(EntityUid source, float range = 32f)
+    {
+        var station = GetOwningStation(source);
+
+        if (TryComp<StationDataComponent>(station, out var data))
+        {
+            return GetInStation(data);
+        }
+
+        return Filter.Empty();
+    }
+
+    /// <summary>
+    /// Retrieves a filter for everything in a particular station or near its member grids.
+    /// </summary>
+    public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
+    {
+        // Could also use circles if you wanted.
+        var bounds = new ValueList<Box2>(dataComponent.Grids.Count);
+        var filter = Filter.Empty();
+        var mapIds = new ValueList<MapId>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!_mapManager.TryGetGrid(gridUid, out var grid) ||
+                !xformQuery.TryGetComponent(gridUid, out var xform)) continue;
+
+            var mapId = xform.MapID;
+            var position = _transform.GetWorldPosition(xform, xformQuery);
+            var bound = grid.LocalAABB.Enlarged(range).Translated(position);
+
+            bounds.Add(bound);
+            if (!mapIds.Contains(mapId))
+            {
+                mapIds.Add(grid.ParentMapId);
+            }
+        }
+
+        foreach (var session in Filter.GetAllPlayers(_player))
+        {
+            var entity = session.AttachedEntity;
+            if (entity == null || !xformQuery.TryGetComponent(entity, out var xform)) continue;
+
+            var mapId = xform.MapID;
+
+            if (!mapIds.Contains(mapId)) continue;
+
+            var position = _transform.GetWorldPosition(xform, xformQuery);
+
+            foreach (var bound in bounds)
+            {
+                if (!bound.Contains(position)) continue;
+
+                filter.AddPlayer(session);
+                break;
+            }
+        }
+
+        return filter;
+    }
 
     /// <summary>
     /// Generates a station name from the given config.
     /// </summary>
-    /// <param name="config"></param>
-    /// <returns></returns>
     public static string GenerateStationName(StationConfig config)
     {
         return config.NameGenerator is not null

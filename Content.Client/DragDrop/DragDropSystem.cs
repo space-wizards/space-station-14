@@ -40,6 +40,7 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly CombatModeSystem _combatMode = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -74,11 +75,12 @@ namespace Content.Client.DragDrop
         private ShaderInstance? _dropTargetInRangeShader;
         private ShaderInstance? _dropTargetOutOfRangeShader;
 
-        private readonly List<ISpriteComponent> _highlightedSprites = new();
+        private readonly List<SpriteComponent> _highlightedSprites = new();
 
         public override void Initialize()
         {
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
             _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
             _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
@@ -376,10 +378,10 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = EntitySystem.Get<EntityLookupSystem>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+            var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
             foreach (var pvsEntity in pvsEntities)
             {
-                if (!EntityManager.TryGetComponent(pvsEntity, out ISpriteComponent? inRangeSprite) ||
+                if (!EntityManager.TryGetComponent(pvsEntity, out SpriteComponent? inRangeSprite) ||
                     !inRangeSprite.Visible ||
                     pvsEntity == _dragDropHelper.Dragged) continue;
 
@@ -396,6 +398,11 @@ namespace Content.Client.DragDrop
                         && _interactionSystem.InRangeUnobstructed(dropArgs.Target, dropArgs.Target);
                 }
 
+                if (inRangeSprite.PostShader != null &&
+                    inRangeSprite.PostShader != _dropTargetInRangeShader &&
+                    inRangeSprite.PostShader != _dropTargetOutOfRangeShader)
+                    return;
+
                 // highlight depending on whether its in or out of range
                 inRangeSprite.PostShader = valid.Value ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                 inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
@@ -407,6 +414,9 @@ namespace Content.Client.DragDrop
         {
             foreach (var highlightedSprite in _highlightedSprites)
             {
+                if (highlightedSprite.PostShader != _dropTargetInRangeShader && highlightedSprite.PostShader != _dropTargetOutOfRangeShader)
+                    continue;
+
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }

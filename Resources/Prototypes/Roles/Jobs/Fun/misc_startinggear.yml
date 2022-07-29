@@ -137,3 +137,24 @@
   innerclothingskirt: ClothingUniformJumpskirtOperative
   satchel: ClothingBackpackDuffelSyndicateOperativeMedic
   duffelbag: ClothingBackpackDuffelSyndicateOperativeMedic
+
+#CBURN Unit Gear - Full Kit
+- type: startingGear
+  id: CBURNGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackDuffelCBURN
+    mask: ClothingMaskGas
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetService
+    gloves: ClothingHandsGlovesFingerless
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsJack
+    id: CentcomPDA
+    pocket1: CombatKnife
+    pocket2: WeaponLaserGun
+    suitstorage: YellowOxygenTankFilled
+    belt: ClothingBeltBandolier
+  innerclothingskirt: ClothingUniformJumpsuitColorBrown
+  satchel: ClothingBackpackDuffelCBURN
+  duffelbag: ClothingBackpackDuffelCBURN

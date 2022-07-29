@@ -98,7 +98,7 @@ grids:
   - ind: 0,2
     tiles: MQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAA0AAAANAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAANAAAADQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAAxAAAANwAAADQAAAA0AAAANAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAA0AAAANAAAADQAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAA2AAAANgAAADYAAAA3AAAAMQAAADcAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAANwAAADEAAAA3AAAANgAAADYAAAA2AAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADYAAAA2AAAANgAAADcAAAAxAAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANgAAADYAAAA2AAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADYAAAA2AAAANgAAAAAAAAAAAAAANwAAADEAAAAxAAAAMQAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAA2AAAANgAAADYAAAAAAAAAAAAAADcAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAANgAAADYAAAA2AAAAAAAAAAAAAAA3AAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAADEAAAAxAAAAMQAAAA==
   - ind: 1,3
-    tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAA3AAAANwAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAAAAAAAAAAAADYAAAAAAAAANgAAADYAAAA2AAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAAAAAAA2AAAAAAAAADYAAAA2AAAAAAAAAAAAAAA2AAAAAAAAAAAAAAA2AAAAAAAAAAAAAAA2AAAAAAAAADYAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAA==
+    tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAMQAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAACsAAAArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAAAAAAAAAAAADYAAAAAAAAANgAAADYAAAA2AAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAAAAAAA2AAAAAAAAADYAAAA2AAAAAAAAAAAAAAA2AAAAAAAAAAAAAAA2AAAAAAAAAAAAAAA2AAAAAAAAADYAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAAA==
   - ind: 0,3
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAA==
   - ind: -1,2
@@ -332,6 +332,8 @@ entities:
     pos: -12.5,-1.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -14972,18 +14974,24 @@ entities:
   - pos: -7.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 132
   type: VendingMachineYouTool
   components:
   - pos: -6.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 133
   type: VendingMachineSnack
   components:
   - pos: -6.5,-3.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 134
   type: ClosetEmergencyFilledRandom
   components:
@@ -15609,6 +15617,8 @@ entities:
     pos: -0.5,-11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -15639,12 +15649,16 @@ entities:
   - pos: -2.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 215
   type: VendingMachineSnack
   components:
   - pos: -2.5,-4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 216
   type: PottedPlantRandom
   components:
@@ -16947,6 +16961,8 @@ entities:
     pos: 4.5,-12.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -17120,15 +17136,42 @@ entities:
     parent: 82
     type: Transform
 - uid: 407
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 8.5,11.5
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,4.5
     parent: 82
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 408
-  type: AirlockExternalLocked
+  type: AirlockExternal
   components:
-  - pos: 10.5,4.5
+  - pos: 10.5,11.5
     parent: 82
     type: Transform
 - uid: 409
@@ -17502,6 +17545,8 @@ entities:
     pos: 12.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -17541,6 +17586,8 @@ entities:
   - pos: 4.5,-7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -17726,6 +17773,8 @@ entities:
     pos: 16.5,-13.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -18278,6 +18327,8 @@ entities:
     pos: 12.5,-13.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -18295,6 +18346,8 @@ entities:
     pos: 9.5,-13.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -18495,6 +18548,8 @@ entities:
   - pos: 8.5,-23.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 588
   type: DisposalUnit
   components:
@@ -19124,12 +19179,16 @@ entities:
   - pos: 16.5,-7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 664
   type: VendingMachineNutri
   components:
   - pos: 16.5,-8.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 665
   type: SeedExtractor
   components:
@@ -19382,6 +19441,8 @@ entities:
   - pos: 19.5,-4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 694
   type: AirlockGlass
   components:
@@ -20067,6 +20128,8 @@ entities:
   - pos: 19.5,-0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 770
   type: SignalButton
   components:
@@ -20766,6 +20829,8 @@ entities:
     pos: 13.5,1.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -20783,6 +20848,8 @@ entities:
     pos: 18.5,1.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -21100,15 +21167,42 @@ entities:
     parent: 82
     type: Transform
 - uid: 895
-  type: AirlockExternalLocked
+  type: AirlockExternalGlassShuttleEmergencyLocked
   components:
-  - pos: 10.5,11.5
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,11.5
     parent: 82
     type: Transform
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.49,-0.49
+        - 0.49,0.49
+        - -0.49,0.49
+        - -0.49,-0.49
+      mask:
+      - Impassable
+      - MidImpassable
+      - HighImpassable
+      - LowImpassable
+      - InteractImpassable
+      layer:
+      - MidImpassable
+      - HighImpassable
+      - BulletImpassable
+      - InteractImpassable
+      - Opaque
+      mass: 100
+    - shape: !type:PhysShapeCircle
+        position: 0,-0.5
+        radius: 0.2
+      hard: False
+      id: docking
+    type: Fixtures
 - uid: 896
-  type: AirlockExternalLocked
+  type: AirlockExternal
   components:
-  - pos: 8.5,4.5
+  - pos: 10.5,4.5
     parent: 82
     type: Transform
 - uid: 897
@@ -21224,6 +21318,8 @@ entities:
   - pos: 27.5,6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 914
   type: WallSolid
   components:
@@ -21684,6 +21780,8 @@ entities:
     pos: 22.5,5.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -22009,12 +22107,16 @@ entities:
   - pos: 24.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1006
   type: VendingMachineCola
   components:
   - pos: 25.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1007
   type: VendingMachineCigs
   components:
@@ -22023,6 +22125,8 @@ entities:
   - pos: 26.5,0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1008
   type: Grille
   components:
@@ -22527,6 +22631,8 @@ entities:
     pos: 30.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -22543,6 +22649,8 @@ entities:
   - pos: 30.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1069
   type: ClosetEmergencyFilledRandom
   components:
@@ -23364,6 +23472,8 @@ entities:
     pos: 15.5,11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -23381,6 +23491,8 @@ entities:
     pos: 15.5,6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -23835,6 +23947,8 @@ entities:
   - pos: 20.5,21.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1221
   type: GasVentPump
   components:
@@ -24353,6 +24467,8 @@ entities:
   - pos: 10.5,19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -24996,12 +25112,16 @@ entities:
   - pos: 8.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1340
   type: VendingMachineSecDrobe
   components:
   - pos: 4.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 1341
   type: WindowReinforcedDirectional
   components:
@@ -25205,6 +25325,8 @@ entities:
     pos: 10.5,27.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -26074,25 +26196,25 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 1473
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.454634
+  - pos: -2.5227056,21.554695
     parent: 82
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1474
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.579634
+  - pos: -2.5383306,21.398445
     parent: 82
     type: Transform
   - canCollide: False
     type: Physics
 - uid: 1475
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -2.474149,21.673384
+  - pos: -2.5539556,21.679695
     parent: 82
     type: Transform
   - canCollide: False
@@ -28155,6 +28277,8 @@ entities:
     pos: -5.5,19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -28890,6 +29014,8 @@ entities:
     pos: -15.5,28.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -28906,6 +29032,8 @@ entities:
   - pos: -13.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -28923,6 +29051,8 @@ entities:
     pos: -15.5,21.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -28940,6 +29070,8 @@ entities:
     pos: -12.5,21.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -29757,6 +29889,8 @@ entities:
   - pos: -21.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -29774,6 +29908,8 @@ entities:
     pos: -21.5,22.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -30199,6 +30335,8 @@ entities:
     pos: -19.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -30215,6 +30353,8 @@ entities:
   - pos: -14.5,18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -30232,6 +30372,8 @@ entities:
     pos: -8.5,17.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -32151,12 +32293,16 @@ entities:
   - pos: 20.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2178
   type: VendingMachineCola
   components:
   - pos: 21.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2179
   type: VendingMachineCigs
   components:
@@ -32165,6 +32311,8 @@ entities:
   - pos: 22.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2180
   type: TableWood
   components:
@@ -32864,6 +33012,8 @@ entities:
   - pos: -7.5,20.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2269
   type: BlastDoorOpen
   components:
@@ -34021,9 +34171,10 @@ entities:
     parent: 82
     type: Transform
 - uid: 2391
-  type: AirlockGlassShuttle
+  type: AirlockExternalGlassShuttleLocked
   components:
-  - pos: 15.5,50.5
+  - rot: 3.141592653589793 rad
+    pos: 13.5,50.5
     parent: 82
     type: Transform
   - fixtures:
@@ -34053,9 +34204,10 @@ entities:
       id: docking
     type: Fixtures
 - uid: 2392
-  type: AirlockGlassShuttle
+  type: AirlockExternalGlassShuttleLocked
   components:
-  - pos: 13.5,50.5
+  - rot: 3.141592653589793 rad
+    pos: 15.5,50.5
     parent: 82
     type: Transform
   - fixtures:
@@ -34721,6 +34873,8 @@ entities:
     pos: 6.5,48.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -34738,6 +34892,8 @@ entities:
     pos: 6.5,45.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -36112,6 +36268,8 @@ entities:
     pos: 4.5,42.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -36129,6 +36287,8 @@ entities:
     pos: 4.5,40.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -36311,6 +36471,8 @@ entities:
     pos: 5.5,35.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -36800,6 +36962,8 @@ entities:
   - pos: 1.5,37.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -37674,6 +37838,8 @@ entities:
     pos: 22.5,47.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38100,6 +38266,8 @@ entities:
   - pos: 31.5,39.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 2863
   type: TableWood
   components:
@@ -38122,6 +38290,8 @@ entities:
   - pos: 30.5,39.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38139,6 +38309,8 @@ entities:
     pos: 31.5,34.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38787,6 +38959,8 @@ entities:
     pos: 31.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -38804,6 +38978,8 @@ entities:
     pos: 28.5,23.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39140,6 +39316,8 @@ entities:
   - pos: 32.5,22.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39157,6 +39335,8 @@ entities:
     pos: 27.5,18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39583,6 +39763,8 @@ entities:
   - pos: 33.5,18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3046
   type: PottedPlantRandom
   components:
@@ -39653,6 +39835,8 @@ entities:
     pos: 26.5,22.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -39676,6 +39860,8 @@ entities:
     pos: 20.5,26.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -40265,6 +40451,8 @@ entities:
     pos: 31.5,10.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -41052,6 +41240,8 @@ entities:
     type: Transform
   - sprite: Structures/Machines/VendingMachines/chapel.rsi
     type: Sprite
+  - enabled: False
+    type: AmbientSound
 - uid: 3221
   type: TableWood
   components:
@@ -41148,6 +41338,8 @@ entities:
   - pos: 36.5,11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -41187,6 +41379,8 @@ entities:
     pos: 24.5,-4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -41223,6 +41417,8 @@ entities:
   - pos: 24.5,-1.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -42438,12 +42634,16 @@ entities:
   - pos: 40.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3393
   type: VendingMachineSnack
   components:
   - pos: 41.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3394
   type: PottedPlantRandom
   components:
@@ -42485,6 +42685,8 @@ entities:
   - pos: 43.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3399
   type: VendingMachineCigs
   components:
@@ -42493,6 +42695,8 @@ entities:
   - pos: 44.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3400
   type: Poweredlight
   components:
@@ -44618,12 +44822,16 @@ entities:
   - pos: 46.5,18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3684
   type: VendingMachineVendomat
   components:
   - pos: 45.5,18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3685
   type: ClothingHandsGlovesColorYellow
   components:
@@ -45687,6 +45895,8 @@ entities:
   - pos: 48.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45703,6 +45913,8 @@ entities:
   - pos: 50.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45840,6 +46052,8 @@ entities:
     pos: 39.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -45857,6 +46071,8 @@ entities:
     pos: 41.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -46252,12 +46468,16 @@ entities:
   - pos: 52.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3889
   type: VendingMachineWallMedical
   components:
   - pos: 51.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3890
   type: WallWeaponCapacitorRecharger
   components:
@@ -46616,6 +46836,8 @@ entities:
   - pos: 58.5,2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3944
   type: WindoorChemistryLocked
   components:
@@ -46821,6 +47043,8 @@ entities:
   - pos: 58.5,12.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 3970
   type: DisposalUnit
   components:
@@ -47409,6 +47633,8 @@ entities:
   - pos: 15.5,9.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -47446,6 +47672,8 @@ entities:
   - pos: 56.5,-0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4038
   type: ClothingEyesGlassesMeson
   components:
@@ -48370,6 +48598,8 @@ entities:
   - pos: 66.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4150
   type: MedicalBed
   components:
@@ -49294,6 +49524,8 @@ entities:
   - pos: 68.5,6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -49310,6 +49542,8 @@ entities:
   - pos: 71.5,6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -49355,6 +49589,8 @@ entities:
     pos: 71.5,-0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -49372,6 +49608,8 @@ entities:
     pos: 71.5,-3.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -49992,6 +50230,8 @@ entities:
   - pos: 77.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50081,6 +50321,8 @@ entities:
   - pos: 74.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4361
   type: WallReinforced
   components:
@@ -50524,6 +50766,8 @@ entities:
     pos: 74.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50541,6 +50785,8 @@ entities:
     pos: 79.5,1.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50558,6 +50804,8 @@ entities:
     pos: 73.5,-0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50575,6 +50823,8 @@ entities:
     pos: 73.5,3.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50591,6 +50841,8 @@ entities:
   - pos: 78.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -50998,6 +51250,8 @@ entities:
   - pos: 81.5,8.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4469
   type: WindowReinforcedDirectional
   components:
@@ -51837,6 +52091,8 @@ entities:
   - pos: 79.5,15.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4576
   type: PottedPlantRandom
   components:
@@ -52279,6 +52535,8 @@ entities:
   - pos: 67.5,14.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -54840,6 +55098,8 @@ entities:
   - pos: 86.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -54857,6 +55117,8 @@ entities:
     pos: 83.5,6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -55169,6 +55431,8 @@ entities:
     pos: 48.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -55191,24 +55455,32 @@ entities:
   - pos: 48.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4936
   type: VendingMachineSovietSoda
   components:
   - pos: 53.5,-2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4937
   type: VendingMachineDiscount
   components:
   - pos: 55.5,-2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4938
   type: VendingMachineCola
   components:
   - pos: 54.5,-2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4939
   type: VendingMachineCigs
   components:
@@ -55217,6 +55489,8 @@ entities:
   - pos: 52.5,-2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 4940
   type: ClosetEmergencyFilledRandom
   components:
@@ -56076,6 +56350,8 @@ entities:
   - pos: 46.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5040
   type: CableApcExtension
   components:
@@ -57624,6 +57900,8 @@ entities:
   - pos: 36.5,-12.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5215
   type: GasVentPump
   components:
@@ -57794,6 +58072,8 @@ entities:
   - pos: 35.5,-19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -58138,6 +58418,8 @@ entities:
   - pos: 44.5,-11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5289
   type: VendingMachineCigs
   components:
@@ -58146,6 +58428,8 @@ entities:
   - pos: 45.5,-11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5290
   type: WaterCooler
   components:
@@ -59682,6 +59966,8 @@ entities:
   - pos: 53.5,-20.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -59699,6 +59985,8 @@ entities:
     pos: 44.5,-21.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -59998,6 +60286,8 @@ entities:
     pos: 60.5,-24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -60498,6 +60788,8 @@ entities:
     pos: 59.5,-17.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -60906,6 +61198,8 @@ entities:
     pos: 64.5,-10.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -61148,6 +61442,8 @@ entities:
     pos: 49.5,-9.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -61179,6 +61475,8 @@ entities:
     pos: 52.5,-6.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -61541,6 +61839,8 @@ entities:
   - pos: 11.5,-20.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -61729,6 +62029,8 @@ entities:
   - pos: 12.5,-18.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5731
   type: DisposalUnit
   components:
@@ -61786,6 +62088,8 @@ entities:
   - pos: 13.5,-19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5739
   type: RandomArcade
   components:
@@ -62346,6 +62650,8 @@ entities:
     pos: 8.5,-30.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -62362,6 +62668,8 @@ entities:
   - pos: 11.5,-28.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -62379,6 +62687,8 @@ entities:
     pos: 11.5,-32.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -62396,6 +62706,8 @@ entities:
     pos: 14.5,-31.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -62813,6 +63125,8 @@ entities:
   - pos: 15.5,-24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -63409,6 +63723,8 @@ entities:
   - pos: 20.5,-15.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 5910
   type: BaseAPC
   components:
@@ -64961,6 +65277,8 @@ entities:
     pos: 23.5,-14.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -64978,6 +65296,8 @@ entities:
     pos: 26.5,-14.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -64994,6 +65314,8 @@ entities:
   - pos: 23.5,-11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -65010,6 +65332,8 @@ entities:
   - pos: 26.5,-11.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -65722,6 +66046,8 @@ entities:
     pos: 25.5,-24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -65739,6 +66065,8 @@ entities:
     pos: 22.5,-24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -65755,6 +66083,8 @@ entities:
   - pos: 25.5,-19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -65771,6 +66101,8 @@ entities:
   - pos: 21.5,-19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -66461,6 +66793,8 @@ entities:
     pos: 26.5,-29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -67786,12 +68120,16 @@ entities:
   - pos: 23.5,-33.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 6384
   type: VendingMachineSnack
   components:
   - pos: 23.5,-34.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 6385
   type: ToolboxMechanicalFilled
   components:
@@ -70263,6 +70601,8 @@ entities:
   - pos: 35.5,-29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 6654
   type: TableWood
   components:
@@ -70695,6 +71035,8 @@ entities:
     pos: 42.5,-29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -72292,6 +72634,8 @@ entities:
     pos: 42.5,-29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -72309,6 +72653,8 @@ entities:
     pos: 21.5,-30.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73440,13 +73786,13 @@ entities:
 - uid: 7017
   type: WallReinforced
   components:
-  - pos: 20.5,51.5
+  - pos: 22.5,52.5
     parent: 82
     type: Transform
 - uid: 7018
-  type: WallReinforced
+  type: Grille
   components:
-  - pos: 21.5,51.5
+  - pos: 22.5,50.5
     parent: 82
     type: Transform
 - uid: 7019
@@ -73474,41 +73820,40 @@ entities:
     parent: 82
     type: Transform
 - uid: 7023
-  type: ReinforcedWindow
+  type: APCBasic
   components:
-  - pos: 20.5,49.5
+  - rot: 1.5707963267948966 rad
+    pos: 22.5,52.5
     parent: 82
     type: Transform
 - uid: 7024
   type: ReinforcedWindow
   components:
-  - pos: 20.5,50.5
+  - pos: 22.5,49.5
     parent: 82
     type: Transform
 - uid: 7025
   type: Grille
   components:
-  - pos: 20.5,50.5
+  - pos: 22.5,49.5
     parent: 82
     type: Transform
 - uid: 7026
-  type: Grille
+  type: WallReinforced
   components:
-  - pos: 20.5,49.5
+  - pos: 22.5,54.5
     parent: 82
     type: Transform
 - uid: 7027
-  type: Chair
+  type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 21.5,50.5
+  - pos: 22.5,53.5
     parent: 82
     type: Transform
 - uid: 7028
-  type: Chair
+  type: ReinforcedWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 21.5,49.5
+  - pos: 22.5,50.5
     parent: 82
     type: Transform
 - uid: 7029
@@ -73538,6 +73883,8 @@ entities:
   - pos: 25.5,45.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7033
   type: VendingMachineCigs
   components:
@@ -73546,6 +73893,8 @@ entities:
   - pos: 25.5,46.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7034
   type: Barricade
   components:
@@ -73645,23 +73994,31 @@ entities:
     parent: 82
     type: Transform
 - uid: 7047
-  type: WallReinforced
+  type: SpawnPointDetective
   components:
-  - pos: 21.5,52.5
+  - pos: 29.5,26.5
     parent: 82
     type: Transform
 - uid: 7048
-  type: WallReinforced
+  type: ForensicScanner
   components:
-  - pos: 21.5,53.5
+  - pos: 29.47085,25.620602
     parent: 82
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 7049
-  type: WallReinforced
+  type: BoxForensicPad
   components:
-  - pos: 21.5,54.5
+  - pos: 29.15835,25.558102
     parent: 82
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 7050
   type: WallReinforced
   components:
@@ -73678,12 +74035,6 @@ entities:
   type: WallReinforced
   components:
   - pos: 25.5,54.5
-    parent: 82
-    type: Transform
-- uid: 7053
-  type: ReinforcedWindow
-  components:
-  - pos: 21.5,55.5
     parent: 82
     type: Transform
 - uid: 7054
@@ -73726,12 +74077,6 @@ entities:
   type: ReinforcedWindow
   components:
   - pos: 25.5,55.5
-    parent: 82
-    type: Transform
-- uid: 7061
-  type: Grille
-  components:
-  - pos: 21.5,55.5
     parent: 82
     type: Transform
 - uid: 7062
@@ -73796,16 +74141,6 @@ entities:
   - pos: 23.5,57.5
     parent: 82
     type: Transform
-- uid: 7072
-  type: ComputerSolarControl
-  components:
-  - pos: 22.5,54.5
-    parent: 82
-    type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 7073
   type: OxygenCanister
   components:
@@ -73832,20 +74167,6 @@ entities:
     type: Physics
   - fixtures: []
     type: Fixtures
-- uid: 7076
-  type: Stool
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 22.5,53.5
-    parent: 82
-    type: Transform
-- uid: 7077
-  type: BaseAPC
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 21.5,52.5
-    parent: 82
-    type: Transform
 - uid: 7078
   type: PoweredSmallLight
   components:
@@ -73853,6 +74174,8 @@ entities:
     pos: 24.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73870,6 +74193,8 @@ entities:
     pos: 26.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73941,6 +74266,8 @@ entities:
     pos: 31.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73958,6 +74285,8 @@ entities:
     pos: 31.5,47.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -73975,6 +74304,8 @@ entities:
     pos: 31.5,44.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -76750,6 +77081,8 @@ entities:
     pos: 40.5,57.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77544,6 +77877,8 @@ entities:
     pos: 40.5,38.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77561,6 +77896,8 @@ entities:
     pos: 37.5,34.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77747,6 +78084,8 @@ entities:
     pos: 33.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77848,6 +78187,8 @@ entities:
     pos: 30.5,29.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77981,6 +78322,8 @@ entities:
     pos: 37.5,27.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -77998,6 +78341,8 @@ entities:
     pos: 34.5,36.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -78015,6 +78360,8 @@ entities:
     pos: 38.5,42.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -78585,6 +78932,8 @@ entities:
   - pos: 52.5,34.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7683
   type: VendingMachineCigs
   components:
@@ -78593,6 +78942,8 @@ entities:
   - pos: 52.5,33.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7684
   type: Table
   components:
@@ -78629,12 +78980,16 @@ entities:
   - pos: 52.5,26.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7690
   type: VendingMachineEngivend
   components:
   - pos: 53.5,26.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7691
   type: DisposalUnit
   components:
@@ -79120,6 +79475,8 @@ entities:
   - pos: 50.5,35.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 7745
   type: LockerEngineerFilled
   components:
@@ -80505,6 +80862,8 @@ entities:
     pos: 62.5,46.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -80521,6 +80880,8 @@ entities:
   - pos: 51.5,57.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -82569,6 +82930,8 @@ entities:
   - pos: 59.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84541,6 +84904,8 @@ entities:
     pos: 74.5,40.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84558,6 +84923,8 @@ entities:
     pos: 74.5,37.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84575,6 +84942,8 @@ entities:
     pos: 74.5,34.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84592,6 +84961,8 @@ entities:
     pos: 74.5,31.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84609,6 +84980,8 @@ entities:
     pos: 74.5,28.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -84626,6 +84999,8 @@ entities:
     pos: 74.5,25.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -85802,6 +86177,8 @@ entities:
     type: Transform
   - sprite: Structures/Machines/VendingMachines/cigs.rsi
     type: Sprite
+  - enabled: False
+    type: AmbientSound
 - uid: 8596
   type: ReinforcedWindow
   components:
@@ -86265,6 +86642,8 @@ entities:
     pos: 89.5,-2.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -86282,6 +86661,8 @@ entities:
     pos: 89.5,-5.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -86375,6 +86756,8 @@ entities:
     pos: 85.5,-5.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -86392,6 +86775,8 @@ entities:
     pos: 80.5,-5.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -86408,6 +86793,8 @@ entities:
   - pos: 79.5,-7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -88171,6 +88558,8 @@ entities:
   - pos: 64.5,22.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 8883
   type: CableApcExtension
   components:
@@ -88587,6 +88976,8 @@ entities:
   - pos: 48.5,35.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 8952
   type: SubstationBasic
   components:
@@ -89598,12 +89989,6 @@ entities:
   type: CableApcExtension
   components:
   - pos: 17.5,30.5
-    parent: 82
-    type: Transform
-- uid: 9119
-  type: CableApcExtension
-  components:
-  - pos: 21.5,52.5
     parent: 82
     type: Transform
 - uid: 9120
@@ -108435,6 +108820,8 @@ entities:
     pos: 84.5,17.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -108500,6 +108887,8 @@ entities:
     pos: 69.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -108630,6 +109019,8 @@ entities:
     pos: 57.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -112433,6 +112824,8 @@ entities:
   - pos: -3.5,31.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 11831
   type: Table
   components:
@@ -117568,12 +117961,6 @@ entities:
   - pos: 23.5,56.5
     parent: 82
     type: Transform
-- uid: 12483
-  type: CableHV
-  components:
-  - pos: 22.5,54.5
-    parent: 82
-    type: Transform
 - uid: 12484
   type: CableHV
   components:
@@ -118912,6 +119299,8 @@ entities:
   - pos: 88.5,13.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -118929,6 +119318,8 @@ entities:
     pos: 91.5,10.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -119116,16 +119507,12 @@ entities:
   - pos: 17.5,47.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 12734
   type: SpawnPointHeadOfPersonnel
   components:
   - pos: 28.5,18.5
-    parent: 82
-    type: Transform
-- uid: 12735
-  type: SpawnPointSecurityOfficer
-  components:
-  - pos: 29.5,26.5
     parent: 82
     type: Transform
 - uid: 12736
@@ -119688,6 +120075,8 @@ entities:
   - pos: 62.5,37.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 12804
   type: VendingMachineTankDispenserEVA
   components:
@@ -119696,6 +120085,8 @@ entities:
   - pos: 33.5,-24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 12805
   type: CableMV
   components:
@@ -120593,6 +120984,8 @@ entities:
     pos: 69.5,22.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120629,6 +121022,8 @@ entities:
     pos: 89.5,5.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120645,6 +121040,8 @@ entities:
   - pos: 90.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120700,6 +121097,8 @@ entities:
   - pos: 88.5,13.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120717,6 +121116,8 @@ entities:
     pos: 89.5,10.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120734,6 +121135,8 @@ entities:
     pos: 65.5,15.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -120751,6 +121154,8 @@ entities:
     pos: 61.5,15.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -122291,22 +122696,6 @@ entities:
   - pos: 23.5,57.5
     parent: 82
     type: Transform
-- uid: 13195
-  type: CableHVStack
-  components:
-  - pos: 22.444117,52.60961
-    parent: 82
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 13196
-  type: CableHVStack
-  components:
-  - pos: 22.600367,52.39086
-    parent: 82
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 13197
   type: Grille
   components:
@@ -125595,6 +125984,8 @@ entities:
     pos: 50.5,-0.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -125612,6 +126003,8 @@ entities:
     pos: 48.5,4.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -125718,6 +126111,8 @@ entities:
     pos: 11.5,-10.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126244,29 +126639,6 @@ entities:
   - pos: 22.5,52.5
     parent: 82
     type: Transform
-- uid: 13827
-  type: CableMV
-  components:
-  - pos: 21.5,52.5
-    parent: 82
-    type: Transform
-- uid: 13828
-  type: PoweredSmallLight
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 22.5,53.5
-    parent: 82
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - containers:
-      light_bulb: !type:ContainerSlot {}
-    type: ContainerContainer
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 13829
   type: PoweredSmallLight
   components:
@@ -126274,6 +126646,8 @@ entities:
     pos: 23.5,56.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126291,6 +126665,8 @@ entities:
     pos: 13.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126308,6 +126684,8 @@ entities:
     pos: 15.5,49.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126509,6 +126887,8 @@ entities:
     pos: 51.5,24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126634,6 +127014,8 @@ entities:
   - pos: 34.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126650,6 +127032,8 @@ entities:
   - pos: 36.5,7.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126666,6 +127050,8 @@ entities:
   - pos: 3.5,16.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126683,6 +127069,8 @@ entities:
     pos: -4.5,15.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126754,6 +127142,8 @@ entities:
   - pos: 13.5,-20.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
 - uid: 13874
   type: MaintenanceFluffSpawner
   components:
@@ -126873,6 +127263,8 @@ entities:
     pos: 33.5,24.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -126901,6 +127293,8 @@ entities:
   - pos: 54.5,19.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -127143,6 +127537,8 @@ entities:
   - pos: -6.5,39.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:
@@ -127160,6 +127556,8 @@ entities:
     pos: -4.5,47.5
     parent: 82
     type: Transform
+  - enabled: False
+    type: AmbientSound
   - powerLoad: 0
     type: ApcPowerReceiver
   - containers:

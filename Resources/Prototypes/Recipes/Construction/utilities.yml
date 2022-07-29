@@ -1,3 +1,4 @@
+# SURVEILLANCE
 - type: construction
   name: camera
   id: camera
@@ -9,6 +10,20 @@
   icon:
     sprite: Structures/Wallmounts/camera.rsi
     state: camera
+  objectType: Structure
+  placementMode: SnapgridCenter
+  
+- type: construction
+  name: telescreen
+  id: WallmountTelescreen
+  graph: WallmountTelescreen
+  startNode: start
+  targetNode: Telescreen
+  category: Utilities
+  description: "A surveillance camera monitor for the wall."
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: telescreen
   objectType: Structure
   placementMode: SnapgridCenter
 

@@ -243,36 +243,6 @@
 
 - type: entity
   parent: WallBase
-  id: WallMetal
-  name: metal wall
-  components:
-  - type: Tag
-    tags:
-      - Wall
-      - RCDDeconstructWhitelist
-  - type: Sprite
-    sprite: Structures/Walls/metal.rsi
-  - type: Icon
-    sprite: Structures/Walls/metal.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: metal
-
-- type: entity
-  parent: WallBase
   id: WallPlasma
   name: plasma wall
   components:
@@ -589,6 +559,45 @@
     base: solid
   - type: StaticPrice
     price: 1 # total material cost. If you change the recipe for the wall you should recalculate this.
+    
+- type: entity
+  parent: WallBase
+  id: WallSolidRust
+  name: solid wall
+  suffix: rusted
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/solidrust.rsi
+  - type: Icon
+    sprite: Structures/Walls/solidrust.rsi
+    state: full
+  - type: Construction
+    graph: Girder
+    node: wallrust
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
+  - type: IconSmooth
+    key: walls
+    base: solidrust
 
 - type: entity
   parent: WallBase

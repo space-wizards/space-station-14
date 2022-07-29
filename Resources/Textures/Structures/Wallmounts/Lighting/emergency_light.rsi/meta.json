@@ -5,7 +5,12 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
+    "copyright": "juliang, modified by mirrorcult",
     "states": [
+        {
+            "name": "base",
+            "directions": 4
+        },
         {
             "name": "emergency_light_off",
             "directions": 4,

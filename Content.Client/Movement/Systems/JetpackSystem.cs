@@ -1,4 +1,5 @@
 using Content.Client.Clothing;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -14,6 +15,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -35,7 +37,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
         args.Sprite?.LayerSetState(0, state);
 
         if (TryComp<ClothingComponent>(uid, out var clothing))
-            clothing.EquippedPrefix = enabled ? "on" : null;
+            _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
     }
 
     public override void Update(float frameTime)
@@ -56,6 +58,12 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void CreateParticles(EntityUid uid)
     {
+        // Don't show particles unless the user is moving.
+        if (Container.TryGetContainingContainer(uid, out var container) &&
+            TryComp<PhysicsComponent>(container.Owner, out var body) &&
+            body.LinearVelocity.LengthSquared < 1f)
+            return;
+
         var uidXform = Transform(uid);
         var coordinates = uidXform.Coordinates;
         var gridUid = coordinates.GetGridUid(EntityManager);

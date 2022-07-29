@@ -16,9 +16,8 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DamageableSystem _damage = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+        [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
         private ISawmill _sawmill = default!;
         private float _accumulatedFrameTime;
@@ -44,7 +43,10 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
         {
-            var mod = (component.CurrentThirstThreshold & (ThirstThreshold.Parched | ThirstThreshold.Dead)) != 0x0 ? 0.75f : 1.0f;
+            if (_jetpack.IsUserFlying(component.Owner))
+                return;
+
+            var mod = component.CurrentThirstThreshold <= ThirstThreshold.Parched ? 0.75f : 1.0f;
             args.ModifySpeed(mod, mod);
         }
 
@@ -74,12 +76,28 @@ namespace Content.Server.Nutrition.EntitySystems
             component.CurrentThirst = component.ThirstThresholds[ThirstThreshold.Okay];
         }
 
+        private bool IsMovementThreshold(ThirstThreshold threshold)
+        {
+            switch (threshold)
+            {
+                case ThirstThreshold.Dead:
+                case ThirstThreshold.Parched:
+                    return true;
+                case ThirstThreshold.Thirsty:
+                case ThirstThreshold.Okay:
+                case ThirstThreshold.OverHydrated:
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(threshold), threshold, null);
+            }
+        }
+
         private void UpdateEffects(ThirstComponent component)
         {
-            if (component.LastThirstThreshold == ThirstThreshold.Parched && component.CurrentThirstThreshold != ThirstThreshold.Dead &&
-                    EntityManager.TryGetComponent(component.Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
+            if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
+                    TryComp(component.Owner, out MovementSpeedModifierComponent? movementSlowdownComponent))
             {
-                _movement.RefreshMovementSpeedModifiers(component.Owner);
+                _movement.RefreshMovementSpeedModifiers(component.Owner, movementSlowdownComponent);
             }
 
             // Update UI

@@ -22,6 +22,9 @@
   id: BodyBag
 
 - type: Tag
+  id: BorgArm
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -50,6 +53,9 @@
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: Carp
 
 - type: Tag
   id: Cartridge
@@ -139,6 +145,9 @@
   id: Dice
 
 - type: Tag
+  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
   id: Document
 
 - type: Tag
@@ -206,6 +215,9 @@
 
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
 
 - type: Tag
   id: Handcuffs
@@ -291,6 +303,9 @@
   id: Matchstick
 
 - type: Tag
+  id: Medkit
+
+- type: Tag
   id: Metal
 
 - type: Tag
@@ -354,6 +369,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: ProximitySensor
+
+- type: Tag
   id: PussyWagonKeys
 
 - type: Tag
@@ -400,6 +418,9 @@
   id: StringInstrument
 
 - type: Tag
+  id: Syndicate
+
+- type: Tag
   id: SyndicateSegwayKeys
 
 - type: Tag
@@ -422,6 +443,12 @@
 
 - type: Tag
   id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
 
 - type: Tag
   id: Wirecutter

@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Cloning;
 using Content.Server.DoAfter;
@@ -7,11 +6,13 @@ using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Actions;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
 using Content.Shared.Species;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Threading;
 
 /// <remarks>
 /// Fair warning, this is all kinda shitcode, but it'll have to wait for a major
@@ -176,7 +177,7 @@ namespace Content.Server.Body.Systems
                 EntityManager.DeleteEntity(entity);
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", mob)), mob, Filter.Entities(mob));
+            _popupSystem.PopupEntity(Loc.GetString("reassemble-success", ("user", Identity.Entity(mob, EntityManager))), mob, Filter.Entities(mob));
         }
 
         /// <summary>

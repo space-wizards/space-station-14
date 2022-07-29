@@ -3,7 +3,7 @@ namespace Content.Server.Entry
 {
     public static class IgnoredComponents
     {
-        public static string[] List => new [] {
+        public static string[] List => new[] {
             "ConstructionGhost",
             "IconSmooth",
             "StasisBedVisuals",
@@ -11,6 +11,7 @@ namespace Content.Server.Entry
             "MeleeWeaponArcAnimation",
             "EffectVisuals",
             "DamageStateVisuals",
+            "PortableScrubberVisuals",
             "AnimationsTest",
             "ItemStatus",
             "VehicleVisuals",
@@ -34,6 +35,9 @@ namespace Content.Server.Entry
             "KudzuVisuals",
             "AMEControllerVisuals",
             "AMEShieldingVisuals",
+            "PipeColorVisuals",
+            "FireVisuals",
+            "CrematoriumVisuals",
         };
     }
 }
