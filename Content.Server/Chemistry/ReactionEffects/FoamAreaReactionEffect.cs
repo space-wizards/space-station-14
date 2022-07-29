@@ -2,7 +2,6 @@
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;

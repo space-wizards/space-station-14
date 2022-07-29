@@ -26,35 +26,44 @@ namespace Content.Tests.Shared.Alert
 
 - type: alert
   id: LowPressure
+  icons: []
   category: Pressure
 
 - type: alert
   id: HighPressure
+  icons: []
   category: Pressure
 
 - type: alert
   id: Peckish
+  icons: []
   category: Hunger
 
 - type: alert
   id: Stun
+  icons: []
 
 - type: alert
   id: Handcuffed
+  icons: []
 
 - type: alert
   id: Hot
+  icons: []
   category: Temperature
 
 - type: alert
   id: Cold
+  icons: []
   category: Temperature
 
 - type: alert
   id: Weightless
+  icons: []
 
 - type: alert
   id: PilotingShuttle
+  icons: []
 ";
 
         [Test]

@@ -1,52 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Flashes and stunbatons now only have effect in combat mode., type: Tweak}
-  - {message: 'Stunbatons will no longer hurt people in combat mode, if they successfully
-      stun them. Harmbatoning is no longer possible while stunning at the same time.',
-    type: Tweak}
-  - {message: Stunbaton damage reduced., type: Tweak}
-  id: 1534
-  time: '2022-05-15T02:10:34.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed not being able to climb after being cloned or ejected from a medical
-      scanner., type: Fix}
-  id: 1535
-  time: '2022-05-15T09:57:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Restart round votes now default to abstain and 60 second timer. Cooldown
-      is also set to 5 minutes., type: Tweak}
-  id: 1536
-  time: '2022-05-16T03:33:14.0000000+00:00'
-- author: themias
-  changes:
-  - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
-  id: 1537
-  time: '2022-05-16T23:53:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: More dynamic melee weapon sound range., type: Tweak}
-  id: 1538
-  time: '2022-05-17T03:49:07.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Reduced lighter size from 3 to 2, type: Tweak}
-  id: 1539
-  time: '2022-05-17T04:29:17.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added chat typing indicator., type: Add}
-  id: 1540
-  time: '2022-05-17T09:55:19.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Fixed client crash when someone was cream pied., type: Fix}
-  id: 1541
-  time: '2022-05-17T09:56:17.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: The wide attack keybind has been removed., type: Remove}
   - {message: 'Combat has been slightly reworked. Click on an entity to directly attack
       it. Click anywhere else (or on an entity out of range), and you''ll do a wide
@@ -2948,3 +2902,47 @@ Entries:
       any water.', type: Fix}
   id: 2033
   time: '2022-07-27T14:18:16.0000000+00:00'
+- author: FunkySphere
+  changes:
+  - {message: Fixed name of mime jumpskirt (previously "mime suit"), type: Fix}
+  id: 2034
+  time: '2022-07-27T23:15:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed missing inhand sprites for various syndicate duffel bags., type: Fix}
+  id: 2035
+  time: '2022-07-27T23:32:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug preventing the Identity system from working for most players.,
+    type: Fix}
+  id: 2036
+  time: '2022-07-28T23:21:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Latejoiners are now eligible for traitor., type: Tweak}
+  - {message: Fixed missing kill objective icon., type: Fix}
+  id: 2037
+  time: '2022-07-29T00:59:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed various visuals for held & equipped items., type: Fix}
+  id: 2038
+  time: '2022-07-29T01:02:09.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Syringes can be put in medical belts, type: Add}
+  id: 2039
+  time: '2022-07-29T01:23:11.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Miasma is no longer visible until it's approaching dangerous levels.,
+    type: Tweak}
+  id: 2040
+  time: '2022-07-29T03:13:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed footsteps and bike horn honking sounds having the wrong pitch
+      scale., type: Fix}
+  id: 2041
+  time: '2022-07-29T16:22:19.0000000+00:00'

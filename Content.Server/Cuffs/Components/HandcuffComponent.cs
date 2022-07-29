@@ -5,7 +5,6 @@ using Content.Server.Hands.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

@@ -5,7 +5,6 @@ using Content.Server.Weapon.Melee;
 using Content.Shared.Alert;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
-using Content.Shared.Sound;
 using Robust.Shared.Collections;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
