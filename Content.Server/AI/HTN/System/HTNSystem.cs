@@ -92,17 +92,18 @@ public sealed partial class HTNSystem : EntitySystem
 
             if (comp.PlanningJob != null)
             {
+                // If a new planning job has finished then handle it.
                 if (comp.PlanningJob.Status != JobStatus.Finished)
                     continue;
 
                 var newPlanBetter = true;
 
+                // If old traversal is better than new traversal then ignore the new plan
                 if (comp.Plan != null && comp.PlanningJob.Result != null)
                 {
                     var oldMtr = comp.Plan.BranchTraversalRecord;
                     var mtr = comp.PlanningJob.Result.BranchTraversalRecord;
 
-                    // If old traversal is better than new traversal then ignore the new plan
                     for (var i = 0; i < oldMtr.Count; i++)
                     {
                         if (i >= mtr.Count || oldMtr[i] < mtr[i])
@@ -208,6 +209,9 @@ public sealed partial class HTNSystem : EntitySystem
 
     private void RequestPlan(HTNComponent component)
     {
+        if (component.PlanningJob != null)
+            return;
+
         component.PlanAccumulator += component.PlanCooldown;
         var cancelToken = new CancellationTokenSource();
 
