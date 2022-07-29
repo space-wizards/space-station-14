@@ -30,6 +30,14 @@ namespace Content.Shared.Markings
             _markingColors = colors;
         }
 
+        public Marking(Marking other)
+        {
+            MarkingId = MarkingId;
+            _markingColors = new(other.MarkingColors);
+            Visible = other.Visible;
+            Forced = other.Forced;
+        }
+
         /// <summary>
         ///     ID of the marking prototype.
         /// </summary>

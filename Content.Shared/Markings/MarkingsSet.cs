@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Markings;
@@ -52,9 +53,26 @@ public sealed class MarkingSet
     /// </summary>
     /// <param name="markings"></param>
     /// <param name="pointsPrototype">The ID of the points dictionary prototype.</param>
-    public MarkingSet(List<Marking> markings, string pointsPrototype)
+    public MarkingSet(List<Marking> markings, string pointsPrototype, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
+        IoCManager.Resolve(ref markingManager, ref prototypeManager);
 
+        if (!prototypeManager.TryIndex(pointsPrototype, out MarkingPointsPrototype? points))
+        {
+            return;
+        }
+
+        _points = MarkingPoints.CloneMarkingPointDictionary(points.Points);
+
+        foreach (var marking in markings)
+        {
+            if (!markingManager.IsValidMarking(marking, out var prototype))
+            {
+                continue;
+            }
+
+            AddBack(prototype.MarkingCategory, marking);
+        }
     }
 
     /// <summary>
@@ -63,8 +81,19 @@ public sealed class MarkingSet
     ///     marking, to ensure that it can be placed into the set.
     /// </summary>
     /// <param name="markings"></param>
-    public MarkingSet(List<Marking> markings)
+    public MarkingSet(List<Marking> markings, MarkingManager? markingManager = null)
     {
+        IoCManager.Resolve(ref markingManager);
+
+        foreach (var marking in markings)
+        {
+            if (!markingManager.IsValidMarking(marking, out var prototype))
+            {
+                continue;
+            }
+
+            AddBack(prototype.MarkingCategory, marking);
+        }
     }
 
     /// <summary>
@@ -73,8 +102,15 @@ public sealed class MarkingSet
     /// <param name="other"></param>
     public MarkingSet(MarkingSet other)
     {
-        _markings = new(other._markings);
-        _points = new(other._points);
+        foreach (var (key, list) in other._markings)
+        {
+            foreach (var marking in list)
+            {
+                AddBack(key, new(marking));
+            }
+        }
+
+        _points = MarkingPoints.CloneMarkingPointDictionary(other._points);
     }
 
     /// <summary>
