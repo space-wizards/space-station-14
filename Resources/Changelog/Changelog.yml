@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Reduced lighter size from 3 to 2, type: Tweak}
-  id: 1539
-  time: '2022-05-17T04:29:17.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added chat typing indicator., type: Add}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Fixed various visuals for held & equipped items., type: Fix}
   id: 2038
   time: '2022-07-29T01:02:09.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: Syringes can be put in medical belts, type: Add}
+  id: 2039
+  time: '2022-07-29T01:23:11.0000000+00:00'
