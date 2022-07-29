@@ -2,24 +2,81 @@
   id: IdleCompound
   desc: Picks a random location for the NPC to move to and idle.
   branches:
-  # Pick a new spot and wait there.
-  - tasks:
-    - !type:HTNPrimitiveTask
-      operator: !type:PickAccessibleOperator
+    # Pick a new spot and wait there.
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:PickAccessibleOperator
 
-    - !type:HTNPrimitiveTask
-      operator: !type:MoveToOperator
-        pathfindInPlanning: false
-      preconditions:
-      - !type:KeyExistsPrecondition
-          key: MovementTarget
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: false
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: MovementTarget
 
-    - !type:HTNPrimitiveTask
-      operator: !type:RandomOperator
-        targetKey: IdleTime
-        minKey: MinimumIdleTime
-        maxKey: MaximumIdleTime
+        - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
 
-    - !type:HTNPrimitiveTask
-      operator: !type:WaitOperator
-        key: IdleTime
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: IdleTime
+
+- type: htnCompound
+  id: MeleeCombatCompound
+  desc: Selects a target in melee and tries to attack it.
+  branches:
+    # Melee Weapon combat
+    - tasks:
+        # We always want to double check our target is best so select that first
+        # TODO: need a CD on target selection
+        - !type:HTNPrimitiveTask
+          operator: !type:PickMeleeTargetOperator
+
+        # Make sure we have a decent weapon
+        #- !type:HTNCompoundTask
+        #  id: EquipMelee
+
+        # Start whacking
+        - !type:HTNCompoundTask
+          id: MeleeAttackTargetCompound
+
+    # Unarmed combat
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:PickMeleeTargetOperator
+
+        - !type:HTNCompoundTask
+          id: MeleeAttackTargetCompound
+
+- type: htnCompound
+  id: MeleeAttackTargetCompound
+  desc: Tries to melee attack our target.
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
+  branches:
+    # Keep hitting them if they're in range
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UnarmedMeleeOperator
+          preconditions:
+            - !type:KeyInRangePrecondition
+              key: CombatTarget
+              rangeKey: MeleeRange
+
+    # Move to melee range and hit them
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            key: CombatTarget
+
+        - !type:HTNPrimitiveTask
+          operator: !type:UnarmedMeleeOperator
+          preconditions:
+            - !type:KeyInRangePrecondition
+              key: CombatTarget
+              rangeKey: MeleeRange

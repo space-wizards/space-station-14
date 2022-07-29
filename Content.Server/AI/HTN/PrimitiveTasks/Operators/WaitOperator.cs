@@ -1,5 +1,8 @@
 namespace Content.Server.AI.HTN.PrimitiveTasks;
 
+/// <summary>
+/// Waits the specified amount of time.
+/// </summary>
 public sealed class WaitOperator : HTNOperator
 {
     /// <summary>

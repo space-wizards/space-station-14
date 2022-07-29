@@ -26,6 +26,12 @@ public sealed partial class HTNSystem : EntitySystem
         OnLoad();
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _prototypeManager.PrototypesReloaded -= OnPrototypeLoad;
+    }
+    
     private void OnLoad()
     {
         // Add dependencies for all operators.
@@ -60,12 +66,6 @@ public sealed partial class HTNSystem : EntitySystem
                 }
             }
         }
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _prototypeManager.PrototypesReloaded -= OnPrototypeLoad;
     }
 
     private void OnHTNStartup(EntityUid uid, HTNComponent component, ComponentStartup args)
@@ -106,6 +106,7 @@ public sealed partial class HTNSystem : EntitySystem
 
                     for (var i = 0; i < oldMtr.Count; i++)
                     {
+                        // TODO: Fix.
                         if (i >= mtr.Count || oldMtr[i] < mtr[i])
                         {
                             newPlanBetter = false;
@@ -192,6 +193,9 @@ public sealed partial class HTNSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Starts a new primitive task. Will apply effects from planning if applicable.
+    /// </summary>
     private void StartupTask(HTNPrimitiveTask primitive, NPCBlackboard blackboard, Dictionary<string, object>? effects)
     {
         // We may have planner only tasks where we want to reuse their data during update
@@ -207,6 +211,10 @@ public sealed partial class HTNSystem : EntitySystem
         primitive.Operator.Startup(blackboard);
     }
 
+    /// <summary>
+    /// Request a new plan for this component, even if running an existing plan.
+    /// </summary>
+    /// <param name="component"></param>
     private void RequestPlan(HTNComponent component)
     {
         if (component.PlanningJob != null)
@@ -226,6 +234,9 @@ public sealed partial class HTNSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// The outcome of the current operator during update.
+/// </summary>
 public enum HTNOperatorStatus : byte
 {
     Continuing,

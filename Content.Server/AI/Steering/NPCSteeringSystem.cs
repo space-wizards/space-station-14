@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Steering
 {
-    public sealed class AiSteeringSystem : EntitySystem
+    public sealed class NPCSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
         [Dependency] private readonly IGameTiming _timing = default!;
