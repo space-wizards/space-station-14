@@ -11,5 +11,5 @@ ent-ClothingHeadsetAltSecurity = security overear-headset
     .desc = { ent-ClothingHeadsetAlt.desc }
     .suffix = { "" }
 ent-ClothingHeadsetAltSyndicate = syndicate overear-headset
-    .desc = A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.
+    .desc = An updated, modular syndicate intercom that fits over the head and takes encryption keys. Protects ears from flashbangs.
     .suffix = { "" }

@@ -7,3 +7,6 @@ ent-MobHonkBot = honkbot
 ent-MobCleanBot = cleanbot
     .desc = The creep of automation now threatening space janitors.
     .suffix = { "" }
+ent-MobMedibot = medibot
+    .desc = No substitute for a doctor, but better than nothing.
+    .suffix = { "" }

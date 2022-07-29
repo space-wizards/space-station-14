@@ -1,3 +1,6 @@
+ent-BaseMobHuman = Urist McHands
+    .desc = A miserable pile of secrets.
+    .suffix = { "" }
 ent-MobHumanBase = Урист МакХэндс
     .desc = Жалкая кучка тайн.
     .suffix = { "" }
