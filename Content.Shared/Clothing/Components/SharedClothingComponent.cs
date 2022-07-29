@@ -1,6 +1,6 @@
-﻿using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
