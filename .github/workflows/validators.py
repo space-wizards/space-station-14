@@ -5,4 +5,4 @@ class URL(Validator):
     tag = 'url'
 
     def _is_valid(self, value):
-        return value.startswith("http")
+        return False
