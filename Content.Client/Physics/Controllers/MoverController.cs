@@ -71,10 +71,13 @@ namespace Content.Client.Physics.Controllers
 
             if (TryComp(player, out JointComponent? jointComponent))
             {
-                foreach (var joint in jointComponent.GetJoints)
+                foreach (var joint in jointComponent.GetJoints.Values)
                 {
-                    joint.BodyA.Predict = true;
-                    joint.BodyB.Predict = true;
+                    if (TryComp(joint.BodyAUid, out PhysicsComponent? physics))
+                        physics.Predict = true;
+
+                    if (TryComp(joint.BodyBUid, out physics))
+                        physics.Predict = true;
                 }
             }
 
