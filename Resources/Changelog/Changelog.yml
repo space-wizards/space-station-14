@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Fixed client crash when someone was cream pied., type: Fix}
-  id: 1541
-  time: '2022-05-17T09:56:17.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The wide attack keybind has been removed., type: Remove}
@@ -2945,3 +2940,9 @@ Entries:
     type: Tweak}
   id: 2040
   time: '2022-07-29T03:13:56.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed footsteps and bike horn honking sounds having the wrong pitch
+      scale., type: Fix}
+  id: 2041
+  time: '2022-07-29T16:22:19.0000000+00:00'
