@@ -4,7 +4,7 @@ attribution:
   files: list(str())
   license: str() #todo regex
   copyright: str() #todo regex
-  source: str() #todo regex
+  source: url() #todo regex
 
 # Example
 # - files: ["deprecated.png"]
