@@ -14,3 +14,4 @@ jobs:
       with:
         schema: .github/workflows/rga.yml
         path_pattern: .*attributions.ya?ml$
+        validators_path: .github/workflows/validators.py
