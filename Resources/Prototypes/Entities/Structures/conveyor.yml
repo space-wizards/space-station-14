@@ -20,10 +20,13 @@
   - type: ExtensionCableReceiver
   - type: Conveyor
   - type: Appearance
-  - type: ConveyorVisuals
-    state_running: conveyor_started_cw
-    state_stopped: conveyor_stopped_cw
-    state_reversed: conveyor_started_cw_r
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: conveyor_stopped_cw }
+          Forward: { state: conveyor_started_cw }
+          Reverse: { state: conveyor_started_cw_r }
   - type: Construction
     graph: ConveyorGraph
     node: entity
