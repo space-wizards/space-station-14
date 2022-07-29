@@ -10,6 +10,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Medical
 {
@@ -52,7 +53,7 @@ namespace Content.Server.Medical
 
             SoundSystem.Play("/Audio/Effects/Diseases/vomiting.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
-            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", uid)), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
             // Get the solution of the puddle we spawned
             if (!_solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
                 return;

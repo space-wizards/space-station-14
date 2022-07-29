@@ -81,6 +81,9 @@
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
   components:
+  - type: Tag
+    tags:
+    - Syndicate
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -368,6 +371,7 @@
     color: "#ff0000"
     canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
+    sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight

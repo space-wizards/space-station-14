@@ -26,11 +26,6 @@ namespace Content.Server.Disposal.Tube.Components
         [ViewVariables]
         public Container Contents { get; private set; } = default!;
 
-        [ViewVariables]
-        private bool Anchored =>
-            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
-            physics.BodyType == BodyType.Static;
-
         /// <summary>
         ///     The directions that this tube can connect to others from
         /// </summary>
@@ -99,7 +94,8 @@ namespace Content.Server.Disposal.Tube.Components
                 return;
             }
 
-            var state = Anchored
+            // TODO this should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
+            var state = _entMan.GetComponent<TransformComponent>(Owner).Anchored
                 ? DisposalTubeVisualState.Anchored
                 : DisposalTubeVisualState.Free;
 

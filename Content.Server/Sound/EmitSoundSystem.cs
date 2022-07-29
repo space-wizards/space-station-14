@@ -3,12 +3,15 @@ using Content.Server.Interaction.Components;
 using Content.Server.Sound.Components;
 using Content.Server.Throwing;
 using Content.Server.UserInterface;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Sound
 {
@@ -20,9 +23,32 @@ namespace Content.Server.Sound
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
-        [Dependency] private readonly SharedAudioSystem _autioSys = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         /// <inheritdoc />
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var soundSpammer in EntityQuery<SpamEmitSoundComponent>())
+            {
+                soundSpammer.Accumulator += frameTime;
+                if (soundSpammer.Accumulator < soundSpammer.RollInterval)
+                {
+                    continue;
+                }
+                soundSpammer.Accumulator -= soundSpammer.RollInterval;
+
+                if (_random.Prob(soundSpammer.PlayChance))
+                {
+                    if (soundSpammer.PopUp != null)
+                        _popupSystem.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner, Filter.Pvs(soundSpammer.Owner));
+                    TryEmitSound(soundSpammer);
+                }
+            }
+        }
         public override void Initialize()
         {
             base.Initialize();
@@ -82,7 +108,7 @@ namespace Content.Server.Sound
 
         private void TryEmitSound(BaseEmitSoundComponent component)
         {
-            _autioSys.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
+            _audioSystem.PlayPvs(component.Sound, component.Owner, component.Sound.Params.AddVolume(-2f));
         }
     }
 }

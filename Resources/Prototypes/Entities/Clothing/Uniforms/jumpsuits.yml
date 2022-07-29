@@ -98,7 +98,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
-  name: centcom official's jumpsuit
+  name: CentCom official's jumpsuit
   description: It's a jumpsuit worn by CentCom's officials.
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficer
-  name: centcom officer's jumpsuit
+  name: CentCom officer's jumpsuit
   description: It's a jumpsuit worn by CentCom Officers.
   components:
   - type: Sprite

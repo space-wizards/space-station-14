@@ -40,6 +40,7 @@ namespace Content.Server.Storage.EntitySystems
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
@@ -66,7 +67,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
             SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
-            SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
+            SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
@@ -83,17 +84,16 @@ namespace Content.Server.Storage.EntitySystems
             UpdateStorageUI(uid, storageComp);
         }
 
-        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
+        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
                 return;
 
-            if (_gameTiming.CurTime <
-                component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+            if (_gameTiming.CurTime < component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
                 return;
 
             component.LastInternalOpenAttempt = _gameTiming.CurTime;
-            component.TryOpenStorage(args.Entity);
+            _entityStorage.TryOpenStorage(args.Entity, component.Owner);
         }
 
 
@@ -102,7 +102,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!component.CanOpen(args.User, silent: true))
+            if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
                 return;
 
             InteractionVerb verb = new();
@@ -116,7 +116,7 @@ namespace Content.Server.Storage.EntitySystems
                 verb.Text = Loc.GetString("verb-common-open");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
-            verb.Act = () => component.ToggleOpen(args.User);
+            verb.Act = () => _entityStorage.ToggleOpen(args.User, args.Target, component);
             args.Verbs.Add(verb);
         }
 
@@ -236,13 +236,13 @@ namespace Content.Server.Storage.EntitySystems
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<SharedItemComponent>(eventArgs.Target.Value)))
+            if (storageComp.AreaInsert && (eventArgs.Target == null || !HasComp<ItemComponent>(eventArgs.Target.Value)))
             {
                 var validStorables = new List<EntityUid>();
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(eventArgs.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
                 {
                     if (entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity)
+                        || !HasComp<ItemComponent>(entity)
                         || !_interactionSystem.InRangeUnobstructed(eventArgs.User, entity))
                         continue;
 
@@ -272,7 +272,7 @@ namespace Content.Server.Storage.EntitySystems
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                     if (_containerSystem.IsEntityInContainer(entity)
                         || entity == eventArgs.User
-                        || !HasComp<SharedItemComponent>(entity))
+                        || !HasComp<ItemComponent>(entity))
                         continue;
 
                     if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(entity, out var transformEnt))
@@ -304,7 +304,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 if (_containerSystem.IsEntityInContainer(target)
                     || target == eventArgs.User
-                    || !HasComp<SharedItemComponent>(target))
+                    || !HasComp<ItemComponent>(target))
                     return;
 
                 if (TryComp<TransformComponent>(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
@@ -432,7 +432,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             foreach (var entity in storageComp.Storage.ContainedEntities)
             {
@@ -491,7 +491,7 @@ namespace Content.Server.Storage.EntitySystems
                 return false;
             }
 
-            if (TryComp(insertEnt, out SharedItemComponent? itemComp) &&
+            if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                 itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed)
             {
                 reason = "comp-storage-insufficient-capacity";

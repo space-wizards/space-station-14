@@ -25,11 +25,12 @@
         Blunt: -2 # negative reductions = increases
         Slash: -8
         Structural: -45
-  - type: Clothing
+  - type: Item
     size: 150
+  - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Tool
     qualities:
@@ -47,9 +48,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 20
+  - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxeflaming.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back

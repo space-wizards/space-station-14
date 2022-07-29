@@ -1,36 +1,36 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/e1d495c3faf4642b6ec1c4be8acc7cd5bc51d785/icons/obj/guns/projectile/rocket.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "base"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken/modified from tgstation at https://github.com/tgstation/tgstation/pull/21818/commits/8959238828600d01ee7c8165a0dd29007570a454",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "mag-0"
-    },
-    {
-      "name": "mag-1"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "rocket0-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "rocket0-inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-0"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "rocket0-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "rocket0-inhand-right",
+            "directions": 4
+        }
+    ]
 }

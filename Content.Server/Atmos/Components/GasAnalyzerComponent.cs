@@ -15,7 +15,7 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
@@ -244,22 +244,6 @@ namespace Content.Server.Atmos.Components
                     Resync();
                     break;
             }
-        }
-
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.CanReach)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"));
-                return true;
-            }
-
-            if (_entities.TryGetComponent(eventArgs.User, out ActorComponent? actor))
-            {
-                OpenInterface(actor.PlayerSession, eventArgs.ClickLocation);
-            }
-
-            return true;
         }
     }
 }

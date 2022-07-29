@@ -8,16 +8,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedVendingMachineComponent))]
     public sealed class VendingMachineComponent : SharedVendingMachineComponent
     {
         public bool Ejecting;
-
-        public TimeSpan AnimationDuration = TimeSpan.Zero;
-
-        [ViewVariables] [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
-        public string PackPrototypeId = string.Empty;
-
-        public string SpriteName = "";
 
         public bool Broken;
 

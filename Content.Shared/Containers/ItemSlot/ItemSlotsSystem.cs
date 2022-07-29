@@ -213,7 +213,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot?.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
 
             var ev = new ItemSlotChangedEvent();
             RaiseLocalEvent(uid, ref ev, true);

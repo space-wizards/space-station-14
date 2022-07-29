@@ -99,6 +99,14 @@ namespace Content.Client.Hands
         }
         #endregion
 
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        {
+            base.DoDrop(uid, hand, doDropInteraction, hands);
+
+            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
+                sprite.RenderOrder = EntityManager.CurrentTick.Value;
+        }
+
         public EntityUid? GetActiveHandEntity()
         {
             return TryGetPlayerHands(out var hands) ? hands.ActiveHandEntity : null;

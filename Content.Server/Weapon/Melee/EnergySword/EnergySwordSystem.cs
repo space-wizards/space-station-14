@@ -18,6 +18,7 @@ namespace Content.Server.Weapon.Melee.EnergySword
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
+        [Dependency] private readonly SharedItemSystem _item = default!;
 
         public override void Initialize()
         {
@@ -66,9 +67,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (!comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 5;
+                _item.SetSize(comp.Owner, 5, item);
             }
 
             if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
@@ -91,9 +92,9 @@ namespace Content.Server.Weapon.Melee.EnergySword
             if (comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out SharedItemComponent? item))
+            if (TryComp(comp.Owner, out ItemComponent? item))
             {
-                item.Size = 9999;
+                _item.SetSize(comp.Owner, 9999, item);
             }
 
             EnsureComp<SharpComponent>(comp.Owner);

@@ -14,9 +14,8 @@ namespace Content.Server.Radio.Components
     [ComponentProtoName("Radio")]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public sealed class HandheldRadioComponent : Component, IListen, IRadio, IActivate
+    public sealed class HandheldRadioComponent : Component, IListen, IRadio
 #pragma warning restore 618
     {
         private ChatSystem _chatSystem = default!;
@@ -97,11 +96,6 @@ namespace Content.Server.Radio.Components
         public void Broadcast(string message, EntityUid speaker, RadioChannelPrototype channel)
         {
             _radioSystem.SpreadMessage(this, speaker, message, channel);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            Use(eventArgs.User);
         }
     }
 }
