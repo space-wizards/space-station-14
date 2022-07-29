@@ -98,11 +98,6 @@ namespace Content.Client.Physics.Controllers
             HandleMobMovement(mover, body, xformMover, frameTime);
         }
 
-        protected override Filter GetSoundPlayers(EntityUid mover)
-        {
-            return Filter.Local();
-        }
-
         protected override bool CanSound()
         {
             return _timing.IsFirstTimePredicted && _timing.InSimulation;

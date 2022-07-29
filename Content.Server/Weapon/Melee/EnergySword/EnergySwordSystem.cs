@@ -1,3 +1,6 @@
+using Content.Server.CombatMode.Disarm;
+using Content.Server.Kitchen.Components;
+using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -5,10 +8,6 @@ using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
-using Content.Server.CombatMode.Disarm;
-using Content.Server.Kitchen.Components;
-using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

@@ -9,7 +9,6 @@ using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
