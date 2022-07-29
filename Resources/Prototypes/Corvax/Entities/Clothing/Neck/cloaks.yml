@@ -6,5 +6,3 @@
   components:
     - type: Sprite
       sprite: Corvax/Clothing/Neck/Cloaks/centcom_officer_black.rsi
-    - type: Clothing
-      sprite: Corvax/Clothing/Neck/Cloaks/centcom_officer_black.rsi
