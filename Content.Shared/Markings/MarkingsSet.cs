@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Species;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -111,6 +112,24 @@ public sealed class MarkingSet
         }
 
         _points = MarkingPoints.CloneMarkingPointDictionary(other._points);
+    }
+
+    public void FilterSpecies(string species, MarkingManager? markingManager = null)
+    {
+        IoCManager.Resolve(ref markingManager);
+
+        foreach (var (category, list) in _markings)
+        {
+            foreach (var marking in list)
+            {
+                if (!markingManager.IsValidMarking(marking, out var prototype)
+                    || prototype.SpeciesRestrictions != null
+                    && !prototype.SpeciesRestrictions.Contains(species))
+                {
+                    Remove(category, marking.MarkingId);
+                }
+            }
+        }
     }
 
     /// <summary>
