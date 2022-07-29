@@ -23,6 +23,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Storage.Components;
@@ -476,7 +477,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
-                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId));
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId), PopupType.SmallCaution);
                 return false;
             }
 
