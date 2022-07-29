@@ -18,11 +18,10 @@ namespace Content.Server.Fluids.EntitySystems;
 
 public sealed class SpraySystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
 
     public override void Initialize()
     {
@@ -58,22 +57,10 @@ public sealed class SpraySystem : EntitySystem
             return;
         }
 
-        var userXform = Transform(args.User);
-
-        // The grid/map entity to attach the vapor to.
-        EntityUid vaporSpawnEntityUid;
-        if (userXform.GridUid != null)
-            vaporSpawnEntityUid = userXform.GridUid.Value;
-        else if (userXform.MapUid != null)
-            vaporSpawnEntityUid = userXform.MapUid.Value;
-        else
-            return;
-
-        var gridMapXform = Transform(vaporSpawnEntityUid);
-        var gridMapInvMatrix = gridMapXform.InvWorldMatrix;
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var userXform = xformQuery.GetComponent(args.User);
 
         var userMapPos = userXform.MapPosition;
-
         var clickMapPos = args.ClickLocation.ToMap(EntityManager);
 
         var diffPos = clickMapPos.Position - userMapPos.Position;
@@ -110,9 +97,11 @@ public sealed class SpraySystem : EntitySystem
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
-            var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters).Position;
-            var vapor = Spawn(component.SprayedPrototype, new EntityCoordinates(vaporSpawnEntityUid, gridMapInvMatrix.Transform(vaporPos)));
-            Transform(vapor).WorldRotation = rotation;
+            var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters);
+            var vapor = Spawn(component.SprayedPrototype, vaporPos);
+            var vaporXform = xformQuery.GetComponent(vapor);
+
+            vaporXform.WorldRotation = rotation;
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
@@ -126,11 +115,7 @@ public sealed class SpraySystem : EntitySystem
 
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
-            _vaporSystem.Start(vaporComponent, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime);
-
-            // Apply the reaction force to the user.
-            if (component.Impulse > 0f && TryComp(args.User, out PhysicsComponent? body))
-                body.ApplyLinearImpulse(-impulseDirection * component.Impulse);
+            _vaporSystem.Start(vaporComponent, vaporXform, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime, args.User);
         }
 
         SoundSystem.Play(component.SpraySound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));

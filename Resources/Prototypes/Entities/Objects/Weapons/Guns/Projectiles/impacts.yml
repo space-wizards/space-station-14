@@ -30,3 +30,18 @@
           state: impact_laser_blue
     - type: EffectVisuals
 
+- type: entity
+  id: BulletImpactEffectKinetic
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.2
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/arcs.rsi
+      state: punch
+  - type: EffectVisuals

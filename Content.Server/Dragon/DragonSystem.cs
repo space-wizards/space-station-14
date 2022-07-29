@@ -28,7 +28,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly ProjectileSystem _projectileSystem = default!;
         [Dependency] private readonly IGameTiming _timingSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-        [Dependency] protected readonly IRobustRandom _randomSystem = default!;
+        [Dependency] private readonly IRobustRandom _randomSystem = default!;
 
         private readonly Dictionary<EntityUid, DragonFirebreath> _pendingBreathAttacks = new();
 

@@ -107,7 +107,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            if (!HasComp<SharedItemComponent>(args.Used))
+            if (!HasComp<ItemComponent>(args.Used))
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
                 return;

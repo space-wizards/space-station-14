@@ -27,8 +27,10 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
 using Content.Shared.Zombies;
+using Content.Shared.Popups;
 using Content.Server.Atmos.Miasma;
 using Content.Server.IdentityManagement;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Zombies
 {
@@ -47,6 +49,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
+        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -62,8 +65,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState.IsDead() ||
-                args.CurrentMobState.IsCritical())
+            if (args.CurrentMobState == DamageState.Dead ||
+                args.CurrentMobState == DamageState.Critical)
             {
                 ZombifyEntity(uid);
             }
@@ -100,7 +103,8 @@ namespace Content.Server.Zombies
 
             //funny voice
             EnsureComp<ReplacementAccentComponent>(target).Accent = "zombie";
-            EnsureComp<RottingComponent>(target);
+            var rotting = EnsureComp<RottingComponent>(target);
+            rotting.DealDamage = false;
 
             ///This is needed for stupid entities that fuck up combat mode component
             ///in an attempt to make an entity not attack. This is the easiest way to do it.
@@ -128,6 +132,7 @@ namespace Content.Server.Zombies
                 DamageSpecifier dspec = new();
                 dspec.DamageDict.Add("Slash", 13);
                 dspec.DamageDict.Add("Piercing", 7);
+                dspec.DamageDict.Add("Structural", 10);
                 melee.Damage = dspec;
             }
 
@@ -142,10 +147,10 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target));
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target), PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
-            if (!HasComp<SharedDummyInputMoverComponent>(target)) //this component is cursed and fucks shit up
+            if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
                 MakeSentientCommand.MakeSentient(target, EntityManager);
 
             //Make the zombie not die in the cold. Good for space zombies
@@ -193,6 +198,8 @@ namespace Content.Server.Zombies
 
             //zombie gamemode stuff
             RaiseLocalEvent(new EntityZombifiedEvent(target));
+            //zombies get slowdown once they convert
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
         }
     }
 }

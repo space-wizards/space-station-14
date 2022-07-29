@@ -196,7 +196,7 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadLightBase
   id: ClothingHeadHelmetFire
   name: fire helmet
   description: An atmos techs best friend. Provides some heat resistance and looks cool.
@@ -205,8 +205,6 @@
     sprite: Clothing/Head/Helmets/firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/firehelmet.rsi
-    size: 5
-    canPickup: true
     quickEquip: true
   - type: IngestionBlocker
   - type: PowerCellSlot
@@ -228,7 +226,7 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: ClothingHeadLightBase
   id: ClothingHeadHelmetAtmosFire
   name: atmos fire helmet
   description: An atmos fire helmet, able to keep the user cool in any situation.
@@ -237,8 +235,6 @@
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/atmos_firehelmet.rsi
-    size: 5
-    canPickup: true
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection

@@ -3,10 +3,6 @@ using Robust.Shared.Containers;
 using System.Threading;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
-using Content.Shared.Sound;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -86,17 +82,18 @@ namespace Content.Server.Dragon
             Params = AudioParams.Default.WithVolume(-3f),
         };
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("soundBreathFire")]
-        public SoundSpecifier? SoundBreathFire = new SoundPathSpecifier("/Audio/Effects/fire.ogg")
-        {
-            Params = AudioParams.Default.WithVolume(-3f),
-        };
-
         [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
         public SoundSpecifier? SoundRoar =
             new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg")
             {
                 Params = AudioParams.Default.WithVolume(-3f),
+            };
+
+        [ViewVariables(VVAccess.ReadWrite), DataField("soundDragonBreath")]
+        public SoundSpecifier? SoundBreathFire =
+            new SoundPathSpecifier("/Audio/Effects/fire.ogg")
+            {
+                Params = AudioParams.Default.WithVolume(-3f)
             };
 
         public CancellationTokenSource? CancelToken;

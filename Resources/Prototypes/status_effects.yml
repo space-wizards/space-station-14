@@ -33,10 +33,13 @@
 
 - type: statusEffect
   id: SlurredSpeech
-  
+
 - type: statusEffect
   id: PressureImmunity
 
 - type: statusEffect
   id: Muted
   alert: Muted
+
+- type: statusEffect
+  id: ForcedSleep #I.e., they will not wake on damage or similar

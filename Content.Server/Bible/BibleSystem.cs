@@ -10,6 +10,8 @@ using Content.Server.Cooldown;
 using Content.Server.Bible.Components;
 using Content.Server.MobState;
 using Content.Server.Popups;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Ghost.Roles.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
@@ -39,6 +41,7 @@ namespace Content.Server.Bible
             SubscribeLocalEvent<SummonableComponent, GetItemActionsEvent>(GetSummonAction);
             SubscribeLocalEvent<SummonableComponent, SummonActionEvent>(OnSummon);
             SubscribeLocalEvent<FamiliarComponent, MobStateChangedEvent>(OnFamiliarDeath);
+            SubscribeLocalEvent<FamiliarComponent, GhostRoleSpawnerUsedEvent>(OnSpawned);
         }
 
         private readonly Queue<EntityUid> _addQueue = new();
@@ -194,6 +197,17 @@ namespace Content.Server.Bible
             }
         }
 
+        /// <summary>
+        /// When the familiar spawns, set its source to the bible.
+        /// </summary>
+        private void OnSpawned(EntityUid uid, FamiliarComponent component, GhostRoleSpawnerUsedEvent args)
+        {
+            if (!TryComp<SummonableComponent>(Transform(args.Spawner).ParentUid, out var summonable))
+                return;
+
+            component.Source = summonable.Owner;
+            summonable.Summon = uid;
+        }
 
         private void AttemptSummon(SummonableComponent component, EntityUid user, TransformComponent? position)
         {
@@ -212,12 +226,11 @@ namespace Content.Server.Bible
             var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
                             component.Summon = familiar;
 
-            // We only want to add the familiar component to mobs
-            if (HasComp<MobStateComponent>(familiar))
+            // If this is going to use a ghost role mob spawner, attach it to the bible.
+            if (HasComp<GhostRoleMobSpawnerComponent>(familiar))
             {
-                // Make this Summon the familiar's source
-                var familiarComp = EnsureComp<FamiliarComponent>(familiar);
-                familiarComp.Source = component.Owner;
+                _popupSystem.PopupEntity(Loc.GetString("bible-summon-requested"), user, Filter.Pvs(user), PopupType.Medium);
+                Transform(familiar).AttachParent(component.Owner);
             }
             component.AlreadySummoned = true;
             _actionsSystem.RemoveAction(user, component.SummonAction);

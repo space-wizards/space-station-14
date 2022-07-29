@@ -6,10 +6,13 @@ using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.PDA.Ringer;
+using Content.Server.Station.Components;
+using Content.Server.Station.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 
 namespace Content.Server.PDA
 {
@@ -21,6 +24,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringerSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public override void Initialize()
         {
@@ -30,6 +34,7 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
             SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
+            SubscribeLocalEvent<PDAComponent, GridModifiedEvent>(OnGridChanged);
         }
 
         protected override void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -38,6 +43,8 @@ namespace Content.Server.PDA
 
             if (!TryComp(uid, out ServerUserInterfaceComponent? uiComponent))
                 return;
+
+            UpdateStationName(pda);
 
             if (_uiSystem.TryGetUi(uid, PDAUiKey.Key, out var ui, uiComponent))
                 ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
@@ -77,6 +84,12 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
+        private void OnGridChanged(EntityUid uid, PDAComponent pda, GridModifiedEvent args)
+        {
+            UpdateStationName(pda);
+            UpdatePDAUserInterface(pda);
+        }
+
         private void UpdatePDAUserInterface(PDAComponent pda)
         {
             var ownerInfo = new PDAIdInfoText
@@ -90,7 +103,7 @@ namespace Content.Server.PDA
                 return;
 
             var hasInstrument = HasComp<InstrumentComponent>(pda.Owner);
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, false, hasInstrument);
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, false, hasInstrument);
 
             ui.SetState(state);
 
@@ -101,7 +114,7 @@ namespace Content.Server.PDA
             if (!HasComp<UplinkComponent>(pda.Owner))
                 return;
 
-            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, true, hasInstrument);
+            var uplinkState = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, hasInstrument);
 
             foreach (var session in ui.SubscribedSessions)
             {
@@ -149,6 +162,12 @@ namespace Content.Server.PDA
             }
         }
 
+        private void UpdateStationName(PDAComponent pda)
+        {
+            var station = _stationSystem.GetOwningStation(pda.Owner);
+            pda.StationName = station is null ? null : Name(station.Value);
+        }
+
         private void AfterUIOpen(EntityUid uid, PDAComponent pda, AfterActivatableUIOpenEvent args)
         {
             // A new user opened the UI --> Check if they are a traitor and should get a user specific UI state override.
@@ -165,7 +184,7 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
-            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, true, HasComp<InstrumentComponent>(pda.Owner));
+            var state = new PDAUpdateState(pda.FlashlightOn, pda.PenSlot.HasItem, ownerInfo, pda.StationName, true, HasComp<InstrumentComponent>(pda.Owner));
 
             ui.SetState(state, args.Session);
         }
