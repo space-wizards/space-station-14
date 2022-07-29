@@ -11,8 +11,9 @@
     size: 60
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
+  - type: Item
 
 - type: entity
   name: china lake

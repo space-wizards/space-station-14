@@ -7,11 +7,12 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Item
   - type: Clothing
     size: 60
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
   - type: Gun
     minAngle: 4

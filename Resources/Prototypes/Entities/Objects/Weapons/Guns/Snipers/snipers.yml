@@ -10,11 +10,12 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+  - type: Item
   - type: Clothing
     size: 50
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
   - type: AmmoCounter
   - type: Gun
@@ -85,13 +86,13 @@
   id: WeaponPistolFlintlock
   description: A pirate's companion. Yarrr!
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
-    - type: Clothing
-      icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
-    - type: BallisticAmmoProvider
-      whitelist:
-        tags:
-          - CartridgeAntiMaterial
-      capacity: 1
-      proto: CartridgeAntiMaterial
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: Clothing
+    icon: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeAntiMaterial
+    capacity: 1
+    proto: CartridgeAntiMaterial

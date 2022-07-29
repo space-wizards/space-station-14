@@ -7,11 +7,12 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Item
   - type: Clothing
     size: 30
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
     - suitStorage
   - type: AmmoCounter

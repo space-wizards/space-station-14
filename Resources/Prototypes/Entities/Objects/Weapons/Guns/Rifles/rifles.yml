@@ -7,11 +7,12 @@
   components:
   - type: Sprite
     netsync: false
+  - type: Item
   - type: Clothing
     size: 50
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
     - suitStorage
   - type: AmmoCounter

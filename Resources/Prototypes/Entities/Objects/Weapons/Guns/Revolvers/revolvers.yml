@@ -8,11 +8,12 @@
   - type: Sprite
     netsync: false
     state: icon
+  - type: Item
   - type: Clothing
     size: 10
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     quickEquip: false
-    Slots:
+    slots:
     - suitStorage
     - Belt
   - type: Gun

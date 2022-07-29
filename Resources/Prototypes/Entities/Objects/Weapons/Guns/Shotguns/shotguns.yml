@@ -14,7 +14,7 @@
     size: 30
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
     - suitStorage
   - type: AmmoCounter
@@ -52,11 +52,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
   - type: Clothing
     size: 30
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
-    Slots:
+    slots:
     - Back
     - suitStorage
   - type: Gun
