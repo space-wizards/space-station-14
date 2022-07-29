@@ -113,7 +113,8 @@ namespace Content.Server.Ghost.Roles
 
         public void CloseEui(IPlayerSession session)
         {
-            if (!_openUis.ContainsKey(session)) return;
+            if (!_openUis.ContainsKey(session))
+                return;
 
             _openUis.Remove(session, out var eui);
 
@@ -227,11 +228,6 @@ namespace Content.Server.Ghost.Roles
             // Clear and add the remaining sessions.
             entry.PendingPlayerSessions.Clear();
             entry.PendingPlayerSessions.UnionWith(sessions);
-        }
-
-        private void ProcessGhostRoleEntryWithRequest(uint identifier, GhostRoleEntry entry)
-        {
-
         }
 
         private void PlayerStatusChanged(object? blah, SessionStatusEventArgs args)

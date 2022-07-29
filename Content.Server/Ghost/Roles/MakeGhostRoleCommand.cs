@@ -52,10 +52,10 @@ namespace Content.Server.Ghost.Roles
                 return;
             }
 
-            takeOver = entityManager.AddComponent<GhostTakeoverAvailableComponent>(uid);
-            takeOver.RoleName = name;
-            takeOver.RoleDescription = description;
-            takeOver.RoleRules = rules;
+            using var newTakeover = entityManager.AddComponentUninitialized<GhostTakeoverAvailableComponent>(uid);
+            newTakeover.Comp.RoleName = name;
+            newTakeover.Comp.RoleDescription = description;
+            newTakeover.Comp.RoleRules = rules;
 
             shell.WriteLine($"Made entity {metaData.EntityName} a ghost role.");
         }

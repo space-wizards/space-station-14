@@ -10,7 +10,7 @@ namespace Content.Client.Ghost.Roles.UI
     [UsedImplicitly]
     public sealed class GhostRolesEui : BaseEui
     {
-        private readonly IGameTiming _timing;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly GhostRolesWindow _window;
         private GhostRoleRulesWindow? _windowRules = null;
@@ -18,7 +18,6 @@ namespace Content.Client.Ghost.Roles.UI
 
         public GhostRolesEui()
         {
-            _timing = IoCManager.Resolve<IGameTiming>();
             _window = new GhostRolesWindow();
 
             _window.OnRoleRequested += info =>
