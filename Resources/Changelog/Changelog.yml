@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: The Light Replacer can now be placed in the Janibelt., type: Tweak}
-  id: 1537
-  time: '2022-05-16T23:53:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: More dynamic melee weapon sound range., type: Tweak}
@@ -2943,3 +2938,9 @@ Entries:
     type: Fix}
   id: 2036
   time: '2022-07-28T23:21:48.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Latejoiners are now eligible for traitor., type: Tweak}
+  - {message: Fixed missing kill objective icon., type: Fix}
+  id: 2037
+  time: '2022-07-29T00:59:45.0000000+00:00'
