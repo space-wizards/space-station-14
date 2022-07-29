@@ -66,6 +66,8 @@
   molarMass: 44
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: miasma
+  gasMolesVisible: 2
+  gasVisbilityFactor: 3.5
   color: 56941E
   reagent: Miasma
 
