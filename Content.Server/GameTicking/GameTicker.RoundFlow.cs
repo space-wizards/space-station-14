@@ -357,6 +357,8 @@ namespace Content.Server.GameTicking
 
             RoundNumberMetric.Inc();
 
+            PlayersJoinedRoundNormally = 0;
+
             RunLevel = GameRunLevel.PreRoundLobby;
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
