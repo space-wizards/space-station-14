@@ -60,7 +60,7 @@ namespace Content.Client.Physics.Controllers
 
             if (TryComp(player, out JointComponent? jointComponent))
             {
-                foreach (var joint in jointComponent.GetJoints)
+                foreach (var joint in jointComponent.GetJoints.Values)
                 {
                     if (TryComp(joint.BodyAUid, out PhysicsComponent? physics))
                         physics.Predict = true;

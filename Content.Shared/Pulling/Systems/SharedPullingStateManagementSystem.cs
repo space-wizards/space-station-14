@@ -45,10 +45,10 @@ namespace Content.Shared.Pulling
 
             // Joint shutdown
             if (!_timing.ApplyingState && // During state-handling, joint component will handle its own state.
+                pullable.PullJointId != null &&
                 TryComp(puller.Owner, out JointComponent? jointComp))
             {
-                var j = jointComp.GetJoints.Where(j => j.ID == pullable.PullJointId).FirstOrDefault();
-                if (j != null)
+                if (jointComp.GetJoints.TryGetValue(pullable.PullJointId, out var j))
                     _jointSystem.RemoveJoint(j);
             }
             pullable.PullJointId = null;
