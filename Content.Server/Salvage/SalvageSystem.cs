@@ -133,7 +133,7 @@ namespace Content.Server.Salvage
                     if (_salvageGridStates.TryGetValue(magnetTranform.GridID, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
-                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", remainingTime.TotalSeconds)));
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     }
                     else
                     {
@@ -329,7 +329,7 @@ namespace Content.Server.Salvage
                     }
                     break;
                 case MagnetStateType.Holding:
-                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
+                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", Math.Ceiling(DetachingTime.TotalSeconds)));
                     magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + DetachingTime);
                     break;
                 case MagnetStateType.Detaching:
