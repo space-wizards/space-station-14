@@ -12,7 +12,7 @@ namespace Content.Client.Ghost.Roles.UI
     {
         private readonly IGameTiming _gameTiming = default!;
 
-        private float _timeRemaining;
+        private TimeSpan _expiresAt;
 
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
@@ -23,7 +23,7 @@ namespace Content.Client.Ghost.Roles.UI
             RobustXamlLoader.Load(this);
 
             _gameTiming = timing;
-            _timeRemaining = (float) (role.ExpiresAt.TotalSeconds - _gameTiming.CurTime.TotalSeconds);
+            _expiresAt = role.ExpiresAt;
 
             Title.Text = name;
             Description.SetMessage(description);
@@ -40,10 +40,10 @@ namespace Content.Client.Ghost.Roles.UI
         {
             base.FrameUpdate(args);
 
-            _timeRemaining -= args.DeltaSeconds;
-            var displayTimeRemaining = Math.Max(0, _timeRemaining);
+            var timeRemaining = (float)(_expiresAt - _gameTiming.CurTime).TotalSeconds;
+            timeRemaining = Math.Max(0, timeRemaining);
 
-            TimeRemaining.Text = $"Ends In {displayTimeRemaining:0.0} s";
+            TimeRemaining.Text = $"Ends In {timeRemaining:0.0} s";
         }
     }
 }

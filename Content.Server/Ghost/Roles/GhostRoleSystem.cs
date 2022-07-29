@@ -247,9 +247,18 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.TryGetValue(role.RoleName, out var entry))
             {
-                entry = GhostRoleEntry.MakeForGhostRole(role);
-                entry.AddedAt = _gameTiming.CurTime;
-                entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
+                var elapseTime = TimeSpan.FromSeconds(30);
+
+                entry = new GhostRoleEntry()
+                {
+                    Name = role.RoleName,
+                    Description = role.RoleDescription,
+                    Rules = role.RoleRules,
+                    ElapseTime = elapseTime,
+                    AddedAt = _gameTiming.CurTime,
+                    ExpiresAt = _gameTiming.CurTime + elapseTime,
+                };
+
                 _ghostRoles[role.RoleName] = entry;
             }
 
@@ -274,36 +283,12 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
-        public void RegisterRequest(IGhostRoleRequester requester, int minPlayers, int maxPlayers, TimeSpan timeLimit)
-        {
-            // if (_ghostRoles.Any(v => v.Value.Requester == requester))
-            //     return;
-
-            // _ghostRoles.Add(GetNextRoleIdentifier(), new GhostRoleEntry()
-            // {
-            //     Requester = requester,
-            //     MinimumPlayers = minPlayers,
-            //     MaximumPlayers = maxPlayers,
-            //     ElapseTime = timeLimit,
-            //     ExpiresAt = _gameTiming.CurTime + timeLimit
-            // });
-            //
-            // UpdateAllEui();
-        }
-
-        public void UnregisterRequest(IGhostRoleRequester requester)
-        {
-
-        }
-
         public void RequestTakeover(IPlayerSession player, string identifier)
         {
             if (_ghostRoles.TryGetValue(identifier, out var entry))
             {
                 entry.PendingPlayerSessions.Add(player);
                 _openUis[player].StateDirty();
-
-                // TODO: Close takeover popup.
             }
         }
 
@@ -373,7 +358,6 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, request) in _ghostRoles)
             {
-                var followIdentifier = request.Components.First().Identifier;
 
                 roles[i] = new GhostRoleInfo()
                 {
@@ -383,7 +367,6 @@ namespace Content.Server.Ghost.Roles
                     ExpiresAt = request.ExpiresAt,
                     AddedAt = request.AddedAt,
                     IsRequested = request.PendingPlayerSessions.Contains(session),
-                    FollowIdentifier = followIdentifier,
                 };
                 i++;
             }
@@ -470,19 +453,6 @@ namespace Content.Server.Ghost.Roles
         private uint _nextComponentIdentifier;
 
         public uint NextComponentIdentifier => unchecked(_nextComponentIdentifier++);
-
-        public static GhostRoleEntry MakeForGhostRole(GhostRoleComponent component)
-        {
-            var inst = new GhostRoleEntry
-            {
-                Name = component.RoleName,
-                Description = component.RoleDescription,
-                Rules = component.RoleRules,
-                ElapseTime = TimeSpan.FromSeconds(10),
-            };
-
-            return inst;
-        }
     }
 
     [AnyCommand]
