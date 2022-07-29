@@ -14,7 +14,6 @@ namespace Content.Shared.Markings;
 // Instead of sending the set over, we can instead just send the dictionary
 // and build the set from there. We can also just send a list and rebuild
 // the set without validating points (we're assuming that the server
-// will always send the correct data here).
 
 public sealed class MarkingSet
 {
@@ -40,7 +39,7 @@ public sealed class MarkingSet
     /// </summary>
     private Dictionary<MarkingCategories, MarkingPoints> _points = new();
 
-    public List<Marking> this[MarkingCategories category] => _markings[category];
+    public IReadOnlyList<Marking> this[MarkingCategories category] => _markings[category];
 
     public MarkingSet()
     {}
@@ -48,7 +47,8 @@ public sealed class MarkingSet
     /// <summary>
     ///     Construct a MarkingSet using a list of markings, and a points
     ///     dictionary. This will set up the points dictionary, and
-    ///     process the list, truncating if necessary.
+    ///     process the list, truncating if necessary. Markings that
+    ///     do not exist as a prototype will be removed.
     /// </summary>
     /// <param name="markings"></param>
     /// <param name="pointsPrototype">The ID of the points dictionary prototype.</param>
@@ -59,7 +59,8 @@ public sealed class MarkingSet
 
     /// <summary>
     ///     Construct a MarkingSet using a dictionary of markings,
-    ///     without validation.
+    ///     without point validation. This will still validate every
+    ///     marking, to ensure that it can be placed into the set.
     /// </summary>
     /// <param name="markings"></param>
     public MarkingSet(List<Marking> markings)
@@ -145,11 +146,18 @@ public sealed class MarkingSet
 
         for (var i = 0; i < markings.Count; i++)
         {
-            if (markings[i].MarkingId == id)
+            if (markings[i].MarkingId != id)
             {
-                markings.RemoveAt(i);
-                return true;
+                continue;
             }
+
+            if (!markings[i].Forced && _points.TryGetValue(category, out var points))
+            {
+                points.Points++;
+            }
+
+            markings.RemoveAt(i);
+            return true;
         }
 
         return false;
@@ -162,14 +170,42 @@ public sealed class MarkingSet
             return;
         }
 
-        // TODO: This should re-add points.
+        if (idx < 0 || idx >= markings.Count)
+        {
+            return;
+        }
+
+        if (!markings[idx].Forced && _points.TryGetValue(category, out var points))
+        {
+            points.Points++;
+        }
+
         markings.RemoveAt(idx);
     }
 
     public bool RemoveCategory(MarkingCategories category)
     {
         // TODO: This should re-add points.
-        return _markings.Remove(category);
+        if (!_markings.TryGetValue(category, out var markings))
+        {
+            return false;
+        }
+
+        if (_points.TryGetValue(category, out var points))
+        {
+            foreach (var marking in markings)
+            {
+                if (marking.Forced)
+                {
+                    continue;
+                }
+
+                points.Points++;
+            }
+        }
+
+        _markings.Remove(category);
+        return true;
     }
 
     public int FindIndexOf(MarkingCategories category, string id)
@@ -180,6 +216,19 @@ public sealed class MarkingSet
         }
 
         return markings.FindIndex(m => m.MarkingId == id);
+    }
+
+    public bool TryGetCategory(MarkingCategories category, [NotNullWhen(true)] out IReadOnlyList<Marking>? markings)
+    {
+        markings = null;
+
+        if (_markings.TryGetValue(category, out var list))
+        {
+            markings = list;
+            return true;
+        }
+
+        return false;
     }
 
     public bool TryGetMarking(MarkingCategories category, string id, [NotNullWhen(true)] out Marking? marking)
@@ -215,9 +264,7 @@ public sealed class MarkingSet
             return;
         }
 
-        var temp = markings[idx - 1];
-        markings[idx - 1] = markings[idx];
-        markings[idx] = temp;
+        (markings[idx - 1], markings[idx]) = (markings[idx], markings[idx - 1]);
     }
 
     // Shifts up from the back (i.e., 2nd position from end)
@@ -244,9 +291,7 @@ public sealed class MarkingSet
             return;
         }
 
-        var temp = markings[idx + 1];
-        markings[idx + 1] = markings[idx];
-        markings[idx] = temp;
+        (markings[idx + 1], markings[idx]) = (markings[idx], markings[idx + 1]);
     }
 
     // Ditto as above.
@@ -269,6 +314,52 @@ public sealed class MarkingSet
         }
 
         return new ForwardMarkingEnumerator(markings);
+    }
+
+    public ReverseMarkingEnumerator GetReverseEnumerator()
+    {
+        var markings = new List<Marking>();
+        foreach (var (_, list) in _markings)
+        {
+            markings.AddRange(list);
+        }
+
+        return new ReverseMarkingEnumerator(markings);
+    }
+
+    public bool CategoryEquals(MarkingCategories category, MarkingSet other)
+    {
+        if (!_markings.TryGetValue(category, out var markings)
+            || !other._markings.TryGetValue(category, out var markingsOther))
+        {
+            return false;
+        }
+
+        return markings.SequenceEqual(markingsOther);
+    }
+
+    public bool Equals(MarkingSet other)
+    {
+        foreach (var (category, _) in _markings)
+        {
+            if (!CategoryEquals(category, other))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public IEnumerable<MarkingCategories> CategoryDifference(MarkingSet other)
+    {
+        foreach (var (category, _) in _markings)
+        {
+            if (!CategoryEquals(category, other))
+            {
+                yield return category;
+            }
+        }
     }
 }
 
