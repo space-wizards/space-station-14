@@ -29,7 +29,7 @@
       state: icon
     - type: Item
       sprite: Objects/Misc/torch.rsi
-      HeldPrefix: unlit
+      heldPrefix: unlit
     - type: Construction
       graph: LightTorch
       node: torch

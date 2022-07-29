@@ -1,10 +1,8 @@
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Disease;
-using Content.Shared.Disease.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

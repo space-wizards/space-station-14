@@ -157,7 +157,7 @@
     netsync: false
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
-    HeldPrefix: pen
+    heldPrefix: pen
   - type: SolutionContainerManager
     solutions:
       hypospray:

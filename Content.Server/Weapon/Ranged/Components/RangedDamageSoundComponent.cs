@@ -1,5 +1,5 @@
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Weapon.Ranged.Components;

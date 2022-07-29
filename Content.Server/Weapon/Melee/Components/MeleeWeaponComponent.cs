@@ -1,5 +1,5 @@
 using Content.Shared.Damage;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Content.Shared.FixedPoint;
 
 namespace Content.Server.Weapon.Melee.Components

@@ -9,7 +9,6 @@ using Content.Server.Damage.Components;
 using Content.Server.Damage.Systems;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Sound;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;

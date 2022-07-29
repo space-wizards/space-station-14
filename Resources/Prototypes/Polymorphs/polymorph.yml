@@ -47,24 +47,6 @@
   inventory: Transfer
 
 - type: polymorph
-  id: AdminMonkeySmite
-  entity: MobMonkey
-  forced: true
-  inventory: Drop
-
-- type: polymorph
-  id: AdminBreadSmite
-  entity: FoodBreadPlain
-  forced: true
-  inventory: Drop
-
-- type: polymorph
-  id: AdminInstrumentSmite
-  entity: SuperSynthesizerInstrument
-  forced: true
-  inventory: Drop
-
-- type: polymorph
   id: AMIVMorph
   entity: MobMonkey
   forced: true
