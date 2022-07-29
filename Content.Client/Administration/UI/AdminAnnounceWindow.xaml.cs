@@ -19,9 +19,9 @@ namespace Content.Client.Administration.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            AnnounceMethod.AddItem(_localization.GetString("announce-type-station"));
+            AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-station"));
             AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
-            AnnounceMethod.AddItem(_localization.GetString("announce-type-server"));
+            AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-server"));
             AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.Server);
             AnnounceMethod.OnItemSelected += AnnounceMethodOnOnItemSelected;
             Announcement.OnTextChanged += AnnouncementOnOnTextChanged;

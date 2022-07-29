@@ -16,6 +16,7 @@ namespace Content.Shared.VendingMachines
         [DataField("animationDuration")]
         public double AnimationDuration { get; }
 
+        // TODO make this a proper sprite specifier for yaml linting.
         [DataField("spriteName")]
         public string SpriteName { get; } = string.Empty;
 

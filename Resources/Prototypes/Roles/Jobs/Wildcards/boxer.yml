@@ -1,0 +1,32 @@
+- type: job
+  id: Boxer
+  name: "boxer"
+  startingGear: BoxerGear
+  setPreference: false
+  departments:
+  - Civilian
+  icon: "Boxer"
+  supervisors: "the head of personnel"
+  access:
+  - Service
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: Boxer
+      modifiers:
+        coefficients: #Remember these only apply to unarmed
+          Blunt: 1.5
+          Slash: 1.5
+          Piercing: 1.5
+
+- type: startingGear
+  id: BoxerGear
+  equipment:
+    jumpsuit: UniformShortsRed
+    back: ClothingBackpackFilled
+    id: BoxerPDA
+    ears: ClothingHeadsetService
+    gloves: ClothingHandsGlovesBoxingRed
+  innerclothingskirt: UniformShortsRedWithTop
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

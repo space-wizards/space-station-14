@@ -14,7 +14,6 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;

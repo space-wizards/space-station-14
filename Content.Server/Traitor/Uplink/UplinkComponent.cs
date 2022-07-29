@@ -1,6 +1,6 @@
 using Content.Shared.Roles;
-using Content.Shared.Sound;
 using Content.Shared.Traitor.Uplink;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Traitor.Uplink.Components
