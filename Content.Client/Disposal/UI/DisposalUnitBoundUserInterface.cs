@@ -45,7 +45,7 @@ namespace Content.Client.Disposal.UI
             {
                 MailingUnitWindow = new MailingUnitWindow();
 
-                MailingUnitWindow.OpenCentered();
+                MailingUnitWindow.OpenCenteredRight();
                 MailingUnitWindow.OnClose += Close;
 
                 MailingUnitWindow.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);
@@ -58,7 +58,7 @@ namespace Content.Client.Disposal.UI
             {
                 DisposalUnitWindow = new DisposalUnitWindow();
 
-                DisposalUnitWindow.OpenCentered();
+                DisposalUnitWindow.OpenCenteredRight();
                 DisposalUnitWindow.OnClose += Close;
 
                 DisposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);
