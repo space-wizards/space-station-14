@@ -1,4 +1,5 @@
 using Content.Server.Buckle.Components;
+using Content.Server.Construction.Completions;
 using Content.Server.Interaction;
 using Content.Shared.Destructible;
 using Content.Shared.Interaction;
@@ -7,7 +8,6 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-
 
 namespace Content.Server.Buckle.Systems
 {
@@ -23,7 +23,19 @@ namespace Content.Server.Buckle.Systems
             SubscribeLocalEvent<StrapComponent, GetVerbsEvent<InteractionVerb>>(AddStrapVerbs);
             SubscribeLocalEvent<StrapComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
             SubscribeLocalEvent<StrapComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<StrapComponent, DestructionEventArgs>(OnDestroy);
+            SubscribeLocalEvent<StrapComponent, DestructionEventArgs>((_,c,_) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, BreakageEventArgs>((_, c, _) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, ConstructionBeforeDeleteEvent>((_, c, _) => RemoveAll(c));
+            SubscribeLocalEvent<StrapComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        private void OnShutdown(EntityUid uid, StrapComponent component, ComponentShutdown args)
+        {
+            if (LifeStage(uid) > EntityLifeStage.MapInitialized)
+                return;
+
+            // Component is being removed, but entity is not shutting down.
+            component.RemoveAll();
         }
 
         private void OnInsertAttempt(EntityUid uid, StrapComponent component, ContainerGettingInsertedAttemptEvent args)
@@ -123,7 +135,7 @@ namespace Content.Server.Buckle.Systems
             }
         }
 
-        private void OnDestroy(EntityUid uid, StrapComponent component, DestructionEventArgs args)
+        public void RemoveAll(StrapComponent component)
         {
             component.RemoveAll();
         }
