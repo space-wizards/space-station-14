@@ -329,7 +329,7 @@ namespace Content.Server.Salvage
                     }
                     break;
                 case MagnetStateType.Holding:
-                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", Math.Ceiling(DetachingTime.TotalSeconds)));
+                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
                     magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + DetachingTime);
                     break;
                 case MagnetStateType.Detaching:
