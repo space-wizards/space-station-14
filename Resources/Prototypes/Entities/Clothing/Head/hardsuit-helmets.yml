@@ -292,6 +292,7 @@
       map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
+  - type: ToggleableLightVisuals
     clothingVisuals:
       head:
       - state: equipped-head-light

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -21,14 +21,11 @@ namespace Content.Shared.Alert
         public AlertType AlertType { get; private set; }
 
         /// <summary>
-        /// Path to the icon (png) to show in alert bar. If severity levels are supported,
-        /// this should be the path to the icon without the severity number
-        /// (i.e. hot.png if there is hot1.png and hot2.png). Use <see cref="GetIconPath"/>
-        /// to get the correct icon path for a particular severity level.
+        /// List of icons to use for this alert. Each entry corresponds to a different severity level, starting from the
+        /// minimum and incrementing upwards. If severities are not supported, the first entry is used.
         /// </summary>
-        [ViewVariables]
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+        [DataField("icons", required: true)]
+        public readonly List<SpriteSpecifier> Icons = new();
 
         /// <summary>
         /// Name to show in tooltip window. Accepts formatting.
@@ -103,8 +100,14 @@ namespace Content.Shared.Alert
                 throw new InvalidOperationException($"This alert ({AlertKey}) does not support severity");
             }
 
+            var minIcons = SupportsSeverity
+                ? MaxSeverity - MinSeverity : 1;
+
+            if (Icons.Count < minIcons)
+                throw new InvalidOperationException($"Insufficient number of icons given for alert {AlertType}");
+
             if (!SupportsSeverity)
-                return Icon;
+                return Icons[0];
 
             if (severity == null)
             {
@@ -121,20 +124,7 @@ namespace Content.Shared.Alert
                 throw new ArgumentOutOfRangeException(nameof(severity), $"Severity above maximum severity in {AlertKey}.");
             }
 
-            var severityText = severity.Value.ToString(CultureInfo.InvariantCulture);
-            switch (Icon)
-            {
-                case SpriteSpecifier.EntityPrototype entityPrototype:
-                    throw new InvalidOperationException($"Severity not supported for EntityPrototype icon in {AlertKey}");
-                case SpriteSpecifier.Rsi rsi:
-                    return new SpriteSpecifier.Rsi(rsi.RsiPath, rsi.RsiState + severityText);
-                case SpriteSpecifier.Texture texture:
-                    var newName = texture.TexturePath.FilenameWithoutExtension + severityText;
-                    return new SpriteSpecifier.Texture(
-                        texture.TexturePath.WithName(newName + "." + texture.TexturePath.Extension));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Icon));
-            }
+            return Icons[severity.Value - _minSeverity];
         }
     }
 }
