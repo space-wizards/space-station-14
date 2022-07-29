@@ -80,7 +80,7 @@ grids:
   - ind: 0,-3
     tiles: MQAAATEAAAExAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAExAAAAMQAAAjcAAAA3AAAAKgAAACoAAAAqAAAANwAAADcAAAA3AAAAMgAAADIAAAA3AAAANwAAADcAAAAxAAABMQAAAzEAAAIqAAAAKgAAACoAAAAqAAAAKgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADIAAAAyAAAAMQAAATEAAAAxAAACNwAAADcAAAAqAAAAKgAAACoAAAA3AAAANwAAADIAAAA3AAAANwAAADIAAAA3AAAANwAAADEAAAIxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAyAAAAMgAAADcAAAA3AAAAMgAAADcAAAAxAAAAMQAAATcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAMxAAACNwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAAzcAAAAeAAADHgAAAR4AAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAAMQAAAzEAAAE3AAAAHgAAAx4AAAMeAAADNwAAADcAAAA3AAAANwAAAB4AAAA3AAAANwAAADcAAAAeAAAANwAAADEAAAIxAAAAHgAAAx4AAAEeAAABHgAAAzcAAAA3AAAANwAAAB4AAAAeAAAAHgAAADcAAAA1AAADIQAAAB4AAAMxAAACMQAAAzcAAAAeAAAAHgAAAR4AAAE3AAAANwAAADcAAAA1AAADNQAAATUAAAI3AAAANQAAAiEAAAAeAAACMQAAATEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANQAAATUAAAI1AAABNwAAADUAAAIhAAAAHgAAATEAAAExAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADUAAAA1AAAANQAAADcAAAA1AAABIQAAAB4AAAIxAAABMQAAADcAAAA3AAAANwAAADcAAAA3AAAANQAAADcAAAA3AAAANQAAADcAAAA3AAAANQAAACEAAAAeAAACMQAAAzEAAAA3AAAAHgAAAB4AAAAeAAAANwAAADUAAAA1AAAANwAAADUAAAA1AAADNQAAAjUAAAMhAAAAHgAAAw==
   - ind: -1,-3
-    tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAADIAAAA3AAAANwAAADcAAAA3AAAAMgAAADcAAAAeAAAAHgAAAB4AAAIeAAAAHgAAAR4AAAExAAACMQAAATEAAAEyAAAAMgAAADIAAAA3AAAANwAAADcAAAA3AAAAHgAAAh4AAAIeAAAAHgAAAR4AAAIeAAACMQAAAzEAAAExAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAACHgAAAR4AAAIeAAABHgAAATEAAAExAAAAMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAANgAAADYAAAA3AAAAMQAAAzcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAAAAAAAAAAADYAAAA2AAAANwAAADEAAAM3AAAAMwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAAxAAAANwAAADMAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAAMQAAATcAAAAzAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA2AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADcAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAw==
+    tiles: NwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAABMQAAADIAAAA3AAAANwAAADcAAAA3AAAAMgAAADcAAAAeAAAAHgAAAB4AAAIeAAAAHgAAAR4AAAExAAACMQAAATEAAAEyAAAAMgAAADIAAAA3AAAANwAAADcAAAA3AAAAHgAAAh4AAAIeAAAAHgAAAR4AAAIeAAACMQAAAzEAAAExAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAACHgAAAR4AAAIeAAABHgAAATEAAAExAAAAMQAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADcAAAAxAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAADYAAAA3AAAAMQAAAzcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAA2AAAANwAAADEAAAM3AAAAMwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAxAAAANwAAADMAAAA3AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAA3AAAAMQAAATcAAAAzAAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADEAAAE3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAxAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAw==
   - ind: 1,-2
     tiles: GgAAARoAAAIaAAABGgAAARoAAAMaAAAANwAAACYAAAAmAAAAJgAAACYAAAA3AAAAJQAAADEAAAAxAAAAMQAAABoAAAMaAAAAGgAAARoAAAIaAAABGgAAADcAAAAeAAAAHgAAAB4AAAAeAAAANwAAACUAAAAxAAAAMQAAADEAAAAaAAAAGgAAAhoAAAMaAAAAGgAAAhoAAAA3AAAAHgAAADcAAAA3AAAANwAAADcAAAAlAAAAMQAAADEAAAAxAAAAGgAAAxoAAAEaAAAAGgAAABoAAAMaAAAANwAAACAAAAAgAAAAIAAAACAAAAA3AAAAJQAAADEAAAAxAAAAMQAAABoAAAIaAAACGgAAAhoAAAAaAAADGgAAADcAAAAgAAAAIAAAACAAAAAgAAAANwAAACUAAAAxAAAAMQAAADEAAAAaAAAAGgAAABoAAAAaAAAAGgAAABoAAAA3AAAAIAAAACAAAAAgAAAAIAAAADcAAAAlAAAAMQAAADEAAAAxAAAAGgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAIAAAADcAAAA3AAAAJQAAADcAAAAlAAAAJQAAADEAAAAxAAABMQAAATEAAAMxAAAAMQAAADEAAAMxAAADMQAAAzEAAAExAAABMQAAAzEAAAIxAAAAMQAAAzEAAAMxAAADMQAAADEAAAExAAAAMQAAAjEAAAMxAAAAMQAAADEAAAAxAAADMQAAADEAAAExAAADMQAAAjEAAAIxAAACMQAAADEAAAMxAAAAMQAAAjEAAAAxAAADMQAAADEAAAMxAAACMQAAAjEAAAIxAAABMQAAATEAAAExAAACMQAAAzEAAAIxAAADNwAAADcAAAAaAAAAGgAAABoAAAAaAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAADMQAAAjcAAAAeAAAAGgAAABoAAAAaAAAAGgAAABoAAAA1AAAANQAAADUAAAA3AAAANAAAAzQAAAA0AAADMQAAADEAAAE3AAAAHgAAABoAAAAaAAAAGgAAABoAAAAaAAAANQAAADUAAAA1AAAANwAAADQAAAI0AAACNAAAADEAAAAxAAABNwAAAB4AAAAaAAAAGgAAABoAAAAaAAAAGgAAADUAAAA1AAAANQAAADcAAAA3AAAANwAAADcAAAAxAAAAMQAAAzcAAAAeAAAAGgAAABoAAAAaAAAAGgAAABoAAAA1AAAANQAAADUAAAA3AAAANAAAAzQAAAI0AAACMQAAAzEAAAE3AAAAHgAAABoAAAAaAAAAGgAAABoAAAAaAAAANQAAADUAAAA1AAAANwAAADQAAAE0AAABNAAAAg==
   - ind: 1,-1
@@ -298,8 +298,6 @@ entities:
   - pos: -15.652456,-29.638643
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3
   type: SpawnPointJanitor
   components:
@@ -382,8 +380,6 @@ entities:
   - pos: -17.449331,-29.623018
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 15
   type: CableMV
   components:
@@ -415,8 +411,6 @@ entities:
   - pos: 37.455032,-37.40484
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -433,8 +427,6 @@ entities:
   - pos: 55.62253,-8.328542
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 22
   type: ReinforcedWindow
   components:
@@ -467,8 +459,6 @@ entities:
   - pos: -35.503693,-35.511295
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 27
   type: CableApcExtension
   components:
@@ -677,8 +667,6 @@ entities:
   - pos: 46.476154,-16.467594
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 55
   type: WallSolid
   components:
@@ -718,7 +706,7 @@ entities:
 - uid: 60
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 0
     type: MapGrid
@@ -23822,9 +23810,17 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23844,11 +23840,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.0791
       moles:
       - 21.81955
       - 82.08308
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23866,11 +23870,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 292.01544
       moles:
       - 21.739624
       - 81.7824
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23888,11 +23900,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 274.9969
       moles:
       - 20.460823
       - 76.97167
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23910,10 +23930,18 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23932,11 +23960,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 284.07346
       moles:
       - 21.14285
       - 79.5374
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23954,11 +23990,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 147.925
       moles:
       - 10.912439
       - 41.05156
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23972,6 +24016,10 @@ entities:
       - 0
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -23987,6 +24035,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
@@ -23998,11 +24050,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 220.5375
       moles:
       - 5.4562197
       - 20.52578
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -26166,9 +26226,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 327
-  type: BedsheetMedical
+  type: ClothingMaskBreathMedical
   components:
-  - pos: 38.5,-19.5
+  - pos: 3.4602647,-3.610754
     parent: 60
     type: Transform
   - canCollide: False
@@ -26192,20 +26252,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 331
-  type: MedicalBed
+  type: PottedPlant22
   components:
   - pos: 38.5,-19.5
-    parent: 60
-    type: Transform
-- uid: 332
-  type: PottedPlantRandom
-  components:
-  - pos: 39.5,-19.5
     parent: 60
     type: Transform
   - containers:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 332
+  type: StasisBed
+  components:
+  - pos: 39.5,-19.5
+    parent: 60
+    type: Transform
 - uid: 333
   type: WallSolid
   components:
@@ -30972,13 +31032,9 @@ entities:
   - color: '#0335FCFF'
     type: AtmosPipeColor
 - uid: 943
-  type: SawAdvanced
   components:
-  - pos: 38.567486,-14.251746
-    parent: 60
-    type: Transform
-  - canCollide: False
-    type: Physics
+  - index: 4
+    type: Map
 - uid: 944
   type: ScalpelLaser
   components:
@@ -35179,8 +35235,6 @@ entities:
   components:
   - parent: 7982
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -38401,6 +38455,8 @@ entities:
   - pos: -27.5,2.5
     parent: 60
     type: Transform
+  - locked: False
+    type: Lock
   - containers:
       entity_storage: !type:Container
         ents:
@@ -41041,10 +41097,14 @@ entities:
   - pos: 11.479033,-35.451874
     parent: 60
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 2178
@@ -41053,10 +41113,14 @@ entities:
   - pos: 11.479033,-35.3425
     parent: 60
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 2179
@@ -44020,6 +44084,8 @@ entities:
 - uid: 2521
   type: AirlockMaintLocked
   components:
+  - name: arrivals maint
+    type: MetaData
   - pos: -6.5,-52.5
     parent: 60
     type: Transform
@@ -49459,11 +49525,13 @@ entities:
     parent: 60
     type: Transform
 - uid: 3207
-  type: Window
+  type: SawElectric
   components:
-  - pos: 31.5,-17.5
+  - pos: 38.68646,-14.261434
     parent: 60
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 3208
   type: WallSolid
   components:
@@ -49572,7 +49640,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 3223
-  type: Window
+  type: TintedWindow
   components:
   - pos: 31.5,-20.5
     parent: 60
@@ -53031,7 +53099,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -8729.462
+  - SecondsUntilStateChange: -10002.094
     state: Opening
     type: Door
 - uid: 3729
@@ -53617,6 +53685,8 @@ entities:
 - uid: 3807
   type: AirlockMaintLocked
   components:
+  - name: disposals
+    type: MetaData
   - pos: -14.5,-47.5
     parent: 60
     type: Transform
@@ -54412,12 +54482,16 @@ entities:
 - uid: 3908
   type: AirlockMaintLocked
   components:
+  - name: disposals
+    type: MetaData
   - pos: -14.5,-38.5
     parent: 60
     type: Transform
 - uid: 3909
   type: AirlockMaintLocked
   components:
+  - name: disposals
+    type: MetaData
   - pos: -1.5,-41.5
     parent: 60
     type: Transform
@@ -57623,6 +57697,12 @@ entities:
   type: Grille
   components:
   - pos: -68.5,7.5
+    parent: 60
+    type: Transform
+- uid: 4325
+  type: TintedWindow
+  components:
+  - pos: 31.5,-17.5
     parent: 60
     type: Transform
 - uid: 4326
@@ -69479,17 +69559,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5854
-  type: MedkitOxygenFilled
+  type: BedsheetMedical
   components:
-  - pos: 37.51929,-19.325336
+  - pos: 37.5,-19.5
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5855
   type: Window
   components:
@@ -73707,7 +73783,7 @@ entities:
 - uid: 6383
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 1
     type: MapGrid
@@ -73737,11 +73813,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
 - uid: 6384
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 2
     type: MapGrid
@@ -73772,11 +73852,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
 - uid: 6385
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 3
     type: MapGrid
@@ -73806,11 +73890,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
 - uid: 6386
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 4
     type: MapGrid
@@ -73841,11 +73929,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
 - uid: 6387
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 5
     type: MapGrid
@@ -73875,11 +73967,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
 - uid: 6388
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 943
     type: Transform
   - index: 6
     type: MapGrid
@@ -73903,6 +73999,10 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -74147,6 +74247,14 @@ entities:
   - pos: -37.5,-29.5
     parent: 60
     type: Transform
+- uid: 6426
+  type: ClothingNeckCloakTrans
+  components:
+  - pos: -19.494429,-68.43767
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 6427
   type: TableWood
   components:
@@ -78690,7 +78798,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 7044
-  type: Table
+  type: MedicalBed
   components:
   - pos: 37.5,-19.5
     parent: 60
@@ -79959,7 +80067,7 @@ entities:
 - uid: 7216
   type: CrateNPCCow
   components:
-  - pos: 24.5,-28.5
+  - pos: 24.5,-37.5
     parent: 60
     type: Transform
   - containers:
@@ -85928,6 +86036,8 @@ entities:
 - uid: 8044
   type: AirlockMaintLocked
   components:
+  - name: arrivals maint
+    type: MetaData
   - pos: 6.5,-52.5
     parent: 60
     type: Transform
@@ -86677,6 +86787,8 @@ entities:
 - uid: 8138
   type: AirlockSecurityGlassLocked
   components:
+  - name: sec checkpoint
+    type: MetaData
   - pos: -2.5,-46.5
     parent: 60
     type: Transform
@@ -86807,6 +86919,12 @@ entities:
   - containers:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 8158
+  type: NitrousOxideCanister
+  components:
+  - pos: -26.5,36.5
+    parent: 60
+    type: Transform
 - uid: 8159
   type: WindowReinforcedDirectional
   components:
@@ -88564,6 +88682,26 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 8401
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -2.5,-10.5
+    parent: 60
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
+- uid: 8402
+  type: CarbonDioxideCanister
+  components:
+  - pos: -27.5,35.5
+    parent: 60
+    type: Transform
 - uid: 8403
   type: PoweredSmallLight
   components:
@@ -91046,6 +91184,20 @@ entities:
   - pos: 31.5,-59.5
     parent: 60
     type: Transform
+- uid: 8773
+  type: PoweredlightSodium
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 56.5,1.5
+    parent: 60
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - inputs:
+      On: []
+      Off: []
+      Toggle: []
+    type: SignalReceiver
 - uid: 8774
   type: GasVentPump
   components:
@@ -92939,13 +93091,14 @@ entities:
     - machine_board
     type: Construction
 - uid: 9017
-  type: StasisBed
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 49.5,-12.5
+  - anchored: True
+    pos: 46.5,-13.5
     parent: 60
     type: Transform
 - uid: 9018
-  type: StasisBed
+  type: Bed
   components:
   - pos: 49.5,-14.5
     parent: 60
@@ -94366,16 +94519,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 9214
-  type: Crematorium
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 36.5,-10.5
+  - anchored: True
+    pos: 23.5,-29.5
     parent: 60
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9215
   type: CableHV
   components:
@@ -96573,6 +96722,14 @@ entities:
     pos: -43.5,3.5
     parent: 60
     type: Transform
+- uid: 9532
+  type: JetpackBlueFilled
+  components:
+  - pos: -61.443325,15.524521
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 9533
   type: Lamp
   components:
@@ -96823,6 +96980,12 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 9562
+  type: Catwalk
+  components:
+  - pos: 10.5,-17.5
+    parent: 60
+    type: Transform
 - uid: 9563
   type: PottedPlantBioluminscent
   components:
@@ -108614,6 +108777,12 @@ entities:
   - pos: 33.5,6.5
     parent: 60
     type: Transform
+- uid: 11432
+  type: Catwalk
+  components:
+  - pos: 10.5,-15.5
+    parent: 60
+    type: Transform
 - uid: 11433
   type: SignDirectionalMed
   components:
@@ -116985,6 +117154,13 @@ entities:
     pos: 24.5,-39.5
     parent: 60
     type: Transform
+- uid: 12753
+  type: SignDirectionalEvac
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 38.5,26.5
+    parent: 60
+    type: Transform
 - uid: 12754
   type: WallReinforced
   components:
@@ -117529,7 +117705,7 @@ entities:
 - uid: 12837
   components:
   - pos: -70.95334,19.107948
-    parent: null
+    parent: 943
     type: Transform
   - index: 7
     type: MapGrid
@@ -117561,6 +117737,10 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -117853,6 +118033,8 @@ entities:
 - uid: 12879
   type: HighSecCommandLocked
   components:
+  - name: vault
+    type: MetaData
   - pos: 2.5,-6.5
     parent: 60
     type: Transform
@@ -122133,10 +122315,26 @@ entities:
   - pos: 49.5,16.5
     parent: 60
     type: Transform
+- uid: 13490
+  type: PlushieLizard
+  components:
+  - pos: -7.4894185,-35.510826
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 13491
   type: ClothingHeadHatCargosoftFlipped
   components:
   - pos: 47.32538,17.533535
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 13492
+  type: ClothingHandsGlovesColorOrange
+  components:
+  - pos: -4.592652,-28.266113
     parent: 60
     type: Transform
   - canCollide: False
@@ -122493,12 +122691,14 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 13535
-  type: WindoorCargoLocked
+  type: PottedPlant21
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 43.5,6.5
+  - pos: 52.5,-30.5
     parent: 60
     type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 13536
   type: GasVentPump
   components:
@@ -124566,6 +124766,13 @@ entities:
   type: Catwalk
   components:
   - pos: 6.5,29.5
+    parent: 60
+    type: Transform
+- uid: 13825
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 25.5,-25.5
     parent: 60
     type: Transform
 - uid: 13826
@@ -127258,6 +127465,12 @@ entities:
   - pos: -8.5,24.5
     parent: 60
     type: Transform
+- uid: 14185
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-28.5
+    parent: 60
+    type: Transform
 - uid: 14186
   type: TableWood
   components:
@@ -129784,7 +129997,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -2242.361
+  - SecondsUntilStateChange: -3514.9932
     state: Closing
     type: Door
   - canCollide: False
@@ -129933,6 +130146,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 14545
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 14546
   type: DisposalUnit
   components:
@@ -132441,6 +132660,12 @@ entities:
     pos: -45.5,37.5
     parent: 60
     type: Transform
+- uid: 14896
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 14897
   type: GasPipeStraight
   components:
@@ -133090,6 +133315,18 @@ entities:
   - pos: -40.5,34.5
     parent: 60
     type: Transform
+- uid: 14989
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-28.5
+    parent: 60
+    type: Transform
+- uid: 14990
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 14991
   type: GasPipeStraight
   components:
@@ -133113,6 +133350,12 @@ entities:
     type: Transform
   - open: False
     type: GasValve
+- uid: 14994
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 14995
   type: GasPipeStraight
   components:
@@ -133179,6 +133422,12 @@ entities:
     pos: -42.5,44.5
     parent: 60
     type: Transform
+- uid: 15004
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-28.5
+    parent: 60
+    type: Transform
 - uid: 15005
   type: GasMixerFlipped
   components:
@@ -133188,6 +133437,12 @@ entities:
   - inletTwoConcentration: 0
     inletOneConcentration: 1
     type: GasMixer
+- uid: 15006
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 15007
   type: GasPipeBend
   components:
@@ -133835,6 +134090,12 @@ entities:
     pos: -44.5,39.5
     parent: 60
     type: Transform
+- uid: 15100
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 15101
   type: GasMixerFlipped
   components:
@@ -134389,9 +134650,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 15176
-  type: CarbonDioxideCanister
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -26.5,36.5
+  - pos: 26.5,-28.5
     parent: 60
     type: Transform
 - uid: 15177
@@ -141042,6 +141303,32 @@ entities:
   - pos: -1.5,22.5
     parent: 60
     type: Transform
+- uid: 16100
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 26.5,-27.5
+    parent: 60
+    type: Transform
+- uid: 16101
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 26.5,-26.5
+    parent: 60
+    type: Transform
+- uid: 16102
+  type: Bed
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
+- uid: 16103
+  type: BedsheetMedical
+  components:
+  - pos: 49.5,-14.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 16104
   type: WaterCooler
   components:
@@ -149698,6 +149985,14 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 17386
+  type: BedsheetMedical
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 17387
   type: Pen
   components:
@@ -155149,6 +155444,8 @@ entities:
 - uid: 18125
   type: AirlockCommandLocked
   components:
+  - name: bridge maintenance
+    type: MetaData
   - pos: 4.5,-1.5
     parent: 60
     type: Transform
@@ -155645,6 +155942,8 @@ entities:
 - uid: 18207
   type: AirlockCaptainLocked
   components:
+  - name: captain's quarters
+    type: MetaData
   - pos: -3.5,-1.5
     parent: 60
     type: Transform
@@ -155675,18 +155974,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 18212
-  type: Poweredlight
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -3.5,-9.5
+  - pos: 47.5,-14.5
     parent: 60
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
-  - inputs:
-      On: []
-      Off: []
-      Toggle: []
-    type: SignalReceiver
 - uid: 18213
   type: CableApcExtension
   components:
@@ -156792,6 +157084,8 @@ entities:
 - uid: 18369
   type: AirlockCaptainLocked
   components:
+  - name: captain's bathroom
+    type: MetaData
   - pos: -2.5,-8.5
     parent: 60
     type: Transform
@@ -157046,12 +157340,16 @@ entities:
 - uid: 18403
   type: AirlockCommandGlassLocked
   components:
+  - name: bridge
+    type: MetaData
   - pos: 0.5,-1.5
     parent: 60
     type: Transform
 - uid: 18404
   type: AirlockCommandGlassLocked
   components:
+  - name: bridge
+    type: MetaData
   - pos: 0.5,-8.5
     parent: 60
     type: Transform
@@ -157463,6 +157761,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 18456
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 47.5,-13.5
+    parent: 60
+    type: Transform
 - uid: 18457
   type: DrinkGoldenCup
   components:
@@ -157497,6 +157801,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 18461
   type: ClothingNeckBling
   components:
@@ -157617,6 +157925,12 @@ entities:
     type: HandheldLight
   - canCollide: False
     type: Physics
+- uid: 18476
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 47.5,-12.5
+    parent: 60
+    type: Transform
 - uid: 18477
   type: ComfyChair
   components:
@@ -157832,6 +158146,8 @@ entities:
 - uid: 18507
   type: AirlockCaptainGlassLocked
   components:
+  - name: captain's bedroom
+    type: MetaData
   - pos: -5.5,-4.5
     parent: 60
     type: Transform
@@ -158027,7 +158343,7 @@ entities:
 - uid: 18529
   type: PhoneInstrument
   components:
-  - pos: -3.511839,-6.4366374
+  - pos: -3.4975305,-6.4212894
     parent: 60
     type: Transform
   - canCollide: False
@@ -166792,6 +167108,12 @@ entities:
   - pos: 34.5,13.5
     parent: 60
     type: Transform
+- uid: 19696
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-14.5
+    parent: 60
+    type: Transform
 - uid: 19697
   type: BoxFolderGrey
   components:
@@ -169390,6 +169712,12 @@ entities:
   - pos: 30.5,-2.5
     parent: 60
     type: Transform
+- uid: 20074
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-13.5
+    parent: 60
+    type: Transform
 - uid: 20075
   type: SignElectricalMed
   components:
@@ -169437,7 +169765,7 @@ entities:
 - uid: 20082
   components:
   - pos: 69.64972,-19.646618
-    parent: null
+    parent: 943
     type: Transform
   - index: 8
     type: MapGrid
@@ -175238,10 +175566,14 @@ entities:
   - pos: -24.464367,0.49183664
     parent: 60
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 21012
@@ -175250,10 +175582,14 @@ entities:
   - pos: -24.464367,0.74183667
     parent: 60
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 21013
@@ -177323,6 +177659,12 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 21247
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-12.5
+    parent: 60
+    type: Transform
 - uid: 21248
   type: CableApcExtension
   components:
@@ -177417,6 +177759,12 @@ entities:
   type: CableApcExtension
   components:
   - pos: -72.5,17.5
+    parent: 60
+    type: Transform
+- uid: 21264
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-14.5
     parent: 60
     type: Transform
 - uid: 21265
@@ -178478,4 +178826,16 @@ entities:
       DisposalUnit: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 21403
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-13.5
+    parent: 60
+    type: Transform
+- uid: 21404
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
 ...

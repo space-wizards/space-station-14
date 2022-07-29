@@ -1,11 +1,11 @@
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.GameObjects;
-using Content.Shared.Sound;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Content.Shared.Materials;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Lathe.Components
 {

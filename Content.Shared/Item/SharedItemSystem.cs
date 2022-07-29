@@ -1,4 +1,4 @@
-﻿using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Verbs;
@@ -38,7 +38,10 @@ public abstract class SharedItemSystem : EntitySystem
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (component.HeldPrefix == heldPrefix)
             return;
 
         component.HeldPrefix = heldPrefix;
@@ -62,7 +65,7 @@ public abstract class SharedItemSystem : EntitySystem
             return;
 
         component.Size = state.Size;
-        component.HeldPrefix = state.HeldPrefix;
+        SetHeldPrefix(uid, state.HeldPrefix, component);
     }
 
     private void OnGetState(EntityUid uid, ItemComponent component, ref ComponentGetState args)

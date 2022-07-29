@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
@@ -7,13 +6,13 @@ using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
-using Content.Shared.Sound;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Shuttles.Systems;
 
