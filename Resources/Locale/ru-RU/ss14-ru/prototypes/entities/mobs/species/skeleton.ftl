@@ -1,3 +1,6 @@
+ent-BaseMobSkeletonPerson = Urist McSkelly
+    .desc = A miserable pile of bones.
+    .suffix = { "" }
 ent-MobSkeletonPersonBase = Урист МакСкелли
     .desc = Жалкая кучка костей.
     .suffix = { "" }

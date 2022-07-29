@@ -1,4 +1,4 @@
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using System.Threading;
 
 namespace Content.Server.Morgue.Components;

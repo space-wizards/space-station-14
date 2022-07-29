@@ -122,6 +122,10 @@ namespace Content.Server.Lathe
         /// </summary>
         private void OnInteractUsing(EntityUid uid, LatheComponent component, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+            args.Handled = true;
+
             if (!TryComp<MaterialStorageComponent>(uid, out var storage)
                 || !TryComp<MaterialComponent>(args.Used, out var material)
                 || component.LatheWhitelist?.IsValid(args.Used) == false)

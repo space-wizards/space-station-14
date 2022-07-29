@@ -10,3 +10,7 @@ reagent-name-nitrogen = азот
 reagent-desc-nitrogen = Он же нитроген. Бесцветный, не имеющий запаха нереактивный газ. Очень стабилен.
 reagent-name-miasma = миазма
 reagent-desc-miasma = Ух ох, как воняет!
+reagent-name-nitrous-oxide = nitrous oxide
+reagent-desc-nitrous-oxide = You know how everything seems funnier when you're tired? Well...
+reagent-name-frezon = frezon
+reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.

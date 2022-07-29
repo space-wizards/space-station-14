@@ -1,3 +1,3 @@
-ent-MobSlimePerson = { ent-MobSlimePersonBase }
-    .desc = { ent-MobSlimePersonBase.desc }
+ent-MobSlimePerson = { ent-BaseMobSlimePerson }
+    .desc = { ent-BaseMobSlimePerson.desc }
     .suffix = { "" }

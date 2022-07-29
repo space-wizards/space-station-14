@@ -1,4 +1,4 @@
-ent-MobReptilianBase = Urisst' Mzhand
+ent-BaseMobReptilian = Urisst' Mzhand
     .desc = A miserable pile of scales.
     .suffix = { "" }
 ent-MobReptilianDummy = Urist McHands

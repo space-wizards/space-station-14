@@ -34,3 +34,7 @@ marking-LizardFrillsBig-frills_big = Унатх, воротник (Большо�
 marking-LizardFrillsBig = Унатх, воротник (Большой)
 marking-LizardHornsDouble-horns_double = Унатх, рожки (Двойные)
 marking-LizardHornsDouble = Унатх, рожки (Двойные)
+marking-LizardFrillsAxolotl-frills_axolotl = Lizard Frills (Axolotl)
+marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
+marking-LizardFrillsHood-frills_hood = Lizard Frills (Hood)
+marking-LizardFrillsHood = Lizard Frills (Hood)

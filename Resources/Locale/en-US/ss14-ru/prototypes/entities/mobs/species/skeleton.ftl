@@ -1,4 +1,4 @@
-ent-MobSkeletonPersonBase = Urist McSkelly
+ent-BaseMobSkeletonPerson = Urist McSkelly
     .desc = A miserable pile of bones.
     .suffix = { "" }
 ent-MobSkeletonPersonDummy = Urist McSkelly

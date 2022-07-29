@@ -150,25 +150,6 @@
       - state: meson
 
 - type: entity
-  name: survival box
-  parent: BoxCardboard
-  id: BoxSurvival
-  description: It's a box with basic internals inside.
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-      - id: SpaceMedipen
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackChocolate
-  - type: Sprite
-    layers:
-      - state: box
-      - state: writing
-
-- type: entity
   name: M.R.E.
   parent: BoxCardboard
   id: BoxMRE
@@ -196,7 +177,7 @@
       - state: box_hug
       - state: heart
   - type: Item
-    HeldPrefix: hug
+    heldPrefix: hug
   - type: StorageFill
     contents:
       - id: Brutepack

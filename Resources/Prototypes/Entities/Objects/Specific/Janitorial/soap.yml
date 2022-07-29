@@ -46,7 +46,7 @@
   - type: Sprite
     state: nt
   - type: Item
-    HeldPrefix: nt
+    heldPrefix: nt
 
 - type: entity
   name: soap
@@ -57,7 +57,7 @@
   - type: Sprite
     state: deluxe
   - type: Item
-    HeldPrefix: deluxe
+    heldPrefix: deluxe
 
 - type: entity
   name: soap
@@ -72,7 +72,7 @@
     launchForwardsMultiplier: 9.0
   - type: StepTrigger
   - type: Item
-    HeldPrefix: syndie
+    heldPrefix: syndie
 
 - type: entity
   name: soap
@@ -86,7 +86,7 @@
     paralyzeTime: 2
   - type: StepTrigger
   - type: Item
-    HeldPrefix: gibs
+    heldPrefix: gibs
 
 - type: entity
   name: omega soap
@@ -101,4 +101,4 @@
     launchForwardsMultiplier: 9.0
   - type: StepTrigger
   - type: Item
-    HeldPrefix: omega
+    heldPrefix: omega
