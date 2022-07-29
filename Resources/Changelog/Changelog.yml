@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: More dynamic melee weapon sound range., type: Tweak}
-  id: 1538
-  time: '2022-05-17T03:49:07.0000000+00:00'
 - author: ike709
   changes:
   - {message: Reduced lighter size from 3 to 2, type: Tweak}
@@ -2944,3 +2939,8 @@ Entries:
   - {message: Fixed missing kill objective icon., type: Fix}
   id: 2037
   time: '2022-07-29T00:59:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed various visuals for held & equipped items., type: Fix}
+  id: 2038
+  time: '2022-07-29T01:02:09.0000000+00:00'
