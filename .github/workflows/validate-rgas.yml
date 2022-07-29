@@ -10,8 +10,9 @@ jobs:
       run: git submodule update --init
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
-    - uses: PaulRitter/yaml-schema-validator@v1
+    - uses: PaulRitter/yaml-schema-validator@v2
       with:
         schema: .github/workflows/rga.yml
         path_pattern: .*attributions.ya?ml$
         validators_path: .github/workflows/validators.py
+        validators_requirements: .github/workflows/requirements.txt
