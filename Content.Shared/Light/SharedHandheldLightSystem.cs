@@ -24,8 +24,6 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
     private void OnInit(EntityUid uid, HandheldLightComponent component, ComponentInit args)
     {
-        DebugTools.Assert(HasComp<SharedPointLightComponent>(uid));
-
         UpdateVisuals(uid, component);
 
         // Want to make sure client has latest data on level so battery displays properly.
