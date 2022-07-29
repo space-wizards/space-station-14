@@ -9,6 +9,7 @@ using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
@@ -34,9 +35,9 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
-        private readonly Dictionary<uint, GhostRoleEntry> _ghostRoles = new();
+
+        private readonly Dictionary<string, GhostRoleEntry> _ghostRoles = new();
 
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
@@ -81,11 +82,6 @@ namespace Content.Server.Ghost.Roles
             base.Shutdown();
 
             _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
-        }
-
-        private uint GetNextRoleIdentifier()
-        {
-            return unchecked(_nextRoleIdentifier++);
         }
 
         public void OpenEui(IPlayerSession session)
@@ -152,7 +148,14 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (identifier, entry) in _ghostRoles)
             {
-                if (entry.Components.Count == 0 || _gameTiming.CurTime < entry.ExpiresAt)
+                if (entry.Components.Count == 0)
+                {
+                    needsUpdating = true;
+                    _ghostRoles.Remove(identifier);
+                    continue;
+                }
+
+                if (_gameTiming.CurTime < entry.ExpiresAt)
                     continue;
 
                 ProcessGhostRoleEntryWithRoleComponents(identifier, entry);
@@ -179,7 +182,7 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        private void ProcessGhostRoleEntryWithRoleComponents(uint identifier, GhostRoleEntry entry)
+        private void ProcessGhostRoleEntryWithRoleComponents(string identifier, GhostRoleEntry entry)
         {
             var playerCount = entry.PendingPlayerSessions.Count;
 
@@ -187,26 +190,43 @@ namespace Content.Server.Ghost.Roles
                 return;
 
             var sessions = new List<IPlayerSession>(entry.PendingPlayerSessions);
-
             _random.Shuffle(sessions);
 
-            while (sessions.Count > 0 && entry.Components.Count > 0)
+            var compIdx = entry.Components.Count - 1; // Deletion is handled elsewhere, so just use an index.
+            while (sessions.Count > 0 && compIdx >= 0)
             {
-                var session = sessions.Pop();
-                var component = entry.Components.First();
+                var session = sessions[^1];
+                var component = entry.Components[compIdx];
 
-                if (session.Status != SessionStatus.InGame || !component.Take(session))
+                if (session.Status != SessionStatus.InGame)
+                {
+                    sessions.Pop();
                     continue;
+                }
+
+                // Remove if already taken or the take-over count has reached the cap.
+                if (!component.Take(session))
+                {
+                    // Assumes that the take over fails only because of the component state.
+                    compIdx--;
+                    continue;
+                }
 
                 if (session.AttachedEntity != null)
                     _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{session:player} took the {entry.Name:roleName} ghost role {ToPrettyString(session.AttachedEntity.Value):entity}");
 
-                // TODO: Take _availableTakeovers in GhostRoleMobSpawnerComponent into consideration.
-                entry.Components.Remove(component);
+                sessions.Pop();
 
-                RemovePlayerTakeoverRequests(session);
+                // A single GhostRoleMobSpawnerComponent can spawn multiple entities. Check it is completely used up.
+                if(component.Taken)
+                    compIdx--;
+
                 CloseEui(session);
             }
+
+            // Clear and add the remaining sessions.
+            entry.PendingPlayerSessions.Clear();
+            entry.PendingPlayerSessions.UnionWith(sessions);
         }
 
         private void ProcessGhostRoleEntryWithRequest(uint identifier, GhostRoleEntry entry)
@@ -225,35 +245,31 @@ namespace Content.Server.Ghost.Roles
 
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            var element = _ghostRoles.FirstOrNull(e => e.Value.Name == role.RoleName);
-            var entry = element?.Value ?? GhostRoleEntry.MakeForGhostRole(role);
-
-            if (element == null)
+            if (!_ghostRoles.TryGetValue(role.RoleName, out var entry))
             {
+                entry = GhostRoleEntry.MakeForGhostRole(role);
                 entry.AddedAt = _gameTiming.CurTime;
                 entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
-                _ghostRoles[role.Identifier = GetNextRoleIdentifier()] = entry;
-            }
-            else
-            {
-                role.Identifier = element.Value.Key;
-                entry.Components.Add(role);
+                _ghostRoles[role.RoleName] = entry;
             }
 
+            if (entry.Components.Contains(role))
+                return;
+
+            entry.Components.Add(role);
+            role.Identifier = entry.NextComponentIdentifier;
 
             UpdateAllEui();
         }
 
         public void UnregisterGhostRole(GhostRoleComponent role)
         {
-            if (!_ghostRoles.ContainsKey(role.Identifier))
+            if (!_ghostRoles.TryFirstOrNull(e => e.Value.Name == role.RoleName, out var element))
                 return;
 
-            var entry = _ghostRoles[role.Identifier];
+            var entry = element.Value.Value;
 
             entry.Components.Remove(role);
-            if (entry.Components.Count == 0)
-                _ghostRoles.Remove(role.Identifier);
 
             UpdateAllEui();
         }
@@ -280,7 +296,7 @@ namespace Content.Server.Ghost.Roles
 
         }
 
-        public void RequestTakeover(IPlayerSession player, uint identifier)
+        public void RequestTakeover(IPlayerSession player, string identifier)
         {
             if (_ghostRoles.TryGetValue(identifier, out var entry))
             {
@@ -291,7 +307,7 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        public void CancelTakeover(IPlayerSession player, uint identifier)
+        public void CancelTakeover(IPlayerSession player, string identifier)
         {
             if (_ghostRoles.TryGetValue(identifier, out var entry))
             {
@@ -300,16 +316,26 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        public void Follow(IPlayerSession player, uint identifier)
+        public void Follow(IPlayerSession player, string roleIdentifier)
         {
-            // TODO: Reimplement
-            // if (!_ghostRoles.TryGetValue(identifier, out var role) || role.Component == null)
-            //     return;
-            //
-            // if (player.AttachedEntity == null)
-            //     return;
-            //
-            // _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, role.Component.Owner);
+            if (player.AttachedEntity == null || !_ghostRoles.TryGetValue(roleIdentifier, out var entry))
+                return;
+
+            if (entry.Components.Count == 0)
+                return;
+
+            var idx = 0;
+            if (TryComp<FollowerComponent>(player.AttachedEntity, out var followerComponent))
+            {
+                // Get the index of the next entity to follow.
+                idx = entry.Components.FindIndex(e => e.Owner == followerComponent.Following) + 1;
+                if (idx <= 0 || idx >= entry.Components.Count)
+                    idx = 0;
+            }
+
+            var component = entry.Components[idx];
+
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, component.Owner);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
@@ -347,16 +373,17 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, request) in _ghostRoles)
             {
+                var followIdentifier = request.Components.First().Identifier;
+
                 roles[i] = new GhostRoleInfo()
                 {
-                    Identifier = id,
                     Name = request.Name,
                     Description = request.Description,
                     Rules = request.Rules,
                     ExpiresAt = request.ExpiresAt,
                     AddedAt = request.AddedAt,
-                    NumSignUps = request.PendingPlayerSessions.Count,
                     IsRequested = request.PendingPlayerSessions.Contains(session),
+                    FollowIdentifier = followIdentifier,
                 };
                 i++;
             }
@@ -367,16 +394,18 @@ namespace Content.Server.Ghost.Roles
         private void OnPlayerAttached(PlayerAttachedEvent message)
         {
             // Close the session of any player that has a ghost roles window open and isn't a ghost anymore.
-            if (!_openUis.ContainsKey(message.Player)) return;
-            if (EntityManager.HasComponent<GhostComponent>(message.Entity)) return;
+            if (!_openUis.ContainsKey(message.Player))
+                return;
+            if (EntityManager.HasComponent<GhostComponent>(message.Entity))
+                return;
             CloseEui(message.Player);
 
-            // TODO: Remove player from any pending ghost role requests.
+            RemovePlayerTakeoverRequests(message.Player);
         }
 
         private void OnMindAdded(EntityUid uid, GhostTakeoverAvailableComponent component, MindAddedMessage args)
         {
-            component.Taken = true;
+            component.Taken = true; // Handle take-overs outside of this system (e.g. Admin take-over).
             UnregisterGhostRole(component);
         }
 
@@ -399,7 +428,6 @@ namespace Content.Server.Ghost.Roles
 
             _openUis.Clear();
             _ghostRoles.Clear();
-            _nextRoleIdentifier = 0;
         }
 
         private void OnInit(EntityUid uid, GhostRoleComponent role, ComponentInit args)
@@ -437,7 +465,11 @@ namespace Content.Server.Ghost.Roles
 
         public readonly HashSet<IPlayerSession> PendingPlayerSessions = new();
 
-        public readonly HashSet<GhostRoleComponent> Components = new();
+        public readonly List<GhostRoleComponent> Components = new();
+
+        private uint _nextComponentIdentifier;
+
+        public uint NextComponentIdentifier => unchecked(_nextComponentIdentifier++);
 
         public static GhostRoleEntry MakeForGhostRole(GhostRoleComponent component)
         {
@@ -448,8 +480,6 @@ namespace Content.Server.Ghost.Roles
                 Rules = component.RoleRules,
                 ElapseTime = TimeSpan.FromSeconds(10),
             };
-
-            inst.Components.Add(component);
 
             return inst;
         }

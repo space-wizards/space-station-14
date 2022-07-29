@@ -16,6 +16,7 @@ namespace Content.Client.Ghost.Roles.UI
 
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
+        public event Action<GhostRoleInfo>? OnRoleFollowed;
 
         public GhostRolesEntry(string name, string description, GhostRoleInfo role, IGameTiming timing)
         {
@@ -32,17 +33,7 @@ namespace Content.Client.Ghost.Roles.UI
 
             RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
             CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
-
-
-            // foreach (var role in roles)
-            // {
-            //     var button = new GhostRoleEntryButtons(role, timing);
-            //     button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
-            //     button.CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
-            //     button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
-            //
-            //     Buttons.AddChild(button);
-            // }
+            FollowButton.OnPressed += _ => OnRoleFollowed?.Invoke(role);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -50,10 +41,9 @@ namespace Content.Client.Ghost.Roles.UI
             base.FrameUpdate(args);
 
             _timeRemaining -= args.DeltaSeconds;
-            var displayTimeRemaining = (int)Math.Max(0, _timeRemaining);
+            var displayTimeRemaining = Math.Max(0, _timeRemaining);
 
-            RequestButton.Text = $"Request ({displayTimeRemaining})";
-            CancelButton.Text = $"Cancel ({displayTimeRemaining})";
+            TimeRemaining.Text = $"Ends In {displayTimeRemaining:0.0} s";
         }
     }
 }

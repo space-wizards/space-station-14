@@ -11,7 +11,7 @@ namespace Content.Client.Ghost.Roles.UI
     {
         public event Action<GhostRoleInfo>? OnRoleRequested;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
-        public event Action<GhostRoleInfo>? OnRoleFollow;
+        public event Action<GhostRoleInfo>? OnRoleFollowed;
 
         public void ClearEntries()
         {
@@ -24,8 +24,10 @@ namespace Content.Client.Ghost.Roles.UI
             NoRolesMessage.Visible = false;
 
             var entry = new GhostRolesEntry(name, description, role, timing);
+            entry.Name = $"GhostRoleEntry.{name}";
             entry.OnRoleSelected += OnRoleRequested;
             entry.OnRoleCancelled += OnRoleCancelled;
+            entry.OnRoleFollowed += OnRoleFollowed;
             EntryContainer.AddChild(entry);
         }
     }

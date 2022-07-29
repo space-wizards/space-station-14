@@ -6,14 +6,13 @@ namespace Content.Shared.Ghost.Roles
     [NetSerializable, Serializable]
     public struct GhostRoleInfo
     {
-        public uint Identifier { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }
         public TimeSpan ExpiresAt { get; set; }
         public TimeSpan AddedAt { get; set; }
-        public int NumSignUps { get; set; }
         public bool IsRequested { get; set; }
+        public uint FollowIdentifier { get; set; }
     }
 
     [NetSerializable, Serializable]
@@ -30,9 +29,9 @@ namespace Content.Shared.Ghost.Roles
     [NetSerializable, Serializable]
     public sealed class GhostRoleTakeoverRequestMessage : EuiMessageBase
     {
-        public uint Identifier { get; }
+        public string Identifier { get; }
 
-        public GhostRoleTakeoverRequestMessage(uint identifier)
+        public GhostRoleTakeoverRequestMessage(string identifier)
         {
             Identifier = identifier;
         }
@@ -41,9 +40,9 @@ namespace Content.Shared.Ghost.Roles
     [NetSerializable, Serializable]
     public sealed class GhostRoleCancelTakeoverRequestMessage : EuiMessageBase
     {
-        public uint Identifier { get; }
+        public string Identifier { get; }
 
-        public GhostRoleCancelTakeoverRequestMessage(uint identifier)
+        public GhostRoleCancelTakeoverRequestMessage(string identifier)
         {
             Identifier = identifier;
         }
@@ -52,9 +51,9 @@ namespace Content.Shared.Ghost.Roles
     [NetSerializable, Serializable]
     public sealed class GhostRoleFollowRequestMessage : EuiMessageBase
     {
-        public uint Identifier { get; }
+        public string Identifier { get; }
 
-        public GhostRoleFollowRequestMessage(uint identifier)
+        public GhostRoleFollowRequestMessage(string identifier)
         {
             Identifier = identifier;
         }

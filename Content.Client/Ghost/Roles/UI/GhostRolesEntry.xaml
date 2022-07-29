@@ -7,11 +7,12 @@
     <PanelContainer StyleClasses="HighDivider" />
     <RichTextLabel Name="Description"
                    Margin="0 4"/>
-    <BoxContainer Name="Buttons"
-                  HorizontalAlignment="Left"
+    <BoxContainer HorizontalAlignment="Left"
                   Orientation="Horizontal"
                   SeparationOverride="5">
         <Button Name="RequestButton" Text="Request"/>
         <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
+        <Button Name="FollowButton" Text="Follow"/>
+        <Label Name="TimeRemaining"/>
     </BoxContainer>
 </BoxContainer>
