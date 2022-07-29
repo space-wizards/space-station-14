@@ -4,6 +4,7 @@ using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.AI.Steering;
+using Content.Server.AI.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks;

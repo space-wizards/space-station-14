@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
+using Content.Server.AI.Steering;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
-using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Map;
@@ -14,8 +14,11 @@ using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Server.AI.Steering
+namespace Content.Server.AI.Systems
 {
+    /// <summary>
+    /// Handles NPC movement AKA steering. Logic isn't on HTNOperator as requires coordination between NPCs.
+    /// </summary>
     public sealed class NPCSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
