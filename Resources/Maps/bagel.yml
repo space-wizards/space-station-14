@@ -298,8 +298,6 @@ entities:
   - pos: -15.652456,-29.638643
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 3
   type: SpawnPointJanitor
   components:
@@ -382,8 +380,6 @@ entities:
   - pos: -17.449331,-29.623018
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 15
   type: CableMV
   components:
@@ -415,8 +411,6 @@ entities:
   - pos: 37.455032,-37.40484
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
   - containers:
       storagebase: !type:Container
         ents: []
@@ -433,8 +427,6 @@ entities:
   - pos: 55.62253,-8.328542
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 22
   type: ReinforcedWindow
   components:
@@ -467,8 +459,6 @@ entities:
   - pos: -35.503693,-35.511295
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 27
   type: CableApcExtension
   components:
@@ -677,8 +667,6 @@ entities:
   - pos: 46.476154,-16.467594
     parent: 60
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 55
   type: WallSolid
   components:
@@ -26238,9 +26226,9 @@ entities:
     parent: 60
     type: Transform
 - uid: 327
-  type: BedsheetMedical
+  type: ClothingMaskBreathMedical
   components:
-  - pos: 38.5,-19.5
+  - pos: 3.4602647,-3.610754
     parent: 60
     type: Transform
   - canCollide: False
@@ -26264,20 +26252,20 @@ entities:
     parent: 60
     type: Transform
 - uid: 331
-  type: MedicalBed
+  type: PottedPlant22
   components:
   - pos: 38.5,-19.5
-    parent: 60
-    type: Transform
-- uid: 332
-  type: PottedPlantRandom
-  components:
-  - pos: 39.5,-19.5
     parent: 60
     type: Transform
   - containers:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 332
+  type: StasisBed
+  components:
+  - pos: 39.5,-19.5
+    parent: 60
+    type: Transform
 - uid: 333
   type: WallSolid
   components:
@@ -53111,7 +53099,7 @@ entities:
   - pos: 48.5,-39.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -9826.678
+  - SecondsUntilStateChange: -10002.094
     state: Opening
     type: Door
 - uid: 3729
@@ -69571,17 +69559,13 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5854
-  type: MedkitOxygenFilled
+  type: BedsheetMedical
   components:
-  - pos: 37.51929,-19.325336
+  - pos: 37.5,-19.5
     parent: 60
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 5855
   type: Window
   components:
@@ -78814,7 +78798,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 7044
-  type: Table
+  type: MedicalBed
   components:
   - pos: 37.5,-19.5
     parent: 60
@@ -80083,7 +80067,7 @@ entities:
 - uid: 7216
   type: CrateNPCCow
   components:
-  - pos: 24.5,-28.5
+  - pos: 24.5,-37.5
     parent: 60
     type: Transform
   - containers:
@@ -93107,13 +93091,14 @@ entities:
     - machine_board
     type: Construction
 - uid: 9017
-  type: StasisBed
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 49.5,-12.5
+  - anchored: True
+    pos: 46.5,-13.5
     parent: 60
     type: Transform
 - uid: 9018
-  type: StasisBed
+  type: Bed
   components:
   - pos: 49.5,-14.5
     parent: 60
@@ -94534,16 +94519,12 @@ entities:
     parent: 60
     type: Transform
 - uid: 9214
-  type: Crematorium
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 36.5,-10.5
+  - anchored: True
+    pos: 23.5,-29.5
     parent: 60
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 9215
   type: CableHV
   components:
@@ -124787,6 +124768,13 @@ entities:
   - pos: 6.5,29.5
     parent: 60
     type: Transform
+- uid: 13825
+  type: AtmosDeviceFanTiny
+  components:
+  - anchored: True
+    pos: 25.5,-25.5
+    parent: 60
+    type: Transform
 - uid: 13826
   type: PosterLegitNanotrasenLogo
   components:
@@ -127477,6 +127465,12 @@ entities:
   - pos: -8.5,24.5
     parent: 60
     type: Transform
+- uid: 14185
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-28.5
+    parent: 60
+    type: Transform
 - uid: 14186
   type: TableWood
   components:
@@ -130003,7 +129997,7 @@ entities:
   - pos: 31.5,-19.5
     parent: 60
     type: Transform
-  - SecondsUntilStateChange: -3339.577
+  - SecondsUntilStateChange: -3514.9932
     state: Closing
     type: Door
   - canCollide: False
@@ -130152,6 +130146,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 14545
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 14546
   type: DisposalUnit
   components:
@@ -132660,6 +132660,12 @@ entities:
     pos: -45.5,37.5
     parent: 60
     type: Transform
+- uid: 14896
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 23.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 14897
   type: GasPipeStraight
   components:
@@ -133309,6 +133315,18 @@ entities:
   - pos: -40.5,34.5
     parent: 60
     type: Transform
+- uid: 14989
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-28.5
+    parent: 60
+    type: Transform
+- uid: 14990
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 14991
   type: GasPipeStraight
   components:
@@ -133332,6 +133350,12 @@ entities:
     type: Transform
   - open: False
     type: GasValve
+- uid: 14994
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 24.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 14995
   type: GasPipeStraight
   components:
@@ -133398,6 +133422,12 @@ entities:
     pos: -42.5,44.5
     parent: 60
     type: Transform
+- uid: 15004
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-28.5
+    parent: 60
+    type: Transform
 - uid: 15005
   type: GasMixerFlipped
   components:
@@ -133407,6 +133437,12 @@ entities:
   - inletTwoConcentration: 0
     inletOneConcentration: 1
     type: GasMixer
+- uid: 15006
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-27.5
+    parent: 60
+    type: Transform
 - uid: 15007
   type: GasPipeBend
   components:
@@ -134054,6 +134090,12 @@ entities:
     pos: -44.5,39.5
     parent: 60
     type: Transform
+- uid: 15100
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 25.5,-26.5
+    parent: 60
+    type: Transform
 - uid: 15101
   type: GasMixerFlipped
   components:
@@ -134605,6 +134647,12 @@ entities:
   type: NitrogenCanister
   components:
   - pos: -25.5,35.5
+    parent: 60
+    type: Transform
+- uid: 15176
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 26.5,-28.5
     parent: 60
     type: Transform
 - uid: 15177
@@ -141255,6 +141303,32 @@ entities:
   - pos: -1.5,22.5
     parent: 60
     type: Transform
+- uid: 16100
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 26.5,-27.5
+    parent: 60
+    type: Transform
+- uid: 16101
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 26.5,-26.5
+    parent: 60
+    type: Transform
+- uid: 16102
+  type: Bed
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
+- uid: 16103
+  type: BedsheetMedical
+  components:
+  - pos: 49.5,-14.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 16104
   type: WaterCooler
   components:
@@ -149911,6 +149985,14 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 17386
+  type: BedsheetMedical
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 17387
   type: Pen
   components:
@@ -155891,6 +155973,12 @@ entities:
   - pos: -5.5,-6.5
     parent: 60
     type: Transform
+- uid: 18212
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 47.5,-14.5
+    parent: 60
+    type: Transform
 - uid: 18213
   type: CableApcExtension
   components:
@@ -157673,6 +157761,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 18456
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 47.5,-13.5
+    parent: 60
+    type: Transform
 - uid: 18457
   type: DrinkGoldenCup
   components:
@@ -157831,6 +157925,12 @@ entities:
     type: HandheldLight
   - canCollide: False
     type: Physics
+- uid: 18476
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 47.5,-12.5
+    parent: 60
+    type: Transform
 - uid: 18477
   type: ComfyChair
   components:
@@ -167008,6 +167108,12 @@ entities:
   - pos: 34.5,13.5
     parent: 60
     type: Transform
+- uid: 19696
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-14.5
+    parent: 60
+    type: Transform
 - uid: 19697
   type: BoxFolderGrey
   components:
@@ -169604,6 +169710,12 @@ entities:
   type: CrateEmptySpawner
   components:
   - pos: 30.5,-2.5
+    parent: 60
+    type: Transform
+- uid: 20074
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-13.5
     parent: 60
     type: Transform
 - uid: 20075
@@ -177547,6 +177659,12 @@ entities:
       Off: []
       Toggle: []
     type: SignalReceiver
+- uid: 21247
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 48.5,-12.5
+    parent: 60
+    type: Transform
 - uid: 21248
   type: CableApcExtension
   components:
@@ -177641,6 +177759,12 @@ entities:
   type: CableApcExtension
   components:
   - pos: -72.5,17.5
+    parent: 60
+    type: Transform
+- uid: 21264
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-14.5
     parent: 60
     type: Transform
 - uid: 21265
@@ -178702,4 +178826,16 @@ entities:
       DisposalUnit: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 21403
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-13.5
+    parent: 60
+    type: Transform
+- uid: 21404
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: 49.5,-12.5
+    parent: 60
+    type: Transform
 ...
