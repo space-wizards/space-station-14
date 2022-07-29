@@ -1,20 +1,16 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Destructible;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Containers.ItemSlots
 {
@@ -27,8 +23,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly INetManager _netMan = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {
@@ -218,29 +213,10 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot?.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
 
-            PlaySound(uid, slot.InsertSound, slot.SoundOptions, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
+
             var ev = new ItemSlotChangedEvent();
             RaiseLocalEvent(uid, ref ev, true);
-        }
-
-        /// <summary>
-        ///     Plays a sound
-        /// </summary>
-        /// <param name="uid">Source of the sound</param>
-        /// <param name="sound">The sound</param>
-        /// <param name="excluded">Optional (server-side) argument used to prevent sending the audio to a specific
-        /// user. When run client-side, exclusion does nothing.</param>
-        private void PlaySound(EntityUid uid, SoundSpecifier? sound, AudioParams audioParams, EntityUid? excluded)
-        {
-            if (sound == null || !_gameTiming.IsFirstTimePredicted)
-                return;
-
-            var filter = Filter.Pvs(uid, entityManager: EntityManager);
-
-            if (excluded != null && _netMan.IsServer)
-                filter = filter.RemoveWhereAttachedEntity(entity => entity == excluded.Value);
-
-            SoundSystem.Play(sound.GetSound(), filter, uid, audioParams);
         }
 
         /// <summary>
@@ -343,7 +319,7 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot?.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
 
-            PlaySound(uid, slot.EjectSound, slot.SoundOptions, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
             var ev = new ItemSlotChangedEvent();
             RaiseLocalEvent(uid, ref ev, true);
         }

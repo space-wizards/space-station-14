@@ -49,7 +49,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
-            IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();

@@ -84,7 +84,7 @@
         Slash: 5
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag

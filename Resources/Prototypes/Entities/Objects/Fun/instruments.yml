@@ -58,10 +58,12 @@
   - type: Tag
     tags:
     - StringInstrument
-  - type: Clothing
+  - type: Item
+    sprite: Objects/Fun/Instruments/guitar.rsi
     size: 24
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
     sprite: Objects/Fun/Instruments/guitar.rsi
 
@@ -267,7 +269,7 @@
       "Soprano": {64: 0}
       "Alto": {65: 0}
       "Tenor": {66: 0}
-      "Baritone": {67: 0} 
+      "Baritone": {67: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
@@ -335,10 +337,12 @@
   - type: Tag
     tags:
     - BrassInstrument #Go figure.
-  - type: Clothing
-    size: 24
+  - type: Item
     sprite: Objects/Fun/Instruments/bike_horn.rsi
-    Slots: [Belt]
+    size: 24
+  - type: Clothing
+    sprite: Objects/Fun/Instruments/bike_horn.rsi
+    slots: [Belt]
     quickEquip: false
 
 - type: entity
