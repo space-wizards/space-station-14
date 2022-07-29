@@ -246,7 +246,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("suspicion.min_traitors", 2);
 
         public static readonly CVarDef<int> SuspicionPlayersPerTraitor =
-            CVarDef.Create("suspicion.players_per_traitor", 5);
+            CVarDef.Create("suspicion.players_per_traitor", 6);
 
         public static readonly CVarDef<int> SuspicionStartingBalance =
             CVarDef.Create("suspicion.starting_balance", 20);
@@ -262,7 +262,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("traitor.min_players", 5);
 
         public static readonly CVarDef<int> TraitorMaxTraitors =
-            CVarDef.Create("traitor.max_traitors", 7);
+            CVarDef.Create("traitor.max_traitors", 12); // Assuming average server maxes somewhere from like 50-80 people
 
         public static readonly CVarDef<int> TraitorPlayersPerTraitor =
             CVarDef.Create("traitor.players_per_traitor", 5);
@@ -294,7 +294,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("nukeops.min_players", 15);
 
         public static readonly CVarDef<int> NukeopsMaxOps =
-            CVarDef.Create("nukeops.max_ops", 6);
+            CVarDef.Create("nukeops.max_ops", 5);
 
         public static readonly CVarDef<int> NukeopsPlayersPerOp =
             CVarDef.Create("nukeops.players_per_op", 5);
@@ -405,54 +405,6 @@ namespace Content.Shared.CCVar
         /*
          * Physics
          */
-
-        /*
-         * WARNING: These are liable to get changed to datafields whenever movement refactor occurs and may no longer be valid.
-         * You were warned!
-         */
-
-        /// <summary>
-        /// Minimum speed a mob has to be moving before applying movement friction.
-        /// </summary>
-        public static readonly CVarDef<float> MinimumFrictionSpeed =
-            CVarDef.Create("physics.minimum_friction_speed", 0.005f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The acceleration applied to mobs when moving.
-        /// </summary>
-        public static readonly CVarDef<float> MobAcceleration =
-            CVarDef.Create("physics.mob_acceleration", 14f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The negative velocity applied for friction.
-        /// </summary>
-        public static readonly CVarDef<float> MobFriction =
-            CVarDef.Create("physics.mob_friction", 14f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The acceleration applied to mobs when moving and weightless.
-        /// </summary>
-        public static readonly CVarDef<float> MobWeightlessAcceleration =
-            CVarDef.Create("physics.mob_weightless_acceleration", 1f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The negative velocity applied for friction when weightless and providing inputs.
-        /// </summary>
-        public static readonly CVarDef<float> MobWeightlessFriction =
-            CVarDef.Create("physics.mob_weightless_friction", 1f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The negative velocity applied for friction when weightless and not providing inputs.
-        /// This is essentially how much their speed decreases per second.
-        /// </summary>
-        public static readonly CVarDef<float> MobWeightlessFrictionNoInput =
-            CVarDef.Create("physics.mob_weightless_friction_no_input", 0.2f, CVar.ARCHIVE | CVar.REPLICATED);
-
-        /// <summary>
-        /// The movement speed modifier applied to a mob's total input velocity when weightless.
-        /// </summary>
-        public static readonly CVarDef<float> MobWeightlessModifier =
-            CVarDef.Create("physics.mob_weightless_modifier", 0.7f, CVar.ARCHIVE | CVar.REPLICATED);
 
         /// <summary>
         /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
@@ -820,6 +772,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminLoocEnabled =
             CVarDef.Create("looc.enabled_admin", true, CVar.NOTIFY);
 
+        /// <summary>
+        /// True: Dead players can use LOOC
+        /// False: Dead player LOOC gets redirected to dead chat
+        /// </summary>
+        public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
+
         /*
          * Entity Menu Grouping Types
          */
@@ -917,23 +875,6 @@ namespace Content.Shared.CCVar
         /*
          * Shuttles
          */
-        public static readonly CVarDef<float> ShuttleMaxLinearSpeed =
-            CVarDef.Create("shuttle.max_linear_speed", 13f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<float> ShuttleMaxAngularSpeed =
-            CVarDef.Create("shuttle.max_angular_speed", 1.4f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<float> ShuttleMaxAngularAcc =
-            CVarDef.Create("shuttle.max_angular_acc", 2f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<float> ShuttleMaxAngularMomentum =
-            CVarDef.Create("shuttle.max_angular_momentum", 60000f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<float> ShuttleIdleLinearDamping =
-            CVarDef.Create("shuttle.idle_linear_damping", 50f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<float> ShuttleIdleAngularDamping =
-            CVarDef.Create("shuttle.idle_angular_damping", 100f, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether cargo shuttles are enabled.
@@ -977,7 +918,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.recall_turning_point", 0.5f, CVar.SERVERONLY);
 
         /// <summary>
-        /// The map to load for centcomm for the emergency shuttle to dock to.
+        /// The map to load for CentCom for the emergency shuttle to dock to.
         /// </summary>
         public static readonly CVarDef<string> CentcommMap =
             CVarDef.Create("shuttle.centcomm_map", "/Maps/centcomm.yml", CVar.SERVERONLY);

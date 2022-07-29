@@ -137,9 +137,9 @@
       types:
         Poison: 2
         Piercing: 1
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
     - Idle
@@ -668,9 +668,9 @@
     damage:
       types:
         Blunt: 10
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -756,12 +756,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    equippedPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -844,6 +845,8 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: DiseaseCarrier #The other class lab animal and disease vector
+    naturalImmunities:
+      - AMIV
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -859,7 +862,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -885,7 +888,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1147,9 +1150,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7
     baseSprintSpeed : 7
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - UnarmedAttackHostiles
   - type: AiFactionTag
@@ -1315,9 +1318,9 @@
     - type: AiFactionTag
       factions:
         - Xeno
-    - type: PlayerInputMover
-    - type: PlayerMobMover
-    - type: UtilityAI
+    - type: InputMover
+    - type: MobMover
+    - type: UtilityNPC
       behaviorSets:
         - Idle
         - UnarmedAttackHostiles

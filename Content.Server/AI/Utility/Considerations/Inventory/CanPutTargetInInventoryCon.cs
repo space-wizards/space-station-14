@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Inventory
             // If not then check if we have a free hand
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<SharedItemComponent>(target))
+            if (target == null || !IoCManager.Resolve<IEntityManager>().HasComponent<ItemComponent>(target))
             {
                 return 0.0f;
             }

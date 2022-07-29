@@ -17,7 +17,7 @@ namespace Content.Server.Projectiles
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly GunSystem _guns = default!;
 
         public override void Initialize()
@@ -40,7 +40,7 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
 
-            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
+            var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances);
             component.DamagedEntity = true;
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
@@ -56,7 +56,7 @@ namespace Content.Server.Projectiles
             if (HasComp<CameraRecoilComponent>(otherEntity))
             {
                 var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-                _cameraRecoil.KickCamera(otherEntity, direction);
+                _sharedCameraRecoil.KickCamera(otherEntity, direction);
             }
 
             if (component.DeleteOnCollide)

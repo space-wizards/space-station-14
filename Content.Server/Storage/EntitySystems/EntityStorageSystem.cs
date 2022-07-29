@@ -6,10 +6,12 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -143,21 +145,24 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var ev = new StorageBeforeCloseEvent(uid, _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate));
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+
+        var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
-        
         var count = 0;
         foreach (var entity in ev.Contents)
         {
-            if (!ev.ContentsWhitelist.Contains(entity))
-                if (!CanFit(entity, uid))
+            if (!ev.BypassChecks.Contains(entity))
+            {
+                if (!CanFit(entity, uid, component.Whitelist))
                     continue;
-            
+            }
+
             if (!AddToContents(entity, uid, component))
                 continue;
 
             count++;
-            if (count >= component.StorageCapacityMax)
+            if (count >= component.Capacity)
                 break;
         }
 
@@ -197,7 +202,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Open)
             return true;
 
-        if (component.Contents.ContainedEntities.Count >= component.StorageCapacityMax)
+        if (component.Contents.ContainedEntities.Count >= component.Capacity)
             return false;
 
         return true;
@@ -226,6 +231,9 @@ public sealed class EntityStorageSystem : EntitySystem
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null)
     {
         if (!Resolve(target, ref component))
+            return false;
+
+        if (!HasComp<SharedHandsComponent>(user))
             return false;
 
         if (component.IsWeldedShut)
@@ -279,7 +287,7 @@ public sealed class EntityStorageSystem : EntitySystem
         return Insert(toAdd, container, component);
     }
 
-    public bool CanFit(EntityUid toInsert, EntityUid container)
+    public bool CanFit(EntityUid toInsert, EntityUid container, EntityWhitelist? whitelist)
     {
         // conditions are complicated because of pizzabox-related issues, so follow this guide
         // 0. Accomplish your goals at all costs.
@@ -296,13 +304,12 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        // checks
-        // TODO: Make the others sub to it.
-        var targetIsItem = HasComp<SharedItemComponent>(toInsert);
         var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
-        var storageIsItem = HasComp<SharedItemComponent>(container);
+        var storageIsItem = HasComp<ItemComponent>(container);
 
-        var allowedToEat = targetIsItem;
+        var allowedToEat = whitelist == null
+            ? HasComp<ItemComponent>(toInsert)
+            : whitelist.IsValid(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
@@ -357,6 +364,5 @@ public sealed class EntityStorageSystem : EntitySystem
             appearance.SetData(StorageVisuals.Open, component.Open);
             appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Count() > 0);
         }
-            
     }
 }

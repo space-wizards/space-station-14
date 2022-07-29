@@ -22,6 +22,7 @@ namespace Content.Server.Wieldable
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -167,10 +168,10 @@ namespace Content.Server.Wieldable
             if (!CanWield(uid, component, args.User.Value) || component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                component.OldInhandPrefix = item.EquippedPrefix;
-                item.EquippedPrefix = component.WieldedInhandPrefix;
+                component.OldInhandPrefix = item.HeldPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
             }
 
             component.Wielded = true;
@@ -196,9 +197,9 @@ namespace Content.Server.Wieldable
             if (!component.Wielded)
                 return;
 
-            if (TryComp<SharedItemComponent>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                item.EquippedPrefix = component.OldInhandPrefix;
+                _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, item);
             }
 
             component.Wielded = false;

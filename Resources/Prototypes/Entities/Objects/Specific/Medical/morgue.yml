@@ -38,8 +38,8 @@
       mask:
       - Impassable
   - type: EntityStorage
-    Capacity: 1
-    IsCollidableWhenOpen: true
+    capacity: 1
+    isCollidableWhenOpen: true
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:

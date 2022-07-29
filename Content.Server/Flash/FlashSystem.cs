@@ -1,4 +1,5 @@
 using Content.Server.Flash.Components;
+using Content.Server.Light.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -9,7 +10,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -31,6 +31,7 @@ namespace Content.Server.Flash
         {
             base.Initialize();
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
+            SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
             SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
 
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
@@ -67,15 +68,22 @@ namespace Content.Server.Flash
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!UseFlash(comp, args.User))
-            {
                 return;
-            }
 
             args.Handled = true;
             foreach (var e in args.HitEntities)
             {
                 Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
             }
+        }
+        
+        private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
+        {
+            if (args.Handled || !UseFlash(comp, args.User))
+                return;
+
+            args.Handled = true;
+            FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
         }
 
         private bool UseFlash(FlashComponent comp, EntityUid user)

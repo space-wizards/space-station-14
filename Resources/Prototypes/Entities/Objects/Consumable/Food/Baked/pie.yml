@@ -114,9 +114,6 @@
     - state: tin
     - state: plain
   - type: CreamPie
-  - type: SolutionInjectOnCollide
-    transferAmount: 20
-    transferEfficiency: 0.2
 # Tastes like pie, cream, banana.
 
 - type: entity

@@ -53,7 +53,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<DisposalUnitComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             // TODO: Predict me when hands predicted
-            SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
+            SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(HandleMovement);
             SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(HandlePowerChange);
 
             // Component lifetime
@@ -376,7 +376,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, RelayMovementEntityEvent args)
+        private void HandleMovement(EntityUid uid, DisposalUnitComponent component, ref ContainerRelayMovementEntityEvent args)
         {
             var currentTime = GameTiming.CurTime;
 
@@ -455,7 +455,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
-                    if (!EntityManager.HasComponent<SharedItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    if (!EntityManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
                     component.RecentlyEjected.RemoveAt(i);
                 }
             }
