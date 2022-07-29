@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added chat typing indicator., type: Add}
-  id: 1540
-  time: '2022-05-17T09:55:19.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Fixed client crash when someone was cream pied., type: Fix}
@@ -2944,3 +2939,9 @@ Entries:
   - {message: Syringes can be put in medical belts, type: Add}
   id: 2039
   time: '2022-07-29T01:23:11.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Miasma is no longer visible until it's approaching dangerous levels.,
+    type: Tweak}
+  id: 2040
+  time: '2022-07-29T03:13:56.0000000+00:00'
