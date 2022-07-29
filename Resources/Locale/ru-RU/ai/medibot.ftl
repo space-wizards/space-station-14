@@ -1,2 +1,2 @@
-medibot-start-inject = Hold still, please.
-medibot-finish-inject = All done.
+medibot-start-inject = Пожалуйста, не двигайтесь.
+medibot-finish-inject = Готово.

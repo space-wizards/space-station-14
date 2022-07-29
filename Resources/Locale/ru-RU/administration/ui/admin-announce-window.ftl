@@ -1,11 +1,7 @@
 admin-announce-title = Сделать объявление
-admin-announce-announcement-placeholder = Announcement text
-admin-announce-announcer-placeholder = Announcer
-admin-announce-announcer-default = Central Command
-admin-announce-button = Announce
-admin-announce-type-station = Station
-admin-announce-type-server = Server
-announcer-placeholder = Объявление
-announcement-placeholder = Текст объявления
-announce-type-station = Станция
-announce-type-server = Сервер
+admin-announce-announcement-placeholder = Текст объявления
+admin-announce-announcer-placeholder = Отправитель
+admin-announce-announcer-default = Центральное командование
+admin-announce-button = Сделать объявление
+admin-announce-type-station = Станция
+admin-announce-type-server = Сервер

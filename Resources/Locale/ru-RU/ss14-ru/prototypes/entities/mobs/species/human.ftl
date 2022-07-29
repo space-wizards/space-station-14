@@ -1,9 +1,6 @@
-ent-BaseMobHuman = Urist McHands
-    .desc = A miserable pile of secrets.
-    .suffix = { "" }
-ent-MobHumanBase = Урист МакХэндс
+ent-BaseMobHuman = Урист МакХэндс
     .desc = Жалкая кучка тайн.
     .suffix = { "" }
 ent-MobHumanDummy = Урист МакХэндс
-    .desc = Манекен-человек, используемый при создании персонажа.
+    .desc = { ent-BaseMobOrganicDummy.desc }
     .suffix = { "" }

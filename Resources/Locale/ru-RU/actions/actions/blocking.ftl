@@ -5,4 +5,4 @@ action-popup-blocking-disabling-user = Вы опускаете свой { $shiel
 action-popup-blocking-other = { CAPITALIZE($blockerName) } поднимает свой { $shield }!
 action-popup-blocking-disabling-other = { CAPITALIZE($blockerName) } опускает свой { $shield }!
 action-popup-blocking-user-cant-block = Вы пытаетесь поднять свой щит, но безрезультатно.
-action-popup-blocking-user-too-close = There's no room here to block. Try moving a bit!
+action-popup-blocking-user-too-close = Не хватает места для блокирования. Попробуйте немного переместиться!

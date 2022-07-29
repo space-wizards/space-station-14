@@ -1,9 +1,9 @@
 admin-player-actions-window-title = Действия с игроками
-admin-player-actions-window-ban = Ban
-admin-player-actions-window-admin-ghost = Admin Ghost
-admin-player-actions-window-teleport = Teleport
-admin-player-actions-window-permissions = Permissions Panel
-admin-player-actions-window-announce = Announce
-admin-player-actions-window-shuttle = (Re)call Shuttle
-admin-player-actions-window-admin-logs = Admin Logs
-admin-player-actions-window-admin-notes = Admin Notes
+admin-player-actions-window-ban = Бан
+admin-player-actions-window-admin-ghost = Админ призрак
+admin-player-actions-window-teleport = Телепорт
+admin-player-actions-window-permissions = Панель доступов
+admin-player-actions-window-announce = Сделать объявление
+admin-player-actions-window-shuttle = Вызвать/отозвать шаттл
+admin-player-actions-window-admin-logs = Админ логи
+admin-player-actions-window-admin-notes = Админ записи

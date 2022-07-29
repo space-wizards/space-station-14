@@ -1,7 +1,7 @@
 # User interface
 comms-console-menu-title = Консоль связи
 comms-console-menu-announcement-placeholder = Объявление
-comms-console-menu-announcement-button = Announce
+comms-console-menu-announcement-button = Сделать объявление
 comms-console-menu-call-shuttle = Вызвать шаттл экстренной эвакуации
 comms-console-menu-recall-shuttle = Отозвать шаттл экстренной эвакуации
 # Popup
