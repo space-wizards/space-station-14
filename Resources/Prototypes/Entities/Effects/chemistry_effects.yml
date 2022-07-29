@@ -36,10 +36,9 @@
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Appearance
-    visuals:
-      - type: FoamVisualizer
-        animationTime: 0.6
-        animationState: foam-dissolve
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: mfoam-dissolve
   - type: Transform
     anchored: true
   - type: Physics
@@ -74,10 +73,9 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: FoamVisualizer
-      animationTime: 0.6
-      animationState: mfoam-dissolve
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: mfoam-dissolve
   - type: FoamSolutionAreaEffect
     foamedMetalPrototype: FoamedIronMetal
 
@@ -93,10 +91,9 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
-    visuals:
-      - type: FoamVisualizer
-        animationTime: 0.6
-        animationState: mfoam-dissolve
+  - type: FoamVisuals
+    animationTime: 0.6
+    animationState: mfoam-dissolve
   - type: FoamSolutionAreaEffect
     foamedMetalPrototype: FoamedAluminiumMetal
 
