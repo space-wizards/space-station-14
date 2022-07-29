@@ -28,7 +28,7 @@ namespace Content.Client.Inventory
             _strippingMenu = new StrippingMenu($"{Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner.Owner, entMan)))}");
 
             _strippingMenu.OnClose += Close;
-            _strippingMenu.OpenCentered();
+            _strippingMenu.OpenCenteredLeft();
             UpdateMenu();
         }
 
