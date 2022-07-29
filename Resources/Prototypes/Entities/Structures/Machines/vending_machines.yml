@@ -895,11 +895,8 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
-#  - type: Advertise
-#    pack: VendomatAds
-#  - type: Speech
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/salvagevend.rsi
+    sprite: Structures/Machines/VendingMachines/mining.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Unlit"]
@@ -913,7 +910,7 @@
     - type: VendingMachineVisualizer
       normalUnshaded: true
       eject: true
-      ejectUnshaded: true
+      ejectUnshaded: false
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
