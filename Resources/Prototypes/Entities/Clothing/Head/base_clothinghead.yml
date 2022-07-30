@@ -65,8 +65,6 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-  - type: Sprite
-    state: icon # default state used by most inheritors
   - type: Item
     size: 10
   - type: PressureProtection
