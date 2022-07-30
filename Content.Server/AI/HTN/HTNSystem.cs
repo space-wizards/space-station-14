@@ -12,6 +12,7 @@ public sealed partial class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new(0.005);
 
     // TODO: Move this onto JobQueue as a finishedjobs thing we can flush.
@@ -20,6 +21,7 @@ public sealed partial class HTNSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("npc.htn");
         SubscribeLocalEvent<HTNComponent, ComponentStartup>(OnHTNStartup);
         SubscribeLocalEvent<HTNComponent, ComponentShutdown>(OnHTNShutdown);
 
@@ -52,6 +54,27 @@ public sealed partial class HTNSystem : EntitySystem
     {
         foreach (var branch in compound.Branches)
         {
+            branch.Tasks.Clear();
+            branch.Tasks.EnsureCapacity(branch.TaskPrototypes.Count);
+
+            // Didn't do this in a typeserializer because we can't recursively grab our own prototype during it, woohoo!
+            // TODO: Need to at least re-add in the validator I wrote.
+            foreach (var proto in branch.TaskPrototypes)
+            {
+                if (_prototypeManager.TryIndex<HTNCompoundTask>(proto, out var compTask))
+                {
+                    branch.Tasks.Add(compTask);
+                }
+                else if (_prototypeManager.TryIndex<HTNPrimitiveTask>(proto, out var primTask))
+                {
+                    branch.Tasks.Add(primTask);
+                }
+                else
+                {
+                    _sawmill.Error($"Unable to find HTNTask fopr {proto} on {compound.ID}");
+                }
+            }
+
             foreach (var task in branch.Tasks)
             {
                 switch (task)

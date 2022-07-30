@@ -10,8 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Server.AI.HTN;
 
-[TypeSerializer]
-public sealed class HTNTaskListSerializer : ITypeSerializer<List<HTNTask>, SequenceDataNode>
+public sealed class HTNTaskListSerializer : ITypeSerializer<List<string>, SequenceDataNode>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, SequenceDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -40,36 +39,22 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<HTNTask>, Seque
         return new ValidatedSequenceNode(list);
     }
 
-    public List<HTNTask> Read(ISerializationManager serializationManager, SequenceDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, List<HTNTask>? value = default)
+    public List<string> Read(ISerializationManager serializationManager, SequenceDataNode node, IDependencyCollection dependencies,
+        bool skipHook, ISerializationContext? context = null, List<string>? value = default)
     {
-        value ??= new List<HTNTask>();
-        var protoManager = dependencies.Resolve<IPrototypeManager>();
-
+        value ??= new List<string>();
         foreach (var data in node.Sequence)
         {
             var mapping = (MappingDataNode) data;
-
             var id = ((ValueDataNode) mapping["id"]).Value;
-
-            if (protoManager.TryIndex<HTNCompoundTask>(id, out var compound))
-            {
-                value.Add(compound);
-            }
-            else if (protoManager.TryIndex<HTNPrimitiveTask>(id, out var primitive))
-            {
-                value.Add(primitive);
-            }
-            else
-            {
-                throw new InvalidOperationException($"Unable to find compound or primitive task for {id}");
-            }
+            // Can't check prototypes here because we're still loading them so yay!
+            value.Add(id);
         }
 
         return value;
     }
 
-    public DataNode Write(ISerializationManager serializationManager, List<HTNTask> value, bool alwaysWrite = false,
+    public DataNode Write(ISerializationManager serializationManager, List<string> value, bool alwaysWrite = false,
         ISerializationContext? context = null)
     {
         var sequence = new SequenceDataNode();
@@ -78,7 +63,7 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<HTNTask>, Seque
         {
             var mapping = new MappingDataNode
             {
-                ["id"] = new ValueDataNode(task.ID)
+                ["id"] = new ValueDataNode(task)
             };
 
             sequence.Add(mapping);
@@ -87,7 +72,7 @@ public sealed class HTNTaskListSerializer : ITypeSerializer<List<HTNTask>, Seque
         return sequence;
     }
 
-    public List<HTNTask> Copy(ISerializationManager serializationManager, List<HTNTask> source, List<HTNTask> target, bool skipHook,
+    public List<string> Copy(ISerializationManager serializationManager, List<string> source, List<string> target, bool skipHook,
         ISerializationContext? context = null)
     {
         target.Clear();
