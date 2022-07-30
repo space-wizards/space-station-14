@@ -6,7 +6,7 @@
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
-  pricePerMole: 0.6
+  pricePerMole: 0.3
 
 - type: gas
   id: 1
@@ -16,7 +16,7 @@
   molarMass: 28
   color: DA1010
   reagent: Nitrogen
-  pricePerMole: 1.2
+  pricePerMole: 0.6
 
 - type: gas
   id: 2
