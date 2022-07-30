@@ -30,7 +30,7 @@
   - type: Item
     size: 2
     sprite: Objects/Tools/lighters.rsi
-    HeldPrefix: off
+    heldPrefix: off
   - type: ItemCooldown
   - type: ItemStatus
   - type: RefillableSolution

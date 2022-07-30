@@ -4,6 +4,7 @@ using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Pulling
 {
@@ -16,6 +17,7 @@ namespace Content.Shared.Pulling
     {
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -42,14 +44,14 @@ namespace Content.Shared.Pulling
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            if (EntityManager.TryGetComponent<JointComponent?>(puller.Owner, out var jointComp))
+            if (!_timing.ApplyingState && // During state-handling, joint component will handle its own state.
+                pullable.PullJointId != null &&
+                TryComp(puller.Owner, out JointComponent? jointComp))
             {
-                if (jointComp.GetJoints.Contains(pullable.PullJoint!))
-                {
-                    _jointSystem.RemoveJoint(pullable.PullJoint!);
-                }
+                if (jointComp.GetJoints.TryGetValue(pullable.PullJointId, out var j))
+                    _jointSystem.RemoveJoint(j);
             }
-            pullable.PullJoint = null;
+            pullable.PullJointId = null;
 
             // State shutdown
             puller.Pulling = null;
@@ -64,8 +66,8 @@ namespace Content.Shared.Pulling
                 RaiseLocalEvent(pullable.Owner, message, true);
 
             // Networking
-            puller.Dirty();
-            pullable.Dirty();
+            Dirty(puller);
+            Dirty(pullable);
         }
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
@@ -92,26 +94,31 @@ namespace Content.Shared.Pulling
 
             // And now for the actual connection (if any).
 
-            if ((puller != null) && (pullable != null))
+            if (puller != null && pullable != null)
             {
                 var pullerPhysics = EntityManager.GetComponent<PhysicsComponent>(puller.Owner);
                 var pullablePhysics = EntityManager.GetComponent<PhysicsComponent>(pullable.Owner);
+                pullable.PullJointId = $"pull-joint-{pullable.Owner}";
 
                 // State startup
                 puller.Pulling = pullable.Owner;
                 pullable.Puller = puller.Owner;
 
-                // Joint startup
-                var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
-                var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
+                // joint state handling will manage its own state
+                if (!_timing.ApplyingState)
+                {
+                    // Joint startup
+                    var union = _physics.GetHardAABB(pullerPhysics).Union(_physics.GetHardAABB(pullablePhysics));
+                    var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id:$"pull-joint-{pullablePhysics.Owner}");
-                pullable.PullJoint.CollideConnected = false;
-                // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
-                pullable.PullJoint.MaxLength = Math.Max(1.0f, length);
-                pullable.PullJoint.Length = length * 0.75f;
-                pullable.PullJoint.MinLength = 0f;
-                pullable.PullJoint.Stiffness = 1f;
+                    var joint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner, pullerPhysics.Owner, id: pullable.PullJointId);
+                    joint.CollideConnected = false;
+                    // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
+                    joint.MaxLength = Math.Max(1.0f, length);
+                    joint.Length = length * 0.75f;
+                    joint.MinLength = 0f;
+                    joint.Stiffness = 1f;
+                }
 
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
