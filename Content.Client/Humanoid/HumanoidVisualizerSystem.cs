@@ -295,7 +295,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
     }
 
     private void ApplyMarkings(EntityUid uid,
-        MarkingsSet markings,
+        MarkingSet markings,
         Dictionary<MarkingCategories, MarkingPoints> points,
         SharedHumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
@@ -307,12 +307,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         humanoid.CurrentMarkings = markings;
 
-        var markingsEnumerator = markings.GetReverseEnumerator();
+        // var markingsEnumerator = markings.GetReverseEnumerator();
 
-        while (markingsEnumerator.MoveNext())
+        foreach (var marking in markings.GetReverseEnumerator())
         {
-            var marking = (Marking) markingsEnumerator.Current!;
-
             if (!marking.Visible || !_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
             {
                 continue;
@@ -324,6 +322,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
                 marking = new Marking(marking.MarkingId, markingPrototype.Sprites.Count);
             }
 
+            /* MarkingSet validation
             if (points.TryGetValue(markingPrototype.MarkingCategory, out MarkingPoints? point))
             {
                 if (marking.Forced || point.Points == 0)
@@ -333,6 +332,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
                 point.Points--;
             }
+            */
 
             ApplyMarking(uid, markingPrototype, marking.MarkingColors);
         }

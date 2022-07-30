@@ -418,7 +418,7 @@ public sealed class MarkingSet
     }
 }
 
-public sealed class ForwardMarkingEnumerator : IEnumerable
+public sealed class ForwardMarkingEnumerator : IEnumerable<Marking>
 {
     private List<Marking> _markings;
 
@@ -427,13 +427,13 @@ public sealed class ForwardMarkingEnumerator : IEnumerable
         _markings = markings;
     }
 
-    public IEnumerator GetEnumerator()
+    public IEnumerator<Marking> GetEnumerator()
     {
         return new MarkingsEnumerator(_markings, false);
     }
 }
 
-public sealed class ReverseMarkingEnumerator : IEnumerable
+public sealed class ReverseMarkingEnumerator : IEnumerable<Marking>
 {
     private List<Marking> _markings;
 
@@ -442,9 +442,14 @@ public sealed class ReverseMarkingEnumerator : IEnumerable
         _markings = markings;
     }
 
-    public IEnumerator GetEnumerator()
+    public IEnumerator<Marking> GetEnumerator()
     {
         return new MarkingsEnumerator(_markings, true);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
 
@@ -684,7 +689,7 @@ public class MarkingsSet : IEnumerable, IEquatable<MarkingsSet>
     }
 }
 
-public class MarkingsEnumerator : IEnumerator
+public class MarkingsEnumerator : IEnumerator<Marking>
 {
     private List<Marking> _markings;
     private bool _reverse;
@@ -731,6 +736,9 @@ public class MarkingsEnumerator : IEnumerator
             position = -1;
         }
     }
+
+    public void Dispose()
+    {}
 
     object IEnumerator.Current
     {
