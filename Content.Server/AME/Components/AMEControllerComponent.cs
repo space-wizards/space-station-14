@@ -79,8 +79,6 @@ namespace Content.Server.AME.Components
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
                 _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
-                if(overloading)
-                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"The AME was set to inject {InjectionAmount}, causing it to start overloading.");
                 fuelJar.FuelAmount -= availableInject;
                 InjectSound(overloading);
                 UpdateUserInterface();
