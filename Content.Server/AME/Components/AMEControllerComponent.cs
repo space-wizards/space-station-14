@@ -178,10 +178,10 @@ namespace Content.Server.AME.Components
                 var humanReadableState = _injecting ? "Inject" : "Not inject";
 
                 if (msg.Button == UiButton.IncreaseFuel || msg.Button == UiButton.DecreaseFuel)
-                    _adminLogger.Add(LogType.Action, LogImpact.High, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to inject {InjectionAmount} while set to {humanReadableState}");
+                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to inject {InjectionAmount} while set to {humanReadableState}");
 
                 if (msg.Button == UiButton.ToggleInjection)
-                    _adminLogger.Add(LogType.Action, LogImpact.High, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to {humanReadableState}");
+                    _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to {humanReadableState}");
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals();

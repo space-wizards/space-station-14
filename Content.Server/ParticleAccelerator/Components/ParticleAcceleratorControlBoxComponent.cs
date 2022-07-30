@@ -526,7 +526,7 @@ namespace Content.Server.ParticleAccelerator.Components
             _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
             var humanReadableState = _isEnabled ? "Turned On" : "Turned Off";
             if(mindComponent != null && state == MaxPower)
-                _adminLogger.Add(LogType.Action, LogImpact.High, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of the Particle Accelerator to a dangerous level while the PA was {humanReadableState}");
+                _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of the Particle Accelerator to a dangerous level while the PA was {humanReadableState}");
 
             if (_isEnabled)
             {
