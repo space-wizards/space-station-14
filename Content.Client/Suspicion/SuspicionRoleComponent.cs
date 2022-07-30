@@ -110,8 +110,6 @@ namespace Content.Client.Suspicion
             {
                 _gui.Parent?.RemoveChild(_gui);
             }
-
-            //_gameHud.SuspicionContainer.AddChild(_gui); //TODO: unfuck this
             _gui.UpdateLabel();
 
             if (_antagonist ?? false)

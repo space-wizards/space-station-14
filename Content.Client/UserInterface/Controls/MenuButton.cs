@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls;
 
-internal sealed class MenuButton : ContainerButton
+public sealed class MenuButton : ContainerButton
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
     public const string StyleClassLabelTopButton = "topButtonLabel";
