@@ -14,10 +14,11 @@ public sealed class PickAccessibleOperator : HTNOperator
     [Dependency] private readonly IRobustRandom _random = default!;
     private AiReachableSystem _reachable = default!;
 
-    [DataField("idleRangeKey")] public string IdleRangeKey = "IdleRange";
+    [DataField("idleRangeKey", required: true)]
+    public string IdleRangeKey = string.Empty;
 
-    [ViewVariables, DataField("targetKey")]
-    public string TargetKey = "MovementTarget";
+    [ViewVariables, DataField("targetKey", required: true)]
+    public string TargetKey = string.Empty;
 
     public override void Initialize()
     {
@@ -26,13 +27,13 @@ public sealed class PickAccessibleOperator : HTNOperator
     }
 
     /// <inheritdoc/>
-    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
         // Very inefficient (should weight each region by its node count) but better than the old system
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
-            return null;
+            return (false, null);
 
         var reachableArgs = ReachableArgs.GetArgs(owner);
         reachableArgs.VisionRadius = blackboard.GetValueOrDefault<float>(IdleRangeKey);
@@ -40,7 +41,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
 
         if (reachableRegions.Count == 0)
-            return null;
+            return (false, null);
 
         var reachableNodes = new List<PathfindingNode>();
 
@@ -55,9 +56,9 @@ public sealed class PickAccessibleOperator : HTNOperator
         var targetNode = _random.Pick(reachableNodes);
 
         var target = grid.Grid.GridTileToLocal(targetNode.TileRef.GridIndices);
-        return new Dictionary<string, object>()
+        return (true, new Dictionary<string, object>()
         {
             { TargetKey, target },
-        };
+        });
     }
 }

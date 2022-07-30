@@ -32,13 +32,13 @@ public sealed class MoveToOperator : HTNOperator
     public bool RemoveKeyOnFinish = true;
 
     /// <summary>
-    /// Target EntityUid to move to.
+    /// Target Coordinates to move to. This gets removed after execution.
     /// </summary>
     [ViewVariables, DataField("key")]
     public string TargetKey = "MovementTarget";
 
     /// <summary>
-    /// Where the pathfinding result will be stored (if applicable).
+    /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
     [ViewVariables, DataField("pathfindKey")]
     public string PathfindKey = "MovementPathfind";
@@ -51,24 +51,24 @@ public sealed class MoveToOperator : HTNOperator
         _pathfind = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
     }
 
-    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
         if (!PathfindInPlanning)
         {
-            return new Dictionary<string, object>()
+            return (true, new Dictionary<string, object>()
             {
-                {NPCBlackboard.OwnerCoordinates, _entManager.GetComponent<TransformComponent>(blackboard.GetValue<EntityUid>(TargetKey)).Coordinates}
-            };
+                {NPCBlackboard.OwnerCoordinates, blackboard.GetValue<EntityCoordinates>(TargetKey)}
+            });
         }
 
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
-            return null;
+            return (false, null);
 
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform) ||
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
-            return null;
+            return (false, null);
 
         // TODO:
         var access = new List<string>();
@@ -77,7 +77,7 @@ public sealed class MoveToOperator : HTNOperator
             !_mapManager.TryGetGrid(targetCoordinates.GetGridUid(_entManager), out var targetGrid) ||
             ownerGrid != targetGrid)
         {
-            return null;
+            return (false, null);
         }
 
         var job = _pathfind.RequestPath(
@@ -93,13 +93,13 @@ public sealed class MoveToOperator : HTNOperator
         await job.AsTask;
 
         if (job.Result == null)
-            return null;
+            return (false, null);
 
-        return new Dictionary<string, object>()
+        return (true, new Dictionary<string, object>()
         {
-            {NPCBlackboard.OwnerCoordinates, targetCoordinates}
-,            { PathfindKey, job.Result }
-        };
+            {NPCBlackboard.OwnerCoordinates, targetCoordinates},
+            {PathfindKey, job.Result}
+        });
     }
 
     // Given steering is complicated we'll hand it off to a dedicated system rather than this singleton operator.
@@ -133,6 +133,7 @@ public sealed class MoveToOperator : HTNOperator
 
         // OwnerCoordinates is only used in planning so dump it.
         blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+        blackboard.Remove<EntityCoordinates>(TargetKey);
         blackboard.Remove<Queue<TileRef>>(PathfindKey);
 
         if (RemoveKeyOnFinish)

@@ -14,6 +14,9 @@ public sealed class PickMeleeTargetOperator : HTNOperator
 
     [ViewVariables, DataField("key")] public string Key = "CombatTarget";
 
+    /// <summary>
+    /// The EntityCoordinates of the specified target.
+    /// </summary>
     [ViewVariables, DataField("keyCoordinates")]
     public string KeyCoordinates = "CombatTargetCoordinates";
 
@@ -23,7 +26,7 @@ public sealed class PickMeleeTargetOperator : HTNOperator
         _tags = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiFactionTagSystem>();
     }
 
-    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius);
@@ -46,17 +49,19 @@ public sealed class PickMeleeTargetOperator : HTNOperator
 
         if (targets.Count == 0)
         {
-            return null;
+            return (false, null);
         }
 
         // TODO: Need some level of rng in ratings (outside of continuing to attack the same target)
         var selectedTarget = targets[0].Entity;
 
-        return new Dictionary<string, object>()
+        var effects = new Dictionary<string, object>()
         {
             {Key, selectedTarget},
             {KeyCoordinates, _entManager.GetComponent<TransformComponent>(selectedTarget).Coordinates}
         };
+
+        return (true, effects);
     }
 
     private float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget)

@@ -20,10 +20,10 @@ public abstract class HTNOperator
     /// Called during planning.
     /// </summary>
     /// <param name="blackboard">The blackboard for the NPC.</param>
-    /// <returns>The effects to apply to the blackboard.</returns>
-    public virtual async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
+    /// <returns>Whether the plan is still valid and the effects to apply to the blackboard. These may get re-applied during execution.</returns>
+    public virtual async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
-        return null;
+        return (true, null);
     }
 
     /// <summary>

@@ -16,15 +16,15 @@ public sealed class RandomOperator : HTNOperator
 
     [DataField("maxKey", required: true)] public string MaxKey = string.Empty;
 
-    public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
-        return new Dictionary<string, object>()
+        return (true, new Dictionary<string, object>()
         {
             {
                 TargetKey,
                 _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey),
                     blackboard.GetValueOrDefault<float>(MaxKey))
             }
-        };
+        });
     }
 }

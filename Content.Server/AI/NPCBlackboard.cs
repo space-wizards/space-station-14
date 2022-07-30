@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI;
@@ -15,8 +13,6 @@ public sealed class NPCBlackboard
         {"VisionRadius", 7f},
         {"MeleeRange", 1f},
     };
-
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private Dictionary<string, object> _blackboard = new();
 
@@ -85,6 +81,18 @@ public sealed class NPCBlackboard
             return true;
         }
 
+        if (TryGetEntityDefault(key, out data))
+        {
+            value = (T) data;
+            return true;
+        }
+
+        if (BlackboardDefaults.TryGetValue(key, out data))
+        {
+            value = (T) data;
+            return true;
+        }
+
         value = default;
         return false;
     }
@@ -105,8 +113,10 @@ public sealed class NPCBlackboard
         DebugTools.Assert(false, $"Tried to write to an NPC blackboard that is readonly!");
     }
 
-    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value)
+    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value, IEntityManager? entManager = null)
     {
+        // TODO: Pass this in
+        IoCManager.Resolve(ref entManager);
         value = default;
 
         switch (key)
@@ -117,7 +127,7 @@ public sealed class NPCBlackboard
                     return false;
                 }
 
-                if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+                if (entManager.TryGetComponent<TransformComponent>(owner, out var xform))
                 {
                     value = xform.Coordinates;
                     return true;
@@ -131,11 +141,6 @@ public sealed class NPCBlackboard
 
     public bool Remove<T>(string key)
     {
-        if (key == "CombatTargetCoordinates")
-        {
-
-        }
-
         DebugTools.Assert(!_blackboard.ContainsKey(key) || _blackboard[key] is T);
         return _blackboard.Remove(key);
     }

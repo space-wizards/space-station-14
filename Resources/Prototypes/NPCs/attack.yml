@@ -12,6 +12,8 @@
 - type: htnPrimitive
   id: PickAccessiblePrimitive
   operator: !type:PickAccessibleOperator
+    idleRangeKey: IdleRange
+    targetKey: MovementTarget
 
 - type: htnPrimitive
   id: MoveToAccessiblePrimitive
@@ -27,11 +29,17 @@
     targetKey: IdleTime
     minKey: MinimumIdleTime
     maxKey: MaximumIdleTime
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: IdleTime
 
 - type: htnPrimitive
   id: WaitIdleTimePrimitive
   operator: !type:WaitOperator
     key: IdleTime
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: IdleTime
 
 - type: htnCompound
   id: MeleeCombatCompound
@@ -39,13 +47,13 @@
   branches:
     # Melee Weapon combat
     #- tasks:
-        # We always want to double check our target is best so select that first
-        #- id: PickMeleeTargetPrimitive
-        # Make sure we have a decent weapon
-        #- !type:HTNCompoundTask
-        #  id: EquipMelee
-        # Start whacking
-        #- id: MeleeAttackTargetCompound
+    # We always want to double check our target is best so select that first
+    #- id: PickMeleeTargetPrimitive
+    # Make sure we have a decent weapon
+    #- !type:HTNCompoundTask
+    #  id: EquipMelee
+    # Start whacking
+    #- id: MeleeAttackTargetCompound
 
     # Unarmed combat
     - tasks:
@@ -75,9 +83,12 @@
 
 - type: htnPrimitive
   id: MeleeAttackTargetPrimitive
+  desc: Attacks the specified target if they're in range.
   operator: !type:MeleeOperator
     targetKey: CombatTarget
   preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTarget
     - !type:TargetInRangePrecondition
       targetKey: CombatTarget
       rangeKey: MeleeRange

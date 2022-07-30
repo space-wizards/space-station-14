@@ -1,14 +1,14 @@
 namespace Content.Server.AI.HTN.PrimitiveTasks;
 
 /// <summary>
-/// Waits the specified amount of time.
+/// Waits the specified amount of time. Removes the key when finished.
 /// </summary>
 public sealed class WaitOperator : HTNOperator
 {
     /// <summary>
     /// Blackboard key for the time we'll wait for.
     /// </summary>
-    [DataField("key")] public string Key = string.Empty;
+    [ViewVariables, DataField("key", required: true)] public string Key = string.Empty;
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

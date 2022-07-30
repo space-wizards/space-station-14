@@ -109,6 +109,8 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
     private async Task<bool> PrimitiveConditionMet(HTNPrimitiveTask primitive, NPCBlackboard blackboard, List<Dictionary<string, object>?> appliedStates)
     {
+        blackboard.ReadOnly = true;
+
         foreach (var con in primitive.Preconditions)
         {
             if (con.IsMet(blackboard))
@@ -117,8 +119,11 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return false;
         }
 
-        blackboard.ReadOnly = true;
-        var effects = await primitive.Operator.Plan(blackboard);
+        var (valid, effects) = await primitive.Operator.Plan(blackboard);
+
+        if (!valid)
+            return false;
+
         blackboard.ReadOnly = false;
 
         if (effects != null)
