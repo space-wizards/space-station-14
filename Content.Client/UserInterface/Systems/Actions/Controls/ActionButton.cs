@@ -58,7 +58,9 @@ public sealed class ActionButton : Control
         Icon = new TextureRect
         {
             Name = "Icon",
-            TextureScale = new Vector2(2,2)
+            TextureScale = new Vector2(2,2),
+            MaxSize = (64, 64),
+            Stretch = TextureRect.StretchMode.Scale
         };
         Label = new Label
         {
