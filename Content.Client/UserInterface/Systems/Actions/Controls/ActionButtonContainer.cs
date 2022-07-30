@@ -39,7 +39,9 @@ public class ActionButtonContainer : GridContainer
         for (var i = 0; i < actionTypes.Length; i++)
         {
             var action = actionTypes[i];
-            if (action == null) continue;
+            if (action == null)
+                continue;
+
             ((ActionButton) GetChild(i)).UpdateData(_entityManager, action);
         }
     }
@@ -78,6 +80,6 @@ public class ActionButtonContainer : GridContainer
 
     ~ActionButtonContainer()
     {
-        UserInterfaceManager.GetUIController<ActionUIController>().ClearActionContainer();
+        UserInterfaceManager.GetUIController<ActionUIController>().RemoveActionContainer();
     }
 }

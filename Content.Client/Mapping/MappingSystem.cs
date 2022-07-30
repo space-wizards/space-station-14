@@ -1,10 +1,10 @@
-using Robust.Shared.Utility;
+using Content.Client.Actions;
+using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Maps;
 using Robust.Client.Placement;
 using Robust.Shared.Map;
-using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Actions;
-using Content.Client.Actions;
-using Content.Shared.Maps;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Mapping;
 
@@ -36,7 +36,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     public void LoadMappingActions()
     {
-        //_actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
+        _actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
     }
 
     /// <summary>

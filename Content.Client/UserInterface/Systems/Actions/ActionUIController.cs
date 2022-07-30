@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.DragDrop;
 using Content.Client.Gameplay;
@@ -14,6 +15,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
+using static Content.Client.Actions.ActionsSystem;
 using static Content.Client.UserInterface.Systems.Actions.Windows.ActionsWindow;
 using static Robust.Client.UserInterface.Control;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -445,7 +447,22 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
         _container.ActionUnpressed += OnActionUnpressed;
     }
 
-    public void ClearActionContainer()
+    public void ClearActions()
+    {
+        _container?.ClearActionData();
+    }
+
+    private void AssignSlots(List<SlotAssignment> assignments)
+    {
+        foreach (ref var assignment in CollectionsMarshal.AsSpan(assignments))
+        {
+            _pages[assignment.Hotbar][assignment.Slot] = assignment.Action;
+        }
+
+        _container?.SetActionData(_pages[_currentPageIndex]);
+    }
+
+    public void RemoveActionContainer()
     {
         _container = null;
     }
@@ -475,12 +492,16 @@ public sealed class ActionUIController : UIController, IOnStateEntered<GameplayS
     {
         _actionsSystem.OnLinkActions += OnComponentLinked;
         _actionsSystem.OnUnlinkActions += OnComponentUnlinked;
+        _actionsSystem.ClearAssignments += ClearActions;
+        _actionsSystem.AssignSlot += AssignSlots;
     }
 
     private void ActionSystemShutdown()
     {
         _actionsSystem.OnLinkActions -= OnComponentLinked;
         _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
+        _actionsSystem.ClearAssignments -= ClearActions;
+        _actionsSystem.AssignSlot -= AssignSlots;
     }
 
     private void OnComponentLinked(ActionsComponent component)
