@@ -1,4 +1,4 @@
-using Content.Server.Interaction;
+using Content.Server.AI.Components;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -8,7 +8,6 @@ namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 public sealed class MeleeOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     /// <summary>
     /// Key that contains the target entity.
@@ -16,40 +15,29 @@ public sealed class MeleeOperator : HTNOperator
     [ViewVariables, DataField("key", required: true)]
     public string Key = default!;
 
-    /// <summary>
-    /// Key that contains our range. When the target leaves this range we end combat.
-    /// </summary>
-    [ViewVariables, DataField("rangeKey", required: true)]
-    public string RangeKey = default!;
+    // TODO: Need a key for what we're using
+
+    // Like movement we add a component and pass it off to the dedicated system.
+
+    public override void Startup(NPCBlackboard blackboard)
+    {
+        base.Startup(blackboard);
+        var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.Target = blackboard.GetValue<EntityUid>(Key);
+    }
+
+    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    {
+        base.Shutdown(blackboard, status);
+        _entManager.RemoveComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+    }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
-        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var target = blackboard.GetValue<EntityUid>(Key);
+        if (_entManager.HasComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner)))
+            return HTNOperatorStatus.Continuing;
 
-        if (_entManager.Deleted(target) ||
-            !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform) ||
-            !_entManager.TryGetComponent<TransformComponent>(owner, out var ownerXform))
-        {
-            return HTNOperatorStatus.Failed;
-        }
-
-        // Out of range, abort.
-        if (!ownerXform.Coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValue<float>(RangeKey)))
-        {
-            return HTNOperatorStatus.Failed;
-        }
-
-        // TODO: Like movement add a component and pass it off to the system.
-
-        // TODO:
-        // Need to be able to specify: Accuracy on moving targets
-        // Should we hit until crit
-        // Should we hit until destroyed
-        // Juking
-        // If target range above threshold (e.g. 0.7f) then move back into range
-        _interaction.DoAttack(owner, targetXform.Coordinates, false, target);
-        return HTNOperatorStatus.Continuing;
+        return HTNOperatorStatus.Finished;
     }
 }

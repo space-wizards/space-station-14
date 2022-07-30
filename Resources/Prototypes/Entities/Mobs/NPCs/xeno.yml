@@ -13,7 +13,7 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: IdleCompound
+    rootTask: MeleeCombatCompound
   - type: Tool
     speed: 0.3
     qualities:

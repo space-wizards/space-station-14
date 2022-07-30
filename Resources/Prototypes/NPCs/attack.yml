@@ -61,7 +61,7 @@
     # Keep hitting them if they're in range
     - tasks:
         - !type:HTNPrimitiveTask
-          operator: !type:UnarmedMeleeOperator
+          operator: !type:MeleeOperator
           preconditions:
             - !type:KeyInRangePrecondition
               key: CombatTarget
@@ -75,7 +75,7 @@
             key: CombatTarget
 
         - !type:HTNPrimitiveTask
-          operator: !type:UnarmedMeleeOperator
+          operator: !type:MeleeOperator
           preconditions:
             - !type:KeyInRangePrecondition
               key: CombatTarget
