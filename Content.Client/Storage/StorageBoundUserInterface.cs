@@ -44,10 +44,6 @@ namespace Content.Client.Storage
             {
                 SendMessage(new StorageInteractWithItemEvent(entity));
             }
-            else if (IoCManager.Resolve<IEntityManager>().EntityExists(entity))
-            {
-                // IoCManager.Resolve<IItemSlotManager>().OnButtonPressed(args.Event, entity); TODO hud refactor BEFORE MERGE
-            }
         }
 
         public void TouchedContainerButton(BaseButton.ButtonEventArgs args)

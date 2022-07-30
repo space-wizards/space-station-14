@@ -34,11 +34,6 @@ public sealed partial class MappingSystem : EntitySystem
         SubscribeLocalEvent<StartPlacementActionEvent>(OnStartPlacementAction);
     }
 
-    public void LoadMappingActions()
-    {
-        //_actionsSystem.LoadActionAssignments(DefaultMappingActions, false);
-    }
-
     /// <summary>
     ///     This checks if the placement manager is currently active, and attempts to copy the placement information for
     ///     some entity or tile into an action. This is somewhat janky, but it seem to work well enough. Though I'd
