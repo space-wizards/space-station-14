@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.AI.Components;
@@ -129,6 +130,10 @@ public sealed class MoveToOperator : HTNOperator
             cancelToken.Cancel();
             blackboard.Remove<CancellationTokenSource>(MovementCancelToken);
         }
+
+        // OwnerCoordinates is only used in planning so dump it.
+        blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+        blackboard.Remove<Queue<TileRef>>(PathfindKey);
 
         if (RemoveKeyOnFinish)
         {
