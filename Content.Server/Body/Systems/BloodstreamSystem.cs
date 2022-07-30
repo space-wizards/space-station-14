@@ -12,6 +12,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Drunk;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -27,6 +28,8 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
+    [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
 
     // TODO here
     // Update over time. Modify bloodloss damage in accordance with (amount of blood / max blood level), and reduce bleeding over time
@@ -108,6 +111,9 @@ public sealed class BloodstreamSystem : EntitySystem
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
+
+                // Apply dizziness as a symptom of bloodloss.
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (bloodstream.BloodlossThreshold / bloodPercentage), false);
             }
             else
             {
