@@ -7,7 +7,6 @@ namespace Content.Client.Administration.UI
     [GenerateTypedNameReferences]
     public sealed partial class AdminMenuWindow : DefaultWindow
     {
-
         public AdminMenuWindow()
         {
             MinSize = SetSize = (500, 250);
@@ -22,19 +21,5 @@ namespace Content.Client.Administration.UI
             MasterTabContainer.SetTabTitle(5, Loc.GetString("admin-menu-players-tab"));
             MasterTabContainer.SetTabTitle(6, Loc.GetString("admin-menu-objects-tab"));
         }
-
-        // protected override void EnteredTree()
-        // {
-        //     base.EnteredTree();
-        //     if (_hudManager!= null)
-        //         _hudManager.GetUIWidget<MenuBar>().AdminButtonDown = true;
-        // }
-        //
-        // protected override void ExitedTree()
-        // {
-        //     base.ExitedTree();
-        //     if (_hudManager != null)
-        //         _hudManager.GetUIWidget<MenuBar>().AdminButtonDown = false;
-        // }
     }
 }

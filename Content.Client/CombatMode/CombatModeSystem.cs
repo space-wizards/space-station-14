@@ -11,12 +11,7 @@ namespace Content.Client.CombatMode
     public sealed class CombatModeSystem : SharedCombatModeSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<CombatModeComponent, PlayerAttachedEvent>((_, component, _) => component.PlayerAttached());
-            SubscribeLocalEvent<CombatModeComponent, PlayerDetachedEvent>((_, component, _) => component.PlayerDetached());
-        }
+
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();
@@ -33,7 +28,6 @@ namespace Content.Client.CombatMode
         {
             EntityManager.RaisePredictiveEvent(new CombatModeSystemMessages.SetTargetZoneMessage(obj));
         }
-
     }
     //All hail A, the mighty. This single class is responsible for holding this codebase together.
     public static class A
