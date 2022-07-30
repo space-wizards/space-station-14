@@ -186,8 +186,8 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         }
 
         ClearAllMarkings(uid);
-        var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
-        ApplyMarkings(uid, humanoid.CurrentMarkings, points);
+        // var points = GetMarkingLimitsAndDefaults(species.MarkingPoints, baseSprites.Sprites);
+        ApplyMarkings(uid, humanoid.CurrentMarkings);
         ApplyDefaultMarkings(uid, points);
     }
 
@@ -199,7 +199,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
             return;
         }
 
-        foreach (var marking in humanoid.CurrentMarkings)
+        foreach (var marking in humanoid.CurrentMarkings.GetForwardEnumerator())
         {
             if (!_markingManager.IsValidMarking(marking, out var prototype))
             {
@@ -225,6 +225,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
         }
     }
 
+    /* See below.
     private Dictionary<MarkingCategories, MarkingPoints> GetMarkingLimitsAndDefaults(string pointPrototypeId,
         Dictionary<HumanoidVisualLayers, HumanoidSpeciesSpriteLayer> spriteSettings)
     {
@@ -258,7 +259,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
 
         return points;
     }
+    */
 
+    /* This needs to be applied on the server instead.
     private void ApplyDefaultMarkings(EntityUid uid,
         Dictionary<MarkingCategories, MarkingPoints> usedPoints,
         SharedHumanoidComponent? humanoid = null,
@@ -293,10 +296,10 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
             }
         }
     }
+    */
 
     private void ApplyMarkings(EntityUid uid,
-        MarkingSet markings,
-        Dictionary<MarkingCategories, MarkingPoints> points,
+        List<Marking> markings,
         SharedHumanoidComponent? humanoid = null,
         SpriteComponent? spriteComp = null)
     {
@@ -305,34 +308,12 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<SharedHumanoidCo
             return;
         }
 
-        humanoid.CurrentMarkings = markings;
-
-        // var markingsEnumerator = markings.GetReverseEnumerator();
-
-        foreach (var marking in markings.GetReverseEnumerator())
+        foreach (var marking in new ReverseMarkingEnumerator(markings))
         {
-            if (!marking.Visible || !_markingManager.IsValidMarking(marking, out MarkingPrototype? markingPrototype))
+            if (!marking.Visible || !_markingManager.IsValidMarking(marking, out var markingPrototype))
             {
                 continue;
             }
-
-            // this should be validated elsewhere?
-            if (marking.MarkingColors.Count != markingPrototype.Sprites.Count)
-            {
-                marking = new Marking(marking.MarkingId, markingPrototype.Sprites.Count);
-            }
-
-            /* MarkingSet validation
-            if (points.TryGetValue(markingPrototype.MarkingCategory, out MarkingPoints? point))
-            {
-                if (marking.Forced || point.Points == 0)
-                {
-                    continue;
-                }
-
-                point.Points--;
-            }
-            */
 
             ApplyMarking(uid, markingPrototype, marking.MarkingColors);
         }

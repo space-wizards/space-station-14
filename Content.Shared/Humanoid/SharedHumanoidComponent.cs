@@ -57,7 +57,7 @@ public sealed class SharedHumanoidComponent : Component
     ///     - This is updated on the client by OnChangeData
     /// </summary>
     [ViewVariables]
-    public MarkingsSet CurrentMarkings = new();
+    public MarkingSet CurrentMarkings = new();
 
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite
