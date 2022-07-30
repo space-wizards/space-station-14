@@ -15,6 +15,7 @@
       visible: false
   - type: Item
     size: 40
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
   - type: PneumaticCannon
   - type: Storage
@@ -51,4 +52,5 @@
     fireInterval: 0.4
   - type: Item
     size: 50
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
