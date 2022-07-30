@@ -65,6 +65,8 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
+  - type: Sprite
+    state: icon # default state used by most inheritors
   - type: Item
     size: 10
   - type: PressureProtection
@@ -87,6 +89,8 @@
   name: base hardsuit helmet
   noSpawn: true
   components:
+  - type: Sprite
+    state: icon # default state used by most inheritors
   - type: Clickable
   - type: InteractionOutline
   - type: Clothing
