@@ -3,17 +3,15 @@ using Content.Client.Ghost;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Robust.Client.Console;
-using Robust.Client.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.Managers
 {
     internal sealed class ChatManager : IChatManager
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IClientAdminManager _adminMgr = default!;
+        [Dependency] private readonly IEntitySystemManager _systems = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -22,10 +20,6 @@ namespace Content.Client.Chat.Managers
             _sawmill = Logger.GetSawmill("chat");
             _sawmill.Level = LogLevel.Info;
         }
-
-        public bool IsGhost => _playerManager.LocalPlayer?.ControlledEntity is {} uid &&
-                               uid.IsValid() &&
-                               _entityManager.HasComponent<GhostComponent>(uid);
 
         public void SendMessage(ReadOnlyMemory<char> text, ChatSelectChannel channel)
         {
@@ -54,7 +48,7 @@ namespace Content.Client.Chat.Managers
                     break;
 
                 case ChatSelectChannel.Dead:
-                    if (IsGhost)
+                    if (_systems.GetEntitySystemOrNull<GhostSystem>() is {IsGhost: true})
                         goto case ChatSelectChannel.Local;
 
                     if (_adminMgr.HasFlag(AdminFlags.Admin))

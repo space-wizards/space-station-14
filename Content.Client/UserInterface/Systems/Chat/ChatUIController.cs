@@ -6,6 +6,7 @@ using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
+using Content.Client.Ghost;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -40,6 +41,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
+    [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
 
     private ISawmill _sawmill = default!;
@@ -394,7 +396,7 @@ public sealed class ChatUIController : UIController
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
-            if (!_manager.IsGhost)
+            if (_ghost is not {IsGhost: true})
             {
                 CanSendChannels |= ChatSelectChannel.Local;
                 CanSendChannels |= ChatSelectChannel.Whisper;
@@ -404,7 +406,7 @@ public sealed class ChatUIController : UIController
         }
 
         // Only ghosts and admins can send / see deadchat.
-        if (_admin.HasFlag(AdminFlags.Admin) || _manager.IsGhost)
+        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
         {
             FilterableChannels |= ChatChannel.Dead;
             CanSendChannels |= ChatSelectChannel.Dead;
@@ -578,7 +580,7 @@ public sealed class ChatUIController : UIController
 
     public ChatSelectChannel MapLocalIfGhost(ChatSelectChannel channel)
     {
-        if (channel == ChatSelectChannel.Local && _manager.IsGhost)
+        if (channel == ChatSelectChannel.Local && _ghost is {IsGhost: true})
             return ChatSelectChannel.Dead;
 
         return channel;
@@ -666,7 +668,7 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.Dead:
-                if (!_manager.IsGhost)
+                if (_ghost is not {IsGhost: true})
                     break;
 
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);

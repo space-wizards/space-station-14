@@ -4,7 +4,7 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 
-namespace Content.Client.Ghost.Roles.UI
+namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
     [UsedImplicitly]
     public sealed class GhostRolesEui : BaseEui

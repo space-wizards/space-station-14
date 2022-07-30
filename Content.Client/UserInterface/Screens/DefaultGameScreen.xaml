@@ -6,11 +6,13 @@
     xmlns:chat="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
     xmlns:alerts="clr-namespace:Content.Client.UserInterface.Systems.Alerts.Widgets"
     xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Widgets"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Ghost.Widgets"
     Name="DefaultHud"
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
     <menuBar:MenuBar Name="TopBar" Access="Protected" />
+    <widgets:GhostGui Name="Ghost" Access="Protected" />
     <hands:HandsGui Name="Hands" Access="Protected" />
     <actions:ActionsBar Name="Actions" Access="Protected" />
     <chat:ChatBox Name="Chat" Access="Protected" Main="True" />
