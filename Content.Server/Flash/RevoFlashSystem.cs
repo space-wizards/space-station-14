@@ -1,6 +1,7 @@
 using Content.Server.Players;
 using Content.Server.Mind.Components;
 using Content.Server.Traitor;
+using Content.Server.Flash.Components;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -13,37 +14,33 @@ namespace Content.Server.Flash
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private const string RevolutionaryPrototypeId = "Revolutionary";
+        private const string RevolutionaryHeadPrototypeId = "RevolutionaryHead";
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<FlashEvent>(RevoFlash);
+            SubscribeLocalEvent<FlashableComponent,FlashEvent>(RevoFlash);
         }
 
-        public void RevoFlash(FlashEvent ev)
+        public void RevoFlash(EntityUid target, FlashableComponent comp, FlashEvent ev)
         {
             if (!TryComp<MindComponent>(ev.Target, out MindComponent? usermindcomp) || usermindcomp.Mind is null) 
                 return;
             
             foreach (var role in usermindcomp.Mind.AllRoles)
             {
-                // If the user has the revo head role they can use this flash to convert ppl
-                if (role.Name == "Revolutionary Head")
+                if (role is not TraitorRole traitor) 
+                    continue;
+                if (traitor.Prototype.ID == RevolutionaryHeadPrototypeId)
                 {
-                    Convert(ev);
-                    return;
-                }
-                else if (role.Name != "Revolutionary")
-                {
-                    Revert(ev);
-                    return;
+                    Convert(target, ev);
                 }
             }
         }
 
-        private void Convert(FlashEvent ev)
+        private void Convert(EntityUid target, FlashEvent ev)
         {
-            if (!TryComp<MindComponent>(ev.Target, out MindComponent? targetmindcomp) || targetmindcomp.Mind is null || targetmindcomp.Mind.CurrentJob is null) 
+            if (!TryComp<MindComponent>(target, out var targetmindcomp) || targetmindcomp.Mind is null || targetmindcomp.Mind.CurrentJob is null) 
                 return;
             
             foreach (var department in targetmindcomp.Mind.CurrentJob.Prototype.Departments)
@@ -59,22 +56,6 @@ namespace Content.Server.Flash
                     SoundSystem.Play("/Audio/Magic/staff_chaos.ogg", Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
                 }
             }            
-        }
-
-        private void Revert(FlashEvent ev)
-        {
-            if (!TryComp<MindComponent>(ev.User, out MindComponent? mind) || mind.Mind is null)
-                return;
-            var rnd = new Random();
-            Logger.Error(rnd+" "+ev.User);
-            foreach (var role in mind.Mind.AllRoles)
-            {
-                if (role.Name == "Revolutionary" && rnd.Next(10) > 2)
-                    mind.Mind.RemoveRole(role);
-
-                SoundSystem.Play("/Audio/Magic/staff_change.ogg", Filter.Empty().AddWhere(s => ((IPlayerSession)s).Data.ContentData()?.Mind?.HasRole<TraitorRole>() ?? false), AudioParams.Default);
-            }
-        }
-        
+        }        
     }
 }

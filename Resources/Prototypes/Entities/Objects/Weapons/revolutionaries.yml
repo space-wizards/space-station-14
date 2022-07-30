@@ -1,25 +1,44 @@
 - type: entity
   name: Hypnotic flash
-  parent: BaseItem
+  parent: Flash
   id: RevolutionaryFlash
-  description: Acts like a standard flash, however it never burns out at the cost of not having shorter stun time and a weaker stun. When used by a revolutionary head, it converts anyone that isn't either a staff head, a security officer, a detective, or anyone with anything covering their eyes over to the revolution
+  description: Acts like a standard flash, however it has shorter stun time and a weaker stun. When used by a revolutionary head, it converts anyone that isn't either a staff head, a security officer, a detective, or anyone with anything covering their eyes over to the revolution
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/revoflash.rsi
       state: flash
     - type: Flash
-      revo: true
       duration: 1000
       range: 1
       aoeFlashDuration: 500
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction? // Yes yes It is for some reason
-      range: 1
-      arcWidth: 10
-      arc: default
     - type: Item
       size: 5
       sprite: Objects/Weapons/Melee/revoflash.rsi
+
+- type: entity
+  name: Revolution flag
+  parent: BaseItem
+  id: RevolutionFlag
+  description: A flag that bears the emblem of the revolution, it may not be much but it may bring courage and strength to those that fight for freedom
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/revolutionflag.rsi
+      state: icon
+    - type: Flag
+      modifiers:
+      coefficients:
+        Blunt: 1.0
+        Slash: 0.0
+        Piercing: 0.0
+        Heat: 0.0
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 2
+      range: 1
+      arcWidth: 60
+      arc: default
+    - type: Item
+      size: 5
+      sprite: Objects/Weapons/Melee/revolutionflag.rsi
     - type: ItemCooldown

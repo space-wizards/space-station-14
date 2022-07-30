@@ -88,13 +88,13 @@ namespace Content.Server.Flash
 
         private bool UseFlash(FlashComponent comp, EntityUid user)
         {
-            if (comp.HasUses || comp.isRevo)
+            if (comp.HasUses)
             {
                 // TODO flash visualizer
                 if (!EntityManager.TryGetComponent<SpriteComponent?>(comp.Owner, out var sprite))
                     return false;
 
-                if (--comp.Uses == 0 && !comp.isRevo)
+                if (--comp.Uses == 0)
                 {
                     sprite.LayerSetState(0, "burnt");
                     PopupExtensions.PopupMessageOtherClients(user, Loc.GetString("flash-component-becomes-empty"));
@@ -110,7 +110,7 @@ namespace Content.Server.Flash
                         comp.Flashing = false;
                     });
                 }
-
+                
                 SoundSystem.Play(comp.Sound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
 
                 return true;
@@ -133,7 +133,10 @@ namespace Content.Server.Flash
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(flashable);
                 
-            RaiseLocalEvent(new FlashEvent(target));
+            if (user is not null)
+            {
+                RaiseLocalEvent(target, new FlashEvent(target, user.Value));
+            }
 
             _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
@@ -178,13 +181,13 @@ namespace Content.Server.Flash
         private void OnFlashExamined(EntityUid uid, FlashComponent comp, ExaminedEvent args)
         {
 
-            if (!comp.HasUses && !comp.isRevo)
+            if (!comp.HasUses)
             {
                 args.PushText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
-            if (args.IsInDetailsRange && !comp.isRevo)
+            if (args.IsInDetailsRange)
             {
                 args.PushMarkup(Loc.GetString("flash-component-examine-detail-count",("count", comp.Uses),("markupCountColor", "green")));
             }
@@ -229,9 +232,10 @@ namespace Content.Server.Flash
         public readonly float Duration;
         public readonly float Strength;
 
-        public FlashEvent(EntityUid target)
+        public FlashEvent(EntityUid target, EntityUid user)
         {
             Target = target;
+            User = user;
         }
     }
 }
