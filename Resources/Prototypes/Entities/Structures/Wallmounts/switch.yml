@@ -95,7 +95,6 @@
       layers:
         - state: switch-off
           map: ["enabled", "enum.TwoWayLeverState.Middle"]
-      
     - type: TwoWayLever
     - type: UseDelay
       delay: 0.2 # prevent light-toggling auto-clickers.
