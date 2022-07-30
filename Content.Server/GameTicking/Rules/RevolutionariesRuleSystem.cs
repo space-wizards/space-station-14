@@ -86,6 +86,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem
             return;
         
         ev.AddLine(_revsWon ? Loc.GetString("revolutionaries-head-won") : Loc.GetString("revolutionaries-crew-won"));
+        ev.AddLine(Loc.GetString("revolutionaries-list-start"));
         foreach (var revohead in _revoHeads)
         {
             if (revohead.CharacterName is not null)

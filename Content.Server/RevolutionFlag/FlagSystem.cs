@@ -31,7 +31,6 @@ namespace Content.Server.RevolutionFlag;
                 if (!GetRole(mind, RevolutionaryPrototypeId))
                     continue;
                 UnderEffect.Add(entityInRange);
-                Logger.Error(entityInRange.ToString());
             }
         }
 

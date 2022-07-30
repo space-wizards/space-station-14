@@ -24,6 +24,7 @@
     - type: Sprite
       sprite: Objects/Weapons/Melee/revolutionflag.rsi
       state: icon
+    - type: TwoHanded
     - type: Flag
       modifiers:
       coefficients:
@@ -39,6 +40,6 @@
       arcWidth: 60
       arc: default
     - type: Item
-      size: 5
+      size: 200
       sprite: Objects/Weapons/Melee/revolutionflag.rsi
     - type: ItemCooldown
