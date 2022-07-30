@@ -21,12 +21,10 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public sealed class ClientInventorySystem : InventorySystem
     {
-        //[Dependency] private readonly IHudManager _hudManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+        [Dependency] private readonly ClothingVisualsSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly VerbSystem _verbs = default!;
 
@@ -87,7 +85,8 @@ namespace Content.Client.Inventory
         private void OnDidUnequip(ClientInventoryComponent component, DidUnequipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
+            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, null, false);
             OnSpriteUpdate?.Invoke(update);
         }
@@ -95,7 +94,8 @@ namespace Content.Client.Inventory
         private void OnDidEquip(ClientInventoryComponent component, DidEquipEvent args)
         {
             UpdateSlot(args.Equipee, component, args.Slot);
-            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity) return;
+            if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
             var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite, HasComp<ClientStorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
@@ -103,7 +103,8 @@ namespace Content.Client.Inventory
 
         private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnUnlinkInventory?.Invoke();
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnUnlinkInventory?.Invoke();
         }
 
         private void OnShutdown(EntityUid uid, ClientInventoryComponent component, ComponentShutdown args)
@@ -113,7 +114,8 @@ namespace Content.Client.Inventory
 
         private void OnPlayerAttached(EntityUid uid, ClientInventoryComponent component, PlayerAttachedEvent args)
         {
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnLinkInventory?.Invoke(component);
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnLinkInventory?.Invoke(component);
         }
 
         public override void Shutdown()
@@ -124,55 +126,75 @@ namespace Content.Client.Inventory
 
         private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
         {
-            _clothingSystem.InitClothing(uid, component);
-            if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate)) return;
+            _clothingVisualsSystem.InitClothing(uid, component);
+
+            if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
+                return;
+
             foreach (var slot in invTemplate.Slots)
             {
                 TryAddSlotDef(uid,component, slot);
             }
         }
+
         public void SetSlotHighlight(EntityUid owner,ClientInventoryComponent component, string slotName, bool state)
         {
             var oldData = component.SlotData[slotName];
             var newData = component.SlotData[slotName] = new SlotData(oldData, state);
-            if (owner == _playerManager.LocalPlayer?.ControlledEntity) EntitySlotUpdate?.Invoke(newData);
+            if (owner == _playerManager.LocalPlayer?.ControlledEntity)
+                EntitySlotUpdate?.Invoke(newData);
         }
+
         public void UpdateSlot(EntityUid owner,ClientInventoryComponent component,string slotName,bool? blocked = null, bool? highlight = null)
         {
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
-            if (blocked != null) newBlocked = blocked.Value;
-            if (highlight != null) newHighlight = highlight.Value;
+
+            if (blocked != null)
+                newBlocked = blocked.Value;
+
+            if (highlight != null)
+                newHighlight = highlight.Value;
+
             var newData = component.SlotData[slotName] = new SlotData(component.SlotData[slotName], newHighlight, newBlocked);
-            if (owner == _playerManager.LocalPlayer?.ControlledEntity) EntitySlotUpdate?.Invoke(newData);
+            if (owner == _playerManager.LocalPlayer?.ControlledEntity)
+                EntitySlotUpdate?.Invoke(newData);
         }
 
         public bool TryAddSlotDef(EntityUid owner,ClientInventoryComponent component,SlotDefinition newSlotDef)
         {
             SlotData newSlotData = newSlotDef; //convert to slotData
-            if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData)) return false;
+            if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
+                return false;
 
 
-            if (owner == _playerManager.LocalPlayer?.ControlledEntity) OnSlotAdded?.Invoke(newSlotData);
+            if (owner == _playerManager.LocalPlayer?.ControlledEntity)
+                OnSlotAdded?.Invoke(newSlotData);
             return true;
         }
+
         public void RemoveSlotDef(EntityUid owner, ClientInventoryComponent component, SlotData slotData)
         {
             if (component.SlotData.Remove(slotData.SlotName))
             {
-                if (owner == _playerManager.LocalPlayer?.ControlledEntity)  OnSlotRemoved?.Invoke(slotData);
+                if (owner == _playerManager.LocalPlayer?.ControlledEntity)
+                    OnSlotRemoved?.Invoke(slotData);
             }
         }
+
         public void RemoveSlotDef(EntityUid owner, ClientInventoryComponent component, string slotName)
         {
-            if (!component.SlotData.TryGetValue(slotName, out var slotData)) return;
-                component.SlotData.Remove(slotName);
-                if (owner == _playerManager.LocalPlayer?.ControlledEntity)  OnSlotRemoved?.Invoke(slotData);
+            if (!component.SlotData.TryGetValue(slotName, out var slotData))
+                return;
 
+            component.SlotData.Remove(slotName);
+
+            if (owner == _playerManager.LocalPlayer?.ControlledEntity)
+                OnSlotRemoved?.Invoke(slotData);
         }
 
-        //This should also live in a UI Controller
+        // TODO hud refactor This should also live in a UI Controller
         private void HoverInSlotButton(EntityUid uid, string slot, SlotControl control, InventoryComponent? inventoryComponent = null, SharedHandsComponent? hands = null)
         {
             if (!Resolve(uid, ref inventoryComponent))
@@ -186,7 +208,6 @@ namespace Content.Client.Inventory
 
             if(!TryGetSlotContainer(uid, slot, out var containerSlot, out var slotDef, inventoryComponent))
                 return;
-
         }
 
         public void UIInventoryActivate(string slot)

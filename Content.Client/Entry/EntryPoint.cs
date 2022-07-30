@@ -82,7 +82,6 @@ namespace Content.Client.Entry
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedLatheComponent>();
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
-            _componentFactory.RegisterClass<SharedVendingMachineComponent>();
             _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
             _componentFactory.RegisterClass<SharedChemMasterComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
@@ -138,9 +137,8 @@ namespace Content.Client.Entry
             // Setup key contexts
             ContentContexts.SetupContexts(_inputManager.Contexts);
 
-            _parallaxManager.LoadParallax();
+            _parallaxManager.LoadDefaultParallax();
 
-            _overlayManager.AddOverlay(new ParallaxOverlay());
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());

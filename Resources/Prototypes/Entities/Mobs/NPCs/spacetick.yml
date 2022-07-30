@@ -6,7 +6,7 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles

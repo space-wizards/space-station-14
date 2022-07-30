@@ -28,6 +28,12 @@ namespace Content.Server.GameTicking
         [ViewVariables(VVAccess.ReadWrite), Obsolete("Due for removal when observer spawning is refactored.")]
         private EntityCoordinates _spawnPoint;
 
+        /// <summary>
+        /// How many players have joined the round through normal methods.
+        /// Useful for game rules to look at. Doesn't count observers, people in lobby, etc.
+        /// </summary>
+        public int PlayersJoinedRoundNormally = 0;
+
         // Mainly to avoid allocations.
         private readonly List<EntityCoordinates> _possiblePositions = new();
 
@@ -193,7 +199,8 @@ namespace Content.Server.GameTicking
             }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
-            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, station, character);
+            PlayersJoinedRoundNormally++;
+            var aev = new PlayerSpawnCompleteEvent(mob, player, jobId, lateJoin, PlayersJoinedRoundNormally, station, character);
             RaiseLocalEvent(mob, aev, true);
         }
 
@@ -317,7 +324,10 @@ namespace Content.Server.GameTicking
         public EntityUid Station { get; }
         public HumanoidCharacterProfile Profile { get; }
 
-        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, EntityUid station, HumanoidCharacterProfile profile)
+        // Ex. If this is the 27th person to join, this will be 27.
+        public int JoinOrder { get; }
+
+        public PlayerSpawnCompleteEvent(EntityUid mob, IPlayerSession player, string? jobId, bool lateJoin, int joinOrder, EntityUid station, HumanoidCharacterProfile profile)
         {
             Mob = mob;
             Player = player;
@@ -325,6 +335,7 @@ namespace Content.Server.GameTicking
             LateJoin = lateJoin;
             Station = station;
             Profile = profile;
+            JoinOrder = joinOrder;
         }
     }
 }

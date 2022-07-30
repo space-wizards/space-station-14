@@ -1,7 +1,8 @@
+using Content.Client.GameTicking.Managers;
 using System.Threading;
 using Content.Client.Gameplay;
-using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
+using Content.Client.Viewport;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -15,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Client.Audio

@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.Animations;

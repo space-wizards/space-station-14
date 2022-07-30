@@ -14,7 +14,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
     public sealed class HandsSystem : SharedHandsSystem
@@ -87,7 +87,8 @@ namespace Content.Client.Hands
                 component.SortedHands = new(state.HandNames);
             }
 
-            if (component.ActiveHand == null && state.ActiveHand == null) return; //edge case
+            if (component.ActiveHand == null && state.ActiveHand == null)
+                return; //edge case
             if (component.ActiveHand != null && state.ActiveHand != component.ActiveHand.Name)
             {
                 SetActiveHand(uid, component.Hands[state.ActiveHand!], component);
@@ -119,6 +120,13 @@ namespace Content.Client.Hands
         }
         #endregion
 
+        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
+        {
+            base.DoDrop(uid, hand, doDropInteraction, hands);
+
+            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
+                sprite.RenderOrder = EntityManager.CurrentTick.Value;
+        }
 
         public EntityUid? GetActiveHandEntity()
         {
@@ -219,10 +227,12 @@ namespace Content.Client.Hands
 
         private void HandleItemAdded(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
         {
-            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
+            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
+                return;
             UpdateHandVisuals(uid, args.Entity, hand);
 
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
 
             OnItemAdded?.Invoke(hand.Name, args.Entity);
 
@@ -232,10 +242,12 @@ namespace Content.Client.Hands
 
         private void HandleItemRemoved(EntityUid uid, SharedHandsComponent handComp, ContainerModifiedMessage args)
         {
-            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand)) return;
+            if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
+                return;
             UpdateHandVisuals(uid, args.Entity, hand);
 
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity) return;
+            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
+                return;
 
             OnItemRemoved?.Invoke(hand.Name, args.Entity);
 
@@ -355,12 +367,12 @@ namespace Content.Client.Hands
         public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, SharedHandsComponent? handsComp = null)
         {
             base.AddHand(uid, handName, handLocation, handsComp);
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnAddHand?.Invoke(handName, handLocation);
-            if (handsComp == null) return;
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnAddHand?.Invoke(handName, handLocation);
+            if (handsComp == null)
+                return;
             if (handsComp.ActiveHand == null)
-            {
                 SetActiveHand(uid, handsComp.Hands[handName], handsComp);
-            }
         }
         public override void RemoveHand(EntityUid uid, string handName, SharedHandsComponent? handsComp = null)
         {
@@ -368,7 +380,8 @@ namespace Content.Client.Hands
             {
                 if (handsComp.Hands.TryGetValue(handName, out var hand))
                 {
-                    if (uid == _playerManager.LocalPlayer?.ControlledEntity) OnRemoveHand?.Invoke(handName);
+                    if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                        OnRemoveHand?.Invoke(handName);
                 }
             }
             base.RemoveHand(uid, handName, handsComp);
@@ -376,7 +389,8 @@ namespace Content.Client.Hands
 
         private void OnHandActivated(SharedHandsComponent? handsComponent)
         {
-            if (handsComponent == null) return;
+            if (handsComponent == null)
+                return;
             if (handsComponent.ActiveHand == null)
             {
                 OnSetActiveHand?.Invoke(null);
