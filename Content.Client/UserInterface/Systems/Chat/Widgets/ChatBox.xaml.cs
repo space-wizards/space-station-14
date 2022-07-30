@@ -49,7 +49,7 @@ public sealed partial class ChatBox : Control
             text = string.Format(msg.MessageWrap, text);
         }
 
-        Logger.Debug("chat", $"{msg.Channel}: {text}");
+        Logger.DebugS("chat", $"{msg.Channel}: {text}");
         if (!ChatInput.FilterButton.ChatFilterPopup.IsActive(msg.Channel))
         {
             return;
