@@ -113,7 +113,9 @@ public sealed class BloodstreamSystem : EntitySystem
                 _damageableSystem.TryChangeDamage(uid, amt, true, false);
 
                 // Apply dizziness as a symptom of bloodloss.
-                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (bloodstream.BloodlossThreshold / bloodPercentage), false);
+                // So, threshold is 0.9, you have 0.85 percent blood, it adds (5 * 1.05) or 5.25 seconds of drunkenness.
+                // So, it'd max at 1.9 by default with 0% blood.
+                _drunkSystem.TryApplyDrunkenness(uid, bloodstream.UpdateInterval * (1 + (bloodstream.BloodlossThreshold - bloodPercentage)), false);
             }
             else
             {
