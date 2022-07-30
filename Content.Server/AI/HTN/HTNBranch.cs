@@ -15,6 +15,6 @@ public sealed class HTNBranch
     [ViewVariables, DataField("preconditions")]
     public List<HTNPrecondition> Preconditions = new();
 
-    [ViewVariables, DataField("tasks")]
-    public List<HTNTask> Tasks = new();
+    [ViewVariables, DataField("tasks", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
+    public List<HTNTask> Tasks = default!;
 }

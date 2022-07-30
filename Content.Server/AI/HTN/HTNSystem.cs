@@ -3,6 +3,7 @@ using Content.Server.AI.Components;
 using Content.Server.AI.HTN.PrimitiveTasks;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.AI.HTN;
@@ -31,7 +32,7 @@ public sealed partial class HTNSystem : EntitySystem
         base.Shutdown();
         _prototypeManager.PrototypesReloaded -= OnPrototypeLoad;
     }
-    
+
     private void OnLoad()
     {
         // Add dependencies for all operators.
@@ -79,6 +80,15 @@ public sealed partial class HTNSystem : EntitySystem
         RemComp<ActiveNPCComponent>(uid);
 
         component.PlanningToken?.Cancel();
+    }
+
+    /// <summary>
+    /// Forces the NPC to replan.
+    /// </summary>
+    [PublicAPI]
+    public void Replan(HTNComponent component)
+    {
+        component.PlanAccumulator = 0f;
     }
 
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)

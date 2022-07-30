@@ -4,25 +4,34 @@
   branches:
     # Pick a new spot and wait there.
     - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:PickAccessibleOperator
+        - id: PickAccessiblePrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: RandomIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
 
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: false
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: MovementTarget
+- type: htnPrimitive
+  id: PickAccessiblePrimitive
+  operator: !type:PickAccessibleOperator
 
-        - !type:HTNPrimitiveTask
-          operator: !type:RandomOperator
-            targetKey: IdleTime
-            minKey: MinimumIdleTime
-            maxKey: MaximumIdleTime
+- type: htnPrimitive
+  id: MoveToAccessiblePrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: false
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: MovementTarget
 
-        - !type:HTNPrimitiveTask
-          operator: !type:WaitOperator
-            key: IdleTime
+- type: htnPrimitive
+  id: RandomIdleTimePrimitive
+  operator: !type:RandomOperator
+    targetKey: IdleTime
+    minKey: MinimumIdleTime
+    maxKey: MaximumIdleTime
+
+- type: htnPrimitive
+  id: WaitIdleTimePrimitive
+  operator: !type:WaitOperator
+    key: IdleTime
 
 - type: htnCompound
   id: MeleeCombatCompound
@@ -31,25 +40,21 @@
     # Melee Weapon combat
     - tasks:
         # We always want to double check our target is best so select that first
-        # TODO: need a CD on target selection
-        - !type:HTNPrimitiveTask
-          operator: !type:PickMeleeTargetOperator
-
+        - id: PickMeleeTargetPrimitive
         # Make sure we have a decent weapon
         #- !type:HTNCompoundTask
         #  id: EquipMelee
-
         # Start whacking
-        - !type:HTNCompoundTask
-          id: MeleeAttackTargetCompound
+        - id: MeleeAttackTargetCompound
 
     # Unarmed combat
     - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:PickMeleeTargetOperator
+        - id: PickMeleeTargetPrimitive
+        - id: MeleeAttackTargetCompound
 
-        - !type:HTNCompoundTask
-          id: MeleeAttackTargetCompound
+- type: htnPrimitive
+  id: PickMeleeTargetPrimitive
+  operator: !type:PickMeleeTargetOperator
 
 - type: htnCompound
   id: MeleeAttackTargetCompound
@@ -60,23 +65,23 @@
   branches:
     # Keep hitting them if they're in range
     - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:MeleeOperator
-          preconditions:
-            - !type:KeyInRangePrecondition
-              key: CombatTarget
-              rangeKey: MeleeRange
+        - id: MeleeAttackTargetPrimitive
 
     # Move to melee range and hit them
     - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:MoveToOperator
-            pathfindInPlanning: true
-            key: CombatTarget
+        - id: MoveToCombatTargetPrimitive
+        - id: MeleeAttackTargetPrimitive
 
-        - !type:HTNPrimitiveTask
-          operator: !type:MeleeOperator
-          preconditions:
-            - !type:KeyInRangePrecondition
-              key: CombatTarget
-              rangeKey: MeleeRange
+- type: htnPrimitive
+  id: MeleeAttackTargetPrimitive
+  operator: !type:MeleeOperator
+  preconditions:
+    - !type:KeyInRangePrecondition
+      key: CombatTarget
+      rangeKey: MeleeRange
+
+- type: htnPrimitive
+  id: MoveToCombatTargetPrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: true
+    key: CombatTarget

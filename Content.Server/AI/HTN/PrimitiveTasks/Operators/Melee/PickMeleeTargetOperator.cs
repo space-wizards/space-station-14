@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.AI.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -24,11 +25,13 @@ public sealed class PickMeleeTargetOperator : HTNOperator
         var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius);
         var targets = new List<(EntityUid Entity, float Rating)>();
 
+        blackboard.TryGetValue<EntityUid>(Key, out var existingTarget);
+
         // TODO: Need a perception system instead
         foreach (var target in _tags
                      .GetNearbyHostiles(owner, radius))
         {
-            targets.Add((target, GetRating(blackboard, target)));
+            targets.Add((target, GetRating(blackboard, target, existingTarget)));
         }
 
         targets.Sort((x, y) => x.Rating.CompareTo(y.Rating));
@@ -42,17 +45,20 @@ public sealed class PickMeleeTargetOperator : HTNOperator
             return null;
         }
 
+        // TODO: Need some level of rng in ratings (outside of continuing to attack the same target)
+        var selectedTarget = targets[0].Entity;
+
         return new Dictionary<string, object>()
         {
-            {Key, targets[0].Entity}
+            {Key, selectedTarget}
         };
     }
 
-    private float GetRating(NPCBlackboard blackboard, EntityUid uid)
+    private float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget)
     {
         var rating = 0f;
 
-        if (blackboard.TryGetValue<EntityUid>(Key, out var existingTarget) && existingTarget == uid)
+        if (existingTarget == uid)
         {
             rating += 3f;
         }
