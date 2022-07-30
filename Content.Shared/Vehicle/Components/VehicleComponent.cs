@@ -1,6 +1,4 @@
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 
