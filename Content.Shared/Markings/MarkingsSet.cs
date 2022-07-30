@@ -132,6 +132,34 @@ public sealed class MarkingSet
         }
     }
 
+    public void EnsureValid(MarkingManager? markingManager = null)
+    {
+        IoCManager.Resolve(ref markingManager);
+
+        var toRemove = new List<int>();
+        foreach (var (category, list) in _markings)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (!markingManager.IsValidMarking(list[i], out var marking))
+                {
+                    toRemove.Add(i);
+                    continue;
+                }
+
+                if (marking.Sprites.Count != list[i].MarkingColors.Count)
+                {
+                    list[i] = new Marking(marking.ID, marking.Sprites.Count);
+                }
+            }
+
+            foreach (var i in toRemove)
+            {
+                Remove(category, i);
+            }
+        }
+    }
+
     /// <summary>
     ///     Add a marking to the front of the category's list of markings.
     /// </summary>
@@ -430,6 +458,11 @@ public sealed class ForwardMarkingEnumerator : IEnumerable<Marking>
     public IEnumerator<Marking> GetEnumerator()
     {
         return new MarkingsEnumerator(_markings, false);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
 
