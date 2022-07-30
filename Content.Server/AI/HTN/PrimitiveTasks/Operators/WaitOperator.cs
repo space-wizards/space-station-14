@@ -26,6 +26,6 @@ public sealed class WaitOperator : HTNOperator
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         base.Shutdown(blackboard, status);
-        blackboard.Remove(Key);
+        blackboard.Remove<float>(Key);
     }
 }

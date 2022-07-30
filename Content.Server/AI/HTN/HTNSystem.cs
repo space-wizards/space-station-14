@@ -43,11 +43,26 @@ public sealed partial class HTNSystem : EntitySystem
         {
             UpdateCompound(compound);
         }
+
+        foreach (var primitive in _prototypeManager.EnumeratePrototypes<HTNPrimitiveTask>())
+        {
+            UpdatePrimitive(primitive);
+        }
     }
 
     private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
     {
         OnLoad();
+    }
+
+    private void UpdatePrimitive(HTNPrimitiveTask primitive)
+    {
+        foreach (var precon in primitive.Preconditions)
+        {
+            IoCManager.InjectDependencies(precon);
+        }
+
+        primitive.Operator.Initialize();
     }
 
     private void UpdateCompound(HTNCompoundTask compound)
@@ -58,7 +73,6 @@ public sealed partial class HTNSystem : EntitySystem
             branch.Tasks.EnsureCapacity(branch.TaskPrototypes.Count);
 
             // Didn't do this in a typeserializer because we can't recursively grab our own prototype during it, woohoo!
-            // TODO: Need to at least re-add in the validator I wrote.
             foreach (var proto in branch.TaskPrototypes)
             {
                 if (_prototypeManager.TryIndex<HTNCompoundTask>(proto, out var compTask))
@@ -75,19 +89,9 @@ public sealed partial class HTNSystem : EntitySystem
                 }
             }
 
-            foreach (var task in branch.Tasks)
+            foreach (var precon in branch.Preconditions)
             {
-                switch (task)
-                {
-                    case HTNCompoundTask compoundy:
-                        UpdateCompound(compoundy);
-                        break;
-                    case HTNPrimitiveTask primitive:
-                        primitive.Operator.Initialize();
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                IoCManager.InjectDependencies(precon);
             }
         }
     }

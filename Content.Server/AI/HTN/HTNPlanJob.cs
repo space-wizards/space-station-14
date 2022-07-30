@@ -79,7 +79,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref _blackboard, ref btrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex);
                     }
                     break;
                 case HTNPrimitiveTask primitive:
@@ -90,11 +90,16 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     else
                     {
-                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref _blackboard, ref btrIndex);
+                        RestoreTolastDecomposedTask(decompHistory, tasksToProcess, appliedStates, finalPlan, ref primitiveCount, ref _blackboard, ref btrIndex);
                     }
 
                     break;
             }
+        }
+
+        if (finalPlan.Count == 0)
+        {
+            return null;
         }
 
         var branchTraversalRecord = decompHistory.Select(o => o.MethodTraversal).ToList();
@@ -167,6 +172,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         Queue<HTNTask> tasksToProcess,
         List<Dictionary<string, object>?> appliedStates,
         List<HTNPrimitiveTask> finalPlan,
+        ref int primitiveCount,
         ref NPCBlackboard blackboard,
         ref int mtrIndex)
     {
@@ -179,10 +185,13 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // Increment MTR so next time we try the next method on the compound task.
         mtrIndex = lastDecomp.MethodTraversal + 1;
 
-        // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
-        finalPlan.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
-        appliedStates.RemoveRange(finalPlan.Count - lastDecomp.PrimitiveCount, lastDecomp.PrimitiveCount);
+        var count = finalPlan.Count;
 
+        // Final plan only has primitive tasks added to it so we can just remove the count we've tracked since the last decomp.
+        finalPlan.RemoveRange(count - primitiveCount, primitiveCount);
+        appliedStates.RemoveRange(count - primitiveCount, primitiveCount);
+
+        primitiveCount = lastDecomp.PrimitiveCount;
         blackboard = lastDecomp.Blackboard;
         tasksToProcess.Enqueue(lastDecomp.CompoundTask);
     }

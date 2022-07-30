@@ -12,8 +12,8 @@ public sealed class MeleeOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [ViewVariables, DataField("key", required: true)]
-    public string Key = default!;
+    [ViewVariables, DataField("targetKey", required: true)]
+    public string TargetKey = default!;
 
     // TODO: Need a key for what we're using
 
@@ -23,7 +23,7 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
-        melee.Target = blackboard.GetValue<EntityUid>(Key);
+        melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -35,7 +35,11 @@ public sealed class MeleeOperator : HTNOperator
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
-        if (_entManager.HasComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner)))
+        // TODO:
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+        _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
+
+        if (_entManager.HasComponent<NPCMeleeCombatComponent>(owner))
             return HTNOperatorStatus.Continuing;
 
         return HTNOperatorStatus.Finished;

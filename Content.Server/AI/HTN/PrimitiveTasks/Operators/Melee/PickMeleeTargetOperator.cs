@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Server.AI.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -9,9 +8,14 @@ namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 /// </summary>
 public sealed class PickMeleeTargetOperator : HTNOperator
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     private AiFactionTagSystem _tags = default!;
 
     [ViewVariables, DataField("key")] public string Key = "CombatTarget";
+
+    [ViewVariables, DataField("keyCoordinates")]
+    public string KeyCoordinates = "CombatTargetCoordinates";
 
     public override void Initialize()
     {
@@ -50,7 +54,8 @@ public sealed class PickMeleeTargetOperator : HTNOperator
 
         return new Dictionary<string, object>()
         {
-            {Key, selectedTarget}
+            {Key, selectedTarget},
+            {KeyCoordinates, _entManager.GetComponent<TransformComponent>(selectedTarget).Coordinates}
         };
     }
 

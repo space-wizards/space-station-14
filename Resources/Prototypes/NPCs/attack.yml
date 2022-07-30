@@ -38,14 +38,14 @@
   desc: Selects a target in melee and tries to attack it.
   branches:
     # Melee Weapon combat
-    - tasks:
+    #- tasks:
         # We always want to double check our target is best so select that first
-        - id: PickMeleeTargetPrimitive
+        #- id: PickMeleeTargetPrimitive
         # Make sure we have a decent weapon
         #- !type:HTNCompoundTask
         #  id: EquipMelee
         # Start whacking
-        - id: MeleeAttackTargetCompound
+        #- id: MeleeAttackTargetCompound
 
     # Unarmed combat
     - tasks:
@@ -59,6 +59,7 @@
 - type: htnCompound
   id: MeleeAttackTargetCompound
   desc: Tries to melee attack our target.
+  # TODO: Precon dumpy
   preconditions:
     - !type:KeyExistsPrecondition
       key: CombatTarget
@@ -75,13 +76,20 @@
 - type: htnPrimitive
   id: MeleeAttackTargetPrimitive
   operator: !type:MeleeOperator
+    targetKey: CombatTarget
   preconditions:
-    - !type:KeyInRangePrecondition
-      key: CombatTarget
+    - !type:TargetInRangePrecondition
+      targetKey: CombatTarget
       rangeKey: MeleeRange
 
 - type: htnPrimitive
   id: MoveToCombatTargetPrimitive
+  desc: Moves the owner into range of the combat target.
   operator: !type:MoveToOperator
     pathfindInPlanning: true
-    key: CombatTarget
+    removeKeyOnFinish: false
+    key: CombatTargetCoordinates
+    pathfindKey: CombatTargetPathfind
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: CombatTargetCoordinates

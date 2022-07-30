@@ -15,6 +15,7 @@ namespace Content.Server.AI.HTN.PrimitiveTasks;
 public sealed class MoveToOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     private PathfindingSystem _pathfind = default!;
 
     /// <summary>
@@ -23,8 +24,23 @@ public sealed class MoveToOperator : HTNOperator
     [ViewVariables, DataField("pathfindInPlanning")]
     public bool PathfindInPlanning = true;
 
+    /// <summary>
+    /// When we're finished moving to the target should we remove its key?
+    /// </summary>
+    [ViewVariables, DataField("removeKeyOnFinish")]
+    public bool RemoveKeyOnFinish = true;
+
+    /// <summary>
+    /// Target EntityUid to move to.
+    /// </summary>
     [ViewVariables, DataField("key")]
     public string TargetKey = "MovementTarget";
+
+    /// <summary>
+    /// Where the pathfinding result will be stored (if applicable).
+    /// </summary>
+    [ViewVariables, DataField("pathfindKey")]
+    public string PathfindKey = "MovementPathfind";
 
     private const string MovementCancelToken = "MovementCancelToken";
 
@@ -37,26 +53,51 @@ public sealed class MoveToOperator : HTNOperator
     public override async Task<Dictionary<string, object>?> Plan(NPCBlackboard blackboard)
     {
         if (!PathfindInPlanning)
+        {
+            return new Dictionary<string, object>()
+            {
+                {NPCBlackboard.OwnerCoordinates, _entManager.GetComponent<TransformComponent>(blackboard.GetValue<EntityUid>(TargetKey)).Coordinates}
+            };
+        }
+
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
+
+        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
             return null;
 
-        var movementToken = new CancellationTokenSource();
-        blackboard.SetValue(MovementCancelToken, movementToken);
+        if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform) ||
+            !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
+            return null;
+
+        // TODO:
+        var access = new List<string>();
+
+        if (!_mapManager.TryGetGrid(xform.GridUid, out var ownerGrid) ||
+            !_mapManager.TryGetGrid(targetCoordinates.GetGridUid(_entManager), out var targetGrid) ||
+            ownerGrid != targetGrid)
+        {
+            return null;
+        }
 
         var job = _pathfind.RequestPath(
             new PathfindingArgs(
                 blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
-                new List<string>(), 0, TileRef.Zero, TileRef.Zero), movementToken.Token);
+                access,
+                body.CollisionMask,
+                ownerGrid.GetTileRef(xform.Coordinates),
+                ownerGrid.GetTileRef(targetCoordinates)), CancellationToken.None);
+
+        job.Run();
 
         await job.AsTask;
-
-        blackboard.Remove(MovementCancelToken);
 
         if (job.Result == null)
             return null;
 
         return new Dictionary<string, object>()
         {
-            { TargetKey, job.Result }
+            {NPCBlackboard.OwnerCoordinates, targetCoordinates}
+,            { PathfindKey, job.Result }
         };
     }
 
@@ -65,7 +106,16 @@ public sealed class MoveToOperator : HTNOperator
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);
+
+        // TODO: re-use pathfinding
         var comp = _entManager.EnsureComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+
+        /*
+        if (blackboard.TryGetValue<Queue<TileRef>>(PathfindKey, out var path))
+        {
+            return;
+        }
+        */
 
         comp.Request = new GridTargetSteeringRequest(blackboard.GetValue<EntityCoordinates>(TargetKey), 1f);
     }
@@ -77,10 +127,14 @@ public sealed class MoveToOperator : HTNOperator
         if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken))
         {
             cancelToken.Cancel();
-            blackboard.Remove(MovementCancelToken);
+            blackboard.Remove<CancellationTokenSource>(MovementCancelToken);
         }
 
-        blackboard.Remove(TargetKey);
+        if (RemoveKeyOnFinish)
+        {
+            blackboard.Remove<EntityCoordinates>(TargetKey);
+        }
+
         _entManager.RemoveComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
     }
 

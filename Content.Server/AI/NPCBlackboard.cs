@@ -1,17 +1,24 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI;
 
 [DataDefinition]
-public sealed class NPCBlackboard : Dictionary<string, object>
+public sealed class NPCBlackboard
 {
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
         {"MaximumIdleTime", 7f},
         {"MinimumIdleTime", 2f},
         {"VisionRadius", 7f},
+        {"MeleeRange", 1f},
     };
+
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
+    private Dictionary<string, object> _blackboard = new();
 
     /// <summary>
     /// Should we allow setting values on the blackboard. This is true when we are planning.
@@ -24,11 +31,16 @@ public sealed class NPCBlackboard : Dictionary<string, object>
     public NPCBlackboard ShallowClone()
     {
         var dict = new NPCBlackboard();
-        foreach (var item in this)
+        foreach (var item in _blackboard)
         {
             dict.SetValue(item.Key, item.Value);
         }
         return dict;
+    }
+
+    public bool ContainsKey(string key)
+    {
+        return _blackboard.ContainsKey(key);
     }
 
     /// <summary>
@@ -36,7 +48,7 @@ public sealed class NPCBlackboard : Dictionary<string, object>
     /// </summary>
     public T GetValue<T>(string key)
     {
-        return (T) this[key];
+        return (T) _blackboard[key];
     }
 
     /// <summary>
@@ -44,7 +56,12 @@ public sealed class NPCBlackboard : Dictionary<string, object>
     /// </summary>
     public T? GetValueOrDefault<T>(string key)
     {
-        if (TryGetValue(key, out var value))
+        if (_blackboard.TryGetValue(key, out var value))
+        {
+            return (T) value;
+        }
+
+        if (TryGetEntityDefault(key, out value))
         {
             return (T) value;
         }
@@ -62,7 +79,7 @@ public sealed class NPCBlackboard : Dictionary<string, object>
     /// </summary>
     public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value)
     {
-        if (TryGetValue(key, out var data))
+        if (_blackboard.TryGetValue(key, out var data))
         {
             value = (T) data;
             return true;
@@ -80,7 +97,7 @@ public sealed class NPCBlackboard : Dictionary<string, object>
             return;
         }
 
-        this[key] = value;
+        _blackboard[key] = value;
     }
 
     private void AssertReadonly()
@@ -88,11 +105,48 @@ public sealed class NPCBlackboard : Dictionary<string, object>
         DebugTools.Assert(false, $"Tried to write to an NPC blackboard that is readonly!");
     }
 
+    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value)
+    {
+        value = default;
+
+        switch (key)
+        {
+            case OwnerCoordinates:
+                if (!TryGetValue<EntityUid>(Owner, out var owner))
+                {
+                    return false;
+                }
+
+                if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+                {
+                    value = xform.Coordinates;
+                    return true;
+                }
+
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public bool Remove<T>(string key)
+    {
+        if (key == "CombatTargetCoordinates")
+        {
+
+        }
+
+        DebugTools.Assert(!_blackboard.ContainsKey(key) || _blackboard[key] is T);
+        return _blackboard.Remove(key);
+    }
+
     /*
     * Constants to make development easier
     */
 
     public const string Owner = "Owner";
+    public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";
     public const string VisionRadius = "VisionRadius";
+    public const float MeleeRange = 1f;
 }
