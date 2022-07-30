@@ -43,7 +43,9 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
     size: 3
-
+  - type: Tag
+    tags:
+      - Trash
 # Tins
 
 # Need something that you can open these tins with. I suggest a prying or cutting tool.

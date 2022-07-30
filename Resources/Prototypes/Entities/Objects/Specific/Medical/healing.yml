@@ -232,6 +232,7 @@
         reagents:
         - ReagentId: Ephedrine
           Quantity: 15
+  - type: TrashOnEmpty
 
 - type: entity
   name: inaprovaline syringe
@@ -245,6 +246,7 @@
         reagents:
         - ReagentId: Inaprovaline
           Quantity: 15
+  - type: TrashOnEmpty
 
 - type: entity
   name: tranexamic acid syringe
@@ -258,6 +260,7 @@
         reagents:
         - ReagentId: TranexamicAcid
           Quantity: 15
+  - type: TrashOnEmpty
 
 - type: entity
   name: spaceacillin syringe
@@ -271,6 +274,7 @@
         reagents:
         - ReagentId: Spaceacillin
           Quantity: 15
+  - type: TrashOnEmpty
 
 - type: entity
   name: ipecac syringe
@@ -284,6 +288,7 @@
         reagents:
         - ReagentId: Ipecac
           Quantity: 15
+  - type: TrashOnEmpty
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
@@ -298,3 +303,5 @@
         reagents:
         - ReagentId: Corpium
           Quantity: 10
+  - type: TrashOnEmpty
+

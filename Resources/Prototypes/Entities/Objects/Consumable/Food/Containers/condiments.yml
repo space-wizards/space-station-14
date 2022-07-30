@@ -33,6 +33,7 @@
   - type: Icon
     sprite: Objects/Consumable/Food/condiments.rsi
     state: packet-empty
+  - type: TrashOnEmpty
 
 - type: entity
   parent: FoodCondimentPacket
@@ -357,6 +358,7 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: bottle-alpha-
+  - type: TrashOnEmpty
 
 - type: entity
   parent: FoodCondimentBottle
@@ -501,6 +503,7 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 3
       fillBaseName: bottle-s-alpha-
+  - type: TrashOnEmpty
 
 - type: entity
   parent: FoodCondimentBottleSmall
