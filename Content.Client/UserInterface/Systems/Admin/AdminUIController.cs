@@ -13,7 +13,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface.Systems.AdminUI;
+namespace Content.Client.UserInterface.Systems.Admin;
 
 public sealed class AdminUIController : UIController, IOnStateEntered<GameplayState>
 {
