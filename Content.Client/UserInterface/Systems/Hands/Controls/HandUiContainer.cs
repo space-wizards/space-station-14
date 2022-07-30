@@ -19,12 +19,16 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     {
         if (MaxButtonCount > 0)
         {
-            if (ButtonCount >= MaxButtonCount) return null;
+            if (ButtonCount >= MaxButtonCount)
+                return null;
+
             _grid.AddChild(newButton);
-            return base.AddButton(newButton);
+        }
+        else
+        {
+            _grid.AddChild(newButton);
         }
 
-        _grid.AddChild(newButton);
         return base.AddButton(newButton);
     }
 

@@ -121,7 +121,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         }
 
         var activeHand = handsComp.ActiveHand;
-        if (activeHand == null) return;
+        if (activeHand == null)
+            return;
         SetActiveHand(activeHand.Name);
     }
 
@@ -147,7 +148,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private int GetHandContainerIndex(string containerName)
     {
-        if (!_handContainerIndices.TryGetValue(containerName, out var result)) return -1;
+        if (!_handContainerIndices.TryGetValue(containerName, out var result))
+            return -1;
         return result;
     }
 
@@ -155,7 +157,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         HandsGui?.UpdatePanelEntity(entity);
         var hand = GetHand(name);
-        if (hand == null) return;
+        if (hand == null)
+            return;
         if (_entities.TryGetComponent(entity, out ISpriteComponent? sprite))
         {
             hand.SpriteView.Sprite = sprite;
@@ -166,16 +169,19 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         HandsGui?.UpdatePanelEntity(null);
         var hand = GetHand(name);
-        if (hand == null) return;
+        if (hand == null)
+            return;
         hand.SpriteView.Sprite = null;
     }
 
     private HandsContainer GetFirstAvailableContainer()
     {
-        if (_handsContainers.Count == 0) throw new Exception("Could not find an attached hand hud container");
+        if (_handsContainers.Count == 0)
+            throw new Exception("Could not find an attached hand hud container");
         foreach (var container in _handsContainers)
         {
-            if (container.IsFull) continue;
+            if (container.IsFull)
+                continue;
             return container;
         }
 
@@ -186,7 +192,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     {
         container = null;
         var containerIndex = GetHandContainerIndex(containerName);
-        if (containerIndex == -1) return false;
+        if (containerIndex == -1)
+            return false;
         container = _handsContainers[containerIndex];
         return true;
     }
@@ -203,7 +210,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         for (var i = _handsContainers.Count - 1; i >= 0; i--)
         {
             var hands = _handsContainers[i];
-            if (hands.ButtonCount == 0 || !hands.TryGetLastButton(out handButton)) continue;
+            if (hands.ButtonCount == 0 || !hands.TryGetLastButton(out handButton))
+                continue;
             return true;
         }
 
@@ -228,7 +236,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             return;
         }
 
-        if (!_handLookup.TryGetValue(handName, out var handControl) || handControl == _activeHand) return;
+        if (!_handLookup.TryGetValue(handName, out var handControl) || handControl == _activeHand)
+            return;
         if (_activeHand != null)
         {
             _activeHand.Highlight = false;
@@ -254,13 +263,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         GetFirstAvailableContainer().AddButton(newHandButton);
     }
 
-    private void BalanceContainers()
-    {
-        if (_handsContainers.Count <= 1) return;
-        //TODO: Actually implement container balancing :P - jezi
-        //currently we only use a single container but I want to support this later.
-    }
-
     private void RemoveHand(string handName)
     {
         RemoveHand(handName, out var _);
@@ -269,7 +271,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     private bool RemoveHand(string handName, out HandButton? handButton)
     {
         handButton = null;
-        if (!_handLookup.TryGetValue(handName, out handButton)) return false;
+        if (!_handLookup.TryGetValue(handName, out handButton))
+            return false;
         if (handButton.Parent is HandsContainer handContainer)
         {
             handContainer.RemoveButton(handButton);
@@ -277,7 +280,6 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         _handLookup.Remove(handName);
         handButton.Dispose();
-        BalanceContainers();
         return true;
     }
 
@@ -303,7 +305,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     public bool RemoveHandContainer(string handContainerName)
     {
         var index = GetHandContainerIndex(handContainerName);
-        if (index == -1) return false;
+        if (index == -1)
+            return false;
         _handContainerIndices.Remove(handContainerName);
         _handsContainers.RemoveAt(index);
         return true;
