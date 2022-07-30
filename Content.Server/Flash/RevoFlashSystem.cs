@@ -24,7 +24,7 @@ namespace Content.Server.Flash
 
         public void RevoFlash(EntityUid target, FlashableComponent comp, FlashEvent ev)
         {
-            if (!TryComp<MindComponent>(ev.Target, out MindComponent? usermindcomp) || usermindcomp.Mind is null) 
+            if (!TryComp<MindComponent>(ev.User, out var usermindcomp) || usermindcomp.Mind is null) 
                 return;
             
             foreach (var role in usermindcomp.Mind.AllRoles)
