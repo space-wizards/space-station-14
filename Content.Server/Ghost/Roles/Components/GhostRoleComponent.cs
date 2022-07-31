@@ -27,7 +27,7 @@ namespace Content.Server.Ghost.Roles.Components
 
         // We do this so updating RoleName and RoleDescription in VV updates the open EUIs.
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadOnly)]
         [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public string RoleName
         {

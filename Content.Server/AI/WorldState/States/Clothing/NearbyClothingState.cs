@@ -17,7 +17,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
             var result = new List<EntityUid>();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner, out AiControllerComponent? controller))
+            if (!entMan.TryGetComponent(Owner, out NPCComponent? controller))
             {
                 return result;
             }

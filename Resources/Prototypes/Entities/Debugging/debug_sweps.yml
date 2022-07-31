@@ -83,7 +83,6 @@
   - type: Item
     size: 1
     sprite: Objects/Weapons/Melee/debug.rsi
-    prefix: inhand
 
 - type: entity
   name: bang stick 100dmg

@@ -23,3 +23,16 @@
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
+
+- type: construction
+  name: medibot
+  id: medibot
+  graph: MediBot
+  startNode: start
+  targetNode: bot
+  category: Utilities
+  objectType: Item
+  description: This bot can help supply basic healing.
+  icon:
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot

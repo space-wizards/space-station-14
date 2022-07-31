@@ -125,7 +125,6 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<BlackboardManager>().Initialize();
                 IoCManager.Resolve<ConsiderationsManager>().Initialize();
                 IoCManager.Resolve<IAdminManager>().Initialize();
-                IoCManager.Resolve<INpcBehaviorManager>().Initialize();
                 IoCManager.Resolve<IAfkManager>().Initialize();
                 IoCManager.Resolve<RulesManager>().Initialize();
                 _euiManager.Initialize();

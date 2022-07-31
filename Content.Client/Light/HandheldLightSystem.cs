@@ -1,39 +1,21 @@
-using Content.Client.Items.Systems;
+using Content.Client.Items;
 using Content.Client.Light.Components;
-using Content.Shared.Item;
+using Content.Shared.Light;
 using Content.Shared.Light.Component;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.Light;
 
-public sealed class HandheldLightSystem : EntitySystem
+public sealed class HandheldLightSystem : SharedHandheldLightSystem
 {
-    [Dependency] private readonly ItemSystem _itemSys = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<HandheldLightComponent, ComponentHandleState>(OnHandleState);
+
+        SubscribeLocalEvent<HandheldLightComponent, ItemStatusCollectMessage>(OnGetStatusControl);
     }
-
-    private void OnHandleState(EntityUid uid, HandheldLightComponent component, ref ComponentHandleState args)
+    
+    private static void OnGetStatusControl(EntityUid uid, HandheldLightComponent component, ItemStatusCollectMessage args)
     {
-        if (args.Current is not SharedHandheldLightComponent.HandheldLightComponentState state)
-            return;
-
-        component.Level = state.Charge;
-
-        if (state.Activated == component.Activated)
-            return;
-
-        component.Activated = state.Activated;
-
-        // really hand-held lights should be using a separate unshaded layer. (see FlashlightVisualizer)
-        // this prefix stuff is largely for backwards compatibility with RSIs/yamls that have not been updated.
-        if (component.AddPrefix && TryComp(uid, out SharedItemComponent? item))
-        {
-            item.EquippedPrefix = state.Activated ? "on" : "off";
-            _itemSys.VisualsChanged(uid);
-        }
+        args.Controls.Add(new HandheldLightStatus(component));
     }
 }

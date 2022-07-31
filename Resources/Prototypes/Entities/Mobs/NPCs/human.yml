@@ -1,12 +1,12 @@
 - type: entity
   name: Civilian
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
@@ -20,13 +20,13 @@
 
 - type: entity
   name: Spirate
-  parent: MobHumanBase
+  parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!
   components:
   - type: InputMover
   - type: MobMover
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Clothing
     - Hunger
@@ -49,7 +49,7 @@
     description: A highly trained CentCom agent, capable of dealing with various threats.
 
 - type: entity
-  parent: MobHumanBase
+  parent: BaseMobHuman
   suffix: Dead
   save: true
   id: SalvageHumanCorpse

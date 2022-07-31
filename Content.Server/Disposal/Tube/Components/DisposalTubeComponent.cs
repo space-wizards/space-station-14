@@ -4,7 +4,7 @@ using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Popups;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 

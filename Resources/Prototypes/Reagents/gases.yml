@@ -151,6 +151,13 @@
         ratios:
           CarbonDioxide: 1.0
           Nitrogen: -1.0
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Slime
+        ratios:
+          NitrousOxide: 1.0
+          Nitrogen: -1.0
 
 - type: reagent
   id: Miasma
@@ -215,3 +222,115 @@
             Blunt: -4
             Slash: -3
             Piercing: -3
+
+- type: reagent
+  id: NitrousOxide
+  name: reagent-name-nitrous-oxide
+  desc: reagent-desc-nitrous-oxide
+  physicalDesc: reagent-physical-desc-gaseous
+  color: "#808080"
+  boilingPoint: -88
+  meltingPoint: -90
+  metabolisms:
+    Gas:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.5
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 1
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 1.8
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 3.5
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+
+- type: reagent
+  id: Frezon
+  name: reagent-name-frezon
+  desc: reagent-desc-frezon
+  physicalDesc: reagent-physical-desc-gaseous
+  color: "#3a758c"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.01
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:Drunk
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "frezon-lungs-cold" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "frezon-euphoric" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1

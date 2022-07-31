@@ -5,7 +5,7 @@
   minPlayers: 0
   votable: false
   stations:
-    Station: #TODO: Add a BecomesStation to empty.yml
+    Empty:
       mapNameTemplate: "Empty"
       overflowJobs:
         - Passenger

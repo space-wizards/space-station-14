@@ -6,7 +6,10 @@
   components:
     - type: Sprite
       sprite: Clothing/Shoes/Boots/magboots.rsi
-      state: icon
+      netsync: false
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
     - type: Clothing
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
@@ -21,6 +24,13 @@
       walkModifier: 0.85
       sprintModifier: 0.8
       enabled: false
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ToggleVisuals.Toggled:
+          enum.ToggleVisuals.Layer:
+            True: {state: icon-on}
+            False: {state: icon}
 
 - type: entity
   parent: ClothingShoesBootsMag
