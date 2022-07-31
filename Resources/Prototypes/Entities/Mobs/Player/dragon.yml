@@ -107,4 +107,6 @@
       name: action-name-carp-summon
       description: action-description-carp-summon
       useDelay: 5
+  - type: AddAntagRole
+    prototype: SpaceDragon
 

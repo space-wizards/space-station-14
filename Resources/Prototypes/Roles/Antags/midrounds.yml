@@ -1,0 +1,41 @@
+- type: antag
+  id: SpaceDragon
+  name: "Space Dragon"
+  antagonist: true
+  setPreference: false
+  objective: "Summon carp and eat the crew."
+
+- type: antag
+  id: RatKing
+  name: "Rat King"
+  antagonist: true
+  setPreference: false
+  objective: "Build up a rat army and raid the service department."
+
+- type: antag
+  id: RatServant
+  name: "Rat Servant"
+  antagonist: true
+  setPreference: false
+  objective: "Serve the Rat King."
+
+- type: antag
+  id: Holoparasite
+  name: "Holoparasite"
+  antagonist: true
+  setPreference: false
+  objective: "Serve your syndicate master and help them accomplish their goals."
+
+- type: antag
+  id: Ifrit
+  name: "Ifrit"
+  antagonist: true
+  setPreference: false
+  objective: "Serve your syndicate master and help them accomplish their goals."
+
+- type: antag
+  id: Cerebus
+  name: "Cerebus"
+  antagonist: true
+  setPreference: false
+  objective: "Do the unholy bidding of your owner."

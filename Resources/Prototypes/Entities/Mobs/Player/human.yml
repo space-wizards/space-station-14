@@ -200,3 +200,5 @@
     prototype: SyndicateOperativeGearExtremelyBasic
   - type: RandomMetadata
     nameSet: names_death_commando
+  - type: AddAntagRole
+    prototype: Traitor

@@ -99,6 +99,8 @@
     - state: tech_flare
       color: "#40a7d7"
       shader: unshaded
+  - type: AddAntagRole
+    prototype: Holoparasite
 
 # From Wizard deck of cards
 - type: entity
@@ -117,3 +119,5 @@
     - state: magic_flare
       color: "#d14730"
       shader: unshaded
+  - type: AddAntagRole
+    prototype: Ifrit

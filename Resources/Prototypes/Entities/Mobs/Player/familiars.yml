@@ -73,3 +73,5 @@
   - type: Mind
     showExamineInfo: true
   - type: Familiar
+  - type: AddAntagRole
+    prototype: Cerebus

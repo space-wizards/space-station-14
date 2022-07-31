@@ -112,6 +112,9 @@
     - Plague
   - type: MobPrice
     price: 2500 # rat wealth
+  - type: Mind
+  - type: AddAntagRole
+    prototype: RatKing
 
 - type: entity
   name: Rat Servant
@@ -212,3 +215,7 @@
     price: 500 # rat wealth
   - type: MobsterAccent
     isBoss: false
+  - type: Mind
+  - type: AddAntagRole
+    prototype: RatServant
+
