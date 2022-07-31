@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Mice can no longer escape inventory while they are dead, stunned, or
-      similar. The invincible mouse revenant that could break men''s hands even after
-      death is no more.', type: Fix}
-  id: 1563
-  time: '2022-05-19T15:29:03.0000000+00:00'
 - author: ike709
   changes:
   - {message: Fixed disabling OOC not disabling the Discord relay, type: Fix}
@@ -2930,3 +2923,8 @@ Entries:
     type: Tweak}
   id: 2062
   time: '2022-07-31T03:41:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Proto-kinetic accelerators take slightly less time to recharge., type: Tweak}
+  id: 2063
+  time: '2022-07-31T03:43:45.0000000+00:00'
