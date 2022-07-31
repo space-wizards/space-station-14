@@ -1,9 +1,4 @@
 Entries:
-- author: abregado
-  changes:
-  - {message: telepads will no longer collide when anchored, type: Fix}
-  id: 1562
-  time: '2022-05-19T10:08:20.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Mice can no longer escape inventory while they are dead, stunned, or
@@ -2929,3 +2924,9 @@ Entries:
       materials., type: Add}
   id: 2061
   time: '2022-07-31T03:35:11.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Disarm math now takes into account mass, damage, and stamina damage.',
+    type: Tweak}
+  id: 2062
+  time: '2022-07-31T03:41:30.0000000+00:00'
