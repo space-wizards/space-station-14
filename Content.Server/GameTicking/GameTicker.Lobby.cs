@@ -67,7 +67,7 @@ namespace Content.Server.GameTicking
         private TickerLobbyStatusEvent GetStatusMsg(IPlayerSession session)
         {
             _playersInLobby.TryGetValue(session, out var status);
-            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, Paused);
+            return new TickerLobbyStatusEvent(RunLevel != GameRunLevel.PreRoundLobby, LobbySong, LobbyBackground,status == LobbyPlayerStatus.Ready, _roundStartTime, _roundStartTimeSpan, Paused);
         }
 
         private void SendStatusToAll()
