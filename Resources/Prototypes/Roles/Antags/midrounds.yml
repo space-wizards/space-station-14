@@ -34,8 +34,8 @@
   objective: "Serve your syndicate master and help them accomplish their goals."
 
 - type: antag
-  id: Cerebus
-  name: "Cerebus"
+  id: Cerberus
+  name: "Cerberus"
   antagonist: true
   setPreference: false
   objective: "Do the unholy bidding of your owner."
