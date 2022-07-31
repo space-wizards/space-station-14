@@ -1,9 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: Fixed disabling OOC not disabling the Discord relay, type: Fix}
-  id: 1564
-  time: '2022-05-20T03:18:28.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'Thanks to an enslaved magical schism, lobby music track x-ceed - flip-flap
@@ -2928,3 +2923,10 @@ Entries:
   - {message: Proto-kinetic accelerators take slightly less time to recharge., type: Tweak}
   id: 2063
   time: '2022-07-31T03:43:45.0000000+00:00'
+- author: Level10Cybermancer
+  changes:
+  - {message: Thieving gloves now actually hide the stripping notification., type: Fix}
+  - {message: Thieving gloves now get the same benefits when placing items as they
+      do when taking them., type: Tweak}
+  id: 2064
+  time: '2022-07-31T06:02:28.0000000+00:00'
