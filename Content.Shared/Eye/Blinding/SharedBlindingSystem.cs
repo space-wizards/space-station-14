@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
@@ -16,10 +17,10 @@ namespace Content.Shared.Eye.Blinding
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
         {
-            if (!TryComp<SharedItemComponent>(uid, out var clothing) || clothing.SlotFlags == SlotFlags.PREVENTEQUIP) // we live in a society
+            if (!TryComp<SharedClothingComponent>(uid, out var clothing) || clothing.Slots == SlotFlags.PREVENTEQUIP) // we live in a society
                 return;
             // Is the clothing in its actual slot?
-            if (!clothing.SlotFlags.HasFlag(args.SlotFlags))
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
                 return;
 
             component.IsActive = true;

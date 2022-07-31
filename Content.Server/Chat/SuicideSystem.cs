@@ -82,7 +82,7 @@ namespace Content.Server.Chat
                     return;
             }
 
-            var itemQuery = GetEntityQuery<SharedItemComponent>();
+            var itemQuery = GetEntityQuery<ItemComponent>();
 
             // Suicide by nearby entity (ex: Microwave)
             foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))

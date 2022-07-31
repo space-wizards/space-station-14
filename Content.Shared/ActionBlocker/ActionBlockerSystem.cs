@@ -97,9 +97,9 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanThrow(EntityUid user)
+        public bool CanThrow(EntityUid user, EntityUid itemUid)
         {
-            var ev = new ThrowAttemptEvent(user);
+            var ev = new ThrowAttemptEvent(user, itemUid);
             RaiseLocalEvent(user, ev, true);
 
             return !ev.Cancelled;
@@ -181,8 +181,10 @@ namespace Content.Shared.ActionBlocker
 
         private void InteractWithItem(EntityUid user, EntityUid item)
         {
-            var itemEvent = new UserInteractedWithItemEvent(user, item);
-            RaiseLocalEvent(user, itemEvent);
+            var userEvent = new UserInteractedWithItemEvent(user, item);
+            RaiseLocalEvent(user, userEvent);
+            var itemEvent = new ItemInteractedWithEvent(user, item);
+            RaiseLocalEvent(item, itemEvent);
         }
     }
 }

@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Items.Components;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Item;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Content.Shared.Storage.SharedStorageComponent;

@@ -7,11 +7,13 @@
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     sprite: Clothing/Back/Duffels/duffel.rsi
     size: 9999
+  - type: Clothing
+    sprite: Clothing/Back/Duffels/duffel.rsi
     quickEquip: false
-    Slots:
+    slots:
     - back
   - type: Storage
     capacity: 120
@@ -66,6 +68,7 @@
     sprite: Clothing/Back/Duffels/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Duffels/clown.rsi
+  - type: Storage
     storageOpenSound:
       collection: BikeHorn
 
@@ -102,9 +105,9 @@
   - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
     storageOpenSound:
-      collection: null    
+      collection: null
     storageInsertSound:
-      collection: null      
+      collection: null
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -140,7 +143,7 @@
     state: icon-ammo
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: ammo
+    heldPrefix: ammo
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -152,7 +155,7 @@
     state: icon-med
   - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
-    HeldPrefix: med
+    heldPrefix: med
 
 - type: entity
   parent: ClothingBackpackDuffel

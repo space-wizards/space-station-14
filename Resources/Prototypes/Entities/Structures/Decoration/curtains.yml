@@ -22,6 +22,8 @@
       layer:
       - Opaque
   - type: Door
+    canCrush: false
+    performCollisionCheck: false
     bumpOpen: false
     clickOpen: true
     closeTimeOne: 0.1

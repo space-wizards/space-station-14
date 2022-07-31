@@ -63,6 +63,7 @@
       startingItem: PowerCellHigh
   - type: HandheldLight
     addPrefix: false
+  - type: ToggleableLightVisuals
     inhandVisuals:
       left:
       - state: inhand-left-light
