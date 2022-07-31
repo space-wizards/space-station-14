@@ -47,7 +47,7 @@ reagent-name-leporazine = leporazine
 reagent-desc-leporazine = This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
 
 reagent-name-barozine = barozine
-reagent-desc-barozine = A somewhat toxic medicine that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
+reagent-desc-barozine = A potent drug that prevents pressure damage. Causes extreme pain and jittering. Very poisonous when overdosed.
 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = Used in the treatment of cancer. Causes moderate radiation poisoning.
