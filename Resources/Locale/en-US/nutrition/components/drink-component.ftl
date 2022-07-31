@@ -15,9 +15,9 @@ drink-component-try-use-drink-had-enough = You can't drink more!
 drink-component-try-use-drink-cannot-drink-other = They can't drink anything!
 drink-component-try-use-drink-had-enough-other = They can't drink more!
 drink-component-try-use-drink-success-slurp = Slurp
-drink-component-force-feed = {$user} is trying to make you drink something!
-drink-component-force-feed-success = {$user} forced you to drink something!
-drink-component-force-feed-success-user = You successfully feed {$target}
+drink-component-force-feed = {CAPITALIZE(THE($user))} is trying to make you drink something!
+drink-component-force-feed-success = {CAPITALIZE(THE($user))} forced you to drink something!
+drink-component-force-feed-success-user = You successfully feed {THE($target)}
 
 
 drink-system-verb-drink = Drink
