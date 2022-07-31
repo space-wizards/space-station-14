@@ -53,7 +53,7 @@ namespace Content.Client.Atmos.Monitor
                             sprite.LayerSetState(setStateLayer, new RSI.StateId(state));
             }
 
-            if (component.TryGetData<Vector2>("offset", out Vector2 offset))
+            if (component.TryGetData<Vector2i>("offset", out Vector2i offset))
             {
                 sprite.Offset = offset;
             }
