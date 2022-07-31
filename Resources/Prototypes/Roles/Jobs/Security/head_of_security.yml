@@ -30,6 +30,7 @@
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS
     id: HoSPDA
+    gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
     belt: ClothingBeltSecurityFilled
   innerclothingskirt: ClothingUniformJumpskirtHoS
