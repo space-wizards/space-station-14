@@ -132,7 +132,7 @@
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
-      path: /Audio/Ambience/Items/bikehorn.ogg
+      path: /Audio/Items/bikehorn.ogg
 
 - type: entity
   parent: MobSiliconBase
