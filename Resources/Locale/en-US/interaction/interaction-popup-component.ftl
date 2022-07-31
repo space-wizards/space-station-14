@@ -35,9 +35,9 @@ petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you d
 
 ## Petting silicons
 
-petting-success-honkbot = You pet {THE{$target}} on {POSS-ADJ($target)} slippery metal head.
-petting-success-cleanbot = You pet {THE{$target}} on {POSS-ADJ($target)} damp metal head.
-petting-success-medibot = You pet {THE{$target}} on {POSS-ADJ($target)} sterile metal head.
+petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery metal head.
+petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
+petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
 
 petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} honks in refusal!
 petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
