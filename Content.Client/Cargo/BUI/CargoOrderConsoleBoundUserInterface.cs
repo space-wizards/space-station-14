@@ -69,6 +69,9 @@ namespace Content.Client.Cargo.BUI
                 if (args.Button.Parent is not CargoProductRow row)
                     return;
                 _product = row.Product;
+                _orderMenu.ProductName.Text = _product.Name;
+                _orderMenu.Description.Text = _product.Description;
+                _orderMenu.PointCost.Text = string._product.PointCost;
                 _orderMenu.Requester.Text = orderRequester;
                 _orderMenu.Reason.Text = "";
                 _orderMenu.Amount.Value = 1;

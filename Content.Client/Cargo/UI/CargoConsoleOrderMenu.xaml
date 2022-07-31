@@ -2,6 +2,15 @@
             Title="{Loc 'cargo-console-order-menu-title'}">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
+            <Label Text="Product" />
+            <Label Name="ProductName"
+                      Access="Public" />
+            <Label Text="Description" />
+            <Label Name="Description"
+                      Access="Public" />
+            <Label Text="Cost" />
+            <Label Name="PointCost"
+                      Access="Public" />
             <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
             <LineEdit Name="Requester"
                       Access="Public" />
