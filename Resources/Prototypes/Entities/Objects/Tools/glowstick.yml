@@ -32,8 +32,7 @@
           color: "#00FF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#00FF00"
-      HeldPrefix: off
+      heldPrefix: off
     - type: Appearance
       visuals:
         - type: ExpendableLightVisualizer
@@ -94,8 +93,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF0000"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -130,8 +128,7 @@
           color: "#FF00FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF00FF"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF00FF"
@@ -166,8 +163,7 @@
           color: "#FFFF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FFFF00"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FFFF00"
@@ -202,8 +198,7 @@
           color: "#0000FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#0000FF"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#0000FF"
@@ -227,7 +222,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -257,7 +252,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -288,7 +283,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -327,7 +322,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -357,7 +352,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -388,7 +383,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"

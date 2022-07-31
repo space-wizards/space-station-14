@@ -240,6 +240,7 @@
       components:
         - Hypospray
         - Radio
+        - Injector
   - type: ItemMapper
     mapLayers:
       bottle:

@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 

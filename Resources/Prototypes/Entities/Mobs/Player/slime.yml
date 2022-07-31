@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  parent: MobSlimePersonBase
+  parent: BaseMobSlimePerson
   id: MobSlimePerson
   components:
     - type: CombatMode
