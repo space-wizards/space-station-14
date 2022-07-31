@@ -1,4 +1,3 @@
-using Content.Shared.Movement;
 using Content.Server.DoAfter;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
@@ -8,6 +7,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Server.Resist;
 
@@ -26,6 +26,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         SubscribeLocalEvent<CanEscapeInventoryComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterComplete>(OnEscapeComplete);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeDoAfterCancel>(OnEscapeFail);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
     }
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
@@ -76,6 +77,12 @@ public sealed class EscapeInventorySystem : EntitySystem
     private void OnEscapeFail(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterCancel ev)
     {
         component.CancelToken = null;
+    }
+
+    private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
+    {
+        if (component.CancelToken != null)
+            component.CancelToken.Cancel();
     }
 
     private sealed class EscapeDoAfterComplete : EntityEventArgs { }
