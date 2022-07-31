@@ -160,6 +160,47 @@ public sealed class MarkingSet
         }
     }
 
+    public void EnsureDefault(Color? skinColor = null, MarkingManager? markingManager = null)
+    {
+        IoCManager.Resolve(ref markingManager);
+
+        foreach (var (category, points) in _points)
+        {
+            if (points.Points <= 0)
+            {
+                continue;
+            }
+
+            var index = 0;
+            while (points.Points > 0 || index < points.DefaultMarkings.Count)
+            {
+                if (markingManager.Markings().TryGetValue(points.DefaultMarkings[index], out var prototype))
+                {
+                    Marking marking;
+                    if (skinColor == null)
+                    {
+                        marking = new Marking(points.DefaultMarkings[index], prototype.Sprites.Count);
+                    }
+                    else
+                    {
+                        var colors = new List<Color>();
+
+                        for (var i = 0; i < prototype.Sprites.Count; i++)
+                        {
+                            colors.Add(skinColor);
+                        }
+
+                        marking = new Marking(points.DefaultMarkings[index], colors);
+                    }
+
+                    AddBack(category, marking);
+                }
+
+                index++;
+            }
+        }
+    }
+
     /// <summary>
     ///     Add a marking to the front of the category's list of markings.
     /// </summary>
