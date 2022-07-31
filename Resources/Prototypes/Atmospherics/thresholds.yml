@@ -29,3 +29,8 @@
 - type: alarmThreshold
   id: danger # just any gas you don't want at all
   upperBound: 0.0001
+
+- type: alarmThreshold
+  id: stationNitrousOxide
+  upperBound: 0.0025
+  upperWarnAround: 0.5 # taken from stationCO2
