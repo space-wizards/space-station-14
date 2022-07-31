@@ -101,9 +101,12 @@ namespace Content.Server.AI.Steering
             if (!_enabled)
                 return;
 
+            // Not every mob has the modifier component so do it as a separate query.
+            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
+
             foreach (var (steering, _, mover, xform) in EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>())
             {
-                Steer(steering, mover, xform, frameTime);
+                Steer(steering, mover, xform, modifierQuery, frameTime);
             }
         }
 
@@ -117,8 +120,15 @@ namespace Content.Server.AI.Steering
         /// <summary>
         /// Go through each steerer and combine their vectors
         /// </summary>
-        private void Steer(NPCSteeringComponent steering, InputMoverComponent mover, TransformComponent xform, float frameTime)
+        private void Steer(
+            NPCSteeringComponent steering,
+            InputMoverComponent mover,
+            TransformComponent xform,
+            EntityQuery<MovementSpeedModifierComponent> modifierQuery,
+            float frameTime)
         {
+            // Can't move at all, just noop input.
+            // TODO: Space movement
             if (!mover.CanMove ||
                 xform.GridUid == null)
             {
@@ -155,9 +165,7 @@ namespace Content.Server.AI.Steering
                 }
             }
 
-            // Although we may want to re-use our last vector2 input we don't want to overshoot our destination.
-            // so make sure to handle that sloth
-
+            // Grab the target position, either the path or our end goal.
             EntityCoordinates targetCoordinates;
 
             // Keep following the path.
@@ -168,15 +176,31 @@ namespace Content.Server.AI.Steering
             else
             {
                 // TODO: Some situations we may not want to move at our target without a path.
-                // e.g. if the pathfinding is gonna take ages might want to wait for the first one.
+                // e.g. if the pathfinding is gonna take ages might want to wait for the first one, or something like a mule.
                 targetCoordinates = steering.Coordinates;
             }
 
             // Early return if we don't want to follow path here
 
-            var moveSpeed = 0f;
-            // Check if we're going to overshoot our target; if we are then cap our speed.
-            // This is to avoid the wigglies :lizdancegreen:
+            // Check if mapids match.
+            var ourCoordinates = xform.Coordinates;
+
+            var targetMap = targetCoordinates.ToMap(EntityManager);
+            var ourMap = ourCoordinates.ToMap(EntityManager);
+
+            if (targetMap.MapId != ourMap.MapId)
+            {
+                // TODO: Abort
+                SetDirection(mover, Vector2.Zero);
+                return;
+            }
+
+            modifierQuery.TryGetComponent(steering.Owner, out var modifier);
+            var moveSpeed = GetSprintSpeed(modifier);
+
+            var direction = targetMap.Position - ourMap.Position;
+
+            SetDirection(mover, direction);
 
             // todo: Need a console command to make an NPC steer to a specific spot.
 
@@ -217,6 +241,16 @@ namespace Content.Server.AI.Steering
                 endTile,
                 component.PathfindingProximity
             ), component.PathfindToken.Token);
+        }
+
+        private float GetSprintSpeed(MovementSpeedModifierComponent? modifier)
+        {
+            return modifier?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+        }
+
+        private float GetWalkSpeed(MovementSpeedModifierComponent? modifier)
+        {
+            return modifier?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
         }
 
         #region Steering
