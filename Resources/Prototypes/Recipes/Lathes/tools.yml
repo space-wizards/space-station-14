@@ -152,7 +152,9 @@
 
 - type: latheRecipe
   id: HolofanProjector
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
+  icon: 
+    sprite: Objects/Devices/Holoprojectors/atmos.rsi
+    state: icon
   result: HolofanProjector
   completetime: 8
   materials: # Inherited materials and time from PowerCellMedium recipe
