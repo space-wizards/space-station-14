@@ -26,7 +26,7 @@ namespace Content.Client.Lathe.UI
         public Button ServerConnectButton;
         public Button ServerSyncButton;
 
-        public const float RecipieTooltipDelay = 0.5f;
+        public const float RecipeTooltipDelay = 0.5f;
 
         public LatheBoundUserInterface Owner { get; }
 
@@ -121,7 +121,7 @@ namespace Content.Client.Lathe.UI
                 ev.ItemList.HideTooltip();
                 ev.ItemList.ToolTip = ev.ItemList[ev.ItemIndex].TooltipText;
             };
-            _items.TooltipDelay = RecipieTooltipDelay;
+            _items.TooltipDelay = RecipeTooltipDelay;
 
             _items.OnItemSelected += ItemSelected;
 
