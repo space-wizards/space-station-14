@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added the water tank and fuel tank back to cargo ordering. It's expensive
-      so use as a last resort., type: Add}
-  id: 1566
-  time: '2022-05-20T20:18:54.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: The rod beckons., type: Add}
@@ -2929,3 +2923,8 @@ Entries:
   - {message: You can now drink out of mop buckets and the janitor trolley, type: Tweak}
   id: 2065
   time: '2022-07-31T08:09:12.0000000+00:00'
+- author: Anthemic
+  changes:
+  - {message: You can now pet bots., type: Add}
+  id: 2066
+  time: '2022-07-31T15:18:06.0000000+00:00'
