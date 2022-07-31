@@ -191,4 +191,3 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
-      owner: job-name-captain
