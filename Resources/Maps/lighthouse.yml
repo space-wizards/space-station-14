@@ -851,7 +851,7 @@ entities:
 - uid: 100
   components:
   - pos: 0.4558292,0.42837813
-    parent: null
+    parent: 579
     type: Transform
   - index: 0
     type: MapGrid
@@ -3370,63 +3370,63 @@ entities:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -24,58
-        2349:
+        2327:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,32
-        2350:
+        2328:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,33
-        2351:
+        2329:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,34
-        2352:
+        2330:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,35
-        2353:
+        2331:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,36
-        2354:
+        2332:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,37
-        2355:
+        2333:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,38
-        2356:
+        2334:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,39
-        2357:
+        2335:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,40
-        2358:
+        2336:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,41
-        2359:
+        2337:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,42
-        2360:
+        2338:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,43
-        2361:
+        2339:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,44
-        2362:
+        2340:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,45
-        2363:
+        2341:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale270
           coordinates: -4,46
@@ -6333,11 +6333,11 @@ entities:
           color: '#8932B8FF'
           id: largebrush
           coordinates: -22,11
-        2347:
+        2325:
           color: '#52B4E996'
           id: HalfTileOverlayGreyscale
           coordinates: -5,31
-        2348:
+        2326:
           color: '#52B4E996'
           id: QuarterTileOverlayGreyscale
           coordinates: -4,31
@@ -6922,255 +6922,255 @@ entities:
           color: '#A46106FF'
           id: Remains
           coordinates: 23,-30
-        2240:
+        2224:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-11
-        2241:
+        2225:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-11
-        2243:
+        2227:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-9
-        2244:
+        2228:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-9
-        2246:
+        2230:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-7
-        2247:
+        2231:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-7
-        2273:
+        2257:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-17
-        2274:
+        2258:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-17
-        2275:
+        2259:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-16
-        2276:
+        2260:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-16
-        2277:
+        2261:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 2,-16
-        2278:
+        2262:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 3,-16
-        2279:
+        2263:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 3,-15
-        2280:
+        2264:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 2,-17
-        2281:
+        2265:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 3,-17
-        2282:
+        2266:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-17
-        2283:
+        2267:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-16
-        2284:
+        2268:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-16
-        2285:
+        2269:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-15
-        2286:
+        2270:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-14
-        2287:
+        2271:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-14
-        2288:
+        2272:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-13
-        2289:
+        2273:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-13
-        2290:
+        2274:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-12
-        2291:
+        2275:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-11
-        2292:
+        2276:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-11
-        2293:
+        2277:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-10
-        2294:
+        2278:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-9
-        2295:
+        2279:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-9
-        2296:
+        2280:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-8
-        2297:
+        2281:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 5,-7
-        2298:
+        2282:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 4,-7
-        2299:
+        2283:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 6,-13
-        2300:
+        2284:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 6,-11
-        2301:
+        2285:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-11
-        2302:
+        2286:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-9
-        2303:
+        2287:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 6,-9
-        2304:
+        2288:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-10
-        2305:
+        2289:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-11
-        2306:
+        2290:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-10
-        2307:
+        2291:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-9
-        2308:
+        2292:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-12
-        2309:
+        2293:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-13
-        2310:
+        2294:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-14
-        2311:
+        2295:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 8,-14
-        2312:
+        2296:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 8,-13
-        2313:
+        2297:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-13
-        2314:
+        2298:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-14
-        2315:
+        2299:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-15
-        2316:
+        2300:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-16
-        2317:
+        2301:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-17
-        2318:
+        2302:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 8,-17
-        2319:
+        2303:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-17
-        2320:
+        2304:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 9,-18
-        2321:
+        2305:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 8,-18
-        2322:
+        2306:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 7,-18
-        2323:
+        2307:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 6,-18
-        2324:
+        2308:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 3,-18
-        2333:
+        2317:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-19
-        2334:
+        2318:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-19
-        2335:
+        2319:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-20
-        2337:
+        2321:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 0,-13
-        2338:
+        2322:
           color: '#0C00FFFF'
           id: Rust
           coordinates: 1,-13
@@ -8035,151 +8035,151 @@ entities:
           color: '#D3BC37C8'
           id: Flowersbr1
           coordinates: -1,-4
-        2239:
+        2223:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-11
-        2242:
+        2226:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-9
-        2245:
+        2229:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-7
-        2248:
+        2232:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-7
-        2249:
+        2233:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-7
-        2250:
+        2234:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-8
-        2251:
+        2235:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-9
-        2252:
+        2236:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-9
-        2253:
+        2237:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-10
-        2254:
+        2238:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-11
-        2255:
+        2239:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-11
-        2256:
+        2240:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-12
-        2257:
+        2241:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-13
-        2258:
+        2242:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-13
-        2259:
+        2243:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-14
-        2260:
+        2244:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-14
-        2261:
+        2245:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -3,-15
-        2262:
+        2246:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-15
-        2263:
+        2247:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-16
-        2264:
+        2248:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-16
-        2265:
+        2249:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-17
-        2266:
+        2250:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-17
-        2267:
+        2251:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -3,-17
-        2268:
+        2252:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -3,-16
-        2269:
+        2253:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -2,-16
-        2270:
+        2254:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-16
-        2271:
+        2255:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -2,-17
-        2272:
+        2256:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-17
-        2325:
+        2309:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-18
-        2326:
+        2310:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-19
-        2327:
+        2311:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -5,-20
-        2328:
+        2312:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-20
-        2329:
+        2313:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -4,-19
-        2330:
+        2314:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -3,-19
-        2331:
+        2315:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -2,-19
-        2332:
+        2316:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-19
-        2336:
+        2320:
           color: '#0C00FFFF'
           id: Rust
           coordinates: -1,-13
@@ -9917,13 +9917,13 @@ entities:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: 4,13
-        2346:
-          color: '#9FDF98BA'
-          id: Flowersbr2
-          coordinates: 0,4
-        2345:
+        2323:
           color: '#9FDF98BA'
           id: Flowersy1
+          coordinates: 0,4
+        2324:
+          color: '#9FDF98BA'
+          id: Flowersbr2
           coordinates: 0,4
       0,-2:
         814:
@@ -14078,7 +14078,7 @@ entities:
       -27,26: 0
       -27,27: 0
       -27,28: 0
-      -27,29: 0
+      -27,29: 2
       -27,30: 0
       -27,31: 1
       -26,22: 0
@@ -19389,7 +19389,7 @@ entities:
       -10,-49: 0
       -9,-50: 0
       -8,-54: 0
-      -8,-53: 2
+      -8,-53: 3
       -8,-52: 0
       -8,-51: 0
       -8,-50: 0
@@ -20149,18 +20149,18 @@ entities:
       -10,-55: 0
       -10,-54: 0
       -9,-58: 0
-      -9,-57: 3
+      -9,-57: 4
       -9,-56: 0
-      -9,-55: 4
+      -9,-55: 5
       -9,-54: 0
       -8,-58: 0
-      -8,-57: 3
+      -8,-57: 4
       -8,-56: 0
-      -8,-55: 4
+      -8,-55: 5
       -7,-58: 0
-      -7,-57: 3
+      -7,-57: 4
       -7,-56: 0
-      -7,-55: 4
+      -7,-55: 5
       -79,27: 0
       -78,26: 0
       -78,27: 0
@@ -20334,7 +20334,7 @@ entities:
       -26,-59: 0
       -26,-58: 0
       -26,-57: 0
-      -25,-57: 5
+      -25,-57: 6
       -55,-58: 0
       -55,-55: 0
       -54,-58: 0
@@ -21470,8 +21470,8 @@ entities:
       -9,-62: 0
       -9,-61: 0
       -9,-60: 0
-      -9,-59: 5
-      -9,-53: 2
+      -9,-59: 6
+      -9,-53: 3
       -9,-52: 0
       -9,-51: 0
       -8,-64: 0
@@ -21479,15 +21479,15 @@ entities:
       -8,-62: 0
       -8,-61: 0
       -8,-60: 0
-      -8,-59: 5
+      -8,-59: 6
       -7,-64: 0
       -7,-63: 0
       -7,-62: 0
       -7,-61: 0
       -7,-60: 0
-      -7,-59: 5
+      -7,-59: 6
       -7,-54: 0
-      -7,-53: 2
+      -7,-53: 3
       -7,-52: 0
       -6,-64: 0
       -6,-63: 0
@@ -21971,7 +21971,7 @@ entities:
       -24,-60: 0
       -24,-59: 0
       -24,-58: 0
-      -24,-57: 5
+      -24,-57: 6
       -24,-56: 0
       -24,-55: 0
       -24,-54: 0
@@ -23081,6 +23081,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 235
       moles:
@@ -23092,6 +23096,25 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 278.6125
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
@@ -23103,6 +23126,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
@@ -23114,6 +23141,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
@@ -23125,9 +23156,17 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -24801,6 +24840,8 @@ entities:
   - pos: 7.453216,-14.38957
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -26268,10 +26309,14 @@ entities:
   - pos: 4.5607066,11.863041
     parent: 100
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 576
@@ -26293,16 +26338,9 @@ entities:
     parent: 100
     type: Transform
 - uid: 579
-  type: Crematorium
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-18.5
-    parent: 100
-    type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-    type: ContainerContainer
+  - index: 2
+    type: Map
 - uid: 580
   type: WallSolid
   components:
@@ -26662,6 +26700,8 @@ entities:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
     type: ContainerContainer
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 637
@@ -27857,6 +27897,8 @@ entities:
   - pos: 11.523961,22.692068
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -29750,6 +29792,8 @@ entities:
     pos: -22.5,10.5
     parent: 100
     type: Transform
+  - solution: bucket
+    type: Drink
   - containers:
       storagebase: !type:Container
         ents: []
@@ -35195,6 +35239,8 @@ entities:
   - pos: 4.3253145,45.71848
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -35215,6 +35261,8 @@ entities:
   - pos: 7.348416,45.734104
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -35235,6 +35283,8 @@ entities:
   - pos: 10.4253235,45.702854
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -38005,6 +38055,8 @@ entities:
   - pos: 6.8861504,49.87903
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -38551,6 +38603,8 @@ entities:
   - pos: 22.03108,6.751455
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -42026,6 +42080,8 @@ entities:
   - pos: -49.484993,65.78671
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -44308,6 +44364,8 @@ entities:
   - pos: -41.30823,-2.246941
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -44886,6 +44944,8 @@ entities:
   - pos: -45.374428,-5.3072186
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -47376,6 +47436,8 @@ entities:
   - pos: -14.557608,-2.168923
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -51629,6 +51691,8 @@ entities:
   - pos: -54.438118,65.81796
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -52553,6 +52617,8 @@ entities:
   - pos: -31.383335,65.840416
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -52565,6 +52631,8 @@ entities:
   - pos: -36.41111,65.88729
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -52577,6 +52645,8 @@ entities:
   - pos: -40.45204,65.88729
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -53059,6 +53129,8 @@ entities:
   - pos: -19.376627,69.86922
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -54510,10 +54582,10 @@ entities:
     parent: 100
     type: Transform
   - ringtone:
+    - C
+    - D
     - A
-    - C
-    - C
-    - G
+    - A
     type: Ringer
   - canCollide: False
     type: Physics
@@ -67277,6 +67349,8 @@ entities:
   - pos: -25.487497,49.678818
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -67289,6 +67363,8 @@ entities:
   - pos: -29.534672,47.851162
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
       cell_slot: !type:ContainerSlot {}
@@ -97224,6 +97300,8 @@ entities:
   - pos: 19.165197,-44.539654
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
   - containers:
@@ -108086,6 +108164,8 @@ entities:
   - pos: 17.38112,29.735542
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -123800,6 +123880,16 @@ entities:
     type: Occluder
   - canCollide: False
     type: Physics
+- uid: 13606
+  type: Crematorium
+  components:
+  - pos: 4.5,-18.5
+    parent: 100
+    type: Transform
+  - containers:
+      entity_storage: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 13621
   type: WallReinforced
   components:
@@ -130566,6 +130656,8 @@ entities:
   - pos: -8.543983,-39.179214
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 14652
@@ -142260,10 +142352,14 @@ entities:
   - pos: 15.507856,53.48512
     parent: 100
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 16180
@@ -142272,10 +142368,14 @@ entities:
   - pos: 15.507856,53.57887
     parent: 100
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 16181
@@ -142310,10 +142410,14 @@ entities:
   - pos: 15.507856,53.64137
     parent: 100
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 16185
@@ -144404,6 +144508,8 @@ entities:
   - pos: -52.925507,55.91718
     parent: 100
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 16467
