@@ -187,7 +187,7 @@ public sealed class MarkingSet
 
                         for (var i = 0; i < prototype.Sprites.Count; i++)
                         {
-                            colors.Add(skinColor);
+                            colors.Add(skinColor.Value);
                         }
 
                         marking = new Marking(points.DefaultMarkings[index], colors);
