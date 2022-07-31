@@ -9,3 +9,5 @@ comp-containment-disconnected = The containment field generator light fades away
 
 comp-containment-anchor-warning = You cannot unanchor the containment field generator while it's on or connected!
 comp-containment-toggle-warning = You cannot turn the generator off while it's connected.
+
+comp-field-vaporized = The {$entity} hits the field and vaporizes into nothing!

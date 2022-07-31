@@ -20,7 +20,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -48,7 +47,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             if (generator.Accumulator >= generator.Threshold)
             {
                 LosePower(generator.PowerLoss, generator);
-                generator.Accumulator = 0f;
+                generator.Accumulator -= generator.Threshold;
             }
         }
     }
@@ -163,7 +162,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     #region Connections
 
-        /// <summary>
+    /// <summary>
     /// Stores power in the generator. If it hits the threshold, it tries to establish a connection.
     /// </summary>
     /// <param name="power">The power that this generator received from the collision in <see cref="HandleGeneratorCollide"/></param>
@@ -171,16 +170,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         component.PowerBuffer += power;
 
+        var genXForm = Transform(component.Owner);
+
         if (component.PowerBuffer >= component.PowerMinimum)
         {
-            for (int i = 0; i < 8; i+=2)
+            var directions = Enum.GetValues<Direction>().Length;
+            for (int i = 0; i < directions-1; i+=2)
             {
                 var dir = (Direction)i;
 
                 if (component.Connections.ContainsKey(dir))
                     continue; // This direction already has an active connection
 
-                TryGenerateFieldConnection(dir, component);
+                TryGenerateFieldConnection(dir, component, genXForm);
             }
         }
 
@@ -206,31 +208,35 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <param name="dir">The field generator establishes a connection in this direction.</param>
     /// <param name="component">The field generator component</param>
     /// <returns></returns>
-    private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component)
+    private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component, TransformComponent genXForm)
     {
-        if (!component.Enabled) return false;
+        if (!component.Enabled)
+            return false;
 
-        var genXForm = Transform(component.Owner);
-        if (!genXForm.Anchored) return false;
+        if (!genXForm.Anchored)
+            return false;
 
-        var genCardinalDirAngle = genXForm.WorldRotation;
-        var dirRad = dir.ToAngle() + genCardinalDirAngle; //needs to be like this for the raycast to work properly
+        var genWorldPosRot = genXForm.GetWorldPositionRotation();
+        var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
-        var ray = new CollisionRay(genXForm.MapPosition.Position, dirRad.ToVec(), component.CollisionMask);
+        var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);
         var rayCastResults = _physics.IntersectRay(genXForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
+        var genQuery = GetEntityQuery<ContainmentFieldGeneratorComponent>();
 
-        if (!rayCastResults.Any()) return false;
+        if (!rayCastResults.Any())
+            return false;
 
         RayCastResults? closestResult = null;
 
         foreach (var result in rayCastResults)
         {
-            if (HasComp<ContainmentFieldGeneratorComponent>(result.HitEntity))
+            if (genQuery.HasComponent(result.HitEntity))
                 closestResult = result;
 
             break;
         }
-        if (closestResult == null) return false;
+        if (closestResult == null)
+            return false;
 
         var ent = closestResult.Value.HitEntity;
 

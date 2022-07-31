@@ -1,12 +1,14 @@
 using Content.Shared.Physics;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Singularity.Components;
 [RegisterComponent]
 [ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
 public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
 {
-    [ViewVariables]
     private int _powerBuffer;
 
     /// <summary>
@@ -67,7 +69,7 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// It really shouldn't be anything but an emitter bolt but it's here for fun.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("idTag")]
+    [DataField("idTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string IDTag = "EmitterBolt";
 
     /// <summary>
@@ -100,6 +102,6 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     /// What fields should this spawn?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("createdField")]
+    [DataField("createdField", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreatedField = "ContainmentField";
 }

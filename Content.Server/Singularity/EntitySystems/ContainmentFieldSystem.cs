@@ -1,15 +1,19 @@
-﻿using Content.Server.Singularity.Components;
+﻿using Content.Server.Popups;
+using Content.Server.Shuttles.Components;
+using Content.Server.Singularity.Components;
+using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public class ContainmentFieldSystem : EntitySystem
+public sealed class ContainmentFieldSystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -21,6 +25,12 @@ public class ContainmentFieldSystem : EntitySystem
     private void HandleFieldCollide(EntityUid uid, ContainmentFieldComponent component, StartCollideEvent args)
     {
         var otherBody = args.OtherFixture.Body.Owner;
+
+        if (TryComp<SpaceGarbageComponent>(otherBody, out var garbage))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
+            QueueDel(garbage.Owner);
+        }
 
         if (TryComp<PhysicsComponent>(otherBody, out var physics) && physics.Mass <= component.MaxMass && physics.Hard)
         {

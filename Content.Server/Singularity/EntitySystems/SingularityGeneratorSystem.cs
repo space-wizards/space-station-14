@@ -5,7 +5,7 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public class SingularityGeneratorSystem : EntitySystem
+public sealed class SingularityGeneratorSystem : EntitySystem
 {
     public override void Initialize()
     {
