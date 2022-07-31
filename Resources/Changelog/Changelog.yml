@@ -1,25 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Hard hat lights now function properly., type: Fix}
-  id: 1557
-  time: '2022-05-18T22:00:29.0000000+00:00'
-- author: abregado
-  changes:
-  - {message: allow players to configure the amount of material to add to a regular
-      bowl., type: Add}
-  - {message: kitchen crate comes with a kitchen knife in case there is no vending
-      machine in the kitchen., type: Tweak}
-  - {message: Kitchen crates from cargo now come with bowls instead of beakers., type: Tweak}
-  id: 1558
-  time: '2022-05-18T22:18:47.0000000+00:00'
-- author: magmodius
-  changes:
-  - {message: 'Due to reports of infighting over them, Nanotran has decided to prevent
-      future such events by supply cargo with a crate holding insulated gloves. It
-      is labelled "Electrical Supplies Crate," and costs 4500 points.', type: Add}
-  id: 1559
-  time: '2022-05-18T22:30:11.0000000+00:00'
 - author: moony
   changes:
   - {message: Secret gamemode added, type: Add}
@@ -2928,3 +2907,24 @@ Entries:
   - {message: Beware the monkey wizard., type: Add}
   id: 2056
   time: '2022-07-31T03:12:06.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: New Barozine overdose threshold is at 30 units (with same effects),
+    type: Tweak}
+  - {message: 'Space medipen now comes with 20 units of Barozine (and keeps it''s
+      10 units of Leporazine), giving you about extra 30 seconds to find spacesuit
+      of some kind, oxygen not included!', type: Tweak}
+  - {message: Poisoning and brute healing aspect of Barozine were replaced with very
+      minor burn damage, type: Tweak}
+  id: 2057
+  time: '2022-07-31T03:15:09.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: 'Added a new space ambience song, "Drifting" by qwerty', type: Add}
+  id: 2058
+  time: '2022-07-31T03:15:26.0000000+00:00'
+- author: UDaV73rus
+  changes:
+  - {message: Added robes for priest, type: Add}
+  id: 2059
+  time: '2022-07-31T03:16:14.0000000+00:00'
