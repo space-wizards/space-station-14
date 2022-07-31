@@ -67,7 +67,7 @@ namespace Content.Server.AI.Steering
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
-        public void Register(EntityUid entity, EntityCoordinates coordinates)
+        public NPCSteeringComponent Register(EntityUid entity, EntityCoordinates coordinates)
         {
             NPCSteeringComponent? comp;
 
@@ -84,15 +84,17 @@ namespace Content.Server.AI.Steering
             }
 
             comp.Coordinates = coordinates;
+            return comp;
         }
 
         /// <summary>
-        /// Stops the steering behavior for the AI and cleans up
+        /// Stops the steering behavior for the AI and cleans up.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <exception cref="InvalidOperationException"></exception>
-        public void Unregister(NPCSteeringComponent component)
+        public void Unregister(EntityUid uid, NPCSteeringComponent? component = null)
         {
+            if (!Resolve(uid, ref component, false))
+                return;
+
             if (EntityManager.TryGetComponent(component.Owner, out InputMoverComponent? controller))
             {
                 controller.CurTickSprintMovement = Vector2.Zero;
@@ -101,6 +103,7 @@ namespace Content.Server.AI.Steering
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
             component.Pathfind = null;
+            RemComp<NPCSteeringComponent>(uid);
         }
 
         public override void Update(float frameTime)
@@ -187,24 +190,14 @@ namespace Content.Server.AI.Steering
             }
 
             // Grab the target position, either the path or our end goal.
-            EntityCoordinates targetCoordinates;
+            // TODO: Some situations we may not want to move at our target without a path.
+            var targetCoordinates = GetTargetCoordinates(steering);
+            var arrivalDistance = TileTolerance;
 
-            // What's our tolerance for arrival.
-            // If it's a pathfinding node it might be different to the destination.
-            float arrivalDistance;
-
-            // Keep following the path.
-            if (steering.CurrentPath.TryPeek(out var nextTarget))
+            if (targetCoordinates.Equals(steering.Coordinates))
             {
-                // TODO: Tile size.
-                targetCoordinates = new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
-                arrivalDistance = TileTolerance;
-            }
-            else
-            {
-                // TODO: Some situations we may not want to move at our target without a path.
-                // e.g. if the pathfinding is gonna take ages might want to wait for the first one, or something like a mule.
-                targetCoordinates = steering.Coordinates;
+                // What's our tolerance for arrival.
+                // If it's a pathfinding node it might be different to the destination.
                 arrivalDistance = steering.Range;
             }
 
@@ -216,8 +209,8 @@ namespace Content.Server.AI.Steering
 
             if (targetMap.MapId != ourMap.MapId)
             {
-                // TODO: Abort
                 SetDirection(mover, Vector2.Zero);
+                steering.Status = SteeringStatus.NoPath;
                 return;
             }
 
@@ -233,16 +226,7 @@ namespace Content.Server.AI.Steering
 
                     // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
                     // TODO: If it's the last node just grab the target instead.
-                    // TODO: UP TO HERE
-                    if (steering.CurrentPath.TryPeek(out nextTarget))
-                    {
-                        targetCoordinates = new EntityCoordinates(nextTarget.GridUid, nextTarget.GridIndices);
-                    }
-                    else
-                    {
-                        targetCoordinates = steering.Coordinates;
-                    }
-
+                    targetCoordinates = GetTargetCoordinates(steering);
                     targetMap = targetCoordinates.ToMap(EntityManager);
 
                     // Can't make it again.
@@ -280,7 +264,7 @@ namespace Content.Server.AI.Steering
                 }
             }
 
-            // Reuest the new path.
+            // Request the new path.
             if (needsPath && bodyQuery.TryGetComponent(steering.Owner, out var body))
             {
                 RequestPath(steering, xform, body);
@@ -295,9 +279,19 @@ namespace Content.Server.AI.Steering
             // TODO: For tile / movement we don't need to get bang on, just need to make sure we don't overshoot the far end.
             var tickMovement = input * moveSpeed * frameTime;
 
-            if (tickMovement.Length > direction.Length)
+            if (tickMovement.Equals(Vector2.Zero))
             {
-                input *= direction.Length / tickMovement.Length;
+                SetDirection(mover, Vector2.Zero);
+                steering.Status = SteeringStatus.NoPath;
+                return;
+            }
+
+            // We may overshoot slightly but still be in the arrival distance which is okay.
+            var maxDistance = direction.Length + arrivalDistance;
+
+            if (tickMovement.Length > maxDistance)
+            {
+                input *= maxDistance / tickMovement.Length;
             }
 
             SetDirection(mover, input);
@@ -306,6 +300,23 @@ namespace Content.Server.AI.Steering
 
             // TODO: Actual steering behaviours and collision avoidance.
             // TODO: Need to handle path invalidation if nodes change.
+        }
+
+        /// <summary>
+        /// Get the coordinates we should be heading towards.
+        /// </summary>
+        private EntityCoordinates GetTargetCoordinates(NPCSteeringComponent steering)
+        {
+            // Depending on what's going on we may return the target or a pathfind node.
+
+            // If it's the last node then just head to the target.
+            if (steering.CurrentPath.Count > 1 && steering.CurrentPath.TryPeek(out var nextTarget))
+            {
+                // TODO: Tile size
+                return new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
+            }
+
+            return steering.Coordinates;
         }
 
         /// <summary>
