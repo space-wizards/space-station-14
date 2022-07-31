@@ -103,10 +103,11 @@
         volume: 70
         moles:
           - 20.5 # oxygen
+          - 0 # Nitrogen
           - 0 # CO2
           - 0 # Plasma
           - 0 # Tritium
-          - 0 #  Water vapor
+          - 0 # Water vapor
           - 0 # Miasma
           - 2 # N2O
         temperature: 293.15

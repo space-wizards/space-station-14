@@ -1,24 +1,23 @@
-using Content.Shared.Stunnable;
-using Content.Shared.MobState.Components;
+using Content.Server.Actions;
+using Content.Server.MobState;
+using Content.Server.Popups;
+using Content.Server.Sound.Components;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
-using Content.Server.Actions;
-using Content.Shared.Actions.ActionTypes;
-using Robust.Shared.Prototypes;
-using Content.Shared.Sound;
-using Robust.Shared.Timing;
-using Content.Shared.MobState;
-using Content.Server.MobState;
-using Content.Server.Sound.Components;
-using Content.Shared.Verbs;
-using Content.Shared.Interaction;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
-using Content.Shared.Audio;
-using Content.Server.Popups;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
+using Content.Shared.Stunnable;
+using Content.Shared.Verbs;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -57,11 +56,12 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<KnockedDownComponent>(uid);
 
                 var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
-                emitSound.Sound = new SoundCollectionSpecifier("Snores");
+
+                // TODO WTF is this, these should a data fields and not hard-coded. 
+                emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
                 emitSound.PlayChance = 0.33f;
                 emitSound.RollInterval = 5f;
                 emitSound.PopUp = "sleep-onomatopoeia";
-                emitSound.PitchVariation = 0.2f;
 
                 if (wakeAction != null)
                 {

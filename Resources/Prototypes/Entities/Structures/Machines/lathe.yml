@@ -386,6 +386,8 @@
   name: uniform printer
   description: Prints new or replacement uniforms.
   components:
+  - type: Transform
+    noRot: false
   - type: LatheDatabase
     static: true
     recipes:

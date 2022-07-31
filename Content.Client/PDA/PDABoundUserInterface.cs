@@ -20,7 +20,7 @@ namespace Content.Client.PDA
             base.Open();
             SendMessage(new PDARequestUpdateInterfaceMessage());
             _menu = new PDAMenu();
-            _menu.OpenToLeft();
+            _menu.OpenCenteredLeft();
             _menu.OnClose += Close;
             _menu.FlashLightToggleButton.OnToggled += _ =>
             {

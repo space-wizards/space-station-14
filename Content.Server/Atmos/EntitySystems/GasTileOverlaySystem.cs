@@ -149,7 +149,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (moles >= gas.GasMolesVisible)
                     {
                         opacity[i] = (byte) (ContentHelpers.RoundToLevels(
-                            MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255, byte.MaxValue, _thresholds) * 255 / (_thresholds - 1));
+                            MathHelper.Clamp01((moles - gas.GasMolesVisible) / (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue, _thresholds) * 255 / (_thresholds - 1));
                     }
                     i++;
                 }
@@ -262,7 +262,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // Not all grids have atmospheres.
                 if (!_overlay.TryGetValue(grid, out var gridData))
                     continue;
-                
+
                 List<GasOverlayChunk> dataToSend = new();
                 ev.UpdatedChunks[grid] = dataToSend;
 

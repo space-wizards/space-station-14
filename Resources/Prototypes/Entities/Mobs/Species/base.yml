@@ -32,6 +32,7 @@
       - !type:WashCreamPieReaction
   - type: Flashable
   - type: Polymorphable
+  - type: Identity
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
