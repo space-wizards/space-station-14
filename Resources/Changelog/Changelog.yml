@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Nukies are now playable., type: Fix}
-  id: 1556
-  time: '2022-05-18T21:48:00.0000000+00:00'
 - author: themias
   changes:
   - {message: Hard hat lights now function properly., type: Fix}
@@ -2928,3 +2923,8 @@ Entries:
       and actions UI, type: Fix}
   id: 2055
   time: '2022-07-31T03:02:12.0000000+00:00'
+- author: Pancake
+  changes:
+  - {message: Beware the monkey wizard., type: Add}
+  id: 2056
+  time: '2022-07-31T03:12:06.0000000+00:00'
