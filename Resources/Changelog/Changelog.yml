@@ -1,27 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: Ghosts now always have a consistent directional sprite while orbiting
-      an entity, type: Tweak}
-  id: 1553
-  time: '2022-05-18T07:22:09.0000000+00:00'
-- author: Daemon
-  changes:
-  - {message: Added wacky zany funny humorous dog mug reagent container, type: Add}
-  id: 1554
-  time: '2022-05-18T18:21:38.0000000+00:00'
-- author: TimrodDX
-  changes:
-  - {message: Delta Station's security department has been completely re-designed
-      based on a design from the original SS13 mapper!, type: Add}
-  - {message: Delta Station's cargo lobby has been temporarily redone based on a design
-      created in-round by a player! It will remain this way until the next major map
-      update., type: Add}
-  - {message: Delta Station's cargo computers start machine linked by default now.,
-    type: Tweak}
-  - {message: Delta's Station's atmos should be more stable than it was., type: Tweak}
-  id: 1555
-  time: '2022-05-18T18:23:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Nukies are now playable., type: Fix}
@@ -2934,3 +2911,20 @@ Entries:
   - {message: Added donut-vend., type: Add}
   id: 2052
   time: '2022-07-31T02:58:57.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Passive gates now equalize pressure instantly and come with a built-in
+      gas flow meter., type: Tweak}
+  id: 2053
+  time: '2022-07-31T03:00:35.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Added the syndicate reinforcement teleporter to the uplink., type: Add}
+  id: 2054
+  time: '2022-07-31T03:01:29.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed some some hardsuit helmet icons not showing up in the inventory
+      and actions UI, type: Fix}
+  id: 2055
+  time: '2022-07-31T03:02:12.0000000+00:00'
