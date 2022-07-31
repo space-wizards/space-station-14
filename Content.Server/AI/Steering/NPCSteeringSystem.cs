@@ -156,6 +156,30 @@ namespace Content.Server.AI.Steering
             }
 
             // Although we may want to re-use our last vector2 input we don't want to overshoot our destination.
+            // so make sure to handle that sloth
+
+            EntityCoordinates targetCoordinates;
+
+            // Keep following the path.
+            if (steering.CurrentPath.TryPeek(out var nextTarget))
+            {
+                targetCoordinates = new EntityCoordinates(nextTarget.GridUid, nextTarget.GridIndices);
+            }
+            else
+            {
+                // TODO: Some situations we may not want to move at our target without a path.
+                // e.g. if the pathfinding is gonna take ages might want to wait for the first one.
+                targetCoordinates = steering.Coordinates;
+            }
+
+            // Early return if we don't want to follow path here
+
+            var moveSpeed = 0f;
+            // Check if we're going to overshoot our target; if we are then cap our speed.
+            // This is to avoid the wigglies :lizdancegreen:
+
+            // todo: Need a console command to make an NPC steer to a specific spot.
+
             // TODO: Steering behaviours.
         }
 
