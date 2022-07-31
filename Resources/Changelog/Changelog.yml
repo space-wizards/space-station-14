@@ -1,14 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Secret gamemode added, type: Add}
-  id: 1560
-  time: '2022-05-19T04:44:24.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: Multiplied the amount of power used by laser guns., type: Tweak}
-  id: 1561
-  time: '2022-05-19T05:51:55.0000000+00:00'
 - author: abregado
   changes:
   - {message: telepads will no longer collide when anchored, type: Fix}
@@ -2928,3 +2918,14 @@ Entries:
   - {message: Added robes for priest, type: Add}
   id: 2059
   time: '2022-07-31T03:16:14.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Makeshift laser guns can no longer be constructed., type: Remove}
+  id: 2060
+  time: '2022-07-31T03:34:51.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Hovering over lathe recipes now shows a tooltip that lists the required
+      materials., type: Add}
+  id: 2061
+  time: '2022-07-31T03:35:11.0000000+00:00'
