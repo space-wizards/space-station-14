@@ -5,6 +5,7 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Storage.Components;
@@ -16,11 +17,13 @@ using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Content.Shared.Storage.Components;
@@ -40,6 +43,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DumpableSystem _dumpableSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -470,6 +474,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             if (!Resolve(unitId, ref unit))
                 return false;
+
+            if (!HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            {
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId), PopupType.SmallCaution);
+                return false;
+            }
 
             if (!CanInsert(unit, toInsertId))
                 return false;
