@@ -88,7 +88,6 @@ namespace Content.Client.Access.UI
             if (!fullNameDirty)
             {
                 FullNameLineEdit.Text = state.TargetIdFullName ?? string.Empty;
-                FullNameLineEdit.Text = FullNameLineEdit.Text.Substring(0, Math.Min(FullNameLineEdit.Text.Length, _maxLength));
             }
 
             FullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
@@ -98,7 +97,6 @@ namespace Content.Client.Access.UI
             if (!jobTitleDirty)
             {
                 JobTitleLineEdit.Text = state.TargetIdJobTitle ?? string.Empty;
-                JobTitleLineEdit.Text = JobTitleLineEdit.Text.Substring(0, Math.Min(JobTitleLineEdit.Text.Length, _maxLength));
             }
 
             JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
