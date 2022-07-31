@@ -91,11 +91,11 @@ public sealed class InternalsSystem : EntitySystem
         if (component.BreathToolEntity == null)
             return false;
 
-        if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-        {
-            _gasTank.DisconnectFromInternals(tank);
-        }
+        if (!TryComp(component.GasTankEntity, out GasTankComponent? tank))
+            return false;
 
+        _gasTank.DisconnectFromInternals(tank);
+        tank.User = component.Owner;
         component.GasTankEntity = tankEntity;
         _alerts.ShowAlert(component.Owner, AlertType.Internals, GetSeverity(component));
         return true;

@@ -197,8 +197,7 @@ namespace Content.Server.Atmos.EntitySystems
             var internals = GetInternalsComponent(component);
             if (internals == null) return;
 
-            if (_internals.TryConnectTank(internals, component.Owner))
-                component.User = internals.Owner;
+            _internals.TryConnectTank(internals, component.Owner);
 
             _actions.SetToggled(component.ToggleAction, component.IsConnected);
 
