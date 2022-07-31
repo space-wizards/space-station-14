@@ -141,6 +141,7 @@ namespace Content.Server.AI.Steering
             EntityQuery<PhysicsComponent> bodyQuery,
             float frameTime)
         {
+            var ourCoordinates = xform.Coordinates;
             var destinationCoordinates = steering.Coordinates;
 
             // We've arrived, nothing else matters.
@@ -175,6 +176,8 @@ namespace Content.Server.AI.Steering
 
                         if (steering.Pathfind.Result != null)
                         {
+                            PrunePath(ourCoordinates, steering.Pathfind.Result);
+
                             foreach (var node in steering.Pathfind.Result)
                             {
                                 steering.CurrentPath.Enqueue(node);
@@ -202,8 +205,6 @@ namespace Content.Server.AI.Steering
             }
 
             // Check if mapids match.
-            var ourCoordinates = xform.Coordinates;
-
             var targetMap = targetCoordinates.ToMap(EntityManager);
             var ourMap = ourCoordinates.ToMap(EntityManager);
 
@@ -255,7 +256,8 @@ namespace Content.Server.AI.Steering
             if (!needsPath)
             {
                 var lastNode = steering.CurrentPath.Last();
-                var lastCoordinate = new EntityCoordinates(lastNode.GridUid, lastNode.GridIndices);
+                // TODO: Tilesize
+                var lastCoordinate = new EntityCoordinates(lastNode.GridUid, (Vector2) lastNode.GridIndices + 0.5f);
 
                 if (lastCoordinate.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
                     lastDistance > steering.RepathRange)
@@ -277,9 +279,9 @@ namespace Content.Server.AI.Steering
 
             // If we're going to overshoot then... don't.
             // TODO: For tile / movement we don't need to get bang on, just need to make sure we don't overshoot the far end.
-            var tickMovement = input * moveSpeed * frameTime;
+            var tickMovement = moveSpeed * frameTime;
 
-            if (tickMovement.Equals(Vector2.Zero))
+            if (tickMovement.Equals(0f))
             {
                 SetDirection(mover, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
@@ -289,9 +291,15 @@ namespace Content.Server.AI.Steering
             // We may overshoot slightly but still be in the arrival distance which is okay.
             var maxDistance = direction.Length + arrivalDistance;
 
-            if (tickMovement.Length > maxDistance)
+            if (tickMovement > maxDistance)
             {
-                input *= maxDistance / tickMovement.Length;
+                input *= maxDistance / tickMovement;
+            }
+
+            // TODO: This isn't going to work for space.
+            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            {
+                input = (-grid.WorldRotation).RotateVec(input);
             }
 
             SetDirection(mover, input);
@@ -300,6 +308,34 @@ namespace Content.Server.AI.Steering
 
             // TODO: Actual steering behaviours and collision avoidance.
             // TODO: Need to handle path invalidation if nodes change.
+        }
+
+        /// <summary>
+        /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
+        /// </summary>
+        private void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
+        {
+            // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
+            // For now, we just prune up until the closest node + 1 extra.
+            var closest = ((Vector2) nodes.Peek().GridIndices + 0.5f - coordinates.Position).Length;
+            // TODO: Need to handle multi-grid and stuff.
+
+            while (nodes.TryPeek(out var node))
+            {
+                // TODO: Tile size
+                var nodePosition = (Vector2) node.GridIndices + 0.5f;
+                var length = (coordinates.Position - nodePosition).Length;
+
+                if (length < closest)
+                {
+                    closest = length;
+                    nodes.Dequeue();
+                    continue;
+                }
+
+                nodes.Dequeue();
+                break;
+            }
         }
 
         /// <summary>
