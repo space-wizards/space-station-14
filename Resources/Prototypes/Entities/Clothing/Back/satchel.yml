@@ -7,10 +7,11 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
     state: icon
-  - type: Clothing
+  - type: Item
     size: 9999
+  - type: Clothing
     quickEquip: false
-    Slots:
+    slots:
     - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage

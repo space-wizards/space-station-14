@@ -27,6 +27,8 @@
       Tritium: danger
       WaterVapor: danger
       Miasma: danger
+      NitrousOxide: danger
+      Frezon: danger
   - type: AtmosAlarmable
     alarmedBy: ["AirAlarm"]
   - type: AtmosDevice

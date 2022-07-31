@@ -112,16 +112,14 @@
 - type: damageModifierSet
   id: Zombie #Blunt resistent and immune to biological threats, but can be hacked apart and burned
   coefficients:
-    Blunt: 0.6
-    Slash: 0.9
-    Piercing: 0.9
+    Blunt: 0.5
+    Slash: 0.7
+    Piercing: 0.7
     Shock: 1.5
     Cold: 0.2
-    Heat: 2.5
+    Heat: 2.0
     Poison: 0.0
-  flatReductions: #offsets rotting damage
-    Blunt: 0.3
-    Cellular: 0.3
+    Radiation: 0.0
 
 # immune to everything except physical and heat damage
 - type: damageModifierSet

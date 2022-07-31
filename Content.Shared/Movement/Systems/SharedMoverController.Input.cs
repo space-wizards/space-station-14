@@ -78,9 +78,12 @@ namespace Content.Shared.Movement.Systems
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
+            // Relayed movement just uses the same keybinds given we're moving the relayed entity
+            // the same as us.
             TryComp<InputMoverComponent>(entity, out var moverComp);
 
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            // Can't relay inputs if you're dead.
+            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover) && !_mobState.IsIncapacitated(entity))
             {
                 // if we swap to relay then stop our existing input if we ever change back.
                 if (moverComp != null)

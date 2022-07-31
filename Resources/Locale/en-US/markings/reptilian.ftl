@@ -52,3 +52,8 @@ marking-LizardFrillsBig = Lizard Frills (Big)
 marking-LizardHornsDouble-horns_double = Lizard Horns (Double)
 marking-LizardHornsDouble = Lizard Horns (Double)
 
+marking-LizardFrillsAxolotl-frills_axolotl = Lizard Frills (Axolotl)
+marking-LizardFrillsAxolotl = Lizard Frills (Axolotl)
+
+marking-LizardFrillsHood-frills_hood = Lizard Frills (Hood)
+marking-LizardFrillsHood = Lizard Frills (Hood)
