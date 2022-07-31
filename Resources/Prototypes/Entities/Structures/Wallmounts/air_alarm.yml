@@ -6,7 +6,7 @@
   - type: WallMount
   - type: ApcPowerReceiver
   - type: Electrified
-    enabled: true
+    enabled: false
     usesApcPower: true
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -35,9 +35,6 @@
   - type: AirAlarm
   - type: Clickable
   - type: InteractionOutline
-  - type: ActivatableUI
-    key: enum.SharedAirAlarmInterfaceKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SharedAirAlarmInterfaceKey.Key
