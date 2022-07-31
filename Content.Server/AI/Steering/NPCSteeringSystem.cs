@@ -6,9 +6,11 @@ using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timing;
@@ -16,104 +18,63 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Steering
 {
-    public sealed class AiSteeringSystem : EntitySystem
+    public sealed class NPCSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
-        /// <summary>
-        /// Whether we try to avoid non-blocking physics objects
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CollisionAvoidanceEnabled { get; set; } = true;
-
-        /// <summary>
-        /// How close we need to get to the center of each tile
-        /// </summary>
-        private const float TileTolerance = 0.8f;
-
-        /// <summary>
-        ///     How long to wait between checks (if necessary).
-        /// </summary>
-        private const float InRangeUnobstructedCooldown = 0.25f;
-
-        private Dictionary<EntityUid, IAiSteeringRequest> RunningAgents => _agentLists[_listIndex];
-
-        // We'll cycle the running list every tick as all we're doing is getting a vector2 for the
-        // agent's steering. Should help a lot given this is the most expensive operator by far.
-        // The AI will keep moving, it's just it'll keep moving in its existing direction.
-        // If we change to 20/30 TPS you might want to change this but for now it's fine
-        private readonly List<Dictionary<EntityUid, IAiSteeringRequest>> _agentLists = new(AgentListCount);
-        private const int AgentListCount = 2;
-        private int _listIndex;
-
-        // Cache nextGrid
-        private readonly Dictionary<EntityUid, EntityCoordinates> _nextGrid = new();
-
-        /// <summary>
-        /// Current live paths for AI
-        /// </summary>
-        private readonly Dictionary<EntityUid, Queue<TileRef>> _paths = new();
-
-        /// <summary>
-        /// Pathfinding request jobs we're waiting on
-        /// </summary>
-        private readonly Dictionary<EntityUid, (CancellationTokenSource CancelToken, CPUJob.JobQueues.Job<Queue<TileRef>> Job)> _pathfindingRequests =
-            new();
-
-        /// <summary>
-        /// Keep track of how long we've been in 1 position and re-path if it's been too long
-        /// </summary>
-        private readonly Dictionary<EntityUid, int> _stuckCounter = new();
-
-        /// <summary>
-        /// Get a fixed position for the target entity; if they move then re-path
-        /// </summary>
-        private readonly Dictionary<EntityUid, EntityCoordinates> _entityTargetPosition = new();
-
-        // Anti-Stuck
-        // Given the collision avoidance can lead to twitching need to store a reference position and check if we've been near this too long
-        private readonly Dictionary<EntityUid, EntityCoordinates> _stuckPositions = new();
+        private bool _enabled;
 
         public override void Initialize()
         {
             base.Initialize();
+            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+        }
 
-            for (var i = 0; i < AgentListCount; i++)
+        private void SetNPCEnabled(bool obj)
+        {
+            if (!obj)
             {
-                _agentLists.Add(new Dictionary<EntityUid, IAiSteeringRequest>());
+                foreach (var comp in EntityQuery<NPCSteeringComponent>())
+                {
+                    comp.LastInput = Vector2.Zero;
+                }
             }
+
+            _enabled = obj;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
         }
 
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
-        /// We'll add it to the movement list that has the least number of agents
-        /// <param name="entity"></param>
-        /// <param name="steeringRequest"></param>
-        public void Register(EntityUid entity, IAiSteeringRequest steeringRequest)
+        public void Register(EntityUid entity, EntityCoordinates coordinates)
         {
-            var lowestListCount = 1000;
-            var lowestListIndex = 0;
+            NPCSteeringComponent? comp;
 
-            for (var i = 0; i < _agentLists.Count; i++)
+            if (TryComp(entity, out comp))
             {
-                var agentList = _agentLists[i];
-                // Register shouldn't be called twice; if it is then someone dun fucked up
-                DebugTools.Assert(!agentList.ContainsKey(entity));
-
-                if (agentList.Count < lowestListCount)
-                {
-                    lowestListCount = agentList.Count;
-                    lowestListIndex = i;
-                }
+                comp.PathfindToken?.Cancel();
+                comp.PathfindToken = null;
+                comp.CurrentPath.Clear();
+                comp.LastInput = Vector2.Zero;
+            }
+            else
+            {
+                comp = AddComp<NPCSteeringComponent>(entity);
             }
 
-            _agentLists[lowestListIndex].Add(entity, steeringRequest);
+            comp.Coordinates = coordinates;
         }
 
         /// <summary>
@@ -121,114 +82,28 @@ namespace Content.Server.AI.Steering
         /// </summary>
         /// <param name="entity"></param>
         /// <exception cref="InvalidOperationException"></exception>
-        public void Unregister(EntityUid entity)
+        public void Unregister(NPCSteeringComponent component)
         {
-            if (EntityManager.TryGetComponent(entity, out InputMoverComponent? controller))
+            if (EntityManager.TryGetComponent(component.Owner, out InputMoverComponent? controller))
             {
                 controller.CurTickSprintMovement = Vector2.Zero;
             }
 
-            if (_pathfindingRequests.TryGetValue(entity, out var request))
-            {
-                switch (request.Job.Status)
-                {
-                    case JobStatus.Pending:
-                    case JobStatus.Finished:
-                        break;
-                    case JobStatus.Running:
-                    case JobStatus.Paused:
-                    case JobStatus.Waiting:
-                        request.CancelToken.Cancel();
-                        break;
-                }
-
-                switch (request.Job.Exception)
-                {
-                    case null:
-                        break;
-                    default:
-                        ExceptionDispatchInfo.Capture(request.Job.Exception).Throw();
-                        throw request.Job.Exception;
-                }
-                _pathfindingRequests.Remove(entity);
-            }
-
-            if (_paths.ContainsKey(entity))
-            {
-                _paths.Remove(entity);
-            }
-
-            if (_nextGrid.ContainsKey(entity))
-            {
-                _nextGrid.Remove(entity);
-            }
-
-            if (_stuckCounter.ContainsKey(entity))
-            {
-                _stuckCounter.Remove(entity);
-            }
-
-            if (_entityTargetPosition.ContainsKey(entity))
-            {
-                _entityTargetPosition.Remove(entity);
-            }
-
-            foreach (var agentList in _agentLists)
-            {
-                if (agentList.ContainsKey(entity))
-                {
-                    agentList.Remove(entity);
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Is the entity currently registered for steering?
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public bool IsRegistered(EntityUid entity)
-        {
-            foreach (var agentList in _agentLists)
-            {
-                if (agentList.ContainsKey(entity))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            component.PathfindToken?.Cancel();
+            component.PathfindToken = null;
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var (agent, steering) in RunningAgents)
+            if (!_enabled)
+                return;
+
+            foreach (var (steering, _, mover) in EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>())
             {
-                // Yeah look it's not true frametime but good enough.
-                var result = Steer(agent, steering, frameTime * RunningAgents.Count);
-                steering.Status = result;
-
-                switch (result)
-                {
-                    case SteeringStatus.Pending:
-                        break;
-                    case SteeringStatus.NoPath:
-                        Unregister(agent);
-                        break;
-                    case SteeringStatus.Arrived:
-                        Unregister(agent);
-                        break;
-                    case SteeringStatus.Moving:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                Steer(steering, mover, xform, frameTime);
             }
-
-            _listIndex = (_listIndex + 1) % _agentLists.Count;
         }
 
         private void SetDirection(InputMoverComponent component, Vector2 value)
@@ -241,169 +116,15 @@ namespace Content.Server.AI.Steering
         /// <summary>
         /// Go through each steerer and combine their vectors
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="steeringRequest"></param>
-        /// <param name="frameTime"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private SteeringStatus Steer(EntityUid entity, IAiSteeringRequest steeringRequest, float frameTime)
+        private void Steer(NPCSteeringComponent steering, InputMoverComponent mover, TransformComponent xform, float frameTime)
         {
-            // Main optimisation to be done below is the redundant calls and adding more variables
-            if (Deleted(entity) ||
-                !EntityManager.TryGetComponent(entity, out InputMoverComponent? controller) ||
-                !controller.CanMove ||
-                !TryComp(entity, out TransformComponent? xform) ||
+            if (!mover.CanMove ||
                 xform.GridUid == null)
             {
-                return SteeringStatus.NoPath;
+                SetDirection(mover, Vector2.Zero);
+                return;
             }
 
-            var entitySteering = steeringRequest as EntityTargetSteeringRequest;
-
-            if (entitySteering != null && (!EntityManager.EntityExists(entitySteering.Target) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(entitySteering.Target).EntityLifeStage) >= EntityLifeStage.Deleted)
-            {
-                controller.CurTickSprintMovement = Vector2.Zero;
-                return SteeringStatus.NoPath;
-            }
-
-            if (_mapManager.IsGridPaused(xform.GridUid.Value))
-            {
-                SetDirection(controller, Vector2.Zero);
-                return SteeringStatus.Pending;
-            }
-
-            // Validation
-            // Check if we can even arrive -> Currently only samegrid movement supported
-            if (xform.GridUid != steeringRequest.TargetGrid.GetGridUid(EntityManager))
-            {
-                SetDirection(controller, Vector2.Zero);
-                return SteeringStatus.NoPath;
-            }
-
-            // Check if we have arrived
-            var targetDistance = (xform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
-            steeringRequest.TimeUntilInteractionCheck -= frameTime;
-
-            if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
-            {
-                if (!steeringRequest.RequiresInRangeUnobstructed ||
-                    _interactionSystem.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
-                {
-                    // TODO: Need cruder LOS checks for ranged weaps
-                    SetDirection(controller, Vector2.Zero);
-                    return SteeringStatus.Arrived;
-                }
-
-                steeringRequest.TimeUntilInteractionCheck = InRangeUnobstructedCooldown;
-                // Welp, we'll keep on moving.
-            }
-
-            // If we're really close don't swiggity swoogity back and forth and just wait for the interaction check maybe?
-            if (steeringRequest.TimeUntilInteractionCheck > 0.0f && targetDistance <= 0.1f)
-            {
-                SetDirection(controller, Vector2.Zero);
-                return SteeringStatus.Moving;
-            }
-
-            // Handle pathfinding job
-            // If we still have an existing path then keep following that until the new path arrives
-            if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Job.Status == JobStatus.Finished)
-            {
-                switch (pathRequest.Job.Exception)
-                {
-                    case null:
-                        break;
-                    // Currently nothing should be cancelling these except external factors
-                    case TaskCanceledException _:
-                        SetDirection(controller, Vector2.Zero);
-                        return SteeringStatus.NoPath;
-                    default:
-                        throw pathRequest.Job.Exception;
-                }
-                // No actual path
-                var path = _pathfindingRequests[entity].Job.Result;
-                if (path == null || path.Count == 0)
-                {
-                    SetDirection(controller, Vector2.Zero);
-                    return SteeringStatus.NoPath;
-                }
-
-                // If we're closer to next tile then we don't want to walk backwards to our tile's center
-                UpdatePath(entity, path);
-
-                // If we're targeting entity get a fixed tile; if they move from it then re-path (at least til we get a better solution)
-                if (entitySteering != null)
-                {
-                    _entityTargetPosition[entity] = entitySteering.TargetGrid;
-                }
-
-                // Move next tick
-                return SteeringStatus.Pending;
-            }
-
-            // Check if we even have a path to follow
-            // If the route's empty we could be close and may not need a re-path so we won't check if it is
-            if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity) && targetDistance > 1.5f)
-            {
-                SetDirection(controller, Vector2.Zero);
-                RequestPath(entity, steeringRequest);
-                return SteeringStatus.Pending;
-            }
-
-            var ignoredCollision = new List<EntityUid>();
-            // Check if the target entity has moved - If so then re-path
-            // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
-            // Probably need a separate "PatchPath" job
-            if (entitySteering != null)
-            {
-                // Check if target's moved too far
-                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) &&
-                    (entitySteering.TargetGrid.Position - targetGrid.Position).Length >= entitySteering.TargetMaxMove)
-                {
-                    // We'll just repath and keep following the existing one until we get a new one
-                    RequestPath(entity, steeringRequest);
-                }
-
-                ignoredCollision.Add(entitySteering.Target);
-            }
-
-            HandleStuck(entity);
-
-            // TODO: Probably need a dedicated queuing solver (doorway congestion FML)
-            // Get the target grid (either next tile or target itself) and pass it in to the steering behaviors
-            // If there's nowhere to go then just stop and wait
-            var nextGrid = NextGrid(entity, steeringRequest);
-            if (!nextGrid.HasValue)
-            {
-                SetDirection(controller, Vector2.Zero);
-                return SteeringStatus.NoPath;
-            }
-
-            // Validate that we can even get to the next grid (could probably just check if we can use nextTile if we're not near the target grid)
-            if (!_pathfindingSystem.CanTraverse(entity, nextGrid.Value))
-            {
-                SetDirection(controller, Vector2.Zero);
-                return SteeringStatus.NoPath;
-            }
-
-            // Now we can /finally/ move
-            var movementVector = Vector2.Zero;
-
-            // Originally I tried using interface steerers but ehhh each one kind of needs to do its own thing
-            // Plus there's not much point putting these in a separate class
-            // Each one just adds onto the final vector
-            movementVector += Seek(entity, nextGrid.Value);
-            if (CollisionAvoidanceEnabled)
-            {
-                movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
-            }
-
-            // Group behaviors would also go here e.g. separation, cohesion, alignment
-
-            // Move towards it
-            DebugTools.Assert(movementVector != new Vector2(float.NaN, float.NaN));
-            SetDirection(controller, movementVector.Normalized);
-            return SteeringStatus.Moving;
         }
 
         /// <summary>
@@ -442,6 +163,8 @@ namespace Content.Server.AI.Steering
                 endTile,
                 steeringRequest.PathfindingProximity
             ), cancelToken.Token);
+
+
             _pathfindingRequests.Add(entity, (cancelToken, job));
         }
 

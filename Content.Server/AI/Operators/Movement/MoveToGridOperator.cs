@@ -25,7 +25,7 @@ namespace Content.Server.AI.Operators.Movement
                 return true;
             }
 
-            var steering = EntitySystem.Get<AiSteeringSystem>();
+            var steering = EntitySystem.Get<NPCSteeringSystem>();
             _request = new GridTargetSteeringRequest(_target, DesiredRange);
             steering.Register(_owner, _request);
             return true;
@@ -36,7 +36,7 @@ namespace Content.Server.AI.Operators.Movement
             if (!base.Shutdown(outcome))
                 return false;
 
-            var steering = EntitySystem.Get<AiSteeringSystem>();
+            var steering = EntitySystem.Get<NPCSteeringSystem>();
             steering.Unregister(_owner);
             return true;
         }
@@ -46,14 +46,14 @@ namespace Content.Server.AI.Operators.Movement
             switch (_request?.Status)
             {
                 case SteeringStatus.Pending:
-                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
+                    DebugTools.Assert(EntitySystem.Get<NPCSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 case SteeringStatus.NoPath:
                     return Outcome.Failed;
                 case SteeringStatus.Arrived:
                     return Outcome.Success;
                 case SteeringStatus.Moving:
-                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
+                    DebugTools.Assert(EntitySystem.Get<NPCSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 default:
                     throw new ArgumentOutOfRangeException();
