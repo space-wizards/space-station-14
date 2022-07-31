@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
-  id: 1543
-  time: '2022-05-17T18:05:51.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: A new chime plays for station announcements., type: Tweak}
   id: 1544
   time: '2022-05-17T22:05:32.0000000+00:00'
@@ -2943,3 +2938,8 @@ Entries:
   - {message: Bloodloss now makes you dizzy., type: Add}
   id: 2042
   time: '2022-07-31T02:24:24.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Adds a new salvage equipment vendor to be added to maps., type: Add}
+  id: 2043
+  time: '2022-07-31T02:31:51.0000000+00:00'
