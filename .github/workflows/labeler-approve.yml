@@ -11,6 +11,4 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-remove-labels@v1
       with:
-        labels: |
-          Status: Needs Review
-          Status: Awaiting Changes
+        labels: "Status: Awaiting Changes"
