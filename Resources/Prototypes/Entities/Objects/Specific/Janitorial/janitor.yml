@@ -210,7 +210,8 @@
       interfaces:
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
-
+    - type: Drink
+      isOpen: true
 
 - type: entity
   id: FloorDrain
