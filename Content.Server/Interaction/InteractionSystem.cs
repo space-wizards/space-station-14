@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -34,6 +35,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
 
         public override void Initialize()
@@ -252,9 +254,10 @@ namespace Content.Server.Interaction
                         }
                     }
                 }
-                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value))
+                else if (!wideAttack && target != null && HasComp<ItemComponent>(target.Value) && !_tagSystem.HasTag(target.Value, "NoPickupOnAttack"))
                 {
                     // We pick up items if our hand is empty, even if we're in combat mode.
+                    // NoPickupOnAttack Tag disables this behavior, e.g. for MobMouse
                     InteractHand(user, target.Value);
                     return;
                 }

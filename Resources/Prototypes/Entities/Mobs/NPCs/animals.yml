@@ -815,6 +815,7 @@
     tags:
     - Trash
     - CannotSuicide
+    - NoPickupOnAttack
   - type: Recyclable
   - type: Respirator
     damage:

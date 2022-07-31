@@ -321,6 +321,9 @@
   id: Mop
 
 - type: Tag
+  id: NoPickupOnAttack # disable picking up an Item if attack mode is active with empty hands
+
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
