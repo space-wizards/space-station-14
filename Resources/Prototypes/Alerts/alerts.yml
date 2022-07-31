@@ -9,6 +9,7 @@
     - category: Internals
     - alertType: Fire
     - alertType: Handcuffed
+    - alertType: Ensnared
     - category: Buckled
     - alertType: Pulling
     - category: Piloting
@@ -122,7 +123,7 @@
 - type: alert
   id: Ensnared
   onClick: !type:RemoveEnsnare  { }
-  icon: /Textures/Interface/Alerts/ensnared.rsi/ensnared.png
+  icons: [ /Textures/Interface/Alerts/ensnared.rsi/ensnared.png ]
   name: "[color=yellow]Ensnared[/color]"
   description: "You're [color=yellow]ensnared[/color] and is impairing your ability to move."
 

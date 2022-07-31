@@ -48,6 +48,10 @@ namespace Content.Tests.Shared.Alert
   icons: []
 
 - type: alert
+  id: Ensnared
+  icons: []
+
+- type: alert
   id: Hot
   icons: []
   category: Temperature
