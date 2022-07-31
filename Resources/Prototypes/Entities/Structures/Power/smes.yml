@@ -63,6 +63,7 @@
       containers:
         machine_parts: !type:Container
         machine_board: !type:Container
+    - type: StationInfiniteBatteryTarget
 
 # SMES' in use
 

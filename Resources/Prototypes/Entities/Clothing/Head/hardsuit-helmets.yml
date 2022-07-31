@@ -20,13 +20,6 @@
     addPrefix: false
   - type: ToggleableLightVisuals
     spriteLayer: light
-    inhandVisuals:
-      left:
-      - state: inhand-left-light
-        shader: unshaded
-      right:
-      - state: inhand-right-light
-        shader: unshaded
     clothingVisuals:
       head:
       - state: equipped-head-light
@@ -36,15 +29,6 @@
       head:
       - state: equipped-head
       - state: equipped-head-unshaded
-        shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
         shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.08
@@ -59,7 +43,7 @@
         Radiation: 0.5
   - type: TemperatureProtection
     coefficient: 0.005
- 
+
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCap
@@ -186,7 +170,7 @@
       coefficients:
         Blunt: 0.8
         Slash: 0.8
-        Piercing: 0.8 
+        Piercing: 0.8
   - type: PointLight
     radius: 7
     energy: 3
@@ -211,7 +195,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-        
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
@@ -287,13 +271,13 @@
   - type: PressureProtection
     highPressureMultiplier: 0.225
     lowPressureMultiplier: 10000
-    
+
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSpatio
   noSpawn: true
   name: spationaut hardsuit helmet
-  description: A sturdy helmet designed for complex industrial operations in space. 
+  description: A sturdy helmet designed for complex industrial operations in space.
   components:
   - type: Sprite
     netsync: false
@@ -308,13 +292,7 @@
       map: [ "light" ]
   - type: HandheldLight
     addPrefix: false
-    inhandVisuals:
-      left:
-      - state: inhand-left-light
-        shader: unshaded
-      right:
-      - state: inhand-right-light
-        shader: unshaded
+  - type: ToggleableLightVisuals
     clothingVisuals:
       head:
       - state: equipped-head-light
@@ -325,15 +303,6 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
-        shader: unshaded   
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 10000
@@ -351,7 +320,7 @@
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000    
+    lowPressureMultiplier: 1000
 
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
@@ -395,7 +364,7 @@
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
@@ -429,22 +398,13 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: inhand-left-unshaded
-        shader: unshaded
-      right:
-      - state: inhand-right
-      - state: inhand-right-unshaded
-        shader: unshaded
   - type: PointLight
     color: orange
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.005    
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
@@ -467,7 +427,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
-    
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTEngineer
@@ -477,7 +437,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
-    
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTMedical
@@ -487,7 +447,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
-    
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTSecurity
@@ -497,7 +457,7 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
-    
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitERTJanitor

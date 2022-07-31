@@ -4,9 +4,9 @@
   parent: SimpleSpaceMobBase
   description: It's a space carp.
   components:
-  - type: PlayerInputMover
-  - type: PlayerMobMover
-  - type: UtilityAI
+  - type: InputMover
+  - type: MobMover
+  - type: UtilityNPC
     behaviorSets:
     - Idle
     - UnarmedAttackHostiles
@@ -69,6 +69,9 @@
   - type: TypingIndicator
     proto: alien
   - type: NoSlip
+  - type: Tag
+    tags:
+    - Carp
 
 - type: entity
   name: magicarp
@@ -117,6 +120,7 @@
   suffix: "Salvage Ruleset"
   components:
   - type: GhostTakeoverAvailable
+    prob: 0.33
     name: space carp on salvage wreck
     description: |
       Defend the loot inside the salvage wreck!

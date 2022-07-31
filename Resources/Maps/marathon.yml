@@ -132,9 +132,9 @@ grids:
   - ind: -1,-2
     tiles: HgAAAjcAAAAxAAACMQAAADEAAAExAAACMQAAAzEAAAAxAAABMQAAADEAAAA3AAAANwAAADEAAAA3AAAANwAAAB4AAAM3AAAAMQAAAjEAAAAxAAABMQAAADEAAAExAAACMQAAAzEAAAMxAAABNwAAADEAAAIxAAABMQAAAjEAAAMeAAAAHgAAAzEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAADEAAAIxAAADMQAAATEAAAMxAAABHgAAADcAAAAxAAADMQAAAjEAAAIxAAAAMQAAAzEAAAMxAAAAMQAAAzEAAAI3AAAAMQAAAzEAAAExAAAAMQAAADcAAAA3AAAAMQAAATEAAAIxAAAAMQAAAjEAAAMxAAACMQAAADEAAAExAAADNwAAADEAAAAxAAAAMQAAAjEAAAIzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACMQAAAjEAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAIxAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzEAAAExAAACMQAAADcAAAA3AAAANwAAADcAAAA3AAAANAAAADQAAAM0AAABNAAAATQAAAA3AAAANwAAADcAAAAxAAAAMQAAADEAAAE3AAAAIAAAACAAAAAgAAAANwAAADQAAAM0AAACNAAAADQAAAA0AAADNwAAADcAAAA3AAAAMQAAATEAAAExAAAANwAAACAAAAAgAAAAIAAAADcAAAA0AAAANAAAATQAAAI0AAABNAAAATcAAAA3AAAANwAAADEAAAMxAAAAMQAAATcAAAAgAAAAIAAAACAAAAAgAAAANAAAAjQAAAA0AAACNAAAADQAAAM0AAABNwAAADcAAAAxAAAAMQAAADEAAAAxAAADIAAAACAAAAAgAAAANwAAADQAAAE0AAADNAAAADQAAAM0AAAANwAAADcAAAA3AAAAMQAAAjEAAAExAAADMQAAAyAAAAAgAAAAIAAAADcAAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADEAAAMxAAAAMQAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADcAAAAeAAAAHgAAAh4AAAE3AAAANwAAADcAAAA3AAAAMQAAAjcAAAA3AAAANAAAAjQAAAI0AAAANAAAAzQAAAMeAAAAHgAAAh4AAAAeAAACHgAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAAA==
   - ind: -2,-2
-    tiles: NwAAADcAAAA3AAAANwAAADUAAAM1AAABNwAAADcAAAA3AAAANwAAADUAAAE3AAAANwAAADcAAAAeAAACHgAAADcAAAA3AAAANwAAADcAAAA3AAAANQAAAzcAAAA1AAAANQAAAzUAAAA3AAAANwAAADcAAAA3AAAAHgAAAx4AAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAEeAAABNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAABHgAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAADYAAAA2AAAANgAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAACAAAAAgAAAANwAAADQAAAI0AAADNAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAABNwAAADcAAAAgAAAAIAAAADcAAAA0AAAANAAAAzQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAABNAAAADQAAAI3AAAAIAAAACAAAAA3AAAANAAAATQAAAI0AAABNAAAAjcAAAAgAAAAIAAAACAAAAA0AAABNAAAADQAAAM0AAABNwAAACAAAAA3AAAANwAAADQAAAE0AAABNAAAATQAAAM3AAAAIAAAACAAAAAgAAAAIAAAADQAAAI0AAABNAAAATQAAAM0AAAANAAAADQAAAA0AAAANAAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAATQAAAMgAAAANAAAAzQAAAM0AAABNAAAAzQAAAM3AAAANAAAATQAAAA0AAADNAAAAzQAAAI0AAACNAAAADQAAAM0AAAANAAAAy4AAAA3AAAANAAAADQAAAA0AAABNwAAADQAAAA0AAAANAAAAzQAAAM0AAADNAAAAjQAAAM0AAAANAAAAzcAAAAuAAAANwAAADcAAAA0AAABNwAAADcAAAA0AAACNAAAATQAAAM0AAAANAAAAjQAAAM0AAADNAAAATQAAAE3AAAANwAAADcAAAAzAAAANAAAAjQAAAE3AAAANAAAAzQAAAM0AAADNAAAATQAAAA0AAAANAAAAzQAAAE0AAADNwAAAA==
+    tiles: NwAAADcAAAA3AAAANwAAADUAAAM1AAABNwAAADcAAAA3AAAANwAAADUAAAE3AAAANwAAADcAAAAeAAACHgAAADcAAAA3AAAANwAAADcAAAA3AAAANQAAAzcAAAA1AAAANQAAAzUAAAA3AAAANwAAADcAAAA3AAAAHgAAAx4AAAE3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAEeAAABNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAAeAAABHgAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAADYAAAA2AAAANgAAADcAAAA3AAAANwAAADMAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADQAAAA0AAAANwAAADQAAAI0AAADNAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAABNwAAADcAAAA0AAAANAAAADcAAAA0AAAANAAAAzQAAAA0AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAABNAAAADQAAAI3AAAANAAAADQAAAA3AAAANAAAATQAAAI0AAABNAAAAjcAAAAgAAAAIAAAACAAAAA0AAABNAAAADQAAAM0AAABNwAAADQAAAA3AAAANwAAADQAAAE0AAABNAAAATQAAAM3AAAAIAAAACAAAAAgAAAAIAAAADQAAAI0AAABNAAAATQAAAM0AAAANAAAADQAAAA0AAAANAAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAATQAAAMgAAAANAAAAzQAAAM0AAABNAAAAzQAAAM3AAAANAAAATQAAAA0AAADNAAAAzQAAAI0AAACNAAAADQAAAM0AAAANAAAAyAAAAA3AAAANAAAADQAAAA0AAABNwAAADQAAAA0AAAANAAAAzQAAAM0AAADNAAAAjQAAAM0AAAANAAAAzcAAAAuAAAANwAAADcAAAA0AAABNwAAADcAAAA0AAACNAAAATQAAAM0AAAANAAAAjQAAAM0AAADNAAAATQAAAE3AAAANwAAADcAAAAzAAAANAAAAjQAAAE3AAAANAAAAzQAAAM0AAADNAAAATQAAAA0AAAANAAAAzQAAAE0AAADNwAAAA==
   - ind: -3,-2
-    tiles: NgAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAA3AAAAHgAAAh4AAAMeAAACHgAAAh4AAAAeAAABHgAAATYAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANwAAADcAAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANgAAADcAAAAzAAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAADcAAAA3AAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAeAAABHgAAAx4AAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAgAAAAIAAAADcAAAAeAAAAHgAAAB4AAAIeAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAIAAAACAAAAA3AAAANwAAAB4AAAIeAAAAHgAAATcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAACAAAAAgAAAANwAAADcAAAAeAAACHgAAAB4AAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAIAAAADcAAAA3AAAAHgAAASEAAAAeAAABNwAAADUAAAE3AAAAMAAAADcAAAA1AAADNwAAADcAAAA3AAAANAAAAjQAAAI0AAAANwAAAB4AAAMeAAADHgAAAjcAAAAwAAAANwAAADAAAAAwAAAANwAAADcAAAA3AAAANwAAADQAAAA0AAAANAAAAjcAAAAeAAAAIQAAAB4AAAI3AAAANQAAAzAAAAAwAAAAMAAAADcAAAA3AAAANwAAADcAAAAuAAAALgAAAC4AAAA3AAAAHgAAAR4AAAIeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAALgAAAC4AAAAuAAAANwAAAB4AAAEhAAAAHgAAAjcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
+    tiles: NgAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAA3AAAAHgAAAh4AAAMeAAACHgAAAh4AAAAeAAABHgAAATYAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANwAAADcAAAAeAAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANgAAADcAAAAzAAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAAzAAAAMwAAADcAAAA3AAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAMwAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAeAAABHgAAAx4AAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA0AAAANAAAADcAAAAeAAAAHgAAAB4AAAIeAAACNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANAAAADQAAAA3AAAANwAAAB4AAAIeAAAAHgAAATcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADQAAAA0AAAANwAAADcAAAAeAAACHgAAAB4AAAM3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANAAAADcAAAA3AAAAHgAAASEAAAAeAAABNwAAADUAAAE3AAAAMAAAADcAAAA1AAADNwAAADcAAAA3AAAANAAAAjQAAAI0AAAANwAAAB4AAAMeAAADHgAAAjcAAAAwAAAANwAAADAAAAAwAAAANwAAADcAAAA3AAAANwAAADQAAAA0AAAANAAAAjcAAAAeAAAAIQAAAB4AAAI3AAAANQAAAzAAAAAwAAAAMAAAADcAAAA3AAAANwAAADcAAAAgAAAAIAAAAC4AAAA3AAAAHgAAAR4AAAIeAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAALgAAACAAAAAgAAAANwAAAB4AAAEhAAAAHgAAAjcAAAAzAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
   - ind: 0,-2
     tiles: NwAAADEAAAE3AAAANwAAADcAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAAMwAAADMAAAAzAAAANwAAADEAAAMxAAACMQAAAjEAAAI3AAAANwAAADEAAAE3AAAANwAAADcAAAAxAAACMQAAAjcAAAA3AAAANwAAADcAAAAxAAAAMQAAAzEAAAIxAAACMQAAADEAAAAxAAACMQAAAjcAAAAxAAABMQAAAjEAAAMxAAAANwAAADcAAAA3AAAAMQAAATEAAAExAAABMQAAAjcAAAAxAAABMQAAATEAAAA3AAAAMQAAATEAAAMxAAADMQAAAjcAAAA3AAAANwAAADEAAAMxAAAAMQAAADEAAAI3AAAAMQAAAzEAAAMxAAADNwAAADEAAAMxAAAAMQAAADEAAAI3AAAANwAAADcAAAA3AAAANwAAADEAAAI3AAAANwAAADEAAAAxAAACMQAAADcAAAA3AAAAMQAAADEAAAI3AAAANwAAADcAAAA3AAAAIwAAACMAAAAjAAAAIQAAADcAAAAxAAADMQAAAzEAAAE3AAAAMQAAADEAAAIxAAADMwAAADMAAAAzAAAANwAAACMAAAAjAAAAIwAAACEAAAA3AAAAMQAAADEAAAAxAAABMQAAAjEAAAMxAAACMQAAAzMAAAA3AAAANwAAADcAAAAjAAAAIwAAACMAAAAhAAAANwAAADEAAAMxAAADMQAAAjEAAAExAAAAMQAAATEAAAAzAAAANwAAADcAAAA3AAAAIwAAACMAAAAjAAAAIQAAADcAAAA3AAAAMQAAADcAAAA3AAAAMQAAAjEAAAAxAAABMwAAADcAAAA3AAAANwAAADcAAAA3AAAAMQAAAzcAAAA3AAAAHgAAAh4AAAIeAAADNwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAAxAAACMQAAATEAAAAxAAABMQAAATEAAAMxAAACMQAAADEAAAMxAAABMQAAAzEAAAMxAAACMQAAATcAAAA3AAAAMQAAAjEAAAMxAAACMQAAADEAAAMxAAABMQAAATEAAAMxAAAAMQAAAjEAAAAxAAABMQAAADEAAAAeAAADNwAAADEAAAExAAAAMQAAATEAAAAxAAACMQAAADEAAAAxAAAAMQAAAzEAAAExAAADMQAAAzEAAAExAAAAHgAAAzcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADUAAAA3AAAANwAAADEAAAMxAAAAMQAAAh4AAAM3AAAANwAAADcAAAA3AAAAKAAAACgAAAAoAAAANwAAADUAAAA1AAAANQAAADcAAAAxAAAAMQAAAjEAAAMeAAACNwAAAA==
   - ind: 1,-2
@@ -483,12 +483,12 @@ entities:
 - uid: 30
   components:
   - pos: 2.2710133,-2.4148211
-    parent: null
+    parent: 5350
     type: Transform
   - index: 0
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -2927,6 +2927,34 @@ entities:
           color: '#FFFFFFFF'
           id: Bushj2
           coordinates: -58.64736,-27.005693
+        1985:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -35,-25
+        1986:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -34,-25
+        1987:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -34,-24
+        1988:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -35,-24
+        1989:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -35,-23
+        1990:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -34,-23
+        1991:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -34,-22
       -2,1:
         143:
           color: '#EFB34144'
@@ -5763,6 +5791,34 @@ entities:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale180
           coordinates: -1,-21
+        1992:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -32,-22
+        1993:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -32,-23
+        1994:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -31,-23
+        1995:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -32,-24
+        1996:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -31,-24
+        1997:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -32,-25
+        1998:
+          color: '#9FED5896'
+          id: CheckerNWSE
+          coordinates: -31,-25
       0,-1:
         908:
           color: '#A4610696'
@@ -6825,6 +6881,18 @@ entities:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 31,-4
+        1982:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 18,-19
+        1983:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 19,-19
+        1984:
+          color: '#FFFFFFFF'
+          id: Bot
+          coordinates: 20,-19
       0,-2:
         1063:
           color: '#FFFFFFFF'
@@ -13340,7 +13408,7 @@ entities:
       14,10: 0
       14,11: 0
       14,12: 0
-      14,13: 1
+      14,13: 0
       14,14: 0
       14,15: 0
       15,0: 0
@@ -14162,7 +14230,7 @@ entities:
       18,21: 0
       18,22: 0
       18,23: 0
-      18,24: 1
+      18,24: 0
       19,16: 0
       19,17: 0
       19,18: 0
@@ -15895,11 +15963,11 @@ entities:
       24,-18: 0
       24,-17: 0
       25,-32: 0
-      25,-31: 2
+      25,-31: 1
       25,-30: 0
-      25,-29: 1
+      25,-29: 2
       25,-28: 0
-      25,-27: 1
+      25,-27: 2
       25,-26: 0
       25,-25: 3
       25,-24: 0
@@ -15911,11 +15979,11 @@ entities:
       25,-18: 0
       25,-17: 0
       26,-32: 0
-      26,-31: 2
+      26,-31: 1
       26,-30: 0
-      26,-29: 1
+      26,-29: 2
       26,-28: 0
-      26,-27: 1
+      26,-27: 2
       26,-26: 0
       26,-25: 3
       26,-24: 0
@@ -15927,11 +15995,11 @@ entities:
       26,-18: 0
       26,-17: 0
       27,-32: 0
-      27,-31: 2
+      27,-31: 1
       27,-30: 0
-      27,-29: 1
+      27,-29: 2
       27,-28: 0
-      27,-27: 1
+      27,-27: 2
       27,-26: 0
       27,-25: 3
       27,-24: 0
@@ -16223,17 +16291,17 @@ entities:
       24,-34: 0
       24,-33: 0
       25,-36: 0
-      25,-35: 1
+      25,-35: 2
       25,-34: 0
-      25,-33: 1
+      25,-33: 2
       26,-36: 0
-      26,-35: 1
+      26,-35: 2
       26,-34: 0
-      26,-33: 1
+      26,-33: 2
       27,-36: 0
-      27,-35: 1
+      27,-35: 2
       27,-34: 0
-      27,-33: 1
+      27,-33: 2
       28,-36: 0
       28,-35: 0
       28,-34: 0
@@ -19197,7 +19265,7 @@ entities:
       -61,54: 0
       -61,55: 0
       -61,56: 0
-      -61,57: 2
+      -61,57: 1
       -61,58: 0
       -61,59: 0
       -61,60: 0
@@ -22002,15 +22070,15 @@ entities:
       36,-61: 0
       36,-60: 0
       36,-59: 0
-      36,-58: 1
+      36,-58: 2
       36,-57: 0
       36,-56: 0
       36,-55: 0
       37,-64: 0
       37,-63: 0
       37,-62: 0
-      37,-61: 1
-      37,-60: 1
+      37,-61: 2
+      37,-60: 2
       37,-59: 0
       37,-58: 0
       37,-57: 0
@@ -22030,9 +22098,9 @@ entities:
       38,-54: 0
       38,-53: 0
       39,-64: 0
-      39,-63: 1
-      39,-62: 1
-      39,-61: 1
+      39,-63: 2
+      39,-62: 2
+      39,-61: 2
       39,-60: 0
       39,-59: 0
       39,-58: 0
@@ -22041,7 +22109,7 @@ entities:
       39,-55: 0
       39,-54: 0
       39,-53: 0
-      40,-64: 1
+      40,-64: 2
       40,-63: 0
       40,-62: 0
       40,-61: 0
@@ -22077,7 +22145,7 @@ entities:
       43,-64: 0
       43,-63: 0
       43,-62: 0
-      43,-61: 1
+      43,-61: 2
       43,-60: 0
       43,-59: 0
       43,-58: 0
@@ -22181,8 +22249,8 @@ entities:
       35,-70: 0
       35,-69: 0
       35,-68: 0
-      35,-67: 1
-      35,-66: 1
+      35,-67: 2
+      35,-66: 2
       35,-65: 0
       36,-76: 0
       36,-75: 0
@@ -22192,9 +22260,9 @@ entities:
       36,-71: 0
       36,-70: 0
       36,-69: 0
-      36,-68: 1
-      36,-67: 1
-      36,-66: 1
+      36,-68: 2
+      36,-67: 2
+      36,-66: 2
       36,-65: 0
       37,-77: 0
       37,-76: 0
@@ -22205,20 +22273,20 @@ entities:
       37,-71: 0
       37,-70: 0
       37,-69: 0
-      37,-68: 1
-      37,-67: 1
+      37,-68: 2
+      37,-67: 2
       37,-66: 0
       37,-65: 0
       38,-77: 0
       38,-76: 0
       38,-75: 0
-      38,-74: 1
+      38,-74: 2
       38,-73: 0
       38,-72: 0
       38,-71: 0
       38,-70: 0
-      38,-69: 1
-      38,-68: 1
+      38,-69: 2
+      38,-68: 2
       38,-67: 0
       38,-66: 0
       38,-65: 0
@@ -22227,7 +22295,7 @@ entities:
       39,-75: 0
       39,-74: 0
       39,-73: 0
-      39,-72: 1
+      39,-72: 2
       39,-71: 0
       39,-70: 0
       39,-69: 0
@@ -22238,7 +22306,7 @@ entities:
       40,-77: 0
       40,-76: 0
       40,-75: 0
-      40,-74: 1
+      40,-74: 2
       40,-73: 0
       40,-72: 0
       40,-71: 0
@@ -22251,7 +22319,7 @@ entities:
       41,-77: 0
       41,-76: 0
       41,-75: 0
-      41,-74: 1
+      41,-74: 2
       41,-73: 0
       41,-72: 0
       41,-71: 0
@@ -22263,12 +22331,12 @@ entities:
       41,-65: 0
       42,-77: 0
       42,-76: 0
-      42,-75: 1
+      42,-75: 2
       42,-74: 0
       42,-73: 0
       42,-72: 0
       42,-71: 0
-      42,-70: 1
+      42,-70: 2
       42,-69: 0
       42,-68: 0
       42,-67: 0
@@ -22281,8 +22349,8 @@ entities:
       43,-73: 0
       43,-72: 0
       43,-71: 0
-      43,-70: 1
-      43,-69: 1
+      43,-70: 2
+      43,-69: 2
       43,-68: 0
       43,-67: 0
       43,-66: 0
@@ -22292,10 +22360,10 @@ entities:
       44,-74: 0
       44,-73: 0
       44,-72: 0
-      44,-71: 1
-      44,-70: 1
-      44,-69: 1
-      44,-68: 1
+      44,-71: 2
+      44,-70: 2
+      44,-69: 2
+      44,-68: 2
       44,-67: 0
       44,-66: 0
       44,-65: 0
@@ -22304,12 +22372,12 @@ entities:
       45,-73: 0
       45,-72: 0
       45,-71: 0
-      45,-70: 1
+      45,-70: 2
       45,-69: 0
       45,-68: 0
       45,-67: 0
       45,-66: 0
-      45,-65: 1
+      45,-65: 2
       46,-73: 0
       46,-72: 0
       46,-71: 0
@@ -22703,30 +22771,30 @@ entities:
       77,32: 0
       56,15: 0
       57,15: 0
-      30,-23: 1
-      30,-18: 1
-      31,-23: 1
-      31,-18: 1
-      32,-25: 1
-      32,-24: 1
-      32,-23: 1
-      32,-22: 1
-      33,-23: 1
-      33,-18: 1
-      33,-17: 1
-      34,-26: 1
-      34,-25: 1
-      34,-24: 1
-      34,-23: 1
-      34,-22: 1
-      35,-23: 1
-      35,-18: 1
-      35,-17: 1
-      36,-25: 1
-      36,-24: 1
-      36,-23: 1
-      36,-22: 1
-      37,-23: 1
+      30,-23: 2
+      30,-18: 2
+      31,-23: 2
+      31,-18: 2
+      32,-25: 2
+      32,-24: 2
+      32,-23: 2
+      32,-22: 2
+      33,-23: 2
+      33,-18: 2
+      33,-17: 2
+      34,-26: 2
+      34,-25: 2
+      34,-24: 2
+      34,-23: 2
+      34,-22: 2
+      35,-23: 2
+      35,-18: 2
+      35,-17: 2
+      36,-25: 2
+      36,-24: 2
+      36,-23: 2
+      36,-22: 2
+      37,-23: 2
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -22739,13 +22807,6 @@ entities:
       - 0
       - 0
       - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
       - 0
       - 0
       - 0
@@ -22761,6 +22822,25 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
@@ -22772,11 +22852,19 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 293.15
       moles:
       - 0
       - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -25644,10 +25732,14 @@ entities:
   - pos: -11.450353,19.462812
     parent: 30
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 445
@@ -27922,8 +28014,6 @@ entities:
   - pos: 6.5,18.5
     parent: 30
     type: Transform
-  - locked: False
-    type: Lock
   - containers:
       entity_storage: !type:Container
         ents:
@@ -27939,8 +28029,6 @@ entities:
   - pos: 5.5,18.5
     parent: 30
     type: Transform
-  - locked: False
-    type: Lock
   - containers:
       entity_storage: !type:Container
         ents:
@@ -32259,15 +32347,12 @@ entities:
     parent: 30
     type: Transform
 - uid: 1402
-  type: DrinkMugMoebius
+  type: Morgue
   components:
-  - pos: -43.53058,-2.4147248
+  - rot: 1.5707963267948966 rad
+    pos: -52.5,51.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1403
   type: BoxFolderGrey
   components:
@@ -32586,15 +32671,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 1443
-  type: DrinkWhiskeyBottleFull
+  type: FirelockGlass
   components:
-  - pos: -43.554337,33.874928
+  - pos: -42.5,45.5
     parent: 30
     type: Transform
+  - airBlocked: False
+    type: Airtight
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 1444
   type: DrinkGlass
   components:
@@ -35962,10 +36047,14 @@ entities:
   - pos: -41.476646,54.61659
     parent: 30
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 1954
@@ -35994,10 +36083,14 @@ entities:
   - pos: -41.476646,54.757214
     parent: 30
     type: Transform
+  - unspawnedCount: 12
+    type: BallisticAmmoProvider
   - canCollide: False
     type: Physics
   - containers:
       storagebase: !type:Container
+        ents: []
+      ballistic-ammo: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 1957
@@ -36568,9 +36661,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 2029
-  type: WeaponTaser
+  type: WeaponDisabler
   components:
-  - pos: -43.536865,49.58343
+  - pos: -43.562447,49.514965
     parent: 30
     type: Transform
   - canCollide: False
@@ -38035,25 +38128,17 @@ entities:
     parent: 30
     type: Transform
 - uid: 2233
-  type: Morgue
+  type: RandomFoodSingle
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -52.5,51.5
+  - pos: -4.5,9.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 2234
-    type: ContainerContainer
 - uid: 2234
-  type: MorgueTray
+  type: RandomFoodSingle
   components:
-  - parent: 2233
+  - pos: -0.5,8.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 2235
   type: TableGlass
   components:
@@ -55249,9 +55334,17 @@ entities:
 - uid: 4443
   type: LampGold
   components:
-  - pos: 4.5164165,10.525761
+  - pos: 4.5292673,10.977108
     parent: 30
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 4444
@@ -59231,15 +59324,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 5003
-  type: DrinkFlask
+  type: RandomFoodMeal
   components:
-  - pos: -21.474657,30.65415
+  - pos: -10.5,8.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5004
   type: PinpointerNuclear
   components:
@@ -59645,15 +59734,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 5055
-  type: DrinkCognacBottleFull
+  type: RandomFoodMeal
   components:
-  - pos: -26.560759,35.937252
+  - pos: -10.5,11.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5056
   type: DrinkGlass
   components:
@@ -61600,25 +61685,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5350
-  type: DrinkMugOne
   components:
-  - pos: -9.006596,35.666164
-    parent: 30
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
+  - index: 4
+    type: Map
 - uid: 5351
-  type: DrinkMugHeart
+  type: CarbonDioxideCanister
   components:
-  - pos: -11.365971,35.228664
+  - pos: 18.5,-16.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5352
   type: WallReinforced
   components:
@@ -63360,15 +63435,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5625
-  type: DrinkGoldschlagerBottleFull
+  type: PlasmaWindow
   components:
-  - pos: 7.45675,42.886192
+  - pos: -34.5,-21.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5626
   type: ClothingHeadHatHairflower
   components:
@@ -65061,15 +65132,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 5841
-  type: DrinkMugMoebius
+  type: StasisBed
   components:
-  - pos: -5.4045205,43.483574
+  - pos: -21.5,-12.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 5842
   type: ToolboxEmergencyFilled
   components:
@@ -70281,15 +70348,11 @@ entities:
       charger-slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6573
-  type: DrinkMugRed
+  type: Bed
   components:
-  - pos: 12.599404,22.817696
+  - pos: -21.5,-22.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6574
   type: Table
   components:
@@ -71878,15 +71941,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6791
-  type: DrinkMugBlue
+  type: PlasmaWindow
   components:
-  - pos: -14.393166,-3.348785
+  - pos: -29.5,-22.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6792
   type: BoxFolderWhite
   components:
@@ -72479,15 +72538,9 @@ entities:
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
-    pos: -25.5,-4.5
+    pos: -25.5,-1.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6913
-    type: ContainerContainer
 - uid: 6878
   type: AirlockMedicalLocked
   components:
@@ -72711,15 +72764,9 @@ entities:
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
-    pos: -25.5,-3.5
+    pos: -25.5,-4.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6914
-    type: ContainerContainer
 - uid: 6907
   type: Morgue
   components:
@@ -72727,24 +72774,15 @@ entities:
     pos: -25.5,-2.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6915
-    type: ContainerContainer
 - uid: 6908
-  type: Morgue
+  type: Crematorium
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -25.5,-1.5
+  - pos: -77.5,-38.5
     parent: 30
     type: Transform
   - containers:
       entity_storage: !type:Container
         ents: []
-      morgue_tray: !type:ContainerSlot
-        ent: 6916
     type: ContainerContainer
 - uid: 6909
   type: GasPipeStraight
@@ -72781,33 +72819,33 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 6913
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6877
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-1.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6914
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6906
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-2.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6915
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6907
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-3.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6916
-  type: MorgueTray
+  type: Morgue
   components:
-  - parent: 6908
+  - rot: -1.5707963267948966 rad
+    pos: -21.5,-4.5
+    parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6917
   type: VendingMachineViroDrobe
   components:
@@ -72821,9 +72859,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 6919
-  type: ReinforcedPlasmaWindow
+  type: PlasmaWindow
   components:
-  - pos: -34.5,-21.5
+  - pos: -30.5,-21.5
     parent: 30
     type: Transform
 - uid: 6920
@@ -73053,9 +73091,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6953
-  type: MedicalBed
+  type: PlasmaWindow
   components:
-  - pos: -21.5,-12.5
+  - pos: -32.5,-24.5
     parent: 30
     type: Transform
 - uid: 6954
@@ -73102,13 +73140,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 6958
-  type: BedsheetMedical
+  type: PlasmaWindow
   components:
-  - pos: -21.5,-12.5
+  - pos: -32.5,-23.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 6959
   type: BedsheetMedical
   components:
@@ -73410,15 +73446,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6998
-  type: DrinkDoctorsDelightGlass
+  type: Grille
   components:
-  - pos: -13.000066,-14.266357
+  - pos: -29.5,-22.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 6999
   type: Lamp
   components:
@@ -73907,9 +73939,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7074
-  type: StasisBed
+  type: PlasmaWindow
   components:
-  - pos: -21.5,-22.5
+  - pos: -29.5,-21.5
     parent: 30
     type: Transform
 - uid: 7075
@@ -74048,13 +74080,11 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 7093
-  type: RollerBed
+  type: OperatingTable
   components:
-  - pos: -9.51763,-21.263887
+  - pos: -9.5,-21.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7094
   type: VendingMachineSmartFridge
   components:
@@ -74660,13 +74690,13 @@ entities:
     parent: 30
     type: Transform
 - uid: 7191
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: -28.5,-17.5
     parent: 30
     type: Transform
 - uid: 7192
-  type: AirlockMedicalLocked
+  type: AirlockVirologyLocked
   components:
   - pos: -28.5,-13.5
     parent: 30
@@ -74678,9 +74708,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7194
-  type: Grille
+  type: PlasmaWindow
   components:
-  - pos: -29.5,-22.5
+  - pos: -29.5,-24.5
     parent: 30
     type: Transform
 - uid: 7195
@@ -74733,10 +74763,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7203
-  type: ReinforcedPlasmaWindow
+  type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -29.5,-24.5
+  - pos: -29.5,-23.5
     parent: 30
     type: Transform
 - uid: 7204
@@ -79056,9 +79085,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7764
-  type: ReinforcedPlasmaWindow
+  type: PlasmaWindow
   components:
-  - pos: -32.5,-24.5
+  - pos: -32.5,-22.5
     parent: 30
     type: Transform
 - uid: 7765
@@ -79090,9 +79119,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7769
-  type: ReinforcedPlasmaWindow
+  type: NitrousOxideCanister
   components:
-  - pos: -32.5,-23.5
+  - pos: 18.5,-15.5
     parent: 30
     type: Transform
 - uid: 7770
@@ -80273,10 +80302,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7965
-  type: ReinforcedPlasmaWindow
+  type: StorageCanister
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -29.5,-21.5
+  - pos: 18.5,-18.5
     parent: 30
     type: Transform
 - uid: 7966
@@ -80322,10 +80350,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7973
-  type: ReinforcedPlasmaWindow
+  type: NitrousOxideCanister
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -29.5,-22.5
+  - pos: 19.5,-15.5
     parent: 30
     type: Transform
 - uid: 7974
@@ -80335,10 +80362,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 7975
-  type: ReinforcedPlasmaWindow
+  type: WaterVaporCanister
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -30.5,-21.5
+  - pos: 18.5,-17.5
     parent: 30
     type: Transform
 - uid: 7976
@@ -82548,7 +82574,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 8275
-  type: AirlockMedicalGlassLocked
+  type: AirlockVirologyGlassLocked
   components:
   - pos: -31.5,-21.5
     parent: 30
@@ -82560,7 +82586,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 8277
-  type: AirlockMedicalGlassLocked
+  type: AirlockVirologyGlassLocked
   components:
   - pos: -33.5,-21.5
     parent: 30
@@ -82612,10 +82638,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 8285
-  type: ReinforcedPlasmaWindow
+  type: StorageCanister
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -29.5,-23.5
+  - pos: 19.5,-18.5
     parent: 30
     type: Transform
 - uid: 8286
@@ -82644,9 +82669,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 8289
-  type: ReinforcedPlasmaWindow
+  type: PlasmaWindow
   components:
-  - pos: -32.5,-22.5
+  - pos: -32.5,-21.5
     parent: 30
     type: Transform
 - uid: 8290
@@ -88835,33 +88860,38 @@ entities:
     parent: 30
     type: Transform
 - uid: 9120
-  type: CarbonDioxideCanister
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 18.5,-15.5
+  - anchored: True
+    pos: -20.5,-21.5
     parent: 30
     type: Transform
 - uid: 9121
-  type: WaterVaporCanister
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 18.5,-16.5
+  - anchored: True
+    pos: 38.5,-5.5
     parent: 30
     type: Transform
 - uid: 9122
-  type: WaterVaporCanister
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 19.5,-16.5
+  - anchored: True
+    pos: 38.5,-3.5
     parent: 30
     type: Transform
 - uid: 9123
-  type: StorageCanister
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 19.5,-17.5
+  - anchored: True
+    pos: -16.5,12.5
     parent: 30
     type: Transform
 - uid: 9124
-  type: StorageCanister
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 18.5,-17.5
+  - anchored: True
+    pos: -19.5,17.5
     parent: 30
     type: Transform
 - uid: 9125
@@ -89235,15 +89265,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 9178
-  type: DrinkWaterBottleFull
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.080818176,-28.226078
+  - pos: -20.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 9179
   type: hydroponicsSoil
   components:
@@ -105277,15 +105303,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 11369
-  type: DrinkDetFlask
+  type: AtmosFixFreezerMarker
   components:
-  - pos: 3.675384,-15.173689
+  - pos: -20.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 11370
   type: ClothingHeadHatFedoraBrown
   components:
@@ -105749,9 +105771,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 11440
-  type: ReinforcedPlasmaWindow
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -32.5,-21.5
+  - pos: -20.5,16.5
     parent: 30
     type: Transform
 - uid: 11441
@@ -106700,9 +106722,17 @@ entities:
 - uid: 11572
   type: LampGold
   components:
-  - pos: -27.572895,-0.3626914
+  - pos: -27.499172,-0.11374092
     parent: 30
     type: Transform
+  - toggleAction:
+      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      keywords: []
+      event: !type:ToggleActionEvent {}
+    type: HandheldLight
   - canCollide: False
     type: Physics
 - uid: 11573
@@ -107314,12 +107344,12 @@ entities:
 - uid: 11649
   components:
   - pos: 2.2710133,-2.4148211
-    parent: null
+    parent: 5350
     type: Transform
   - index: 1
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -107338,6 +107368,10 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -137238,15 +137272,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 15382
-  type: DrinkShotGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: 15.757429,60.801353
+  - pos: -19.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 15383
   type: Sink
   components:
@@ -140277,15 +140307,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 15859
-  type: DrinkShotGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: 15.554304,60.91073
+  - pos: -19.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 15860
   type: Barricade
   components:
@@ -146244,15 +146270,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 16752
-  type: DrinkWineGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -40.301033,22.896976
+  - pos: -19.5,16.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 16753
   type: PosterLegitHighClassMartini
   components:
@@ -148711,27 +148733,17 @@ entities:
     parent: 30
     type: Transform
 - uid: 17108
-  type: DrinkVodkaBottleFull
+  type: AtmosFixFreezerMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.409187,44.67379
+  - pos: -18.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 17109
-  type: DrinkVodkaBottleFull
+  type: AtmosFixFreezerMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.393562,44.533165
+  - pos: -18.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 17110
   type: ClothingHeadHatUshanka
   components:
@@ -150982,15 +150994,15 @@ entities:
     parent: 30
     type: Transform
 - uid: 17468
-  type: TableWood
+  type: AltarConvertRed
   components:
-  - pos: -62.5,-44.5
+  - pos: -61.5,-44.5
     parent: 30
     type: Transform
 - uid: 17469
-  type: TableWood
+  type: AltarConvertRed
   components:
-  - pos: -61.5,-44.5
+  - pos: -62.5,-44.5
     parent: 30
     type: Transform
 - uid: 17470
@@ -151046,17 +151058,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 17477
-  type: DrinkBottleWine
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -57.464348,-43.09291
+  - pos: -18.5,16.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 17478
   type: SolarTracker
   components:
@@ -152112,16 +152118,12 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 17631
-  type: Crematorium
+  type: Morgue
   components:
-  - pos: -77.5,-38.5
+  - rot: 1.5707963267948966 rad
+    pos: -23.5,-2.5
     parent: 30
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      morgue_tray: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 17632
   type: ChairWood
   components:
@@ -152260,17 +152262,11 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 17652
-  type: DrinkBottlePatron
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -82.53516,-45.268623
+  - pos: -17.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 17653
   type: PaintingMonkey
   components:
@@ -153383,10 +153379,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 17810
-  type: WallReinforced
+  type: WallSolid
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -43.5,-22.5
+  - pos: -43.5,-22.5
     parent: 30
     type: Transform
 - uid: 17811
@@ -165442,25 +165437,17 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 19525
-  type: DrinkMugGreen
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -71.575066,-52.318336
+  - pos: -17.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19526
-  type: DrinkMugBlack
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -72.24694,-52.474586
+  - pos: -17.5,16.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19527
   type: PottedPlantRandom
   components:
@@ -167403,16 +167390,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 19790
-  type: DrinkVodkaBottleFull
+  type: AtmosFixFreezerMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -59.409187,44.76754
+  - pos: -16.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 19791
   type: YellowOxygenTankFilled
   components:
@@ -167815,15 +167797,11 @@ entities:
     parent: 30
     type: Transform
 - uid: 19844
-  type: DrinkChangelingStingCan
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -42.46064,-22.560078
+  - pos: -16.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: RefillableSolution
 - uid: 19845
   type: FoamBlade
   components:
@@ -171972,10 +171950,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 20437
-  type: StasisBed
+  type: AtmosFixFreezerMarker
   components:
-  - rot: 3.141592653589793 rad
-    pos: -23.5,-22.5
+  - pos: -16.5,16.5
     parent: 30
     type: Transform
 - uid: 20438
@@ -172686,12 +172663,12 @@ entities:
 - uid: 20528
   components:
   - pos: 47.71392,-60.546738
-    parent: null
+    parent: 5350
     type: Transform
   - index: 2
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -177610,59 +177587,69 @@ entities:
 - uid: 21242
   type: Morgue
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-4.5
+  - rot: 1.5707963267948966 rad
+    pos: -23.5,-3.5
     parent: 30
     type: Transform
 - uid: 21243
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-3.5
-    parent: 30
-    type: Transform
-- uid: 21244
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-2.5
-    parent: 30
-    type: Transform
-- uid: 21245
-  type: Morgue
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -21.5,-1.5
-    parent: 30
-    type: Transform
-- uid: 21246
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.5,-4.5
     parent: 30
     type: Transform
-- uid: 21247
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-3.5
-    parent: 30
-    type: Transform
-- uid: 21248
-  type: Morgue
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.5,-2.5
-    parent: 30
-    type: Transform
-- uid: 21249
+- uid: 21244
   type: Morgue
   components:
   - rot: 1.5707963267948966 rad
     pos: -23.5,-1.5
     parent: 30
     type: Transform
+- uid: 21245
+  type: Morgue
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -25.5,-3.5
+    parent: 30
+    type: Transform
+- uid: 21246
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -20.5,-13.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21247
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -23.5,-11.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21248
+  type: HospitalCurtainsOpen
+  components:
+  - pos: -24.5,-11.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21249
+  type: PortableScrubber
+  components:
+  - pos: 5.5,-25.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 21250
   type: Table
   components:
@@ -178414,35 +178401,23 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 21337
-  type: DrinkMug
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.38949347,-9.49394
+  - pos: -15.5,14.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21338
-  type: DrinkMug
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.35824347,-9.290815
+  - pos: -15.5,15.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21339
-  type: DrinkMug
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.42074347,-9.11894
+  - pos: -15.5,16.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21340
   type: TableGlass
   components:
@@ -178511,45 +178486,29 @@ entities:
   - solution: drink
     type: DrainableSolution
 - uid: 21350
-  type: DrinkIrishCoffeeGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.6569953,-8.2281685
+  - pos: -17.5,17.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21351
-  type: DrinkIrishCoffeeGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.6726203,-8.0250435
+  - pos: -16.5,17.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21352
-  type: DrinkIcedCoffeeGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.4028604,-8.289953
+  - pos: -15.5,17.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21353
-  type: DrinkIcedCoffeeGlass
+  type: AtmosFixFreezerMarker
   components:
-  - pos: -0.4497354,-8.008703
+  - pos: -15.5,13.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21354
   type: PosterLegitCohibaRobustoAd
   components:
@@ -178666,15 +178625,11 @@ entities:
   - solution: drink
     type: DrainableSolution
 - uid: 21366
-  type: DrinkMugDog
+  type: AtmosFixFreezerMarker
   components:
-  - pos: 5.551281,-11.404634
+  - pos: -16.5,13.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 21367
   type: ShuttersWindowOpen
   components:
@@ -179590,33 +179545,41 @@ entities:
     parent: 30
     type: Transform
 - uid: 21502
-  type: MorgueTray
+  type: PortableScrubber
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6908
+  - pos: 5.5,-24.5
+    parent: 30
     type: Transform
+  - canCollide: False
+    type: Physics
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 21503
-  type: MorgueTray
+  type: BrbSign
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6907
+  - pos: -0.87252545,31.729797
+    parent: 30
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 21504
-  type: MorgueTray
+  type: AtmosFixFreezerMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6906
+  - pos: -17.5,13.5
+    parent: 30
     type: Transform
 - uid: 21505
-  type: MorgueTray
+  type: BedsheetMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0,-1
-    parent: 6877
+  - pos: -21.5,-22.5
+    parent: 30
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 21506
   type: PaintingCafeTerraceAtNight
   components:
@@ -180161,6 +180124,36 @@ entities:
   - pos: -48.5,7.5
     parent: 30
     type: Transform
+- uid: 21583
+  type: WallSolid
+  components:
+  - pos: -43.5,2.5
+    parent: 30
+    type: Transform
+- uid: 21584
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -23.5,-22.5
+    parent: 30
+    type: Transform
+- uid: 21585
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -23.5,-21.5
+    parent: 30
+    type: Transform
+- uid: 21586
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -22.5,-22.5
+    parent: 30
+    type: Transform
+- uid: 21587
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -22.5,-21.5
+    parent: 30
+    type: Transform
 - uid: 21588
   type: JetpackMini
   components:
@@ -180559,4 +180552,16 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 21651
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -21.5,-22.5
+    parent: 30
+    type: Transform
+- uid: 21652
+  type: AtmosFixFreezerMarker
+  components:
+  - pos: -21.5,-21.5
+    parent: 30
+    type: Transform
 ...

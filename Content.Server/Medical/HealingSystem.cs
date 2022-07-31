@@ -4,12 +4,12 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
+using Content.Server.MobState;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState.Components;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -24,6 +24,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     public override void Initialize()
     {
@@ -36,7 +37,7 @@ public sealed class HealingSystem : EntitySystem
 
     private void OnHealingComplete(EntityUid uid, DamageableComponent component, HealingCompleteEvent args)
     {
-        if (TryComp<MobStateComponent>(uid, out var state) && state.IsDead())
+        if (_mobStateSystem.IsDead(uid))
             return;
 
         if (TryComp<StackComponent>(args.Component.Owner, out var stack) && stack.Count < 1) return;
@@ -97,10 +98,13 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        if (TryComp<MobStateComponent>(target, out var state) && state.IsDead())
+        if (_mobStateSystem.IsDead(target))
             return false;
 
         if (!TryComp<DamageableComponent>(target, out var targetDamage))
+            return false;
+
+        if (targetDamage.TotalDamage == 0)
             return false;
 
         if (component.DamageContainerID is not null && !component.DamageContainerID.Equals(targetDamage.DamageContainerID))
@@ -122,7 +126,12 @@ public sealed class HealingSystem : EntitySystem
             SoundSystem.Play(component.HealingBeginSound.GetSound(), Filter.Pvs(uid, entityManager:EntityManager), uid, AudioHelpers.WithVariation(0.125f).WithVolume(-5f));
         }
 
-        _doAfter.DoAfter(new DoAfterEventArgs(user, component.Delay, component.CancelToken.Token, target)
+        var delay = component.Delay;
+
+        if (user == target)
+            delay *= component.SelfHealPenaltyMultiplier;
+
+        _doAfter.DoAfter(new DoAfterEventArgs(user, delay, component.CancelToken.Token, target)
         {
             BreakOnUserMove = true,
             BreakOnTargetMove = true,

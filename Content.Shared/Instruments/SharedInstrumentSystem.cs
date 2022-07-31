@@ -20,8 +20,10 @@ public abstract class SharedInstrumentSystem : EntitySystem
 
     public void SetInstrumentProgram(SharedInstrumentComponent component, byte program, byte bank)
     {
-        component.InstrumentProgram = program;
         component.InstrumentBank = bank;
+        component.InstrumentProgram = program;
+        component.DirtyRenderer = true;
+        Dirty(component);
     }
 
     private void OnGetState(EntityUid uid, SharedInstrumentComponent instrument, ref ComponentGetState args)

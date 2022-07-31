@@ -304,6 +304,27 @@
   itemId: DehydratedSpaceCarp
   price: 3
 
+# Job Specific
+
+- type: uplinkListing
+  id: uplinkGatfruitSeeds
+  category: Job
+  itemId: GatfruitSeeds
+  description: And who says guns don't grow on trees?
+  price: 4
+  jobWhitelist:
+  - Botanist
+
+- type: uplinkListing
+  id: uplinkNecronomicon
+  category: Job
+  itemId: BibleNecronomicon
+  description: An unholy book capable of summoning a demonic familiar.
+  price: 6
+  surplus: false
+  jobWhitelist:
+  - Chaplain
+
 # Armor
 
 # Should be cameleon shoes, change when implemented.
@@ -346,7 +367,7 @@
 - type: uplinkListing
   id: UplinkEVASyndie
   category: Armor
-  itemId: BoxSyndicateEVA
+  itemId: ClothingBackpackDuffelSyndicateEVABundle
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   price: 4
 

@@ -226,7 +226,7 @@
         map: ["enum.SolutionContainerLayers.Base"]
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
-    HeldPrefix: 0
+    heldPrefix: 0
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -272,7 +272,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 50
   - type: SolutionSpiker
     sourceSolution: food
   - type: DeleteOnTrigger

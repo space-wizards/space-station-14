@@ -8,6 +8,7 @@ using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
@@ -51,7 +52,7 @@ namespace Content.Server.Recycling
                 }
             }
 
-            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", victim)),
+            _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Entity(victim, EntityManager))),
                 victim,
                 Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
 

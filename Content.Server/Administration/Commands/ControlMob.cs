@@ -7,8 +7,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
-    sealed class ControlMob : IConsoleCommand
+    [AdminCommand(AdminFlags.Fun)]
+    public sealed class ControlMob : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
