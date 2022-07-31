@@ -30,8 +30,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
-        //Prevents the user from creating multiple DoAfters if they're already resisting.
-        if (component.IsResisting == true)
+        if (component.CancelToken != null)
             return;
 
         if (_containerSystem.TryGetContainingContainer(uid, out var container)
@@ -51,7 +50,7 @@ public sealed class EscapeInventorySystem : EntitySystem
     private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component)
     {
         component.CancelToken = new();
-        var doAfterEventArgs = new DoAfterEventArgs(user, component.ResistTime, component.CancelToken.Token, container)
+        var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime, component.CancelToken.Token, container)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = false,
@@ -62,7 +61,6 @@ public sealed class EscapeInventorySystem : EntitySystem
             UserCancelledEvent = new EscapeDoAfterCancel(),
         };
 
-        component.IsResisting = true;
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, Filter.Entities(user));
         _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, Filter.Entities(container));
         _doAfterSystem.DoAfter(doAfterEventArgs);
@@ -72,12 +70,12 @@ public sealed class EscapeInventorySystem : EntitySystem
     {
         //Drops the mob on the tile below the container
         Transform(uid).AttachParentToContainerOrGrid(EntityManager);
-        component.IsResisting = false;
+        component.CancelToken = null;
     }
 
     private void OnEscapeFail(EntityUid uid, CanEscapeInventoryComponent component, EscapeDoAfterCancel ev)
     {
-        component.IsResisting = false;
+        component.CancelToken = null;
     }
 
     private sealed class EscapeDoAfterComplete : EntityEventArgs { }
