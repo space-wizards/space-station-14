@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,8 @@ namespace Content.Server.AI.Steering
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+
+        private const float TileTolerance = 0.1f;
 
         private bool _enabled;
 
@@ -34,6 +36,13 @@ namespace Content.Server.AI.Steering
         {
             base.Initialize();
             _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+
+            SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
+        }
+
+        private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
+        {
+            component.PathfindToken?.Cancel();
         }
 
         private void SetNPCEnabled(bool obj)
@@ -42,7 +51,7 @@ namespace Content.Server.AI.Steering
             {
                 foreach (var comp in EntityQuery<NPCSteeringComponent>())
                 {
-                    comp.LastInput = Vector2.Zero;
+                    // comp.LastInput = Vector2.Zero;
                 }
             }
 
@@ -67,7 +76,7 @@ namespace Content.Server.AI.Steering
                 comp.PathfindToken?.Cancel();
                 comp.PathfindToken = null;
                 comp.CurrentPath.Clear();
-                comp.LastInput = Vector2.Zero;
+                // comp.LastInput = Vector2.Zero;
             }
             else
             {
@@ -102,11 +111,12 @@ namespace Content.Server.AI.Steering
                 return;
 
             // Not every mob has the modifier component so do it as a separate query.
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
             foreach (var (steering, _, mover, xform) in EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>())
             {
-                Steer(steering, mover, xform, modifierQuery, frameTime);
+                Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
             }
         }
 
@@ -125,14 +135,25 @@ namespace Content.Server.AI.Steering
             InputMoverComponent mover,
             TransformComponent xform,
             EntityQuery<MovementSpeedModifierComponent> modifierQuery,
+            EntityQuery<PhysicsComponent> bodyQuery,
             float frameTime)
         {
-            // Can't move at all, just noop input.
-            // TODO: Space movement
-            if (!mover.CanMove ||
-                xform.GridUid == null)
+            var destinationCoordinates = steering.Coordinates;
+
+            // We've arrived, nothing else matters.
+            if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
+                distance <= steering.Range)
             {
                 SetDirection(mover, Vector2.Zero);
+                steering.Status = SteeringStatus.InRange;
+                return;
+            }
+
+            // Can't move at all, just noop input.
+            if (!mover.CanMove)
+            {
+                SetDirection(mover, Vector2.Zero);
+                steering.Status = SteeringStatus.Moving;
                 return;
             }
 
@@ -168,19 +189,24 @@ namespace Content.Server.AI.Steering
             // Grab the target position, either the path or our end goal.
             EntityCoordinates targetCoordinates;
 
+            // What's our tolerance for arrival.
+            // If it's a pathfinding node it might be different to the destination.
+            float arrivalDistance;
+
             // Keep following the path.
             if (steering.CurrentPath.TryPeek(out var nextTarget))
             {
-                targetCoordinates = new EntityCoordinates(nextTarget.GridUid, nextTarget.GridIndices);
+                // TODO: Tile size.
+                targetCoordinates = new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
+                arrivalDistance = TileTolerance;
             }
             else
             {
                 // TODO: Some situations we may not want to move at our target without a path.
                 // e.g. if the pathfinding is gonna take ages might want to wait for the first one, or something like a mule.
                 targetCoordinates = steering.Coordinates;
+                arrivalDistance = steering.Range;
             }
-
-            // Early return if we don't want to follow path here
 
             // Check if mapids match.
             var ourCoordinates = xform.Coordinates;
@@ -195,35 +221,107 @@ namespace Content.Server.AI.Steering
                 return;
             }
 
+            var direction = targetMap.Position - ourMap.Position;
+
+            // Are we in range
+            if (direction.Length <= arrivalDistance)
+            {
+                // It was just a node, not the target, so grab the next destination (either the target or next node).
+                if (steering.CurrentPath.Count > 0)
+                {
+                    steering.CurrentPath.Dequeue();
+
+                    // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
+                    // TODO: If it's the last node just grab the target instead.
+                    if (steering.CurrentPath.TryPeek(out nextTarget))
+                    {
+                        targetCoordinates = new EntityCoordinates(nextTarget.GridUid, nextTarget.GridIndices);
+                    }
+                    else
+                    {
+                        targetCoordinates = steering.Coordinates;
+                    }
+
+                    targetMap = targetCoordinates.ToMap(EntityManager);
+
+                    // Can't make it again.
+                    if (ourMap.MapId != targetMap.MapId)
+                    {
+                        SetDirection(mover, Vector2.Zero);
+                        steering.Status = SteeringStatus.NoPath;
+                        return;
+                    }
+
+                    // Gonna resume now business as usual
+                    direction = targetMap.Position - ourMap.Position;
+                }
+                else
+                {
+                    // This probably shouldn't happen as we check above but eh.
+                    SetDirection(mover, Vector2.Zero);
+                    steering.Status = SteeringStatus.InRange;
+                    return;
+                }
+            }
+
+            // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
+            var needsPath = steering.CurrentPath.Count == 0;
+
+            if (!needsPath)
+            {
+                var lastNode = steering.CurrentPath.Last();
+                var lastCoordinate = new EntityCoordinates(lastNode.GridUid, lastNode.GridIndices);
+
+                if (lastCoordinate.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
+                    lastDistance > steering.RepathRange)
+                {
+                    needsPath = true;
+                }
+            }
+
+            // Reuest the new path.
+            if (needsPath && bodyQuery.TryGetComponent(steering.Owner, out var body))
+            {
+                RequestPath(steering, xform, body);
+            }
+
             modifierQuery.TryGetComponent(steering.Owner, out var modifier);
             var moveSpeed = GetSprintSpeed(modifier);
 
-            var direction = targetMap.Position - ourMap.Position;
+            var input = direction.Normalized;
 
-            SetDirection(mover, direction);
+            // If we're going to overshoot then... don't.
+            // TODO: For tile / movement we don't need to get bang on, just need to make sure we don't overshoot the far end.
+            var tickMovement = input * moveSpeed * frameTime;
+
+            if (tickMovement.Length > direction.Length)
+            {
+                input *= direction.Length / tickMovement.Length;
+            }
+
+            SetDirection(mover, input);
 
             // todo: Need a console command to make an NPC steer to a specific spot.
 
-            // TODO: Steering behaviours.
+            // TODO: Actual steering behaviours and collision avoidance.
+            // TODO: Need to handle path invalidation if nodes change.
         }
 
         /// <summary>
         /// Get a new job from the pathfindingsystem
         /// </summary>
-        private void RequestPath(NPCSteeringComponent component, TransformComponent xform, PhysicsComponent? body)
+        private void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
         {
-            if (component.PathfindToken != null)
-            {
-                return;
-            }
-
-            if (xform.GridUid == null)
+            // If we already have a pathfinding request then don't grab another.
+            if (steering.Pathfind != null)
                 return;
 
-            component.PathfindToken = new CancellationTokenSource();
-            var gridManager = _mapManager.GetGrid(xform.GridUid.Value);
-            var startTile = gridManager.GetTileRef(xform.Coordinates);
-            var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
+            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+                return;
+
+            steering.PathfindToken = new CancellationTokenSource();
+            var startTile = grid.GetTileRef(xform.Coordinates);
+            var endTile = grid.GetTileRef(steering.Coordinates);
             var collisionMask = 0;
 
             if (body != null)
@@ -231,16 +329,16 @@ namespace Content.Server.AI.Steering
                 collisionMask = body.CollisionMask;
             }
 
-            var access = _accessReader.FindAccessTags(component.Owner);
+            var access = _accessReader.FindAccessTags(steering.Owner);
 
-            component.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
-                component.Owner,
+            steering.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
+                steering.Owner,
                 access,
                 collisionMask,
                 startTile,
                 endTile,
-                component.PathfindingProximity
-            ), component.PathfindToken.Token);
+                steering.Range
+            ), steering.PathfindToken.Token);
         }
 
         private float GetSprintSpeed(MovementSpeedModifierComponent? modifier)
@@ -314,13 +412,5 @@ namespace Content.Server.AI.Steering
         }
 
         #endregion
-    }
-
-    public enum SteeringStatus
-    {
-        Pending,
-        NoPath,
-        Arrived,
-        Moving,
     }
 }
