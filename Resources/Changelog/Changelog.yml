@@ -1,17 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: 'Added space ambience, with two songs. Go throw yourself out into space
-      a few times.', type: Add}
-  - {message: Added audio settings to disable station ambience and/or space ambience.,
-    type: Add}
-  id: 1551
-  time: '2022-05-18T04:21:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: No more bangin' donks allowed, type: Remove}
-  id: 1552
-  time: '2022-05-18T04:53:37.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Ghosts now always have a consistent directional sprite while orbiting
@@ -2937,3 +2924,13 @@ Entries:
   - {message: Desk lamps and floodlights are now heavier., type: Tweak}
   id: 2050
   time: '2022-07-31T02:56:42.0000000+00:00'
+- author: GoodWheatley
+  changes:
+  - {message: nuke disk now takes up 5 space instead of 12, type: Tweak}
+  id: 2051
+  time: '2022-07-31T02:58:19.0000000+00:00'
+- author: Deahaka
+  changes:
+  - {message: Added donut-vend., type: Add}
+  id: 2052
+  time: '2022-07-31T02:58:57.0000000+00:00'
