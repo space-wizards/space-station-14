@@ -12,7 +12,7 @@ namespace Content.Client.Ghost.Roles.UI
     {
         private readonly IGameTiming _gameTiming = default!;
 
-        private TimeSpan _expiresAt;
+        private readonly TimeSpan _expiresAt;
 
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
@@ -25,7 +25,7 @@ namespace Content.Client.Ghost.Roles.UI
             _gameTiming = timing;
             _expiresAt = role.ExpiresAt;
 
-            Title.Text = name;
+            Title.Text = role.AvailableRoleCount > 1 ? $"{role.Name} ({role.AvailableRoleCount})" : role.Name;
             Description.SetMessage(description);
 
             RequestButton.Visible = !role.IsRequested;

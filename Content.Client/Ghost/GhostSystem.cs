@@ -18,6 +18,7 @@ namespace Content.Client.Ghost
         // Changes to this value are manually propagated.
         // No good way to get an event into the UI.
         public int AvailableGhostRoleCount { get; private set; } = 0;
+        public string[] AvailableGhostRoles { get; set; } = new string[] {};
 
         private bool _ghostVisibility;
 
@@ -120,7 +121,9 @@ namespace Content.Client.Ghost
 
         private void OnUpdateGhostRoleCount(GhostUpdateGhostRoleCountEvent msg)
         {
-            AvailableGhostRoleCount = msg.AvailableGhostRoles;
+            AvailableGhostRoleCount = msg.AvailableGhostRoleCount;
+            AvailableGhostRoles = msg.AvailableGhostRoles;
+
             foreach (var ghost in EntityManager.EntityQuery<GhostComponent>(true))
                 ghost.Gui?.Update();
         }

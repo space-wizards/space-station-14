@@ -112,11 +112,14 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public sealed class GhostUpdateGhostRoleCountEvent : EntityEventArgs
     {
-        public int AvailableGhostRoles { get; }
+        public int AvailableGhostRoleCount { get; }
 
-        public GhostUpdateGhostRoleCountEvent(int availableGhostRoleCount)
+        public string[] AvailableGhostRoles { get; }
+
+        public GhostUpdateGhostRoleCountEvent(int availableGhostRoleCount, string[] ghostRoles)
         {
-            AvailableGhostRoles = availableGhostRoleCount;
+            AvailableGhostRoleCount = availableGhostRoleCount;
+            AvailableGhostRoles = ghostRoles;
         }
     }
 }

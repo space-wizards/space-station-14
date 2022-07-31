@@ -35,9 +35,13 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        private bool _needsUpdateGhostRoles = true;
         private bool _needsUpdateGhostRoleCount = true;
 
         private readonly Dictionary<string, GhostRoleEntry> _ghostRoles = new();
+
+        private int TotalRoleCount => _ghostRoles.Sum(op => op.Value.Components.Count);
+
 
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
@@ -145,17 +149,8 @@ namespace Content.Server.Ghost.Roles
         {
             base.Update(frameTime);
 
-            var needsUpdating = false;
-
             foreach (var (identifier, entry) in _ghostRoles)
             {
-                if (entry.Components.Count == 0)
-                {
-                    needsUpdating = true;
-                    _ghostRoles.Remove(identifier);
-                    continue;
-                }
-
                 if (_gameTiming.CurTime < entry.ExpiresAt)
                     continue;
 
@@ -166,16 +161,19 @@ namespace Content.Server.Ghost.Roles
                     entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
                 }
 
-                needsUpdating = true;
+                _needsUpdateGhostRoles = true;
             }
 
-            if (needsUpdating)
-                UpdateAllEui(); // TODO: Optimize to update individual ghost roles.
+            if (_needsUpdateGhostRoles)
+            {
+                _needsUpdateGhostRoles = false;
+                UpdateAllEui();
+            }
 
             if (_needsUpdateGhostRoleCount)
             {
                 _needsUpdateGhostRoleCount = false;
-                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                var response = new GhostUpdateGhostRoleCountEvent(TotalRoleCount, _ghostRoles.Keys.ToArray());
                 foreach (var player in _playerManager.Sessions)
                 {
                     RaiseNetworkEvent(response, player.ConnectedClient);
@@ -193,7 +191,7 @@ namespace Content.Server.Ghost.Roles
             var sessions = new List<IPlayerSession>(entry.PendingPlayerSessions);
             _random.Shuffle(sessions);
 
-            var compIdx = entry.Components.Count - 1; // Deletion is handled elsewhere, so just use an index.
+            var compIdx = entry.Components.Count - 1; // Ghost role components will unregister themselves via events.
             while (sessions.Count > 0 && compIdx >= 0)
             {
                 var session = sessions[^1];
@@ -226,15 +224,18 @@ namespace Content.Server.Ghost.Roles
             }
 
             // Clear and add the remaining sessions.
-            entry.PendingPlayerSessions.Clear();
-            entry.PendingPlayerSessions.UnionWith(sessions);
+            if (entry.Components.Count > 0)
+            {
+                entry.PendingPlayerSessions.Clear();
+                entry.PendingPlayerSessions.UnionWith(sessions);
+            }
         }
 
         private void PlayerStatusChanged(object? blah, SessionStatusEventArgs args)
         {
             if (args.NewStatus == SessionStatus.InGame)
             {
-                var response = new GhostUpdateGhostRoleCountEvent(_ghostRoles.Count);
+                var response = new GhostUpdateGhostRoleCountEvent(TotalRoleCount, _ghostRoles.Keys.ToArray());
                 RaiseNetworkEvent(response, args.Session.ConnectedClient);
             }
         }
@@ -243,7 +244,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.TryGetValue(role.RoleName, out var entry))
             {
-                var elapseTime = TimeSpan.FromSeconds(30);
+                var elapseTime = TimeSpan.FromSeconds(30); // TODO: Should this be defined within the role?
 
                 entry = new GhostRoleEntry()
                 {
@@ -256,6 +257,7 @@ namespace Content.Server.Ghost.Roles
                 };
 
                 _ghostRoles[role.RoleName] = entry;
+                _needsUpdateGhostRoles = true;
             }
 
             if (entry.Components.Contains(role))
@@ -263,8 +265,6 @@ namespace Content.Server.Ghost.Roles
 
             entry.Components.Add(role);
             role.Identifier = entry.NextComponentIdentifier;
-
-            UpdateAllEui();
         }
 
         public void UnregisterGhostRole(GhostRoleComponent role)
@@ -275,8 +275,11 @@ namespace Content.Server.Ghost.Roles
             var entry = element.Value.Value;
 
             entry.Components.Remove(role);
-
-            UpdateAllEui();
+            if (entry.Components.Count == 0)
+            {
+                _ghostRoles.Remove(element.Value.Key);
+                _needsUpdateGhostRoles = true;
+            }
         }
 
         public void RequestTakeover(IPlayerSession player, string identifier)
@@ -352,17 +355,18 @@ namespace Content.Server.Ghost.Roles
 
             var i = 0;
 
-            foreach (var (id, request) in _ghostRoles)
+            foreach (var (id, entry) in _ghostRoles)
             {
 
                 roles[i] = new GhostRoleInfo()
                 {
-                    Name = request.Name,
-                    Description = request.Description,
-                    Rules = request.Rules,
-                    ExpiresAt = request.ExpiresAt,
-                    AddedAt = request.AddedAt,
-                    IsRequested = request.PendingPlayerSessions.Contains(session),
+                    Name = entry.Name,
+                    Description = entry.Description,
+                    Rules = entry.Rules,
+                    ExpiresAt = entry.ExpiresAt,
+                    AddedAt = entry.AddedAt,
+                    IsRequested = entry.PendingPlayerSessions.Contains(session),
+                    AvailableRoleCount = entry.Components.Count,
                 };
                 i++;
             }

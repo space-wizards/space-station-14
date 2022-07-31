@@ -12,6 +12,7 @@ namespace Content.Shared.Ghost.Roles
         public TimeSpan ExpiresAt { get; set; }
         public TimeSpan AddedAt { get; set; }
         public bool IsRequested { get; set; }
+        public int AvailableRoleCount { get; set; }
     }
 
     [NetSerializable, Serializable]
