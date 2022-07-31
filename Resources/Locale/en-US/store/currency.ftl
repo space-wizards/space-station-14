@@ -1,0 +1,1 @@
+store-currency-inserted = {CAPITALIZE(THE($used))} is inserted into the {THE($target)}.

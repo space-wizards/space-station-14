@@ -1,0 +1,9 @@
+- type: currency
+  id: Telecrystal
+  name: TC
+  entityId: Telecrystal
+
+#debug
+- type: currency
+  id: DebugDollar
+  name: debug dollar

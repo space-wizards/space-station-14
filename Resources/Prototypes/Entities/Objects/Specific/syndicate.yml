@@ -18,6 +18,9 @@
   - type: Telecrystal
   - type: StackPrice
     price: 200
+  - type: Currency
+    price:
+      Telecrystal: 1
 
 - type: entity
   parent: Telecrystal
@@ -63,17 +66,18 @@
     interfaces:
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
-  - type: Uplink
-    activatesInHands: true
-
+    - key: enum.StoreUiKey.Key
+      type: UplinkBoundUserInterface
+  - type: Store
+  
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio20TC
   suffix: 20 TC
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 20
+  - type: Store
+    currency:
+      Telecrystal: 20
 
 
 #Default Nuclear Operative amount, not considering crew count

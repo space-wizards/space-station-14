@@ -1,0 +1,17 @@
+- type: listing
+  id: DebugListing
+  name: debug name
+  description: debug desc
+  categories: 
+    - Debug
+  cost: 
+    DebugDollar: 10
+
+- type: listing
+  id: DebugListing2
+  name: debug name
+  description: debug desc
+  categories: 
+    - Debug2
+  cost: 
+    DebugDollar: 10
