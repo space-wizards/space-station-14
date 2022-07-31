@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'Thanks to an enslaved magical schism, lobby music track x-ceed - flip-flap
-      (also known as title1) is now in higher quality at the same size.', type: Fix}
-  id: 1565
-  time: '2022-05-20T14:40:00.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added the water tank and fuel tank back to cargo ordering. It's expensive
@@ -2930,3 +2924,8 @@ Entries:
       do when taking them., type: Tweak}
   id: 2064
   time: '2022-07-31T06:02:28.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: You can now drink out of mop buckets and the janitor trolley, type: Tweak}
+  id: 2065
+  time: '2022-07-31T08:09:12.0000000+00:00'
