@@ -12,7 +12,7 @@ public sealed class StoreComponent : Component
     /// The available listings are partially based on the categories.
     /// </summary>
     [DataField("categories", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
-    public HashSet<string> Categories = new() { "Debug" };
+    public HashSet<string> Categories = new() { "Debug", "Debug2" };
 
     /// <summary>
     /// The total amount of currency that can be used in the store.

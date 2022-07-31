@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Store;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Store;
 ///     Used to define different categories for a store.
 /// </summary>
 [Prototype("storeCategory")]
-[DataDefinition]
+[Serializable, NetSerializable, DataDefinition]
 public sealed class StoreCategoryPrototype : IPrototype
 {
     [ViewVariables]

@@ -64,10 +64,8 @@
     heldPrefix: old-radio
   - type: UserInterface
     interfaces:
-    - key: enum.UplinkUiKey.Key
-      type: UplinkBoundUserInterface
     - key: enum.StoreUiKey.Key
-      type: UplinkBoundUserInterface
+      type: StoreBoundUserInterface
   - type: Store
   
 - type: entity

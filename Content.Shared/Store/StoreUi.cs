@@ -16,13 +16,10 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     public Dictionary<string, float> Currency;
 
     public HashSet<ListingData> Listings;
-
-    public HashSet<string> Categories;
-    public StoreUpdateState(EntityUid buyer, Dictionary<string, float> currency, HashSet<ListingData> listings, HashSet<string> categories)
+    public StoreUpdateState(EntityUid buyer, Dictionary<string, float> currency, HashSet<ListingData> listings)
     {
         Buyer = buyer;
         Currency = currency;
         Listings = listings;
-        Categories = categories;
     }
 }

@@ -38,7 +38,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         var listings = GetAvailableListings(buyer, component).ToHashSet();
 
-        var state = new StoreUpdateState(buyer, component.Currency, listings, component.Categories);
+        var state = new StoreUpdateState(buyer, component.Currency, listings);
         ui.SetState(state);
     }
 }
