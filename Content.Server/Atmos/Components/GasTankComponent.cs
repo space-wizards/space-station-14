@@ -42,7 +42,17 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         ///     Tank is connected to internals.
         /// </summary>
-        [ViewVariables] public bool IsConnected { get; set; }
+        [ViewVariables] public bool IsConnected => User != null;
+
+        [ViewVariables]
+        public EntityUid? User;
+
+        /// <summary>
+        ///     True if this entity was recently moved out of a container. This might have been a hand -> inventory
+        ///     transfer, or it might have been the user dropping the tank. This indicates the tank needs to be checked.
+        /// </summary>
+        [ViewVariables]
+        public bool CheckUser;
 
         /// <summary>
         ///     Pressure at which tanks start leaking.

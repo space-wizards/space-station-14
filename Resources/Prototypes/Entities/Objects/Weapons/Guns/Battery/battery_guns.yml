@@ -79,9 +79,6 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
-  - type: Construction
-    graph: MakeshiftLaser
-    node: makeshiftLaser
 
 - type: entity
   name: laser gun
