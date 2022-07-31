@@ -189,7 +189,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             else
                 unit.Container.Insert(toInsert);
-            
+
             AfterInsert(unit, toInsert);
         }
 
@@ -475,9 +475,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!Resolve(unitId, ref unit))
                 return false;
 
-            if (!HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
+            if (userId.HasValue && !HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
-                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId, Filter.Entities(userId), PopupType.SmallCaution);
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, Filter.Entities(userId.Value), PopupType.SmallCaution);
                 return false;
             }
 
