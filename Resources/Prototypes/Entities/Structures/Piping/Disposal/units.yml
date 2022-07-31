@@ -105,7 +105,7 @@
         map: [ "enum.DisposalUnitVisualLayers.Light" ]
   - type: Construction
     graph: DisposalMachine
-    node: disposal_unit
+    node: mailing_unit
   - type: DisposalUnit
     flushTime: 2
     autoEngageEnabled: false
