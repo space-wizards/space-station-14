@@ -19,7 +19,7 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public async IAsyncEnumerable<Image> Paint(string map)
+        public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -75,6 +75,8 @@ namespace Content.MapRenderer.Painters
             await PoolManager.RunTicksSync(pairTracker.Pair, 10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
+            Vector2? initialOffset = null;
+
             foreach (var grid in grids)
             {
                 // Skip empty grids
@@ -107,7 +109,20 @@ namespace Content.MapRenderer.Painters
                     gridCanvas.Mutate(e => e.Flip(FlipMode.Vertical));
                 });
 
-                yield return gridCanvas;
+                var renderedImage = new RenderedGridImage<Rgba32>(gridCanvas);
+                renderedImage.GridUid = grid.GridEntityId;
+
+                if (!initialOffset.HasValue)
+                {
+                    initialOffset = grid.WorldPosition;
+                    renderedImage.Base = true;
+                }
+                else
+                {
+                    renderedImage.Offset = grid.WorldPosition - initialOffset.Value;
+                }
+
+                yield return renderedImage;
             }
 
             // We don't care if it fails as we have already saved the images.
