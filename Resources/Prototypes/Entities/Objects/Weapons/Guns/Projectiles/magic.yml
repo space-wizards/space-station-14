@@ -111,15 +111,3 @@
       types:
         Piercing: 300
     ignoreResistances: true
-
-- type: entity
-  id: BulletKinetic
-  name: kinetic bolt
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  description: Not too bad, but you still don't want to get hit by it.
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 10
