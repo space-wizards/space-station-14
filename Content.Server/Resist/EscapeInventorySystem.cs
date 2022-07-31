@@ -1,10 +1,11 @@
 using Content.Server.DoAfter;
+using Content.Server.Contests;
 using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Content.Shared.Inventory;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
@@ -17,6 +18,13 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly ContestsSystem _contests = default!;
+
+    /// <summary>
+    /// You can't escape the hands of an entity this many times more massive than you.
+    /// </summary>
+    public const float MaximumMassDisadvantage = 6f;
 
     public override void Initialize()
     {
@@ -34,12 +42,24 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (component.CancelToken != null)
             return;
 
-        if (_containerSystem.TryGetContainingContainer(uid, out var container)
-            && (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SharedHandsComponent>(container.Owner)))
+        if (!_containerSystem.TryGetContainingContainer(uid, out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
+            return;
+
+        // Contested
+        if (_handsSystem.IsHolding(container.Owner, uid, out var inHand))
         {
-            if (_actionBlockerSystem.CanInteract(uid, container.Owner))
-                AttemptEscape(uid, container.Owner, component);
+            var contestResults = 1 / (_contests.MassContest(uid, container.Owner));
+            Logger.Error("Result: " + contestResults);
+            if (contestResults >= MaximumMassDisadvantage)
+                return;
+
+            AttemptEscape(uid, container.Owner, component, contestResults);
+            return;
         }
+
+        // Uncontested
+        if (HasComp<SharedStorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner))
+            AttemptEscape(uid, container.Owner, component);
     }
 
     private void OnMoveAttempt(EntityUid uid, CanEscapeInventoryComponent component, UpdateCanMoveEvent args)
@@ -48,10 +68,10 @@ public sealed class EscapeInventorySystem : EntitySystem
             args.Cancel();
     }
 
-    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component)
+    private void AttemptEscape(EntityUid user, EntityUid container, CanEscapeInventoryComponent component, float multiplier = 1f)
     {
         component.CancelToken = new();
-        var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime, component.CancelToken.Token, container)
+        var doAfterEventArgs = new DoAfterEventArgs(user, component.BaseResistTime * multiplier, component.CancelToken.Token, container)
         {
             BreakOnTargetMove = false,
             BreakOnUserMove = false,
