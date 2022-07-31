@@ -89,7 +89,10 @@
 - type: soundCollection
   id: footstep_snow
   files:
-  - /Audio/Effects/Footsteps/snowstep.ogg
+  - /Audio/Effects/Footsteps/snowstep1.ogg
+  - /Audio/Effects/Footsteps/snowstep2.ogg
+  - /Audio/Effects/Footsteps/snowstep3.ogg
+  - /Audio/Effects/Footsteps/snowstep4.ogg
 
 - type: soundCollection
   id: footstep_grass

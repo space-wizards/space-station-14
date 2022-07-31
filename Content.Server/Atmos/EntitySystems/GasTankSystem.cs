@@ -41,8 +41,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GetItemActionsEvent>(OnGetActions);
             SubscribeLocalEvent<GasTankComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<GasTankComponent, ToggleActionEvent>(OnActionToggle);
-            SubscribeLocalEvent<GasTankComponent, DroppedEvent>(OnDropped);
-
+            SubscribeLocalEvent<GasTankComponent, EntParentChangedMessage>(OnParentChange);
             SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
         }
@@ -84,9 +83,12 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateUserInterface(component, true);
         }
 
-        private void OnDropped(EntityUid uid, GasTankComponent component, DroppedEvent args)
+        private void OnParentChange(EntityUid uid, GasTankComponent component, ref EntParentChangedMessage args)
         {
-            DisconnectFromInternals(component, args.User);
+            // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
+            // So this is a shitty fix, where the parent check is just delayed. But this really needs to get fixed
+            // properly at some point. 
+            component.CheckUser = true;
         }
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
@@ -122,6 +124,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
+                if (gasTank.CheckUser)
+                {
+                    gasTank.CheckUser = false;
+                    if (Transform(gasTank.Owner).ParentUid != gasTank.User)
+                    {
+                        DisconnectFromInternals(gasTank);
+                        continue;
+                    }
+                }
+
                 _atmosphereSystem.React(gasTank.Air, gasTank);
                 CheckStatus(gasTank);
                 if (_ui.IsUiOpen(gasTank.Owner, SharedGasTankUiKey.Key))
@@ -184,7 +196,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!CanConnectToInternals(component)) return;
             var internals = GetInternalsComponent(component);
             if (internals == null) return;
-            component.IsConnected = _internals.TryConnectTank(internals, component.Owner);
+
+            if (_internals.TryConnectTank(internals, component.Owner))
+                component.User = internals.Owner;
+
             _actions.SetToggled(component.ToggleAction, component.IsConnected);
 
             // Couldn't toggle!
@@ -201,7 +216,7 @@ namespace Content.Server.Atmos.EntitySystems
         public void DisconnectFromInternals(GasTankComponent component, EntityUid? owner = null)
         {
             if (!component.IsConnected) return;
-            component.IsConnected = false;
+            component.User = null;
             _actions.SetToggled(component.ToggleAction, false);
 
             _internals.DisconnectTank(GetInternalsComponent(component, owner));

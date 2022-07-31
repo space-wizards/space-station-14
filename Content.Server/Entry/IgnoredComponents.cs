@@ -39,6 +39,7 @@ namespace Content.Server.Entry
             "PipeColorVisuals",
             "FireVisuals",
             "CrematoriumVisuals",
+            "PlantHolderVisuals",
         };
     }
 }

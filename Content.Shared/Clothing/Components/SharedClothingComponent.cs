@@ -1,6 +1,6 @@
-﻿using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,9 +10,11 @@ namespace Content.Shared.Clothing.Components;
 ///     This handles entities which can be equipped.
 /// </summary>
 [NetworkedComponent]
+[Access(typeof(ClothingSystem), typeof(InventorySystem))]
 public abstract class SharedClothingComponent : Component
 {
     [DataField("clothingVisuals")]
+    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
     public Dictionary<string, List<SharedSpriteComponent.PrototypeLayerData>> ClothingVisuals = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -21,6 +23,7 @@ public abstract class SharedClothingComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("slots", required: true)]
+    [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
     [ViewVariables(VVAccess.ReadWrite)]

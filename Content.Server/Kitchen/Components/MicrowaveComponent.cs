@@ -9,7 +9,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
-using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

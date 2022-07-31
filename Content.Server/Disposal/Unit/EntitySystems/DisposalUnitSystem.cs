@@ -181,11 +181,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!unit.Container.Insert(toInsert))
-            {
+            if (ev.User != null && !_handsSystem.TryDropIntoContainer(ev.User.Value, ev.ToInsert, unit.Container))
                 return;
-            }
-
+            else
+                unit.Container.Insert(toInsert);
+            
             AfterInsert(unit, toInsert);
         }
 
@@ -466,7 +466,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
-        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid userId, DisposalUnitComponent? unit = null)
+        public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
         {
             if (!Resolve(unitId, ref unit))
                 return false;
@@ -477,7 +477,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
             var ev = new DoInsertDisposalUnitEvent(userId, toInsertId, unitId);
 
-            if (delay <= 0)
+            if (delay <= 0 || userId == null)
             {
                 DoInsertDisposalUnit(ev);
                 return true;
@@ -485,7 +485,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             // Can't check if our target AND disposals moves currently so we'll just check target.
             // if you really want to check if disposals moves then add a predicate.
-            var doAfterArgs = new DoAfterEventArgs(userId, delay, default, toInsertId)
+            var doAfterArgs = new DoAfterEventArgs(userId.Value, delay, default, toInsertId)
             {
                 BreakOnDamage = true,
                 BreakOnStun = true,

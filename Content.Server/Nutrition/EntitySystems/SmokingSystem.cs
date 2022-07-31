@@ -10,6 +10,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
@@ -26,6 +27,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedItemSystem _items = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -61,6 +63,7 @@ namespace Content.Server.Nutrition.EntitySystems
             };
 
             _clothing.SetEquippedPrefix(uid, newState, clothing);
+            _items.SetHeldPrefix(uid, newState);
 
             if (state == SmokableState.Lit)
                 _active.Add(uid);

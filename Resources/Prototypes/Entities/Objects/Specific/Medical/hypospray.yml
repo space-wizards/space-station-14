@@ -133,16 +133,16 @@
         emptySpriteName: hypovolemic_empty
   - type: Hypospray
     solutionName: pen
-    transferAmount: 20
+    transferAmount: 30
   - type: SolutionContainerManager
     solutions:
       pen:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: Leporazine
             Quantity: 10
           - ReagentId: Barozine
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   name: pen

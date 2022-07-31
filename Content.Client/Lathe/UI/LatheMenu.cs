@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Content.Client.Lathe.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -24,6 +25,8 @@ namespace Content.Client.Lathe.UI
         public Button QueueButton;
         public Button ServerConnectButton;
         public Button ServerSyncButton;
+
+        public const float RecipeTooltipDelay = 0.5f;
 
         public LatheBoundUserInterface Owner { get; }
 
@@ -112,6 +115,14 @@ namespace Content.Client.Lathe.UI
                 SelectMode = ItemList.ItemListSelectMode.Button,
             };
 
+            // This is a shitty hack, because item lists apparently don't actually support tooltips. Yay..
+            _items.OnItemHover += (ev) =>
+            {
+                ev.ItemList.HideTooltip();
+                ev.ItemList.ToolTip = ev.ItemList[ev.ItemIndex].TooltipText;
+            };
+            _items.TooltipDelay = RecipeTooltipDelay;
+
             _items.OnItemSelected += ItemSelected;
 
             _amountLineEdit = new LineEdit()
@@ -152,6 +163,9 @@ namespace Content.Client.Lathe.UI
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
+            args.ItemList.HideTooltip();
+            args.ItemList.ToolTip = args.ItemList[args.ItemIndex].TooltipText;
+
             int.TryParse(_amountLineEdit.Text, out var quantity);
             if (quantity <= 0) quantity = 1;
             Owner.Queue(_shownRecipes[args.ItemIndex], quantity);
@@ -199,7 +213,26 @@ namespace Content.Client.Lathe.UI
             _items.Clear();
             foreach (var prototype in _shownRecipes)
             {
-                _items.AddItem(prototype.Name, prototype.Icon.Frame0());
+                var item = _items.AddItem(prototype.Name, prototype.Icon.Frame0());
+
+                StringBuilder sb = new();
+                bool first = true;
+                foreach (var (id, quantity) in prototype.RequiredMaterials)
+                {
+                    if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
+                        continue;
+
+                    if (first)
+                        first = false;
+                    else
+                        sb.Append("\n");
+
+                    sb.Append(quantity.ToString());
+                    sb.Append(" ");
+                    sb.Append(proto.Name);
+                }
+
+                item.TooltipText = sb.ToString();
             }
 
             PopulateDisabled();
