@@ -233,6 +233,7 @@ namespace Content.Server.AI.Steering
 
                     // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
                     // TODO: If it's the last node just grab the target instead.
+                    // TODO: UP TO HERE
                     if (steering.CurrentPath.TryPeek(out nextTarget))
                     {
                         targetCoordinates = new EntityCoordinates(nextTarget.GridUid, nextTarget.GridIndices);
