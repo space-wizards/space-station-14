@@ -15,11 +15,6 @@ namespace Content.Client.Medical.CrewMonitoring
     {
         private List<Control> _rowsContent = new();
 
-        // Limiter for how long a mobs's name or job can be. Without this the HoP can set a ridiculously
-        // long name and make it near impossible for someone to use the crew monitoring window.
-        private int _nameMaxLength = 30;
-        private int _jobMaxLength = 30;
-
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 
         public CrewMonitoringWindow()
@@ -42,7 +37,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 // format: UserName (Job)
                 var nameLabel = new Label()
                 {
-                    Text = $"{sensor.Name.Substring(0, Math.Min(sensor.Name.Length, _nameMaxLength))} ({sensor.Job.Substring(0, Math.Min(sensor.Job.Length, _jobMaxLength))})"
+                    Text = $"{sensor.Name} ({sensor.Job})"
                 };
                 nameLabel.HorizontalExpand = true;
                 SensorsTable.AddChild(nameLabel);

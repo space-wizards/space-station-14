@@ -19,6 +19,7 @@ namespace Content.Client.Access.UI
         private readonly IdCardConsoleBoundUserInterface _owner;
 
         private readonly Dictionary<string, Button> _accessButtons = new();
+        private readonly int _maxLength = 30;
 
         private string? _lastFullName;
         private string? _lastJobTitle;
@@ -87,6 +88,7 @@ namespace Content.Client.Access.UI
             if (!fullNameDirty)
             {
                 FullNameLineEdit.Text = state.TargetIdFullName ?? string.Empty;
+                FullNameLineEdit.Text = FullNameLineEdit.Text.Substring(0, Math.Min(FullNameLineEdit.Text.Length, _maxLength));
             }
 
             FullNameSaveButton.Disabled = !interfaceEnabled || !fullNameDirty;
@@ -96,6 +98,7 @@ namespace Content.Client.Access.UI
             if (!jobTitleDirty)
             {
                 JobTitleLineEdit.Text = state.TargetIdJobTitle ?? string.Empty;
+                JobTitleLineEdit.Text = JobTitleLineEdit.Text.Substring(0, Math.Min(JobTitleLineEdit.Text.Length, _maxLength));
             }
 
             JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
@@ -116,8 +119,8 @@ namespace Content.Client.Access.UI
         private void SubmitData()
         {
             _owner.SubmitData(
-                FullNameLineEdit.Text,
-                JobTitleLineEdit.Text,
+                FullNameLineEdit.Text.Substring(0, Math.Min(FullNameLineEdit.Text.Length, _maxLength)),
+                JobTitleLineEdit.Text.Substring(0, Math.Min(JobTitleLineEdit.Text.Length, _maxLength)),
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
                 _accessButtons.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
