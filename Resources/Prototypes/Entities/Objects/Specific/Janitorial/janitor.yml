@@ -65,6 +65,8 @@
       layer:
       - MobLayer
   - type: Pullable
+  - type: Drink
+    isOpen: true
 
 - type: entity
   name: wet floor sign
