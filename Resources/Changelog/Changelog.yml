@@ -1,30 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Made anchoring not spammable., type: Tweak}
-  id: 1547
-  time: '2022-05-18T02:35:44.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Added the gas tank dispenser (and engineer variant). Look out for it
-      in EVA storage, Engineering and other locations. (Entity only, no map changes).',
-    type: Add}
-  id: 1548
-  time: '2022-05-18T02:46:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Polymorphing! Your local spacemen might find themselves turning into
-      a variety of different things., type: Add}
-  id: 1549
-  time: '2022-05-18T04:05:22.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has installed a new alert readiness system into its stations!
-      Use these to indicate to your fellow crewmembers when the station is going OK,
-      or is in a flurry of viral infections, hostile activity, and imminent destruction!',
-    type: Add}
-  id: 1550
-  time: '2022-05-18T04:05:32.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Added space ambience, with two songs. Go throw yourself out into space
@@ -2942,3 +2916,24 @@ Entries:
   - {message: syndicate shoulder holster will now accept melee weapons, type: Fix}
   id: 2046
   time: '2022-07-31T02:48:05.0000000+00:00'
+- author: jessicamaybe
+  changes:
+  - {message: You can now see the station time in the lobby screen, type: Add}
+  id: 2047
+  time: '2022-07-31T02:55:43.0000000+00:00'
+- author: CormosLemming
+  changes:
+  - {message: Popcorn sprite now has the proper number on it., type: Fix}
+  id: 2048
+  time: '2022-07-31T02:56:04.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that enabled people to keep breathing using gas tanks that
+      had been unequipped., type: Fix}
+  id: 2049
+  time: '2022-07-31T02:56:26.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Desk lamps and floodlights are now heavier., type: Tweak}
+  id: 2050
+  time: '2022-07-31T02:56:42.0000000+00:00'
