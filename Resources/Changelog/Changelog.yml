@@ -1,14 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: The wide attack keybind has been removed., type: Remove}
-  - {message: 'Combat has been slightly reworked. Click on an entity to directly attack
-      it. Click anywhere else (or on an entity out of range), and you''ll do a wide
-      attack instead.', type: Tweak}
-  id: 1542
-  time: '2022-05-17T09:57:28.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: Sandbox can no longer be voted as a game preset., type: Tweak}
   id: 1543
   time: '2022-05-17T18:05:51.0000000+00:00'
@@ -2946,3 +2938,8 @@ Entries:
       scale., type: Fix}
   id: 2041
   time: '2022-07-29T16:22:19.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Bloodloss now makes you dizzy., type: Add}
+  id: 2042
+  time: '2022-07-31T02:24:24.0000000+00:00'
