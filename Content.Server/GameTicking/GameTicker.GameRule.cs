@@ -165,10 +165,6 @@ namespace Content.Server.GameTicking
                     continue;
 
                 AddGameRule(rule);
-
-                // Start rule if we're already in the middle of a round
-                if(RunLevel == GameRunLevel.InRound)
-                    StartGameRule(rule);
             }
         }
 
