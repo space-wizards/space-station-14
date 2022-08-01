@@ -26295,8 +26295,7 @@ entities:
 - uid: 579
   type: Crematorium
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-18.5
+  - pos: 4.5,-18.5
     parent: 100
     type: Transform
   - containers:
