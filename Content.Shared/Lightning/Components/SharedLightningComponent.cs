@@ -1,6 +1,6 @@
 ﻿namespace Content.Shared.Lightning.Components;
 [RegisterComponent]
-public class SharedLightningComponent : Component
+public sealed class SharedLightningComponent : Component
 {
     /// <summary>
     /// Can this lightning arc to something else?
@@ -15,4 +15,11 @@ public class SharedLightningComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxArc")]
     public int MaxArc;
+
+    /// <summary>
+    /// How far should this lightning go?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("maxLength")]
+    public float MaxLength = 5f;
 }
