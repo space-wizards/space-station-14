@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests
         public async Task SpawnTest()
         {
             //TODO: Run this test in a for loop, and figure out why garbage is ending up in the Entities list on cleanup.
+            //If this gets fixed, see also UninitializedSaveTest.
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Dirty = true, Destructive = true});
             var server = pairTracker.Pair.Server;
 
