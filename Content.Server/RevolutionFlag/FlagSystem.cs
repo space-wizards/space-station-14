@@ -31,14 +31,16 @@ namespace Content.Server.RevolutionFlag;
             comp.active = false;
         }
 
-        public void Aura(EntityUid entity, float range)
+        public void Aura(FlagComponent flagcomp, float range)
         {
-            var transform = EntityManager.GetComponent<TransformComponent>(entity);
+            var transform = EntityManager.GetComponent<TransformComponent>(flagcomp.Owner);
             var mapPosition = transform.MapPosition;
             var inRange = _entityLookup.GetEntitiesInRange(transform.Coordinates, range);
 
             UnderEffect.Clear();
 
+            if (!flagcomp.active)
+                return;
             foreach(var entityInRange in inRange)
             {
                 if (!TryComp<MindComponent>(entityInRange, out var mind))
@@ -83,7 +85,7 @@ namespace Content.Server.RevolutionFlag;
                 {
                     flagComp.accumulator = 0;
                     Modifiers = flagComp.Modifiers;
-                    Aura(flagComp.Owner, flagComp.range);
+                    Aura(flagComp, flagComp.range);
                 }
             }
         }

@@ -175,7 +175,7 @@
   satchel: ClothingBackpackDuffelCBURN
   duffelbag: ClothingBackpackDuffelCBURN
 
-#Revolutionary Head - Just Uplink
+#Revolutionary Head
 - type: startingGear
   id: RevoHeadGear
   equipment:
