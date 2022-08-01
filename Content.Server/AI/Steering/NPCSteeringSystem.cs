@@ -1,15 +1,11 @@
 using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
-using Content.Shared.Doors.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -28,6 +24,7 @@ namespace Content.Server.AI.Steering
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+        // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.1f;
 
         private bool _enabled;
@@ -49,9 +46,9 @@ namespace Content.Server.AI.Steering
         {
             if (!obj)
             {
-                foreach (var comp in EntityQuery<NPCSteeringComponent>())
+                foreach (var (_, mover) in EntityQuery<NPCSteeringComponent, InputMoverComponent>())
                 {
-                    // comp.LastInput = Vector2.Zero;
+                    mover.CurTickSprintMovement = Vector2.Zero;
                 }
             }
 
@@ -69,14 +66,11 @@ namespace Content.Server.AI.Steering
         /// </summary>
         public NPCSteeringComponent Register(EntityUid entity, EntityCoordinates coordinates)
         {
-            NPCSteeringComponent? comp;
-
-            if (TryComp(entity, out comp))
+            if (TryComp<NPCSteeringComponent>(entity, out var comp))
             {
                 comp.PathfindToken?.Cancel();
                 comp.PathfindToken = null;
                 comp.CurrentPath.Clear();
-                // comp.LastInput = Vector2.Zero;
             }
             else
             {
@@ -253,10 +247,13 @@ namespace Content.Server.AI.Steering
             // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
             var needsPath = steering.CurrentPath.Count == 0;
 
+            // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
+
             if (!needsPath)
             {
                 var lastNode = steering.CurrentPath.Last();
-                // TODO: Tilesize
+                // I know this is bad and doesn't account for tile size
+                // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
                 var lastCoordinate = new EntityCoordinates(lastNode.GridUid, (Vector2) lastNode.GridIndices + 0.5f);
 
                 if (lastCoordinate.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
@@ -348,7 +345,6 @@ namespace Content.Server.AI.Steering
             // If it's the last node then just head to the target.
             if (steering.CurrentPath.Count > 1 && steering.CurrentPath.TryPeek(out var nextTarget))
             {
-                // TODO: Tile size
                 return new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
             }
 
@@ -398,67 +394,5 @@ namespace Content.Server.AI.Steering
         {
             return modifier?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
         }
-
-        #region Steering
-        /// <summary>
-        /// Move straight to target position
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="grid"></param>
-        /// <returns></returns>
-        private Vector2 Seek(EntityUid entity, EntityCoordinates grid)
-        {
-            // is-even much
-            var entityPos = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            return entityPos == grid
-                ? Vector2.Zero
-                : (grid.Position - entityPos.Position).Normalized;
-        }
-
-        /// <summary>
-        /// Like Seek but slows down when within distance
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="grid"></param>
-        /// <param name="slowingDistance"></param>
-        /// <returns></returns>
-        private Vector2 Arrival(EntityUid entity, EntityCoordinates grid, float slowingDistance = 1.0f)
-        {
-            var entityPos = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            DebugTools.Assert(slowingDistance > 0.0f);
-            if (entityPos == grid)
-            {
-                return Vector2.Zero;
-            }
-            var targetDiff = grid.Position - entityPos.Position;
-            var rampedSpeed = targetDiff.Length / slowingDistance;
-            return targetDiff.Normalized * MathF.Min(1.0f, rampedSpeed);
-        }
-
-        /// <summary>
-        /// Like Seek but predicts target's future position
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        private Vector2 Pursuit(EntityUid entity, EntityUid target)
-        {
-            var entityPos = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-            var targetPos = EntityManager.GetComponent<TransformComponent>(target).Coordinates;
-            if (entityPos == targetPos)
-            {
-                return Vector2.Zero;
-            }
-
-            if (EntityManager.TryGetComponent(target, out IPhysBody? physics))
-            {
-                var targetDistance = (targetPos.Position - entityPos.Position);
-                targetPos = targetPos.Offset(physics.LinearVelocity * targetDistance);
-            }
-
-            return (targetPos.Position - entityPos.Position).Normalized;
-        }
-
-        #endregion
     }
 }

@@ -14,6 +14,9 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables] public Job<Queue<TileRef>>? Pathfind = null;
     [ViewVariables] public CancellationTokenSource? PathfindToken = null;
 
+    /// <summary>
+    /// Current path we're following to our coordinates.
+    /// </summary>
     [ViewVariables] public Queue<TileRef> CurrentPath = new();
 
     /// <summary>
@@ -32,21 +35,6 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 1.5f;
 
     [ViewVariables] public SteeringStatus Status = SteeringStatus.Moving;
-
-    /// <summary>
-    /// How many times we try to change our movement vector per second.
-    /// </summary>
-    // [ViewVariables(VVAccess.ReadWrite), DataField("movementFrequency")] public float MovementFrequency = 10f;
-
-    /// <summary>
-    /// Last input movement vector. We may re-use this so we don't re-check our velocity obstacle every tick.
-    /// </summary>
-    // [ViewVariables] public Vector2 LastInput;
-
-    /// <summary>
-    /// Accumulate time since our last input vector before we can change direction.
-    /// </summary>
-    // [ViewVariables(VVAccess.ReadWrite)] public float LastInputAccumulator = 0f;
 }
 
 public enum SteeringStatus : byte
