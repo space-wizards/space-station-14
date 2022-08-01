@@ -120,8 +120,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
             else
             {
-                _winType = WinType.OpsMajor;
-                _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
+                if (_targetStation != null
+                    && TryComp(_targetStation, out StationDataComponent? data))
+                {
+                    foreach (var grid in data.Grids)
+                    {
+                        if (grid != ev.OwningStation)
+                        {
+                            continue;
+                        }
+
+                        _winType = WinType.OpsMajor;
+                        _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
+                        return;
+                    }
+                }
+
+                _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
             }
         }
         else
