@@ -2922,3 +2922,9 @@ Entries:
   - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
   id: 2070
   time: '2022-08-01T09:36:01.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Lizards now use their claws in unarmed combat, giving their attacks
+      a bleeding chance.', type: Tweak}
+  id: 2071
+  time: '2022-08-01T15:34:50.0000000+00:00'
