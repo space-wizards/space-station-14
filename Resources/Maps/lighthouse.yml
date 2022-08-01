@@ -148932,4 +148932,60 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 16979
+  type: SpawnMobMedibot
+  components:
+  - pos: -11.5,36.5
+    parent: 100
+    type: Transform
+- uid: 16980
+  type: SpawnMobCleanBot
+  components:
+  - pos: -0.5,19.5
+    parent: 100
+    type: Transform
+- uid: 16981
+  type: SpawnMobCleanBot
+  components:
+  - pos: -20.5,53.5
+    parent: 100
+    type: Transform
+- uid: 16982
+  type: SpawnMobCleanBot
+  components:
+  - pos: -42.5,3.5
+    parent: 100
+    type: Transform
+- uid: 16983
+  type: UniformShortsRed
+  components:
+  - pos: -23.309948,26.205736
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16984
+  type: UniformShortsRed
+  components:
+  - pos: -23.278698,25.236986
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16985
+  type: UniformShortsRedWithTop
+  components:
+  - pos: -23.216198,24.596361
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 16986
+  type: UniformShortsRedWithTop
+  components:
+  - pos: -23.231823,27.205736
+    parent: 100
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
