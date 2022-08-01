@@ -3,12 +3,12 @@ using Content.Server.Mind.Components;
 using Content.Server.Traitor;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Damage;
+using Content.Shared.Hands;
 
 namespace Content.Server.RevolutionFlag;
     internal sealed class FlagSystem : EntitySystem
     {
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-
         private const string RevolutionaryPrototypeId = "Revolutionary";
         private List<EntityUid> UnderEffect = new();
         private DamageModifierSet Modifiers = default!; 
@@ -17,12 +17,27 @@ namespace Content.Server.RevolutionFlag;
         {
             base.Initialize();
             SubscribeLocalEvent<MindComponent,MeleeHitEvent>(ModifyDamage);
+            SubscribeLocalEvent<FlagComponent,GotEquippedHandEvent>(OnEquipped);
+            SubscribeLocalEvent<FlagComponent,GotUnequippedHandEvent>(OnDequipped);
         }
+
+        private void OnEquipped(EntityUid uid, FlagComponent comp, GotEquippedHandEvent args)
+        {
+            comp.active = true;
+        }
+
+        private void OnDequipped(EntityUid uid, FlagComponent comp, GotUnequippedHandEvent args)
+        {
+            comp.active = false;
+        }
+
         public void Aura(EntityUid entity, float range)
         {
             var transform = EntityManager.GetComponent<TransformComponent>(entity);
             var mapPosition = transform.MapPosition;
             var inRange = _entityLookup.GetEntitiesInRange(transform.Coordinates, range);
+
+            UnderEffect.Clear();
 
             foreach(var entityInRange in inRange)
             {

@@ -60,3 +60,16 @@
   icon:
     sprite: Clothing/Eyes/Misc/blindfold.rsi
     state: icon
+
+- type: construction
+  name: revolutionflagrecipe
+  id: revolutionflagrecipe
+  graph: revolutionflag
+  startNode: start
+  targetNode: flag
+  category: Utilities
+  objectType: Item
+  description: This musty old bedsheet will have to do for the base of the flag...
+  icon:
+    sprite: Objects/Weapons/Melee/revolutionflag.rsi
+    state: icon

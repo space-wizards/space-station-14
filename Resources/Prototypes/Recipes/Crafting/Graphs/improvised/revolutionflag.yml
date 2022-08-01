@@ -1,0 +1,24 @@
+- type: constructionGraph
+  id: revolutionflag
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: flag
+          steps:
+            - material: WoodPlank
+              amount: 2
+            - tag: Bedsheet
+              icon:
+                sprite: Objects/Misc/bedsheets.rsi
+                state: sheetwhite
+              name: Bedsheet
+              doAfter: 2
+            - tag: Write
+              icon:
+                sprite: Objects/Fun/crayons.rsi
+                state: black
+              name: Drawing implement
+              doAfter: 4
+    - node: flag
+      entity: RevolutionFlag

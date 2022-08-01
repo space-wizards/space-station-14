@@ -9,15 +9,18 @@
     snap:
     - Bed
   components:
-  - type: Sprite
-    sprite: Objects/Misc/bedsheets.rsi
-    netsync: false
-  - type: Item
-    size: 10
-  - type: Clothing
-    quickEquip: true
-    slots:
-    - neck
+    - type: Sprite
+      sprite: Objects/Misc/bedsheets.rsi
+      netsync: false
+    - type: Item
+      size: 10
+    - type: Clothing
+      quickEquip: true
+      slots:
+      - neck
+    - type: Tag
+      tags:
+      - Bedsheet
 
 - type: entity
   id: BedsheetBlack

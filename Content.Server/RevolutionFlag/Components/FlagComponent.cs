@@ -15,5 +15,8 @@ namespace Content.Server.RevolutionFlag.Components
 
         [DataField("modifiers", required: true)]
         public DamageModifierSet Modifiers = default!;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool active = false;
     }
 }

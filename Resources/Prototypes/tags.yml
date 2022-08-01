@@ -10,6 +10,9 @@
   id: Baguette
 
 - type: Tag
+  id: Bedsheet
+
+- type: Tag
   id: Bee
 
 - type: Tag
