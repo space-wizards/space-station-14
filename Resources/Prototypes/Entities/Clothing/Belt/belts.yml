@@ -240,6 +240,7 @@
       components:
         - Hypospray
         - Radio
+        - Injector
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -452,7 +453,7 @@
     whitelist:
       components:
         - Gun
-        - MeeleeWeapon
+        - MeleeWeapon
         - BallisticAmmoProvider
         - CartridgeAmmo
 

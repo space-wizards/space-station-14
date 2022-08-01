@@ -18,8 +18,52 @@
   - type: Anchorable
   - type: Pullable
   - type: Sprite
-    sprite: Structures/Hydroponics/containers.rsi
-    state: hydrotray3
+    layers:
+      - sprite: Structures/Hydroponics/containers.rsi
+        state: hydrotray3
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowhealth3
+        map: [ "health_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lowwater3
+        map: [ "water_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: lownutri3
+        map: [ "nutri_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: alert3
+        map: [ "undefined_alert" ]
+        visible: false
+      - sprite: Structures/Hydroponics/overlays.rsi
+        state: harvest3
+        map: [ "harvest_alert" ]
+        visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PlantHolderVisuals.HealthLight:
+        health_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.WaterLight:
+        water_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.NutritionLight:
+        nutri_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.AlertLight:
+        undefined_alert:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PlantHolderVisuals.HarvestLight:
+        harvest_alert:
+          True: { visible: true }
+          False: { visible: false }
   - type: PlantHolder
     drawWarnings: true
   - type: Construction

@@ -1,5 +1,4 @@
 using Content.Server.AI.Steering;
-using Content.Server.AI.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -8,7 +7,6 @@ namespace Content.Server.AI.Operators.Movement
     public sealed class MoveToGridOperator : AiOperator
     {
         private readonly EntityUid _owner;
-        private GridTargetSteeringRequest? _request;
         private readonly EntityCoordinates _target;
         public float DesiredRange { get; set; }
 
@@ -27,8 +25,8 @@ namespace Content.Server.AI.Operators.Movement
             }
 
             var steering = EntitySystem.Get<NPCSteeringSystem>();
-            _request = new GridTargetSteeringRequest(_target, DesiredRange);
-            steering.Register(_owner, _request);
+            var comp = steering.Register(_owner, _target);
+            comp.Range = DesiredRange;
             return true;
         }
 
@@ -44,17 +42,16 @@ namespace Content.Server.AI.Operators.Movement
 
         public override Outcome Execute(float frameTime)
         {
-            switch (_request?.Status)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<NPCSteeringComponent>(_owner, out var steering))
+                return Outcome.Failed;
+
+            switch (steering.Status)
             {
-                case SteeringStatus.Pending:
-                    DebugTools.Assert(EntitySystem.Get<NPCSteeringSystem>().IsRegistered(_owner));
-                    return Outcome.Continuing;
                 case SteeringStatus.NoPath:
                     return Outcome.Failed;
-                case SteeringStatus.Arrived:
+                case SteeringStatus.InRange:
                     return Outcome.Success;
                 case SteeringStatus.Moving:
-                    DebugTools.Assert(EntitySystem.Get<NPCSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 default:
                     throw new ArgumentOutOfRangeException();

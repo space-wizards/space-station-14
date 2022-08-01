@@ -1,4 +1,5 @@
-﻿using Content.Shared.Hands.Components;
+using Content.Shared.Hands.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Item;
@@ -8,11 +9,13 @@ namespace Content.Shared.Item;
 ///     like backpacks.
 /// </summary>
 [RegisterComponent]
+[NetworkedComponent]
+[Access(typeof(SharedItemSystem))]
 public sealed class ItemComponent : Component
 {
-    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
+    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     public int Size = 5;
 
     [DataField("inhandVisuals")]
