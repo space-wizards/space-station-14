@@ -141,6 +141,7 @@
   - type: Clothing
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskBase
@@ -165,6 +166,7 @@
   - type: Clothing
     sprite: Clothing/Mask/mime.rsi
   - type: BreathMask
+  - type: IdentityBlocker
 
 - type: entity
   parent: ClothingMaskPullableBase
