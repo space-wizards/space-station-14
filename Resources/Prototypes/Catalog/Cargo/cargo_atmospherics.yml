@@ -1,7 +1,5 @@
 - type: cargoProduct
-  name: "air canister"
   id: AtmosphericsAir
-  description: "Air canister"
   icon:
     sprite: Structures/Storage/canister.rsi
     state: grey
@@ -11,9 +9,7 @@
   group: market
 
 - type: cargoProduct
-  name: "oxygen canister"
   id: AtmosphericsOxygen
-  description: "Oxygen canister"
   icon:
     sprite: Structures/Storage/canister.rsi
     state: blue
@@ -23,9 +19,7 @@
   group: market
 
 - type: cargoProduct
-  name: "nitrogen canister"
   id: AtmosphericsNitrogen
-  description: "Nitrogen canister"
   icon:
     sprite: Structures/Storage/canister.rsi
     state: red
@@ -35,9 +29,7 @@
   group: market
 
 - type: cargoProduct
-  name: "carbon dioxide canister"
   id: AtmosphericsCarbonDioxide
-  description: "Carbon dioxide canister"
   icon:
     sprite: Structures/Storage/canister.rsi
     state: black
