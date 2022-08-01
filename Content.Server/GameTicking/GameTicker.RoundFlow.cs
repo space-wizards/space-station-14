@@ -461,6 +461,7 @@ namespace Content.Server.GameTicking
             if (RunLevel == GameRunLevel.InRound)
             {
                 RoundLengthMetric.Inc(frameTime);
+                RaiseNetworkEvent(new TickerLobbyRoundDurationEvent(RoundDuration()));
             }
 
             if (RunLevel != GameRunLevel.PreRoundLobby || Paused ||

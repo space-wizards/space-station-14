@@ -92,6 +92,20 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
+    public sealed class TickerLobbyRoundDurationEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// The current duration of the round
+        /// </summary>
+        public TimeSpan RoundDuration { get; }
+
+        public TickerLobbyRoundDurationEvent(TimeSpan roundDuration)
+        {
+            RoundDuration = roundDuration;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class TickerLobbyReadyEvent : EntityEventArgs
     {
         /// <summary>
