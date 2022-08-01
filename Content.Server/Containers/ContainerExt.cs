@@ -4,21 +4,39 @@ namespace Content.Server.Containers
 {
     public static class ContainerExt
     {
-        public static int CountPrototypeOccurencesRecursive(this ContainerManagerComponent mgr, string prototypeId)
+        /// <summary>
+        /// Searches the entity, and the entities containers recursively for a prototypeId
+        /// </summary>
+        /// <param name="entityUid">The entity to search</param>
+        /// <param name="prototypeId">The prototypeId to find</param>
+        /// <param name="entityManager">Optional entity manager</param>
+        /// <returns>True if entity is, or contains a prototype Id</returns>
+        public static bool ContainsPrototypeRecursive(this EntityUid entityUid, string prototypeId, IEntityManager? entityManager = null)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            int total = 0;
-            foreach (var container in mgr.GetAllContainers())
+            IoCManager.Resolve(ref entityManager);
+            var metaQuery = entityManager.GetEntityQuery<MetaDataComponent>();
+            var managerQuery = entityManager.GetEntityQuery<ContainerManagerComponent>();
+            var stack = new Stack<ContainerManagerComponent>();
+            if (metaQuery.GetComponent(entityUid).EntityPrototype?.ID == prototypeId)
+                return true;
+            if (!managerQuery.TryGetComponent(entityUid, out var currentManager))
+                return false;
+            do
             {
-                foreach (var entity in container.ContainedEntities)
+                foreach (var container in currentManager.Containers.Values)
                 {
-                    if (entMan.GetComponent<MetaDataComponent>(entity).EntityPrototype?.ID == prototypeId) total++;
-                    if(!entMan.TryGetComponent<ContainerManagerComponent?>(entity, out var component)) continue;
-                    total += component.CountPrototypeOccurencesRecursive(prototypeId);
+                    foreach (var entity in container.ContainedEntities)
+                    {
+                        if (metaQuery.GetComponent(entity).EntityPrototype?.ID == prototypeId)
+                            return true;
+                        if (!managerQuery.TryGetComponent(entity, out var containerManager))
+                            continue;
+                        stack.Push(containerManager);
+                    }
                 }
-            }
+            } while (stack.TryPop(out currentManager));
 
-            return total;
+            return false;
         }
     }
 }

@@ -29,7 +29,7 @@ public sealed class WiresComponent : Component
     ///     The layout ID of this entity's wires.
     /// </summary>
     [ViewVariables]
-    [DataField("LayoutId", customTypeSerializer: typeof(PrototypeIdSerializer<WireLayoutPrototype>), required: true)]
+    [DataField("LayoutId", required: true)]
     public string LayoutId { get; set; } = default!;
 
     /// <summary>
