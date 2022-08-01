@@ -1,10 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: Some maps should no longer contain any of those pesky mouse-tiles.,
-    type: Fix}
-  id: 1569
-  time: '2022-05-21T07:46:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bullets now have flyby sounds, type: Add}
@@ -2928,3 +2922,8 @@ Entries:
   - {message: Fixed gas tanks not being disconnected when dropped (again)., type: Fix}
   id: 2068
   time: '2022-08-01T07:43:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Early launches are now disabled by default., type: Tweak}
+  id: 2069
+  time: '2022-08-01T08:26:25.0000000+00:00'
