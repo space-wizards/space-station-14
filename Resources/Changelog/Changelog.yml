@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bullets now have flyby sounds, type: Add}
-  id: 1570
-  time: '2022-05-21T08:04:47.0000000+00:00'
 - author: TheIntoxicatedCat
   changes:
   - {message: Fixed pressure pump multiplying transferred moles by 8., type: Fix}
@@ -2927,3 +2922,8 @@ Entries:
   - {message: Early launches are now disabled by default., type: Tweak}
   id: 2069
   time: '2022-08-01T08:26:25.0000000+00:00'
+- author: Anthemic
+  changes:
+  - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
+  id: 2070
+  time: '2022-08-01T09:36:01.0000000+00:00'
