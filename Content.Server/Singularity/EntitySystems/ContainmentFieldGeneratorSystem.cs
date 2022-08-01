@@ -29,6 +29,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
     }
@@ -99,6 +100,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (!args.Anchored)
             RemoveConnections(component);
+    }
+
+    private void OnReanchorEvent(EntityUid uid, ContainmentFieldGeneratorComponent component, ref ReAnchorEvent args)
+    {
+        GridCheck(component);
     }
 
     private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
@@ -207,24 +213,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     /// <param name="dir">The field generator establishes a connection in this direction.</param>
     /// <param name="component">The field generator component</param>
+    /// <param name="gen1XForm">The transform component for the first generator</param>
     /// <returns></returns>
-    private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component, TransformComponent genXForm)
+    private bool TryGenerateFieldConnection(Direction dir, ContainmentFieldGeneratorComponent component, TransformComponent gen1XForm)
     {
         if (!component.Enabled)
             return false;
 
-        if (!genXForm.Anchored)
+        if (!gen1XForm.Anchored)
             return false;
 
-        var genWorldPosRot = genXForm.GetWorldPositionRotation();
+        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
         var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);
-        var rayCastResults = _physics.IntersectRay(genXForm.MapID, ray, component.MaxLength, component.Owner, false).ToList();
+        var rayCastResults = _physics.IntersectRay(gen1XForm.MapID, ray, component.MaxLength, component.Owner, false);
         var genQuery = GetEntityQuery<ContainmentFieldGeneratorComponent>();
-
-        if (!rayCastResults.Any())
-            return false;
 
         RayCastResults? closestResult = null;
 
@@ -243,7 +247,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!TryComp<ContainmentFieldGeneratorComponent?>(ent, out var otherFieldGeneratorComponent) ||
             otherFieldGeneratorComponent == component ||
             !TryComp<PhysicsComponent>(ent, out var collidableComponent) ||
-            collidableComponent.BodyType != BodyType.Static)
+            collidableComponent.BodyType != BodyType.Static ||
+            gen1XForm.GridUid != Transform(otherFieldGeneratorComponent.Owner).GridUid)
         {
             return false;
         }
@@ -319,6 +324,21 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         {
             bool hasAnyConnection = component.Connections != null;
             pointLightComponent.Enabled = hasAnyConnection;
+        }
+    }
+
+    /// <summary>
+    /// Checks to see if this or the other gens connected to a new grid. If they did, remove connection.
+    /// </summary>
+    public void GridCheck(ContainmentFieldGeneratorComponent component)
+    {
+        foreach (var (_, generators) in component.Connections)
+        {
+            var gen1GridUid = Transform(component.Owner).GridUid;
+            var gen2GridUid = Transform(generators.Item1.Owner).GridUid;
+
+            if (gen1GridUid != gen2GridUid)
+                RemoveConnections(component);
         }
     }
 
