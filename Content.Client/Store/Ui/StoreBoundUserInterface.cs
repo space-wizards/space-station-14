@@ -25,7 +25,8 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            //SendMessage(new UplinkBuyListingMessage(listing));
+            if (_menu.CurrentBuyer != null)
+              SendMessage(new StoreBuyListingMessage(_menu.CurrentBuyer.Value, listing));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
@@ -52,7 +53,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             case StoreUpdateState msg:
                 if (msg.Buyer != null)
                     _menu.CurrentBuyer = msg.Buyer;
-                _menu.UpdateBalance(msg.Currency);
+                _menu.UpdateBalance(msg.Balance);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
                 _menu.UpdateListing(msg.Listings.ToList());
                 break;

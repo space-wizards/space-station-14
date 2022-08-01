@@ -1,9 +1,11 @@
 using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -18,10 +20,15 @@ public sealed partial class StoreSystem : EntitySystem
 
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
 
-        SubscribeLocalEvent<StoreComponent, ComponentInit>((_, c, _) => RefreshAllListings(c));
+        SubscribeLocalEvent<StoreComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
 
         InitializeUi();
+    }
+
+    private void OnInit(EntityUid uid, StoreComponent component, ComponentInit args)
+    {
+        RefreshAllListings(component);
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)
@@ -32,7 +39,46 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
             return;
 
-        args.Handled = TryAddCurrency(args.Used, args.Target.Value, component, store);
+        args.Handled = TryAddCurrency(GetCurrencyValue(component), store);
+
+        if (args.Handled)
+        {
+            var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
+            _popup.PopupEntity(msg, args.Target.Value, Filter.Pvs(args.Target.Value));
+            QueueDel(args.Used);
+        }
+    }
+
+    public Dictionary<string, FixedPoint2> GetCurrencyValue(CurrencyComponent component)
+    {
+        TryComp<StackComponent>(component.Owner, out var stack);
+        var amount = stack == null ? 1 : stack.Count;
+
+        return component.Price.ToDictionary(v => v.Key, p => p.Value * amount);
+    }
+
+    public bool TryAddCurrency(CurrencyComponent component, StoreComponent store)
+    {
+        return TryAddCurrency(GetCurrencyValue(component), store);
+    }
+
+    public bool TryAddCurrency(Dictionary<string, FixedPoint2> currency, StoreComponent store)
+    {
+        //verify these before values are modified
+        foreach (var type in currency)
+        {
+            if (!store.CurrencyWhitelist.Contains(type.Key))
+                return false;
+        }
+
+        foreach (var type in currency)
+        {
+            if (!store.Balance.TryAdd(type.Key, type.Value))
+                store.Balance[type.Key] += type.Value;
+        }
+
+        UpdateUserInterface(null, store);
+        return true;
     }
 
     private void OnActivate(EntityUid uid, StoreComponent component, ActivateInWorldEvent args)
@@ -43,34 +89,5 @@ public sealed partial class StoreSystem : EntitySystem
         args.Handled = true;
 
         ToggleUi(args.User, component);
-    }
-
-    public bool TryAddCurrency(EntityUid? used, EntityUid receiver, CurrencyComponent currency, StoreComponent? store = null)
-    {
-        if (!Resolve(receiver, ref store))
-            return false;
-
-        var amount = 1;
-        if (used != null)
-        {
-            TryComp<StackComponent>(used, out var stack);
-            amount = stack != null ? stack.Count : 1;
-
-            var msg = Loc.GetString("store-currency-inserted", ("used", used), ("target", receiver));
-            _popup.PopupEntity(msg, receiver, Filter.Pvs(receiver));
-
-            QueueDel(used.Value);
-        }
-
-        foreach (var type in currency.Price)
-        {
-            var adjustedValue = type.Value * amount;
-
-            if (!store.Currency.TryAdd(type.Key, adjustedValue))
-                store.Currency[type.Key] += adjustedValue;
-        }
-
-        UpdateUserInterface(null, store);
-        return true;
     }
 }

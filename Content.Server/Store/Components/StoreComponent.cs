@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -12,15 +13,21 @@ public sealed class StoreComponent : Component
     /// The available listings are partially based on the categories.
     /// </summary>
     [DataField("categories", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
-    public HashSet<string> Categories = new() { "Debug", "Debug2" };
+    public HashSet<string> Categories = new() { "Debug" }; //todo: remove
 
     /// <summary>
     /// The total amount of currency that can be used in the store.
     /// The string represents the ID of te currency prototype, where the
     /// float is that amount.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("currency", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, CurrencyPrototype>))]
-    public Dictionary<string, float> Currency = new();
+    [ViewVariables(VVAccess.ReadWrite), DataField("balance", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
+    public Dictionary<string, FixedPoint2> Balance = new();
+
+    /// <summary>
+    /// The list of currencies that can be inserted into this store.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField("currencyWhitelist", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<CurrencyPrototype>))]
+    public HashSet<string> CurrencyWhitelist = new() { "Telecrystal", "DebugDollar" }; //todo: remove
 
     /// <summary>
     /// Whether or not this store can be activated by clicking on it (like an uplink)

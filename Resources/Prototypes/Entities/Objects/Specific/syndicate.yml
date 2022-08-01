@@ -74,7 +74,7 @@
   suffix: 20 TC
   components:
   - type: Store
-    currency:
+    balance:
       Telecrystal: 20
 
 

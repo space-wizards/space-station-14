@@ -5,6 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Store;
 
@@ -15,7 +16,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData
+public record ListingData
 {
     [DataField("name")]
     public string Name = string.Empty;
@@ -24,10 +25,10 @@ public class ListingData
     public string Description = string.Empty;
 
     [DataField("categories", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
-    public HashSet<string> Categories = new HashSet<string>();
+    public HashSet<string> Categories = new();
 
-    [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, CurrencyPrototype>))]
-    public Dictionary<string, float> Cost = new Dictionary<string, float>();
+    [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
+    public Dictionary<string, FixedPoint2> Cost = new();
 
     [DataField("conditions", serverOnly: true)]
     public HashSet<ListingCondition>? Conditions;
@@ -36,7 +37,7 @@ public class ListingData
     public SpriteSpecifier? Icon;
 
     [DataField("priority")]
-    public int Priority = 5;
+    public int Priority = 10;
 
     [DataField("productEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ProductEntity;
@@ -59,7 +60,7 @@ public class ListingData
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class ListingPrototype : ListingData, IPrototype
+public sealed record ListingPrototype : ListingData, IPrototype
 {
     [ViewVariables]
     [IdDataField]

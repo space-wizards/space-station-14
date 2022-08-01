@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Client.Graphics;
 using Content.Shared.Actions.ActionTypes;
 using System.Linq;
+using Content.Shared.FixedPoint;
 
 namespace Content.Client.Store.Ui;
 
@@ -28,10 +29,8 @@ public sealed partial class StoreMenu : DefaultWindow
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<int>? OnWithdrawAttempt;
 
-    private UplinkAccountData? _loggedInUplinkAccount;
-
     public EntityUid? CurrentBuyer = null;
-    public Dictionary<string, float> Balance = new();
+    public Dictionary<string, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
     public StoreMenu()
@@ -42,12 +41,18 @@ public sealed partial class StoreMenu : DefaultWindow
         //WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
     }
 
-    public void UpdateBalance(Dictionary<string, float> balance)
+    public void UpdateBalance(Dictionary<string, FixedPoint2> balance)
     {
         Balance = balance;
 
         var balanceStr = string.Empty;
-        BalanceInfo.SetMarkup(balanceStr);
+        foreach (var type in balance)
+        {
+            var proto = _prototypeManager.Index<CurrencyPrototype>(type.Key);
+
+            balanceStr += $"{Loc.GetString(proto.Name, ("amount", 1))}: {type.Value}\n";
+        }
+        BalanceInfo.SetMarkup(balanceStr.TrimEnd());
 
         // you can't withdraw if you don't have TC
         WithdrawButton.Disabled = true;
@@ -68,8 +73,6 @@ public sealed partial class StoreMenu : DefaultWindow
 
     private void OnWithdrawButtonDown(BaseButton.ButtonEventArgs args)
     {
-        if (_loggedInUplinkAccount == null)
-            return;
         /*
         // check if window is already open
         if (_withdrawWindow != null && _withdrawWindow.IsOpen)
@@ -120,7 +123,7 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.AddChild(newListing);
     }
 
-    public bool CanBuyListing(Dictionary<string, float> currency, Dictionary<string, float> price)
+    public bool CanBuyListing(Dictionary<string, FixedPoint2> currency, Dictionary<string, FixedPoint2> price)
     {
         foreach (var type in price)
         {
@@ -156,8 +159,6 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public void PopulateStoreCategoryButtons(HashSet<ListingData> listings)
     {
-        CategoryListContainer.Children.Clear();
-
         var allCategories = new List<string>();
         foreach (var listing in listings)
         {
@@ -170,6 +171,11 @@ public sealed partial class StoreMenu : DefaultWindow
 
         if (CurrentCategory == string.Empty && allCategories.Count > 0)
             CurrentCategory = allCategories[0];
+
+        if (allCategories.Count <= 1)
+            return;
+
+        CategoryListContainer.Children.Clear();
 
         foreach (var cat in allCategories)
         {
