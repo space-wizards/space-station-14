@@ -2922,9 +2922,3 @@ Entries:
   - {message: Decreased traitor count. Hail NanoTrasen!, type: Tweak}
   id: 2070
   time: '2022-08-01T09:36:01.0000000+00:00'
-- author: PaulRitter
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  id: 2071
-  time: '2022-08-01T13:10:08.0000000+00:00'
