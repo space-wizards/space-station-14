@@ -45,7 +45,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private bool _opsWon;
     private EntityUid? _outpostGrid;
 
-    private enum WinConditions
+    private enum WinType
     {
         /// <summary>
         ///     Operative major win. This means they nuked the station.
@@ -72,7 +72,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         CrewMajor
     }
 
-    private WinConditions _winCondition = WinConditions.Neutral;
+    private enum WinCondition
+    {
+        NukeExplodedOnCorrectStation,
+        NukeExplodedOnNukieOutpost,
+        NukeExplodedOnIncorrectLocation,
+        NukeDiskOnCentCom,
+        NukeDiskNotOnCentCom,
+        AllNukiesDead,
+        SomeNukiesAlive,
+        AllNukiesAlive
+    }
+
+    private WinType _winType = WinType.Neutral;
+    private List<WinCondition> _winConditions = new ();
 
     public override string Prototype => "Nukeops";
 
@@ -98,9 +111,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (ev.OwningStation != null)
         {
-            _winCondition = ev.OwningStation == _outpostGrid
-                ? WinConditions.CrewMajor
-                : WinConditions.OpsMajor;
+            if (ev.OwningStation == _outpostGrid)
+            {
+                _winType = WinType.CrewMajor;
+                _winConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
+            }
+            else
+            {
+                _winType = WinType.OpsMajor;
+                _winConditions.Add(WinCondition.NukeExplodedOnCorrectStation);
+            }
+        }
+        else
+        {
+            _winConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
         }
 
         _roundEndSystem.EndRound();
@@ -114,7 +138,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         // If the win condition was set to operative/crew major win, ignore.
-        if (_winCondition == WinConditions.OpsMajor || _winCondition == WinConditions.CrewMajor)
+        if (_winType == WinType.OpsMajor || _winType == WinType.CrewMajor)
         {
             return;
         }
@@ -124,9 +148,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // running away the moment nuke ops appear.
         if (_aliveNukeops.Values.All(x => x))
         {
-            _winCondition = WinConditions.OpsMinor;
+            _winType = WinType.OpsMinor;
+            _winConditions.Add(WinCondition.AllNukiesAlive);
             return;
         }
+
+        _winConditions.Add(WinCondition.SomeNukiesAlive);
 
         var diskAtCentCom = false;
         foreach (var comp in EntityManager.EntityQuery<NukeDiskComponent>())
@@ -142,12 +169,14 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // This also implies that some nuclear operatives have died.
         if (diskAtCentCom)
         {
-            _winCondition = WinConditions.CrewMinor;
+            _winType = WinType.CrewMinor;
+            _winConditions.Add(WinCondition.NukeDiskOnCentCom);
         }
         // Otherwise, the nuke ops win.
         else
         {
-            _winCondition = WinConditions.OpsMinor;
+            _winType = WinType.OpsMinor;
+            _winConditions.Add(WinCondition.NukeDiskNotOnCentCom);
         }
     }
 
@@ -156,17 +185,36 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        var winText = _winCondition switch
+        var winText = _winType switch
         {
-            WinConditions.OpsMajor => Loc.GetString("nukeops-ops-major"),
-            WinConditions.OpsMinor => Loc.GetString("nukeops-ops-minor"),
-            WinConditions.Neutral => Loc.GetString("nukeops-neutral"),
-            WinConditions.CrewMinor => Loc.GetString("nukeops-crew-minor"),
-            WinConditions.CrewMajor => Loc.GetString("nukeops-crew-major"),
+            WinType.OpsMajor => Loc.GetString("nukeops-ops-major"),
+            WinType.OpsMinor => Loc.GetString("nukeops-ops-minor"),
+            WinType.Neutral => Loc.GetString("nukeops-neutral"),
+            WinType.CrewMinor => Loc.GetString("nukeops-crew-minor"),
+            WinType.CrewMajor => Loc.GetString("nukeops-crew-major"),
             _ => "oopsie woopsie! nukie wukies! (Contact a developer about this immediately.)"
         };
 
         ev.AddLine(winText);
+
+        foreach (var cond in _winConditions)
+        {
+            var text = cond switch
+            {
+                WinCondition.NukeExplodedOnCorrectStation => Loc.GetString("nukeops-cond-correct-station"),
+                WinCondition.NukeExplodedOnNukieOutpost => Loc.GetString("nukeops-cond-nukie-outpost-destroyed"),
+                WinCondition.NukeExplodedOnIncorrectLocation => Loc.GetString("nukeops-cond-incorrect-station"),
+                WinCondition.NukeDiskOnCentCom => Loc.GetString("nukeops-cond-disk-on-centcom"),
+                WinCondition.NukeDiskNotOnCentCom => Loc.GetString("nukeops-cond-disk-not-on-centcom"),
+                WinCondition.AllNukiesDead => Loc.GetString("nukeops-cond-all-nukies-dead"),
+                WinCondition.SomeNukiesAlive => Loc.GetString("nukeops-cond-some-nukies-dead"),
+                WinCondition.AllNukiesAlive => Loc.GetString("nukeops-cond-no-nukies-dead"),
+                _ => "the nuclear operatives managed to break something! (Contact a developer about this immediately.)",
+            };
+
+            ev.AddLine(text);
+        }
+
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _aliveNukeops)
         {
@@ -188,7 +236,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_aliveNukeops.Values.All(x => !x))
         {
-            _winCondition = WinConditions.CrewMajor;
+            _winType = WinType.CrewMajor;
+            _winConditions.Add(WinCondition.AllNukiesDead);
             _roundEndSystem.EndRound();
         }
     }
