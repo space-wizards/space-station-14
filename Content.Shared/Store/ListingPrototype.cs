@@ -2,6 +2,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
+using Content.Shared.Actions.ActionTypes;
 
 namespace Content.Shared.Store;
 
@@ -23,11 +26,31 @@ public class ListingData
     [DataField("categories", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
     public HashSet<string> Categories = new HashSet<string>();
 
-    [DataField("cost", required: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, CurrencyPrototype>))]
+    [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, CurrencyPrototype>))]
     public Dictionary<string, float> Cost = new Dictionary<string, float>();
 
-    [DataField("conditions")]
+    [DataField("conditions", serverOnly: true)]
     public HashSet<ListingCondition>? Conditions;
+
+    [DataField("icon")]
+    public SpriteSpecifier? Icon;
+
+    [DataField("priority")]
+    public int Priority = 5;
+
+    [DataField("productEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ProductEntity;
+
+    [DataField("productAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    public string? ProductAction;
+
+    [DataField("productEvent")]
+    public object? ProductEvent;
+
+    /// <summary>
+    /// used internally for tracking how many times an item was purchased.
+    /// </summary>
+    public int PurchaseAmount = 0;
 }
 
 /// <summary>

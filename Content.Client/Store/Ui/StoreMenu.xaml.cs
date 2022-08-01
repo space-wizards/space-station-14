@@ -10,25 +10,29 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
+using Robust.Client.Graphics;
+using Content.Shared.Actions.ActionTypes;
+using System.Linq;
 
 namespace Content.Client.Store.Ui;
 
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     //private UplinkWithdrawWindow? _withdrawWindow;
 
-    public event Action<BaseButton.ButtonEventArgs, UplinkListingData>? OnListingButtonPressed;
+    public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<int>? OnWithdrawAttempt;
 
     private UplinkAccountData? _loggedInUplinkAccount;
 
-    private HashSet<StoreCategoryPrototype> _categories = new();
-    private string? _currentCategory;
+    public EntityUid? CurrentBuyer = null;
+    public Dictionary<string, float> Balance = new();
+    public string CurrentCategory = string.Empty;
 
     public StoreMenu()
     {
@@ -38,35 +42,25 @@ public sealed partial class StoreMenu : DefaultWindow
         //WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
     }
 
-    public void UpdateAccount(UplinkAccountData account)
+    public void UpdateBalance(Dictionary<string, float> balance)
     {
-        _loggedInUplinkAccount = account;
+        Balance = balance;
 
-        // update balance label
-        var balance = account.DataBalance;
-        var weightedColor = balance switch
-        {
-            <= 0 => "gray",
-            <= 5 => "green",
-            <= 20 => "yellow",
-            <= 50 => "purple",
-            _ => "gray"
-        };
-        var balanceStr = Loc.GetString("uplink-bound-user-interface-tc-balance-popup",
-                                                  ("weightedColor", weightedColor),
-                                                  ("balance", balance));
+        var balanceStr = string.Empty;
         BalanceInfo.SetMarkup(balanceStr);
 
         // you can't withdraw if you don't have TC
-        WithdrawButton.Disabled = balance <= 0;
+        WithdrawButton.Disabled = true;
     }
 
-    public void UpdateListing(UplinkListingData[] listings)
+    public void UpdateListing(List<ListingData> listings)
     {
+        var sorted = listings.OrderBy(l => l.Priority).ThenBy(l => l.Cost.Values.Sum());
+         
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
         ClearListings();
-        foreach (var item in listings)
+        foreach (var item in sorted)
         {
             AddListingGui(item);
         }
@@ -91,41 +85,80 @@ public sealed partial class StoreMenu : DefaultWindow
         _withdrawWindow.OnWithdrawAttempt += OnWithdrawAttempt;*/
     }
 
-    private void AddListingGui(UplinkListingData listing)
+    private void AddListingGui(ListingData listing)
     {
-        /*
-        if (!_prototypeManager.TryIndex(listing.ItemId, out EntityPrototype? prototype) || listing.Category != CurrentFilterCategory)
-        {
+        if (!listing.Categories.Contains(CurrentCategory))
             return;
+
+        var listingName = listing.Name; // == string.Empty ? prototype.Name : listing.ListingName;
+        var listingDesc = listing.Description; // == string.Empty ? prototype.Description : listing.Description;
+        var listingPrice = listing.Cost;
+        var canBuy = CanBuyListing(Balance, listingPrice);
+
+        var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
+
+        Texture? texture = null;
+        if (listing.Icon != null)
+        {
+            texture = spriteSys.Frame0(listing.Icon);
+        }
+        else if (listing.ProductEntity != null)
+        {
+            texture = spriteSys.GetPrototypeIcon(listing.ProductEntity).Default;
+        }
+        else if (listing.ProductAction != null)
+        {
+            var action = _prototypeManager.Index<InstantActionPrototype>(listing.ProductAction);
+            if (action.Icon != null)
+                texture = spriteSys.Frame0(action.Icon);
         }
 
-        var listingName = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName;
-        var listingDesc = listing.Description == string.Empty ? prototype.Description : listing.Description;
-        var listingPrice = listing.Price;
-        var canBuy = _loggedInUplinkAccount?.DataBalance >= listing.Price;
-
-        var texture = listing.Icon?.Frame0();
-        if (texture == null)
-            texture = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
-
-
-        //var newListing = new UplinkListingControl(listingName, listingDesc, listingPrice, canBuy, texture);
-        newListing.UplinkItemBuyButton.OnButtonDown += args
+        var newListing = new StoreListingControl(listingName, listingDesc, GetListingPriceString(listing), canBuy, texture);
+        newListing.StoreItemBuyButton.OnButtonDown += args
             => OnListingButtonPressed?.Invoke(args, listing);
 
-        UplinkListingsContainer.AddChild(newListing);*/
+        StoreListingsContainer.AddChild(newListing);
+    }
+
+    public bool CanBuyListing(Dictionary<string, float> currency, Dictionary<string, float> price)
+    {
+        foreach (var type in price)
+        {
+            if (!currency.ContainsKey(type.Key))
+                return false;
+
+            if (currency[type.Key] < type.Value)
+                return false;
+        }
+        return true;
+    }
+
+    public string GetListingPriceString(ListingData listing)
+    {
+        var text = string.Empty;
+
+        foreach (var type in listing.Cost)
+        {
+            var currency = _prototypeManager.Index<CurrencyPrototype>(type.Key);
+            text += $"{type.Value} {Loc.GetString(currency.Name, ("amount", type.Value))}\n";
+        }
+
+        if (listing.Cost.Count < 1)
+            text = Loc.GetString("store-currency-free");
+
+        return text.TrimEnd();
     }
 
     private void ClearListings()
     {
-        UplinkListingsContainer.Children.Clear();
+        StoreListingsContainer.Children.Clear();
     }
 
     public void PopulateStoreCategoryButtons(HashSet<ListingData> listings)
     {
         CategoryListContainer.Children.Clear();
 
-        var allCategories = new HashSet<string>();
+        var allCategories = new List<string>();
         foreach (var listing in listings)
         {
             foreach (var cat in listing.Categories)
@@ -134,6 +167,9 @@ public sealed partial class StoreMenu : DefaultWindow
                     allCategories.Add(cat);
             }
         }
+
+        if (CurrentCategory == string.Empty && allCategories.Count > 0)
+            CurrentCategory = allCategories[0];
 
         foreach (var cat in allCategories)
         {
@@ -153,6 +189,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public override void Close()
     {
         base.Close();
+        CurrentBuyer = null;
         //_withdrawWindow?.Close();
     }
 

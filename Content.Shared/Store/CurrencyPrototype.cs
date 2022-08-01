@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Store;
@@ -9,7 +10,7 @@ namespace Content.Shared.Store;
 ///     This is separate to the cargo ordering system.
 /// </summary>
 [Prototype("currency")]
-[DataDefinition]
+[DataDefinition, Serializable, NetSerializable]
 public sealed class CurrencyPrototype : IPrototype
 {
     [ViewVariables]

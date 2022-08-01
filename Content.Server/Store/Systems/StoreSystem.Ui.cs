@@ -8,6 +8,11 @@ namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem : EntitySystem
 {
+    public void InitializeUi()
+    {
+        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>((_,c,r) => UpdateUserInterface(r.CurrentBuyer, c));
+    }
+
     public void ToggleUi(EntityUid user, StoreComponent component)
     {
         if (!TryComp<ActorComponent>(user, out var actor))
@@ -19,7 +24,7 @@ public sealed partial class StoreSystem : EntitySystem
         UpdateUserInterface(user, component, ui);
     }
 
-    public void UpdateUserInterface(EntityUid user, StoreComponent component, BoundUserInterface? ui = null)
+    public void UpdateUserInterface(EntityUid? user, StoreComponent component, BoundUserInterface? ui = null)
     {
         if (ui == null)
         {
@@ -33,12 +38,15 @@ public sealed partial class StoreSystem : EntitySystem
 
         //this is the person who will be passed into logic for all listing filtering.
         var buyer = user;
-        if (component.AccountOwner != null) //if we have one stored, then use that instead
-            buyer = component.AccountOwner.Value;
+        if (buyer != null) //if we have no "buyer" for this update, then don't update the listings
+        {
+            if (component.AccountOwner != null) //if we have one stored, then use that instead
+                buyer = component.AccountOwner.Value;
 
-        var listings = GetAvailableListings(buyer, component).ToHashSet();
+            component.LastAvailableListings = GetAvailableListings(buyer.Value, component).ToHashSet();
+        }
 
-        var state = new StoreUpdateState(buyer, component.Currency, listings);
+        var state = new StoreUpdateState(buyer, component.LastAvailableListings, component.Currency);
         ui.SetState(state);
     }
 }

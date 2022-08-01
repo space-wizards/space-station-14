@@ -42,7 +42,7 @@ public sealed partial class StoreSystem : EntitySystem
 
             if (listing.Conditions != null)
             {
-                var args = new ListingConditionArgs(user, EntityManager);
+                var args = new ListingConditionArgs(user, listing, EntityManager);
                 var conditionsMet = true;
 
                 foreach (var condition in listing.Conditions)

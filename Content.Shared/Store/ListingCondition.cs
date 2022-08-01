@@ -9,4 +9,4 @@ public abstract class ListingCondition
     public abstract bool Condition(ListingConditionArgs args);
 }
 
-public readonly record struct ListingConditionArgs(EntityUid User, IEntityManager EntityManager);
+public readonly record struct ListingConditionArgs(EntityUid User, ListingData listing, IEntityManager EntityManager);

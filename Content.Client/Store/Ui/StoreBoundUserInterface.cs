@@ -2,6 +2,7 @@ using Content.Shared.Traitor.Uplink;
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using System.Linq;
 
 namespace Content.Client.Store.Ui;
 
@@ -19,18 +20,19 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     {
         _menu = new StoreMenu();
 
-        _menu.OpenCentered();
+        _menu.OpenCenteredLeft();
         _menu.OnClose += Close;
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new UplinkBuyListingMessage(listing.ItemId));
+            //SendMessage(new UplinkBuyListingMessage(listing));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
         {
-            //_menu.CurrentFilterCategory = category;
-            SendMessage(new UplinkRequestUpdateInterfaceMessage());
+            _menu.CurrentCategory = category;
+            if (_menu.CurrentBuyer != null)
+                SendMessage(new StoreRequestUpdateInterfaceMessage(_menu.CurrentBuyer.Value));
         };
 
         _menu.OnWithdrawAttempt += (tc) =>
@@ -48,9 +50,11 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case StoreUpdateState msg:
+                if (msg.Buyer != null)
+                    _menu.CurrentBuyer = msg.Buyer;
+                _menu.UpdateBalance(msg.Currency);
                 _menu.PopulateStoreCategoryButtons(msg.Listings);
-                //_menu.UpdateAccount(msg.Account);
-                //_menu.UpdateListing(msg.Listings);
+                _menu.UpdateListing(msg.Listings.ToList());
                 break;
         }
     }

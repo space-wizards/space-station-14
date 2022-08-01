@@ -11,15 +11,26 @@ public enum StoreUiKey : byte
 [Serializable, NetSerializable]
 public sealed class StoreUpdateState : BoundUserInterfaceState
 {
-    public EntityUid Buyer;
+    public EntityUid? Buyer;
 
     public Dictionary<string, float> Currency;
 
     public HashSet<ListingData> Listings;
-    public StoreUpdateState(EntityUid buyer, Dictionary<string, float> currency, HashSet<ListingData> listings)
+    public StoreUpdateState(EntityUid? buyer, HashSet<ListingData> listings, Dictionary<string, float> currency)
     {
         Buyer = buyer;
-        Currency = currency;
         Listings = listings;
+        Currency = currency;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+{
+    public EntityUid CurrentBuyer;
+
+    public StoreRequestUpdateInterfaceMessage(EntityUid currentBuyer)
+    {
+        CurrentBuyer = currentBuyer;
     }
 }

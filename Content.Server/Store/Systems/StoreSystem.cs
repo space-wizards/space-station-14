@@ -20,6 +20,8 @@ public sealed partial class StoreSystem : EntitySystem
 
         SubscribeLocalEvent<StoreComponent, ComponentInit>((_, c, _) => RefreshAllListings(c));
         SubscribeLocalEvent<StoreComponent, ActivateInWorldEvent>(OnActivate);
+
+        InitializeUi();
     }
 
     private void OnAfterInteract(EntityUid uid, CurrencyComponent component, AfterInteractEvent args)
@@ -68,6 +70,7 @@ public sealed partial class StoreSystem : EntitySystem
                 store.Currency[type.Key] += adjustedValue;
         }
 
+        UpdateUserInterface(null, store);
         return true;
     }
 }

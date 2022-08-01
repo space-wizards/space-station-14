@@ -1,5 +1,15 @@
 # Guns
 
+- type: listing
+  id: UplinkPistolViper
+  name: Viper
+  description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
+  productEntity: WeaponPistolViper
+  cost:
+    Telecrystal: 6
+  categories:
+    - Debug
+
 - type: uplinkListing
   id: UplinkPistolViper
   category: Weapons

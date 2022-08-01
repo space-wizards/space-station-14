@@ -1,9 +1,18 @@
 - type: currency
   id: Telecrystal
-  name: TC
+  name: store-currency-name-telecrystal
   entityId: Telecrystal
 
 #debug
 - type: currency
   id: DebugDollar
-  name: debug dollar
+  name: store-currency-name-debugdollar
+
+- type: entity
+  parent: Telecrystal
+  id: debugdollar
+  suffix: debug dollar
+  components:
+  - type: Currency
+    price:
+      DebugDollar: 1

@@ -35,5 +35,14 @@ public sealed class StoreComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? AccountOwner = null;
 
+    /// <summary>
+    /// All listings, including those that aren't available to the buyer
+    /// </summary>
     public HashSet<ListingData> Listings = new();
+
+    /// <summary>
+    /// All available listings from the last time that it was checked.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<ListingData> LastAvailableListings = new();
 }
