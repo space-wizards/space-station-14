@@ -117,6 +117,7 @@ namespace Content.Client.GameTicking.Managers
             StartTime = message.StartTime;
             Paused = message.Paused;
         }
+
         private void LobbyDuration(TickerLobbyRoundDurationEvent message)
         {
             RoundDuration = message.RoundDuration;
