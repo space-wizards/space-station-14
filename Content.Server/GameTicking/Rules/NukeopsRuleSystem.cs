@@ -42,8 +42,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
-    private bool _opsWon;
     private EntityUid? _outpostGrid;
+    private EntityUid? _targetStation;
 
     private enum WinType
     {
@@ -77,6 +77,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         NukeExplodedOnCorrectStation,
         NukeExplodedOnNukieOutpost,
         NukeExplodedOnIncorrectLocation,
+        NukeActiveInStation,
+        NukeActiveAtCentCom,
         NukeDiskOnCentCom,
         NukeDiskNotOnCentCom,
         AllNukiesDead,
@@ -101,7 +103,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -130,17 +132,73 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _roundEndSystem.EndRound();
     }
 
-    private void OnRoundEnd(GameRunLevelChangedEvent ev)
+    private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        if (ev.New != GameRunLevel.PostRound)
+        switch (ev.New)
         {
-            return;
+            case GameRunLevel.InRound:
+                OnRoundStart();
+                break;
+            case GameRunLevel.PostRound:
+                OnRoundEnd();
+                break;
         }
+    }
 
+    private void OnRoundStart()
+    {
+        // TODO: This needs to try and target a Nanotrasen station. At the very least,
+        // we can only currently guarantee that NT stations are the only station to
+        // exist in the base game.
+        _targetStation = _stationSystem.Stations.FirstOrNull();
+    }
+
+    private void OnRoundEnd()
+    {
         // If the win condition was set to operative/crew major win, ignore.
         if (_winType == WinType.OpsMajor || _winType == WinType.CrewMajor)
         {
             return;
+        }
+
+        foreach (var nuke in EntityManager.EntityQuery<NukeComponent>())
+        {
+            if (nuke.Status != NukeStatus.ARMED)
+            {
+                continue;
+            }
+
+            var nukeTransform = Transform(nuke.Owner);
+
+            // UH OH
+            if (nukeTransform.MapID == _shuttleSystem.CentComMap)
+            {
+                _winType = WinType.OpsMajor;
+                _winConditions.Add(WinCondition.NukeActiveAtCentCom);
+                return;
+            }
+
+            if (nukeTransform.GridUid == null || _targetStation == null)
+            {
+                continue;
+            }
+
+            if (!TryComp(_targetStation.Value, out StationDataComponent? data))
+            {
+                continue;
+            }
+
+            foreach (var grid in data.Grids)
+            {
+                if (grid != nukeTransform.GridUid)
+                {
+                    continue;
+                }
+
+                _winType = WinType.OpsMajor;
+                _winConditions.Add(WinCondition.NukeActiveInStation);
+                return;
+            }
         }
 
         // If all nuke ops were alive at the end of the round,
@@ -204,6 +262,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
                 WinCondition.NukeExplodedOnCorrectStation => Loc.GetString("nukeops-cond-correct-station"),
                 WinCondition.NukeExplodedOnNukieOutpost => Loc.GetString("nukeops-cond-nukie-outpost-destroyed"),
                 WinCondition.NukeExplodedOnIncorrectLocation => Loc.GetString("nukeops-cond-incorrect-station"),
+                WinCondition.NukeActiveInStation => Loc.GetString("nukeops-cond-active-on-station"),
+                WinCondition.NukeActiveAtCentCom => Loc.GetString("nukeops-cond-active-on-centcom"),
                 WinCondition.NukeDiskOnCentCom => Loc.GetString("nukeops-cond-disk-on-centcom"),
                 WinCondition.NukeDiskNotOnCentCom => Loc.GetString("nukeops-cond-disk-not-on-centcom"),
                 WinCondition.AllNukiesDead => Loc.GetString("nukeops-cond-all-nukies-dead"),
@@ -469,7 +529,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     public override void Started()
     {
-        _opsWon = false;
+        _winType = WinType.Neutral;
+        _winConditions.Clear();
     }
 
     public override void Ended() { }
