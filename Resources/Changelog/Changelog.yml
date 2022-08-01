@@ -1,9 +1,4 @@
 Entries:
-- author: Todd
-  changes:
-  - {message: Added 3 new lobby themes from the original!, type: Add}
-  id: 1572
-  time: '2022-05-21T15:19:59.0000000+00:00'
 - author: rok-povsic
   changes:
   - {message: Fixed equipping items inside a locker., type: Fix}
@@ -2928,3 +2923,8 @@ Entries:
       a bleeding chance.', type: Tweak}
   id: 2071
   time: '2022-08-01T15:34:50.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to drag & drop entities into disposal units, type: Fix}
+  id: 2072
+  time: '2022-08-01T22:35:34.0000000+00:00'
