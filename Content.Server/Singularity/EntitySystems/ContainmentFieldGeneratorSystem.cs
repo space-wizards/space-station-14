@@ -332,10 +332,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     public void GridCheck(ContainmentFieldGeneratorComponent component)
     {
+        var xFormQuery = GetEntityQuery<TransformComponent>();
+
         foreach (var (_, generators) in component.Connections)
         {
             var gen1GridUid = Transform(component.Owner).GridUid;
-            var gen2GridUid = Transform(generators.Item1.Owner).GridUid;
+            var gen2GridUid = xFormQuery.GetComponent(generators.Item1.Owner).GridUid;
 
             if (gen1GridUid != gen2GridUid)
                 RemoveConnections(component);
