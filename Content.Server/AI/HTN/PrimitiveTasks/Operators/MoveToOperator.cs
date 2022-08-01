@@ -17,6 +17,7 @@ public sealed class MoveToOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    private NPCSteeringSystem _steering = default!;
     private PathfindingSystem _pathfind = default!;
 
     /// <summary>
@@ -48,7 +49,9 @@ public sealed class MoveToOperator : HTNOperator
     public override void Initialize()
     {
         base.Initialize();
-        _pathfind = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<PathfindingSystem>();
+        var sysManager = IoCManager.Resolve<IEntitySystemManager>();
+        _pathfind = sysManager.GetEntitySystem<PathfindingSystem>();
+        _steering = sysManager.GetEntitySystem<NPCSteeringSystem>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
@@ -70,15 +73,14 @@ public sealed class MoveToOperator : HTNOperator
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
             return (false, null);
 
-        // TODO:
-        var access = new List<string>();
-
         if (!_mapManager.TryGetGrid(xform.GridUid, out var ownerGrid) ||
             !_mapManager.TryGetGrid(targetCoordinates.GetGridUid(_entManager), out var targetGrid) ||
             ownerGrid != targetGrid)
         {
             return (false, null);
         }
+
+        var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
 
         var job = _pathfind.RequestPath(
             new PathfindingArgs(
@@ -108,23 +110,25 @@ public sealed class MoveToOperator : HTNOperator
     {
         base.Startup(blackboard);
 
-        // TODO: re-use pathfinding
-        var comp = _entManager.EnsureComponent<NPCSteeringComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        // Re-use the path we may have if applicable.
+        var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), blackboard.GetValue<EntityCoordinates>(TargetKey));
 
-        /*
         if (blackboard.TryGetValue<Queue<TileRef>>(PathfindKey, out var path))
         {
-            return;
-        }
-        */
+            if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+            {
+                _steering.PrunePath(coordinates, path);
+            }
 
-        comp.Request = new GridTargetSteeringRequest(blackboard.GetValue<EntityCoordinates>(TargetKey), 1f);
+            comp.CurrentPath = path;
+        }
     }
 
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         base.Shutdown(blackboard, status);
 
+        // Cleanup the blackboard and remove steering.
         if (blackboard.TryGetValue<CancellationTokenSource>(MovementCancelToken, out var cancelToken))
         {
             cancelToken.Cancel();
@@ -153,10 +157,9 @@ public sealed class MoveToOperator : HTNOperator
 
         return steering.Status switch
         {
-            SteeringStatus.Arrived => HTNOperatorStatus.Finished,
+            SteeringStatus.InRange => HTNOperatorStatus.Finished,
             SteeringStatus.NoPath => HTNOperatorStatus.Failed,
             SteeringStatus.Moving => HTNOperatorStatus.Continuing,
-            SteeringStatus.Pending => HTNOperatorStatus.Continuing,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

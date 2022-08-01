@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.AI.Systems;
+using Robust.Shared.Map;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -58,7 +59,7 @@ public sealed class PickMeleeTargetOperator : HTNOperator
         var effects = new Dictionary<string, object>()
         {
             {Key, selectedTarget},
-            {KeyCoordinates, _entManager.GetComponent<TransformComponent>(selectedTarget).Coordinates}
+            {KeyCoordinates, new EntityCoordinates(selectedTarget, Vector2.Zero)}
         };
 
         return (true, effects);

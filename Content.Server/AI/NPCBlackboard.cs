@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI;
@@ -118,11 +119,23 @@ public sealed class NPCBlackboard
         // TODO: Pass this in
         IoCManager.Resolve(ref entManager);
         value = default;
+        EntityUid owner;
 
         switch (key)
         {
+            case Access:
+                if (!TryGetValue(Owner, out owner))
+                {
+                    return false;
+                }
+
+                var access = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AccessReaderSystem>();
+                value = access.FindAccessTags(owner);
+                return true;
+
+                break;
             case OwnerCoordinates:
-                if (!TryGetValue<EntityUid>(Owner, out var owner))
+                if (!TryGetValue(Owner, out owner))
                 {
                     return false;
                 }
@@ -149,6 +162,7 @@ public sealed class NPCBlackboard
     * Constants to make development easier
     */
 
+    public const string Access = "Access";
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";

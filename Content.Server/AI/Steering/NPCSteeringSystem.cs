@@ -310,7 +310,9 @@ namespace Content.Server.AI.Steering
         /// <summary>
         /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
         /// </summary>
-        private void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
+        /// <param name="coordinates">Our coordinates we are pruning from</param>
+        /// <param name="nodes">Path we're pruning</param>
+        public void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
         {
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
