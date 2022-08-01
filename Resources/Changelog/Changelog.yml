@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: ID Card computer no longer shows nukies access level, type: Fix}
-  id: 1568
-  time: '2022-05-21T04:19:02.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: Some maps should no longer contain any of those pesky mouse-tiles.,
@@ -2928,3 +2923,8 @@ Entries:
   - {message: 'clown, mime, and plague doctor masks can now block identities', type: Fix}
   id: 2067
   time: '2022-08-01T05:29:03.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed gas tanks not being disconnected when dropped (again)., type: Fix}
+  id: 2068
+  time: '2022-08-01T07:43:21.0000000+00:00'
