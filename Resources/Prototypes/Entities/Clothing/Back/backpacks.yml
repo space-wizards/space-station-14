@@ -30,6 +30,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/clown.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/clown.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/clown.rsi
   - type: Storage
@@ -44,6 +46,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/security.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/security.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/security.rsi
 
@@ -54,6 +58,8 @@
   description: It's a tough backpack for the daily grind of station life.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/engineering.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/engineering.rsi
@@ -66,6 +72,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/medical.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/medical.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/medical.rsi
 
@@ -76,6 +84,8 @@
   description: It's a special backpack made exclusively for Nanotrasen officers.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/captain.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/captain.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/captain.rsi
@@ -88,6 +98,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/mime.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/mime.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
 
@@ -98,6 +110,8 @@
   description: A backpack specially designed to repel stains and hazardous liquids.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/chemistry.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/chemistry.rsi
@@ -110,6 +124,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/botany.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/botany.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/botany.rsi
 
@@ -120,6 +136,8 @@
   description: A backpack specially designed to repel stains and hazardous liquids.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/science.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/science.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/science.rsi
@@ -132,6 +150,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/virology.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/virology.rsi
 
@@ -143,6 +163,8 @@
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertleader.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/ertleader.rsi
@@ -157,6 +179,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertsec.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/ertsec.rsi
 
@@ -167,6 +191,8 @@
   description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertmed.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/ertmed.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/ertmed.rsi
@@ -179,6 +205,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/erteng.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/erteng.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/erteng.rsi
 
@@ -190,6 +218,8 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/ertjanitor.rsi
+  - type: Item
+    sprite: Clothing/Back/Backpacks/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/ertjanitor.rsi
 
@@ -200,6 +230,8 @@
   description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertclown.rsi
+  - type: Item
     sprite: Clothing/Back/Backpacks/ertclown.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/ertclown.rsi
@@ -218,6 +250,8 @@
     - state: holding
     - state: holding-unlit
       shader: unshaded
+  - type: Item
+    sprite: Clothing/Back/Backpacks/holding.rsi
   - type: Clothing
     sprite: Clothing/Back/Backpacks/holding.rsi
   - type: Storage
