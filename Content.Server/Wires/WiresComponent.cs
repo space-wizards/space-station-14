@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Wires;
 
@@ -28,7 +29,7 @@ public sealed class WiresComponent : Component
     ///     The layout ID of this entity's wires.
     /// </summary>
     [ViewVariables]
-    [DataField("LayoutId", required: true)]
+    [DataField("LayoutId", customTypeSerializer: typeof(PrototypeIdSerializer<WireLayoutPrototype>), required: true)]
     public string LayoutId { get; set; } = default!;
 
     /// <summary>
