@@ -8,12 +8,12 @@ namespace Content.Server.AI.Utility
     {
         public static Blackboard? GetBlackboard(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out AiControllerComponent? aiControllerComponent))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out NPCComponent? aiControllerComponent))
             {
                 return null;
             }
 
-            if (aiControllerComponent is UtilityAi utilityAi)
+            if (aiControllerComponent is UtilityNPCComponent utilityAi)
             {
                 return utilityAi.Blackboard;
             }

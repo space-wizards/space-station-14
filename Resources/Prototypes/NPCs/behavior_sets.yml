@@ -34,6 +34,11 @@
   - WanderAndWait
 
 - type: behaviorSet
+  id: MediBot
+  actions:
+  - InjectNearbyExp
+
+- type: behaviorSet
   id: Spirate
   actions:
   - EquipMeleeExp

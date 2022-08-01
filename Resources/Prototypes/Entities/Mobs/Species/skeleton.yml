@@ -1,67 +1,17 @@
 - type: entity
   save: false
   name: Urist McSkelly
-  id: MobSkeletonPersonBase
+  parent: BaseMobOrganic
+  id: BaseMobSkeletonPerson
+  abstract: true
   description: A miserable pile of bones.
-  noSpawn: true
   components:
-  - type: Tag
-    tags:
-    - CanPilot
-    - FootstepSound
-    - DoorBumpOpener
-  - type: Reactive
-    groups:
-      Flammable: [ Touch ]
-      Extinguish: [ Touch ]
-      Acidic: [Touch, Ingestion]
-    reactions:
-    - reagents: [Water, SpaceCleaner]
-      methods: [Touch]
-      effects:
-      - !type:WashCreamPieReaction
-  - type: Flashable
-  - type: Polymorphable
-  - type: Hands
-  - type: MovementSpeedModifier
-  - type: MovedByPressure
   - type: Markings
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.1 #per second, scales with pressure and other constants.
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  # Organs
-  - type: HealthExaminable
-    examinableTypes:
-    - Blunt
-    - Slash
-    - Piercing
-    - Heat
-    - Shock
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-    - Stutter
-    - Electrocution
-  # Other
-  - type: Inventory
-  - type: Clickable
-  - type: InteractionOutline
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
+  # Other
   - type: Sprite
-    netsync: false
-    noRot: true
-    drawdepth: Mobs
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
       color: "#ffffff"
@@ -135,38 +85,6 @@
     - map: [ "head" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
-  - type: Physics
-    bodyType: KinematicController
-  - type: Fixtures
-    fixtures: # TODO: This needs a second fixture just for mob collisions.
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 70
-      restitution: 0.0
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
-  - type: AtmosExposed
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
-  - type: Temperature
-    heatDamageThreshold: 360
-    coldDamageThreshold: 260
-    currentTemperature: 310.15
-    specificHeat: 42
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
-  - type: HumanoidAppearance
   - type: Body
     template: HumanoidTemplate
     preset: SkeletonPreset
@@ -174,15 +92,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Skeleton
-  - type: ThermalRegulator
-    metabolismHeat: 800
-    radiatedHeat: 100
-    implicitHeatRegulation: 500
-    sweatHeatRegulation: 2000
-    shiveringHeatRegulation: 2000
-    normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
-  - type: Internals
   - type: MobState
     thresholds:
       0: Alive
@@ -198,71 +107,12 @@
     speedModifierThresholds:
       60: 0.9
       80: 0.7
-  - type: HeatResistance
-  - type: Appearance
-    visuals:
-    - type: RotationVisualizer
-    - type: BuckleVisualizer
-    - type: CreamPiedVisualizer
-      state: creampie_human
-    - type: DamageVisualizer
-      thresholds: [20, 40, 100]
-      targetLayers:
-      - "enum.HumanoidVisualLayers.Chest"
-      - "enum.HumanoidVisualLayers.Head"
-      - "enum.HumanoidVisualLayers.LArm"
-      - "enum.HumanoidVisualLayers.LLeg"
-      - "enum.HumanoidVisualLayers.RArm"
-      - "enum.HumanoidVisualLayers.RLeg"
-      damageOverlayGroups:
-        Brute:
-          sprite: Mobs/Effects/brute_damage.rsi
-          color: "#8a8a8a"
-        Burn:
-          sprite: Mobs/Effects/burn_damage.rsi
-  - type: FireVisuals
-    sprite: Mobs/Effects/onfire.rsi
-    normalState: Generic_mob_burning
-    alternateState: Standing
-    fireStackAlternateState: 3
-  - type: CombatMode
-    canDisarm: true
-  - type: Climbing
-  - type: Cuffable
-  - type: CharacterInfo
-  - type: AnimationPlayer
-  - type: Buckle
-  - type: MeleeWeapon
-    hitSound:
-      collection: Punch
-    range: 0.8
-    arcwidth: 30
-    arc: fist
-    damage:
-      types:
-        Blunt: 5
-  - type: Pullable
-  - type: DoAfter
-  - type: CreamPied
-  - type: Stripping
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
-  - type: Puller
   - type: Speech
-  - type: Vocal
-  - type: Emoting
-  - type: Grammar
-    attributes:
-      proper: true
-  - type: StandingState
 
 - type: entity
   save: false
   name: Urist McSkelly
-  parent: MobHumanDummy
+  parent: BaseMobOrganicDummy
   id: MobSkeletonPersonDummy
   noSpawn: true
   description: A dummy skeleton meant to be used in character setup.

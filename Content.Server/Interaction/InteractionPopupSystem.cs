@@ -1,13 +1,13 @@
-using Content.Server.Popups;
 using Content.Server.Interaction.Components;
+using Content.Server.Popups;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
-
+using Robust.Shared.Timing;
 
 namespace Content.Server.Interaction;
 
@@ -26,6 +26,10 @@ public sealed class InteractionPopupSystem : EntitySystem
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
         if (args.Handled || args.User == args.Target)
+            return;
+
+        //Handling does nothing and this thing annoyingly plays way too often.
+        if (HasComp<SleepingComponent>(uid))
             return;
 
         var curTime = _gameTiming.CurTime;

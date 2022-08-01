@@ -39,7 +39,7 @@
     netsync: false
   - type: Recyclable
     safe: false
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: AiFactionTag
@@ -99,7 +99,7 @@
   - type: SpamEmitSound
     sound:
       collection: BikeHorn
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - Idle
   - type: Sprite
@@ -128,6 +128,11 @@
     makeSentient: true
     name: honkbot
     description: An artificial being of pure evil.
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -139,7 +144,7 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: UtilityAI
+  - type: UtilityNPC
     behaviorSets:
     - CleanBot
   - type: Drain
@@ -156,3 +161,32 @@
         maxVol: 30
   - type: DrainableSolution
     solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: UtilityNPC
+    behaviorSets:
+    - MediBot
+  - type: Medibot
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: Speech
+  - type: Construction
+    graph: MediBot
+    node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

@@ -1,47 +1,55 @@
-using System;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Parallax;
 
 public sealed class ParallaxOverlay : Overlay
 {
-    [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IParallaxManager _manager = default!;
+    private readonly ParallaxSystem _parallax;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
-    private readonly ShaderInstance _shader;
 
     public ParallaxOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
+        _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
+
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.Viewport.Eye == null)
-        {
+        if (args.MapId == MapId.Nullspace)
             return;
-        }
 
         if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
-        {
             return;
-        }
 
+        var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
         var screenHandle = args.WorldHandle;
-        screenHandle.UseShader(_shader);
 
-        foreach (var layer in _parallaxManager.ParallaxLayers)
+        var layers = _parallax.GetParallaxLayers(args.MapId);
+        var realTime = (float) _timing.RealTime.TotalSeconds;
+
+        foreach (var layer in layers)
         {
+            ShaderInstance? shader;
+
+            if (!string.IsNullOrEmpty(layer.Config.Shader))
+                shader = _prototypeManager.Index<ShaderPrototype>(layer.Config.Shader).Instance();
+            else
+                shader = null;
+
+            screenHandle.UseShader(shader);
             var tex = layer.Texture;
 
             // Size of the texture in world units.
@@ -52,10 +60,11 @@ public sealed class ParallaxOverlay : Overlay
             // The effects of this are such that a slowness of 1 anchors the layer to the centre of the screen, while a slowness of 0 anchors the layer to the world.
             // (For values 0.0 to 1.0 this is in effect a lerp, but it's deliberately unclamped.)
             // The ParallaxAnchor adapts the parallax for station positioning and possibly map-specific tweaks.
-            var home = layer.Config.WorldHomePosition + _parallaxManager.ParallaxAnchor;
+            var home = layer.Config.WorldHomePosition + _manager.ParallaxAnchor;
+            var scrolled = layer.Config.Scrolling * realTime;
 
             // Origin - start with the parallax shift itself.
-            var originBL = (args.Viewport.Eye.Position.Position - home) * layer.Config.Slowness;
+            var originBL = (position - home) * layer.Config.Slowness + scrolled;
 
             // Place at the home.
             originBL += home;
@@ -90,6 +99,8 @@ public sealed class ParallaxOverlay : Overlay
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
+
+        screenHandle.UseShader(null);
     }
 }
 
