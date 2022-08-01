@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-
 namespace Content.Server.RevolutionFlag.Components
 {
     [RegisterComponent, Access(typeof(FlagSystem))]
@@ -13,10 +11,13 @@ namespace Content.Server.RevolutionFlag.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float range { get; set; } = 2.5f;
 
-        [DataField("modifiers", required: true)]
-        public DamageModifierSet Modifiers = default!;
+        [DataField("timespan")]
+        public TimeSpan timespan = new TimeSpan(0,0,2);
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool active = false;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<EntityUid> UnderEffect = new();
     }
 }

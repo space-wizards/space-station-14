@@ -2,7 +2,7 @@
   name: Hypnotic flash
   parent: [Flash]
   id: RevolutionaryFlash
-  description: Acts like a standard flash, however it has shorter stun time and a weaker stun. When used by a revolutionary head, it converts anyone that isn't either a staff head, a security officer, a detective, or anyone with anything covering their eyes over to the revolution
+  description: Acts like a standard flash, having more uses at the cost of having a weaker stun. If used on a person not wearing eye protection and not apart of command or security it will convert them over to the revolution
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/revoflash.rsi
@@ -11,6 +11,7 @@
       duration: 1000
       range: 1
       aoeFlashDuration: 500
+      uses: 10
     - type: Item
       size: 5
       sprite: Objects/Weapons/Melee/revoflash.rsi
@@ -26,12 +27,6 @@
       state: icon
     - type: TwoHanded
     - type: Flag
-      modifiers:
-      coefficients:
-        Blunt: 1.0
-        Slash: 0.0
-        Piercing: 0.0
-        Heat: 0.0
     - type: MeleeWeapon
       damage:
         types:

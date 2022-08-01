@@ -4,19 +4,20 @@ using Content.Server.Traitor;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
+using Content.Shared.StatusEffect;
 
 namespace Content.Server.RevolutionFlag;
     internal sealed class FlagSystem : EntitySystem
     {
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         private const string RevolutionaryPrototypeId = "Revolutionary";
-        private List<EntityUid> UnderEffect = new();
         private DamageModifierSet Modifiers = default!; 
         
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<MindComponent,MeleeHitEvent>(ModifyDamage);
+            SubscribeLocalEvent<FlagBuffComponent,MeleeHitEvent>(ModifyDamage);
             SubscribeLocalEvent<FlagComponent,GotEquippedHandEvent>(OnEquipped);
             SubscribeLocalEvent<FlagComponent,GotUnequippedHandEvent>(OnDequipped);
         }
@@ -31,15 +32,15 @@ namespace Content.Server.RevolutionFlag;
             comp.active = false;
         }
 
-        public void Aura(FlagComponent flagcomp, float range)
+        public void Aura(FlagComponent flagComp, float range)
         {
-            var transform = EntityManager.GetComponent<TransformComponent>(flagcomp.Owner);
+            var transform = EntityManager.GetComponent<TransformComponent>(flagComp.Owner);
             var mapPosition = transform.MapPosition;
             var inRange = _entityLookup.GetEntitiesInRange(transform.Coordinates, range);
 
-            UnderEffect.Clear();
+            flagComp.UnderEffect.Clear();
 
-            if (!flagcomp.active)
+            if (!flagComp.active)
                 return;
             foreach(var entityInRange in inRange)
             {
@@ -47,15 +48,23 @@ namespace Content.Server.RevolutionFlag;
                     continue;
                 if (!GetRole(mind, RevolutionaryPrototypeId))
                     continue;
-                UnderEffect.Add(entityInRange);
+                _statusEffectSystem.TryAddStatusEffect<FlagBuffComponent>(entityInRange, "Courage", flagComp.timespan, true);
             }
         }
 
-        private void ModifyDamage(EntityUid uid, MindComponent comp, MeleeHitEvent args)
+        private void ModifyDamage(EntityUid uid, FlagBuffComponent comp, MeleeHitEvent args)
         {
-            if (!UnderEffect.Contains(uid))
+            if (!_statusEffectSystem.HasStatusEffect(uid, "Courage"))
                 return;
-            args.BonusDamage = DamageSpecifier.ApplyModifierSet(args.BaseDamage + new DamageSpecifier(), Modifiers);
+            
+            /* 
+                This is a little bit cheaty but I couldn't 
+                figure out how to specify a damagemodifierset 
+                inside a component to actually modify the damage
+                so for now I'm just adding the base damage to
+                bonus damage
+            */
+            args.BonusDamage += args.BaseDamage;
         }
 
         public bool GetRole(MindComponent mind, String compare)
@@ -84,7 +93,6 @@ namespace Content.Server.RevolutionFlag;
                 if (flagComp.accumulator > 1)
                 {
                     flagComp.accumulator = 0;
-                    Modifiers = flagComp.Modifiers;
                     Aura(flagComp, flagComp.range);
                 }
             }
