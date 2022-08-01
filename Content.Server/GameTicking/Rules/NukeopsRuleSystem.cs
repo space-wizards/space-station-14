@@ -85,9 +85,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         if (!RuleAdded)
             return;
 
-        if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op)) return;
+        if (!_aliveNukeops.TryFirstOrNull(x => x.Key.OwnedEntity == ev.Entity, out var op))
+        {
+            return;
+        }
 
-        _aliveNukeops[op.Value.Key] = op.Value.Key.CharacterDeadIC;
+        _aliveNukeops[op.Value.Key] = !op.Value.Key.CharacterDeadIC;
 
         if (_aliveNukeops.Values.All(x => !x))
         {
