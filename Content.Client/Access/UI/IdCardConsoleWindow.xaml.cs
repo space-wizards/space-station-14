@@ -53,7 +53,7 @@ namespace Content.Client.Access.UI
 
                 var newButton = new Button
                 {
-                    Text = Loc.GetString("id-card-access-level-" + accessLevel.ID.ToLower()),
+                    Text = accessLevel.Name,
                     ToggleMode = true,
                 };
                 AccessLevelGrid.AddChild(newButton);
