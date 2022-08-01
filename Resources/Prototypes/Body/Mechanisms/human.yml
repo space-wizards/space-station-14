@@ -12,7 +12,7 @@
     grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
-      organ:
+      food:
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -41,7 +41,7 @@
   id: OrganHumanEyes
   parent: BaseHumanOrgan
   name: eyes
-  description: "I see you!"
+  description: "Something certainly caught their eye. "
   components:
   - type: Sprite
     layers:
@@ -67,6 +67,7 @@
   id: OrganHumanAppendix
   parent: BaseHumanOrgan
   name: appendix
+  desc: "Bomb has been defused."
   components:
   - type: Sprite
     layers:
@@ -93,7 +94,7 @@
   id: OrganHumanLungs
   parent: BaseHumanOrgan
   name: lungs
-  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  description: "The smell is enough to take your breath away."
   components:
   - type: Sprite
     layers:

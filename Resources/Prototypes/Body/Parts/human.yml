@@ -8,6 +8,10 @@
   components:
   - type: Damageable
     damageContainer: Biological
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCutlet
+      amount: 1
 
 - type: entity
   id: TorsoHuman
