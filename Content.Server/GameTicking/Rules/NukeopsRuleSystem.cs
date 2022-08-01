@@ -43,6 +43,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
+    private EntityUid? _outpostGrid;
 
     private enum WinConditions
     {
@@ -95,7 +96,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     	if (!RuleAdded)
             return;
 
-        _winCondition = WinConditions.OpsMajor;
+        if (ev.OwningStation != null)
+        {
+            _winCondition = ev.OwningStation == _outpostGrid
+                ? WinConditions.CrewMajor
+                : WinConditions.OpsMajor;
+        }
+
         _roundEndSystem.EndRound();
     }
 
@@ -106,8 +113,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
-        // If the win conditions was set to operative major win, ignore.
-        if (_winCondition == WinConditions.OpsMajor)
+        // If the win condition was set to operative/crew major win, ignore.
+        if (_winCondition == WinConditions.OpsMajor || _winCondition == WinConditions.CrewMajor)
         {
             return;
         }
@@ -124,8 +131,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var diskAtCentCom = false;
         foreach (var comp in EntityManager.EntityQuery<NukeDiskComponent>())
         {
-            var diskGridUid = Transform(comp.Owner).GridUid;
-            diskAtCentCom = diskGridUid != null && _shuttleSystem.CentCom == diskGridUid;
+            var diskMapId = Transform(comp.Owner).MapID;
+            diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             break;
@@ -151,10 +158,15 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         var winText = _winCondition switch
         {
+            WinConditions.OpsMajor => Loc.GetString("nukeops-ops-major"),
+            WinConditions.OpsMinor => Loc.GetString("nukeops-ops-minor"),
+            WinConditions.Neutral => Loc.GetString("nukeops-neutral"),
+            WinConditions.CrewMinor => Loc.GetString("nukeops-crew-minor"),
+            WinConditions.CrewMajor => Loc.GetString("nukeops-crew-major"),
             _ => "oopsie woopsie! nukie wukies! (Contact a developer about this immediately.)"
         };
 
-        ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
+        ev.AddLine(winText);
         ev.AddLine(Loc.GetString("nukeops-list-start"));
         foreach (var nukeop in _aliveNukeops)
         {

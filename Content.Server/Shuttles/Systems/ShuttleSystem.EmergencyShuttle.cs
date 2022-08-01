@@ -38,7 +38,7 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly DockingSystem _dockSystem = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
-   private MapId? _centComMap;
+   public MapId? CentComMap { get; private set; }
    public EntityUid? CentCom { get; private set; }
 
    /// <summary>
@@ -367,8 +367,8 @@ public sealed partial class ShuttleSystem
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        EmergencyShuttleArrived = true;
 
-       if (_centComMap != null)
-         _mapManager.SetMapPaused(_centComMap.Value, false);
+       if (CentComMap != null)
+         _mapManager.SetMapPaused(CentComMap.Value, false);
 
        foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
@@ -415,17 +415,17 @@ public sealed partial class ShuttleSystem
 
    private void SetupEmergencyShuttle()
    {
-       if (!_emergencyShuttleEnabled || _centComMap != null && _mapManager.MapExists(_centComMap.Value)) return;
+       if (!_emergencyShuttleEnabled || CentComMap != null && _mapManager.MapExists(CentComMap.Value)) return;
 
-       _centComMap = _mapManager.CreateMap();
-       _mapManager.SetMapPaused(_centComMap.Value, true);
+       CentComMap = _mapManager.CreateMap();
+       _mapManager.SetMapPaused(CentComMap.Value, true);
 
        // Load CentCom
        var centComPath = _configManager.GetCVar(CCVars.CentcommMap);
 
        if (!string.IsNullOrEmpty(centComPath))
        {
-           var (_, centcomm) = _loader.LoadBlueprint(_centComMap.Value, "/Maps/centcomm.yml");
+           var (_, centcomm) = _loader.LoadBlueprint(CentComMap.Value, "/Maps/centcomm.yml");
            CentCom = centcomm;
 
            if (CentCom != null)
@@ -444,10 +444,10 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (!_emergencyShuttleEnabled || _centComMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadBlueprint(_centComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var (_, shuttle) = _loader.LoadBlueprint(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
@@ -473,13 +473,13 @@ public sealed partial class ShuttleSystem
 
        _shuttleIndex = 0f;
 
-       if (_centComMap == null || !_mapManager.MapExists(_centComMap.Value))
+       if (CentComMap == null || !_mapManager.MapExists(CentComMap.Value))
        {
-           _centComMap = null;
+           CentComMap = null;
            return;
        }
 
-       _mapManager.DeleteMap(_centComMap.Value);
+       _mapManager.DeleteMap(CentComMap.Value);
    }
 
    /// <summary>
