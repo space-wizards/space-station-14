@@ -24,7 +24,9 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using System.Data;
+using Content.Shared.Chat;
 using Content.Shared.Nuke;
+using Robust.Shared.Player;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -165,7 +167,23 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // TODO: This needs to try and target a Nanotrasen station. At the very least,
         // we can only currently guarantee that NT stations are the only station to
         // exist in the base game.
+
         _targetStation = _stationSystem.Stations.FirstOrNull();
+
+        if (_targetStation == null)
+        {
+            return;
+        }
+
+        foreach (var (mind, _) in _aliveNukeops)
+        {
+            if (mind.Session == null)
+            {
+                continue;
+            }
+
+            _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("nukeops-welcome", ("station", _targetStation.Value)));
+        }
     }
 
     private void OnRoundEnd()
