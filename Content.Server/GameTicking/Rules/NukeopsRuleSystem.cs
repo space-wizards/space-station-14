@@ -299,6 +299,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
         }
 
+        _outpostGrid = outpost;
+
         // Listen I just don't want it to overlap.
         var (_, shuttleId) = _mapLoader.LoadBlueprint(mapId, shuttlePath, new MapLoadOptions()
         {
