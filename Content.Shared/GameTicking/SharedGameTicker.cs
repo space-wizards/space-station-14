@@ -45,17 +45,15 @@ namespace Content.Shared.GameTicking
         public bool YouAreReady { get; }
         // UTC.
         public TimeSpan StartTime { get; }
-        public TimeSpan RoundStartTimeSpan { get; }
         public bool Paused { get; }
 
-        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, string? lobbyBackground, bool youAreReady, TimeSpan startTime, TimeSpan roundStartTimeSpan, bool paused)
+        public TickerLobbyStatusEvent(bool isRoundStarted, string? lobbySong, string? lobbyBackground, bool youAreReady, TimeSpan startTime, bool paused)
         {
             IsRoundStarted = isRoundStarted;
             LobbySong = lobbySong;
             LobbyBackground = lobbyBackground;
             YouAreReady = youAreReady;
             StartTime = startTime;
-            RoundStartTimeSpan = roundStartTimeSpan;
             Paused = paused;
         }
     }
@@ -88,6 +86,20 @@ namespace Content.Shared.GameTicking
         {
             StartTime = startTime;
             Paused = paused;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class TickerLobbyRoundDurationEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// The current duration of the round
+        /// </summary>
+        public TimeSpan RoundDuration { get; }
+
+        public TickerLobbyRoundDurationEvent(TimeSpan roundDuration)
+        {
+            RoundDuration = roundDuration;
         }
     }
 
