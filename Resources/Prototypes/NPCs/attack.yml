@@ -1,73 +1,15 @@
 - type: htnCompound
-  id: IdleCompound
-  desc: Picks a random location for the NPC to move to and idle.
-  branches:
-    # Pick a new spot and wait there.
-    - tasks:
-        - id: PickAccessiblePrimitive
-        - id: MoveToAccessiblePrimitive
-        - id: RandomIdleTimePrimitive
-        - id: WaitIdleTimePrimitive
-
-- type: htnPrimitive
-  id: PickAccessiblePrimitive
-  operator: !type:PickAccessibleOperator
-    idleRangeKey: IdleRange
-    targetKey: MovementTarget
-
-- type: htnPrimitive
-  id: MoveToAccessiblePrimitive
-  operator: !type:MoveToOperator
-    pathfindInPlanning: false
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: MovementTarget
-
-- type: htnPrimitive
-  id: RandomIdleTimePrimitive
-  operator: !type:RandomOperator
-    targetKey: IdleTime
-    minKey: MinimumIdleTime
-    maxKey: MaximumIdleTime
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: IdleTime
-
-- type: htnPrimitive
-  id: WaitIdleTimePrimitive
-  operator: !type:WaitOperator
-    key: IdleTime
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: IdleTime
-
-- type: htnCompound
   id: MeleeCombatCompound
   desc: Selects a target in melee and tries to attack it.
   branches:
-    # Melee Weapon combat
-    #- tasks:
-    # We always want to double check our target is best so select that first
-    #- id: PickMeleeTargetPrimitive
-    # Make sure we have a decent weapon
-    #- !type:HTNCompoundTask
-    #  id: EquipMelee
-    # Start whacking
-    #- id: MeleeAttackTargetCompound
-
     # Unarmed combat
     - tasks:
         - id: PickMeleeTargetPrimitive
         - id: MeleeAttackTargetCompound
 
-- type: htnPrimitive
-  id: PickMeleeTargetPrimitive
-  operator: !type:PickMeleeTargetOperator
-
 - type: htnCompound
   id: MeleeAttackTargetCompound
   desc: Tries to melee attack our target.
-  # TODO: Precon dumpy
   preconditions:
     - !type:KeyExistsPrecondition
       key: CombatTarget
@@ -80,6 +22,11 @@
     - tasks:
         - id: MoveToCombatTargetPrimitive
         - id: MeleeAttackTargetPrimitive
+
+
+- type: htnPrimitive
+  id: PickMeleeTargetPrimitive
+  operator: !type:PickMeleeTargetOperator
 
 - type: htnPrimitive
   id: MeleeAttackTargetPrimitive
@@ -101,6 +48,5 @@
     removeKeyOnFinish: false
     key: CombatTargetCoordinates
     pathfindKey: CombatTargetPathfind
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: CombatTargetCoordinates
+    # TODO: Need to pass this in
+    rangeKey: MeleeRange

@@ -1,0 +1,37 @@
+# Picks a random location for the NPC to move to and idle.
+- type: htnCompound
+  id: IdleCompound
+  branches:
+    # Pick a new spot and wait there.
+    - tasks:
+        - id: PickAccessiblePrimitive
+        - id: MoveToAccessiblePrimitive
+        - id: RandomIdleTimePrimitive
+        - id: WaitIdleTimePrimitive
+
+
+- type: htnPrimitive
+  id: PickAccessiblePrimitive
+  operator: !type:PickAccessibleOperator
+    idleRangeKey: IdleRange
+    targetKey: MovementTarget
+
+- type: htnPrimitive
+  id: MoveToAccessiblePrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: false
+
+- type: htnPrimitive
+  id: RandomIdleTimePrimitive
+  operator: !type:RandomOperator
+    targetKey: IdleTime
+    minKey: MinimumIdleTime
+    maxKey: MaximumIdleTime
+
+- type: htnPrimitive
+  id: WaitIdleTimePrimitive
+  operator: !type:WaitOperator
+    key: IdleTime
+  preconditions:
+    - !type:KeyExistsPrecondition
+      key: IdleTime

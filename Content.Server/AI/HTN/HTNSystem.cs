@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Server.AI.Components;
@@ -271,7 +272,7 @@ public sealed partial class HTNSystem : EntitySystem
         component.PlanningToken = cancelToken;
     }
 
-    private string GetDomain(HTNCompoundTask compound)
+    public string GetDomain(HTNCompoundTask compound)
     {
         // TODO: Recursively add each one
         var indent = 0;
@@ -283,16 +284,20 @@ public sealed partial class HTNSystem : EntitySystem
 
     private void AppendDomain(StringBuilder builder, HTNTask task, ref int indent)
     {
+        var buffer = string.Concat(Enumerable.Repeat("    ", indent));
+
         if (task is HTNPrimitiveTask primitive)
         {
-            builder.Append("Primitive: {task.ID}");
-            builder.AppendLine($"operator: {primitive.Operator.ToString()}");
+            builder.AppendLine(buffer + $"Primitive: {task.ID}");
+            builder.AppendLine(buffer + $"  operator: {primitive.Operator.GetType().Name}");
         }
         else if (task is HTNCompoundTask compound)
         {
+            builder.AppendLine(buffer + $"Compound: {task.ID}");
+
             foreach (var branch in compound.Branches)
             {
-                builder.AppendLine("branch");
+                builder.AppendLine(buffer + "  branch:");
                 indent++;
 
                 foreach (var branchTask in branch.Tasks)

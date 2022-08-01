@@ -57,7 +57,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
 
             // Very inefficient (should weight each region by its node count) but better than the old system
             var reachableSystem = entMan.EntitySysManager.GetEntitySystem<AiReachableSystem>();
-            var reachableArgs = ReachableArgs.GetArgs(Owner);
+            var reachableArgs = ReachableArgs.GetArgs(Owner, 7f);
             var entityRegion = reachableSystem.GetRegion(Owner);
             var reachableRegions = reachableSystem.GetReachableRegions(reachableArgs, entityRegion);
 

@@ -9,8 +9,6 @@ namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
 /// </summary>
 public sealed class PickMeleeTargetOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-
     private AiFactionTagSystem _tags = default!;
 
     [ViewVariables, DataField("key")] public string Key = "CombatTarget";

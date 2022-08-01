@@ -221,7 +221,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
             }
 
             // We'll go from target's position to us because most of the time it's probably in a locked room rather than vice versa
-            var reachableArgs = ReachableArgs.GetArgs(entity);
+            var reachableArgs = ReachableArgs.GetArgs(entity, 7f);
             var reachableRegions = GetReachableRegions(reachableArgs, targetRegion);
 
             return entityRegion != null && reachableRegions.Contains(entityRegion);

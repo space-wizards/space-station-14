@@ -23,7 +23,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static ReachableArgs GetArgs(EntityUid entity)
+        public static ReachableArgs GetArgs(EntityUid entity, float radius)
         {
             var collisionMask = 0;
             var entMan = IoCManager.Resolve<IEntityManager>();
@@ -34,9 +34,8 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
             var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             var access = accessSystem.FindAccessTags(entity);
-            var visionRadius = entMan.GetComponent<NPCComponent>(entity).VisionRadius;
 
-            return new ReachableArgs(visionRadius, access, collisionMask);
+            return new ReachableArgs(radius, access, collisionMask);
         }
     }
 }

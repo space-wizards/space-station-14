@@ -1,11 +1,8 @@
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.AI.Steering;
-using Content.Server.AI.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks;
@@ -44,6 +41,12 @@ public sealed class MoveToOperator : HTNOperator
     [ViewVariables, DataField("pathfindKey")]
     public string PathfindKey = "MovementPathfind";
 
+    /// <summary>
+    /// How close we need to get before considering movement finished.
+    /// </summary>
+    [ViewVariables, DataField("rangeKey")]
+    public string RangeKey = "MovementRange";
+
     private const string MovementCancelToken = "MovementCancelToken";
 
     public override void Initialize()
@@ -56,18 +59,20 @@ public sealed class MoveToOperator : HTNOperator
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
     {
+        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
+        {
+            return (false, null);
+        }
+
         if (!PathfindInPlanning)
         {
             return (true, new Dictionary<string, object>()
             {
-                {NPCBlackboard.OwnerCoordinates, blackboard.GetValue<EntityCoordinates>(TargetKey)}
+                {NPCBlackboard.OwnerCoordinates, targetCoordinates}
             });
         }
 
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-
-        if (!blackboard.TryGetValue<EntityCoordinates>(TargetKey, out var targetCoordinates))
-            return (false, null);
 
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform) ||
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
@@ -82,13 +87,16 @@ public sealed class MoveToOperator : HTNOperator
 
         var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
 
+        var range = blackboard.GetValueOrDefault<float>(RangeKey);
+
         var job = _pathfind.RequestPath(
             new PathfindingArgs(
                 blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
                 access,
                 body.CollisionMask,
                 ownerGrid.GetTileRef(xform.Coordinates),
-                ownerGrid.GetTileRef(targetCoordinates)), CancellationToken.None);
+                ownerGrid.GetTileRef(targetCoordinates),
+                range), CancellationToken.None);
 
         job.Run();
 
@@ -112,6 +120,11 @@ public sealed class MoveToOperator : HTNOperator
 
         // Re-use the path we may have if applicable.
         var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), blackboard.GetValue<EntityCoordinates>(TargetKey));
+
+        if (blackboard.TryGetValue<float>(RangeKey, out var range))
+        {
+            comp.Range = range;
+        }
 
         if (blackboard.TryGetValue<Queue<TileRef>>(PathfindKey, out var path))
         {
@@ -139,6 +152,7 @@ public sealed class MoveToOperator : HTNOperator
         blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
         blackboard.Remove<EntityCoordinates>(TargetKey);
         blackboard.Remove<Queue<TileRef>>(PathfindKey);
+        blackboard.Remove<float>(RangeKey);
 
         if (RemoveKeyOnFinish)
         {

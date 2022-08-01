@@ -35,8 +35,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
             return (false, null);
 
-        var reachableArgs = ReachableArgs.GetArgs(owner);
-        reachableArgs.VisionRadius = blackboard.GetValueOrDefault<float>(IdleRangeKey);
+        var reachableArgs = ReachableArgs.GetArgs(owner, blackboard.GetValueOrDefault<float>(IdleRangeKey));
         var entityRegion = _reachable.GetRegion(owner);
         var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
 
