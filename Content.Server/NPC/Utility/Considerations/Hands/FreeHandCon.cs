@@ -1,0 +1,21 @@
+using Content.Server.NPC.WorldState;
+using Content.Server.NPC.WorldState.States;
+using Content.Shared.Hands.Components;
+
+namespace Content.Server.NPC.Utility.Considerations.Hands
+{
+    public sealed class FreeHandCon : Consideration
+    {
+        protected override float GetScore(Blackboard context)
+        {
+            var owner = context.GetState<SelfState>().GetValue();
+
+            if (!owner.IsValid() || !IoCManager.Resolve<IEntityManager>().TryGetComponent(owner, out SharedHandsComponent? handsComponent))
+            {
+                return 0.0f;
+            }
+
+            return (float) handsComponent.CountFreeHands() / handsComponent.Count;
+        }
+    }
+}

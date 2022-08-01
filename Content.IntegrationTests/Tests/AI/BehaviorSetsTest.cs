@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.AI.Utility;
-using Content.Server.AI.Utility.Actions;
-using Content.Server.AI.Utility.AiLogic;
+using Content.Server.NPC.Utility;
+using Content.Server.NPC.Utility.Actions;
+using Content.Server.NPC.Utility.AiLogic;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;

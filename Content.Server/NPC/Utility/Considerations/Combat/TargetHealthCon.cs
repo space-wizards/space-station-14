@@ -1,0 +1,21 @@
+using Content.Server.NPC.WorldState;
+using Content.Server.NPC.WorldState.States;
+using Content.Shared.Damage;
+
+namespace Content.Server.NPC.Utility.Considerations.Combat
+{
+    public sealed class TargetHealthCon : Consideration
+    {
+        protected override float GetScore(Blackboard context)
+        {
+            var target = context.GetState<TargetEntityState>().GetValue();
+
+            if (target == null || !IoCManager.Resolve<IEntityManager>().TryGetComponent(target, out DamageableComponent? damageableComponent))
+            {
+                return 0.0f;
+            }
+
+            return (float) damageableComponent.TotalDamage / 300.0f;
+        }
+    }
+}
