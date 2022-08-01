@@ -2,6 +2,8 @@
 - type: htnCompound
   id: IdleCompound
   branches:
+    - tasks:
+        - id: WaitIdleTimePrimitive
     # Pick a new spot and wait there.
     - tasks:
         - id: PickAccessiblePrimitive
@@ -13,7 +15,7 @@
 - type: htnPrimitive
   id: PickAccessiblePrimitive
   operator: !type:PickAccessibleOperator
-    idleRangeKey: IdleRange
+    rangeKey: IdleRange
     targetKey: MovementTarget
 
 - type: htnPrimitive

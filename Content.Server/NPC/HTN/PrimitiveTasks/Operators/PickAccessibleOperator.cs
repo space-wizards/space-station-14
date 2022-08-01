@@ -14,8 +14,8 @@ public sealed class PickAccessibleOperator : HTNOperator
     [Dependency] private readonly IRobustRandom _random = default!;
     private AiReachableSystem _reachable = default!;
 
-    [DataField("idleRangeKey", required: true)]
-    public string IdleRangeKey = string.Empty;
+    [DataField("rangeKey", required: true)]
+    public string RangeKey = string.Empty;
 
     [ViewVariables, DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
@@ -35,7 +35,7 @@ public sealed class PickAccessibleOperator : HTNOperator
         if (!_entManager.TryGetComponent(_entManager.GetComponent<TransformComponent>(owner).GridUid, out IMapGridComponent? grid))
             return (false, null);
 
-        var reachableArgs = ReachableArgs.GetArgs(owner, blackboard.GetValueOrDefault<float>(IdleRangeKey));
+        var reachableArgs = ReachableArgs.GetArgs(owner, blackboard.GetValueOrDefault<float>(RangeKey));
         var entityRegion = _reachable.GetRegion(owner);
         var reachableRegions = _reachable.GetReachableRegions(reachableArgs, entityRegion);
 
