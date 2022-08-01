@@ -67,7 +67,7 @@
   id: OrganHumanAppendix
   parent: BaseHumanOrgan
   name: appendix
-  desc: "Bomb has been defused."
+  description: "Bomb has been defused."
   components:
   - type: Sprite
     layers:
