@@ -7,14 +7,14 @@ nukeops-neutral = Neutral outcome!
 nukeops-crew-minor = Crew minor victory!
 nukeops-crew-major = Crew major victory!
 
-nukeops-cond-correct-station = "The nuclear operatives managed to blow up the station."
-nukeops-cond-nukie-outpost-destroyed = "The nuclear operative outpost was destroyed by a nuclear blast."
-nukeops-cond-incorrect-station = "The nuclear bomb was detonated off-station."
-nukeops-cond-disk-on-centcom = "The crew escaped with the nuclear authentication disk."
-nukeops-cond-disk-not-on-centcom = "The crew left the nuclear authentication disk behind."
-nukeops-cond-all-nukies-dead = "All nuclear operatives have died."
-nukeops-cond-some-nukies-dead = "Some nuclear operatives died."
-nukeops-cond-no-nukies-dead = "No nuclear operatives died."
+nukeops-cond-correct-station = The nuclear operatives managed to blow up the station.
+nukeops-cond-nukie-outpost-destroyed = The nuclear operative outpost was destroyed by a nuclear blast.
+nukeops-cond-incorrect-station = The nuclear bomb was detonated off-station.
+nukeops-cond-disk-on-centcom = The crew escaped with the nuclear authentication disk.
+nukeops-cond-disk-not-on-centcom = The crew left the nuclear authentication disk behind.
+nukeops-cond-all-nukies-dead = All nuclear operatives have died.
+nukeops-cond-some-nukies-dead = Some nuclear operatives died.
+nukeops-cond-no-nukies-dead = No nuclear operatives died.
 
 nukeops-list-start = The nuke ops were:
 nukeops-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Nukeops.
