@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: The rod beckons., type: Add}
-  id: 1567
-  time: '2022-05-21T02:43:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: ID Card computer no longer shows nukies access level, type: Fix}
@@ -2928,3 +2923,8 @@ Entries:
   - {message: You can now pet bots., type: Add}
   id: 2066
   time: '2022-07-31T15:18:06.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: 'clown, mime, and plague doctor masks can now block identities', type: Fix}
+  id: 2067
+  time: '2022-08-01T05:29:03.0000000+00:00'
