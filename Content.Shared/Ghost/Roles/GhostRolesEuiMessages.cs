@@ -9,8 +9,6 @@ namespace Content.Shared.Ghost.Roles
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }
-        public TimeSpan ExpiresAt { get; set; }
-        public TimeSpan AddedAt { get; set; }
         public bool IsRequested { get; set; }
         public int AvailableRoleCount { get; set; }
     }
@@ -19,10 +17,14 @@ namespace Content.Shared.Ghost.Roles
     public sealed class GhostRolesEuiState : EuiStateBase
     {
         public GhostRoleInfo[] GhostRoles { get; }
+        public TimeSpan LotteryStart { get; }
+        public TimeSpan LotteryEnd { get; }
 
-        public GhostRolesEuiState(GhostRoleInfo[] ghostRoles)
+        public GhostRolesEuiState(GhostRoleInfo[] ghostRoles, TimeSpan lotteryStart, TimeSpan lotteryEnd)
         {
             GhostRoles = ghostRoles;
+            LotteryStart = lotteryStart;
+            LotteryEnd = lotteryEnd;
         }
     }
 

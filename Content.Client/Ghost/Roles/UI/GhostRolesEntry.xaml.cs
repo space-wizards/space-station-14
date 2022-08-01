@@ -12,23 +12,16 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesEntry : BoxContainer
     {
-        private readonly IGameTiming _gameTiming = default!;
-
-        private readonly TimeSpan _expiresAt;
-
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
         public event Action<GhostRoleInfo>? OnRoleFollowed;
 
-        public GhostRolesEntry(string name, string description, GhostRoleInfo role, IGameTiming timing)
+        public GhostRolesEntry(GhostRoleInfo role)
         {
             RobustXamlLoader.Load(this);
 
-            _gameTiming = timing;
-            _expiresAt = role.ExpiresAt;
-
             Title.Text = role.AvailableRoleCount > 1 ? $"{role.Name} ({role.AvailableRoleCount})" : role.Name;
-            Description.SetMessage(description);
+            Description.SetMessage(role.Description);
 
             RequestButton.Visible = !role.IsRequested;
             CancelButton.Visible = role.IsRequested;
@@ -36,18 +29,8 @@ namespace Content.Client.Ghost.Roles.UI
             RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
             CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
             FollowButton.OnPressed += _ => OnRoleFollowed?.Invoke(role);
-
-            // Use negative values to save doing some math.
-            TimeRemainingProgress.MinValue = (float)-role.ExpiresAt.TotalSeconds;
-            TimeRemainingProgress.MaxValue = (float)-role.AddedAt.TotalSeconds;
-            TimeRemainingProgress.ForegroundStyleBoxOverride = new StyleBoxFlat(StyleNano.NanoGold);
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
 
-            TimeRemainingProgress.Value = (float)-_gameTiming.CurTime.TotalSeconds;
-        }
     }
 }

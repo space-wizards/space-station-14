@@ -12,6 +12,8 @@ namespace Content.Server.Ghost.Roles.Components
 
         [DataField("rules")] private string _roleRules = "";
 
+        [DataField("useLottery")] private bool _roleUseLottery = true;
+
         /// <summary>
         /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
         /// </summary>
@@ -59,6 +61,18 @@ namespace Content.Server.Ghost.Roles.Components
             set
             {
                 _roleRules = value;
+                EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        public bool RoleUseLottery
+        {
+            get => _roleUseLottery;
+            set
+            {
+                _roleUseLottery = value;
                 EntitySystem.Get<GhostRoleSystem>().UpdateAllEui();
             }
         }

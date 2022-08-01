@@ -3,22 +3,20 @@ using Content.Client.Eui;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Ghost.Roles.UI
 {
     [UsedImplicitly]
     public sealed class GhostRolesEui : BaseEui
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-
         private readonly GhostRolesWindow _window;
-        private GhostRoleRulesWindow? _windowRules = null;
+        private GhostRoleRulesWindow? _windowRules;
         private string _windowRulesId = "";
 
         public GhostRolesEui()
         {
             _window = new GhostRolesWindow();
+            IoCManager.InjectDependencies(_window);
 
             _window.OnRoleRequested += info =>
             {
@@ -73,14 +71,12 @@ namespace Content.Client.Ghost.Roles.UI
             if (state is not GhostRolesEuiState ghostState)
                 return;
 
+            _window.SetLotteryTime(ghostState.LotteryStart, ghostState.LotteryEnd);
             _window.ClearEntries();
 
             foreach (var role in ghostState.GhostRoles)
             {
-                var name = role.Name;
-                var description = role.Description;
-
-                _window.AddEntry(name, description, role, _timing);
+                _window.AddEntry(role);
             }
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Name != _windowRulesId);

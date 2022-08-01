@@ -38,6 +38,11 @@ namespace Content.Server.Ghost.Roles
         private bool _needsUpdateGhostRoles = true;
         private bool _needsUpdateGhostRoleCount = true;
 
+        private TimeSpan _lotteryElapseTime = TimeSpan.FromSeconds(30);
+        public TimeSpan LotteryStartTime { get; private set; } = TimeSpan.Zero;
+        public TimeSpan LotteryExpiresTime { get; private set; } = TimeSpan.Zero;
+
+        private readonly List<GhostRoleComponent> _pendingGhostRoles = new();
         private readonly Dictionary<string, GhostRoleEntry> _ghostRoles = new();
 
         private int TotalRoleCount => _ghostRoles.Sum(op => op.Value.Components.Count);
@@ -149,21 +154,45 @@ namespace Content.Server.Ghost.Roles
         {
             base.Update(frameTime);
 
+            if (_gameTiming.CurTime < LotteryExpiresTime)
+            {
+                UpdateUi();
+                return;
+            }
+
             foreach (var (identifier, entry) in _ghostRoles)
             {
-                if (_gameTiming.CurTime < entry.ExpiresAt)
-                    continue;
-
                 ProcessGhostRoleEntryWithRoleComponents(identifier, entry);
-                if (entry.Components.Count != 0)
-                {
-                    entry.AddedAt = _gameTiming.CurTime;
-                    entry.ExpiresAt = _gameTiming.CurTime + entry.ElapseTime;
-                }
-
                 _needsUpdateGhostRoles = true;
             }
 
+            foreach (var role in _pendingGhostRoles)
+            {
+                if (!_ghostRoles.TryGetValue(role.RoleName, out var entry))
+                {
+                    _ghostRoles[role.RoleName] = entry = new GhostRoleEntry();
+                    entry.Name = role.RoleName;
+                    entry.Description = role.RoleDescription;
+                    entry.Rules = role.RoleRules;
+                }
+
+                if (entry.Components.Contains(role))
+                    continue;
+
+                entry.Components.Add(role);
+
+                role.Identifier = entry.NextComponentIdentifier;
+                _needsUpdateGhostRoles = true;
+            }
+            _pendingGhostRoles.Clear();
+
+            LotteryStartTime = _gameTiming.CurTime;
+            LotteryExpiresTime = _gameTiming.CurTime + _lotteryElapseTime; // TODO: Extend lottery time depending on number of lottery roles.
+            UpdateUi();
+        }
+
+        private void UpdateUi()
+        {
             if (_needsUpdateGhostRoles)
             {
                 _needsUpdateGhostRoles = false;
@@ -242,33 +271,19 @@ namespace Content.Server.Ghost.Roles
 
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            if (!_ghostRoles.TryGetValue(role.RoleName, out var entry))
-            {
-                var elapseTime = TimeSpan.FromSeconds(30); // TODO: Should this be defined within the role?
-
-                entry = new GhostRoleEntry()
-                {
-                    Name = role.RoleName,
-                    Description = role.RoleDescription,
-                    Rules = role.RoleRules,
-                    ElapseTime = elapseTime,
-                    AddedAt = _gameTiming.CurTime,
-                    ExpiresAt = _gameTiming.CurTime + elapseTime,
-                };
-
-                _ghostRoles[role.RoleName] = entry;
-                _needsUpdateGhostRoles = true;
-            }
-
-            if (entry.Components.Contains(role))
+            if (_ghostRoles.TryGetValue(role.RoleName, out var entry) && entry.Components.Contains(role))
                 return;
 
-            entry.Components.Add(role);
-            role.Identifier = entry.NextComponentIdentifier;
+            if (_pendingGhostRoles.Contains(role))
+                return;
+
+            _pendingGhostRoles.Add(role);
         }
 
         public void UnregisterGhostRole(GhostRoleComponent role)
         {
+            _pendingGhostRoles.Remove(role);
+
             if (!_ghostRoles.TryFirstOrNull(e => e.Value.Name == role.RoleName, out var element))
                 return;
 
@@ -363,8 +378,6 @@ namespace Content.Server.Ghost.Roles
                     Name = entry.Name,
                     Description = entry.Description,
                     Rules = entry.Rules,
-                    ExpiresAt = entry.ExpiresAt,
-                    AddedAt = entry.AddedAt,
                     IsRequested = entry.PendingPlayerSessions.Contains(session),
                     AvailableRoleCount = entry.Components.Count,
                 };
@@ -411,6 +424,7 @@ namespace Content.Server.Ghost.Roles
 
             _openUis.Clear();
             _ghostRoles.Clear();
+            _pendingGhostRoles.Clear();
         }
 
         private void OnInit(EntityUid uid, GhostRoleComponent role, ComponentInit args)
@@ -439,12 +453,6 @@ namespace Content.Server.Ghost.Roles
         [ViewVariables] public string Description = "";
 
         [ViewVariables] public string Rules = "";
-
-        public TimeSpan ElapseTime = TimeSpan.Zero;
-
-        public TimeSpan ExpiresAt = TimeSpan.Zero;
-
-        public TimeSpan AddedAt = TimeSpan.Zero;
 
         public readonly HashSet<IPlayerSession> PendingPlayerSessions = new();
 
