@@ -1,3 +1,4 @@
+using Content.Server.AI.Combat;
 using Content.Server.AI.Components;
 
 namespace Content.Server.AI.HTN.PrimitiveTasks.Operators.Melee;
@@ -14,8 +15,6 @@ public sealed class MeleeOperator : HTNOperator
     /// </summary>
     [ViewVariables, DataField("targetKey", required: true)]
     public string TargetKey = default!;
-
-    // TODO: Need a key for what we're using
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -37,11 +36,33 @@ public sealed class MeleeOperator : HTNOperator
         base.Update(blackboard, frameTime);
         // TODO:
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
+        HTNOperatorStatus status = HTNOperatorStatus.Continuing;
 
-        if (_entManager.HasComponent<NPCMeleeCombatComponent>(owner))
-            return HTNOperatorStatus.Continuing;
+        if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat))
+        {
+            switch (combat.Status)
+            {
+                case CombatStatus.TargetNormal:
+                    status = HTNOperatorStatus.Continuing;
+                    break;
+                case CombatStatus.TargetCrit:
+                case CombatStatus.TargetDead:
+                    status = HTNOperatorStatus.Finished;
+                    break;
+                case CombatStatus.TargetUnreachable:
+                case CombatStatus.NoWeapon:
+                    status = HTNOperatorStatus.Failed;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
-        return HTNOperatorStatus.Finished;
+        if (status != HTNOperatorStatus.Continuing)
+        {
+            _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
+        }
+
+        return status;
     }
 }

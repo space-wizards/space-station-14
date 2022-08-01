@@ -7,14 +7,21 @@ namespace Content.Server.AI;
 [DataDefinition]
 public sealed class NPCBlackboard
 {
+    /// <summary>
+    /// Global defaults for NPCs
+    /// </summary>
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
         {"MaximumIdleTime", 7f},
         {"MinimumIdleTime", 2f},
         {"VisionRadius", 7f},
         {"MeleeRange", 1f},
+        {"IdleRange", 14f}
     };
 
+    /// <summary>
+    /// The specific blackboard for this NPC.
+    /// </summary>
     private Dictionary<string, object> _blackboard = new();
 
     /// <summary>

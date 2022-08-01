@@ -1,3 +1,4 @@
+using Content.Server.AI.Combat;
 using Content.Server.AI.Components;
 
 namespace Content.Server.AI.Systems;
