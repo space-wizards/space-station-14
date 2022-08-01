@@ -5,12 +5,12 @@ namespace Content.Server.Containers
     public static class ContainerExt
     {
         /// <summary>
-        /// Checks the entity, and the entities containers recursively for a prototypeId
+        /// Searches the entity, and the entities containers recursively for a prototypeId
         /// </summary>
         /// <param name="entityUid">The entity to search</param>
         /// <param name="prototypeId">The prototypeId to find</param>
         /// <param name="entityManager">Optional entity manager</param>
-        /// <returns></returns>
+        /// <returns>True if entity is, or contains a prototype Id</returns>
         public static bool ContainsPrototypeRecursive(this EntityUid entityUid, string prototypeId, IEntityManager? entityManager = null)
         {
             IoCManager.Resolve(ref entityManager);
