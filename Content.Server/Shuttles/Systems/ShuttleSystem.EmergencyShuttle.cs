@@ -39,7 +39,7 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly StationSystem _station = default!;
 
    private MapId? _centComMap;
-   private EntityUid? _centCom;
+   public EntityUid? CentCom { get; private set; }
 
    /// <summary>
    /// Used for multiple shuttle spawn offsets.
@@ -426,10 +426,10 @@ public sealed partial class ShuttleSystem
        if (!string.IsNullOrEmpty(centComPath))
        {
            var (_, centcomm) = _loader.LoadBlueprint(_centComMap.Value, "/Maps/centcomm.yml");
-           _centCom = centcomm;
+           CentCom = centcomm;
 
-           if (_centCom != null)
-               AddFTLDestination(_centCom.Value, false);
+           if (CentCom != null)
+               AddFTLDestination(CentCom.Value, false);
        }
        else
        {

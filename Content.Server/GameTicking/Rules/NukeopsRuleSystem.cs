@@ -24,6 +24,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.Traitor;
 using System.Data;
+using Content.Shared.Nuke;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -37,10 +38,40 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
     private Dictionary<Mind.Mind, bool> _aliveNukeops = new();
     private bool _opsWon;
+
+    private enum WinConditions
+    {
+        /// <summary>
+        ///     Operative major win. This means they nuked the station.
+        /// </summary>
+        OpsMajor,
+        /// <summary>
+        ///     Minor win. All nukies were alive at the end of the round.
+        ///     Alternatively, some nukies were alive, but the disk was left behind.
+        /// </summary>
+        OpsMinor,
+        /// <summary>
+        ///     Neutral win. The nuke exploded, but on the wrong station.
+        /// </summary>
+        Neutral,
+        /// <summary>
+        ///     Crew minor win. The nuclear authentication disk escaped on the shuttle,
+        ///     but some nukies were alive.
+        /// </summary>
+        CrewMinor,
+        /// <summary>
+        ///     Crew major win. This means they either killed all nukies,
+        ///     or the bomb exploded too far away from the station, or on the nukie moon.
+        /// </summary>
+        CrewMajor
+    }
+
+    private WinConditions _winCondition = WinConditions.Neutral;
 
     public override string Prototype => "Nukeops";
 
@@ -56,6 +87,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -63,14 +95,64 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     	if (!RuleAdded)
             return;
 
-        _opsWon = true;
+        _winCondition = WinConditions.OpsMajor;
         _roundEndSystem.EndRound();
+    }
+
+    private void OnRoundEnd(GameRunLevelChangedEvent ev)
+    {
+        if (ev.New != GameRunLevel.PostRound)
+        {
+            return;
+        }
+
+        // If the win conditions was set to operative major win, ignore.
+        if (_winCondition == WinConditions.OpsMajor)
+        {
+            return;
+        }
+
+        // If all nuke ops were alive at the end of the round,
+        // the nuke ops win. This is to prevent people from
+        // running away the moment nuke ops appear.
+        if (_aliveNukeops.Values.All(x => x))
+        {
+            _winCondition = WinConditions.OpsMinor;
+            return;
+        }
+
+        var diskAtCentCom = false;
+        foreach (var comp in EntityManager.EntityQuery<NukeDiskComponent>())
+        {
+            var diskGridUid = Transform(comp.Owner).GridUid;
+            diskAtCentCom = diskGridUid != null && _shuttleSystem.CentCom == diskGridUid;
+
+            // TODO: The target station should be stored, and the nuke disk should store its original station.
+            break;
+        }
+
+        // If the disk is currently at Central Command, the crew wins - just slightly.
+        // This also implies that some nuclear operatives have died.
+        if (diskAtCentCom)
+        {
+            _winCondition = WinConditions.CrewMinor;
+        }
+        // Otherwise, the nuke ops win.
+        else
+        {
+            _winCondition = WinConditions.OpsMinor;
+        }
     }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         if (!RuleAdded)
             return;
+
+        var winText = _winCondition switch
+        {
+            _ => "oopsie woopsie! nukie wukies! (Contact a developer about this immediately.)"
+        };
 
         ev.AddLine(_opsWon ? Loc.GetString("nukeops-ops-won") : Loc.GetString("nukeops-crew-won"));
         ev.AddLine(Loc.GetString("nukeops-list-start"));
@@ -94,6 +176,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (_aliveNukeops.Values.All(x => !x))
         {
+            _winCondition = WinConditions.CrewMajor;
             _roundEndSystem.EndRound();
         }
     }

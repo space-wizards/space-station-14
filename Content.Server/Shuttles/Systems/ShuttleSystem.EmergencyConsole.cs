@@ -129,7 +129,7 @@ public sealed partial class ShuttleSystem
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    if (Deleted(_centCom))
+                    if (Deleted(CentCom))
                     {
                         // TODO: Need to get non-overlapping positions.
                         FTLTravel(shuttle,
@@ -140,7 +140,7 @@ public sealed partial class ShuttleSystem
                     else
                     {
                         FTLTravel(shuttle,
-                            _centCom.Value, _consoleAccumulator, TransitTime, dock: true);
+                            CentCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
@@ -156,8 +156,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (_centCom != null)
-                AddFTLDestination(_centCom.Value, true);
+            if (CentCom != null)
+                AddFTLDestination(CentCom.Value, true);
 
         }
     }
