@@ -29,7 +29,9 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     public override void Initialize()
     {
         base.Initialize();
-        _reachable = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiReachableSystem>();
+        var sysManager = IoCManager.Resolve<IEntitySystemManager>();
+        _reachable = sysManager.GetEntitySystem<AiReachableSystem>();
+        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
     }
 
     /// <inheritdoc/>

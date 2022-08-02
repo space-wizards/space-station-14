@@ -1,0 +1,33 @@
+- type: htnCompound
+  id: FollowCompound
+  desc: Follows the specified target
+  branches:
+    # If we're in range of our follow target check if we can idle near it
+    # otherwise, keep following our existing target
+    - tasks:
+        - id: PickAccessibleNearFollowPrimitive
+        - id: IdleNearFollowPrimitive
+    - tasks:
+        - id: FollowPrimitive
+
+
+- type: htnPrimitive
+  id: PickAccessibleNearFollowPrimitive
+  operator: !type:PickAccessibleOperator
+    rangeKey: FollowRange
+    targetKey: FollowTarget
+
+- type: htnPrimitive
+  id: IdleNearFollowPrimitive
+  operator: !type:MoveToOperator
+  preconditions:
+    - !type:TargetInRangePrecondition
+      targetKey: FollowTarget
+      rangeKey: FollowRange
+
+- type: htnPrimitive
+  id: FollowPrimitive
+  operator: !type:MoveToOperator
+    pathfindInPlanning: true
+    key: FollowTarget
+    rangeKey: FollowRange
