@@ -18,7 +18,7 @@
   - type: MobMover
   - type: InputMover
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
+    baseWalkSpeed : 3
     baseSprintSpeed : 5
   - type: Sprite
     sprite: Mobs/Aliens/Carps/dragon.rsi
@@ -101,10 +101,17 @@
         - Door
         tags:
         - Wall
+    spawnRiftAction:
+      event: !type:DragonSpawnRiftActionEvent
+      icon:
+        sprite: Interface/Actions/carp_rift.rsi
+        state: icon
+      name: action-name-carp-rift
+      description: action-description-carp-rift
+      useDelay: 1
     spawnAction:
       event: !type:DragonSpawnActionEvent
       icon: Interface/Actions/carp_summon.png
       name: action-name-carp-summon
       description: action-description-carp-summon
       useDelay: 5
-

@@ -29,10 +29,23 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
+            SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnDragonRift);
 
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
+        }
+
+        private void OnDragonRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
+        {
+            if (component.WaveSpawner != null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("dragon-wave-spawner-duplicate"), uid, Filter.Entities(uid));
+                return;
+            }
+
+            // TODO: Wave spawner
+            // Also make a game rule for dragons.
         }
 
         private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)
@@ -100,6 +113,9 @@ namespace Content.Server.Dragon
 
             if (component.SpawnAction != null)
                 _actionsSystem.AddAction(uid, component.SpawnAction, null);
+
+            if (component.SpawnRiftAction != null)
+                _actionsSystem.AddAction(uid, component.SpawnRiftAction, null);
 
             if (component.SoundRoar != null)
                 _audioSystem.Play(component.SoundRoar, Filter.Pvs(uid, 4f, EntityManager), uid, component.SoundRoar.Params);

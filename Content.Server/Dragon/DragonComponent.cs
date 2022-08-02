@@ -35,8 +35,23 @@ namespace Content.Server.Dragon
         [DataField("spawnActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
         public string SpawnActionId = "DragonSpawn";
 
+        /// <summary>
+        /// If we have an active wave spawner.
+        /// </summary>
+        [ViewVariables, DataField("waveSpawner")]
+        public EntityUid? WaveSpawner;
+
+        /// <summary>
+        /// Spawn the <see cref="SpawnPrototype"/>
+        /// </summary>
         [DataField("spawnAction")]
         public InstantAction? SpawnAction;
+
+        /// <summary>
+        /// Spawns a rift which can summon more mobs.
+        /// </summary>
+        [ViewVariables, DataField("spawnRiftAction")]
+        public InstantAction? SpawnRiftAction;
 
         /// <summary>
         /// The amount of time it takes to devour something
@@ -104,4 +119,6 @@ namespace Content.Server.Dragon
     public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
     public sealed class DragonSpawnActionEvent : InstantActionEvent {}
+
+    public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }
