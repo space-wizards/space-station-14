@@ -103,7 +103,6 @@ namespace Content.Server.Radio.Components
 
             // if we can't get the channel, we need to just use the broadcast frequency
             if (prototype == null
-                || !_channels.TryGetValue(prototype.ID, out var channel)
                 && !_prototypeManager.TryIndex(BroadcastChannel, out prototype))
             {
                 return;
