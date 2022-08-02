@@ -15,6 +15,6 @@ food-system-verb-eat = Съесть
 
 ## Force feeding
 
-food-system-force-feed = { $user } пытается скормить вам что-то!
-food-system-force-feed-success = { $user } скормил вам что-то!
+food-system-force-feed = { CAPITALIZE($user) } пытается вам что-то скормить!
+food-system-force-feed-success = { CAPITALIZE($user) } вам что-то скормил!
 food-system-force-feed-success-user = Вы успешно накормили { $target }

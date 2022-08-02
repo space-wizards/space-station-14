@@ -34,6 +34,6 @@ ent-MobHumanERTJanitor = ОБР уборщик
 ent-MobHumanERTJanitorEVA = ОБР уборщик
     .suffix = EVA
     .desc = { ent-MobHumanERTJanitor.desc }
-ent-MobHumanSyndicateAgent = Syndicate Agent
+ent-MobHumanSyndicateAgent = Агент Синдиката
     .desc = { ent-MobHuman.desc }
     .suffix = { "" }

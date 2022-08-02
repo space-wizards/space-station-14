@@ -19,6 +19,3 @@ ent-ProjectileHealingBolt = исцеляющий заряд
 ent-BulletInstakillMagic = волшебный свинцовый цилиндр
     .desc = Выглядит знакомо.
     .suffix = { "" }
-ent-BulletKinetic = кинетический заряд
-    .desc = Не очень силён, но вам всё равно не захочется попасть под него.
-    .suffix = { "" }

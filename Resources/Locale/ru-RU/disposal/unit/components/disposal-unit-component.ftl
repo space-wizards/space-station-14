@@ -7,4 +7,4 @@ ui-disposal-unit-label-status = Готов
 ui-disposal-unit-button-flush = Смыть
 ui-disposal-unit-button-eject = Извлечь
 ui-disposal-unit-button-power = Питание
-disposal-unit-no-hands = You don't have hands!
+disposal-unit-no-hands = У вас нет рук!
