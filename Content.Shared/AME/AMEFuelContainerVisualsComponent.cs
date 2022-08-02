@@ -1,4 +1,4 @@
-namespace Content.Client.AME.Components;
+namespace Content.Shared.AME;
 
 [RegisterComponent]
 public sealed class AMEFuelContainerVisualsComponent : Component
