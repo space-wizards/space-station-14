@@ -74,6 +74,11 @@ public sealed partial class StoreSystem : EntitySystem
 
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
+        /// PROBLEM AREA:
+        /// The big pain in the ass here is that for some reason, despite the listingData in the message being identical
+        /// to that of the one stored in the component, they are somehow not the same, which means we cannot modify it
+        /// for tracking as needed
+
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(msg.Listing, component.Categories))
             return;
@@ -122,10 +127,25 @@ public sealed partial class StoreSystem : EntitySystem
                 $"{ToPrettyString(mind.Owner):player} purchased listing \"{msg.Listing.Name}\" from {ToPrettyString(uid)}");
         }
 
+        //testing... don't worry about this
+        //the problem areas seem to be cost and categories. Conditions probably would have similar issues if not null.
         foreach (var listing in component.Listings)
         {
-            var b = listing == msg.Listing;
-            Logger.Debug(b.ToString());
+            Logger.Debug("==");
+            Logger.Debug($"{listing.Equals(msg.Listing)}");
+            foreach (var f in msg.Listing.Categories)
+                Logger.Debug(f);
+            foreach (var l in listing.Categories)
+                Logger.Debug(l);
+            Logger.Debug($"{msg.Listing.Categories.Equals(listing.Categories)}");
+
+            foreach (var g in msg.Listing.Cost)
+                Logger.Debug($"{g.Key}: {g.Value}");
+            foreach (var h in listing.Cost)
+                Logger.Debug($"{h.Key}: {h.Value}");
+            Logger.Debug($"{msg.Listing.Cost.Equals(listing.Cost)}");
         }
+
+        UpdateUserInterface(msg.Buyer, component);
     }
 }

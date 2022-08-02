@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
@@ -24,14 +24,14 @@ public record ListingData
     [DataField("description")]
     public string Description = string.Empty;
 
-    [DataField("categories", required: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StoreCategoryPrototype>))]
-    public HashSet<string> Categories = new();
+    [DataField("categories", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<StoreCategoryPrototype>))]
+    public List<string> Categories = new();
 
     [DataField("cost", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
     public Dictionary<string, FixedPoint2> Cost = new();
 
     [DataField("conditions", serverOnly: true)]
-    public HashSet<ListingCondition>? Conditions;
+    public List<ListingCondition>? Conditions;
 
     [DataField("icon")]
     public SpriteSpecifier? Icon;

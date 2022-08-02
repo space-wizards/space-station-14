@@ -12,11 +12,11 @@ public enum StoreUiKey : byte
 [Serializable, NetSerializable]
 public sealed class StoreUpdateState : BoundUserInterfaceState
 {
-    public EntityUid? Buyer;
+    public readonly EntityUid? Buyer;
 
-    public HashSet<ListingData> Listings;
+    public readonly HashSet<ListingData> Listings;
 
-    public Dictionary<string, FixedPoint2> Balance;
+    public readonly Dictionary<string, FixedPoint2> Balance;
 
     public StoreUpdateState(EntityUid? buyer, HashSet<ListingData> listings, Dictionary<string, FixedPoint2> balance)
     {
