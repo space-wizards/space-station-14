@@ -59,7 +59,7 @@ namespace Content.Server.Sound
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
             SubscribeLocalEvent<EmitSoundOnTriggerComponent, TriggerEvent>(HandleEmitSoundOnTrigger);
             SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
-            SubscribeLocalEvent<EmitSoundOnPickupComponent, GettingPickedUpAttemptEvent>(HandleEmitSoundOnPickup);
+            SubscribeLocalEvent<EmitSoundOnPickupComponent, PickedUpEvent>(HandleEmitSoundOnPickup);
             SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(HandleEmitSoundOnDrop);
         }
 
@@ -109,7 +109,7 @@ namespace Content.Server.Sound
             TryEmitSound(component);
         }
 
-        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, GettingPickedUpAttemptEvent args)
+        private void HandleEmitSoundOnPickup(EntityUid uid, EmitSoundOnPickupComponent component, PickedUpEvent args)
         {
             TryEmitSound(component);
         }
