@@ -311,7 +311,6 @@ public sealed partial class ShuttleSystem
                     RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     break;
                 case FTLState.Cooldown:
-
                     RemComp<FTLComponent>(comp.Owner);
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
