@@ -13,6 +13,9 @@ namespace Content.Shared.Eye.Blinding
             base.Initialize();
             SubscribeLocalEvent<BlindfoldComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BlindfoldComponent, GotUnequippedEvent>(OnUnequipped);
+
+            SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentShutdown>(OnShutdown);
         }
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
@@ -39,6 +42,16 @@ namespace Content.Shared.Eye.Blinding
             AdjustBlindSources(args.Equipee, false, blindComp);
         }
 
+        private void OnInit(EntityUid uid, TemporaryBlindnessComponent component, ComponentInit args)
+        {
+            AdjustBlindSources(uid, true);
+        }
+
+        private void OnShutdown(EntityUid uid, TemporaryBlindnessComponent component, ComponentShutdown args)
+        {
+            AdjustBlindSources(uid, false);
+        }
+
         [PublicAPI]
         public void AdjustBlindSources(EntityUid uid, bool Add, BlindableComponent? blindable = null)
         {
@@ -52,6 +65,26 @@ namespace Content.Shared.Eye.Blinding
             {
                 blindable.Sources--;
             }
+        }
+
+        public void AdjustEyeDamage(EntityUid uid, bool Add, BlindableComponent? blindable = null)
+        {
+            if (!Resolve(uid, ref blindable, false))
+                return;
+
+            if (Add)
+            {
+                blindable.EyeDamage++;
+            } else
+            {
+                blindable.EyeDamage--;
+            }
+
+            if (!blindable.EyeTooDamaged && blindable.EyeDamage == 8)
+                AdjustBlindSources(uid, true, blindable);
+
+            if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
+                AdjustBlindSources(uid, false, blindable);
         }
     }
 }

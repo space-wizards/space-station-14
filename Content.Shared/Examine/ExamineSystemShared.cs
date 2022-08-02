@@ -101,6 +101,8 @@ namespace Content.Shared.Examine
                     return DeadExamineRange;
                 else if (MobStateSystem.IsCritical(examiner, mobState) || (TryComp<BlindableComponent>(examiner, out var blind) && blind.Sources > 0))
                     return CritExamineRange;
+                else if (blind != null && blind.EyeDamage > 0)
+                    return (ExamineRange - (2 * blind.EyeDamage));
             }
             return ExamineRange;
         }
