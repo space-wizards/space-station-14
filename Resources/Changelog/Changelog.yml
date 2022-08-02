@@ -1,15 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Removed security access from the syndicate segway, type: Fix}
-  id: 1574
-  time: '2022-05-21T20:35:16.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Fixed being able to use multitools on airlocks without first opening
-      the wiring panel with a screwdriver, type: Fix}
-  id: 1575
-  time: '2022-05-21T20:35:47.0000000+00:00'
 - author: 20kdc
   changes:
   - {message: 'When the server shuts down or you fail to connect because of a key
@@ -2928,3 +2917,13 @@ Entries:
   - {message: accents carry over the radio again, type: Fix}
   id: 2073
   time: '2022-08-02T02:33:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
+  id: 2074
+  time: '2022-08-02T12:55:09.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
+  id: 2075
+  time: '2022-08-02T12:55:30.0000000+00:00'
