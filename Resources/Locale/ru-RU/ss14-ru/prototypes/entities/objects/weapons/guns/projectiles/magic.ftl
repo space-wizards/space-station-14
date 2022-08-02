@@ -1,8 +1,14 @@
 ent-ProjectileFireball = огненный шар
     .desc = По мнению волшебников явлется средством от всех проблем.
     .suffix = { "" }
+ent-ProjectilePolyboltBase = { ent-BaseBullet }
+    .desc = { ent-BaseBullet.desc }
+    .suffix = { "" }
 ent-ProjectilePolyboltCarp = полизаряд карпа
     .desc = Неееет, я не хочу быть рыбой!
+    .suffix = { "" }
+ent-ProjectilePolyboltMonkey = monkey polybolt
+    .desc = Nooo, I don't wanna be monkey!
     .suffix = { "" }
 ent-ProjectilePolyboltDoor = полизаряд двери
     .desc = Неееет, я не хочу быть дверью!

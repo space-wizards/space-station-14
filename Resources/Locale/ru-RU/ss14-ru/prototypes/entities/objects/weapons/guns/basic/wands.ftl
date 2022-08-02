@@ -1,5 +1,11 @@
+ent-WeaponWandPolymorphBase = { ent-WeaponWandBase }
+    .desc = { ent-WeaponWandBase.desc }
+    .suffix = { "" }
 ent-WeaponWandPolymorphCarp = жезл полиморфа карпа
     .desc = На случай, когда вам срочно нужно филе карпа, а клоун выглядит уж очень аппетитно.
+    .suffix = { "" }
+ent-WeaponWandPolymorphMonkey = wand of monkey polymorph
+    .desc = For when you need a monkey friend.
     .suffix = { "" }
 ent-WeaponWandFireball = жезл огненного шара
     .desc = Огромные огненные шары!
