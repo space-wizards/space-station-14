@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -33,6 +34,7 @@ public sealed partial class ShuttleSystem
     private const float DefaultStartupTime = 5.5f;
     private const float DefaultTravelTime = 30f;
     private const float DefaultArrivalTime = 5f;
+    private const float FTLArrivedDelay = 3f;
     private const float FTLCooldown = 30f;
 
     private const float ShuttleFTLRange = 100f;
@@ -304,11 +306,19 @@ public sealed partial class ShuttleSystem
                         dest.Enabled = true;
                     }
 
+                    comp.State = FTLState.Arrived;
+                    comp.Accumulator += FTLArrivedDelay;
+                    _console.RefreshShuttleConsoles(comp.Owner);
+                    break;
+                case FTLState.Arrived:
+                    // We want to raise the completed event here rather than in FTLState.Arriving to avoid a race condition with assets loading in.
+                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
                 case FTLState.Cooldown:
+
                     RemComp<FTLComponent>(comp.Owner);
                     _console.RefreshShuttleConsoles(comp.Owner);
                     break;
