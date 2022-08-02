@@ -1,6 +1,7 @@
-﻿namespace Content.Shared.Lightning.Components;
-[RegisterComponent]
-public sealed class SharedLightningComponent : Component
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Lightning.Components;
+public abstract class SharedLightningComponent : Component
 {
     /// <summary>
     /// Can this lightning arc to something else?

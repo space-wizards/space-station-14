@@ -1,0 +1,11 @@
+﻿- type: entity
+  name: "Lightning"
+  id: LightningBase
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    layers:
+    - state: "lightning_1"
+      shader: unshaded
+  - type: Transform
+  - type: Physics
