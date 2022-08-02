@@ -1,11 +1,4 @@
 Entries:
-- author: 20kdc
-  changes:
-  - {message: 'When the server shuts down or you fail to connect because of a key
-      error, the button shown will say `Relaunch` rather than `Reconnect` and will
-      restart the client for you.', type: Tweak}
-  id: 1576
-  time: '2022-05-22T01:56:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add gas tank internals connection sound, type: Add}
@@ -2927,3 +2920,9 @@ Entries:
   - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
   id: 2075
   time: '2022-08-02T12:55:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
+    type: Add}
+  id: 2076
+  time: '2022-08-02T13:01:15.0000000+00:00'
