@@ -147,9 +147,6 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
             case Shared.Shuttles.Systems.FTLState.Cooldown:
                 stateText = Loc.GetString("shuttle-console-ftl-cooldown");
                 break;
-            case Shared.Shuttles.Systems.FTLState.Arrived:
-                stateText = Loc.GetString("shuttle-console-ftl-arrived");
-                break;
             case Shared.Shuttles.Systems.FTLState.Arriving:
                 stateText = Loc.GetString("shuttle-console-ftl-arriving");
                 break;

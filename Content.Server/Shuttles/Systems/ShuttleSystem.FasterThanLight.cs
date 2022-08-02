@@ -34,7 +34,6 @@ public sealed partial class ShuttleSystem
     private const float DefaultStartupTime = 5.5f;
     private const float DefaultTravelTime = 30f;
     private const float DefaultArrivalTime = 5f;
-    private const float FTLArrivedDelay = 3f;
     private const float FTLCooldown = 30f;
 
     private const float ShuttleFTLRange = 100f;
@@ -306,16 +305,10 @@ public sealed partial class ShuttleSystem
                         dest.Enabled = true;
                     }
 
-                    comp.State = FTLState.Arrived;
-                    comp.Accumulator += FTLArrivedDelay;
-                    _console.RefreshShuttleConsoles(comp.Owner);
-                    break;
-                case FTLState.Arrived:
-                    // We want to raise the completed event here rather than in FTLState.Arriving to avoid a race condition with assets loading in.
-                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(comp.Owner);
+                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
                     break;
                 case FTLState.Cooldown:
 

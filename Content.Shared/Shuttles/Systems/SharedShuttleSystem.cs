@@ -29,10 +29,6 @@ public enum FTLState : byte
     /// Approaching destination, play effects or whatever,
     /// </summary>
     Arriving = 1 << 3,
-    /// <summary>
-    /// Arrived at destination, play after effects or whatever,
-    /// </summary>
-    Arrived = 1 << 4,
-    Cooldown = 1 << 5,
+    Cooldown = 1 << 4,
 }
 

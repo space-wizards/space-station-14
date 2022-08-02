@@ -28,8 +28,7 @@ namespace Content.Server.Pinpointer
             // This feels kind of expensive, but it only happens once per hyperspace jump
             foreach (var uid in ActivePinpointers)
             {
-                var entities = IoCManager.Resolve<IEntityManager>();
-                entities.TryGetComponent<PinpointerComponent>(uid, out var component);
+                TryComp<PinpointerComponent>(uid, out var component);
                 if (component != null)
                 {
                     LocateTarget(uid, component);
