@@ -1,0 +1,9 @@
+- type: htnCompound
+  id: DragonCarpCompound
+  branches:
+    - tasks:
+        - id: MeleeAttackTargetCompound
+    - tasks:
+        - id: FollowCompound
+    #- tasks:
+    #    - id: IdleCompound

@@ -101,7 +101,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return null;
         }
 
-        var branchTraversalRecord = decompHistory.Select(o => o.MethodTraversal).ToList();
+        var branchTraversalRecord = decompHistory.Reverse().Select(o => o.MethodTraversal).ToList();
 
         return new HTNPlan(finalPlan, branchTraversalRecord, appliedStates);
     }

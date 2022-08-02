@@ -34,7 +34,7 @@
   id: PickAccessibleNearFollowPrimitive
   operator: !type:PickAccessibleOperator
     # originKey: FollowTarget
-    rangeKey: FollowRange
+    rangeKey: FollowCloseRange
     targetKey: FollowIdleTarget
 
 - type: htnPrimitive

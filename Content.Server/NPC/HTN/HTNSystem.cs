@@ -135,7 +135,7 @@ public sealed partial class HTNSystem : EntitySystem
                 if (comp.PlanningJob.Status != JobStatus.Finished)
                     continue;
 
-                var newPlanBetter = true;
+                var newPlanBetter = false;
 
                 // If old traversal is better than new traversal then ignore the new plan
                 if (comp.Plan != null && comp.PlanningJob.Result != null)
@@ -145,17 +145,17 @@ public sealed partial class HTNSystem : EntitySystem
 
                     for (var i = 0; i < oldMtr.Count; i++)
                     {
-                        // TODO: Fix.
-                        if (i >= mtr.Count || oldMtr[i] < mtr[i])
+                        if (i < oldMtr.Count && oldMtr[i] > mtr[i])
                         {
-                            newPlanBetter = false;
+                            newPlanBetter = true;
                             break;
                         }
                     }
                 }
 
-                if (newPlanBetter)
+                if (comp.Plan == null || newPlanBetter)
                 {
+                    comp.Plan?.CurrentTask.Operator.Shutdown(comp.BlackboardA, HTNOperatorStatus.BetterPlan);
                     comp.Plan = comp.PlanningJob.Result;
 
                     // Startup the first task and anything else we need to do.
@@ -319,4 +319,9 @@ public enum HTNOperatorStatus : byte
     Continuing,
     Failed,
     Finished,
+
+    /// <summary>
+    /// Was a better plan than this found?
+    /// </summary>
+    BetterPlan,
 }

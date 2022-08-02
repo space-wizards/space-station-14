@@ -128,6 +128,9 @@ public sealed class MoveToOperator : HTNOperator
     {
         base.Startup(blackboard);
 
+        // Need to remove the planning value for execution.
+        blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
+
         // Re-use the path we may have if applicable.
         var comp = _steering.Register(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner), blackboard.GetValue<EntityCoordinates>(TargetKey));
 
@@ -159,7 +162,6 @@ public sealed class MoveToOperator : HTNOperator
         }
 
         // OwnerCoordinates is only used in planning so dump it.
-        blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
         blackboard.Remove<Queue<TileRef>>(PathfindKey);
 
         if (RemoveKeyOnFinish)

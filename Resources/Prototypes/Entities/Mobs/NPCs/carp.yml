@@ -68,6 +68,7 @@
   - type: Tag
     tags:
     - Carp
+    - DoorBumpOpener
 
 - type: entity
   name: magicarp
@@ -133,4 +134,4 @@
     name: Sentient Carp
     description: Help the dragon flood the station with carps!
   - type: HTN
-    rootTask: FollowCompound
+    rootTask: DragonCarpCompound

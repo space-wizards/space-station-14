@@ -26,6 +26,11 @@ public sealed class WaitOperator : HTNOperator
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         base.Shutdown(blackboard, status);
-        blackboard.Remove<float>(Key);
+
+        // The replacement plan may want this value so only dump it if we're successful.
+        if (status != HTNOperatorStatus.BetterPlan)
+        {
+            blackboard.Remove<float>(Key);
+        }
     }
 }
