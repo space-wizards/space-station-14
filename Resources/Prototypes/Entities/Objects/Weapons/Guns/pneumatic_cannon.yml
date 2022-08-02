@@ -16,6 +16,9 @@
   - type: Item
     size: 40
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
+    quickEquip: false
+     slots:
+     - Back
   - type: PneumaticCannon
   - type: Storage
     # todo mirror pneum replace with ecs/evnts
@@ -52,3 +55,6 @@
   - type: Item
     size: 50
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    quickEquip: false
+     slots:
+     - Back
