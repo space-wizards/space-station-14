@@ -1,6 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Body.Components;
 
