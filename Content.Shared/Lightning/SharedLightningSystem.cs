@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Lightning.Components;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Lightning;
 
@@ -9,15 +10,11 @@ public abstract class SharedLightningSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedLightningComponent, WorldTargetActionEvent>(OnWorldTarget);
-    }
-
-    private void OnWorldTarget(EntityUid uid, SharedLightningComponent component, WorldTargetActionEvent args)
-    {
-        SpawnLightning(component);
     }
 
     //TODO: Add way to form the lightning (sprites/spawning)
+
+
 
     public void SpawnLightning(SharedLightningComponent component)
     {

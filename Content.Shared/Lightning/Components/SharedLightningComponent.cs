@@ -1,4 +1,6 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Lightning.Components;
 public abstract class SharedLightningComponent : Component
@@ -23,4 +25,23 @@ public abstract class SharedLightningComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxLength")]
     public float MaxLength = 5f;
+}
+
+[Serializable, NetSerializable]
+public sealed class LightningEvent : EntityEventArgs
+{
+    public EntityCoordinates OwnerCoords;
+    public EntityCoordinates TargetCoords;
+    public Angle Angle;
+    public float Distance;
+    public Vector2 CalculatedDistance;
+
+    public LightningEvent(EntityCoordinates ownerCoords, EntityCoordinates targetCoords, Angle angle, float distance, Vector2 calculatedDistance)
+    {
+        OwnerCoords = ownerCoords;
+        TargetCoords = targetCoords;
+        Angle = angle;
+        Distance = distance;
+        CalculatedDistance = calculatedDistance;
+    }
 }
