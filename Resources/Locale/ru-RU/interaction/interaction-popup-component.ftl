@@ -33,6 +33,12 @@ petting-failure-dragon = Вы поднимаете руку, но { $target } и
 
 ## Knocking on windows
 
+petting-success-honkbot = You pet { THE($target) } on { POSS-ADJ($target) } slippery metal head.
+petting-success-cleanbot = You pet { THE($target) } on { POSS-ADJ($target) } damp metal head.
+petting-success-medibot = You pet { THE($target) } on { POSS-ADJ($target) } sterile metal head.
+petting-failure-honkbot = You reach out to pet { THE($target) }, but { SUBJECT($target) } honks in refusal!
+petting-failure-cleanbot = You reach out to pet { THE($target) }, but { SUBJECT($target) } { CONJUGATE-BE($target) } busy mopping!
+petting-failure-medibot = You reach out to pet { THE($target) }, but { POSS-ADJ($target) } syringe nearly stabs your hand!
 # Shown when knocking on a window
 comp-window-knock = *тук-тук*
 hugging-success-generic = Вы обнимаете { $target }.

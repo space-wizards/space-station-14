@@ -66,30 +66,17 @@ public sealed class WiresSystem : EntitySystem
 
         WireLayout? layout = null;
         List<Wire>? wireSet = null;
-        if (wires.LayoutId != null)
+        if (!wires.AlwaysRandomize)
         {
-            if (!wires.AlwaysRandomize)
-            {
-                TryGetLayout(wires.LayoutId, out layout);
-            }
+            TryGetLayout(wires.LayoutId, out layout);
+        }
 
-            if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
-                return;
-
-            // does the prototype have a parent (and are the wires empty?) if so, we just create
-            // a new layout based on that
-            //
-            // TODO: Merge wire layouts...
-            if (!string.IsNullOrEmpty(layoutPrototype.Parent) && layoutPrototype.Wires == null)
-            {
-                var parent = layoutPrototype.Parent;
-
-                if (!_protoMan.TryIndex(parent, out WireLayoutPrototype? parentPrototype))
-                    return;
-
-                layoutPrototype = parentPrototype;
-            }
-
+        // does the prototype have a parent (and are the wires empty?) if so, we just create
+        // a new layout based on that
+        //
+        // TODO: Merge wire layouts...
+        foreach (var layoutPrototype in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
+        {
             if (layoutPrototype.Wires != null)
             {
                 foreach (var wire in layoutPrototype.Wires)
@@ -98,6 +85,7 @@ public sealed class WiresSystem : EntitySystem
                 }
 
                 wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
+                break;
             }
         }
 
@@ -108,7 +96,7 @@ public sealed class WiresSystem : EntitySystem
 
         wires.WiresList.AddRange(wireSet);
 
-        Dictionary<object, int> types = new Dictionary<object, int>();
+        var types = new Dictionary<object, int>();
 
         if (layout != null)
         {

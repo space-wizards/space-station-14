@@ -7,3 +7,4 @@ lobby-state-ready-button-ready-up-state = Готов
 lobby-state-player-status-not-ready = Не готов
 lobby-state-player-status-ready = Готов
 lobby-state-player-status-observer = Наблюдатель
+lobby-state-player-status-station-time = The station time is: { $stationTime }

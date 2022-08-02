@@ -21,6 +21,8 @@ emergency-shuttle-docked = Аварийный шаттл пристыковал�
 emergency-shuttle-good-luck = Аварийный шаттл не может найти станцию. Удачи.
 emergency-shuttle-nearby = Аварийный шаттл не может найти подходящий стыковочный шлюз. Он дрейфует около станции, сторона: { $direction }.
 # Emergency shuttle console popup / announcement
+emergency-shuttle-console-no-early-launches = Early launch is disabled
+# Emergency shuttle console popup / announcement
 emergency-shuttle-console-auth-left =
     { $remaining } { $remaining ->
         [one] авторизация осталась

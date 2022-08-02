@@ -76,3 +76,6 @@ ent-FoodDonutJellySweetpea = желейный пончик из душистог
 ent-FoodDonutJellySlugcat = слизнекотовый желейный пончик
     .desc = В этом пончике нет отверстий на случай, если появится подозрительный столб.
     .suffix = { "" }
+ent-FoodDonutPoison = { ent-FoodDonutPink }
+    .desc = { ent-FoodDonutPink.desc }
+    .suffix = { "" }

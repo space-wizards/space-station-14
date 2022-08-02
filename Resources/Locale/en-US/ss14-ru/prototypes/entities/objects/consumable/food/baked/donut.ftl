@@ -76,3 +76,6 @@ ent-FoodDonutJellySweetpea = sweet pea jelly-donut
 ent-FoodDonutJellySlugcat = slugcat jelly-donut
     .desc = No holes in this donut incase a suspicious looking pole shows up.
     .suffix = { "" }
+ent-FoodDonutPoison = { ent-FoodDonutPink }
+    .desc = { ent-FoodDonutPink.desc }
+    .suffix = { "" }
