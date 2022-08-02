@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Add gas tank internals connection sound, type: Add}
-  id: 1577
-  time: '2022-05-22T02:31:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Melee combat no longer possible with guns (for now)., type: Tweak}
   - {message: Drag-drop no longer possible in combat mode., type: Tweak}
   id: 1578
@@ -2926,3 +2921,9 @@ Entries:
     type: Add}
   id: 2076
   time: '2022-08-02T13:01:15.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
+      the shuttle, A/D to strafe.', type: Tweak}
+  id: 2077
+  time: '2022-08-02T13:02:28.0000000+00:00'
