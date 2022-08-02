@@ -71,22 +71,41 @@ public sealed class WiresSystem : EntitySystem
             TryGetLayout(wires.LayoutId, out layout);
         }
 
+        List<IWireAction> wireActions = new();
+        var dummyWires = 0;
+
+        if (!_protoMan.TryIndex(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        {
+            return;
+        }
+
+        dummyWires += layoutPrototype.DummyWires;
+
+        if (layoutPrototype.Wires != null)
+        {
+            wireActions.AddRange(layoutPrototype.Wires);
+        }
+
         // does the prototype have a parent (and are the wires empty?) if so, we just create
         // a new layout based on that
-        //
-        // TODO: Merge wire layouts...
-        foreach (var layoutPrototype in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
+        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
         {
-            if (layoutPrototype.Wires != null)
+            if (parentLayout.Wires != null)
             {
-                foreach (var wire in layoutPrototype.Wires)
-                {
-                    wire.Initialize();
-                }
-
-                wireSet = CreateWireSet(uid, layout, layoutPrototype.Wires, layoutPrototype.DummyWires);
-                break;
+                wireActions.AddRange(parentLayout.Wires);
             }
+
+            dummyWires += parentLayout.DummyWires;
+        }
+
+        if (wireActions.Count > 0)
+        {
+            foreach (var wire in wireActions)
+            {
+                wire.Initialize();
+            }
+
+            wireSet = CreateWireSet(uid, layout, wireActions, dummyWires);
         }
 
         if (wireSet == null || wireSet.Count == 0)
