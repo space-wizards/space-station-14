@@ -12,3 +12,9 @@
     state: jar
     netsync: false
   - type: AMEFuelContainer
+  - type: SinguloFood
+    energy: 0
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: blue

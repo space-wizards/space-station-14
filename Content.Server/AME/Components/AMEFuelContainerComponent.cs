@@ -3,34 +3,30 @@ namespace Content.Server.AME.Components
     [RegisterComponent]
     public sealed class AMEFuelContainerComponent : Component
     {
-        private int _fuelAmount;
-        private int _maxFuelAmount;
-
         /// <summary>
         ///     The amount of fuel in the jar.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int FuelAmount
-        {
-            get => _fuelAmount;
-            set => _fuelAmount = value;
-        }
+        public int FuelAmount { get; set; }
 
         /// <summary>
         ///     The maximum fuel capacity of the jar.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxFuelAmount
-        {
-            get => _maxFuelAmount;
-            set => _maxFuelAmount = value;
-        }
+        public int MaxFuelAmount { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Sealed { get; set; }
+
+        [ViewVariables(VVAccess.ReadOnly)] public int OpenFuelConsumption = 32;
+        [ViewVariables(VVAccess.ReadOnly)] public string QualityNeeded = "Prying";
 
         protected override void Initialize()
         {
             base.Initialize();
-            _maxFuelAmount = 1000;
-            _fuelAmount = 1000;
+            MaxFuelAmount = 1000;
+            FuelAmount = 1000;
+            Sealed = true;
         }
 
     }
