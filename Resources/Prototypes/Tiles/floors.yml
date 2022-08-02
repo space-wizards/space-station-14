@@ -671,7 +671,7 @@
   variants: 4
   placementVariants: [0, 1, 2, 3]
   base_turfs:
-  - plating
+  - FloorDirt
   is_subfloor: false
   can_crowbar: false
   footstep_sounds:
@@ -687,7 +687,7 @@
   variants: 4
   placementVariants: [0, 1, 2, 3]
   base_turfs:
-  - plating
+  - FloorDirt
   is_subfloor: false
   can_crowbar: false
   footstep_sounds:
