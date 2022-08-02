@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems.Part;
@@ -47,12 +48,14 @@ namespace Content.Server.Body.Commands
 
             var mechanismName = string.Join(" ", args).ToLowerInvariant();
 
-            foreach (var (part, _) in body.Parts)
-            foreach (var mechanism in part.Mechanisms)
+            var bodySystem = EntitySystem.Get<BodySystem>();
+            var bodyPartSys = EntitySystem.Get<SharedBodyPartSystem>();
+
+            foreach (var part in bodySystem.GetAllParts(attached, body))
+            foreach (var mechanism in bodyPartSys.GetAllMechanisms(part.Owner, part))
             {
                 if (mechanism.Name.ToLowerInvariant() == mechanismName)
                 {
-                    var bodyPartSys = EntitySystem.Get<SharedBodyPartSystem>();
                     bodyPartSys.DeleteMechanism(attached, mechanism, part);
                     shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");
                     return;

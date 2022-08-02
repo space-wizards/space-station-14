@@ -1,3 +1,5 @@
+using Content.Client.Body.Components;
+using Content.Client.Body.Systems;
 using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -13,14 +15,15 @@ namespace Content.Client.CharacterAppearance.Systems
     {
         [Dependency] private readonly SpriteAccessoryManager _accessoryManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateLooks);
-            SubscribeNetworkEvent<PartAddedToBodyEvent>(BodyPartAdded);
-            SubscribeNetworkEvent<PartRemovedFromBodyEvent>(BodyPartRemoved);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, PartAddedToBodyEvent>(BodyPartAdded);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, PartRemovedFromBodyEvent>(BodyPartRemoved);
         }
 
         public readonly static HumanoidVisualLayers[] BodyPartLayers = {
@@ -51,7 +54,7 @@ namespace Content.Client.CharacterAppearance.Systems
 
             if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
             {
-                foreach (var (part, _) in body.Parts)
+                foreach (var part in _bodySystem.GetAllParts(uid, body))
                 {
                     if (spriteQuery.TryGetComponent(part.Owner, out var partSprite))
                     {
@@ -121,55 +124,44 @@ namespace Content.Client.CharacterAppearance.Systems
             }
         }
 
-        private void BodyPartAdded(PartAddedToBodyEvent args)
+        private void UpdateBodyPartVisuals(EntityUid uid)
         {
-            if (!EntityManager.TryGetComponent(args.BodyUid, out SpriteComponent? sprite))
-            {
+            if (!TryComp<SpriteComponent>(uid, out var sprite))
                 return;
+
+            if (!TryComp<BodyComponent>(uid, out var body))
+                return;
+
+            var humanoidLayers = new HashSet<HumanoidVisualLayers>();
+            foreach (var part in _bodySystem.GetAllParts(uid, body))
+            {
+                if (!HasComp<SpriteComponent>(part.Owner))
+                    continue;
+
+                foreach (var hlayer in part.ToHumanoidLayers())
+                {
+                    humanoidLayers.Add(hlayer);
+                }
             }
 
-            if (!EntityManager.TryGetComponent(args.BodyPartUid, out SharedBodyPartComponent? part))
-            {
-                return;
-            }
-
-            if (!EntityManager.HasComponent<SpriteComponent>(part.Owner))
-            {
-                return;
-            }
-
-            var layers = part.ToHumanoidLayers();
-            // TODO BODY Layer color, sprite and state
-            foreach (var layer in layers)
+            foreach (var layer in BodyPartLayers)
             {
                 if (!sprite.LayerMapTryGet(layer, out _))
                     continue;
 
-                sprite.LayerSetVisible(layer, true);
+                var visible = humanoidLayers.Contains(layer);
+                sprite.LayerSetVisible(layer, visible);
             }
         }
 
-        private void BodyPartRemoved(PartRemovedFromBodyEvent args)
+        private void BodyPartAdded(EntityUid uid, HumanoidAppearanceComponent component, PartAddedToBodyEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.BodyUid, out SpriteComponent? sprite))
-            {
-                return;
-            }
+            UpdateBodyPartVisuals(uid);
+        }
 
-            if (!EntityManager.TryGetComponent(args.BodyPartUid, out SharedBodyPartComponent? part))
-            {
-                return;
-            }
-
-            if (!EntityManager.HasComponent<SpriteComponent>(part.Owner))
-            {
-                return;
-            }
-
-            var layers = part.ToHumanoidLayers();
-            // TODO BODY Layer color, sprite and state
-            foreach (var layer in layers)
-                sprite.LayerSetVisible(layer, false);
+        private void BodyPartRemoved(EntityUid uid, HumanoidAppearanceComponent component, PartRemovedFromBodyEvent args)
+        {
+            UpdateBodyPartVisuals(uid);
         }
     }
 }

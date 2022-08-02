@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-
 namespace Content.Server.Body.Components;
 
 // TODO replace with better simulation of organs.
@@ -9,6 +7,6 @@ namespace Content.Server.Body.Components;
 ///     then kill the body.
 /// </summary>
 [RegisterComponent]
-public class VitalOrganComponent : Component
+public sealed class VitalPartComponent : Component
 {
 }

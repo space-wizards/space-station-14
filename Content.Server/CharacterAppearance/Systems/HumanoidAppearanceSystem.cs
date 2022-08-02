@@ -1,3 +1,4 @@
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
@@ -7,6 +8,8 @@ namespace Content.Server.CharacterAppearance.Systems
 {
     public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -18,7 +21,7 @@ namespace Content.Server.CharacterAppearance.Systems
         {
             if (EntityManager.TryGetComponent<SharedBodyComponent>(uid, out SharedBodyComponent?  body))
             {
-                foreach (var (part, _) in body.Parts)
+                foreach (var part in _bodySystem.GetAllParts(uid, body))
                 {
                     if (EntityManager.TryGetComponent(part.Owner, out SpriteComponent? sprite))
                     {

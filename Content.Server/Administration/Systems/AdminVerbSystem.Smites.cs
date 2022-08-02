@@ -306,13 +306,13 @@ public sealed partial class AdminVerbSystem
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
                     var organs = _bodySystem.GetComponentsOnMechanisms<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
-                    foreach (var (xform, mechanism) in organs)
+                    foreach (var (xform, mechanism) in organs.ToList())
                     {
                         
                         if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner) || mechanism.Part == null)
                             continue;
 
-                        _bodyPartSystem.RemoveMechanism(mechanism.Part.Owner, mechanism);
+                        _bodyPartSystem.TryRemoveMechanism(mechanism.Part.Owner, mechanism);
                         xform.Coordinates = baseXform.Coordinates.Offset(_random.NextVector2(0.5f,0.75f));
                     }
 
@@ -380,9 +380,9 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/stomach.png",
                 Act = () =>
                 {
-                    foreach (var part in body.Parts)
+                    foreach (var part in _bodySystem.GetAllParts(args.Target, body))
                     {
-                        foreach (var mechanism in part.Key.Mechanisms)
+                        foreach (var mechanism in _bodyPartSystem.GetAllMechanisms(part.Owner, part))
                         {
                             if (HasComp<StomachComponent>(mechanism.Owner))
                                 QueueDel(mechanism.Owner);
@@ -404,9 +404,9 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Mobs/Species/Human/organs.rsi/lung-r.png",
                 Act = () =>
                 {
-                    foreach (var part in body.Parts)
+                    foreach (var part in _bodySystem.GetAllParts(args.Target, body))
                     {
-                        foreach (var mechanism in part.Key.Mechanisms)
+                        foreach (var mechanism in _bodyPartSystem.GetAllMechanisms(part.Owner, part))
                         {
                             if (HasComp<LungComponent>(mechanism.Owner))
                                 QueueDel(mechanism.Owner);

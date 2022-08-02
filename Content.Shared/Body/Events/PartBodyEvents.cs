@@ -1,23 +1,18 @@
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
-using Robust.Shared.Serialization;
-
 namespace Content.Shared.Body.Events;
 
 /// <summary>
 ///     Raised on a body part and the body when added to a body.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed class PartAddedToBodyEvent : EntityEventArgs
 {
-    public readonly EntityUid BodyUid;
-    public readonly EntityUid BodyPartUid;
+    public readonly EntityUid Body;
+    public readonly EntityUid BodyPart;
     public readonly string SlotId;
 
-    public PartAddedToBodyEvent(EntityUid bodyUid, EntityUid bodyPartUid, string slotId)
+    public PartAddedToBodyEvent(EntityUid body, EntityUid bodyPart, string slotId)
     {
-        BodyUid = bodyUid;
-        BodyPartUid = bodyPartUid;
+        Body = body;
+        BodyPart = bodyPart;
         SlotId = slotId;
     }
 }
@@ -25,17 +20,16 @@ public sealed class PartAddedToBodyEvent : EntityEventArgs
 /// <summary>
 ///     Raised on a body part and the body when removed from a body.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed class PartRemovedFromBodyEvent : EntityEventArgs
 {
-    public readonly EntityUid BodyUid;
-    public readonly EntityUid BodyPartUid;
+    public readonly EntityUid Body;
+    public readonly EntityUid BodyPart;
     public readonly string SlotId;
 
-    public PartRemovedFromBodyEvent(EntityUid bodyUid, EntityUid bodyPartUid, string slotId)
+    public PartRemovedFromBodyEvent(EntityUid body, EntityUid bodyPart, string slotId)
     {
-        BodyUid = bodyUid;
-        BodyPartUid = bodyPartUid;
+        Body = body;
+        BodyPart = bodyPart;
         SlotId = slotId;
     }
 }

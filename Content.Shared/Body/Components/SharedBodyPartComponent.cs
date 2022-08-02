@@ -1,10 +1,12 @@
 using Content.Shared.Body.Part;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems.Body;
 using Content.Shared.Body.Systems.Part;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Body.Components
@@ -22,15 +24,8 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Container that stores all the mechanism entities.
         /// </summary>
-        [ViewVariables]
-        public Container MechanismContainer = default!;
-
-        /// <summary>
-        ///     A hashset of all actual mechanisms in the body,
-        ///     whether they were initially there or not.
-        /// </summary>
-        [ViewVariables]
-        public readonly HashSet<MechanismComponent> Mechanisms = new();
+        [ViewVariables, NonSerialized]
+        public Container? MechanismContainer = default!;
 
         [ViewVariables]
         public SharedBodyComponent? Body;
@@ -55,11 +50,10 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     What types of BodyParts this <see cref="SharedBodyPartComponent"/> can easily attach to.
         ///     For the most part, most limbs aren't universal and require extra work to
-        ///     attach between types.
+        ///     attach between types. If no compatibility is set, the part is considered universal.
         /// </summary>
-        [ViewVariables]
-        [DataField("compatibility")]
-        public BodyPartCompatibility Compatibility = BodyPartCompatibility.Universal;
+        [DataField("compatibility", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPartCompatibilityPrototype>))]
+        public string? Compatibility = null;
 
         [ViewVariables]
         [DataField("symmetry")]
@@ -69,11 +63,13 @@ namespace Content.Shared.Body.Components
     [Serializable, NetSerializable]
     public sealed class BodyPartComponentState : ComponentState
     {
-        public readonly EntityUid[] MechanismIds;
+        public readonly BodyPartType PartType;
+        public readonly BodyPartSymmetry Symmetry;
 
-        public BodyPartComponentState(EntityUid[] mechanismIds)
+        public BodyPartComponentState(BodyPartType partType, BodyPartSymmetry symmetry)
         {
-            MechanismIds = mechanismIds;
+            PartType = partType;
+            Symmetry = symmetry;
         }
     }
 }

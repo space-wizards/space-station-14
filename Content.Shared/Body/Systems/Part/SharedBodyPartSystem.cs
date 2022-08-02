@@ -1,55 +1,69 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Body.Systems.Part;
 
 public abstract partial class SharedBodyPartSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] protected readonly IComponentFactory ComponentFactory = default!;
+
+    public const string ContainerName = "part-mechanisms";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        InitializeNetworking();
-
         SubscribeLocalEvent<SharedBodyPartComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SharedBodyPartComponent, ComponentGetState>(OnComponentGetState);
+        SubscribeLocalEvent<SharedBodyPartComponent, ComponentHandleState>(OnComponentHandleState);
         SubscribeLocalEvent<SharedBodyPartComponent, PartAddedToBodyEvent>(OnAddedToBody);
         SubscribeLocalEvent<SharedBodyPartComponent, PartRemovedFromBodyEvent>(OnRemovedFromBody);
+        SubscribeLocalEvent<SharedBodyPartComponent, EntInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+        SubscribeLocalEvent<SharedBodyPartComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
     }
 
-    private void OnComponentInit(EntityUid uid, SharedBodyPartComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, SharedBodyPartComponent component, ComponentInit args)
     {
         component.MechanismContainer =
-            ContainerSystem.EnsureContainer<Container>(uid, $"{ComponentFactory.GetComponentName(typeof(SharedBodyPartComponent))}-{nameof(SharedBodyPartComponent)}");
+            ContainerSystem.EnsureContainer<Container>(uid, ContainerName);
     }
 
-    private void OnAddedToBody(EntityUid uid, SharedBodyPartComponent component, PartAddedToBodyEvent args)
+    private void OnComponentGetState(EntityUid uid, SharedBodyPartComponent component, ref ComponentGetState args)
     {
-        var xform = Transform(uid);
-        xform.LocalRotation = 0;
-        xform.AttachParent(args.BodyUid);
+        args.State = new BodyPartComponentState(component.PartType, component.Symmetry);
+    }
 
-        foreach (var mechanism in component.Mechanisms)
+    private void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is BodyPartComponentState state)
         {
-            RaiseLocalEvent(mechanism.Owner, new MechanismAddedToBodyEvent(args.BodyUid), true);
+            component.PartType = state.PartType;
+            component.Symmetry = state.Symmetry;
         }
     }
 
-    private void OnRemovedFromBody(EntityUid uid, SharedBodyPartComponent component, PartRemovedFromBodyEvent args)
+    protected virtual void OnAddedToBody(EntityUid uid, SharedBodyPartComponent component, PartAddedToBodyEvent args)
+    {
+        var xform = Transform(uid);
+        xform.LocalRotation = 0;
+        xform.AttachParent(args.Body);
+    }
+
+    protected virtual void OnRemovedFromBody(EntityUid uid, SharedBodyPartComponent component, PartRemovedFromBodyEvent args)
     {
         if (!Deleted(uid))
         {
             Transform(uid).AttachToGridOrMap();
         }
+    }
 
-        foreach (var mechanism in component.Mechanisms)
-        {
-            RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromBodyEvent(args.BodyUid), true);
-        }
+    protected virtual void OnInsertedIntoContainer(EntityUid uid, SharedBodyPartComponent component, EntInsertedIntoContainerMessage args)
+    {
+    }
+
+    protected virtual void OnRemovedFromContainer(EntityUid uid, SharedBodyPartComponent component, EntRemovedFromContainerMessage args)
+    {
     }
 }

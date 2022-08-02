@@ -2,7 +2,7 @@
   name: "slime"
   id: SlimePreset
   partIDs:
-    head: HeadSlime
+    head-part: HeadSlime
     torso: TorsoSlime
     right arm: RightArmSlime
     left arm: LeftArmSlime

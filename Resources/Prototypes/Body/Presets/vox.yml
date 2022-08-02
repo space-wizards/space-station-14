@@ -2,7 +2,7 @@
   name: "vox"
   id: VoxPreset
   partIDs:
-    head: HeadVox
+    head-part: HeadVox
     torso: TorsoVox
     right arm: RightArmVox
     left arm: LeftArmVox

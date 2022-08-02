@@ -191,7 +191,7 @@ namespace Content.Server.Hands.Systems
 
         private void OnPartAdded(EntityUid uid, HandsComponent component, PartAddedToBodyEvent args)
         {
-            if (!TryComp<SharedBodyPartComponent>(args.BodyPartUid, out var part))
+            if (!TryComp<SharedBodyPartComponent>(args.BodyPart, out var part))
                 return;
 
             if (part.PartType != BodyPartType.Hand)
@@ -207,18 +207,22 @@ namespace Content.Server.Hands.Systems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            AddHand(uid, args.SlotId, location);
+            var handName = $"{args.SlotId}-inv";
+
+            AddHand(uid, handName, location);
         }
 
         private void OnPartRemoved(EntityUid uid, HandsComponent component, PartRemovedFromBodyEvent args)
         {
-            if (!TryComp<SharedBodyPartComponent>(args.BodyPartUid, out var part))
+            if (!TryComp<SharedBodyPartComponent>(args.BodyPart, out var part))
                 return;
 
             if (part.PartType != BodyPartType.Hand)
                 return;
 
-            RemoveHand(uid, args.SlotId);
+            var handName = $"{args.SlotId}-inv";
+
+            RemoveHand(uid, handName);
         }
 
         #endregion

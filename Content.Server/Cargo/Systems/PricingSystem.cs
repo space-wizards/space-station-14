@@ -85,9 +85,9 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partList = body.Parts.Values;
-        var totalPartsPresent = partList.Sum(x => x.Part != null ? 1 : 0);
-        var totalParts = partList.Count;
+        var bodySlots = body.Slots.Values;
+        var totalPartsPresent = bodySlots.Sum(x => x.HasPart ? 1 : 0);
+        var totalParts = bodySlots.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;
         var partPenalty = component.Price * (1 - partRatio) * component.MissingBodyPartPenalty;

@@ -2,7 +2,7 @@
   name: "reptilian"
   id: ReptilianPreset
   partIDs:
-    head: HeadReptilian
+    head-part: HeadReptilian
     torso: TorsoReptilian
     right arm: RightArmReptilian
     left arm: LeftArmReptilian

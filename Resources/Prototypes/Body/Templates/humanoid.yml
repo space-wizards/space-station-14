@@ -3,7 +3,7 @@
   name: "humanoid"
   centerSlot: "torso"
   slots:
-    head: Head
+    head-part: Head
     torso: Torso
     left arm: Arm
     left hand: Hand
@@ -14,7 +14,7 @@
     right leg: Leg
     right foot: Foot
   connections:
-    head:
+    head-part:
     - torso
     torso:
     - left arm

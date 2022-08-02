@@ -1,7 +1,6 @@
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems.Body;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -19,23 +18,16 @@ public abstract class SharedBodyComponent : Component
     public string PresetId = default!;
 
     [ViewVariables]
-    public Dictionary<string, BodyPartSlot> SlotIds = new();
-
-    [ViewVariables]
-    public Dictionary<SharedBodyPartComponent, BodyPartSlot> Parts = new();
-
-    [ViewVariables]
-    public Container PartContainer = default!;
+    public Dictionary<string, BodyPartSlot> Slots = new();
 }
 
-[Serializable]
-[NetSerializable]
-public class BodyComponentState : ComponentState
+[Serializable, NetSerializable]
+public sealed class BodyComponentState : ComponentState
 {
-    public Dictionary<string, EntityUid> Parts;
+    public readonly Dictionary<string, BodyPartSlot> Slots;
 
-    public BodyComponentState(Dictionary<string, EntityUid> parts)
+    public BodyComponentState(Dictionary<string, BodyPartSlot> slots)
     {
-        Parts = parts;
+        Slots = slots;
     }
 }

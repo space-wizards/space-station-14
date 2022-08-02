@@ -3,6 +3,7 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -12,6 +13,7 @@ using Content.Shared.Body.Systems.Body;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Standing;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -26,12 +28,14 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly BodyPartSystem _bodyPartSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<BodyComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnMoveInput);
-            SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnComponentStartup);
 
             SubscribeLocalEvent<FallDownNoLegsComponent, ComponentInit>(OnFallDownInit);
             SubscribeLocalEvent<FallDownNoLegsComponent, PartRemovedFromBodyEvent>(OnFallDownPartRemoved);
@@ -39,62 +43,31 @@ namespace Content.Server.Body.Systems
             SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
         }
 
-        #region Overrides
-
-        protected override void OnComponentInit(EntityUid uid, SharedBodyComponent component, ComponentInit args)
-        {
-            base.OnComponentInit(uid, component, args);
-
-            var preset = _prototypeManager.Index<BodyPresetPrototype>(component.PresetId);
-            foreach (var slot in component.SlotIds.Values)
-            {
-                // Using MapPosition instead of Coordinates here prevents
-                // a crash within the character preview menu in the lobby
-                var entity = Spawn(preset.PartIDs[slot.Id], Transform(uid).MapPosition);
-
-                if (!TryComp(entity, out SharedBodyPartComponent? part))
-                {
-                    Logger.Error($"Entity {slot.Id} does not have a {nameof(SharedBodyPartComponent)} component.");
-                    continue;
-                }
-
-                AddPart(uid, slot.Id, part, component);
-            }
-        }
-
-        protected override void OnPartAdded(SharedBodyComponent body, SharedBodyPartComponent part)
-        {
-            body.PartContainer.Insert(part.Owner);
-        }
-
-        protected override void OnPartRemoved(SharedBodyComponent body, SharedBodyPartComponent part)
-        {
-            body.PartContainer.Remove(part.Owner);
-            part.Owner.RandomOffset(0.25f);
-        }
-
-        #endregion
-
         #region Body events
 
-        private void OnComponentStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, BodyComponent body, MapInitEvent args)
         {
-            // This is ran in Startup as entities spawned in Initialize
-            // are not synced to the client since they are assumed to be
-            // identical on it
+            if (string.IsNullOrEmpty(body.PresetId) ||
+                !PrototypeManager.TryIndex<BodyPresetPrototype>(body.PresetId, out var preset))
+                return;
 
-            // TODO that should probably get sussed out given we're removing startup eventually.
-            foreach (var (part, _) in component.Parts)
+            foreach (var slot in body.Slots.Values)
             {
-                part.Dirty();
+                if (slot.HasPart)
+                    continue;
+
+                if (!preset.PartIDs.TryGetValue(slot.Id, out var partId))
+                    continue;
+
+                var part = Spawn(partId, Transform(body.Owner).Coordinates);
+                slot.ContainerSlot?.Insert(part);
             }
         }
 
         private void OnMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
         {
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
-                mobState.IsDead() &&
-                EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
+            if (_mobStateSystem.IsDead(uid) &&
+                TryComp<MindComponent>(uid, out var mind) &&
                 mind.HasMind)
             {
                 if (!mind.Mind!.TimeOfDeath.HasValue)
@@ -108,8 +81,8 @@ namespace Content.Server.Body.Systems
 
         private void OnApplyMetabolicMultiplier(EntityUid uid, BodyComponent component, ApplyMetabolicMultiplierEvent args)
         {
-            foreach (var (part, _) in component.Parts)
-                foreach (var mechanism in part.Mechanisms)
+            foreach (var part in GetAllParts(uid, component))
+                foreach (var mechanism in _bodyPartSystem.GetAllMechanisms(part.Owner, part))
                 {
                     RaiseLocalEvent(mechanism.Owner, args, false);
                 }
@@ -136,7 +109,7 @@ namespace Content.Server.Body.Systems
             if (!TryComp<SharedBodyComponent>(uid, out var body))
                 return;
 
-            if (!TryComp<SharedBodyPartComponent>(args.BodyPartUid, out var part))
+            if (!TryComp<SharedBodyPartComponent>(args.BodyPart, out var part))
                 return;
 
             if (part.PartType == BodyPartType.Leg &&
@@ -167,7 +140,7 @@ namespace Content.Server.Body.Systems
             if (!Resolve(uid, ref body, false))
                 return gibs;
 
-            foreach (var part in body.Parts.Keys.ToList())
+            foreach (var part in GetAllParts(uid, body))
             {
                 gibs.Add(part.Owner);
                 RemovePart(uid, part, body);

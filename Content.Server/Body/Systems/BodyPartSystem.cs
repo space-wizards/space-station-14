@@ -1,7 +1,7 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Systems.Part;
-using Content.Shared.Random.Helpers;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Body.Systems;
 
@@ -11,19 +11,16 @@ public sealed class BodyPartSystem : SharedBodyPartSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedBodyPartComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<SharedBodyPartComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnStartup(EntityUid uid, SharedBodyPartComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, SharedBodyPartComponent component, MapInitEvent args)
     {
-        // This is ran in Startup as entities spawned in Initialize
-        // are not synced to the client since they are assumed to be
-        // identical on it
         foreach (var mechanismId in component.InitialMechanisms)
         {
-            var entity = Spawn(mechanismId, Transform(uid).MapPosition);
+            var entity = Spawn(mechanismId, Transform(uid).Coordinates);
 
-            if (!TryComp(entity, out MechanismComponent? mechanism))
+            if (!TryComp<MechanismComponent>(entity, out var mechanism))
             {
                 Logger.Error($"Entity {mechanismId} does not have a {nameof(MechanismComponent)} component.");
                 continue;
@@ -33,25 +30,66 @@ public sealed class BodyPartSystem : SharedBodyPartSystem
         }
     }
 
-    #region Overrides
-
-    protected override void OnAddMechanism(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent part)
+    protected override void OnAddedToBody(EntityUid uid, SharedBodyPartComponent component, PartAddedToBodyEvent args)
     {
-        base.OnRemoveMechanism(uid, mechanism, part);
+        base.OnAddedToBody(uid, component, args);
 
-        part.MechanismContainer.Insert(mechanism.Owner);
+        if (TryComp<SharedBodyComponent>(args.Body, out var body))
+            component.Body = body;
+
+        if (!ContainerSystem.TryGetContainer(uid, ContainerName, out var mechanismContainer))
+            return;
+
+        foreach (var ent in mechanismContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(ent, new MechanismAddedToBodyEvent(args.Body), true);
+        }
     }
 
-
-    protected override void OnRemoveMechanism(EntityUid uid, MechanismComponent mechanism, SharedBodyPartComponent part)
+    protected override void OnRemovedFromBody(EntityUid uid, SharedBodyPartComponent component, PartRemovedFromBodyEvent args)
     {
-        base.OnRemoveMechanism(uid, mechanism, part);
+        base.OnRemovedFromBody(uid, component, args);
 
-        part.MechanismContainer.Remove(mechanism.Owner);
-        mechanism.Owner.RandomOffset(0.25f);
+        component.Body = null;
+
+        if (!ContainerSystem.TryGetContainer(uid, ContainerName, out var mechanismContainer))
+            return;
+
+        foreach (var ent in mechanismContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(ent, new MechanismRemovedFromBodyEvent(args.Body), true);
+        }
     }
 
-    #endregion
+    protected override void OnInsertedIntoContainer(EntityUid uid, SharedBodyPartComponent component, EntInsertedIntoContainerMessage args)
+    {
+        base.OnInsertedIntoContainer(uid, component, args);
+
+        if (!TryComp<MechanismComponent>(args.Entity, out var mechanism))
+            return;
+
+        mechanism.Part = component;
+
+        if (component.Body == null)
+            RaiseLocalEvent(mechanism.Owner, new MechanismAddedToPartEvent(component.Owner));
+        else
+            RaiseLocalEvent(mechanism.Owner, new MechanismAddedToPartInBodyEvent(component.Body.Owner, component.Owner));
+    }
+
+    protected override void OnRemovedFromContainer(EntityUid uid, SharedBodyPartComponent component, EntRemovedFromContainerMessage args)
+    {
+        base.OnRemovedFromContainer(uid, component, args);
+
+        if (!TryComp<MechanismComponent>(args.Entity, out var mechanism))
+            return;
+
+        mechanism.Part = null;
+
+        if (component.Body == null)
+            RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromPartEvent(component.Owner));
+        else
+            RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromPartInBodyEvent(component.Body.Owner, component.Owner));
+    }
 
     /// <summary>
     ///     Gibs the body part.
@@ -62,10 +100,10 @@ public sealed class BodyPartSystem : SharedBodyPartSystem
         if (!Resolve(uid, ref part))
             return gibs;
 
-        foreach (var mechanism in part.Mechanisms)
+        foreach (var mechanism in GetAllMechanisms(uid, part))
         {
             gibs.Add(part.Owner);
-            RemoveMechanism(uid, mechanism, part);
+            TryRemoveMechanism(uid, mechanism, part);
         }
 
         return gibs;

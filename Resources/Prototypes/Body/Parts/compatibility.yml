@@ -1,0 +1,8 @@
+- type: bodyPartCompatibility
+  id: Biological
+
+- type: bodyPartCompatibility
+  id: Mechanical
+
+- type: bodyPartCompatibility
+  id: Slime

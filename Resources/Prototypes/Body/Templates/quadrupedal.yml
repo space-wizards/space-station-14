@@ -3,7 +3,7 @@
   name: "quadrupedal"
   centerSlot: "torso"
   slots:
-    head: Head
+    head-part: Head
     torso: Torso
     left front leg: Leg
     left front paw: Foot
@@ -14,7 +14,7 @@
     right hind leg: Leg
     right hind paw: Foot
   connections:
-    head:
+    head-part:
     - torso
     torso:
     - left front leg

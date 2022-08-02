@@ -1,27 +1,56 @@
-using Content.Shared.CharacterAppearance.Systems;
-using Content.Shared.Damage;
-using Content.Shared.Standing;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
+using Content.Shared.Body.Systems.Part;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body.Systems.Body
 {
     public abstract partial class SharedBodySystem : EntitySystem
     {
+        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+        [Dependency] protected readonly SharedBodyPartSystem BodyPartSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            InitializeNetworking();
-            InitializeManagerial();
+            SubscribeLocalEvent<SharedBodyComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<SharedBodyComponent, ComponentGetState>(OnComponentGetState);
+            SubscribeLocalEvent<SharedBodyComponent, EntInsertedIntoContainerMessage>(OnInsertedIntoContainer);
+            SubscribeLocalEvent<SharedBodyComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
         }
 
-        [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] protected readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] protected readonly StandingStateSystem _standingStateSystem = default!;
-        [Dependency] protected readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
-        [Dependency] protected readonly DamageableSystem _damageableSystem = default!;
+        protected virtual void OnComponentInit(EntityUid uid, SharedBodyComponent component, ComponentInit args)
+        {
+            UpdateFromTemplate(uid, component.TemplateId, component);
+        }
+
+        public void OnComponentGetState(EntityUid uid, SharedBodyComponent body, ref ComponentGetState args)
+        {
+            args.State = new BodyComponentState(body.Slots);
+        }
+
+        protected virtual void OnInsertedIntoContainer(EntityUid uid, SharedBodyComponent body, EntInsertedIntoContainerMessage args)
+        {
+            if (!TryComp<SharedBodyPartComponent>(args.Entity, out var part))
+                return;
+
+            var ev = new PartAddedToBodyEvent(uid, part.Owner, args.Container.ID);
+            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(part.Owner, ev);
+        }
+
+        protected virtual void OnRemovedFromContainer(EntityUid uid, SharedBodyComponent body, EntRemovedFromContainerMessage args)
+        {
+            if (!TryComp<SharedBodyPartComponent>(args.Entity, out var part))
+                return;
+
+            var ev = new PartRemovedFromBodyEvent(uid, args.Entity, args.Container.ID);
+            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(args.Entity, ev);
+        }
     }
 }

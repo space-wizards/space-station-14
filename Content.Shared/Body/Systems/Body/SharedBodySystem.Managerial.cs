@@ -1,91 +1,114 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.Body.Systems.Part;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Body.Systems.Body;
 
 public abstract partial class SharedBodySystem
 {
-    public void InitializeManagerial()
-    {
-        SubscribeLocalEvent<SharedBodyComponent, ComponentInit>(OnComponentInit);
-    }
-
-    protected virtual void OnComponentInit(EntityUid uid, SharedBodyComponent component, ComponentInit args)
-    {
-        component.PartContainer = _containerSystem.EnsureContainer<Container>(uid, $"{component.Name}-Parts");
-
-        UpdateFromTemplate(uid, component.TemplateId, component);
-    }
-
+    /// <summary>
+    ///     Populates the BodyComponent with slots based provided BodyTemplate prototype ID
+    /// </summary>
     public void UpdateFromTemplate(EntityUid uid, string templateId,
         SharedBodyComponent? body = null)
     {
         if (!Resolve(uid, ref body))
             return;
 
-        var template = _prototypeManager.Index<BodyTemplatePrototype>(templateId);
+        var template = PrototypeManager.Index<BodyTemplatePrototype>(templateId);
 
         foreach (var (id, partType) in template.Slots)
         {
-            SetSlot(uid, id, partType, body);
+            var slot = new BodyPartSlot(id, partType);
+            if (id == template.CenterSlot)
+                slot.IsCenterSlot = true;
+
+            SetSlot(uid, id, slot, body);
         }
 
         foreach (var (slotId, connectionIds) in template.Connections)
         {
-            var connections = connectionIds.Select(id => body.SlotIds[id]);
-            body.SlotIds[slotId].Connections = new HashSet<BodyPartSlot>(connections);
+            SetSlotConnections(uid, slotId, connectionIds, body);
         }
+    }
+
+    /// <summary>
+    ///     Sets a slot's connections with the provided connection IDs
+    /// </summary>
+    public void SetSlotConnections(EntityUid uid, string slotId, HashSet<string> connectionIds, SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return;
+
+        if (!body.Slots.TryGetValue(slotId, out var slot))
+            return;
+
+        slot.Connections = new HashSet<string>(connectionIds);
     }
 
     #region Slots
 
     /// <summary>
-    ///     Creates a new slot name for a given part.
+    ///     Sets the provided body part slot, overwriting all data
     /// </summary>
-    public string GenerateUniqueSlotName(SharedBodyPartComponent part)
+    public void SetSlot(EntityUid uid, string slotId, BodyPartSlot slot, SharedBodyComponent? body = null)
     {
-        // e.g. 8912-Arm-Left
-        // Can't see how we'd get a collision from this.
-        return $"{part.Owner.ToString()}-{part.PartType.ToString()}-{part.Compatibility.ToString()}";
+        if (!Resolve(uid, ref body))
+            return;
+
+        slot.ContainerSlot = ContainerSystem.EnsureContainer<ContainerSlot>(body.Owner, slotId);
+        body.Slots[slotId] = slot;
+        Dirty(body);
     }
 
-    public BodyPartSlot SetSlot(EntityUid uid, string id, BodyPartType type, SharedBodyComponent body)
+    /// <summary>
+    ///     Completely removes a body part slot from the body, dropping the contained part if possible
+    /// </summary>
+    public void RemoveSlot(EntityUid uid, BodyPartSlot slot, SharedBodyComponent? body = null)
     {
-        var slot = new BodyPartSlot(id, type);
+        if (slot.ContainerSlot != null)
+            slot.ContainerSlot.Shutdown();
 
-        body.SlotIds[id] = slot;
-        return slot;
+        if (!Resolve(uid, ref body, logMissing: false))
+            return;
+
+        var partRemoved = RemovePart(uid, slot, body);
+        body.Slots.Remove(slot.Id);
+
+        // if a part was removed the component was already dirtied
+        if (!partRemoved)
+            Dirty(body);
     }
 
     #endregion
 
     #region Adding Parts
 
+    /// <summary>
+    ///     Checks if a part can be added to the provided slot, does not return false if the slot already since by default the new part will replace the old part
+    /// </summary>
     public bool CanAddPart(EntityUid uid, string slotId, SharedBodyPartComponent part,
         SharedBodyComponent? body = null)
     {
         if (!Resolve(uid, ref body))
             return false;
 
-        if (!body.SlotIds.TryGetValue(slotId, out var slot))
+        if (!body.Slots.TryGetValue(slotId, out var slot))
             return false;
 
         if (part.PartType != slot.PartType)
             return false;
 
-        return true;
+        if (!IsCompatible(uid, part, slot, body))
+            return false;
+
+        return slot.ContainerSlot?.CanInsertIfEmpty(part.Owner, EntityManager) ?? false;
     }
 
     /// <summary>
-    ///     Tries to add a given part, generating a new slot name for it.
+    ///     Tries to add a given part, generating a new slot for it.
     /// </summary>
     public bool TryAddPart(EntityUid uid, SharedBodyPartComponent part,
         SharedBodyComponent? body = null)
@@ -137,71 +160,71 @@ public abstract partial class SharedBodySystem
         if (!Resolve(uid, ref body))
             return false;
 
-        if (!body.SlotIds.TryGetValue(slotId, out var slot))
+        if (!body.Slots.TryGetValue(slotId, out var slot))
         {
-            slot = SetSlot(uid, slotId, part.PartType, body);
-            body.SlotIds[slotId] = slot;
+            slot = new BodyPartSlot(slotId, part.PartType);
+            SetSlot(uid, slotId, slot, body);
+
+            body.Slots[slotId] = slot;
         }
 
-        if (slot.Part != null)
+        if (slot.Part != null && slot.Part != part.Owner)
         {
             RemovePart(uid, slot, body);
         }
 
-        slot.Part = part;
-        body.Parts[part] = slot;
-        var ev = new PartAddedToBodyEvent(uid, part.Owner, slot.Id);
-        part.Body = body;
-        OnPartAdded(body, part);
+        slot.ContainerSlot?.Insert(part.Owner);
 
-        // Raise the event on both the body and the part.
-        RaiseLocalEvent(uid, ev, true);
-        RaiseLocalEvent(part.Owner, ev);
-        RaiseNetworkEvent(ev);
-
-        // TODO BODY Sort this duplicate out
-        body.Dirty();
+        Dirty(body);
 
         return true;
     }
-
-    /// <summary>
-    ///     Server needs to do things like add the part to a container,
-    ///     so we'll just have a virtual call.
-    /// </summary>
-    protected virtual void OnPartAdded(SharedBodyComponent body, SharedBodyPartComponent part) { }
 
     #endregion
 
     #region Removing Parts
 
+    /// <summary>
+    /// Checks if a body part can be removed from the provided slot
+    /// </summary>
+    public bool CanRemove(EntityUid uid, BodyPartSlot slot, SharedBodyComponent? body = null)
+    {
+        if (!Resolve(uid, ref body))
+            return false;
+
+        if (slot.Part == null)
+            return false;
+
+        return slot.ContainerSlot?.CanRemove(slot.Part.Value, EntityManager) ?? false;
+    }
+
+    /// <summary>
+    /// Tries to remove the body part in the provided slot
+    /// </summary>
+    /// <returns></returns>
     public bool TryRemovePart(EntityUid uid, BodyPartSlot slot, [NotNullWhen(true)] out Dictionary<BodyPartSlot, SharedBodyPartComponent>? dropped,
         SharedBodyComponent? body = null)
     {
+        dropped = null;
         if (!Resolve(uid, ref body))
-        {
-            dropped = null;
             return false;
-        }
 
-        if (!body.SlotIds.TryGetValue(slot.Id, out var ownedSlot) ||
-            ownedSlot != slot ||
-            slot.Part == null)
-        {
-            dropped = null;
+        if (!CanRemove(uid, slot, body))
             return false;
-        }
+
+        if (!body.Slots.TryGetValue(slot.Id, out var ownedSlot) ||
+            ownedSlot != slot)
+            return false;
 
         var oldPart = slot.Part;
+        if (!RemovePart(uid, slot, body))
+            return false;
+
         dropped = GetHangingParts(uid, slot, body);
 
-        if (!RemovePart(uid, oldPart, body))
-        {
-            dropped = null;
-            return false;
-        }
+        if (oldPart != null && TryComp<SharedBodyPartComponent>(oldPart.Value, out var comp))
+            dropped[slot] = comp;
 
-        dropped[slot] = oldPart;
         return true;
     }
 
@@ -214,9 +237,10 @@ public abstract partial class SharedBodySystem
         if (!Resolve(uid, ref body))
             return false;
 
-        if (body.Parts.TryGetValue(part, out var slot))
+        foreach (var (slotId, slot) in body.Slots)
         {
-            return RemovePart(uid, slot, body);
+            if (slot.HasPart && slot.Part == part.Owner)
+                return RemovePart(uid, slot, body);
         }
 
         return false;
@@ -235,29 +259,17 @@ public abstract partial class SharedBodySystem
 
         var old = slot.Part;
 
-        var ev = new PartRemovedFromBodyEvent(uid, old.Owner, slot.Id);
-        slot.Part = null;
-        body.Parts.Remove(old);
+        slot.ContainerSlot?.Remove(old.Value);
 
-        OnPartRemoved(body, old);
-        old.Body = null;
-
-        foreach (var part in GetHangingParts(uid, slot, body))
+        foreach (var hangingPart in GetHangingParts(uid, slot, body))
         {
-            RemovePart(uid, part.Value, body);
+            RemovePart(uid, hangingPart.Key, body);
         }
 
-        // Raise the event on both the body and the part.
-        RaiseLocalEvent(uid, ev);
-        RaiseLocalEvent(old.Owner, ev);
-        RaiseNetworkEvent(ev);
-
-        body.Dirty();
+        Dirty(body);
 
         return true;
     }
-
-    protected virtual void OnPartRemoved(SharedBodyComponent body, SharedBodyPartComponent part) { }
 
     #endregion
 }

@@ -115,10 +115,10 @@ namespace Content.Client.Body.UI
                 return;
             }
 
-            foreach (var (part, _) in body.Parts)
-            {
-                BodyPartList.AddItem(Loc.GetString(part.Name));
-            }
+            //foreach (var (part, _) in body.Parts)
+            //{
+            //    BodyPartList.AddItem(Loc.GetString(part.Name));
+            //}
         }
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
@@ -129,13 +129,13 @@ namespace Content.Client.Body.UI
             }
 
             var bodySys = EntitySystem.Get<SharedBodySystem>();
-            var slot = bodySys.SlotAt(body.Owner, args.ItemIndex, body);
-            _currentBodyPart = bodySys.PartAt(body.Owner, args.ItemIndex, body);
+            //var slot = bodySys.SlotAt(body.Owner, args.ItemIndex, body);
+            //_currentBodyPart = bodySys.PartAt(body.Owner, args.ItemIndex, body);
 
-            if (slot.Part != null)
-            {
-                UpdateBodyPartBox(slot.Part, slot.Id);
-            }
+            //if (slot.Part != null)
+            //{
+            //    UpdateBodyPartBox(slot.Part, slot.Id);
+            //}
         }
 
         private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
@@ -151,16 +151,16 @@ namespace Content.Client.Body.UI
 
             MechanismList.Clear();
 
-            foreach (var mechanism in part.Mechanisms)
-            {
-                MechanismList.AddItem(mechanism.Name);
-            }
+            //foreach (var mechanism in part.Mechanisms)
+            //{
+            //    MechanismList.AddItem(mechanism.Name);
+            //}
         }
 
         // TODO BODY Guaranteed this is going to crash when a part's mechanisms change. This part is left as an exercise for the reader.
         public void MechanismOnItemSelected(ItemListSelectedEventArgs args)
         {
-            UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
+            //UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
         private void UpdateMechanismBox(MechanismComponent? mechanism)

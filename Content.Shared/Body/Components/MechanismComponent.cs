@@ -1,5 +1,6 @@
-using Content.Shared.Body.Part;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems.Part;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Body.Components;
 
@@ -11,7 +12,6 @@ public sealed class MechanismComponent : Component
 
     public SharedBodyPartComponent? Part;
 
-    // TODO BODY OnSizeChanged
     /// <summary>
     ///     Determines whether this
     ///     <see cref="MechanismComponent" /> can fit into a <see cref="SharedBodyPartComponent" />.
@@ -22,7 +22,8 @@ public sealed class MechanismComponent : Component
     /// <summary>
     ///     What kind of <see cref="SharedBodyPartComponent" /> this
     ///     <see cref="MechanismComponent" /> can be easily installed into.
+    ///     If no compatibility is set, the mechanism is considered universal.
     /// </summary>
-    [DataField("compatibility")]
-    public BodyPartCompatibility Compatibility = BodyPartCompatibility.Universal;
+    [DataField("compatibility", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPartCompatibilityPrototype>))]
+    public string? Compatibility = null;
 }

@@ -2,7 +2,7 @@
   name: "skeleton"
   id: SkeletonPreset
   partIDs:
-    head: HeadSkeleton
+    head-part: HeadSkeleton
     torso: TorsoSkeleton
     right arm: RightArmSkeleton
     left arm: LeftArmSkeleton

@@ -2,7 +2,7 @@
   name: "human"
   id: HumanPreset
   partIDs:
-    head: HeadHuman
+    head-part: HeadHuman
     torso: TorsoHuman
     right arm: RightArmHuman
     left arm: LeftArmHuman

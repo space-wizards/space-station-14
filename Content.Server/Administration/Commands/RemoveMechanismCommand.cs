@@ -37,7 +37,7 @@ namespace Content.Server.Administration.Commands
             if (entityManager.TryGetComponent<SharedBodyPartComponent>(parent, out var part) &&
                 entityManager.TryGetComponent<MechanismComponent>(entityUid, out var mechanism))
             {
-                bodyPartSys.RemoveMechanism(parent, mechanism, part);
+                bodyPartSys.TryRemoveMechanism(parent, mechanism, part);
             }
             else
             {
