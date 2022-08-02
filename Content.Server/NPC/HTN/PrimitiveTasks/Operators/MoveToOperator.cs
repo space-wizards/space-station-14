@@ -84,7 +84,7 @@ public sealed class MoveToOperator : HTNOperator
             // In range
             return (true, new Dictionary<string, object>()
             {
-                {NPCBlackboard.OwnerCoordinates, blackboard.GetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates)}
+                {NPCBlackboard.OwnerCoordinates, blackboard.GetValueOrDefault<EntityCoordinates>(NPCBlackboard.OwnerCoordinates)}
             });
         }
 

@@ -5,6 +5,7 @@ using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN.PrimitiveTasks;
+using Content.Server.NPC.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +14,7 @@ namespace Content.Server.NPC.HTN;
 public sealed partial class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly NPCSystem _npc = default!;
 
     private ISawmill _sawmill = default!;
     private readonly JobQueue _planQueue = new(0.005);
@@ -131,6 +133,14 @@ public sealed partial class HTNSystem : EntitySystem
 
             if (comp.PlanningJob != null)
             {
+                if (comp.PlanningJob.Exception != null)
+                {
+                    _sawmill.Fatal($"Received exception on planning job for {comp.Owner}!");
+                    _npc.SleepNPC(comp.Owner);
+                    RemComp<HTNComponent>(comp.Owner);
+                    throw comp.PlanningJob.Exception;
+                }
+
                 // If a new planning job has finished then handle it.
                 if (comp.PlanningJob.Status != JobStatus.Finished)
                     continue;
@@ -145,7 +155,7 @@ public sealed partial class HTNSystem : EntitySystem
 
                     for (var i = 0; i < oldMtr.Count; i++)
                     {
-                        if (i < oldMtr.Count && oldMtr[i] > mtr[i])
+                        if (i < mtr.Count && oldMtr[i] > mtr[i])
                         {
                             newPlanBetter = true;
                             break;

@@ -57,12 +57,12 @@ namespace Content.Server.NPC.Systems
 
         private void OnNPCInit(EntityUid uid, NPCComponent component, ComponentInit args)
         {
-            WakeNPC(component);
+            WakeNPC(uid, component);
         }
 
         private void OnNPCShutdown(EntityUid uid, NPCComponent component, ComponentShutdown args)
         {
-            SleepNPC(component);
+            SleepNPC(uid, component);
         }
 
         /// <summary>
@@ -76,17 +76,24 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Allows the NPC to actively be updated.
         /// </summary>
-        public void WakeNPC(NPCComponent component)
+        public void WakeNPC(EntityUid uid, NPCComponent? component = null)
         {
+            if (!Resolve(uid, ref component, false))
+            {
+                return;
+            }
+
             _sawmill.Debug($"Waking {ToPrettyString(component.Owner)}");
             EnsureComp<ActiveNPCComponent>(component.Owner);
         }
 
-        /// <summary>
-        /// Stops the NPC from actively being updated.
-        /// </summary>
-        public void SleepNPC(NPCComponent component)
+        public void SleepNPC(EntityUid uid, NPCComponent? component = null)
         {
+            if (!Resolve(uid, ref component, false))
+            {
+                return;
+            }
+
             _sawmill.Debug($"Sleeping {ToPrettyString(component.Owner)}");
             RemComp<ActiveNPCComponent>(component.Owner);
         }
@@ -110,11 +117,11 @@ namespace Content.Server.NPC.Systems
             switch (args.CurrentMobState)
             {
                 case DamageState.Alive:
-                    WakeNPC(component);
+                    WakeNPC(uid, component);
                     break;
                 case DamageState.Critical:
                 case DamageState.Dead:
-                    SleepNPC(component);
+                    SleepNPC(uid, component);
                     break;
             }
         }

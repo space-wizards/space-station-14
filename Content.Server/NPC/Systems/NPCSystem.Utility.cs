@@ -201,7 +201,7 @@ public sealed partial class NPCSystem
             RebuildActions(npc);
 
         if (npc.BehaviorSets.Count == 1 && !IsAwake(npc))
-            WakeNPC(npc);
+            WakeNPC(npc.Owner, npc);
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ public sealed partial class NPCSystem
             RebuildActions(npc);
 
         if (npc.BehaviorSets.Count == 0)
-            SleepNPC(npc);
+            SleepNPC(npc.Owner, npc);
     }
 
     /// <summary>

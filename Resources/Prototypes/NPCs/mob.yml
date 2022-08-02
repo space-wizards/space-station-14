@@ -2,8 +2,8 @@
   id: DragonCarpCompound
   branches:
     - tasks:
-        - id: MeleeAttackTargetCompound
+        - id: MeleeCombatCompound
     - tasks:
         - id: FollowCompound
-    #- tasks:
-    #    - id: IdleCompound
+    - tasks:
+        - id: IdleCompound

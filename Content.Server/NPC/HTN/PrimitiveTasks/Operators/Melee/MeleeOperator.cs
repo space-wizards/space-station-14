@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using Content.Server.MobState;
 using Content.Server.NPC.Combat;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -15,6 +19,12 @@ public sealed class MeleeOperator : HTNOperator
     [ViewVariables, DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
+    /// <summary>
+    /// Damage state that the target has to be in for us to consider attacking.
+    /// </summary>
+    [ViewVariables, DataField("targetState")]
+    public DamageState TargetState = DamageState.Alive;
+
     // Like movement we add a component and pass it off to the dedicated system.
 
     public override void Startup(NPCBlackboard blackboard)
@@ -24,10 +34,29 @@ public sealed class MeleeOperator : HTNOperator
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    {
+        // Don't attack if they're already as wounded as we want them.
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        {
+            return (false, null);
+        }
+
+        if (_entManager.TryGetComponent<MobStateComponent>(target, out var mobState) &&
+            mobState.CurrentState != null &&
+            mobState.CurrentState > TargetState)
+        {
+            return (false, null);
+        }
+
+        return (true, null);
+    }
+
     public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
         base.Shutdown(blackboard, status);
         _entManager.RemoveComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        blackboard.Remove<EntityUid>(TargetKey);
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
@@ -35,25 +64,35 @@ public sealed class MeleeOperator : HTNOperator
         base.Update(blackboard, frameTime);
         // TODO:
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        HTNOperatorStatus status = HTNOperatorStatus.Continuing;
+        var status = HTNOperatorStatus.Continuing;
 
         if (_entManager.TryGetComponent<NPCMeleeCombatComponent>(owner, out var combat))
         {
-            switch (combat.Status)
+            // Success
+            if (_entManager.TryGetComponent<MobStateComponent>(combat.Target, out var mobState) &&
+                mobState.CurrentState != null &&
+                mobState.CurrentState > TargetState)
             {
-                case CombatStatus.TargetNormal:
-                    status = HTNOperatorStatus.Continuing;
-                    break;
-                case CombatStatus.TargetCrit:
-                case CombatStatus.TargetDead:
-                    status = HTNOperatorStatus.Finished;
-                    break;
-                case CombatStatus.TargetUnreachable:
-                case CombatStatus.NoWeapon:
-                    status = HTNOperatorStatus.Failed;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                status = HTNOperatorStatus.Finished;
+            }
+            else
+            {
+                switch (combat.Status)
+                {
+                    case CombatStatus.TargetNormal:
+                        status = HTNOperatorStatus.Continuing;
+                        break;
+                    case CombatStatus.TargetCrit:
+                    case CombatStatus.TargetDead:
+                        status = HTNOperatorStatus.Finished;
+                        break;
+                    case CombatStatus.TargetUnreachable:
+                    case CombatStatus.NoWeapon:
+                        status = HTNOperatorStatus.Failed;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
