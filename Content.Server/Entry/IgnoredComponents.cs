@@ -17,6 +17,7 @@ namespace Content.Server.Entry
             "VehicleVisuals",
             "Marker",
             "Clickable",
+            "VaporVisuals",
             "Icon",
             "ClientEntitySpawner",
             "CharacterInfo",
