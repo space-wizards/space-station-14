@@ -3,7 +3,7 @@
   name: job-name-chaplain
   startingGear: ChaplainGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Chaplain"
   supervisors: job-supervisors-hop
   access:

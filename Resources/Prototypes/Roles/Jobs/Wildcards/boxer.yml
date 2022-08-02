@@ -4,7 +4,7 @@
   startingGear: BoxerGear
   setPreference: false
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Boxer"
   supervisors: "the head of personnel"
   access:

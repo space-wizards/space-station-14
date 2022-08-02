@@ -4,8 +4,8 @@
   weight: 10
   startingGear: ResearchDirectorGear
   departments:
-  - Command
-  - Science
+  - job-department-command
+  - job-department-science
   icon: "ResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

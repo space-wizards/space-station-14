@@ -3,7 +3,7 @@
   name: job-name-cargoteh
   startingGear: CargoTechGear
   departments:
-  - Cargo
+  - job-department-cargo
   icon: "CargoTechnician"
   supervisors: job-supervisors-hop-qm
   access:

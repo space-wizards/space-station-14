@@ -3,7 +3,7 @@
   name: job-name-warden
   startingGear: WardenGear
   departments:
-  - Security
+  - job-department-security
   icon: "Warden"
   supervisors: job-supervisors-hos
   canBeAntag: false

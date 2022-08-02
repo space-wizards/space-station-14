@@ -3,7 +3,7 @@
   name: job-name-passenger
   startingGear: PassengerGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Passenger"
   supervisors: job-supervisors-everyone
   access:

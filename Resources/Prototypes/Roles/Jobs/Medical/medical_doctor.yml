@@ -3,7 +3,7 @@
   name: job-name-doctor
   startingGear: DoctorGear
   departments:
-  - Medical
+  - job-department-medical
   icon: "MedicalDoctor"
   supervisors: job-supervisors-cmo
   access:

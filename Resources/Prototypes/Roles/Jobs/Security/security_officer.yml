@@ -3,7 +3,7 @@
   name: job-name-security
   startingGear: SecurityOfficerGear
   departments:
-  - Security
+  - job-department-security
   icon: "SecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false

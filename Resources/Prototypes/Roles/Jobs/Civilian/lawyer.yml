@@ -3,7 +3,7 @@
   name: job-name-lawyer
   startingGear: LawyerGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Lawyer"
   supervisors: job-supervisors-hop
   access:

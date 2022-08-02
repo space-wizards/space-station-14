@@ -4,7 +4,7 @@
   weight: 20
   startingGear: CaptainGear
   departments:
-  - Command
+  - job-department-command
   icon: "Captain"
   requireAdminNotify: true
   joinNotifyCrew: true

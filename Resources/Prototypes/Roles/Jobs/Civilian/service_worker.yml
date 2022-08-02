@@ -3,7 +3,7 @@
   name: job-name-serviceworker
   startingGear: ServiceWorkerGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "ServiceWorker"
   supervisors: job-supervisors-service
   canBeAntag: false

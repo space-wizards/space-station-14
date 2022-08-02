@@ -3,7 +3,7 @@
   name: job-name-detective
   startingGear: DetectiveGear
   departments:
-  - Security
+  - job-department-security
   icon: "Detective"
   supervisors: job-supervisors-hos
   canBeAntag: false

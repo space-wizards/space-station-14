@@ -3,7 +3,7 @@
   name: job-name-chef
   startingGear: ChefGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Chef"
   supervisors: job-supervisors-hop
   access:

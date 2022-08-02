@@ -3,7 +3,7 @@
   name: job-name-clown
   startingGear: ClownGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Clown"
   supervisors: job-supervisors-hop
   access:

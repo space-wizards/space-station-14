@@ -6,8 +6,8 @@
   weight: 10
   startingGear: CMOGear
   departments:
-  - Command
-  - Medical
+  - job-department-command
+  - job-department-medical
   icon: "ChiefMedicalOfficer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

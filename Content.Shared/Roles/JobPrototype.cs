@@ -65,7 +65,21 @@ namespace Content.Shared.Roles
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField("departments")]
-        public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
+        private IReadOnlyCollection<string> _departments { get; } = Array.Empty<string>();
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public IReadOnlyCollection<string> Departments
+        {
+            get
+            {
+                var departments = new List<string>();
+                foreach (var department in _departments)
+                {
+                    departments.Add(Loc.GetString(department));
+                }
+                return departments;
+            }
+        }
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();

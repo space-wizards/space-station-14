@@ -4,7 +4,7 @@
   icon: "ShaftMiner"
   startingGear: SalvageSpecialistGear
   departments:
-  - Cargo
+  - job-department-cargo
   supervisors: job-supervisors-hop-qm
   access:
   - Cargo
