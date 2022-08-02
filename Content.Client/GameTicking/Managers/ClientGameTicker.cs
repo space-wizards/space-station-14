@@ -150,7 +150,7 @@ namespace Content.Client.GameTicking.Managers
             if (string.IsNullOrEmpty(RestartSound))
                 return;
 
-            if (!_configManager.GetCVar(CCVars.LobbyMusicEnabled))
+            if (!_configManager.GetCVar(CCVars.RestartSoundsEnabled))
             {
                 RestartSound = null;
                 return;
