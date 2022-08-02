@@ -9,6 +9,9 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.NPC;
+using Content.Server.NPC.Systems;
+using Robust.Shared.Map;
 
 namespace Content.Server.Dragon
 {
@@ -20,6 +23,7 @@ namespace Content.Server.Dragon
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly NPCSystem _npc = default!;
 
         public override void Initialize()
         {
@@ -172,7 +176,9 @@ namespace Content.Server.Dragon
             // If dragon has spawns then add one.
             if (component.SpawnsLeft > 0)
             {
-                Spawn(component.SpawnPrototype, Transform(dragonuid).Coordinates);
+                var coordinates = Transform(dragonuid).Coordinates;
+                var ent = Spawn(component.SpawnPrototype, coordinates);
+                _npc.SetBlackboard(ent, NPCBlackboard.FollowTarget, new EntityCoordinates(dragonuid, Vector2.Zero));
                 component.SpawnsLeft--;
                 return;
             }

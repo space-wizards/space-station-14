@@ -46,7 +46,7 @@
   operator: !type:MoveToOperator
     pathfindInPlanning: true
     removeKeyOnFinish: false
-    key: CombatTargetCoordinates
+    targetKey: CombatTargetCoordinates
     pathfindKey: CombatTargetPathfind
     # TODO: Need to pass this in
     rangeKey: MeleeRange

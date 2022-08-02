@@ -23,7 +23,7 @@ namespace Content.Server.Dragon
         /// <summary>
         /// The amount of ichor injected per devour
         /// </summary>
-        [DataField("devourHealRate")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("devourHealRate")]
         public float DevourHealRate = 15f;
 
         [DataField("devourActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityTargetActionPrototype>))]
@@ -50,11 +50,11 @@ namespace Content.Server.Dragon
         [DataField("devourTime")]
         public float DevourTime = 2f;
 
-        [DataField("spawnCount")] public int SpawnsLeft = 2;
+        [ViewVariables(VVAccess.ReadWrite), DataField("spawnCount")] public int SpawnsLeft = 2;
 
-        [DataField("maxSpawnCount")] public int MaxSpawns = 2;
+        [ViewVariables(VVAccess.ReadWrite), DataField("maxSpawnCount")] public int MaxSpawns = 2;
 
-        [DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite), DataField("spawnProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? SpawnPrototype = "MobCarpDragon";
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]

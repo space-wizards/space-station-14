@@ -82,7 +82,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
                     }
                     break;
                 case HTNPrimitiveTask primitive:
-                    if (await PrimitiveConditionMet(primitive, _blackboard, appliedStates))
+                    if (await WaitAsyncTask(PrimitiveConditionMet(primitive, _blackboard, appliedStates)))
                     {
                         primitiveCount++;
                         finalPlan.Add(primitive);

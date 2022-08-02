@@ -312,6 +312,9 @@ namespace Content.Server.NPC.Steering
         /// <param name="nodes">Path we're pruning</param>
         public void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
         {
+            if (nodes.Count == 0)
+                return;
+
             // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
             // For now, we just prune up until the closest node + 1 extra.
             var closest = ((Vector2) nodes.Peek().GridIndices + 0.5f - coordinates.Position).Length;

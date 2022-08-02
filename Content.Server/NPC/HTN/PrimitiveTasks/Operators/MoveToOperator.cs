@@ -32,7 +32,7 @@ public sealed class MoveToOperator : HTNOperator
     /// <summary>
     /// Target Coordinates to move to. This gets removed after execution.
     /// </summary>
-    [ViewVariables, DataField("key")]
+    [ViewVariables, DataField("targetKey")]
     public string TargetKey = "MovementTarget";
 
     /// <summary>
@@ -64,14 +64,6 @@ public sealed class MoveToOperator : HTNOperator
             return (false, null);
         }
 
-        if (!PathfindInPlanning)
-        {
-            return (true, new Dictionary<string, object>()
-            {
-                {NPCBlackboard.OwnerCoordinates, targetCoordinates}
-            });
-        }
-
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
         if (!_entManager.TryGetComponent<TransformComponent>(owner, out var xform) ||
@@ -85,9 +77,27 @@ public sealed class MoveToOperator : HTNOperator
             return (false, null);
         }
 
-        var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
-
         var range = blackboard.GetValueOrDefault<float>(RangeKey);
+
+        if (xform.Coordinates.TryDistance(_entManager, targetCoordinates, out var distance) && distance <= range)
+        {
+            // In range
+            return (true, new Dictionary<string, object>()
+            {
+                {NPCBlackboard.OwnerCoordinates, blackboard.GetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates)}
+            });
+        }
+
+        if (!PathfindInPlanning)
+        {
+            return (true, new Dictionary<string, object>()
+            {
+                {NPCBlackboard.OwnerCoordinates, targetCoordinates}
+            });
+        }
+
+        var cancelToken = new CancellationTokenSource();
+        var access = blackboard.GetValueOrDefault<ICollection<string>>(NPCBlackboard.Access) ?? new List<string>();
 
         var job = _pathfind.RequestPath(
             new PathfindingArgs(
@@ -96,11 +106,11 @@ public sealed class MoveToOperator : HTNOperator
                 body.CollisionMask,
                 ownerGrid.GetTileRef(xform.Coordinates),
                 ownerGrid.GetTileRef(targetCoordinates),
-                range), CancellationToken.None);
+                range), cancelToken.Token);
 
         job.Run();
 
-        await job.AsTask;
+        await job.AsTask.WaitAsync(cancelToken.Token);
 
         if (job.Result == null)
             return (false, null);
@@ -150,9 +160,7 @@ public sealed class MoveToOperator : HTNOperator
 
         // OwnerCoordinates is only used in planning so dump it.
         blackboard.Remove<EntityCoordinates>(NPCBlackboard.OwnerCoordinates);
-        blackboard.Remove<EntityCoordinates>(TargetKey);
         blackboard.Remove<Queue<TileRef>>(PathfindKey);
-        blackboard.Remove<float>(RangeKey);
 
         if (RemoveKeyOnFinish)
         {

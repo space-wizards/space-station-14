@@ -12,11 +12,13 @@ public sealed class NPCBlackboard
     /// </summary>
     private static readonly Dictionary<string, object> BlackboardDefaults = new()
     {
+        {"FollowCloseRange", 3f},
+        {"FollowRange", 7f},
+        {"IdleRange", 14f},
         {"MaximumIdleTime", 7f},
+        {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
         {"VisionRadius", 7f},
-        {"MeleeRange", 1f},
-        {"IdleRange", 14f}
     };
 
     /// <summary>
@@ -170,6 +172,7 @@ public sealed class NPCBlackboard
     */
 
     public const string Access = "Access";
+    public const string FollowTarget = "FollowTarget";
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";

@@ -132,4 +132,5 @@
     makeSentient: true
     name: Sentient Carp
     description: Help the dragon flood the station with carps!
-
+  - type: HTN
+    rootTask: FollowCompound
