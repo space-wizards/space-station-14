@@ -3,8 +3,8 @@
   name: job-name-intern
   startingGear: MedicalInternGear
   departments:
-  - Civilian
-  - Medical
+  - job-department-civilian
+  - job-department-medical
   icon: "MedicalIntern"
   supervisors: job-supervisors-medicine
   canBeAntag: false

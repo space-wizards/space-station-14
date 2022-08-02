@@ -3,7 +3,7 @@
   name: job-name-chemist
   startingGear: ChemistGear
   departments:
-  - Medical
+  - job-department-medical
   icon: "Chemist"
   supervisors: job-supervisors-cmo
   access:

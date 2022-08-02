@@ -4,8 +4,8 @@
   weight: 10
   startingGear: ChiefEngineerGear
   departments:
-  - Command
-  - Engineering
+  - job-department-command
+  - job-department-engineering
   icon: "ChiefEngineer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

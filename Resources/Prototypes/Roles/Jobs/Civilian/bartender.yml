@@ -3,7 +3,7 @@
   name: job-name-bartender
   startingGear: BartenderGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Bartender"
   supervisors: job-supervisors-hop
   access:

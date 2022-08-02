@@ -3,7 +3,7 @@
   name: job-name-scientist
   startingGear: ScientistGear
   departments:
-  - Science
+  - job-department-science
   icon: "Scientist"
   supervisors: job-supervisors-rd
   access:

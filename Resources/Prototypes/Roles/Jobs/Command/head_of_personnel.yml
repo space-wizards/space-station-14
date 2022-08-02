@@ -4,8 +4,8 @@
   weight: 20
   startingGear: HoPGear
   departments:
-  - Command
-  - Civilian
+  - job-department-command
+  - job-department-civilian
   icon: "HeadOfPersonnel"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

@@ -3,7 +3,7 @@
   name: job-name-botanist
   startingGear: BotanistGear
   departments:
-  - Civilian
+  - job-department-civilian
   icon: "Botanist"
   supervisors: job-supervisors-hop
   access:

@@ -5,7 +5,7 @@
   setPreference: false
   startingGear: ERTLeaderGearEVA
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -52,7 +52,7 @@
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -98,7 +98,7 @@
   setPreference: false
   startingGear: ERTEngineerGearEVA
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -144,7 +144,7 @@
   setPreference: false
   startingGear: ERTMedicalGearEVA
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -191,7 +191,7 @@
   setPreference: false
   startingGear: ERTJanitorGearEVA
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false

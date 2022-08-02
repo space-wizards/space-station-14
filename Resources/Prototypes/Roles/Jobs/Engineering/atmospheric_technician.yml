@@ -3,7 +3,7 @@
   name: job-name-atmostech
   startingGear: AtmosphericTechnicianGear
   departments:
-  - Engineering
+  - job-department-engineering
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce
   canBeAntag: false

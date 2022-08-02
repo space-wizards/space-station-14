@@ -4,7 +4,7 @@
   setPreference: false
   startingGear: CentcomGear
   departments:
-  - Command
+  - job-department-command
   icon: "Nanotrasen"
   supervisors: job-supervisors-hos
   canBeAntag: false

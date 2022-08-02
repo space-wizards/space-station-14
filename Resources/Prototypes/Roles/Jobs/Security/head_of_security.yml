@@ -4,8 +4,8 @@
   weight: 10
   startingGear: HoSGear
   departments:
-  - Command
-  - Security
+  - job-department-command
+  - job-department-security
   icon: "HeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain

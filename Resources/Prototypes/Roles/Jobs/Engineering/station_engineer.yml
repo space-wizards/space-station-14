@@ -3,7 +3,7 @@
   name: job-name-engineer
   startingGear: StationEngineerGear
   departments:
-  - Engineering
+  - job-department-engineering
   icon: "StationEngineer"
   supervisors: job-supervisors-ce
   access:
