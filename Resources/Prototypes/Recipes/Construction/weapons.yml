@@ -21,17 +21,6 @@
   objectType: Item
 
 - type: construction
-  name: makeshift laser
-  id: MakeshiftLaser
-  graph: MakeshiftLaser
-  startNode: start
-  targetNode: makeshiftLaser
-  category: Weapons
-  description: A make shift laser for the lasering enthusiast.
-  icon: Objects/Weapons/Guns/Battery/makeshift.rsi/icon.png
-  objectType: Item
-
-- type: construction
   name: wooden buckler
   id: WoodenBuckler
   graph: WoodenBuckler

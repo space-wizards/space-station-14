@@ -188,3 +188,15 @@
     state: ertjanitoreva
   - type: Loadout
     prototype: ERTJanitorGearEVA
+
+
+#Syndie
+- type: entity
+  parent: MobHuman
+  id: MobHumanSyndicateAgent
+  name: Syndicate Agent
+  components:
+  - type: Loadout
+    prototype: SyndicateOperativeGearExtremelyBasic
+  - type: RandomMetadata
+    nameSet: names_death_commando
