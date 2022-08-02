@@ -8,10 +8,8 @@
     sprite: Clothing/Back/Duffels/duffel.rsi
     state: icon
   - type: Item
-    sprite: Clothing/Back/Duffels/duffel.rsi
     size: 9999
   - type: Clothing
-    sprite: Clothing/Back/Duffels/duffel.rsi
     quickEquip: false
     slots:
     - back
@@ -33,10 +31,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/engineering.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -45,10 +39,6 @@
   description: A large duffel bag for holding extra medical supplies.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/medical.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/medical.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
@@ -59,10 +49,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/captain.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/captain.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -71,10 +57,6 @@
   description: A large duffel bag for holding extra honk goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/clown.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/clown.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/clown.rsi
   - type: Storage
     storageOpenSound:
@@ -88,10 +70,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/security.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -101,10 +79,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/chemistry.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/chemistry.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/chemistry.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -113,10 +87,6 @@
   description: A large duffel bag for holding... mime... stuff.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/mime.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/mime.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/mime.rsi
     storageOpenSound:
       collection: null
@@ -131,10 +101,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/science.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/science.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -143,10 +109,6 @@
   description: A large duffel bag for holding various traitor goods.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Item
-    sprite: Clothing/Back/Duffels/syndicate.rsi
-  - type: Clothing
     sprite: Clothing/Back/Duffels/syndicate.rsi
   - type: Storage
     capacity: 131
@@ -160,10 +122,8 @@
     sprite: Clothing/Back/Duffels/syndicate.rsi
     state: icon-ammo
   - type: Item
-    sprite: Clothing/Back/Duffels/syndicate.rsi
     heldPrefix: ammo
   - type: Clothing
-    sprite: Clothing/Back/Duffels/syndicate.rsi
     equippedPrefix: ammo
 
 - type: entity
@@ -175,10 +135,8 @@
     sprite: Clothing/Back/Duffels/syndicate.rsi
     state: icon-med
   - type: Item
-    sprite: Clothing/Back/Duffels/syndicate.rsi
     heldPrefix: med
   - type: Clothing
-    sprite: Clothing/Back/Duffels/syndicate.rsi
     equippedPrefix: med
 
 - type: entity
@@ -194,9 +152,5 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Item
-    sprite: Clothing/Back/Duffels/holding.rsi
-  - type: Clothing
-    sprite: Clothing/Back/Duffels/holding.rsi
   - type: Storage
     capacity: 10000
