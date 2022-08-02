@@ -5,25 +5,25 @@ health-analyzer-window-damage-group-text = {$damageGroup}: {$amount}
 health-analyzer-window-damage-type-text = {$damageType}: {$amount}
 health-analyzer-window-damage-type-duplicate-text = {$damageType}: {$amount} (duplicate)
 
-health-analyzer-window-damage-group-brute = Brute
-health-analyzer-window-damage-type-blunt = Blunt
-health-analyzer-window-damage-type-slash = Slash
-health-analyzer-window-damage-type-piercing = Piercing
+health-analyzer-window-damage-group-Brute = Brute
+health-analyzer-window-damage-type-Blunt = Blunt
+health-analyzer-window-damage-type-Slash = Slash
+health-analyzer-window-damage-type-Piercing = Piercing
 
-health-analyzer-window-damage-group-burn = Burn
-health-analyzer-window-damage-type-heat = Heat
-health-analyzer-window-damage-type-shock = Shock
-health-analyzer-window-damage-type-cold = Cold
+health-analyzer-window-damage-group-Burn = Burn
+health-analyzer-window-damage-type-Heat = Heat
+health-analyzer-window-damage-type-Shock = Shock
+health-analyzer-window-damage-type-Cold = Cold
 
-health-analyzer-window-damage-group-airloss = Airloss
-health-analyzer-window-damage-type-asphyxiation = Asphyxiation
-health-analyzer-window-damage-type-bloodloss = Bloodloss
+health-analyzer-window-damage-group-Airloss = Airloss
+health-analyzer-window-damage-type-Asphyxiation = Asphyxiation
+health-analyzer-window-damage-type-Bloodloss = Bloodloss
 
-health-analyzer-window-damage-group-toxin = Toxin
-health-analyzer-window-damage-type-poison = Poison
-health-analyzer-window-damage-type-radiation = Radiation
+health-analyzer-window-damage-group-Toxin = Toxin
+health-analyzer-window-damage-type-Poison = Poison
+health-analyzer-window-damage-type-Radiation = Radiation
 
-health-analyzer-window-damage-group-genetic = Genetic
-health-analyzer-window-damage-type-cellular = Cellular
+health-analyzer-window-damage-group-Genetic = Genetic
+health-analyzer-window-damage-type-Cellular = Cellular
 
-health-analyzer-window-damage-group-caustic = Caustic
+health-analyzer-window-damage-group-Caustic = Caustic
