@@ -30,7 +30,7 @@ namespace Content.Server.AME
         private float _AMEFuelContainerTimer = 0f;
 
         // A full (1000 unit) AME jar will feed the singulo by this amount
-        private const int SinguloFoodPerThousand = -150;
+        private const int SinguloFoodPerThousand = -100;
 
         public override void Initialize()
         {
