@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+using Content.Shared.FixedPoint;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Components
 {
@@ -15,11 +16,26 @@ namespace Content.Shared.Body.Components
     [Serializable, NetSerializable]
     public sealed class BodyScannerUIState : BoundUserInterfaceState
     {
-        public readonly EntityUid Uid;
+        public readonly Dictionary<string, BodyPartUiState> BodyParts;
 
-        public BodyScannerUIState(EntityUid uid)
+        public BodyScannerUIState(Dictionary<string, BodyPartUiState> bodyParts)
         {
-            Uid = uid;
+            BodyParts = bodyParts;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class BodyPartUiState
+    {
+        public readonly string Name;
+        public readonly FixedPoint2 TotalDamage;
+        public readonly List<string> Mechanisms;
+
+        public BodyPartUiState(string name, FixedPoint2 totalDamage, List<string> mechanisms)
+        {
+            Name = name;
+            TotalDamage = totalDamage;
+            Mechanisms = mechanisms;
         }
     }
 }

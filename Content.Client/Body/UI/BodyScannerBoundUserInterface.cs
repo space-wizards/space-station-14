@@ -1,10 +1,6 @@
-﻿using System;
 using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Body.UI
 {
@@ -29,18 +25,9 @@ namespace Content.Client.Body.UI
             base.UpdateState(state);
 
             if (state is not BodyScannerUIState scannerState)
-            {
                 return;
-            }
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.EntityExists(scannerState.Uid))
-            {
-                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner} at {entMan.GetComponent<TransformComponent>(Owner.Owner).MapPosition}");
-            }
-
-            _display?.UpdateDisplay(scannerState.Uid);
+            _display?.UpdateDisplay(scannerState);
         }
 
         protected override void Dispose(bool disposing)

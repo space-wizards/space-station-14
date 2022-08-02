@@ -1,12 +1,7 @@
 using System.Linq;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems.Body;
-using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
@@ -14,8 +9,8 @@ namespace Content.Client.Body.UI
 {
     public sealed class BodyScannerDisplay : DefaultWindow
     {
-        private EntityUid? _currentEntity;
-        private SharedBodyPartComponent? _currentBodyPart;
+        private BodyScannerUIState? _currentState;
+        private BodyPartUiState? _currentBodyPart;
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -103,81 +98,57 @@ namespace Content.Client.Body.UI
 
         private RichTextLabel MechanismInfoLabel { get; }
 
-        public void UpdateDisplay(EntityUid entity)
+        public void UpdateDisplay(BodyScannerUIState state)
         {
-            _currentEntity = entity;
+            _currentState = state;
             BodyPartList.Clear();
 
-            var body = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SharedBodyComponent>(_currentEntity);
-
-            if (body == null)
+            foreach (var (_, part) in state.BodyParts)
             {
-                return;
+                BodyPartList.AddItem(Loc.GetString(part.Name));
             }
-
-            //foreach (var (part, _) in body.Parts)
-            //{
-            //    BodyPartList.AddItem(Loc.GetString(part.Name));
-            //}
         }
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SharedBodyComponent>(_currentEntity, out var body))
-            {
+            if (_currentState == null)
                 return;
-            }
 
-            var bodySys = EntitySystem.Get<SharedBodySystem>();
-            //var slot = bodySys.SlotAt(body.Owner, args.ItemIndex, body);
-            //_currentBodyPart = bodySys.PartAt(body.Owner, args.ItemIndex, body);
+            var slotId = _currentState.BodyParts.Keys.ElementAt(args.ItemIndex);
+            _currentBodyPart = _currentState.BodyParts[slotId];
 
-            //if (slot.Part != null)
-            //{
-            //    UpdateBodyPartBox(slot.Part, slot.Id);
-            //}
+            UpdateBodyPartBox(_currentBodyPart, slotId);
         }
 
-        private void UpdateBodyPartBox(SharedBodyPartComponent part, string slotName)
+        private void UpdateBodyPartBox(BodyPartUiState part, string slotName)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(entMan.GetComponent<MetaDataComponent>(part.Owner).EntityName)}";
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Name)}";
 
             // TODO BODY Part damage
-            if (entMan.TryGetComponent(part.Owner, out DamageableComponent? damageable))
-            {
-                BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text",("damage", damageable.TotalDamage));
-            }
+            BodyPartHealth.Text = Loc.GetString("body-scanner-display-body-part-damage-text", ("damage", part.TotalDamage));
 
             MechanismList.Clear();
 
-            //foreach (var mechanism in part.Mechanisms)
-            //{
-            //    MechanismList.AddItem(mechanism.Name);
-            //}
+            foreach (var mechanism in part.Mechanisms)
+            {
+                MechanismList.AddItem(mechanism);
+            }
         }
 
-        // TODO BODY Guaranteed this is going to crash when a part's mechanisms change. This part is left as an exercise for the reader.
         public void MechanismOnItemSelected(ItemListSelectedEventArgs args)
         {
-            //UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
+            if (_currentBodyPart == null)
+                return;
+
+            UpdateMechanismBox(_currentBodyPart.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(MechanismComponent? mechanism)
+        private void UpdateMechanismBox(string mechanism)
         {
             // TODO BODY Improve UI
-            if (mechanism == null)
-            {
-                MechanismInfoLabel.SetMessage("");
-                return;
-            }
-
+ 
             // TODO BODY Mechanism description
-            var message =
-                Loc.GetString(
-                    $"{mechanism.Name}");
-
-            MechanismInfoLabel.SetMessage(message);
+            MechanismInfoLabel.SetMessage(Loc.GetString(mechanism));
         }
     }
 }
