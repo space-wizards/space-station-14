@@ -14,6 +14,7 @@ namespace Content.Server.Disposal.Mailing;
 public sealed class MailingUnitSystem : EntitySystem
 {
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
 
     private const string MailTag = "mail";
 
@@ -157,7 +158,7 @@ public sealed class MailingUnitSystem : EntitySystem
 
         args.Handled = true;
         UpdateTargetList(uid, component);
-        component.Owner.GetUIOrNull(MailingUnitUiKey.Key)?.Open(actor.PlayerSession);
+        _userInterfaceSystem.GetUiOrNull(uid, MailingUnitUiKey.Key)?.Open(actor.PlayerSession);
     }
 
     /// <summary>

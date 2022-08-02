@@ -10,14 +10,12 @@ public sealed class MailingUnitComponent : Component
     /// List of targets the mailing unit can send to.
     /// Each target is just a disposal routing tag
     /// </summary>
-    [ViewVariables]
     [DataField("targetList")]
     public readonly List<string> TargetList = new();
 
     /// <summary>
     /// The target that gets attached to the disposal holders tag list on flush
     /// </summary>
-    [ViewVariables]
     [DataField("target")]
     public string? Target;
 
