@@ -16,13 +16,25 @@ namespace Content.Shared.Roles
         ///     The name of this antag as displayed to players.
         /// </summary>
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        private string _name { get; } = string.Empty;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string Name
+        {
+            get => Loc.GetString(_name);
+        }
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
         [DataField("objective")]
-        public string Objective { get; private set; } = string.Empty;
+        private string _objective { get; } = string.Empty;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string Objective
+        {
+            get => Loc.GetString(_objective);
+        }
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.
