@@ -77,12 +77,7 @@ namespace Content.Server.Radio.Components
 
         public bool CanListen(string message, EntityUid source, RadioChannelPrototype? prototype)
         {
-            if (_channels.Count == 0 || prototype == null)
-            {
-                return false;
-            }
-
-            if (!_channels.Contains(prototype.ID)
+            if (prototype != null && !_channels.Contains(prototype.ID)
                 || !_prototypeManager.HasIndex<RadioChannelPrototype>(BroadcastChannel))
             {
                 return false;
