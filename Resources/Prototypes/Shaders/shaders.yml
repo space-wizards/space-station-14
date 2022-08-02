@@ -57,6 +57,11 @@
     removeTransparency: false
 
 - type: shader
-  id: BlurryVision
+  id: BlurryVisionX
   kind: source
-  path: "/Textures/Shaders/blurry.swsl"
+  path: "/Textures/Shaders/blurryx.swsl"
+
+- type: shader
+  id: BlurryVisionY
+  kind: source
+  path: "/Textures/Shaders/blurryy.swsl"

@@ -1,6 +1,0 @@
-uniform sampler2D SCREEN_TEXTURE;
-uniform highp float BLUR_AMOUNT;
-
-void fragment() {
-	COLOR = vec4(textureLod(SCREEN_TEXTURE, UV, BLUR_AMOUNT));
-}

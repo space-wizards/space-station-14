@@ -15,13 +15,15 @@ namespace Content.Client.Eye.Blinding
 
         public override bool RequestScreenTexture => true;
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _blurryVisionShader;
+        private readonly ShaderInstance _blurryVisionXShader;
+        private readonly ShaderInstance _blurryVisionYShader;
         private BlurryVisionComponent _blurryVisionComponent = default!;
 
         public BlurryVisionOverlay()
         {
             IoCManager.InjectDependencies(this);
-             _blurryVisionShader = _prototypeManager.Index<ShaderPrototype>("BlurryVision").InstanceUnique();
+            _blurryVisionXShader = _prototypeManager.Index<ShaderPrototype>("BlurryVisionX").InstanceUnique();
+            _blurryVisionYShader = _prototypeManager.Index<ShaderPrototype>("BlurryVisionY").InstanceUnique();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -34,6 +36,10 @@ namespace Content.Client.Eye.Blinding
             if (!_entityManager.TryGetComponent<BlurryVisionComponent>(playerEntity, out var blurComp))
                 return false;
 
+            if (_entityManager.TryGetComponent<BlindableComponent>(playerEntity, out var blindComp)
+                && blindComp.Sources > 0)
+                return false;
+
             _blurryVisionComponent = blurComp;
             return true;
         }
@@ -43,13 +49,17 @@ namespace Content.Client.Eye.Blinding
             if (ScreenTexture == null)
                 return;
 
-            _blurryVisionShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _blurryVisionShader?.SetParameter("BLUR_AMOUNT", _blurryVisionComponent.Magnitude);
+            _blurryVisionXShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _blurryVisionXShader?.SetParameter("BLUR_AMOUNT", (_blurryVisionComponent.Magnitude / 10));
+            _blurryVisionYShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _blurryVisionYShader?.SetParameter("BLUR_AMOUNT", (_blurryVisionComponent.Magnitude / 10));
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
             worldHandle.SetTransform(Matrix3.Identity);
-            worldHandle.UseShader(_blurryVisionShader);
+            worldHandle.UseShader(_blurryVisionXShader);
+            worldHandle.DrawRect(viewport, Color.White);
+            worldHandle.UseShader(_blurryVisionYShader);
             worldHandle.DrawRect(viewport, Color.White);
         }
     }

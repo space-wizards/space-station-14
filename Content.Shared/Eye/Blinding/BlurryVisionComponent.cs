@@ -2,10 +2,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Eye.Blinding
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
+    [NetworkedComponent]
     public sealed class BlurryVisionComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("mangitude")]
         public float Magnitude = 1f;
     }
 }

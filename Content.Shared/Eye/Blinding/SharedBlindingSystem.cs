@@ -1,7 +1,8 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Eye.Blinding
@@ -13,6 +14,8 @@ namespace Content.Shared.Eye.Blinding
             base.Initialize();
             SubscribeLocalEvent<BlindfoldComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BlindfoldComponent, GotUnequippedEvent>(OnUnequipped);
+
+            SubscribeLocalEvent<BlurryVisionComponent, ComponentGetState>(OnGetState);
 
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentShutdown>(OnShutdown);
@@ -42,6 +45,11 @@ namespace Content.Shared.Eye.Blinding
             AdjustBlindSources(args.Equipee, false, blindComp);
         }
 
+        private void OnGetState(EntityUid uid, BlurryVisionComponent component, ref ComponentGetState args)
+        {
+            args.State = new BlurryVisionComponentState(component.Magnitude);
+        }
+
         private void OnInit(EntityUid uid, TemporaryBlindnessComponent component, ComponentInit args)
         {
             AdjustBlindSources(uid, true);
@@ -65,6 +73,17 @@ namespace Content.Shared.Eye.Blinding
             {
                 blindable.Sources--;
             }
+
+            if (blindable.Sources > 0)
+            {
+                // used for examining here...
+                var blurry = EnsureComp<BlurryVisionComponent>(uid);
+                blurry.Magnitude = 1;
+                blurry.Dirty();
+            } else
+            {
+                blindable.Sources = 0;
+            }
         }
 
         public void AdjustEyeDamage(EntityUid uid, bool Add, BlindableComponent? blindable = null)
@@ -80,11 +99,33 @@ namespace Content.Shared.Eye.Blinding
                 blindable.EyeDamage--;
             }
 
-            if (!blindable.EyeTooDamaged && blindable.EyeDamage == 8)
+            if (blindable.EyeDamage > 0)
+            {
+                var blurry = EnsureComp<BlurryVisionComponent>(uid);
+                blurry.Magnitude = (9 - blindable.EyeDamage);
+                blurry.Dirty();
+            } else
+            {
+                RemComp<BlurryVisionComponent>(uid);
+                blindable.EyeDamage = 0;
+            }
+
+            if (!blindable.EyeTooDamaged && blindable.EyeDamage >= 8)
                 AdjustBlindSources(uid, true, blindable);
 
             if (blindable.EyeTooDamaged && blindable.EyeDamage < 8)
                 AdjustBlindSources(uid, false, blindable);
+        }
+    }
+
+    // I have no idea why blurry vision needs this but blindness doesn't
+    [Serializable, NetSerializable]
+    public sealed class BlurryVisionComponentState : ComponentState
+    {
+        public float Magnitude;
+        public BlurryVisionComponentState(float magnitude)
+        {
+            Magnitude = magnitude;
         }
     }
 }
