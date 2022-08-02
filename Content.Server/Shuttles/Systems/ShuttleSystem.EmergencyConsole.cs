@@ -5,6 +5,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -82,6 +83,18 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleAuthorizeMessage>(OnEmergencyAuthorize);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
+        SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
+    }
+
+    private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // I'm hoping ActivatableUI checks it's open before allowing these messages.
+        if (!_configManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
+        {
+            args.Cancel();
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, Filter.Entities(args.User));
+            return;
+        }
     }
 
     private void SetAuthorizeTime(float obj)
@@ -123,24 +136,24 @@ public sealed partial class ShuttleSystem
         {
             _launchedShuttles = true;
 
-            if (_centcommMap != null)
+            if (_centComMap != null)
             {
                 foreach (var comp in EntityQuery<StationDataComponent>(true))
                 {
                     if (!TryComp<ShuttleComponent>(comp.EmergencyShuttle, out var shuttle)) continue;
 
-                    if (Deleted(_centcomm))
+                    if (Deleted(_centCom))
                     {
                         // TODO: Need to get non-overlapping positions.
                         FTLTravel(shuttle,
                             new EntityCoordinates(
-                                _mapManager.GetMapEntityId(_centcommMap.Value),
+                                _mapManager.GetMapEntityId(_centComMap.Value),
                                 Vector2.One * 1000f), _consoleAccumulator, TransitTime);
                     }
                     else
                     {
                         FTLTravel(shuttle,
-                            _centcomm.Value, _consoleAccumulator, TransitTime, dock: true);
+                            _centCom.Value, _consoleAccumulator, TransitTime, dock: true);
                     }
                 }
             }
@@ -156,8 +169,8 @@ public sealed partial class ShuttleSystem
             Timer.Spawn((int) (TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken.Token);
 
             // Guarantees that emergency shuttle arrives first before anyone else can FTL.
-            if (_centcomm != null)
-                AddFTLDestination(_centcomm.Value, true);
+            if (_centCom != null)
+                AddFTLDestination(_centCom.Value, true);
 
         }
     }

@@ -3,6 +3,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
@@ -151,6 +152,9 @@ namespace Content.Server.Lock
         {
             if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
+
+            if (!HasComp<SharedHandsComponent>(user))
+                return false;
 
             // Cannot lock if the entity is currently opened.
             if (storage.Open)

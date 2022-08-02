@@ -33,6 +33,16 @@ petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($targe
 petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
 petting-failure-dragon = You raise your hand, but as {THE($target)} roars, you decide you'd rather not be toasty carp food.
 
+## Petting silicons
+
+petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery metal head.
+petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
+petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
+
+petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} honks in refusal!
+petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
+petting-failure-medibot = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} syringe nearly stabs your hand!
+
 ## Knocking on windows
 
 # Shown when knocking on a window

@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
@@ -15,6 +14,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using System.Threading;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -195,7 +195,7 @@ public sealed partial class ChemistrySystem
         if (user != target)
         {
             // Create a pop-up for the target
-            var userName = Identity.Name(user, EntityManager);
+            var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
                 ("user", userName)), user, Filter.Entities(target));
 
