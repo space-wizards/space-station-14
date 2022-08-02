@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Interaction
     [TestOf(typeof(SharedInteractionSystem))]
     public sealed class InRangeUnobstructed
     {
-        private const string HumanId = "MobHumanBase";
+        private const string HumanId = "MobHuman";
 
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 

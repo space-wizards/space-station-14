@@ -5,5 +5,3 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Clothing
-    size: 5

@@ -8,13 +8,23 @@
     sprite: Clothing/Hands/Gloves/boxing.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
+  - type: BoxingGloves
+  - type: StaminaDamageOnHit
+    damage: 8 #Stam damage values seem a bit higher than regular damage because of the decay, etc
+    knockdownSound: /Audio/Weapons/boxingbell.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0.6
+    hitSound:
+      collection: BoxingHit
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingBlue
   name: blue boxing gloves
   description: Blue gloves for competitive boxing.
@@ -24,14 +34,14 @@
     state: icon-blue
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingGreen
   name: green boxing gloves
   description: Green gloves for competitive boxing.
@@ -41,14 +51,14 @@
     state: icon-green
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: green
+    heldPrefix: green
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-green
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingYellow
   name: yellow boxing gloves
   description: Yellow gloves for competitive boxing.
@@ -58,7 +68,7 @@
     state: icon-yellow
   - type: Clothing
     sprite: Clothing/Hands/Gloves/boxing.rsi
-    HeldPrefix: yellow
+    heldPrefix: yellow
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-yellow
@@ -74,7 +84,8 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
@@ -138,7 +149,8 @@
     sprite: Clothing/Hands/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-brown
@@ -183,7 +195,8 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
@@ -202,7 +215,8 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-    HeatResistance: 1400
+  - type: GloveHeatResistance
+    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
@@ -236,3 +250,7 @@
     - type: Thieving
       stealTime: 1.5
       stealthy: true
+    - type: Fiber
+      fiberMaterial: fibers-synthetic
+      fiberColor: fibers-black
+    - type: FingerprintMask

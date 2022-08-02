@@ -25,7 +25,7 @@ namespace Content.Server.AI.Operators.Inventory
             var handsSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
             if (entMan.Deleted(_target)
-                || !entMan.HasComponent<SharedItemComponent>(_target)
+                || !entMan.HasComponent<ItemComponent>(_target)
                 || _target.IsInContainer()
                 || !interactionSystem.InRangeUnobstructed(_owner, _target, popup: true))
             {
@@ -35,7 +35,7 @@ namespace Content.Server.AI.Operators.Inventory
             // select empty hand
             if (!handsSys.TrySelectEmptyHand(_owner))
                 return Outcome.Failed;
-            
+
             interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }

@@ -746,8 +746,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: mouse
-    description: A hungry and mischievous mouse.
+    name: ghost-role-information-mouse-name
+    description: ghost-role-information-mouse-description
   - type: Speech
     speechSounds: Squeak
   - type: Sprite
@@ -756,12 +756,13 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mouse-0
-  - type: Clothing
+  - type: Item
     size: 5
+  - type: Clothing
     quickEquip: false
     sprite: Mobs/Animals/mouse.rsi
-    HeldPrefix: 0
-    Slots:
+    equippedPrefix: 0
+    slots:
     - HEAD
   - type: Physics
   - type: Fixtures
@@ -861,7 +862,7 @@
       state: mouse-1
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -887,7 +888,7 @@
       state: mouse-2
       sprite: Mobs/Animals/mouse.rsi
   - type: Clothing
-    HeldPrefix: 1
+    equippedPrefix: 1
   - type: Appearance
   - type: DamageStateVisuals
     states:
@@ -1325,8 +1326,8 @@
         - UnarmedAttackHostiles
     - type: GhostTakeoverAvailable
       makeSentient: true
-      name: giant spider
-      description: Wreak havoc on the station's inhabitants!
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
 
 - type: entity
   name: possum

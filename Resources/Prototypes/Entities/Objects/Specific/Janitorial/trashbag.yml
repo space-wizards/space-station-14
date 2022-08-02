@@ -31,8 +31,9 @@
     fillBaseName: icon
   - type: Dumpable
   - type: Clothing
-    Slots: [belt]
+    slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Item
     size: 125
 
 - type: entity
@@ -45,7 +46,7 @@
       - state: blue-icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Item
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
 

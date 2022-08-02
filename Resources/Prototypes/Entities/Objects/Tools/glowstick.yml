@@ -10,8 +10,8 @@
     - type: Recyclable
     - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: spent green glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-green-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -32,8 +32,7 @@
           color: "#00FF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#00FF00"
-      HeldPrefix: off
+      heldPrefix: off
     - type: Appearance
       visuals:
         - type: ExpendableLightVisualizer
@@ -42,6 +41,7 @@
       color: "#00FF00"
       radius: 5
       energy: 0
+      netsync: false
     - type: LightBehaviour
       behaviours:
         - !type:FadeBehaviour # slowly fade in once activated
@@ -72,8 +72,8 @@
   id: GlowstickRed
   components:
     - type: ExpendableLight
-      spentName: spent red glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-red-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -94,8 +94,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF0000"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -108,8 +107,8 @@
   id: GlowstickPurple
   components:
     - type: ExpendableLight
-      spentName: spent purple glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-purple-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -130,8 +129,7 @@
           color: "#FF00FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF00FF"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF00FF"
@@ -144,8 +142,8 @@
   id: GlowstickYellow
   components:
     - type: ExpendableLight
-      spentName: spent yellow glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-yellow-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -166,8 +164,7 @@
           color: "#FFFF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FFFF00"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FFFF00"
@@ -180,8 +177,8 @@
   id: GlowstickBlue
   components:
     - type: ExpendableLight
-      spentName: spent blue glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-blue-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -202,8 +199,7 @@
           color: "#0000FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#0000FF"
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#0000FF"
@@ -227,7 +223,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -257,7 +253,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -288,7 +284,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -327,7 +323,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -357,7 +353,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -388,7 +384,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"

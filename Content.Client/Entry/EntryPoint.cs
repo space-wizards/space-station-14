@@ -73,7 +73,6 @@ namespace Content.Client.Entry
             // Do not add to these, they are legacy.
             factory.RegisterClass<SharedLatheComponent>();
             factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedVendingMachineComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();

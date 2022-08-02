@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Popups;
+using Content.Server.Hands.Systems;
 using Content.Shared.Body.Systems.Body;
 
 namespace Content.Server.Kitchen.EntitySystems
@@ -20,6 +21,7 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class MicrowaveSystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly HandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedBodySystem _bodySystem = default!;
         public override void Initialize()
         {
@@ -109,15 +111,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             }
 
-            if (!HasComp<SharedItemComponent>(args.Used))
+            if (!HasComp<ItemComponent>(args.Used))
             {
                 _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
                 return;
             }
 
             args.Handled = true;
-
-            component.Storage.Insert(args.Used);
+            _handsSystem.TryDropIntoContainer(args.User, args.Used, component.Storage);
             component.DirtyUi();
         }
 

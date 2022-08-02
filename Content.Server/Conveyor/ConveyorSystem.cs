@@ -68,7 +68,7 @@ namespace Content.Server.Conveyor
         public bool CanRun(ConveyorComponent component)
         {
             return component.State != ConveyorState.Off &&
-                   !EntityManager.HasComponent<SharedItemComponent>(component.Owner) &&
+                   !EntityManager.HasComponent<ItemComponent>(component.Owner) &&
                    this.IsPowered(component.Owner, EntityManager);
         }
     }

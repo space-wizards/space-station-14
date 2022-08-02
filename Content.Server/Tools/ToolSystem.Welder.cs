@@ -59,7 +59,7 @@ namespace Content.Server.Tools
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            SharedItemComponent? item = null,
+            ItemComponent? item = null,
             PointLightComponent? light = null,
             AppearanceComponent? appearance = null)
         {
@@ -76,7 +76,7 @@ namespace Content.Server.Tools
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
-            SharedItemComponent? item = null,
+            ItemComponent? item = null,
             PointLightComponent? light = null,
             AppearanceComponent? appearance = null,
             TransformComponent? transform = null)
@@ -105,7 +105,7 @@ namespace Content.Server.Tools
             welder.Lit = true;
 
             if(item != null)
-                item.EquippedPrefix = "on";
+                _itemSystem.SetHeldPrefix(uid, "on", item);
 
             appearance?.SetData(WelderVisuals.Lit, true);
 
@@ -128,7 +128,7 @@ namespace Content.Server.Tools
 
         public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
-            SharedItemComponent? item = null,
+            ItemComponent? item = null,
             PointLightComponent? light = null,
             AppearanceComponent? appearance = null)
         {
@@ -142,7 +142,7 @@ namespace Content.Server.Tools
 
             // TODO: Make all this use visualizers.
             if (item != null)
-                item.EquippedPrefix = "off";
+                _itemSystem.SetHeldPrefix(uid, "off", item);
 
             // Layer 1 is the flame.
             appearance?.SetData(WelderVisuals.Lit, false);
