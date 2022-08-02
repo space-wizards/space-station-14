@@ -11,6 +11,9 @@
       "name": "jar"
     },
     {
+      "name": "seal"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },

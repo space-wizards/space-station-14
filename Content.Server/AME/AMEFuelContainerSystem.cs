@@ -5,6 +5,7 @@ using Content.Server.Item;
 using Content.Server.Popups;
 using Content.Server.Singularity.Components;
 using Content.Server.Tools;
+using Content.Shared.AME;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -52,9 +53,10 @@ namespace Content.Server.AME
             AMEFuelContainerComponent? container = null,
             ItemComponent? item = null,
             SinguloFoodComponent? singuloFood = null,
-            PointLightComponent? light = null)
+            PointLightComponent? light = null,
+            AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref container, ref singuloFood, ref light))
+            if (!Resolve(uid, ref container, ref singuloFood, ref light, ref appearance))
                 return false;
 
             if (!container.Sealed)
@@ -65,6 +67,8 @@ namespace Content.Server.AME
             container.Sealed = false;
             singuloFood.Energy = SinguloFoodPerThousand;
             light.Enabled = true;
+
+            appearance.SetData(AMEFuelContainerVisuals.IsOpen, true);
 
             if (item != null)
                 _itemSystem.SetHeldPrefix(uid, "open", item);

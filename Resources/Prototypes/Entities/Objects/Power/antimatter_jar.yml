@@ -9,8 +9,12 @@
     sprite: Objects/Power/AME/ame_jar.rsi
   - type: Sprite
     sprite: Objects/Power/AME/ame_jar.rsi
-    state: jar
     netsync: false
+    layers:
+    - state: jar
+    - state: seal
+      map: ["enum.AMEFuelContainerVisualLayers.Seal"]
+      visible: true
   - type: AMEFuelContainer
   - type: SinguloFood
     energy: 0
@@ -18,3 +22,4 @@
     enabled: false
     radius: 1.5
     color: blue
+  - type: Appearance
