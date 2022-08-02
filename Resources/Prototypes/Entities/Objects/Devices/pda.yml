@@ -15,10 +15,11 @@
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
+  - type: Item
+    size: 10
   - type: Clothing
     quickEquip: false
-    size: 10
-    Slots:
+    slots:
     - idcard
     - Belt
   - type: UnpoweredFlashlight

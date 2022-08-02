@@ -52,6 +52,8 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
+  - type: BecomesStation
+    id: Empty
   - linearDamping: 0.05
     fixtures: []
     bodyType: Dynamic

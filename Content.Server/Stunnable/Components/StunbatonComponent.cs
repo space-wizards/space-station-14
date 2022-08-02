@@ -1,6 +1,6 @@
 using Content.Server.Stunnable.Systems;
-using Content.Shared.Sound;
 using Content.Shared.Timing;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Stunnable.Components
 {

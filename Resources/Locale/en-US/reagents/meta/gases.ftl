@@ -18,3 +18,6 @@ reagent-desc-miasma = Uh oh, stinky!
 
 reagent-name-nitrous-oxide = nitrous oxide
 reagent-desc-nitrous-oxide = You know how everything seems funnier when you're tired? Well...
+
+reagent-name-frezon = frezon
+reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.

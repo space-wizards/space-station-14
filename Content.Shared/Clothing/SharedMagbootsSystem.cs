@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Slippery;
@@ -13,6 +14,8 @@ public abstract class SharedMagbootsSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
     [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
     public override void Initialize()
@@ -37,8 +40,11 @@ public abstract class SharedMagbootsSystem : EntitySystem
             _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
             UpdateMagbootEffects(container.Owner, uid, true, component);
 
-        if (TryComp<SharedItemComponent>(uid, out var item))
-            item.EquippedPrefix = component.On ? "on" : null;
+        if (TryComp<ItemComponent>(uid, out var item))
+        {
+            _item.SetHeldPrefix(uid, component.On ? "on" : null, item);
+            _clothing.SetEquippedPrefix(uid, component.On ? "on" : null);
+        }
 
         if (TryComp(uid, out AppearanceComponent? appearance))
             appearance.SetData(ToggleVisuals.Toggled, component.On);

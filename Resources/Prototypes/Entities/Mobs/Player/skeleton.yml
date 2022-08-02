@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  parent: MobSkeletonPersonBase
+  parent: BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
     - type: InteractionPopup

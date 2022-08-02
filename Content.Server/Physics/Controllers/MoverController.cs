@@ -17,11 +17,6 @@ namespace Content.Server.Physics.Controllers
 
         private Dictionary<ShuttleComponent, List<(PilotComponent, InputMoverComponent, TransformComponent)>> _shuttlePilots = new();
 
-        protected override Filter GetSoundPlayers(EntityUid mover)
-        {
-            return Filter.Pvs(mover, entityManager: EntityManager).RemoveWhereAttachedEntity(o => o == mover);
-        }
-
         protected override bool CanSound()
         {
             return true;
