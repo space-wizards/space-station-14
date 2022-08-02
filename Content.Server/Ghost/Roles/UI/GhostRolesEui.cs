@@ -19,10 +19,13 @@ namespace Content.Server.Ghost.Roles.UI
             switch (msg)
             {
                 case GhostRoleTakeoverRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().RequestTakeover(Player, req.Identifier);
+                    EntitySystem.Get<GhostRoleSystem>().TakeoverImmediate(Player, req.Identifier);
                     break;
-                case GhostRoleCancelTakeoverRequestMessage req:
-                    EntitySystem.Get<GhostRoleSystem>().CancelTakeover(Player, req.Identifier);
+                case GhostRoleLotteryRequestMessage req:
+                    EntitySystem.Get<GhostRoleSystem>().AddToRoleLottery(Player, req.Identifier);
+                    break;
+                case GhostRoleCancelLotteryRequestMessage req:
+                    EntitySystem.Get<GhostRoleSystem>().RemoveFromRoleLottery(Player, req.Identifier);
                     break;
                 case GhostRoleFollowRequestMessage req:
                     EntitySystem.Get<GhostRoleSystem>().Follow(Player, req.Identifier);

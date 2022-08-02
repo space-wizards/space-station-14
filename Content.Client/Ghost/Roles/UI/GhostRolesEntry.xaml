@@ -10,6 +10,7 @@
     <BoxContainer HorizontalAlignment="Left"
                   Orientation="Horizontal"
                   SeparationOverride="5">
+        <Button Name="TakeButton" Text="Take"/>
         <Button Name="RequestButton" Text="Request"/>
         <Button Name="CancelButton" Text="Cancel" StyleClasses="Caution"/>
         <Button Name="FollowButton" Text="Follow"/>

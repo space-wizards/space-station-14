@@ -18,10 +18,9 @@ namespace Content.Client.Ghost.Roles.UI
             _window = new GhostRolesWindow();
             IoCManager.InjectDependencies(_window);
 
-            _window.OnRoleRequested += info =>
+            _window.OnRoleTake += info =>
             {
-                if (_windowRules != null)
-                    _windowRules.Close();
+                _windowRules?.Close();
                 _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
                 {
                     SendMessage(new GhostRoleTakeoverRequestMessage(info.Name));
@@ -35,9 +34,25 @@ namespace Content.Client.Ghost.Roles.UI
                 _windowRules.OpenCentered();
             };
 
+            _window.OnRoleRequested += info =>
+            {
+                _windowRules?.Close();
+                _windowRules = new GhostRoleRulesWindow(info.Rules, _ =>
+                {
+                    SendMessage(new GhostRoleLotteryRequestMessage(info.Name));
+                    _windowRules?.Close();
+                });
+                _windowRulesId = info.Name;
+                _windowRules.OnClose += () =>
+                {
+                    _windowRules = null;
+                };
+                _windowRules.OpenCentered();
+            };
+
             _window.OnRoleCancelled += info =>
             {
-               SendMessage(new GhostRoleCancelTakeoverRequestMessage(info.Name));
+               SendMessage(new GhostRoleCancelLotteryRequestMessage(info.Name));
             };
 
             _window.OnRoleFollowed += info =>

@@ -748,6 +748,7 @@
     makeSentient: true
     name: mouse
     description: A hungry and mischievous mouse.
+    useLottery: false
   - type: Speech
     speechSounds: Squeak
   - type: Sprite

@@ -13,6 +13,7 @@ namespace Content.Client.Ghost.Roles.UI
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        public event Action<GhostRoleInfo>? OnRoleTake;
         public event Action<GhostRoleInfo>? OnRoleRequested;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
         public event Action<GhostRoleInfo>? OnRoleFollowed;
@@ -44,6 +45,7 @@ namespace Content.Client.Ghost.Roles.UI
 
             var entry = new GhostRolesEntry(role);
             entry.Name = $"GhostRoleEntry.{role.Name}";
+            entry.OnRoleTake += OnRoleTake;
             entry.OnRoleSelected += OnRoleRequested;
             entry.OnRoleCancelled += OnRoleCancelled;
             entry.OnRoleFollowed += OnRoleFollowed;

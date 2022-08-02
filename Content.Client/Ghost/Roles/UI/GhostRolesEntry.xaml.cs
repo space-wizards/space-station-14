@@ -12,6 +12,7 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesEntry : BoxContainer
     {
+        public event Action<GhostRoleInfo>? OnRoleTake;
         public event Action<GhostRoleInfo>? OnRoleSelected;
         public event Action<GhostRoleInfo>? OnRoleCancelled;
         public event Action<GhostRoleInfo>? OnRoleFollowed;
@@ -20,12 +21,20 @@ namespace Content.Client.Ghost.Roles.UI
         {
             RobustXamlLoader.Load(this);
 
-            Title.Text = role.AvailableRoleCount > 1 ? $"{role.Name} ({role.AvailableRoleCount})" : role.Name;
+            var total = role.AvailableLotteryRoleCount + role.AvailableImmediateRoleCount;
+            var showButtonNumbers = role.AvailableImmediateRoleCount > 0 && role.AvailableLotteryRoleCount > 0;
+
+            Title.Text = total > 1 ? $"{role.Name} ({total})" : role.Name;
             Description.SetMessage(role.Description);
 
-            RequestButton.Visible = !role.IsRequested;
-            CancelButton.Visible = role.IsRequested;
+            TakeButton.Text = showButtonNumbers ? $"Take ({role.AvailableImmediateRoleCount})" : "Take";
+            RequestButton.Text = showButtonNumbers ? $"Request ({role.AvailableLotteryRoleCount})" : "Request";
 
+            TakeButton.Visible = role.AvailableImmediateRoleCount > 0;
+            RequestButton.Visible = role.AvailableLotteryRoleCount > 0 && !role.IsRequested;
+            CancelButton.Visible = role.AvailableLotteryRoleCount > 0 && role.IsRequested;
+
+            TakeButton.OnPressed += _ => OnRoleTake?.Invoke(role);
             RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
             CancelButton.OnPressed += _ => OnRoleCancelled?.Invoke(role);
             FollowButton.OnPressed += _ => OnRoleFollowed?.Invoke(role);

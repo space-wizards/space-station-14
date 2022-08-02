@@ -45,8 +45,7 @@ namespace Content.Server.Ghost.Roles
         private readonly List<GhostRoleComponent> _pendingGhostRoles = new();
         private readonly Dictionary<string, GhostRoleEntry> _ghostRoles = new();
 
-        private int TotalRoleCount => _ghostRoles.Sum(op => op.Value.Components.Count);
-
+        private int TotalRoleCount => _ghostRoles.Sum(op => op.Value.Count);
 
         private readonly Dictionary<IPlayerSession, GhostRolesEui> _openUis = new();
         private readonly Dictionary<IPlayerSession, MakeGhostRoleEui> _openMakeGhostRoleUis = new();
@@ -162,7 +161,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (identifier, entry) in _ghostRoles)
             {
-                ProcessGhostRoleEntryWithRoleComponents(identifier, entry);
+                RunGhostRoleLottery(entry);
                 _needsUpdateGhostRoles = true;
             }
 
@@ -176,10 +175,8 @@ namespace Content.Server.Ghost.Roles
                     entry.Rules = role.RoleRules;
                 }
 
-                if (entry.Components.Contains(role))
+                if (!entry.Add(role))
                     continue;
-
-                entry.Components.Add(role);
 
                 role.Identifier = entry.NextComponentIdentifier;
                 _needsUpdateGhostRoles = true;
@@ -210,21 +207,21 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        private void ProcessGhostRoleEntryWithRoleComponents(string identifier, GhostRoleEntry entry)
+        private void RunGhostRoleLottery(GhostRoleEntry entry)
         {
             var playerCount = entry.PendingPlayerSessions.Count;
 
-            if (playerCount == 0 || entry.Components.Count == 0)
+            if (playerCount == 0 || entry.LotteryTakeoverComponents.Count == 0)
                 return;
 
             var sessions = new List<IPlayerSession>(entry.PendingPlayerSessions);
             _random.Shuffle(sessions);
 
-            var compIdx = entry.Components.Count - 1; // Ghost role components will unregister themselves via events.
+            var compIdx = entry.LotteryTakeoverComponents.Count - 1; // Ghost role components will unregister themselves via events.
             while (sessions.Count > 0 && compIdx >= 0)
             {
                 var session = sessions[^1];
-                var component = entry.Components[compIdx];
+                var component = entry.LotteryTakeoverComponents[compIdx];
 
                 if (session.Status != SessionStatus.InGame)
                 {
@@ -253,7 +250,7 @@ namespace Content.Server.Ghost.Roles
             }
 
             // Clear and add the remaining sessions.
-            if (entry.Components.Count > 0)
+            if (entry.LotteryTakeoverComponents.Count > 0)
             {
                 entry.PendingPlayerSessions.Clear();
                 entry.PendingPlayerSessions.UnionWith(sessions);
@@ -271,7 +268,7 @@ namespace Content.Server.Ghost.Roles
 
         public void RegisterGhostRole(GhostRoleComponent role)
         {
-            if (_ghostRoles.TryGetValue(role.RoleName, out var entry) && entry.Components.Contains(role))
+            if (_ghostRoles.TryGetValue(role.RoleName, out var entry) && entry.Contains(role))
                 return;
 
             if (_pendingGhostRoles.Contains(role))
@@ -289,15 +286,32 @@ namespace Content.Server.Ghost.Roles
 
             var entry = element.Value.Value;
 
-            entry.Components.Remove(role);
-            if (entry.Components.Count == 0)
+            entry.Remove(role);
+            if (entry.Count == 0)
             {
                 _ghostRoles.Remove(element.Value.Key);
                 _needsUpdateGhostRoles = true;
             }
         }
 
-        public void RequestTakeover(IPlayerSession player, string identifier)
+        public void TakeoverImmediate(IPlayerSession player, string identifier)
+        {
+            if (!_ghostRoles.TryGetValue(identifier, out var entry) || entry.ImmediateTakeoverComps.Count <= 0)
+                return;
+
+            var role = entry.ImmediateTakeoverComps.Pop();
+            if (!role.Take(player))
+                return;
+
+            if (player.AttachedEntity != null)
+                _adminLogger.Add(LogType.GhostRoleTaken, LogImpact.Low, $"{player:player} took the {role.RoleName:roleName} ghost role {ToPrettyString(player.AttachedEntity.Value):entity}");
+
+            _needsUpdateGhostRoles = true;
+            RemovePlayerTakeoverRequests(player);
+            CloseEui(player);
+        }
+
+        public void AddToRoleLottery(IPlayerSession player, string identifier)
         {
             if (_ghostRoles.TryGetValue(identifier, out var entry))
             {
@@ -306,7 +320,7 @@ namespace Content.Server.Ghost.Roles
             }
         }
 
-        public void CancelTakeover(IPlayerSession player, string identifier)
+        public void RemoveFromRoleLottery(IPlayerSession player, string identifier)
         {
             if (_ghostRoles.TryGetValue(identifier, out var entry))
             {
@@ -320,21 +334,29 @@ namespace Content.Server.Ghost.Roles
             if (player.AttachedEntity == null || !_ghostRoles.TryGetValue(roleIdentifier, out var entry))
                 return;
 
-            if (entry.Components.Count == 0)
+            var totalCount = entry.Count;
+            if (totalCount == 0)
                 return;
 
-            var idx = 0;
+            var allGhostRoles = entry.ImmediateTakeoverComps.Concat(entry.LotteryTakeoverComponents).ToList();
+
+            var next = allGhostRoles.First();
             if (TryComp<FollowerComponent>(player.AttachedEntity, out var followerComponent))
             {
-                // Get the index of the next entity to follow.
-                idx = entry.Components.FindIndex(e => e.Owner == followerComponent.Following) + 1;
-                if (idx <= 0 || idx >= entry.Components.Count)
-                    idx = 0;
+                var current = default(GhostRoleComponent);
+                foreach (var role in allGhostRoles)
+                {
+                    if (current?.Owner == followerComponent.Following)
+                    {
+                        next = role;
+                        break;
+                    }
+
+                    current = role;
+                }
             }
 
-            var component = entry.Components[idx];
-
-            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, component.Owner);
+            _followerSystem.StartFollowingEntity(player.AttachedEntity.Value, next.Owner);
         }
 
         public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, EntityUid roleUid, EntityUid mob, GhostRoleComponent? role = null)
@@ -379,7 +401,8 @@ namespace Content.Server.Ghost.Roles
                     Description = entry.Description,
                     Rules = entry.Rules,
                     IsRequested = entry.PendingPlayerSessions.Contains(session),
-                    AvailableRoleCount = entry.Components.Count,
+                    AvailableLotteryRoleCount = entry.LotteryTakeoverComponents.Count,
+                    AvailableImmediateRoleCount = entry.ImmediateTakeoverComps.Count,
                 };
                 i++;
             }
@@ -456,11 +479,42 @@ namespace Content.Server.Ghost.Roles
 
         public readonly HashSet<IPlayerSession> PendingPlayerSessions = new();
 
-        [ViewVariables] public readonly List<GhostRoleComponent> Components = new();
+        [ViewVariables] public readonly List<GhostRoleComponent> ImmediateTakeoverComps = new();
+        [ViewVariables] public readonly List<GhostRoleComponent> LotteryTakeoverComponents = new();
 
         private uint _nextComponentIdentifier;
 
         public uint NextComponentIdentifier => unchecked(_nextComponentIdentifier++);
+
+        public int Count => ImmediateTakeoverComps.Count + LotteryTakeoverComponents.Count;
+
+        public bool Add(GhostRoleComponent role)
+        {
+            switch (role.RoleUseLottery)
+            {
+                case true when !LotteryTakeoverComponents.Contains(role):
+                    LotteryTakeoverComponents.Add(role);
+                    return true;
+                case false when !ImmediateTakeoverComps.Contains(role):
+                    ImmediateTakeoverComps.Add(role);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public void Remove(GhostRoleComponent role)
+        {
+            if (role.RoleUseLottery)
+                LotteryTakeoverComponents.Remove(role);
+            else
+                ImmediateTakeoverComps.Remove(role);
+        }
+
+        public bool Contains(GhostRoleComponent role)
+        {
+            return LotteryTakeoverComponents.Contains(role) || ImmediateTakeoverComps.Contains(role);
+        }
     }
 
     [AnyCommand]

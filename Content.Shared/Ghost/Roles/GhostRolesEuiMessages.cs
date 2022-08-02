@@ -10,7 +10,8 @@ namespace Content.Shared.Ghost.Roles
         public string Description { get; set; }
         public string Rules { get; set; }
         public bool IsRequested { get; set; }
-        public int AvailableRoleCount { get; set; }
+        public int AvailableLotteryRoleCount { get; set; }
+        public int AvailableImmediateRoleCount { get; set; }
     }
 
     [NetSerializable, Serializable]
@@ -40,11 +41,22 @@ namespace Content.Shared.Ghost.Roles
     }
 
     [NetSerializable, Serializable]
-    public sealed class GhostRoleCancelTakeoverRequestMessage : EuiMessageBase
+    public sealed class GhostRoleLotteryRequestMessage : EuiMessageBase
     {
         public string Identifier { get; }
 
-        public GhostRoleCancelTakeoverRequestMessage(string identifier)
+        public GhostRoleLotteryRequestMessage(string identifier)
+        {
+            Identifier = identifier;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public sealed class GhostRoleCancelLotteryRequestMessage : EuiMessageBase
+    {
+        public string Identifier { get; }
+
+        public GhostRoleCancelLotteryRequestMessage(string identifier)
         {
             Identifier = identifier;
         }
