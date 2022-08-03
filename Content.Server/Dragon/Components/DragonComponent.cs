@@ -36,10 +36,10 @@ namespace Content.Server.Dragon
         public string SpawnActionId = "DragonSpawn";
 
         /// <summary>
-        /// If we have an active wave spawner.
+        /// If we have active rifts.
         /// </summary>
-        [ViewVariables, DataField("waveSpawner")]
-        public EntityUid? WaveSpawner;
+        [ViewVariables, DataField("rifts")]
+        public List<EntityUid> Rifts = new();
 
         /// <summary>
         /// Spawn the <see cref="SpawnPrototype"/>

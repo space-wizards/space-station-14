@@ -9,11 +9,18 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.Chat.Systems;
+using Content.Server.Dragon.Events;
+using Content.Shared.Damage;
+using Content.Shared.Dragon;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Dragon
 {
     public sealed class DragonSystem : EntitySystem
     {
+        [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -26,6 +33,7 @@ namespace Content.Server.Dragon
             base.Initialize();
 
             SubscribeLocalEvent<DragonComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<DragonComponent, DragonDevourComplete>(OnDragonDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourActionEvent>(OnDevourAction);
             SubscribeLocalEvent<DragonComponent, DragonSpawnActionEvent>(OnDragonSpawnAction);
@@ -34,18 +42,97 @@ namespace Content.Server.Dragon
             SubscribeLocalEvent<DragonComponent, DragonStructureDevourComplete>(OnDragonStructureDevourComplete);
             SubscribeLocalEvent<DragonComponent, DragonDevourCancelledEvent>(OnDragonDevourCancelled);
             SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+            SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
+            SubscribeLocalEvent<DragonRiftComponent, ComponentGetState>(OnRiftGetState);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var comp in EntityQuery<DragonRiftComponent>())
+            {
+                if (comp.State != DragonRiftState.Finished && comp.Accumulator >= comp.MaxAccumulator)
+                {
+                    comp.Accumulator = comp.MaxAccumulator;
+                    RemComp<DamageableComponent>(comp.Owner);
+                    comp.State = DragonRiftState.Finished;
+                    var ev = new DragonRiftFinishedEvent();
+                    RaiseLocalEvent(comp.Owner, ref ev, true);
+                    Dirty(comp);
+
+                }
+                else
+                {
+                    comp.Accumulator += frameTime;
+                }
+
+                comp.SpawnAccumulator += frameTime;
+
+                if (comp.State < DragonRiftState.AlmostFinished && comp.SpawnAccumulator > comp.MaxAccumulator / 2f)
+                {
+                    comp.State = DragonRiftState.AlmostFinished;
+                    Dirty(comp);
+                    var location = Transform(comp.Owner).LocalPosition;
+
+                    _chat.DispatchGlobalAnnouncement(Loc.GetString("carp-rift-warning", ("location", location)), playSound: false, colorOverride: Color.Red);
+                    _audioSystem.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast());
+                }
+
+                if (comp.SpawnAccumulator > comp.SpawnCooldown)
+                {
+                    comp.SpawnAccumulator -= comp.SpawnCooldown;
+                    Spawn(comp.SpawnPrototype, Transform(comp.Owner).MapPosition);
+                    // TODO: When NPC refactor make it guard the rift.
+                }
+            }
+        }
+
+        #region Rift
+
+        private void OnRiftShutdown(EntityUid uid, DragonRiftComponent component, ComponentShutdown args)
+        {
+            if (TryComp<DragonComponent>(component.Dragon, out var dragon))
+            {
+                dragon.Rifts.Remove(uid);
+            }
+        }
+
+        private void OnRiftGetState(EntityUid uid, DragonRiftComponent component, ref ComponentGetState args)
+        {
+            args.State = new DragonRiftComponentState()
+            {
+                State = component.State
+            };
         }
 
         private void OnDragonRift(EntityUid uid, DragonComponent component, DragonSpawnRiftActionEvent args)
         {
-            if (component.WaveSpawner != null)
+            if (component.Rifts.Count >= 3)
             {
-                _popupSystem.PopupEntity(Loc.GetString("dragon-wave-spawner-duplicate"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
                 return;
             }
 
-            // TODO: Wave spawner
-            // Also make a game rule for dragons.
+            if (component.Rifts.Count > 0 && TryComp<DragonRiftComponent>(component.Rifts[^1], out var rift) && rift.State != DragonRiftState.Finished)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-duplicate"), uid, Filter.Entities(uid));
+                return;
+            }
+
+            var carpUid = Spawn(component.RiftPrototype, Transform(uid).MapPosition);
+            component.Rifts.Add(carpUid);
+            _audioSystem.Play("/Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg", Filter.Pvs(carpUid, entityManager: EntityManager), carpUid);
+        }
+
+        #endregion
+
+        private void OnShutdown(EntityUid uid, DragonComponent component, ComponentShutdown args)
+        {
+            foreach (var rift in component.Rifts)
+            {
+                Del(rift);
+            }
         }
 
         private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)

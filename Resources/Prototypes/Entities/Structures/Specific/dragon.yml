@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: DragonRift
     - type: Transform
       anchored: true
     - type: Physics
@@ -22,7 +23,7 @@
     - type: PointLight
       enabled: true
       color: "#366db5"
-      radius: 5.0
+      radius: 10.0
       energy: 5.0
       netsync: false
     - type: Damageable
