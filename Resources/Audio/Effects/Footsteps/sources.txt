@@ -7,3 +7,5 @@ catwalk, floor, plating, tile, hull and wood sfx modified by mirrorcult.
 
 grass1.ogg and grass2.ogg are taken from https://freesound.org/people/D001447733/sounds/464609/ by D001447733 licensed under CC BY-3.0 and split by mirrorcult
 grass3.ogg and grass4.ogg are taken from https://freesound.org/people/jevans27/sounds/563529/ by jevans27 licensed under CC-0 and split/modified by mirrorcult
+
+snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, and snowstep4.ogg are taken from https://freesound.org/people/alexo400/sounds/543385/ by alexo400 licensed under CC-0 and split by EmoGarbage404

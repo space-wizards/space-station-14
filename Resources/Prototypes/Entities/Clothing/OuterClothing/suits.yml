@@ -44,9 +44,6 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/fire.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.65
-    lowPressureMultiplier: 1000
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Armor

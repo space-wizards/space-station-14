@@ -110,6 +110,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: MobPrice
     price: 2500 # rat wealth
 
@@ -192,6 +193,7 @@
     - VanAusdallsRobovirus
     - BleedersBite
     - Plague
+    - TongueTwister
   - type: Vocal
     # mice are gender neutral who cares
     maleScream: /Audio/Animals/mouse_squeak.ogg
