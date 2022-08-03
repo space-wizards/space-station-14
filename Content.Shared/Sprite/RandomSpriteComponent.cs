@@ -10,9 +10,7 @@ public sealed class RandomSpriteComponent : Component
     /// Stored as a list so we can have groups of random sprites (e.g. tech_base + tech_flare for holoparasite)
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("available")]
-    public List<Dictionary<string, Dictionary<string, string?>>> Available = new();
-
-    // TODO: Value tuples in, serv3 was giving me grief
+    public List<Dictionary<string, (string State, string? Color)>> Available = new();
 
     /// <summary>
     /// Selected colors

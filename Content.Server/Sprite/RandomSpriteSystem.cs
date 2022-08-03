@@ -33,13 +33,11 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
         foreach (var layer in group)
         {
             Color? color = null;
-            // Gross
-            var value = layer.Value.First();
 
-            if (!string.IsNullOrEmpty(value.Value))
-                color = _random.Pick(_prototype.Index<ColorPalettePrototype>(value.Value).Colors.Values);
+            if (!string.IsNullOrEmpty(layer.Value.Color))
+                color = _random.Pick(_prototype.Index<ColorPalettePrototype>(layer.Value.Color).Colors.Values);
 
-            component.Selected.Add(layer.Key, (value.Key, color));
+            component.Selected.Add(layer.Key, (layer.Value.State, color));
         }
 
         Dirty(component);

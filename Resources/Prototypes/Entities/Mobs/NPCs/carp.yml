@@ -101,7 +101,7 @@
       drawdepth: Mobs
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: alive
+          state: base
           sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
       proto: guardian
@@ -116,7 +116,7 @@
       drawdepth: Mobs
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: alive
+          state: base
           sprite: Mobs/Aliens/Carps/holo.rsi
     - type: Physics
     - type: Fixtures
