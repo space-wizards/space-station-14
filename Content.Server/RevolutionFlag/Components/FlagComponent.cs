@@ -16,8 +16,5 @@ namespace Content.Server.RevolutionFlag.Components
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool active = false;
-
-        [ViewVariables(VVAccess.ReadOnly)]
-        public List<EntityUid> UnderEffect = new();
     }
 }

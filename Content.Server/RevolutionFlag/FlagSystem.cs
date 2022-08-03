@@ -38,8 +38,6 @@ namespace Content.Server.RevolutionFlag;
             var mapPosition = transform.MapPosition;
             var inRange = _entityLookup.GetEntitiesInRange(transform.Coordinates, range);
 
-            flagComp.UnderEffect.Clear();
-
             if (!flagComp.active)
                 return;
             foreach(var entityInRange in inRange)
@@ -48,7 +46,7 @@ namespace Content.Server.RevolutionFlag;
                     continue;
                 if (!GetRole(mind, RevolutionaryPrototypeId))
                     continue;
-                _statusEffectSystem.TryAddStatusEffect<FlagBuffComponent>(entityInRange, "Courage", flagComp.timespan, true);
+                _statusEffectSystem.TryAddStatusEffect(entityInRange, "Courage", flagComp.timespan, true);
             }
         }
 

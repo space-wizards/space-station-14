@@ -1,6 +1,6 @@
 - type: entity
   name: Hypnotic flash
-  parent: [Flash]
+  parent: Flash
   id: RevolutionaryFlash
   description: Acts like a standard flash, having more uses at the cost of having a weaker stun. If used on a person not wearing eye protection and not apart of command or security it will convert them over to the revolution
   components:
@@ -18,7 +18,7 @@
 
 - type: entity
   name: Revolution flag
-  parent: [BaseItem]
+  parent: BaseItem
   id: RevolutionFlag
   description: A flag that bears the emblem of the revolution, it may not be much but it may bring courage and strength to those that fight for freedom
   components:
