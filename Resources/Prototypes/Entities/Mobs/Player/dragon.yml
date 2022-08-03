@@ -22,6 +22,7 @@
     baseSprintSpeed : 5
   - type: Sprite
     sprite: Mobs/Aliens/Carps/dragon.rsi
+    netsync: false
     noRot: true
     # TODO: Randomise colors when RandomSpriteColor isn't poopoo
     layers:
