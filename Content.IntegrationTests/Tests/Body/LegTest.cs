@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems.Body;
@@ -13,8 +13,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(SharedBodyComponent))]
-    [TestOf(typeof(BodyComponent))]
+    [TestOf(typeof(BodySystem))]
     public sealed class LegTest
     {
         private const string Prototypes = @"
@@ -26,8 +25,8 @@ namespace Content.IntegrationTests.Tests.Body
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: StandingState
+  - type: NeedsSupport
 ";
 
         [Test]

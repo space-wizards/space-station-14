@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Robust.Shared.Containers;
@@ -17,7 +18,9 @@ public abstract partial class SharedBodySystem
         if (!Resolve(uid, ref body))
             return;
 
-        var template = PrototypeManager.Index<BodyTemplatePrototype>(templateId);
+        if (string.IsNullOrEmpty(templateId) ||
+            !PrototypeManager.TryIndex<BodyTemplatePrototype>(templateId, out var template))
+            return;
 
         foreach (var (id, partType) in template.Slots)
         {
@@ -168,14 +171,24 @@ public abstract partial class SharedBodySystem
             body.Slots[slotId] = slot;
         }
 
-        if (slot.Part != null && slot.Part != part.Owner)
-        {
-            RemovePart(uid, slot, body);
-        }
+        if (slot.Part != null && slot.Part != part.Owner &&
+            !RemovePart(uid, slot, body))
+            return false;
 
-        slot.ContainerSlot?.Insert(part.Owner);
+        return AddPartAndRaiseEvents(part.Owner, slot, body);
+    }
 
-        Dirty(body);
+    protected bool AddPartAndRaiseEvents(EntityUid part, BodyPartSlot slot, SharedBodyComponent body)
+    {
+        if (slot.ContainerSlot == null)
+            return false;
+
+        if (!slot.ContainerSlot.Insert(part))
+            return false;
+
+        var ev = new PartAddedToBodyEvent(body.Owner, part, slot.Id);
+        RaiseLocalEvent(body.Owner, ev);
+        RaiseLocalEvent(part, ev);
 
         return true;
     }
@@ -237,7 +250,7 @@ public abstract partial class SharedBodySystem
         if (!Resolve(uid, ref body))
             return false;
 
-        foreach (var (slotId, slot) in body.Slots)
+        foreach (var (_, slot) in body.Slots)
         {
             if (slot.HasPart && slot.Part == part.Owner)
                 return RemovePart(uid, slot, body);
@@ -259,14 +272,28 @@ public abstract partial class SharedBodySystem
 
         var old = slot.Part;
 
-        slot.ContainerSlot?.Remove(old.Value);
+        if (!RemovePartAndRaiseEvents(old.Value, slot, body))
+            return false;
 
         foreach (var hangingPart in GetHangingParts(uid, slot, body))
         {
             RemovePart(uid, hangingPart.Key, body);
         }
 
-        Dirty(body);
+        return true;
+    }
+
+    protected bool RemovePartAndRaiseEvents(EntityUid part, BodyPartSlot slot, SharedBodyComponent body)
+    {
+        if (slot.ContainerSlot == null)
+            return false;
+
+        if (!slot.ContainerSlot.Remove(part))
+            return false;
+
+        var ev = new PartRemovedFromBodyEvent(body.Owner, part, slot.Id);
+        RaiseLocalEvent(body.Owner, ev);
+        RaiseLocalEvent(part, ev);
 
         return true;
     }

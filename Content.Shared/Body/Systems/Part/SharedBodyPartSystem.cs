@@ -20,8 +20,6 @@ public abstract partial class SharedBodyPartSystem : EntitySystem
         SubscribeLocalEvent<SharedBodyPartComponent, ComponentHandleState>(OnComponentHandleState);
         SubscribeLocalEvent<SharedBodyPartComponent, PartAddedToBodyEvent>(OnAddedToBody);
         SubscribeLocalEvent<SharedBodyPartComponent, PartRemovedFromBodyEvent>(OnRemovedFromBody);
-        SubscribeLocalEvent<SharedBodyPartComponent, EntInsertedIntoContainerMessage>(OnInsertedIntoContainer);
-        SubscribeLocalEvent<SharedBodyPartComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
     }
 
     protected virtual void OnComponentInit(EntityUid uid, SharedBodyPartComponent component, ComponentInit args)
@@ -30,12 +28,12 @@ public abstract partial class SharedBodyPartSystem : EntitySystem
             ContainerSystem.EnsureContainer<Container>(uid, ContainerName);
     }
 
-    private void OnComponentGetState(EntityUid uid, SharedBodyPartComponent component, ref ComponentGetState args)
+    protected virtual void OnComponentGetState(EntityUid uid, SharedBodyPartComponent component, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(component.PartType, component.Symmetry);
     }
 
-    private void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ref ComponentHandleState args)
+    protected virtual void OnComponentHandleState(EntityUid uid, SharedBodyPartComponent component, ref ComponentHandleState args)
     {
         if (args.Current is BodyPartComponentState state)
         {
@@ -49,6 +47,17 @@ public abstract partial class SharedBodyPartSystem : EntitySystem
         var xform = Transform(uid);
         xform.LocalRotation = 0;
         xform.AttachParent(args.Body);
+
+        if (TryComp<SharedBodyComponent>(args.Body, out var body))
+            component.Body = body;
+
+        if (!ContainerSystem.TryGetContainer(uid, ContainerName, out var mechanismContainer))
+            return;
+
+        foreach (var ent in mechanismContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(ent, new MechanismAddedToBodyEvent(args.Body), true);
+        }
     }
 
     protected virtual void OnRemovedFromBody(EntityUid uid, SharedBodyPartComponent component, PartRemovedFromBodyEvent args)
@@ -57,13 +66,15 @@ public abstract partial class SharedBodyPartSystem : EntitySystem
         {
             Transform(uid).AttachToGridOrMap();
         }
-    }
 
-    protected virtual void OnInsertedIntoContainer(EntityUid uid, SharedBodyPartComponent component, EntInsertedIntoContainerMessage args)
-    {
-    }
+        component.Body = null;
 
-    protected virtual void OnRemovedFromContainer(EntityUid uid, SharedBodyPartComponent component, EntRemovedFromContainerMessage args)
-    {
+        if (!ContainerSystem.TryGetContainer(uid, ContainerName, out var mechanismContainer))
+            return;
+
+        foreach (var ent in mechanismContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(ent, new MechanismRemovedFromBodyEvent(args.Body), true);
+        }
     }
 }

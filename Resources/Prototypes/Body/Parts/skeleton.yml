@@ -171,6 +171,7 @@
       size: 6
       compatibility: Biological
       symmetry: Left
+    - type: ProvidesSupport
 
 - type: entity
   id: RightLegSkeleton
@@ -189,6 +190,7 @@
       size: 6
       compatibility: Biological
       symmetry: Right
+    - type: ProvidesSupport
     #    criticalThreshold: 45
     #    deadThreshold: 90
 

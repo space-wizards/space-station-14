@@ -1,4 +1,5 @@
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Events;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 
@@ -45,9 +46,23 @@ public abstract partial class SharedBodyPartSystem
         if (!force && !CanAddMechanism(uid, mechanism, part))
             return false;
 
-        part.MechanismContainer?.Insert(mechanism.Owner);
+        return AddMechanismAndRaiseEvents(mechanism, part);
+    }
 
-        part.Dirty();
+    protected bool AddMechanismAndRaiseEvents(MechanismComponent mechanism, SharedBodyPartComponent part)
+    {
+        if (part.MechanismContainer == null)
+            return false;
+
+        if (!part.MechanismContainer.Insert(mechanism.Owner))
+            return false;
+
+        mechanism.Part = part;
+
+        if (part.Body == null)
+            RaiseLocalEvent(mechanism.Owner, new MechanismAddedToPartEvent(part.Owner));
+        else
+            RaiseLocalEvent(mechanism.Owner, new MechanismAddedToPartInBodyEvent(part.Body.Owner, part.Owner));
 
         return true;
     }
@@ -68,10 +83,10 @@ public abstract partial class SharedBodyPartSystem
         if (!CanRemoveMechanism(uid, mechanism, part))
             return false;
 
-        part.MechanismContainer?.Remove(mechanism.Owner);
-        mechanism.Owner.RandomOffset(0.25f);
+        if (!RemoveMechanismAndRaiseEvents(mechanism, part))
+            return false;
 
-        part.Dirty();
+        mechanism.Owner.RandomOffset(0.25f);
 
         return true;
     }
@@ -98,6 +113,24 @@ public abstract partial class SharedBodyPartSystem
         }
 
         return false;
+    }
+
+    protected bool RemoveMechanismAndRaiseEvents(MechanismComponent mechanism, SharedBodyPartComponent part)
+    {
+        if (part.MechanismContainer == null)
+            return false;
+
+        if (!part.MechanismContainer.Remove(mechanism.Owner))
+            return false;
+
+        mechanism.Part = null;
+
+        if (part.Body == null)
+            RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromPartEvent(part.Owner));
+        else
+            RaiseLocalEvent(mechanism.Owner, new MechanismRemovedFromPartInBodyEvent(part.Body.Owner, part.Owner));
+
+        return true;
     }
 
     /// <summary>

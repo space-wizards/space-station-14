@@ -227,6 +227,9 @@ public abstract partial class SharedBodySystem
         return part;
     }
 
+    /// <summary>
+    /// Checks if the body has any parts of the given type
+    /// </summary>
     public bool HasPartOfType(EntityUid uid, BodyPartType type,
         SharedBodyComponent? body = null)
     {
