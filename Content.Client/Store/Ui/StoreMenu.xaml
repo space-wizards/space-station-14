@@ -32,7 +32,7 @@
                         </BoxContainer>
                     </PanelContainer>
                     <ScrollContainer
-                        Name="UplinkListingsScroll"
+                        Name="StoreListingsScroll"
                         HScrollEnabled="False"
                         HorizontalExpand="True"
                         MinSize="100 256"

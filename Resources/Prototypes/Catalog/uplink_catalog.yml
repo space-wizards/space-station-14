@@ -105,7 +105,11 @@
     Telecrystal: 6
   categories:
     - UplinkExplosives
-  #surplus: false # got wrecked by penguins from surplus crate
+  conditions:
+  - !type:StoreUserWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkC4
@@ -296,6 +300,10 @@
     whitelist: 
     - Nukeops
     - NukeopsCommander
+  - !type:StoreUserWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkSurplusBundle

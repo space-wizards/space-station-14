@@ -15,7 +15,6 @@
     count: 20
     max: 999999 # todo: add support for unlimited stacks
     stackType: Telecrystal
-  - type: Telecrystal
   - type: StackPrice
     price: 200
   - type: Currency
@@ -68,6 +67,8 @@
       type: StoreBoundUserInterface
   - type: Store
     preset: StorePresetUplink
+    balance: 
+      Telecrystal: 0
   
 - type: entity
   parent: BaseUplinkRadio
@@ -86,24 +87,27 @@
   id: BaseUplinkRadio25TC
   suffix: 25 TC
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 25
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 25
 
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadio40TC
   suffix: 40 TC
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 40
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 40
 
 - type: entity
   parent: BaseUplinkRadio
   id: BaseUplinkRadioDebug
   suffix: Debug
   components:
-  - type: Uplink
-    presetInfo:
-      balance: 9999
+  - type: Store
+    preset: StorePresetUplink
+    balance:
+      Telecrystal: 99999
