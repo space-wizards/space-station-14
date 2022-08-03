@@ -24,6 +24,7 @@ latejoin-arrival-announcement =
     { $character } ({ $job }) { $gender ->
         [male] прибыл
         [female] прибыла
-       *[other] прибыло
+        [epicene] прибыли
+       *[neuter] прибыл
     } на станцию!
 latejoin-arrival-sender = Станции
