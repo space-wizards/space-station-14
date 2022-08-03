@@ -1,38 +1,4 @@
 Entries:
-- author: rok-povsic
-  changes:
-  - {message: Fixed equipping items inside a locker., type: Fix}
-  id: 1573
-  time: '2022-05-21T17:39:13.0000000+00:00'
-- author: Veritius
-  changes:
-  - {message: Removed security access from the syndicate segway, type: Fix}
-  id: 1574
-  time: '2022-05-21T20:35:16.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: Fixed being able to use multitools on airlocks without first opening
-      the wiring panel with a screwdriver, type: Fix}
-  id: 1575
-  time: '2022-05-21T20:35:47.0000000+00:00'
-- author: 20kdc
-  changes:
-  - {message: 'When the server shuts down or you fail to connect because of a key
-      error, the button shown will say `Relaunch` rather than `Reconnect` and will
-      restart the client for you.', type: Tweak}
-  id: 1576
-  time: '2022-05-22T01:56:19.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Add gas tank internals connection sound, type: Add}
-  id: 1577
-  time: '2022-05-22T02:31:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee combat no longer possible with guns (for now)., type: Tweak}
-  - {message: Drag-drop no longer possible in combat mode., type: Tweak}
-  id: 1578
-  time: '2022-05-22T02:31:46.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: 'New lobby song: Spac Stac by Hayabusa', type: Add}
@@ -2928,3 +2894,36 @@ Entries:
   - {message: Fixed being unable to drag & drop entities into disposal units, type: Fix}
   id: 2072
   time: '2022-08-01T22:35:34.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: accents carry over the radio again, type: Fix}
+  id: 2073
+  time: '2022-08-02T02:33:30.0000000+00:00'
+- author: Myctai
+  changes:
+  - {message: Thieving Gloves will not reveal your fingerprints to detective, type: Fix}
+  id: 2074
+  time: '2022-08-02T12:55:09.0000000+00:00'
+- author: Peptide90
+  changes:
+  - {message: Added new cave floors. Check them out in a future mapping update., type: Add}
+  id: 2075
+  time: '2022-08-02T12:55:30.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Added allicins to aliums. Animals can''t eat onions, garlic or leeks!',
+    type: Add}
+  id: 2076
+  time: '2022-08-02T13:01:15.0000000+00:00'
+- author: eclips_e
+  changes:
+  - {message: 'Rotating and Strafing keybinds have been swapped. Use E/Q to rotate
+      the shuttle, A/D to strafe.', type: Tweak}
+  id: 2077
+  time: '2022-08-02T13:02:28.0000000+00:00'
+- author: JustinTrotter
+  changes:
+  - {message: backpack and duffels no longer only display default gray when held,
+    type: Fix}
+  id: 2078
+  time: '2022-08-02T21:30:05.0000000+00:00'

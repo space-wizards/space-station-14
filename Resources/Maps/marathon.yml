@@ -26488,6 +26488,8 @@ entities:
   - pos: -31.607449,13.581036
     parent: 30
     type: Transform
+  - solution: bucket
+    type: Drink
 - uid: 549
   type: Bed
   components:
@@ -27423,6 +27425,8 @@ entities:
   - pos: 2.630969,15.77392
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 673
@@ -27859,6 +27863,8 @@ entities:
 - uid: 735
   type: AirlockTheatreLocked
   components:
+  - name: Musician's Den
+    type: MetaData
   - pos: -31.5,24.5
     parent: 30
     type: Transform
@@ -28366,6 +28372,8 @@ entities:
   - pos: -32.580593,21.699749
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 804
@@ -29769,6 +29777,8 @@ entities:
   - pos: -42.548836,3.6628456
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 1027
@@ -32658,6 +32668,8 @@ entities:
   - pos: -43.454178,31.703054
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 1442
@@ -33186,6 +33198,8 @@ entities:
   - pos: -50.531364,30.771608
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 1519
@@ -33338,6 +33352,8 @@ entities:
   - pos: -52.437233,33.682484
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 1537
@@ -34881,6 +34897,8 @@ entities:
   - pos: -27.386805,43.706738
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 1774
@@ -37761,6 +37779,8 @@ entities:
   - pos: -34.56183,51.715214
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2181
@@ -37783,6 +37803,8 @@ entities:
   - pos: -31.546207,51.73084
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2184
@@ -37791,6 +37813,8 @@ entities:
   - pos: -34.514954,49.777714
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2185
@@ -37799,6 +37823,8 @@ entities:
   - pos: -31.546207,49.69959
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 2186
@@ -55337,6 +55363,8 @@ entities:
   - pos: 4.5292673,10.977108
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -57341,19 +57369,19 @@ entities:
     parent: 30
     type: Transform
 - uid: 4772
-  type: TableGlass
+  type: VendingMachineSalvage
   components:
-  - pos: -50.5,50.5
+  - name: Salvage Equipment
+    type: MetaData
+  - pos: 23.5,-9.5
     parent: 30
     type: Transform
 - uid: 4773
-  type: HandheldHealthAnalyzer
+  type: LockerWeldingSuppliesFilled
   components:
-  - pos: -50.572617,50.5551
+  - pos: 49.5,29.5
     parent: 30
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4774
   type: CableApcExtension
   components:
@@ -59012,6 +59040,8 @@ entities:
   - pos: -22.461006,36.440132
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 4954
@@ -59273,6 +59303,8 @@ entities:
   - pos: -21.431438,31.451025
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 4995
@@ -59471,6 +59503,8 @@ entities:
   - pos: -19.477777,35.681534
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 5024
@@ -64068,6 +64102,8 @@ entities:
   - pos: 2.4749203,32.371178
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 5705
@@ -72544,18 +72580,24 @@ entities:
 - uid: 6878
   type: AirlockMedicalLocked
   components:
+  - name: Morgue
+    type: MetaData
   - pos: -22.5,0.5
     parent: 30
     type: Transform
 - uid: 6879
   type: AirlockMedicalLocked
   components:
+  - name: Morgue
+    type: MetaData
   - pos: -20.5,-5.5
     parent: 30
     type: Transform
 - uid: 6880
   type: AirlockMedicalLocked
   components:
+  - name: Morgue
+    type: MetaData
   - pos: -26.5,-5.5
     parent: 30
     type: Transform
@@ -72636,6 +72678,8 @@ entities:
 - uid: 6890
   type: AirlockMedicalLocked
   components:
+  - name: Psychology
+    type: MetaData
   - pos: -28.5,-4.5
     parent: 30
     type: Transform
@@ -72675,6 +72719,8 @@ entities:
 - uid: 6895
   type: AirlockMedicalLocked
   components:
+  - name: Psychology
+    type: MetaData
   - pos: -32.5,-1.5
     parent: 30
     type: Transform
@@ -73308,12 +73354,16 @@ entities:
 - uid: 6985
   type: AirlockMedicalGlassLocked
   components:
+  - name: Medical Storage
+    type: MetaData
   - pos: -20.5,-18.5
     parent: 30
     type: Transform
 - uid: 6986
   type: AirlockMedicalGlassLocked
   components:
+  - name: Medical Storage
+    type: MetaData
   - pos: -20.5,-17.5
     parent: 30
     type: Transform
@@ -73457,6 +73507,8 @@ entities:
   - pos: -14.306395,-14.292982
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 7000
@@ -73935,6 +73987,8 @@ entities:
 - uid: 7073
   type: AirlockMedicalGlassLocked
   components:
+  - name: Cryonics
+    type: MetaData
   - pos: -20.5,-21.5
     parent: 30
     type: Transform
@@ -105248,6 +105302,8 @@ entities:
   - pos: 3.5723639,-14.605923
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 11363
@@ -106725,6 +106781,8 @@ entities:
   - pos: -27.499172,-0.11374092
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - toggleAction:
       icon: Objects/Tools/flashlight.rsi/flashlight.png
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
@@ -107166,6 +107224,8 @@ entities:
   - pos: 25.549688,2.573295
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 11626
@@ -108265,9 +108325,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 11752
-  type: OxygenCanister
+  type: ClosetFireFilled
   components:
-  - pos: 23.5,-9.5
+  - pos: 45.5,29.5
     parent: 30
     type: Transform
 - uid: 11753
@@ -112501,6 +112561,8 @@ entities:
   - pos: -39.48713,24.49544
     parent: 30
     type: Transform
+  - solution: bucket
+    type: Drink
 - uid: 12279
   type: MopItem
   components:
@@ -116466,6 +116528,8 @@ entities:
   - pos: 27.590237,12.417603
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 12802
@@ -140986,9 +141050,9 @@ entities:
     parent: 30
     type: Transform
 - uid: 15969
-  type: ClosetFireFilled
+  type: OxygenCanister
   components:
-  - pos: 49.5,29.5
+  - pos: 25.5,-9.5
     parent: 30
     type: Transform
 - uid: 15970
@@ -141245,6 +141309,8 @@ entities:
   - pos: 16.440987,33.621025
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 15996
@@ -141253,6 +141319,8 @@ entities:
   - pos: 18.331612,40.69915
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 15997
@@ -142660,6 +142728,8 @@ entities:
   - pos: 44.59955,22.506374
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 16174
@@ -147730,9 +147800,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 16966
-  type: LockerWeldingSuppliesFilled
+  type: SignExamroom
   components:
-  - pos: 45.5,29.5
+  - pos: -20.5,-11.5
     parent: 30
     type: Transform
 - uid: 16967
@@ -151047,6 +151117,8 @@ entities:
   - pos: -57.474648,-39.373875
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 17476
@@ -165294,6 +165366,8 @@ entities:
   - pos: -77.46411,-65.291664
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 19505
@@ -165302,6 +165376,8 @@ entities:
   - pos: -60.62825,-65.170204
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 19506
@@ -171962,6 +172038,8 @@ entities:
     pos: -30.5,7.5
     parent: 30
     type: Transform
+  - solution: bucket
+    type: Drink
   - containers:
       storagebase: !type:Container
         ents: []
@@ -171974,6 +172052,8 @@ entities:
   - pos: -30.570229,13.5742035
     parent: 30
     type: Transform
+  - solution: bucket
+    type: Drink
 - uid: 20440
   type: VehicleKeyPussyWagon
   components:
@@ -172424,6 +172504,8 @@ entities:
   - pos: -33.431374,-36.318756
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 20496
@@ -174802,6 +174884,8 @@ entities:
   - pos: 38.480736,-53.50987
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 20881
@@ -174810,6 +174894,8 @@ entities:
   - pos: 41.59011,-51.431744
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 20882
@@ -176671,6 +176757,8 @@ entities:
   - pos: -54.376183,52.63288
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 21159
@@ -180542,6 +180630,8 @@ entities:
   - pos: -28.479252,15.714678
     parent: 30
     type: Transform
+  - heldPrefix: off
+    type: Item
   - canCollide: False
     type: Physics
 - uid: 21650
@@ -180562,6 +180652,20 @@ entities:
   type: AtmosFixFreezerMarker
   components:
   - pos: -21.5,-21.5
+    parent: 30
+    type: Transform
+- uid: 21653
+  type: BedsheetMedical
+  components:
+  - pos: -50.5,50.5
+    parent: 30
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 21654
+  type: Bed
+  components:
+  - pos: -50.5,50.5
     parent: 30
     type: Transform
 ...

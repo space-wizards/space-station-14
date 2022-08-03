@@ -5,8 +5,8 @@
   description: A torch fashioned from some wood.
   components:
     - type: ExpendableLight
-      spentName: burnt torch
-      spentDesc: It looks like this torch has burnt out. What a bummer.
+      spentName: expendable-light-burnt-torch-name
+      spentDesc: expendable-light-burnt-torch-desc
       glowDuration: 100
       fadeOutDuration: 4
       iconStateSpent: torch_spent
