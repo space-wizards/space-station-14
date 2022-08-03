@@ -272,6 +272,7 @@ namespace Content.Server.Communications
                 return;
             }
             _roundEndSystem.RequestRoundEnd(uid);
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has called the shuttle.");
         }
 
         private void OnRecallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleRecallEmergencyShuttleMessage message)
@@ -285,6 +286,7 @@ namespace Content.Server.Communications
             }
 
             _roundEndSystem.CancelRoundEndCountdown(uid);
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
         }
     }
 }
