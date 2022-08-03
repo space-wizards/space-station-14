@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,6 @@ using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -15,7 +15,6 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
-using static Robust.Server.Maps.MapLoader;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -54,7 +53,7 @@ public sealed class PrototypeSaveTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        IMapGrid grid = default;
+        IMapGrid grid = default!;
         EntityUid uid;
         MapId mapId = default;
 
