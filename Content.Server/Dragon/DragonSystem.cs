@@ -97,7 +97,7 @@ namespace Content.Server.Dragon
 
         private void OnAnchorChange(EntityUid uid, DragonRiftComponent component, ref AnchorStateChangedEvent args)
         {
-            if (!args.Anchored)
+            if (!args.Anchored && component.State == DragonRiftState.Charging)
             {
                 QueueDel(uid);
             }
