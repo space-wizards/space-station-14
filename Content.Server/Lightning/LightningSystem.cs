@@ -27,14 +27,15 @@ public sealed class LightningSystem : SharedLightningSystem
         //TODO: Need to spawn an offset from the comp owner coords, not on them directly.
         var ent = Spawn("LightningBase", ev.OwnerCoords.Offset(ev.OwnerCoords.Position.ToAngle().ToWorldVec().Normalized));
         //TODO: Edge shape works but the position is wacky as hell if done like this (like miles away from the lightning)
-        var shape = new EdgeShape(ev.OwnerCoords.Position, ev.TargetCoords.Position);
+        var shape = new EdgeShape(ev.CalculatedDistance, -ev.CalculatedDistance);
+        //shape.SetOneSided(ev.CalculatedDistance, ev.CalculatedDistance, -ev.CalculatedDistance, new Vector2(0,0)); //very close to working properly
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
             //TODO: Just X makes it too fat, X and Y with the same distance makes it too large, find the correct Y to work for this.
             //Defintely have more y than x here. 1-1.5 seems to work out perfectly without it looking too fat
             //Doesn't really feel like lightning yet though.
-            sprites.Scale = new Vector2(1.5f, 3f);
+            sprites.Scale = new Vector2(1.5f, ev.Distance);
             sprites.Rotation = ev.Angle;
             var fixture = new Fixture(physics, shape)
             {
