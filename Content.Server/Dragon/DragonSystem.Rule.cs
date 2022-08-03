@@ -29,13 +29,12 @@ public sealed partial class DragonSystem
 
     public override void Started()
     {
-        var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent, TransformComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<IMapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)
             return;
 
         var location = _random.Pick(spawnLocations);
-
         Spawn("MobDragon", location.Item2.MapPosition);
     }
 

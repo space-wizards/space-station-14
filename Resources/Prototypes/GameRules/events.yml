@@ -38,7 +38,7 @@
     !type:StationEventRuleConfiguration
     id: Dragon
     weight: 10
-    endAfter: 10
+    endAfter: 2
     earliestStart: 15
     maxOccurrences: 7
     minimumPlayers: 15

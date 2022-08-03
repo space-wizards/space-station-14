@@ -69,7 +69,7 @@
       groups:
         - id: Medicine
         - id: Poison
-    - type: MovementIgnoreGravity
+    - type: MovementAlwaysTouching
     - type: NoSlip
     - type: Butcherable
       spawned:
@@ -87,8 +87,8 @@
         path: /Audio/Effects/bite.ogg
       damage:
         types:
-          Piercing: 10
-          Slash: 10
+          Piercing: 15
+          Slash: 15
     - type: Dragon
       spawnsLeft: 2
       spawnsProto: MobCarpDragon

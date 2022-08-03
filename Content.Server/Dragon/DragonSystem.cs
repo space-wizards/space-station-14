@@ -139,8 +139,6 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            // TODO: Make weightless movement floatier
-            // TODO: Spawn dragon in space
             var xform = Transform(uid);
 
             // Have to be on a grid fam
