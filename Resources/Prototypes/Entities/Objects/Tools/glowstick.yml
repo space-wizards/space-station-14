@@ -10,8 +10,8 @@
     - type: Recyclable
     - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: spent green glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-green-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -72,8 +72,8 @@
   id: GlowstickRed
   components:
     - type: ExpendableLight
-      spentName: spent red glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-red-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -107,8 +107,8 @@
   id: GlowstickPurple
   components:
     - type: ExpendableLight
-      spentName: spent purple glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-purple-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -142,8 +142,8 @@
   id: GlowstickYellow
   components:
     - type: ExpendableLight
-      spentName: spent yellow glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-yellow-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
@@ -177,8 +177,8 @@
   id: GlowstickBlue
   components:
     - type: ExpendableLight
-      spentName: spent blue glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      spentName: expendable-light-spent-blue-glowstick-name
+      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit

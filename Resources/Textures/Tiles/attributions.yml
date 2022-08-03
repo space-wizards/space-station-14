@@ -34,3 +34,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "by WALPVRGIS for Goonstation, taken at commit 236551b95a5b24917c72f3069223026b2dc4e690 from floors.dmi"
   source: "https://github.com/goonstation/goonstation"
+  
+- files: ["cave.png", "cavedrought.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Mojave-Sun, taken at commit 0587dd16e28108bdf0b0a28e2caae4319845e861"
+  source: "https://github.com/Mojave-Sun/mojave-sun-13"
