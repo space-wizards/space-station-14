@@ -23,7 +23,7 @@
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:
-            alive: Sixteen
+            alive: Rainbow
     - type: Sprite
       sprite: Mobs/Aliens/Carps/dragon.rsi
       netsync: false

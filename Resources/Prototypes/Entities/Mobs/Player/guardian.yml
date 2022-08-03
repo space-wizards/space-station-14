@@ -14,8 +14,8 @@
     - type: MobMover
     - type: InputMover
     - type: MovementSpeedModifier
-      baseWalkSpeed: 7
-      baseSprintSpeed: 7
+      baseWalkSpeed: 4
+      baseSprintSpeed: 5.5
     - type: DamageOnHighSpeedImpact
       damage:
         types:

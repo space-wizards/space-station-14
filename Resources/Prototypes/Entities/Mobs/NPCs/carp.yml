@@ -146,4 +146,4 @@
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:
-            alive: Sixteen
+            alive: Rainbow
