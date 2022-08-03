@@ -83,8 +83,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 15
-        Slash: 15
+        Piercing: 10
+        Slash: 10
   - type: Dragon
     spawnsLeft: 2
     spawnsProto: MobCarpDragon
