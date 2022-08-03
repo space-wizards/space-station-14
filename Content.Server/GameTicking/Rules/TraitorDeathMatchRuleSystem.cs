@@ -45,7 +45,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
     private bool _safeToEndRound = false;
 
-    private readonly Dictionary<UplinkAccount, string> _allOriginalNames = new();
+    //private readonly Dictionary<UplinkAccount, string> _allOriginalNames = new();
 
     private const string TraitorPrototypeID = "Traitor";
 
