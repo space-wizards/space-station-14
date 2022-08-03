@@ -3,6 +3,7 @@
   id: BaseMobCarp
   parent: SimpleSpaceMobBase
   description: It's a space carp.
+  abstract: true
   components:
     - type: InputMover
     - type: MobMover
@@ -18,8 +19,18 @@
       netsync: false
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: alive
+          state: base
           sprite: Mobs/Aliens/Carps/space.rsi
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: mouth
+          sprite: Mobs/Aliens/Carps/space.rsi
+          shader: unshaded
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            base: Rainbow
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            mouth: ""
     - type: CombatMode
       disarmAction:
         enabled: false
@@ -46,11 +57,11 @@
     - type: DamageStateVisuals
       states:
         Alive:
-          Base: alive
-        Critical:
-          Base: crit
+          Base: base
+          BaseUnshaded: mouth
         Dead:
           Base: dead
+          BaseUnshaded: dead_mouth
     - type: Butcherable
       spawned:
         - id: FoodMeatFish
@@ -143,7 +154,3 @@
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.Base:
-            alive: Rainbow
