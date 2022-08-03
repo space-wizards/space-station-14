@@ -35,13 +35,17 @@ public sealed class LightningEvent : EntityEventArgs
     public Angle Angle;
     public float Distance;
     public Vector2 CalculatedDistance;
+    public EntityCoordinates Offset;
+    public Vector2 OffsetCorrection;
 
-    public LightningEvent(EntityCoordinates ownerCoords, EntityCoordinates targetCoords, Angle angle, float distance, Vector2 calculatedDistance)
+    public LightningEvent(EntityCoordinates ownerCoords, EntityCoordinates targetCoords, Angle angle, float distance, Vector2 calculatedDistance, EntityCoordinates offset, Vector2 offsetCorrection)
     {
         OwnerCoords = ownerCoords;
         TargetCoords = targetCoords;
         Angle = angle;
         Distance = distance;
         CalculatedDistance = calculatedDistance;
+        Offset = offset;
+        OffsetCorrection = offsetCorrection;
     }
 }

@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lightning;
 using Content.Shared.Lightning.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
@@ -25,10 +26,9 @@ public sealed class LightningSystem : SharedLightningSystem
     private void OnLightning(LightningEvent ev)
     {
         //TODO: Need to spawn an offset from the comp owner coords, not on them directly.
-        var ent = Spawn("LightningBase", ev.OwnerCoords.Offset(ev.Angle.ToWorldVec().Normalized));
+        var ent = Spawn("LightningBase", ev.Offset);
         //TODO: Edge shape works but the position is wacky as hell if done like this (like miles away from the lightning)
-        var shape = new EdgeShape(ev.CalculatedDistance, -ev.CalculatedDistance);
-        //shape.SetOneSided(ev.CalculatedDistance, ev.CalculatedDistance, -ev.CalculatedDistance, new Vector2(0,0)); //very close to working properly
+        var shape = new EdgeShape(ev.OffsetCorrection, new Vector2(0,0));
         if (TryComp<SpriteComponent>(ent, out var sprites) && TryComp<PhysicsComponent>(ent, out var physics) &&
             TryComp<TransformComponent>(ent, out var xForm))
         {
@@ -58,10 +58,13 @@ public sealed class LightningSystem : SharedLightningSystem
         var userXForm = Transform(args.User);
         var userCoords = userXForm.Coordinates;
 
-        var distance = userXForm.LocalPosition - compXForm.LocalPosition;
-        var userAngle = distance.ToWorldAngle(); //This plus the above distance works.
+        var calculatedDistance = userXForm.LocalPosition - compXForm.LocalPosition;
+        var userAngle = calculatedDistance.ToWorldAngle(); //This plus the above distance works.
 
-        var ev = new LightningEvent(compCoords, userCoords, userAngle, component.MaxLength, distance);
+        var offset = compCoords.Offset(calculatedDistance.Normalized);
+        var offsetCorrection = (calculatedDistance / calculatedDistance.Length) * (calculatedDistance.Length - 1);
+
+        var ev = new LightningEvent(compCoords, userCoords, userAngle, component.MaxLength, calculatedDistance, offset, offsetCorrection);
         RaiseLocalEvent(uid, ev, true);
 
         args.Handled = true;
