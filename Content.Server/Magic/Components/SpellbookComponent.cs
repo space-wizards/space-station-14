@@ -32,5 +32,9 @@ public sealed class SpellbookComponent : Component
     [DataField("learnTime")]
     public float LearnTime = .75f;
 
+    [ViewVariables]
+    [DataField("isPersistent")]
+    public bool Persistent = false;
+
     public CancellationTokenSource? CancelToken;
 }

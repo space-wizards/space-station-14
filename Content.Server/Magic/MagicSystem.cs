@@ -115,7 +115,11 @@ public sealed class MagicSystem : EntitySystem
     private void OnLearnComplete(EntityUid uid, SpellbookComponent component, LearnDoAfterComplete ev)
     {
         component.CancelToken = null;
-        _actionsSystem.AddActions(ev.User, component.Spells, uid);
+
+        if (!component.Persistent)
+            _actionsSystem.AddActions(ev.User, component.Spells, uid);
+        if (component.Persistent)
+            _actionsSystem.AddActions(ev.User, component.Spells, null);
     }
 
     private void OnLearnCancel(EntityUid uid, SpellbookComponent component, LearnDoAfterCancel args)

@@ -23,3 +23,7 @@ action-speech-spell-summon-magicarp = AIE KHUSE EU
 action-name-spell-fireball = Fireball
 action-description-spell-fireball = Fires an explosive fireball towards the clicked location.
 action-speech-spell-fireball = ONI'SOMA!
+
+action-name-spell-mimewall = Big Invisible Wall
+action-description-spell-mimewall = Long wall
+action-popup-spell-mimewall = {CAPITALIZE(THE($user))} brushes up against an invisible wall!

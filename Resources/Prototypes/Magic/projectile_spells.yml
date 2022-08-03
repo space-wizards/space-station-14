@@ -15,3 +15,20 @@
   serverEvent: !type:ProjectileSpellEvent
     prototype: ProjectileFireball
     posData: !type:TargetCasterPos
+
+- type: worldTargetAction
+  id: MimeGun
+  name: action-name-spell-fireball
+  description: action-description-spell-fireball
+  useDelay: 60
+  itemIconStyle: BigAction
+  checkCanAccess: false
+  range: 60
+  sound: !type:SoundPathSpecifier
+    path: /Audio/Magic/fireball.ogg
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: fireball
+  serverEvent: !type:ProjectileSpellEvent
+    prototype: BaseBulletTrigger
+    posData: !type:TargetCasterPos

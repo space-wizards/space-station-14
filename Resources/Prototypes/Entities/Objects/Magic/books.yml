@@ -91,3 +91,21 @@
   - type: Spellbook
     worldSpells:
       Fireball: -1
+
+- type: entity
+  id: MimeSpellbook
+  name: Guide to Advanced Mimery Series
+  description: The classical two part series on how to further hone your mime skills.
+  parent: BaseSpellbook
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Magic/spellbooks.rsi
+      layers:
+        - state: bookknock
+    - type: Spellbook
+      instantSpells:
+        MimeWall: -1
+      worldSpells:
+        MimeGun: 10
+      isPersistent: true
