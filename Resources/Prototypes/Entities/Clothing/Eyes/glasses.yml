@@ -65,17 +65,15 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMeson
-  name: optical meson scanners
-  description: The pinnacle of modern science, wallhacks in real life
+  name: engineering goggles #less confusion
+  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Radiation: 0.5
+  - type: FlashImmunity
+  - type: EyeProtection
 
 - type: entity
   parent: ClothingEyesBase
