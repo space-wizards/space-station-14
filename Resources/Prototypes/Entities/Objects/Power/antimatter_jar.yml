@@ -13,7 +13,7 @@
     layers:
     - state: jar
     - state: seal
-      map: ["enum.AMEFuelContainerVisualLayers.Seal"]
+      map: ["seal"]
       visible: true
   - type: AMEFuelContainer
   - type: AMEFuelContainerVisuals
@@ -24,3 +24,9 @@
     radius: 1.5
     color: blue
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AMEFuelContainerVisuals.IsOpen:
+        seal:
+          True: { visible: false }
+          False: { visible: true }

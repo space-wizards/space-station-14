@@ -24,13 +24,7 @@ namespace Content.Server.AME
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
-        private readonly HashSet<EntityUid> _activeAMEFuelContainers = new();
-
-        private const float AMEFuelContainerUpdateTimer = 1f;
-        private float _AMEFuelContainerTimer = 0f;
-
-        // A full (1000 unit) AME jar will feed the singulo by this amount
-        private const int SinguloFoodPerThousand = -100;
+        private const float UpdateCooldown = 1f;
 
         public override void Initialize()
         {
@@ -38,7 +32,6 @@ namespace Content.Server.AME
             SubscribeLocalEvent<AMEFuelContainerComponent, ComponentStartup>(OnAMEFuelContainerStartup);
             SubscribeLocalEvent<AMEFuelContainerComponent, ExaminedEvent>(OnAMEFuelContainerExamine);
             SubscribeLocalEvent<AMEFuelContainerComponent, InteractUsingEvent>(OnAMEFuelContainerInteractUsing);
-            SubscribeLocalEvent<AMEFuelContainerComponent, ComponentShutdown>(OnAMEFuelContainerShutdown);
         }
 
         private (int fuel, int capacity) GetAmeFuelContainerFuelAndCapacity(EntityUid uid,
@@ -65,7 +58,7 @@ namespace Content.Server.AME
             Resolve(uid, ref item);
 
             container.Sealed = false;
-            singuloFood.Energy = SinguloFoodPerThousand;
+            singuloFood.Energy = container.SinguloFoodPerThousand;
             light.Enabled = true;
 
             appearance.SetData(AMEFuelContainerVisuals.IsOpen, true);
@@ -75,12 +68,8 @@ namespace Content.Server.AME
 
             SoundSystem.Play("/Audio/Items/crowbar.ogg", Filter.Pvs(uid, entityManager: EntityManager), uid);
 
-            if(user != null)
-                _popupSystem.PopupEntity(Loc.GetString("ame-fuel-container-component-on-pry"), uid, Filter.Entities(user.Value));
+            AddComp<LeakingAMEFuelContainerComponent>(uid);
 
-            container.Dirty();
-
-            _activeAMEFuelContainers.Add(uid);
             return true;
         }
 
@@ -108,53 +97,42 @@ namespace Content.Server.AME
                 ("status", string.Empty)));
         }
 
-        private void OnAMEFuelContainerInteractUsing(EntityUid uid, AMEFuelContainerComponent container,
+        private async void OnAMEFuelContainerInteractUsing(EntityUid uid, AMEFuelContainerComponent container,
             InteractUsingEvent args)
         {
-            if (!_toolSystem.HasQuality(args.Used, container.QualityNeeded))
+            if (args.Handled || !await _toolSystem.UseTool(args.Used, args.User, uid, 0, 1, container.QualityNeeded))
                 return;
 
             args.Handled = TryOpenAMEFuelContainer(uid, args.User, container);
-        }
-
-        private void OnAMEFuelContainerShutdown(EntityUid uid, AMEFuelContainerComponent container,
-            ComponentShutdown args)
-        {
-            _activeAMEFuelContainers.Remove(uid);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            _AMEFuelContainerTimer += frameTime;
-
-            if (_AMEFuelContainerTimer < AMEFuelContainerUpdateTimer)
-                return;
-
-            foreach (var uid in _activeAMEFuelContainers.ToArray())
+            foreach (var (leaking, container, singuloFood, pointLight) in EntityQuery<LeakingAMEFuelContainerComponent, AMEFuelContainerComponent, SinguloFoodComponent, PointLightComponent>())
             {
-                if (!EntityManager.TryGetComponent(uid, out AMEFuelContainerComponent? container)
-                    || !EntityManager.TryGetComponent(uid, out SinguloFoodComponent? singuloFood)
-                    || !EntityManager.TryGetComponent(uid, out PointLightComponent? light))
+                leaking.Accumulator += frameTime;
+
+                if (leaking.Accumulator < UpdateCooldown)
                     continue;
 
-                container.FuelAmount -= (int)Math.Round(container.OpenFuelConsumption * _AMEFuelContainerTimer);
+                leaking.Accumulator -= UpdateCooldown;
+
+                container.FuelAmount -= (int)Math.Round(container.OpenFuelConsumption * UpdateCooldown);
 
                 // Finish emitting fuel
                 if (container.FuelAmount <= 0)
                 {
-                    _activeAMEFuelContainers.Remove(uid);
+                    RemComp<LeakingAMEFuelContainerComponent>(container.Owner);
                     container.FuelAmount = 0;
-                    light.Enabled = false;
+                    pointLight.Enabled = false;
                 }
 
-                singuloFood.Energy = container.FuelAmount * SinguloFoodPerThousand / 1000;
+                singuloFood.Energy = container.FuelAmount * container.SinguloFoodPerThousand / 1000;
 
                 container.Dirty();
             }
-
-            _AMEFuelContainerTimer -= AMEFuelContainerUpdateTimer;
         }
     }
 }

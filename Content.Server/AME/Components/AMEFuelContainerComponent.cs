@@ -6,28 +6,26 @@ namespace Content.Server.AME.Components
         /// <summary>
         ///     The amount of fuel in the jar.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int FuelAmount { get; set; }
+        [ViewVariables(VVAccess.ReadWrite), DataField("fuelAmount")]
+        public int FuelAmount = 1000;
 
         /// <summary>
         ///     The maximum fuel capacity of the jar.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxFuelAmount { get; set; }
+        [ViewVariables(VVAccess.ReadWrite), DataField("maxFuelAmount")]
+        public int MaxFuelAmount = 1000;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Sealed { get; set; }
+        [ViewVariables(VVAccess.ReadWrite), DataField("sealed")]
+        public bool Sealed = true;
 
-        [ViewVariables(VVAccess.ReadOnly)] public int OpenFuelConsumption = 32;
-        [ViewVariables(VVAccess.ReadOnly)] public string QualityNeeded = "Prying";
+        [ViewVariables(VVAccess.ReadOnly), DataField("openFuelConsumption")]
+        public int OpenFuelConsumption = 32;
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-            MaxFuelAmount = 1000;
-            FuelAmount = 1000;
-            Sealed = true;
-        }
+        [ViewVariables(VVAccess.ReadOnly), DataField("qualityNeeded")]
+        public string QualityNeeded = "Prying";
 
+        // Negative singulo food shrinks
+        [ViewVariables(VVAccess.ReadOnly), DataField("singuloFoodPerThousand")]
+        public int SinguloFoodPerThousand = -100;
     }
 }
