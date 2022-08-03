@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: fax_machine
+  id: FaxMachine
   parent: BaseMachinePowered
   name: fax machine
   description: A bluespace powered fax machine. You'd expect NT to invent something new, nope! Use fax. Deal with it.
