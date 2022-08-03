@@ -177,8 +177,10 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     state: tendie
-    netsync: true
-  - type: RandomSpriteState
+    netsync: false
+  - type: RandomSprite
+    available:
+      - enum:
     spriteStates:
       - tendie
       - lizard

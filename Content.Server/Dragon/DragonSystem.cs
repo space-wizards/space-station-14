@@ -139,7 +139,6 @@ namespace Content.Server.Dragon
                 return;
             }
 
-            // TODO: Random sprite colors
             // TODO: Random carp colors
             // TODO: Make weightless movement floatier
             // TODO: Spawn dragon in space

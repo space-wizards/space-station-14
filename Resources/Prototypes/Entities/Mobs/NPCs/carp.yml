@@ -15,6 +15,7 @@
         - SimpleHostile
     - type: Sprite
       drawdepth: Mobs
+      netsync: false
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: alive
@@ -142,4 +143,7 @@
       makeSentient: true
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
-
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            alive: Sixteen
