@@ -1,10 +1,4 @@
 Entries:
-- author: Putnam
-  changes:
-  - {message: Game presets can now be limited by player count (both min and max),
-    type: Add}
-  id: 1580
-  time: '2022-05-22T03:55:19.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: More gun impact sounds have been added., type: Tweak}
@@ -2928,3 +2922,8 @@ Entries:
   - {message: NPCs shouldn't get stuck going back and forth anymore., type: Fix}
   id: 2079
   time: '2022-08-03T06:02:50.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Barratry has been removed., type: Remove}
+  id: 2080
+  time: '2022-08-03T23:44:11.0000000+00:00'
