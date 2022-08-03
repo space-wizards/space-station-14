@@ -115,7 +115,7 @@
 - type: entity
   id: ProjectileFingerGun
   name: mime bullet
-  description: insert raunchy finger bang joke
+  description: Insert raunchy finger bang joke here.
   components:
     - type: FlyBySound
     - type: Clickable
