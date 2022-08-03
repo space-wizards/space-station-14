@@ -1,8 +1,6 @@
-using System.Linq;
 using Content.Server.AME.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Item;
-using Content.Server.Popups;
 using Content.Server.Singularity.Components;
 using Content.Server.Tools;
 using Content.Shared.AME;
@@ -22,7 +20,6 @@ namespace Content.Server.AME
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private const float UpdateCooldown = 1f;
 
@@ -100,7 +97,7 @@ namespace Content.Server.AME
         private async void OnAMEFuelContainerInteractUsing(EntityUid uid, AMEFuelContainerComponent container,
             InteractUsingEvent args)
         {
-            if (args.Handled || !await _toolSystem.UseTool(args.Used, args.User, uid, 0, 1, container.QualityNeeded))
+            if (args.Handled || !await _toolSystem.UseTool(args.Used, args.User, uid, 0, 0.2f, container.QualityNeeded))
                 return;
 
             args.Handled = TryOpenAMEFuelContainer(uid, args.User, container);

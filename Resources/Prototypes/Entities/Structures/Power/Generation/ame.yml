@@ -82,7 +82,7 @@
 - type: entity
   id: AMEShielding
   name: AME shielding
-  description: Keeps the antimatter in and the matter out.
+  description: Keeps the antimatter contained and far from fragile singularities.
   placement:
     mode: SnapgridCenter
   components:

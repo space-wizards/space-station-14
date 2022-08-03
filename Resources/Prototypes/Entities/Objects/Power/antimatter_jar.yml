@@ -16,7 +16,6 @@
       map: ["seal"]
       visible: true
   - type: AMEFuelContainer
-  - type: AMEFuelContainerVisuals
   - type: SinguloFood
     energy: 0
   - type: PointLight
