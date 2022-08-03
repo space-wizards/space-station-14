@@ -7,8 +7,8 @@
   components:
   - type: GhostTakeoverAvailable
     makeSentient: true
-    name: Space dragon!
-    description: Crash, roast, flood the station with carps!
+    name: Space dragon
+    description: Call in 3 carp rifts and take over this quadrant!
   - type: Speech
   - type: CombatMode
     disarmAction:

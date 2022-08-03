@@ -10,16 +10,18 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Chat.Systems;
-using Content.Server.Dragon.Events;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Random;
 
 namespace Content.Server.Dragon
 {
-    public sealed class DragonSystem : EntitySystem
+    public sealed partial class DragonSystem : GameRuleSystem
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -45,6 +47,8 @@ namespace Content.Server.Dragon
 
             SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnRiftShutdown);
             SubscribeLocalEvent<DragonRiftComponent, ComponentGetState>(OnRiftGetState);
+
+            SubscribeLocalEvent<DragonRiftComponent, RoundEndTextAppendEvent>(OnRiftRoundEnd);
         }
 
         public override void Update(float frameTime)
@@ -54,13 +58,13 @@ namespace Content.Server.Dragon
             {
                 if (comp.State != DragonRiftState.Finished && comp.Accumulator >= comp.MaxAccumulator)
                 {
+                    // TODO: When we get autocall you can buff if the rift finishes / 3 rifts are up
+                    // for now they just keep 3 rifts up.
+
                     comp.Accumulator = comp.MaxAccumulator;
                     RemComp<DamageableComponent>(comp.Owner);
                     comp.State = DragonRiftState.Finished;
-                    var ev = new DragonRiftFinishedEvent();
-                    RaiseLocalEvent(comp.Owner, ref ev, true);
                     Dirty(comp);
-
                 }
                 else
                 {
@@ -122,6 +126,7 @@ namespace Content.Server.Dragon
 
             var carpUid = Spawn(component.RiftPrototype, Transform(uid).MapPosition);
             component.Rifts.Add(carpUid);
+            Comp<DragonRiftComponent>(carpUid).Dragon = uid;
             _audioSystem.Play("/Audio/Weapons/Guns/Gunshots/rocket_launcher.ogg", Filter.Pvs(carpUid, entityManager: EntityManager), carpUid);
         }
 
