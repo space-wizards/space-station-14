@@ -1,0 +1,14 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "fax.png created by Hyenh#6078 (313846233099927552)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fax"
+        }
+    ]
+}
