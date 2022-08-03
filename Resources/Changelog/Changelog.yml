@@ -1,9 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'New lobby song: Spac Stac by Hayabusa', type: Add}
-  id: 1579
-  time: '2022-05-22T02:49:15.0000000+00:00'
 - author: Putnam
   changes:
   - {message: Game presets can now be limited by player count (both min and max),
@@ -2927,3 +2922,9 @@ Entries:
     type: Fix}
   id: 2078
   time: '2022-08-02T21:30:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs no longer move at half speed., type: Fix}
+  - {message: NPCs shouldn't get stuck going back and forth anymore., type: Fix}
+  id: 2079
+  time: '2022-08-03T06:02:50.0000000+00:00'
