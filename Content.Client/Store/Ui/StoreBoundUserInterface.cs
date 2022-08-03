@@ -1,4 +1,3 @@
-using Content.Shared.Traitor.Uplink;
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
